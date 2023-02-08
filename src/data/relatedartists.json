@@ -1,0 +1,33 @@
+[
+    {
+        "path":"/",
+        "name":"FLEETWOOD MAC",
+        "cover": "../assets/relartist1.jpg"
+   
+    },
+    {
+        "path":"/",
+        "name":"QUEEN",
+        "cover": "../assets/relartist2.jpg"
+  
+    },
+    {
+        "path":"/",
+        "name":"VAN HALEN",
+        "cover": "../assets/relartist3.jpg"
+        
+    },
+    {
+        "path":"/",
+        "name":"DAVID BOWIE",
+        "cover": "../assets/relartist4.jpg"
+  
+    },
+    {
+        "path":"/",
+        "name":"AC/DC",
+        "cover": "../assets/relartist5.jpg"
+     
+    }
+
+]
