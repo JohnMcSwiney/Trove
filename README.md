@@ -8,5 +8,3 @@ Our Team is:
 - Johnny McSwiney
 - Mohummad Bhatti
 
-
-hi
