@@ -1,12 +1,9 @@
 require("dotenv").config();
 const express = require("express");
-
-const { Readable } = require("stream");
-const mongodb = require("mongodb");
-const multer = require("multer");
-
-const dbConnection = require("../backend/database/db");
+const dbConnection = require("./database/db");
 const songRoutes = require("./routes/songRoutes");
+const albumRoutes = require("./routes/albumRoutes");
+
 
 //to solve cross origin error with different ports
 const cors = require("cors");
@@ -21,6 +18,9 @@ dbConnection();
 
 //routes
 app.use("/api/songs", songRoutes);
+
+app.use("/api/albums", albumRoutes);
+
 
 app.use(function (err, req, res, next) {
   console.log(err);
