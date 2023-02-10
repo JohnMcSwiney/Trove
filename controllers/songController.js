@@ -1,60 +1,67 @@
 const Song = require("../models/song");
+const Album = require("../models/album");
+
 
 const uploadSong = async (request, response) => {
 
+    Album.findOne({title: request.body.album}, (err, foundAlbum) => {
 
-    Song.findOne({ _id: request.params.id })
+        if (err) {
 
-        .then((result) => {
+            response.status(500).send(err);
+        }
 
-            if (result) {
+        else if (!foundAlbum) {
 
-                return response.status(200).json({ msg: "song already exists" });
-            }
-        });
+            response.status(400).send("Album not found");
+        }
 
-    const { title, artist, album, songUrl, imageUrl, genre, year, duration } = request.body;
+        else {
 
-    //The album and artist will be taking in the id from the album and artist API.
+            const { title, artist, album, songUrl, imageUrl, genre, year, duration } = request.body;
 
-    const song = new Song({
-
-        title: title,
-
-        artist: artist,
-
-        genre: genre,
-
-        album: album,
-
-        songUrl: songUrl,
-
-        imageUrl: imageUrl,
-
-        year: year,
-
-        duration: duration
+            //The album and artist will be taking in the id from the album and artist API.
+        
+            const song = new Song({
+        
+                title: title,
+        
+                artist: artist,
+        
+                genre: genre,
+        
+                album: foundAlbum._id,
+        
+                songUrl: songUrl,
+        
+                imageUrl: imageUrl,
+        
+                year: year,
+        
+                duration: duration
+            });
+        
+            song.save()
+        
+                .then((result) => {
+        
+                    console.log(result);
+                    console.log("post method working");
+        
+                    response.status(201).json({
+                        message: "Song uploaded successfully!",
+                        song: result,
+                    });
+                })
+        
+                .catch((err) => {
+                    console.log(err);
+                    response.status(500).json({
+                        error: err,
+                    });
+                });
+        }
     });
-
-    await song.save()
-
-        .then((result) => {
-
-            console.log(result);
-            console.log("post method working");
-
-            response.status(201).json({
-                message: "Song uploaded successfully!",
-                song: result,
-            });
-        })
-
-        .catch((err) => {
-            console.log(err);
-            response.status(500).json({
-                error: err,
-            });
-        });
 }
 
 

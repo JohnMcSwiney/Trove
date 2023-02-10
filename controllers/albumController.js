@@ -1,43 +1,36 @@
 const Album = require("../models/album");
 
 
-const uploadSong = async (request, response) => {
+const createAlbum = async (request, response) => {
 
 
-    Song.findOne({ _id: request.params.id })
+    Album.findOne({ _id: request.params.id })
 
         .then((result) => {
 
             if (result) {
 
-                return response.status(200).json({ msg: "song already exists" });
+                return response.status(200).json({ msg: "album already exists" });
             }
         });
 
-    const { title, artist, album, songUrl, imageUrl, genre, year, duration } = request.body;
+    const { title, artist, imageUrl, year} = request.body;
 
     //The album and artist will be taking in the id from the album and artist API.
 
-    const song = new Song({
+    const album = new Album({
 
         title: title,
 
         artist: artist,
 
-        genre: genre,
-
-        album: album,
-
-        songUrl: songUrl,
-
         imageUrl: imageUrl,
 
-        year: year,
+        year: year
 
-        duration: duration
     });
 
-    await song.save()
+    await album.save()
 
         .then((result) => {
 
@@ -45,8 +38,8 @@ const uploadSong = async (request, response) => {
             console.log("post method working");
 
             response.status(201).json({
-                message: "Song uploaded successfully!",
-                song: result,
+                message: "Album uploaded successfully!",
+                album: result,
             });
         })
 
@@ -56,4 +49,8 @@ const uploadSong = async (request, response) => {
                 error: err,
             });
         });
+}
+
+module.exports = {
+    createAlbum
 }

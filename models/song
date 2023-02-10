@@ -20,7 +20,11 @@ const songSchema = new Schema({
 
     album: {
 
-        type: String
+        type: mongoose.Schema.Types.ObjectId,
+        
+        ref: "Album",
+
+        default: null
     },
 
     genre: {
