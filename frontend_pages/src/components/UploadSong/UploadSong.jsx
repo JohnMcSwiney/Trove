@@ -3,7 +3,6 @@ import MusicBar from "../ArtistProfile/musicBar/MusicBar";
 import SideBar from "../ArtistProfile/Sidebar/Sidebar"
 import WavesBG from "../../Vector.svg"
 import MusicDetails from "./MusicDetails";
-import AddSongs from "./AddSongs";
 import { FilePond } from "filepond";
 import  './UploadMusic.css'; 
  
@@ -90,9 +89,9 @@ export default function UploadMusic(props) {
           genre: "", 
           cover: albumCover,
           releasetype:"",
+          releaseYear: 0,
           artist: "", 
           files: files, 
-          filePond: files
 
 
       }
@@ -155,7 +154,7 @@ export default function UploadMusic(props) {
             */}
 
               <div>
-              <span><h1>SUBMIT MUSIC</h1></span>
+              <span><h1>UPLOAD SONG</h1></span>
               </div>
 
               </div>
@@ -174,13 +173,6 @@ export default function UploadMusic(props) {
                   </label>
                 
                   </div>
-                    
-                    {/* Comment this component out to aid in viewing the music details section */}
-                    {/* <AddSongs 
-                      handleChange={handleChange}
-                      files={files}
-                      setFiles={setFiles}
-                    /> */}
 
                     {/* Uncomment below  to see music details section of form, 
                     will be adding feature to navigate through both effectively */}
@@ -189,6 +181,9 @@ export default function UploadMusic(props) {
                       handleChange={handleChange}
                       formData={formData}
                       handleSubmit={handleSubmit}
+                      files={files}
+                      setFiles={setFiles}
+
                     /> 
                  
                   </div>
