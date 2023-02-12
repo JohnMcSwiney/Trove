@@ -7,7 +7,8 @@ import albumList from "../../data/albums.json"
 import relatedArtists from "../../data/relatedartists.json"
 import ArtistAlbum from "./ArtistAlbum"
 import RelatedArtist from "./RelatedArtist";
-
+import  './ArtistProfile.css';
+ 
 // This is how the normal users will see the artist profile
 export default function ArtistProfile(props) {
     const [small, setSmall] = useState(false);
