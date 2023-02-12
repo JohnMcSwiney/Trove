@@ -1,0 +1,12 @@
+import React from "react"
+
+export default function ArtistAlbum(props) {
+
+    return (
+        <div className="slide" id={"slide-" + props.index}><div className="album--cover">
+        <img src={props.cover} className="album--cover" alt="album--cover"/>
+        </div><div className="artist--name"><a href="/" className="song--title">{props.title}</a>
+        </div><br/> <div className="song--artist"><a href="/" className="">{props.artist}</a> </div> 
+        <div className="song--genre"><h6>{props.genre}</h6></div></div>
+    )
+}
