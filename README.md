@@ -1,36 +1,29 @@
-
 # Trove
-
-2023 - SAIT Software Design Capstone
+SAIT Software Design Capstone
 
 Our Team is:
- - Ava Khan
- - Dan Nguyen
- - Jack Eyre
- - Johnny McSwiney
- - Mohummad Bhatti
-
-## Practice Work Links
-
-### Ava:
- - https://github.com/jvakhan/trove_work
+- Ava Khan
+- Dan Nguyen
+- Jack Eyre
+- Johnny McSwiney
+- Mohummad Bhatti
 
 
-### Dan:
- - https://github.com/Dan1Nguyen01/TrovePC-main
+___________________
+Practice Work Links
 
+Ava:
+- https://github.com/jvakhan/trove_work
 
-### Jack:
- - https://github.com/Facelesscactus/TroveTest
+Dan:
+- https://github.com/Dan1Nguyen01/TrovePC-main
 
+Jack:
+-
 
-### Johnny:
- - https://github.com/JohnMcSwiney/ReactPractice
- - https://github.com/JohnMcSwiney/TailwindPractice
+Johnny:
+- https://github.com/JohnMcSwiney/ReactPractice
+- https://github.com/JohnMcSwiney/TailwindPractice
 
-
-### Mohummad:
-https://github.com/goosefring/trovecode
-
-## Project Completion
- **5%**
+Mohummad:
+-
