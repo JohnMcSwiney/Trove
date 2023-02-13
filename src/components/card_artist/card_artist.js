@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import artistTemp from '../../components/your artist/artistTemp.jpg';
+import artistTemp from '../../assets/tempAssets/artistTemp.jpg';
 
 export default class card_artist extends Component {
     render() {
