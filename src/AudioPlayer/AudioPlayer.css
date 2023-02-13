@@ -65,7 +65,7 @@
 
 .progressBar{
     --bar-bg:var(--Black);
-    --seek-before-width: 100px;
+    --seek-before-width: 0;
     --seek-before-color: var(--Purple) ;
     --knobby: var(--Purple) ;
     --selectedKnobby:var(--Purple) ;
