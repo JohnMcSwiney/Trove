@@ -1,5 +1,16 @@
+<<<<<<< Updated upstream
 # Trove
 SAIT Software Design Capstone
+=======
+
+# Trove Front End
+
+This is Johnny's front end for the trove website
+
+_______
+
+## 2023 - SAIT Software Design Capstone
+>>>>>>> Stashed changes
 
 Our Team is:
 - Ava Khan

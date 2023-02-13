@@ -13,7 +13,8 @@ import { FiSettings } from "react-icons/fi"
 import artistTemp from './assets/tempAssets/artistTemp.jpg';
 import Trv_Chest from "./assets/Trv_icons/Tvr_lib_icon.ico";
 import { StickyContainer, Sticky } from 'react-sticky';
-import card_artist from './components/card_artist/card_artist.js';
+import CardArtist from './components/card_artist/CardArtist.js';
+import CardAlbum from './components/card_album/CardAlbum.js';
 
 import './App.css';
 
@@ -39,7 +40,7 @@ function App() {
       <header className='headerBg py-2 pt-2 w-full my-auto sticky top-0 z-50'>
         <div className='flex flex-row py-2.5 m-auto justify-between mx-2'>
           <div className=' text-trv-White bg-trv-sm-Play-bg p-4 h-5 w-5 flex rounded-full shadow-md' ><FiSettings className='relative' size={20} /> </div>
-          <div className='flex text-trv-White my-auto h-8 bg-pink-400 px-2 rounded mobileNav drop-shadow-md'>
+          <div className='flex text-trv-White my-auto h-8 px-2 rounded mobileNav drop-shadow-md'>
             <h1 className='font-bold text-lg'>Trove</h1><h2 className='text-lg'>Music</h2>
           </div>
           <div className='relative text-trv-White bg-gradient-to-t from-trv-Purple to-trv-Blue p-4 h-5 w-5 flex rounded-full flex-row justify-center shadow-md'>
@@ -113,70 +114,79 @@ function App() {
         {/* Content */}
         <div className="">
 
-          <h4 className="font-bold mt-4 pb-2 text-sm box-border pl-3 text-trv-White">Artists you love:</h4>
+          <h4 className="mainHeadertxt">Artists you love:</h4>
           <div className='grid grid-flow-col overflow-scroll '>
-            {/* <artistTemp /> */}
+            <CardArtist
+              artist={{
+                name: 'Ice Cube',
+                picUrl: 'https://storage.googleapis.com/trv_test/TroveMusic/rap/ice_cube/the_predator/cover/cover.jpg'
+              }} />
+            <CardArtist
+              artist={{
+                name: 'Téa G',
+                picUrl: 'https://storage.googleapis.com/trv_test/TroveMusic/pop/tea_g/see_it_through/cover/cover.jpg'
+              }} />
 
-            {/* ???? like ?????? fr why don't you work like ??????????????? */}
-            <div className='flex flex-col align-middle justify-center text-center text-ellipsis w-24 rounded p-1 m-2'>
-              <div className='rounded-full bg-gradient-to-t from-trv-Purple to-trv-Blue p-1.5 m-auto'>
-                <div className='overflow-hidden' >
-                  <img src={artistTemp} className='rounded-full w-14' />
-                </div>
-              </div>
-              <h2 className='text-trv-sm-Artist-txt text-sm pt-1 shadow'>Artist Name</h2>
-            </div>
-      
-            <div className='flex flex-col align-middle justify-center text-center text-ellipsis w-24 rounded p-1 m-2'>
-              <div className='rounded-full bg-gradient-to-t from-trv-Purple to-trv-Blue p-1.5 m-auto'>
-                <div className='overflow-hidden' >
-                  <img src={artistTemp} className='rounded-full w-14' />
-                </div>
-              </div>
-              <h2 className='text-trv-sm-Artist-txt text-sm pt-1'>Artist Name</h2>
-            </div>
+            <CardArtist
+              artist={{
+                name: 'wavepool abortion',
+                picUrl: 'https://storage.googleapis.com/trv_test/TroveMusic/country/wavepool_abortion/wavepool_abortion/artist_img.JPG'
+              }} />
+            <CardArtist
+              artist={{
+                name: 'custodian',
+                picUrl: 'https://storage.googleapis.com/trv_test/TroveMusic/electronic/custodian/songs_2/cover/cover.jpg'
+              }} />
+            <CardArtist
+              artist={{
+                name: 'Poltergeist',
+                picUrl: 'https://storage.googleapis.com/trv_test/TroveMusic/rock/poltergeist/cold_in_september/cover/cover.png'
+              }} />
 
-            <div className='flex flex-col align-middle justify-center text-center text-ellipsis w-24 rounded p-1 m-2'>
-              <div className='rounded-full bg-gradient-to-t from-trv-Purple to-trv-Blue p-1.5 m-auto'>
-                <div className='overflow-hidden' >
-                  <img src={artistTemp} className='rounded-full w-14' />
-                </div>
-              </div>
-              <h2 className='text-trv-sm-Artist-txt text-sm pt-1'>Artist Name</h2>
-            </div>
-
-            <div className='flex flex-col align-middle justify-center text-center text-ellipsis w-24 rounded p-1 m-2'>
-              <div className='rounded-full bg-gradient-to-t from-trv-Purple to-trv-Blue p-1.5 m-auto'>
-                <div className='overflow-hidden' >
-                  <img src={artistTemp} className='rounded-full w-14' />
-                </div>
-              </div>
-              <h2 className='text-trv-sm-Artist-txt text-sm pt-1'>Artist Name</h2>
-            </div>
-
-            <div className='flex flex-col align-middle justify-center text-center text-ellipsis w-24 rounded p-1 m-2'>
-              <div className='rounded-full bg-gradient-to-t from-trv-Purple to-trv-Blue p-1.5 m-auto'>
-                <div className='overflow-hidden' >
-                  <img src={artistTemp} className='rounded-full w-14' />
-                </div>
-              </div>
-              <h2 className='text-trv-sm-Artist-txt text-sm pt-1'>Artist Name</h2>
-            </div>
 
 
           </div>
 
 
-          <h4 className="font-bold mt-6 pb-2 border-b  border-grey-600">Latest Recipies</h4>
+          <h4 className="mainHeadertxt">Try these on for size:</h4>
 
-          <div className="mt-8">
+          <div className='grid grid-flow-col overflow-scroll py-2'>
             {/* cards go here */}
-          </div>
+            <CardAlbum
+              album={{
+                name: 'Cold in September',
+                picUrl: 'https://storage.googleapis.com/trv_test/TroveMusic/rock/poltergeist/cold_in_september/cover/cover.png'
+                , artist: 'Poltergeist'
+              }} />
 
-          <div className="flex justify-center">
-            <div className="btn text-black">Load More</div>
-          </div>
+            <CardAlbum
+              album={{
+                name: 'Khala',
+                picUrl: 'https://storage.googleapis.com/trv_test/TroveMusic/country/chrome%20harvest/khala/cover/cover.png'
+                , artist: 'Chrome Harvest'
+              }} />
 
+            <CardAlbum
+              album={{
+                name: 'Santosha',
+                picUrl: 'https://storage.googleapis.com/trv_test/TroveMusic/etc/NeedleJustice/santosha/cover/cover.jpg'
+                , artist: 'mindspring memories'
+              }} />
+
+            <CardAlbum
+              album={{
+                name: 'Without You',
+                picUrl: 'https://storage.googleapis.com/trv_test/TroveMusic/pop/tea_g/without_you/cover/cover.jpg'
+                , artist: 'Téa G, LeBrock'
+              }} />
+
+            <CardAlbum
+              album={{
+                name: 'They Want My Soul',
+                picUrl: 'https://storage.googleapis.com/trv_test/TroveMusic/rock/spoon/they_want_my_soul/cover/cover.jpg'
+                , artist: 'Spoon'
+              }} />
+          </div>
         </div>
 
       </main>

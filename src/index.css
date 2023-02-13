@@ -56,6 +56,10 @@
     @apply fill-trv-sm-Artist-txt
   }
 
+  .mainHeadertxt{
+    @apply font-bold mt-4 pb-2 text-sm box-border pl-3 text-trv-White
+  }
+
   .MainBg{
     background-image: url("./assets/Trv_bg/trove bg.png");
     background-color: #0C081C;

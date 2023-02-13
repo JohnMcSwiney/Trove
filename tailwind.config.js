@@ -38,5 +38,23 @@ module.exports = {
       }
     },
   },
-  plugins: [],
+  plugins: [
+    require('tailwind-content-placeholder')({
+      width: '90%',
+      placeholders: {
+        'paragraph': {
+          height: 4, // the height of the container in em
+          rows: [ // This class will have 4 rows:
+            [100], // A 100% width row
+            [100], // Another 100% width row
+            [40], // A 40% width row
+            [] // And an empty row, to create separation
+          ]
+        },
+        'img' : {
+          height: 6,
+        },
+      }
+    }),
+  ],
 }
