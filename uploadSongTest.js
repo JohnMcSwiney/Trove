@@ -54,7 +54,7 @@ const UploadSong = () => {
 
         storage
           .bucket('trv_test')
-          .upload(imageFile, {
+          .upload(imageFile, {  
             gzip: true,
             metadata: {
               cacheControl: 'public, max-age=31536000',
