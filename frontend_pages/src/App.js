@@ -1,8 +1,9 @@
 import ArtistProfile from './components/ArtistProfile/ArtistProfile';
 import UserProfile from './components/UserProfile/UserProfile';
 import UploadMusic from './components/UploadMusic/UploadMusic';
-import UploadSong from './components/UploadSong/UploadSong'
-import UploadMusicConnect from './components/UploadSong/UploadSongConnect';
+// import UploadSong from './components/UploadSong/UploadSong'
+import UploadSongConnect from './components/UploadSong/UploadSongConnect';
+import UploadSong from './components/UploadSong/avauploadsong'
 
 function App() {
   return (
@@ -11,7 +12,9 @@ function App() {
       {/* <UserProfile /> */}
       {/* <UploadMusic /> */}
       <UploadSong />
-      {/* <UploadMusicConnect /> */}
+      {/* <UploadSongConnect /> */}
+
+ 
 
     </div>
   ); 

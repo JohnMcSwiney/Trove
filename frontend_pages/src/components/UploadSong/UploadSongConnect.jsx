@@ -9,7 +9,7 @@ import  './UploadMusic.css';
 
   
 // This is how the normal users will see the artist profile
-export default function UploadMusicConnect(props) {
+export default function UploadSongConnect(props) {
     const UploadSong = () => {
 
         const storage = new Storage({
