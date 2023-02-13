@@ -6,12 +6,12 @@ const UploadSong = () => {
 
   const storage = new Storage({
     //the project id
-  projectId: '',
-  
-  // path to keyfile.json
-  keyFilename: ''
+    projectId: '',
+
+    // path to keyfile.json
+    keyFilename: ''
   });
-  
+
   //const bucket = storage.bucket('trv-test');
 
   const [title, setTitle] = useState('');
@@ -38,7 +38,7 @@ const UploadSong = () => {
     //const storage = new Storage();
 
     storage
-      .bucket('trv-test')
+      .bucket('trv_test')
       .upload(songFile, {
         gzip: true,
         metadata: {
@@ -53,7 +53,7 @@ const UploadSong = () => {
         const songUrl = `https://storage.googleapis.com/${songFile.bucket.name}/${songFile.name}`;
 
         storage
-          .bucket('trv-test')
+          .bucket('trv_test')
           .upload(imageFile, {
             gzip: true,
             metadata: {
@@ -121,14 +121,22 @@ const UploadSong = () => {
         onChange={(e) => setArtist(e.target.value)}
       />
       <input
+        type="text"
+        placeholder="Album"
+        value={artist}
+        onChange={(e) => setAlbum(e.target.value)}
+      />
+      <input
         type="file"
         accept="audio/*"
         onChange={(e) => setAudioFile(e.target.files[0])}
+      //onChange={handleSongFileChange}
       />
       <input
         type="file"
         accept="image/*"
         onChange={(e) => setImageFile(e.target.files[0])}
+      //onChange={handleImageFileChange}
       />
       <button type="submit">Upload</button>
     </form>
