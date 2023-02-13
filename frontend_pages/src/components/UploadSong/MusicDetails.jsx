@@ -16,25 +16,48 @@ import FilePondPluginFileEncode from 'filepond-plugin-file-encode';
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview, FilePondPluginFileEncode)
 
 export default function MusicDetails(props) {
-    
+  //  const [listFiles, setListFiles] = React.useState(false)  
+
       React.useEffect(() => {
         console.log("files changed!");
         console.log(props.files);
     }, [props.files]);
 
+    // if(props.files.length > 0) {
+    //   setListFiles(prevListFiles => !prevListFiles);
+    // }
+
+    // let isFiles=null; 
+
+    //   if (listFiles) {
+    //         isFiles = <h4>{props.files[0].filename}</h4> 
+
+    //   } 
+
+    //   React.useEffect(() => {
+    //     if(props.files.length > 0 ) {
+
+    //     }
+
+    //     console.log("files changed!");
+    //     console.log(props.files);
+    // }, [props.files]);
+
     return (
         <div className="column song--form">
         {/* <h2>MUSIC DETAILS</h2> */}
+            <div className="add--song"> 
            <FilePond
                 files={props.files}
                 onupdatefiles={props.setFiles}
                 allowMultiple={true}
                 maxFiles={1}
                 //server="/"
-                name="files" /* sets the file input name, it's filepond by default */
+                name="songFile" /* sets the file input name, it's filepond by default */
                 labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
                 allowFileEncode={true}
             />
+            </div>
 
             <table>
               <tbody>
@@ -43,7 +66,7 @@ export default function MusicDetails(props) {
                 <label>
                 Song Name:
                 <br />
-                    <input type="text" name="songName" placeholder="Song Name" onChange={props.handleChange}/>
+                    <input type="text" name="title" placeholder="Song Name" onChange={props.handleChange}/>
                 </label>  
                 </td>                          
               </tr>
@@ -52,7 +75,7 @@ export default function MusicDetails(props) {
                 <label>
                   Album Name:
                   <br />
-                      <input type="text" name="albumName" placeholder="Album Name"  onChange={props.handleChange} />
+                      <input type="text" name="album" placeholder="Album Name"  onChange={props.handleChange} />
                 </label>
                 </td>                          
               </tr>
@@ -138,6 +161,12 @@ export default function MusicDetails(props) {
 
             </tbody>
             </table>
+
+            {/* {isFiles} */}
+
+           {/* { props.files && <h4>{props.files[0].filename}</h4> 
+            
+           } */}
 
         </div>
     )
