@@ -1,0 +1,32 @@
+.musicbar{
+    width: 96%;
+    margin: auto;
+    background: #12164B;
+    border-radius: 0px 0px 8px 8px;
+    
+    
+    
+}
+
+.musicbar-wrap{
+  background-color: transparent;
+  width: 100%;
+  margin: auto;
+  bottom: 80px;
+  position: fixed;
+
+}
+
+.musicbar-items{
+    display: flex;
+    flex-direction: row;
+    
+}
+
+
+.song-buttons{
+    display: flex;
+    flex-direction: row;
+    margin-left:auto;
+    align-items: center
+}

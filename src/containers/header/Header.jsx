@@ -9,6 +9,7 @@ const Header = () => {
             <h1 className='font-bold text-lg'>Trove</h1><h2 className='text-lg'>Music</h2>
           </div>
           <div className='relative text-trv-White bg-gradient-to-t from-trv-Purple to-trv-Blue p-4 h-5 w-5 flex rounded-full flex-row justify-center shadow-md'>
+            
             <div className='absolute bg-yellow-500 p-3 w-5 h-5 rounded-full inset-x-1 inset-y-1'></div>
             {/* <FaUserCircle/> */}
           </div>
