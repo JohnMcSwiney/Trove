@@ -34,7 +34,3 @@ https://github.com/goosefring/trovecode
 
 ## Project Completion
  **5%**
-
-
-
-test
