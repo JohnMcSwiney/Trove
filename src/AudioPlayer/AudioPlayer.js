@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 
 import Reflection from '../mp3/Reflection.mp3'
 import './AudioPlayer.css'
@@ -12,6 +12,8 @@ const AudioPlayer = () => {
     //state
 
     const [isPlaying, setIsPlaying] =  useState(false);
+    const [duration, setDuration] = useState(0);
+
 
     //reference
     const audioPlayer = useRef(); //reference to the audio player
@@ -27,7 +29,7 @@ const AudioPlayer = () => {
         
         setIsPlaying(!preValue);
         
-        if(isPlaying){
+        if(!preValue){
             audioPlayer.current.play();
             
         
@@ -63,7 +65,7 @@ const AudioPlayer = () => {
 
 
             {/*Duration*/}
-            <div className='duration'>2:49</div>
+            <div className='duration'>{duration}</div>
 
         </div>
     );
