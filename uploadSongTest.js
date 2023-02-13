@@ -6,10 +6,10 @@ const UploadSong = () => {
 
   const storage = new Storage({
     //the project id
-    projectId: '',
+    projectId: 'helical-analyst-376421',
 
     // path to keyfile.json
-    keyFilename: ''
+    keyFilename: 'C:\Users\Rehan\Desktop\projects\TroveTest\trovecode\keyfile.json'
   });
 
   //const bucket = storage.bucket('trv-test');
