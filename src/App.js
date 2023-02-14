@@ -1,12 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react'
-import logo from './logo.svg';
 import { StickyContainer, Sticky } from 'react-sticky';
 import { AudioPlayer } from './components/audioplayer/AudioPlayer';
-
-
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
-
 import Header from './containers/header/Header';
 import MusicBar from './components/music bar/MusicBar';
 import NavBar from './components/nav bar/NavBar';
