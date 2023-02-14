@@ -10,8 +10,8 @@ function App() {
     <div className="App">
       {/* <ArtistProfile /> */}
       {/* <UserProfile /> */}
-      {/* <UploadMusic /> */}
-      <UploadSong />
+      <UploadMusic />
+      {/* <UploadSong /> */}
       {/* <UploadSongConnect /> */}
 
  
