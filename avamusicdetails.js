@@ -16,113 +16,117 @@ import FilePondPluginFileEncode from 'filepond-plugin-file-encode';
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview, FilePondPluginFileEncode)
 
 export default function MusicDetails(props) {
-    
-      React.useEffect(() => {
-        console.log("files changed!");
-        console.log(props.files);
-        //console.log(props.songFile)
-        //[prop.songFile]
-    }, [props.files]);
 
-    return (
-        <div className="column song--form">
-        {/* <h2>MUSIC DETAILS</h2> */}
-           <FilePond
-           //files={props.songFile}
-           //onupdatefiles={props.setSongFile}
-                files={props.files}
-                onupdatefiles={props.setFiles}
-                allowMultiple={true}
-                maxFiles={1}
-                //server="/"
-                //name="songFile"
-                name="files" /* sets the file input name, it's filepond by default */
-                labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
-                allowFileEncode={true}
-            />
+  // React.useEffect(() => {
+  //   console.log("files changed!");
+  //   console.log("props.songFile: " + props.songFile);
+  //   //console.log(props.songFile)
+  //   //[prop.songFile]
+  // }, [props.songFile]);
 
-            <table>
-              <tbody>
-              <tr>
-                <td className="columnt">
-                <label>
+  return (
+    <div className="column song--form">
+      <label className="custom-file-upload">
+        <input type="file" name="songFile" value="" accept="audio/*" className="gradient--btn image--btn hide--file" onChange={props.handleSongFileChange} />
+        Choose Song <img src="../../assets/upload_icon.png" id="upload--icon" alt="upload_icon" />
+      </label>
+      {/* <h2>MUSIC DETAILS</h2> */}
+      <FilePond
+        //files={props.songFile}
+        //onupdatefiles={props.setSongFile}
+        files={props.songFile}
+        onupdatefiles={props.setSongFile}
+        allowMultiple={true}
+        maxFiles={1}
+        //server="/"
+        //name="songFile"
+        //name="files" /* sets the file input name, it's filepond by default */
+        labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
+        allowFileEncode={true}
+      />
+
+      <table>
+        <tbody>
+          <tr>
+            <td className="columnt">
+              <label>
                 Song Name:
                 <br />
-                    <input type="text" name="songName" placeholder="Song Name" onChange={props.handleSongName}/>
-                </label>  
-                </td>                          
-              </tr>
-              <tr>
-                <td  className="columnt">
-                <label>
-                  Album Name:
-                  <br />
-                      <input type="text" name="albumName" placeholder="Album Name"  onChange={props.handleAlbumName} />
-                </label>
-                </td>                          
-              </tr>
-              <tr>
-                <td className="columnt">
-                <label>
-                  Hot Spot:
-                  </label>
-                  </td>
-                </tr>
-                <tr>
-                  <td className="hotspot--start">
-                  <label>
-                  Start:
-                  </label>
-                  <input type="number" name="highlightStart" placeholder="00:00" min="0" onChange={props.handleHighlightStart}/>
-                </td>   
-                <td  className="hotspot--stop">
-                  <label>
-                  Stop:
-                  </label>
-                  <input type="number" name="highlightStop" placeholder="00:00" min="0"  onChange={props.handleHighlightStop}/>
-                  <br/> 
-                </td>                
-              </tr>
-              <td  className="columnt">
-                <label>
-                  Release Year:
-                  <br />
-                      <input type="number" name="releaseYear" placeholder="YYYY" min="1900" max="2024"  onChange={props.handleReleaseYear} />
-                </label>
-                </td>     
-              <tr>
-                  <td  className="columnt">
-                    <label>
-                      Genre:
-                    </label>
-                  </td> 
-              </tr> 
-              <fieldset>
-              <tr>
+                <input type="text" name="songName" placeholder="Song Name" onChange={props.handleTitle} />
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td className="columnt">
+              <label>
+                Album Name:
+                <br />
+                <input type="text" name="albumName" placeholder="Album Name" onChange={props.handleAlbumName} />
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td className="columnt">
+              <label>
+                Hot Spot:
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td className="hotspot--start">
+              <label>
+                Start:
+              </label>
+              <input type="number" name="highlightStart" placeholder="00:00" min="0" onChange={props.handleHighlightStart} />
+            </td>
+            <td className="hotspot--stop">
+              <label>
+                Stop:
+              </label>
+              <input type="number" name="highlightStop" placeholder="00:00" min="0" onChange={props.handleHighlightStop} />
+              <br />
+            </td>
+          </tr>
+          <td className="columnt">
+            <label>
+              Release Year:
+              <br />
+              <input type="number" name="releaseYear" placeholder="YYYY" min="1900" max="2024" onChange={props.handleReleaseYear} />
+            </label>
+          </td>
+          <tr>
+            <td className="columnt">
+              <label>
+                Genre:
+              </label>
+            </td>
+          </tr>
+          <fieldset>
+            {/* <tr>
                   <td className="genre--radio">
-                        <input type="radio" name="genre" value="pop" checked={props.genre === "pop"} onChange={props.handleGenre}/>POP
-                  </td>
-                  <td className="genre--radio">
-                        <input type="radio" name="genre" value="rock" checked={props.genre === "rock"} onChange={props.handleGenre}/>ROCK
-                  </td>
-              </tr>
-              <tr>
-                  <td className="genre--radio">
-                        <input type="radio" name="genre" value="country" checked={props.genre === "country"} onChange={props.handleGenre} />COUNTRY
+                        <input type="radio" name="genre" value="pop" checked={props.genre === "pop"} />POP
                   </td>
                   <td className="genre--radio">
-                        <input type="radio" name="genre" value="hiphop"checked={props.genre === "hiphop"} onChange={props.handleGenre} />HIP-HOP
+                        <input type="radio" name="genre" value="rock" checked={props.genre === "rock"} />ROCK
                   </td>
               </tr>
-              </fieldset>
               <tr>
-                  <td  className="columnt">
-                    <label>
-                      Release Type:
-                    </label>
-                  </td> 
-              </tr> 
-              <fieldset>
+                  <td className="genre--radio">
+                        <input type="radio" name="genre" value="country" checked={props.genre === "country"}/>COUNTRY
+                  </td>
+                  <td className="genre--radio">
+                        <input type="radio" name="genre" value="hiphop"checked={props.genre === "hiphop"}  />HIP-HOP
+                  </td>
+              </tr> */}
+          </fieldset>
+          <tr>
+            <td className="columnt">
+              <label>
+                Release Type:
+              </label>
+            </td>
+          </tr>
+          {/* <fieldset>
               <tr>
                   <td className="release--radio">
                         <input type="radio" name="releasetype" value="album" checked={props.releaseType === "album"} onChange={props.handleReleaseType}/>ALBUM
@@ -134,16 +138,16 @@ export default function MusicDetails(props) {
                         <input type="radio" name="releasetype" value="single" checked={props.releaseType === "single"} onChange={props.handleReleaseType} />SINGLE
                   </td>
               </tr>
-              </fieldset>
-              <tr>
-                <td  className="columnt">
-                  <input type="submit" value="Submit" className="gradient--btn submit--btn" onClick={props.handleSubmit} /> 
-                </td>
-              </tr>
+              </fieldset> */}
+          <tr>
+            <td className="columnt">
+              <input type="submit" value="Submit" className="gradient--btn submit--btn" onClick={props.handleSubmit} />
+            </td>
+          </tr>
 
-            </tbody>
-            </table>
+        </tbody>
+      </table>
 
-        </div>
-    )
+    </div>
+  )
 }
