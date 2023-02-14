@@ -1,7 +1,7 @@
 import React, {useState, useRef, useEffect} from 'react';
 
 import Reflection from '../mp3/Reflection.mp3'
-import './AudioPlayer.css'
+import style from './AudioPlayer.module.css'
 import {GoArrowLeft} from 'react-icons/go';
 import {GoArrowRight} from 'react-icons/go';
 import {FaPlay} from 'react-icons/fa';
@@ -88,30 +88,30 @@ const AudioPlayer = () => {
     }
 
     return (  
-        <div className="audioPlayer">
+        <div className={style.audioPlayer}>
             <audio ref={audioPlayer} src ={Reflection}></audio>
             
-            <button className='forwardBackward'><GoArrowLeft/> 30</button>
+            <button className={style.forwardBackward}><GoArrowLeft/> 30</button>
             
-            <button onClick={togglePlayPause} className='playPause'>
-                {isPlaying ? <FaPause/> : <FaPlay className='play'/>}
+            <button onClick={togglePlayPause} className={style.playPause}>
+                {isPlaying ? <FaPause/> : <FaPlay className={style.play}/>}
                 
             </button>
             
-            <button className='forwardBackward'> 30<GoArrowRight/></button>
+            <button className={style.forwardBackward}> 30<GoArrowRight/></button>
 
             {/*current time*/}
 
-            <div className='currentTime'>{calculateTime(currentTime)}</div>
+            <div className={style.currentTime}>{calculateTime(currentTime)}</div>
 
             {/*progress bar*/}
             <div>
-                <input type="range" className="progressBar" defaultValue="0" ref={progressBar} onChange={changeRange} />
+                <input type="range" className={style.progressBar} defaultValue="0" ref={progressBar} onChange={changeRange} />
             </div>
 
 
             {/*Duration*/}
-            <div className="duration">{(duration && !isNaN(duration)) && calculateTime(duration)}</div>
+            <div className={style.duration}>{(duration && !isNaN(duration)) && calculateTime(duration)}</div>
 
         </div>
     );
