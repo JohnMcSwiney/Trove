@@ -6,8 +6,8 @@ import MusicDetails from "./MusicDetails";
 import { FilePond } from "filepond";
 import './UploadMusic.css';
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getStorage } from "firebase/storage";
+import firebase, { initializeApp } from "firebase/app";
+import "firebase/storage";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -95,9 +95,9 @@ const firebaseConfig = {
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   // Initialize Cloud Storage and get a reference to the service
-  const storage = getStorage(app);
+  //const storage = getStorage(app);
 
-  //const storage = firebase.storage()
+  const storage = firebase.storage()
 
     const [songName, setSongName] = useState('');
     const [albumName, setAlbumName] = useState('');
@@ -156,8 +156,8 @@ const firebaseConfig = {
         e.preventDefault();
         setIsUploading(true);
 
-        //const storageRef = storage.ref()
-        const storageRef = firebase.storage().ref();
+        const storageRef = storage.ref();
+        //const storageRef = firebase.storage().ref();
         const songRef = storageRef.child(`songs/${songFile.name}`);
         const songUploadTask = songRef.put(songFile);
 
