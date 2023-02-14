@@ -8,9 +8,9 @@ import UploadSong from './components/UploadSong/avauploadsong'
 function App() {
   return (
     <div className="App">
-      {/* <ArtistProfile /> */}
+      <ArtistProfile />
       {/* <UserProfile /> */}
-      <UploadMusic />
+      {/* <UploadMusic /> */}
       {/* <UploadSong /> */}
       {/* <UploadSongConnect /> */}
 

@@ -2,18 +2,16 @@ import React, { useEffect, useState } from "react";
 import MusicBar from "../ArtistProfile/musicBar/MusicBar";
 import SideBar from "../ArtistProfile/Sidebar/Sidebar"
 import WavesBG from "../../Vector.svg"
-import MusicDetails from "./avamusicdetails";
+import MusicDetails from "./MusicDetails";
 import { FilePond } from "filepond";
 import './UploadMusic.css';
 // Import the functions you need from the SDKs you need
-import firebase, { initializeApp } from "firebase/app";
-// import { getStorage } from "firebase/storage";
-// import * as firebase from "firebase/app";
-import "firebase/storage";
+import { initializeApp } from "firebase/app";
+import { getStorage } from "firebase/storage";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
- 
+
 // This is how the normal users will see the artist profile
 export default function UploadMusic(props) {
     const [small, setSmall] = useState(false);
@@ -95,11 +93,11 @@ const firebaseConfig = {
   };
   
   // Initialize Firebase
-  const firebase = initializeApp(firebaseConfig);
+  const app = initializeApp(firebaseConfig);
   // Initialize Cloud Storage and get a reference to the service
-//   const storage = firebase.storage();
+  const storage = getStorage(app);
 
-  const storage = firebase.storage();
+  //const storage = firebase.storage()
 
     const [title, setTitle] = useState('');
     const [album, setAlbum] = useState('');
@@ -159,8 +157,8 @@ const firebaseConfig = {
         e.preventDefault();
         setIsUploading(true);
 
-        const storageRef = storage.ref();
-        // const storageRef = firebase.storage().ref();
+        //const storageRef = storage.ref()
+        const storageRef = app.storage().ref();
         const songRef = storageRef.child(`songs/${songFile.name}`);
         const songUploadTask = songRef.put(songFile);
 
@@ -244,28 +242,28 @@ const firebaseConfig = {
     //     //   console.log(files);
     //     // }, [files]);
 
-    // function handleChange(event) {
-    //     const { name, value, type, checked } = event.target;
+    function handleChange(event) {
+        const { name, value, type, checked } = event.target;
 
-    //     if (type === "file") {
-    //         setImageFile(URL.createObjectURL(event.target.files[0]));
+        if (type === "file") {
+            setImageFile(URL.createObjectURL(event.target.files[0]));
 
-    //     }
+        }
 
-    //     setFormData(prevFormData => {
+        // setFormData(prevFormData => {
 
-    //         return {
-    //             ...prevFormData,
-    //             [name]: type === "checkbox" ? checked : value,
-    //             songFile: songFile
-    //             // [name]: type === "file" ? value === setAlbumCover(URL.createObjectURL(event.target.files[0]))  : value
+        //     return {
+        //         ...prevFormData,
+        //         [name]: type === "checkbox" ? checked : value,
+        //         songFile: songFile
+        //         // [name]: type === "file" ? value === setAlbumCover(URL.createObjectURL(event.target.files[0]))  : value
 
-    //         }
+        //     }
 
-    //     });
+        // });
 
         //console.log(formData)
-    // }
+    }
 
     //     function handleSubmit(event) {
     //       event.preventDefault()
@@ -301,7 +299,7 @@ const firebaseConfig = {
                                 <img src={imageFile} id="album--icon" alt="default_album" />
                             </div>
                             <label className="custom-file-upload">
-                                <input type="file" name="imageFile" value="" accept="image/*" className="gradient--btn image--btn hide--file" onChange={handleImageFileChange} />
+                                <input type="file" name="cover" value="" accept="image/*" className="gradient--btn image--btn hide--file" onChange={handleChange} />
                                 Choose Image <img src="../../assets/upload_icon.png" id="upload--icon" alt="upload_icon" />
                             </label>
 
@@ -317,8 +315,7 @@ const firebaseConfig = {
                             handleGenre={handleGenre}
                             handleTitle={handleTitle}
                             songFile={songFile}
-                            setSongFile={setSongFile}
-                            genre={genre}
+                            setSongFile={songFile}
                         />
 
                     </div>
