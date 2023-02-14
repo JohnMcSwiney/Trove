@@ -6,7 +6,7 @@ export default function ArtistAlbum(props) {
         
 
     }    
-
+ 
     return (
         <div className="slide" id={"slide-" + props.index}><div className="album--cover">
         <img src={props.cover} className="album--cover" onMouseOver={handleMouseOver} alt="album--cover"/>
