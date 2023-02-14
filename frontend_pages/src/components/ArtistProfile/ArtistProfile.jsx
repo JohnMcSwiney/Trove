@@ -81,7 +81,8 @@ export default function ArtistProfile(props) {
 
     return( 
         <section>
-        {menu}
+        {/* {menu} */}
+        <SideBar />
         <div className={`header ${
           small ? "small" : "header"
         }`}>
@@ -96,7 +97,7 @@ export default function ArtistProfile(props) {
               className="menu"
               onClick={handleClick}
               name="menu">
-              <img name="menu" width="30vmin" src="../assets/menuicon.jpg" alt="menu"/>
+              {/* <img name="menu" width="30vmin" src="../assets/menuicon.jpg" alt="menu"/> */}
               </div>}
 
         
