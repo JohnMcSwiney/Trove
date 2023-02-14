@@ -1,21 +1,58 @@
-import React from 'react'
-import { FiSettings } from "react-icons/fi"
-const Header = () => {
+import React from "react";
+import './header.css';
+import {Dropdown,ButtonGroup} from 'react-bootstrap';
+import {GiHamburgerMenu} from 'react-icons/gi'
+
+import {AiOutlineUser} from 'react-icons/ai' //
+
+import {RiUser5Line} from 'react-icons/ri' //for signup
+import {RiLoginBoxLine, RiLogoutBoxLine, RiUpload2Line} from 'react-icons/ri' // login out , upload
+function Header() {
   return (
-    <header className='headerBg py-2 pt-2 w-full my-auto sticky top-0 z-50'>
-        <div className='flex flex-row py-2.5 m-auto justify-between mx-2'>
-          <div className=' text-trv-White bg-trv-sm-Play-bg p-4 h-5 w-5 flex rounded-full shadow-md' ><FiSettings className='relative' size={20} /> </div>
-          <div className='flex text-trv-White my-auto h-8 px-2 rounded mobileNav drop-shadow-md'>
-            <h1 className='font-bold text-lg'>Trove</h1><h2 className='text-lg'>Music</h2>
-          </div>
-          <div className='relative text-trv-White bg-gradient-to-t from-trv-Purple to-trv-Blue p-4 h-5 w-5 flex rounded-full flex-row justify-center shadow-md'>
-            
-            <div className='absolute bg-yellow-500 p-3 w-5 h-5 rounded-full inset-x-1 inset-y-1'></div>
-            {/* <FaUserCircle/> */}
-          </div>
+    <div class="d-flex">
+      <div class="mr-auto p-2">
+      <a class="trove-logo-link navbar-brand" href="/">
+      <img src="./img/troveIcon.png" alt="Trove logo" className="trove-logo"/>
+        <h1 className="trove-logo-link">
+          <span className="span">Trove</span> Music
+        </h1>
+      </a>
+      </div>
+      <div class="p-2">
+      <Dropdown as={ButtonGroup}>
+      <Dropdown.Toggle  id="dropdown-basic" style={{backgroundColor:"#393bd0" }}>
+      <AiOutlineUser/>
+      </Dropdown.Toggle>
+
+      <Dropdown.Menu style={{backgroundColor:"#393bd0"}} >
+        <div className="dd-backg">
+          <RiUpload2Line style={{color:"white"}}/>
+        <a href="/upload" className="uploadbtn btn text-light">Upload</a>
         </div>
-      </header>
-  )
+        
+        <div className="dd-backg">
+          <RiUser5Line style={{color:"white"}}/>
+          <a href="/signup" class="signupbtn btn text-light">  Sign up</a>
+        </div>
+
+        <div className="dd-backg">
+          <RiLoginBoxLine  style={{color:"white"}} />
+          <a href="/login "className="loginbtn btn text-light" >Log in</a>  
+        </div>
+        <div className="dd-backg">
+        <RiLogoutBoxLine  style={{color:"white"}} />
+          <a href="/logout" className="logout btn text-light">Log out</a>
+        </div>
+        
+        
+
+        
+      </Dropdown.Menu>
+    </Dropdown>
+      
+      </div>
+    </div>
+  );
 }
 
-export default Header
+export default Header;

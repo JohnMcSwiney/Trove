@@ -1,4 +1,4 @@
-.trove-links{
+.trovelinks{
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -17,6 +17,22 @@ margin-left: auto;
    
 }
 
-.trove-navbar{
+.trove-nav-icon{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    color: white;
+}
+
+.trove-nav-icon:hover{
+    background-color: #1a2248;
+}
+
+.trove-links{
+    text-decoration: none;
+    color: white;
     
 }
+
