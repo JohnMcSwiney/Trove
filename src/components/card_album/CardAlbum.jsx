@@ -10,7 +10,7 @@ function CardArtist({props}){
       <>
         {
           albumData.map((album, index)=>(
-            <div className='bg mx-3 hover:drop-shadow-2xl flex flex-col align-middle justify-center text-center text-ellipsis w-24 rounded-lg shadow-md overflow-hidden  '>
+            <div className='bg mx-3 flex flex-col align-middle justify-center text-center text-ellipsis w-24 rounded-lg overflow-hidden bg-slate-800  '>
                    <div className='rounded-md m-auto  '>
                      <div className='overflow-hidden p-0.5 ' > 
                        <img 

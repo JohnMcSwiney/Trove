@@ -20,13 +20,13 @@ export default [
     {
          "name": 'Without You',
                 "picUrl": 'https://storage.googleapis.com/trv_test/TroveMusic/pop/tea_g/without_you/cover/cover.jpg'
-                , "artist": 'TÃ©a G, LeBrock'
+                , "artist": 'Téa G, LeBrock'
     },
 
     {
          "name": 'They Want My Soul',
                 "picUrl": 'https://storage.googleapis.com/trv_test/TroveMusic/rock/spoon/they_want_my_soul/cover/cover.jpg',
-                "artist": 'TÃ©a G, LeBrock'
+                "artist": 'Spoon'
     },
 
 ]

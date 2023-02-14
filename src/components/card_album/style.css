@@ -7,7 +7,7 @@
         @apply pb-1
     }
     .bg:hover{
-        @apply bg-gradient-to-t from-trv-Purple to-trv-Blue pb-1
+        @apply bg-gradient-to-t from-trv-Purple to-trv-Blue
     }
     .albtxt{
         @apply w-full flex flex-wrap h-8 overflow-hidden text-trv-sm-Song-txt text-center m-auto items-center justify-center 
@@ -25,11 +25,12 @@
     backdrop-filter: blur(16.1px);
     -webkit-backdrop-filter: blur(16.1px);
     border:rgba(25, 29, 75, 0.7) 2px solid;
+    overflow: hidden;
     
   }
 
 .bg:hover{
-    border:rgba(78, 78, 78, 0.7) 2px solid;
+    border:rgba(78, 78, 78, 0.976) 2px solid;
 }
 
 .albtxt{

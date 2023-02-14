@@ -20,8 +20,8 @@ export default [
     },
 
     {
-        "name": "Cold in September",
-        "picUrl": 'https://storage.googleapis.com/trv_test/TroveMusic/rock/poltergeist/cold_in_september/cover/cover.png'
+        "name": "custodian",
+        "picUrl": 'https://storage.googleapis.com/trv_test/TroveMusic/electronic/custodian/songs_2/cover/cover.jpg'
     }
 
 

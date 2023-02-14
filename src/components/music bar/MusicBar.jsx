@@ -74,8 +74,6 @@ const MusicBar = () => {
     const prevValue = isPlaying;
     setIsPlaying(!prevValue);
     changeVolumeLevel();
-
-
     if (!prevValue) {
       audioPlayer.current.play();
       animationRef.current = requestAnimationFrame(whilePlaying); //fix this
@@ -83,6 +81,7 @@ const MusicBar = () => {
       audioPlayer.current.pause();
       cancelAnimationFrame(animationRef.current);
     }
+
   }
 
   const toggleMute = () => {
@@ -149,60 +148,18 @@ const MusicBar = () => {
   }
 
 
-
-
-
-
-
-
-
-
-
-
   return (
     <>
-      {/* <div className='musicbar-wrap'>
-        <div className='musicbar'>
-          {/* Song Progress and Range inp 
-          <div className=''>
-            <input type="range" className="progressBar" defaultValue="0 " onChange />
-          </div>
-
-          <div className='musicbar-items'>
-            <div className='song-info'>
-              <img src="" alt="Song Img" />
-              <p>Song name</p>
-              <p>Artist</p>
-            </div>
-
-            <div className='song-buttons'>
-              <p>left</p>
-              <p>right</p>
-              <p>stop</p>
-
-              <p>Volume</p>
-              <p>Repeat</p>
-
-            </div>
-
-
-
-          </div>
-
-        </div>
-      </div> */}
-
-
-
-
       <div className='player-container musicbar'>
         <div className='musicbar-wrap bg-trv-sm-Play-bg'>
 
           <audio ref={audioPlayer} src={obj.song_url} preload="metadata"></audio>
 
           {/* Progress Bar */}
-          <div className='progressbarContainer'>
-            <input className='progressBar' type="range" ref={progressBar} defaultValue="0 " onChange={changeRange} />
+          <div className='progressbarContainer' onMouseDown={toggleMute} onMouseUp={toggleMute} >
+            <input className='progressBar' type="range" ref={progressBar} defaultValue="0 " 
+            onMouseDown={togglePlayPause} onMouseUp={togglePlayPause} 
+            onChange={changeRange} />
           </div>
 
           
