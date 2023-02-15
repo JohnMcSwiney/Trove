@@ -1,0 +1,7 @@
+
+
+.atest{
+    text-overflow: ellipsis;
+    overflow:hidden;
+    white-space: wrap;
+}

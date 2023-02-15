@@ -1,0 +1,255 @@
+.musicbar{
+    width: 96%;
+    margin: auto;
+    background: #12164B;
+    border-radius: 0px 0px 8px 8px;
+    /* overflow: hidden;  */
+}
+
+.musicbar-wrap{
+  width: inherit;
+  margin: auto;
+  bottom: 80px;
+  position: fixed;
+  height: 80px;
+  border-radius: 0px 0px 12px 12px;
+    
+}
+
+.musicbar-items{
+    display: flex;
+    flex-direction: row;
+    
+}
+
+.song-buttons{
+    display: flex;
+    flex-direction: row;
+    margin-left:auto;
+    align-items: center
+}
+
+.progressbarContainer{
+    padding: 0;
+    margin:0;
+    display: block;
+    position: relative;
+    
+}
+
+.player-container{
+    display: flex;
+    flex-direction: column; 
+    
+}
+.like-btn{
+    display: flex;
+    box-sizing: border-box;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    margin: auto;
+    width: fit-content;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+.like-btn :hover{
+    color: white;
+    box-shadow: white;
+}
+.player-info-container{
+    
+    height: 80px;
+    align-items: center;
+    justify-items: center;
+    margin: 2px;
+    display: flex;
+    flex-direction: row;
+}
+.song-txt-container-container{
+    max-height: 90%;
+    
+    min-width: 45%;
+    max-width: 50px;
+    overflow: hidden;
+    display: flex;
+
+}
+.song-info-txt-container{
+    
+    display: flex;
+    flex-grow: 3;
+    flex-direction: column;
+    justify-items: center;
+    text-align: left;
+    overflow: hidden;
+    padding-left: 1px; 
+    margin: 2px;
+}
+.explicit-containter{
+    display: flex;
+    align-self: center;
+}
+.song-txt{
+    color:whitesmoke;
+    text-overflow: ellipsis;
+    font-size: small;
+    overflow: hidden;
+
+}
+.artist-txt{
+    color: rgb(145, 144, 144);
+    text-overflow: ellipsis;
+    font-size: x-small;
+    overflow: hidden;
+    padding-left: 2px;
+}
+.song-img{
+    width: 60px;
+    height: 60px;
+    margin: 1px;
+}
+.song-img > img{
+    border-radius: 4px;
+}
+
+.control-container{
+    
+    display: flex;
+    justify-content:center;
+    gap: 1px;
+    align-items: center;
+    width: 70px;
+
+}
+.control-container > button{
+    padding: 0;
+    margin: auto;
+    width: fit-content;
+    color: white;
+    height: 30px;
+    width: 30px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    font-size: x-large;
+}
+
+.bg1{
+    background-color: rgba(128, 255, 0, 0.757);
+    position: relative;
+}
+.bg2{
+    background-color: rgba(255, 127, 80, 0.778);
+    position: relative;
+}
+.bg3{
+    background-color: rgba(220, 20, 60, 0.741);
+}
+.bg4{
+    background-color: rgba(139, 0, 139, 0.712);
+}
+
+.progressBar{
+    appearance: none;
+    background-color: var(--bar-bg);
+    border-radius: 10px;
+    width: 96%;
+    outline:none;
+    position: fixed;
+    transform: translate(0px, -40%);
+}
+  
+
+/*safari*/
+.progressBar::-webkit-slider-runnable-track{
+    background-color: rgba(255, 255, 255, 0.527);
+    border-radius: 10px;
+    position: relative;
+    width: 100%;
+    height: 5px;
+    outline:none;
+    
+}
+
+/*chrome & safari*/
+.progressBar::before{
+    content: '';
+    height: 5px;
+    width: var(--seek-before-width);
+    /* background-color: #0034c4 ; */
+    background-image: linear-gradient(to right,#0034c4, #8650F4);
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    cursor: pointer;
+}
+
+.progressBar::-webkit-slider-thumb{
+    -webkit-appearance: none;
+    height:7px;
+    width: 7px;
+    border-radius: 50%;
+    border: none;
+    background-color: #8650F4;
+    cursor: pointer;
+    position: relative;
+    margin: -4px 0 0 0;
+    z-index: 3;
+    box-sizing: border-box;
+    box-shadow: -1px 0px 5px rgba(3, 3, 59, 0.363);
+
+}
+
+.progressBar:active::-webkit-slider-thumb{
+    transform: scale(1.2);
+    background-color: var(--seek-head-selected);
+}
+
+
+/* firefox */
+.progressBar::-moz-range-track{
+    background: rgba(19, 13, 103, 0.74);
+    border-radius: 10px;
+    position: relative;
+    width: 100%;
+    height: 5px;
+    outline:none;
+    z-index: 1;
+}
+.progressBar::-moz-focus-outer{
+    border:0;
+}
+
+.progressBar::-moz-range-progress{
+    background-image: linear-gradient(to right,#0034c4, #8650F4);
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    height: 5px;
+}
+
+.progressBar::-moz-range-thumb{
+    height:7px;
+    width: 7px;
+    border-radius: 50%;
+    border: transparent;
+    background-color: #8650F4;
+    cursor: pointer;
+    position: relative;
+    box-sizing: border-box;
+    box-shadow: -1px 0px 5px #8750f43b;
+}
+
+.progressBar:active::-moz-range-thumb{
+    transform: scale(1.6);
+    transition: ease-in-out .05s;
+    border: 1px solid whitesmoke;
+    border-radius: 50%;
+    box-shadow: rgba(255, 255, 255, 0.671);
+    
+}
+
