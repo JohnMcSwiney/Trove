@@ -1,0 +1,16 @@
+
+### signup
+POST http://localhost:8080/api/user/signup
+Content-Type: application/json
+
+{   
+    "userName": "admin20",
+    "email": "eq21sd@gmail.com",
+    "password": "password"
+}
+
+### 
+GET http://localhost:8080/api/users
+
+###
+GET  http://localhost:8080/api/users

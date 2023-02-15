@@ -1,0 +1,31 @@
+
+GET http://localhost:8080/api/artists
+###
+POST http://localhost:8080/api/artists
+Content-Type: application/json
+
+{
+    "artistName": "name",
+    "email" :"email",
+    "userName" : "username",
+    "password" : "password"
+}
+
+
+###sql
+GET http://localhost:8080/api/songs
+
+
+###
+POST  http://localhost:8080/api/songs
+Content-Type: application/json
+
+{
+    "title" : "ABCDEF",
+    "genre" : "Pop",
+    "songUrl" : "adasdhajkdka"
+}
+
+
+#### delete
+DELETE http://localhost:8080/api/songs/63e40a57b0f4b61259fcb3b1
