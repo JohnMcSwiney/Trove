@@ -27,22 +27,22 @@ export default function MusicDetails(props) {
                 </td>                          
               </tr>
               <tr>
-                <td className="columnt">
+                <td colSpan={2} className="columnt">
                 <label>
                   Hot Spot:
                   </label>
                   </td>
                 </tr>
-                <tr>
-                  <td className="hotspot--start">
+                <tr >
+                  <td  className="hotspot--start">
                   <label>
                   Start:
                   </label>
                   <input type="number" name="highlightStart" placeholder="00:00"  onChange={props.handleChange}/>
                 </td>   
-                <td  className="hotspot--stop">
+                <td colspan="2" className="hotspot--stop">
                   <label>
-                  Stop:
+                  Stop: 
                   </label>
                   <input type="number" name="highlightStop" placeholder="00:00"  onChange={props.handleChange}/>
                   <br/> 
@@ -101,6 +101,8 @@ export default function MusicDetails(props) {
 
             </tbody>
             </table>
+
+            [0].filename
 
         </div>
     )

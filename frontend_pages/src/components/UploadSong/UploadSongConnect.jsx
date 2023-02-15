@@ -4,7 +4,7 @@ import SideBar from "../ArtistProfile/Sidebar/Sidebar"
 import WavesBG from "../../Vector.svg"
 import MusicDetails from "./MusicDetails";
 import { FilePond } from "filepond";
-import  './UploadMusic.css'; 
+import  './UploadSong.css'; 
 // import { Storage } from '@google-cloud/storage';
 
   

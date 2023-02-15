@@ -35,7 +35,7 @@ body {
         /* background-color: #0C081C; */
         background-image: linear-gradient(to right, #0c081c, #0e0924, #0d0a2c, #0b0b35, #080c3d);
         height: 20vmin;
-        font-size: 5vmin;
+        font-size:5vmin;
         text-align:left;
         color: white;
         position: fixed; 
@@ -586,8 +586,23 @@ body {
           
 
         }
-        
 
+        table, th, td, tr {
+          border: 1px solid white;
+      }
+        
+        table {
+          table-layout: fixed;
+          width: 100%;
+        }
+
+        td {
+          position: relative;
+        }
+
+        .hotspot--start {
+          width: 5%;
+        }
 
         .row {
           display: flex;

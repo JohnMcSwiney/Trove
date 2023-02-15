@@ -742,18 +742,21 @@ border-radius: 20vmin;
         margin-left: 25%;
         float: left; 
         width: 50%;
+        padding-bottom: 5%;
         /* margin-top: -70%; */
         /* margin-right: 50%; */
         
       }
 
       .rec--desc > p {
-        font-size: 1.3vmin;
+        font-size: 2vmin;
+        margin-left: -33%;
+        margin-right: -35%;
         /* text-align: center; */
       }
 
       .rec--desc > h3 {
-        font-size: 3vmin;
+        font-size: 4vmin;
       }
 
 
