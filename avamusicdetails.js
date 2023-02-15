@@ -7,13 +7,13 @@ import { FilePond, registerPlugin } from 'react-filepond'
 // Import the Image EXIF Orientation and Image Preview plugins
 // Note: These need to be installed separately
 // `npm i filepond-plugin-image-preview filepond-plugin-image-exif-orientation --save`
-import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation'
-import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
-import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
-import FilePondPluginFileEncode from 'filepond-plugin-file-encode';
+// import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation'
+// import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
+// import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
+// import FilePondPluginFileEncode from 'filepond-plugin-file-encode';
 
 // Register the plugins
-registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview, FilePondPluginFileEncode)
+// registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview, FilePondPluginFileEncode)
 
 export default function MusicDetails(props) {
 
@@ -26,24 +26,10 @@ export default function MusicDetails(props) {
 
   return (
     <div className="column song--form">
-      <label className="custom-file-upload">
+      {/* <label className="custom-file-upload">
         <input type="file" name="songFile" value="" accept="audio/*" className="gradient--btn image--btn hide--file" onChange={props.handleSongFileChange} />
         Choose Song <img src="../../assets/upload_icon.png" id="upload--icon" alt="upload_icon" />
-      </label>
-      {/* <h2>MUSIC DETAILS</h2> */}
-      <FilePond
-        //files={props.songFile}
-        //onupdatefiles={props.setSongFile}
-        files={props.songFile}
-        onupdatefiles={props.setSongFile}
-        allowMultiple={true}
-        maxFiles={1}
-        //server="/"
-        //name="songFile"
-        //name="files" /* sets the file input name, it's filepond by default */
-        labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
-        allowFileEncode={true}
-      />
+      </label> */}
 
       <table>
         <tbody>
@@ -53,6 +39,15 @@ export default function MusicDetails(props) {
                 Song Name:
                 <br />
                 <input type="text" name="songName" placeholder="Song Name" onChange={props.handleTitle} />
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td className="columnt">
+              <label>
+                Artist:
+                <br />
+                <input type="text" name="artist" placeholder="Artist" onChange={props.handleArtist} />
               </label>
             </td>
           </tr>
@@ -102,22 +97,22 @@ export default function MusicDetails(props) {
             </td>
           </tr>
           <fieldset>
-            {/* <tr>
-                  <td className="genre--radio">
-                        <input type="radio" name="genre" value="pop" checked={props.genre === "pop"} />POP
-                  </td>
-                  <td className="genre--radio">
-                        <input type="radio" name="genre" value="rock" checked={props.genre === "rock"} />ROCK
-                  </td>
-              </tr>
-              <tr>
-                  <td className="genre--radio">
-                        <input type="radio" name="genre" value="country" checked={props.genre === "country"}/>COUNTRY
-                  </td>
-                  <td className="genre--radio">
-                        <input type="radio" name="genre" value="hiphop"checked={props.genre === "hiphop"}  />HIP-HOP
-                  </td>
-              </tr> */}
+            <tr>
+              <td className="genre--radio">
+                <input type="radio" name="genre" value="pop" checked={props.genre === "pop"} onChange={props.handleGenre}/>POP
+              </td>
+              <td className="genre--radio">
+                <input type="radio" name="genre" value="rock" checked={props.genre === "rock"} onChange={props.handleGenre}/>ROCK
+              </td>
+            </tr>
+            <tr>
+              <td className="genre--radio">
+                <input type="radio" name="genre" value="country" checked={props.genre === "country"} onChange={props.handleGenre}/>COUNTRY
+              </td>
+              <td className="genre--radio">
+                <input type="radio" name="genre" value="hiphop" checked={props.genre === "hiphop"} onChange={props.handleGenre}/>HIP-HOP
+              </td>
+            </tr>
           </fieldset>
           <tr>
             <td className="columnt">
@@ -126,19 +121,19 @@ export default function MusicDetails(props) {
               </label>
             </td>
           </tr>
-          {/* <fieldset>
-              <tr>
-                  <td className="release--radio">
-                        <input type="radio" name="releasetype" value="album" checked={props.releaseType === "album"} onChange={props.handleReleaseType}/>ALBUM
-                  </td>
-                  <td className="release--radio">
-                        <input type="radio" name="releasetype" value="ep" checked={props.releaseType === "ep"} onChange={props.handleReleaseType}/>EP
-                  </td>
-                  <td className="release--radio">
-                        <input type="radio" name="releasetype" value="single" checked={props.releaseType === "single"} onChange={props.handleReleaseType} />SINGLE
-                  </td>
-              </tr>
-              </fieldset> */}
+          <fieldset>
+            <tr>
+              <td className="release--radio">
+                <input type="radio" name="releasetype" value="album" checked={props.releaseType === "album"} onChange={props.handleReleaseType} />ALBUM
+              </td>
+              <td className="release--radio">
+                <input type="radio" name="releasetype" value="ep" checked={props.releaseType === "ep"} onChange={props.handleReleaseType} />EP
+              </td>
+              <td className="release--radio">
+                <input type="radio" name="releasetype" value="single" checked={props.releaseType === "single"} onChange={props.handleReleaseType} />SINGLE
+              </td>
+            </tr>
+          </fieldset>
           <tr>
             <td className="columnt">
               <input type="submit" value="Submit" className="gradient--btn submit--btn" onClick={props.handleSubmit} />

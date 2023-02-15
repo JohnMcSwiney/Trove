@@ -159,7 +159,7 @@ export default function UploadMusic(props) {
         setIsUploading(true);
 
         const storageRef = storage.ref();
-        const songRef = storageRef.child(`songs/${songFile.filename}`);
+        const songRef = storageRef.child(`songs/${songFile.name}`);
         const songUploadTask = songRef.put(songFile, { contentType: 'audio/mp3' });
 
         console.log("songFile: " + songFile);
@@ -176,180 +176,193 @@ export default function UploadMusic(props) {
                 console.log("Bytes Transferred: " + snapshot.bytesTransferred);
 
                 console.log("Total Bytes: " + snapshot.totalBytes);
+
+                console.log((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
             },
             (error) => {
                 console.error(error);
                 setIsUploading(false);
             },
 
-        async () => {
-            const songUrl = await songRef.getDownloadURL();
+            async () => {
+                const songUrl = await songRef.getDownloadURL();
 
-            const imageRef = storageRef.child(`images/${imageFile.name}`);
-            const imageUploadTask = imageRef.put(imageFile);
+                const imageRef = storageRef.child(`images/${imageFile.name}`);
+                const imageUploadTask = imageRef.put(imageFile);
 
-            console.log("imageFile: " + imageFile);
+                console.log("imageFile: " + imageFile);
 
-            console.log("imageFile[0]: " + imageFile[0]);
-    
-            console.log("imageRef: " + imageRef);
+                console.log("imageFile[0]: " + imageFile[0]);
 
-            imageUploadTask.on(
-                'state_changed',
-                (snapshot) => {
-                    setUploadProgress((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+                console.log("imageRef: " + imageRef);
 
-                    console.log("Bytes Transferred: " + snapshot.bytesTransferred);
+                imageUploadTask.on(
+                    'state_changed',
+                    (snapshot) => {
+                        setUploadProgress((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
 
-                    console.log("Total Bytes: " + snapshot.totalBytes);
-                },
-                (error) => {
-                    console.error(error);
-                    setIsUploading(false);
-                },
+                        console.log("Bytes Transferred: " + snapshot.bytesTransferred);
 
-                async () => {
-                    const imgUrl = await imageRef.getDownloadURL();
+                        console.log("Total Bytes: " + snapshot.totalBytes);
 
-                    fetch('/api/songs', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            title,
-                            album,
-                            highlightStart,
-                            highlightStop,
-                            //genre,
-                            songUrl,
-                            imgUrl,
-                            releaseType,
-                            releaseYear,
-                            artist,
+                        console.log((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+
+                    },
+                    (error) => {
+                        console.error(error);
+                        setIsUploading(false);
+                    },
+
+                    async () => {
+                        const imgUrl = await imageRef.getDownloadURL();
+
+                        fetch('/api/songs', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                title,
+                                album,
+                                highlightStart,
+                                highlightStop,
+                                genre,
+                                songUrl,
+                                imgUrl,
+                                releaseType,
+                                releaseYear,
+                                artist,
+                            })
                         })
-                    })
-                        .then(res => res.json())
+                            .then(res => res.json())
 
-                        .then((res) => {
-                            console.log("End Response: " + res);
-                            console.log("End Response Data: " + res.data);
-                            setIsUploading(false);
-                            setUploadProgress(0);
-                        })
-                        .catch((err) => {
-                            console.error(err);
-                            setIsUploading(false);
-                            setUploadProgress(0);
-                        });
-                },
-            );
-        },
+                            .then((res) => {
+                                console.log("End Response: " + res);
+                                console.log("End Response Data: " + res.data);
+                                setIsUploading(false);
+                                setUploadProgress(0);
+                            })
+                            .catch((err) => {
+                                console.error(err);
+                                setIsUploading(false);
+                                setUploadProgress(0);
+                            });
+                    },
+                );
+            },
         );
-}
+    }
 
-//     const default_album = "../../assets/default_upload.png";
-//     const [albumCover, setAlbumCover] = React.useState(formData.cover);
-//     const [files, setFiles] = React.useState([]);
+    //     const default_album = "../../assets/default_upload.png";
+    //     const [albumCover, setAlbumCover] = React.useState(formData.cover);
+    //     const [files, setFiles] = React.useState([]);
 
-// function onChange(event) {
-//   console.log(event.target.files[0]);
-//   // setAlbumCover(event.target.files[0])
-//   setAlbumCover(URL.createObjectURL(event.target.files[0]))
-// }
+    // function onChange(event) {
+    //   console.log(event.target.files[0]);
+    //   // setAlbumCover(event.target.files[0])
+    //   setAlbumCover(URL.createObjectURL(event.target.files[0]))
+    // }
 
-//     // React.useEffect(() => {
-//     //   console.log("files changed!");
-//     //   console.log(files);
-//     // }, [files]);
+    //     // React.useEffect(() => {
+    //     //   console.log("files changed!");
+    //     //   console.log(files);
+    //     // }, [files]);
 
-// function handleChange(event) {
-//     const { name, value, type, checked } = event.target;
+    // function handleChange(event) {
+    //     const { name, value, type, checked } = event.target;
 
-//     if (type === "file") {
-//         setImageFile(URL.createObjectURL(event.target.files[0]));
+    //     if (type === "file") {
+    //         setImageFile(URL.createObjectURL(event.target.files[0]));
 
-//     }
+    //     }
 
-//     setFormData(prevFormData => {
+    //     setFormData(prevFormData => {
 
-//         return {
-//             ...prevFormData,
-//             [name]: type === "checkbox" ? checked : value,
-//             songFile: songFile
-//             // [name]: type === "file" ? value === setAlbumCover(URL.createObjectURL(event.target.files[0]))  : value
+    //         return {
+    //             ...prevFormData,
+    //             [name]: type === "checkbox" ? checked : value,
+    //             songFile: songFile
+    //             // [name]: type === "file" ? value === setAlbumCover(URL.createObjectURL(event.target.files[0]))  : value
 
-//         }
+    //         }
 
-//     });
+    //     });
 
-//console.log(formData)
-// }
+    //console.log(formData)
+    // }
 
-//     function handleSubmit(event) {
-//       event.preventDefault()
-//       // submitToApi(formData)
-//       console.log(formData)
+    //     function handleSubmit(event) {
+    //       event.preventDefault()
+    //       // submitToApi(formData)
+    //       console.log(formData)
 
-//   }
+    //   }
 
-return (
-    <section>
-        {menu}
-        <div className={`header ${small ? "small" : "header"
-            }`}>
-            <img className="waves " name="waves" src={WavesBG} alt="waves" />
+    return (
+        <section>
+            {menu}
+            <div className={`header ${small ? "small" : "header"
+                }`}>
+                <img className="waves " name="waves" src={WavesBG} alt="waves" />
 
 
-            {/* artist name, main genre, follower count, follow button '
+                {/* artist name, main genre, follower count, follow button '
                 also display the artist's description
             */}
 
-            <div>
-                <span><h1>UPLOAD SONG</h1></span>
+                <div>
+                    <span><h1>UPLOAD SONG</h1></span>
+                </div>
+
             </div>
+            <div className="upload--form">
+                <form className="upload--form"
+                    onSubmit={handleSubmit}>
 
-        </div>
-        <div className="upload--form">
-            <form className="upload--form"
-                onSubmit={handleSubmit}>
+                    <div className="row">
+                        <div className="upload--image">
+                            <div className="column upload--zone">
+                                <img src={imageFile} id="album--icon" alt="default_album" />
+                            </div>
+                            <label className="custom-file-upload">
+                                <input type="file" name="imageFile" value="" accept="image/*" className="gradient--btn image--btn hide--file" onChange={handleImageFileChange} />
+                                Choose Image <img src="../../assets/upload_icon.png" id="upload--icon" alt="upload_icon" />
+                            </label>
 
-                <div className="row">
-                    <div className="upload--image">
-                        <div className="column upload--zone">
-                            <img src={imageFile} id="album--icon" alt="default_album" />
+                            <label className="custom-file-upload">
+                                <input type="file" name="songFile" value="" accept="audio/*" className="gradient--btn image--btn hide--file" onChange={handleSongFileChange} />
+                                Choose Song <img src="../../assets/upload_icon.png" id="upload--icon" alt="upload_icon" />
+                            </label>
+
                         </div>
-                        <label className="custom-file-upload">
-                            <input type="file" name="imageFile" value="" accept="image/*" className="gradient--btn image--btn hide--file" onChange={handleImageFileChange} />
-                            Choose Image <img src="../../assets/upload_icon.png" id="upload--icon" alt="upload_icon" />
-                        </label>
 
-                    </div>
-
-                    {/* Uncomment below  to see music details section of form, 
+                        {/* Uncomment below  to see music details section of form, 
                     will be adding feature to navigate through both effectively */}
 
-                    <MusicDetails
-                        handleSongFileChange={handleSongFileChange}
-                        handleImageFileChange={handleImageFileChange}
-                        handleSubmit={handleSubmit}
-                        handleGenre={handleGenre}
-                        handleTitle={handleTitle}
-                        setSongFile={setSongFile}
-                        setImageFile={setImageFile}
+                        <MusicDetails
+                            handleSubmit={handleSubmit}
+                            handleTitle={handleTitle}
+                            handleAlbumName={handleAlbumName}
+                            handleHighlightStart={handleHighlightStart}
+                            handleHighlightStop={handleHighlightStop}
+                            handleGenre={handleGenre}
+                            handleSongFileChange={handleSongFileChange}
+                            handleImageFileChange={handleImageFileChange}
+                            handleReleaseType={handleReleaseType}
+                            handleReleaseYear={handleReleaseYear}
+                            handleArtist={handleArtist}
+                        />
 
-                    />
-
-                </div>
-            </form>
-        </div>
+                    </div>
+                </form>
+            </div>
 
 
-        <footer><MusicBar /></footer>
+            <footer><MusicBar /></footer>
 
 
-    </section>
+        </section>
 
-)
+    )
 
 }
