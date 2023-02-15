@@ -69,11 +69,11 @@
 }
 .song-txt-container-container{
     max-height: 90%;
-    
     min-width: 45%;
     max-width: 50px;
     overflow: hidden;
     display: flex;
+    justify-content: space-between;
 
 }
 .song-info-txt-container{
@@ -109,6 +109,9 @@
     width: 60px;
     height: 60px;
     margin: 1px;
+    display: flex;
+    align-items: center;
+
 }
 .song-img > img{
     border-radius: 4px;
