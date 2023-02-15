@@ -1,6 +1,7 @@
 import React from "react";
 import './header.css';
 import { useLogout } from "../../hooks/useLogout";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 import {Dropdown,ButtonGroup} from 'react-bootstrap';
 import {GiHamburgerMenu} from 'react-icons/gi'
@@ -10,13 +11,14 @@ import {RiLoginBoxLine, RiLogoutBoxLine, RiUpload2Line} from 'react-icons/ri' //
 
 function Header() {
   const {logout} = useLogout();
-
+  const {user} = useAuthContext();
   const logoutHandler = ()=> {
     logout();
   }
 
   return (
     <div class="d-flex sticky-top">
+      
       <div class=" p-2">
         <a class="trove-logo-link navbar-brand" href="/">
         <img src="./img/troveIcon.png" alt="Trove logo" className="trove-logo"/>
@@ -29,7 +31,9 @@ function Header() {
       <div class="ml-auto p-2">
         <Dropdown>
           <Dropdown.Toggle  id="dropdown-basic" style={{backgroundColor:"#393bd0" }}>
-          <AiOutlineUser/>Me
+          {/* work on this to get the id */}
+            {user&& (<div>{user._id}</div>)} 
+            {!user && (<div><AiOutlineUser/>Me</div>)}
           </Dropdown.Toggle>
 
           <Dropdown.Menu style={{backgroundColor:"#393bd0"}} >
@@ -37,7 +41,17 @@ function Header() {
                 <RiUpload2Line style={{color:"white"}}/>
               <a href="/upload" className="uploadbtn btn text-light">Upload</a>
               </div>
-              
+              {user && (
+                <div className="dd-backg">
+                  <RiLogoutBoxLine  style={{color:"white"}} />
+                    <button className="logout btn text-light"
+                    onClick={logoutHandler}
+                    >Log out</button>
+                </div>
+              )}
+
+              {!user && (
+                <>
               <div className="dd-backg">
                 <RiUser5Line style={{color:"white"}}/>
                 <a href="/signup" class="signupbtn btn text-light">  Sign up</a>
@@ -47,12 +61,8 @@ function Header() {
                 <RiLoginBoxLine  style={{color:"white"}} />
                 <a href="/login "className="loginbtn btn text-light" >Log in</a>  
               </div>
-              <div className="dd-backg">
-              <RiLogoutBoxLine  style={{color:"white"}} />
-                <button className="logout btn text-light"
-                onClick={logoutHandler}
-                >Log out</button>
-            </div>
+              </>
+              )}
         
           </Dropdown.Menu>
       </Dropdown>
