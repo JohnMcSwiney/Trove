@@ -1,0 +1,490 @@
+/* * {
+    
+} */
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap');
+
+.container_container{
+    display: inline-block;
+    align-items: center;
+    justify-content: space-evenly;
+    margin: 0;
+    padding: 0;;
+}
+
+.grid_container {
+    display: grid;
+    row-gap: 0px;
+    grid-template-columns: auto 500px auto;
+    
+    /* background-color: #2196F3; */
+    padding-left: 10px;
+    padding-right: 10px;
+    margin: 0;
+}
+.musicInfo{
+    width: 225px;
+    height: 80px;
+    margin-top: 5px;
+    margin-left: 15px;
+    margin-right: 15px;
+    /* background-color: rgba(0, 255, 255, 0.304); */
+    z-index: 5;
+    grid-column-start: 1;
+    grid-column-end: 2;
+    /* padding-left: 10px; */
+    display: grid;
+}
+.mute_N_vol {
+    grid-row: 2;
+    display: grid;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: 15px;
+    align-items: center;
+    justify-content: center;
+
+}
+.muteBTN{
+    grid-row: 1 ;
+    grid-column: 1;
+}
+.muteBTN > button {
+    background-color: transparent;
+    border: none;
+    font-size: 15px;
+    filter: drop-shadow( 0px 0px 2px #183c8aaf);
+    color: var(--secondary);
+}
+.muteBTN:hover > button {
+    color: var(--highlight-col);
+    font-size: 15px;
+    filter: drop-shadow( 0px 0px 2px #183c8aaf);
+    
+}
+.otherBTNs {
+    grid-row: 1;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 0;
+    margin-top: 15px;
+    
+    
+}
+.otherBTNs > button{
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    filter: drop-shadow( 0px 0px 2px #183c8aaf);
+    color: var(--secondary);
+}
+.likeBTN{
+    grid-row: 1 ;
+    grid-column: 1;
+}
+.likeBTN:hover{
+    color: var(--highlight-col);
+    
+    filter: drop-shadow( 0px 0px 2px #183c8aaf);
+}
+.queueBTN{
+    grid-row: 1 ;
+    grid-column: 2;
+    font-size: 20px;
+}
+.queueBTN:hover{
+    color: var(--highlight-col);
+    font-size: 20px;
+    filter: drop-shadow( 0px 0px 2px #183c8aaf);
+}
+.shareBTN{
+    grid-row: 1 ;
+    grid-column: 3;
+    margin-left: 6px;
+}
+.shareBTN:hover{
+    color: var(--highlight-col);
+    
+    filter: drop-shadow( 0px 0px 2px #183c8aaf);
+}
+
+
+
+.volSlider{
+    grid-row: 1;
+    grid-column-start: 2;
+    grid-column-end: 3;
+}
+.grid_item {
+    /* background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.8); */
+    /* padding: 20px; */
+    font-size: 20px;
+    box-sizing: border-box;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+
+}
+  
+.grid_item2 {
+    /* background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.8); */
+    padding-left: 10px;
+    padding-right: 10px;
+    display:block;
+    box-sizing: border-box;
+    text-align: center;
+    grid-column-start: 1;
+    grid-column-end: 4;
+}
+@keyframes marquee {
+    0%   { transform: translate(-15%, 0); }
+    50% { transform: translate(-30%, 0); }
+    75% { transform: translate(-50%, 0); }
+    100% {transform: translate(-20%, 0);}
+    /* 75% { trasnform: translate(-20%, 0); }
+    100% { transform: translate(-10%, 0); }  */
+}
+.marquee {
+    width: 110px;
+    line-height: 0px;
+    height:30px;
+    /* background-color: red; */
+    color: white;
+    white-space: pre;
+    overflow: hidden;
+    /* overflow-x: scroll; */
+    box-sizing: border-box;
+    justify-content: center;
+    align-items: center;
+
+    grid-row: 1;
+    grid-column-start: 1;
+    grid-column-end: 2;
+
+}
+.marquee > p {
+    display: inline-block;
+    padding-left: 40%;
+    animation-name: marquee;
+    animation-duration: 8s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-delay: -3s;
+    font-size: 15px;
+    font-weight:900;
+
+    
+}
+
+.explicitTag{
+    display: flex;
+    font-size: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0;
+    grid-row: 1;
+    grid-column-start: 2;
+    /* align-items: center;
+    justify-content: center;
+    text-align: center;*/
+    padding-bottom: 10px; 
+    padding-left: 5px;
+    
+}
+.songArtist {
+    font-size: 10px;
+    color: rgb(210, 210, 210);
+    grid-row: 2;
+    grid-column-start: 1;
+    padding: 0;
+    margin:0;
+}
+.mediaControlBox{
+    background-color: rgba(2, 34, 104, 0.459);
+    backdrop-filter: blur(2.5px);
+    box-shadow: -1px 0px 5px rgba(0, 0, 0, 0.178);
+}
+.albumArt{
+    grid-row: 1;
+    grid-column: 1;
+}
+.albumArt > img {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+}
+.songName{
+    grid-row: 1;
+    grid-column: 2;
+    display: grid;
+    /* background-color: #2bff00; */
+    height: fit-content;
+    padding-left: 5px;
+    align-items: center;
+    justify-content: center;
+    margin-top:auto;
+    margin-bottom: auto;
+    margin-right: 0;
+}
+.songName > p{
+    font-size: 10px;
+}
+.songName > h2{
+    font-size: 12px;
+}
+.songName > h3 {
+    font-size: 15px;
+    margin: 0;
+    padding: 0;
+}
+.audioPlayer {
+    
+    --primary: #19479c;
+    --highlight-col: #226bf2;
+    --secondary: #d1d1d1;
+    --sec-highlight-col: #ffffff;
+    align-items: center;
+    /* justify-content:center; */
+    /* display:inline-flex; */
+    /* flex-direction: row;
+    position: fixed; */
+    /* display: grid;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: auto; */
+
+    display: inline-flex;
+    align-items: center;
+    gap: 20px;
+
+    font-family:  'Comfortaa', cursive;
+
+    width: 100%;
+    height: fit-content;
+    border-radius: 15px;
+    margin: auto;
+    padding-bottom: 0.5%;
+    background-color: rgb(38, 38, 38);
+}
+
+.mediaControls{
+    position: static;
+    display:inline-flex;
+    box-sizing: border-box;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    padding-top: 20px;
+    /* background-color: #2bff00; */
+    
+    
+}
+.mediaControls > button {
+    margin-left: 5px;
+    margin-right: 5px;
+    
+}
+.mediaScrubber{
+    grid-row-start: 2;
+    grid-row-end: 3;
+    display: inline-block;
+    box-sizing: border-box;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    /* padding: 10px;
+    padding: 5px; */
+    /* padding-top: 20px; */
+    /* width: fit-content; */
+    padding: 0;
+    margin: 0;
+    
+    
+}
+.mediaTime{
+    display: flex;
+    box-sizing: border-box;
+    padding: 2px;
+    padding-top: 60px;
+    justify-content:center;
+    font-size: 15px;
+    font-family:  'Comfortaa', cursive;
+    color: var(--secondary);
+    font-weight: bolder;
+    width: 100px;
+}
+.table{
+    width: 100%;
+}
+.w25{
+    width:25%
+}
+.w50{
+    width: 50%;
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: red;
+    color: white;
+    text-align: center;
+  }
+
+.forwardBackward{
+    background: none;
+    border:none;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 60px;
+    color: var(--secondary)
+}
+
+.forwardBackward:hover{
+    color: var(--highlight-col);
+    font-size: 60px;
+    filter: drop-shadow( 0px 0px 2px #183c8aaf);
+    
+}
+
+
+.playPause{
+    background-color: var(--primary);
+    color: var(--secondary);
+    border:none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.playPause:hover{
+    
+    filter: drop-shadow( 0px -1px 2px #183c8aaf);
+    background-color: var(--highlight-col); 
+    color: var(--sec-highlight-col);
+}
+
+.currentTime,
+.duration{
+    width: 60px;
+    font-size: 60;
+    font-weight: bolder;
+    display: flex;
+    position:initial;
+    padding-top: 50px;
+    padding-left:5px;
+    padding-right:5px;
+}
+
+.progressBar{
+    --bar-bg: var(#2bff00);
+    --seek-before-width: 0;
+    --seek-before-color: var(--primary);
+    --seek-head: var(--primary);
+    --seek-head-selected: var(--secondary);
+
+    appearance: none;
+    background-color: var(--bar-bg);
+    border-radius: 10px;
+    position: relative;
+    width: 100%;
+    height: 11px;
+    outline:none;
+
+}
+
+/*safari*/
+.progressBar::-webkit-slider-runnable-track{
+    background-color: rgba(255, 255, 255, 0.527);
+    border-radius: 10px;
+    position: relative;
+    width: 100%;
+    height: 11px;
+    outline:none;
+    
+}
+
+/*chrome & safari*/
+.progressBar::before{
+    content: '';
+    height: 11px;
+    width: var(--seek-before-width);
+    /* background-color: #0034c4 ; */
+    background-image: linear-gradient(to right,#0034c4, #8650F4);
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    cursor: pointer;
+}
+
+.progressBar::-webkit-slider-thumb{
+    -webkit-appearance: none;
+    height:20px;
+    width: 20px;
+    border-radius: 50%;
+    border: none;
+    background-color: #8650F4;
+    cursor: pointer;
+    position: relative;
+    margin: -4px 0 0 0;
+    z-index: 3;
+    box-sizing: border-box;
+    box-shadow: -1px 0px 5px rgba(0, 0, 0, 0.178);
+
+}
+
+.progressBar:active::-webkit-slider-thumb{
+    transform: scale(1.2);
+    background-color: var(--seek-head-selected);
+}
+
+
+/* firefox */
+.progressBar::-moz-range-track{
+    background: rgba(255, 255, 255, 0.527);
+    border-radius: 10px;
+    position: relative;
+    width: 100%;
+    height: 11px;
+    outline:none;
+    z-index: 1;
+}
+.progressBar::-moz-focus-outer{
+    border:0;
+}
+
+.progressBar::-moz-range-progress{
+    background-color: var(--seek-before-color);
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    height: 11px;
+}
+
+.progressBar::-moz-range-thumb{
+    height:15px;
+    width: 15px;
+    border-radius: 50%;
+    border: transparent;
+    background-color: var(--seek-head);
+    cursor: pointer;
+    position: relative;
+    box-sizing: border-box;
+    box-shadow: -1px 0px 5px rgba(0, 0, 0, 0.178);
+}
+
+.progressBar:active::-moz-range-thumb{
+    transform: scale(1.2);
+    background-color: var(--seek-head-selected);
+}

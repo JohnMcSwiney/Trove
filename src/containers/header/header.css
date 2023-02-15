@@ -1,0 +1,35 @@
+.span{
+    font-weight: 800;
+}
+
+.loginbtn{
+    border-radius: 30px;
+}
+
+
+.signupbtn{
+
+}
+
+.trove-logo{
+    border-radius:30px ;
+    width:70px;
+}
+
+.trove-logo-link{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   
+}
+
+.dd-backg{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 5px
+}
+
+.dd-backg:hover{
+    background-color:#647DEE ;
+}

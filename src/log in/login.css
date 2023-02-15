@@ -1,0 +1,44 @@
+.login{
+    max-width: 400px;
+    margin: auto;
+}
+
+.login-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+}
+
+
+.login-header{
+    text-align: center;
+    color: white;
+}
+
+.loginbtn-form{
+    background-image: linear-gradient(to left, #8650f4, #6f49e8, #5642dc, #393bd0, #0034c4);
+    border-radius: 5px;
+}
+
+.loginbtn-form:hover{
+    background-image: linear-gradient(to left, #8650f4, #6f49e8, #5642dc, #393bd0, #0034c4);
+    opacity: 0.8;
+}
+
+
+.form-control {
+    background-color: transparent;
+    transform: none;
+    color: white;
+    border-color: rgb(116, 122, 122);
+}
+
+.form-label{
+    color: white;
+}
+
+.signupbtn-form:hover{
+    opacity: 0.8;
+}
+
