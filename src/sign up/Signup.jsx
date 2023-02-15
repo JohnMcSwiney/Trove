@@ -63,7 +63,7 @@ export default function Signup() {
                
                <button  className='signupbtn-form btn mb-4' type='submit'>Sign up</button>
                </div>
-               {/* {error &&<div className='error'>{error}</div>} */}
+               {error &&<div className='error'>{error}</div>}
      </form>
   )
 }
