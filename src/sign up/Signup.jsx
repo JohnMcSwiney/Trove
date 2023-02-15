@@ -1,4 +1,4 @@
-import { ErrorResponse } from '@remix-run/router';
+// import { ErrorResponse } from '@remix-run/router';
 import React from 'react';
 import { useSignup } from '../hooks/useSignup';
 
@@ -10,11 +10,13 @@ export default function Signup() {
      const [password, setPassword] = React.useState('');
      const [conPassword,setConPassword] = React.useState('');
 
-     const checkPassword = password == conPassword ? true: false;
+    
+     const checkPassword = password === conPassword ? true: false;
      const {signup,error,isLoading} = useSignup();
+     console.log(error);
      const handleSubmit = async (e)=> {
           e.preventDefault();
-          await signup(email, password)
+          await signup(email, password);
      }
 
      //axios method
@@ -61,9 +63,11 @@ export default function Signup() {
                     </div>
 
                
-               <button  className='signupbtn-form btn mb-4' type='submit'>Sign up</button>
+               <button disabled={isLoading&&checkPassword}  className='signupbtn-form btn mb-4' type='submit'>Sign up</button>
                </div>
-               {error &&<div className='error'>{error}</div>}
+               {error && <div className='error'>{error}</div>}
+              
+               
      </form>
   )
 }
