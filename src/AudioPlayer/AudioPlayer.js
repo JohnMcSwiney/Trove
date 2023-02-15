@@ -1,15 +1,18 @@
 import React, {useState, useRef, useEffect} from 'react';
-
-import Reflection from '../mp3/Reflection.mp3'
+import { useSwipeable } from 'react-swipeable';
 import style from './AudioPlayer.module.css'
-import {GoArrowLeft} from 'react-icons/go';
-import {GoArrowRight} from 'react-icons/go';
 import {FaPlay} from 'react-icons/fa';
 import {FaPause} from 'react-icons/fa';
 
 
 const AudioPlayer = () => {
     //state
+
+    const [index, setIndex] = React.useState(0);
+    const [accept, setAccept] = React.useState(0);
+    const [deny, setDeny] = React.useState(0);
+
+
 
     const [isPlaying, setIsPlaying] =  useState(false);
     const [duration, setDuration] = useState(0);
@@ -87,33 +90,119 @@ const AudioPlayer = () => {
         setCurrentTime(progressBar.current.value);
     }
 
+
+
+    const slides = [
+        {
+          url: require('../imgs/Reflection.jpg'),
+          alt: 'Image 1',
+          header: 'Reflection',
+          audio: require('../mp3/Reflection.mp3'),
+          startTime: ('59'),
+        },
+        {
+          url: require('../imgs/Resurrections.jpg'),
+          alt: 'Image 2',
+          header: 'Resurrections',
+          audio: require('../mp3/Resurrections.mp3'),
+          startTime: ('20'),
+        },
+        {
+          url: require('../imgs/Farewell.jpg'),
+          alt: 'Image 3',
+          header: 'Farewell',
+          audio: require('../mp3/Farewell.mp3'),
+          startTime: ('45'),
+        },
+        {
+          url: require('../imgs/Farewell.jpg'),
+          alt: 'Image 3',
+          header: 'Discovery Game Song List Done',
+          audio: require('../mp3/Farewell.mp3'),
+          startTime: ('30'),
+        },
+      ];
+    
+      const swipeableProps = useSwipeable({
+        trackMouse: true,
+        onSwipedLeft: () => {
+          if (index === slides.length - 1) return;
+          setIndex((prevIndex) => (prevIndex + 1) % slides.length);
+          setAccept(accept + 1);
+        },
+        onSwipedRight: () => {
+          if (index === slides.length - 1) return;
+          setIndex((prevIndex) => (prevIndex + 1) % slides.length);
+          setDeny(deny + 1);
+        },
+      });
+
+
+
+
+
     return (  
-        <div className={style.audioPlayer}>
-            <audio ref={audioPlayer} src ={Reflection}></audio>
-            
-            <button className={style.forwardBackward}><GoArrowLeft/> 30</button>
-            
-            <button onClick={togglePlayPause} className={style.playPause}>
-                {isPlaying ? <FaPause/> : <FaPlay className={style.play}/>}
+        <div className="div">
+            <div className={style.container} {...swipeableProps}>
+
+                <h2 className={style.SongName}>{slides[index].header}</h2>
+
+
+                <div className={style.Redux}>
+                <img src={slides[index].url} alt={slides[index].alt} className={style.trove__mp_img}/>
                 
-            </button>
+
+                <button onClick={() => {if (index === slides.length - 1) return;
+                setIndex((prevIndex) => (prevIndex + 1) % slides.length);
+                setDeny(deny + 1);
+                }} className={style.SwipeRight}>Swipe right</button>
+
+
+                <button onClick={() => {if (index === slides.length - 1) return;
+                setIndex((prevIndex) => (prevIndex + 1) % slides.length);
+                setAccept(accept + 1);
+                }} className={style.SwipeLeft}>Swipe left</button>
+
+                </div>
+
+                <div className={style.audioPlayer}>
+                    <audio ref={audioPlayer} src ={slides[index].audio}></audio>
+                    
+                    
+                    
+                    <button onClick={togglePlayPause} className={style.playPause}>
+                        {isPlaying ? <FaPause/> : <FaPlay className={style.play}/>}
+                        
+                    </button>
+                    
+                    
+
+                    {/*current time*/}
+
+                    <div className={style.currentTime}>{calculateTime(currentTime)}</div>
+
+                    {/*progress bar*/}
+                    <div>
+                        <input type="range" className={style.progressBar} defaultValue="0" ref={progressBar} onChange={changeRange} />
+                    </div>
+
+
+                    {/*Duration*/}
+                    <div className={style.duration}>{(duration && !isNaN(duration)) && calculateTime(duration)}</div>
+
+                </div>
+                <button onClick={() => {
+                if (index === 0) return;
+                setIndex((prevIndex) => (prevIndex + slides.length - 1) % slides.length);
+                }}>Previous</button>
             
-            <button className={style.forwardBackward}> 30<GoArrowRight/></button>
-
-            {/*current time*/}
-
-            <div className={style.currentTime}>{calculateTime(currentTime)}</div>
-
-            {/*progress bar*/}
-            <div>
-                <input type="range" className={style.progressBar} defaultValue="0" ref={progressBar} onChange={changeRange} />
             </div>
-
-
-            {/*Duration*/}
-            <div className={style.duration}>{(duration && !isNaN(duration)) && calculateTime(duration)}</div>
-
+                
+            <div className={style.showNumber}>{accept}Left swipes </div>
+            <br/>
+            <div className={style.showNumber}>{deny}Right swipes</div>
         </div>
+        
     );
 }
  

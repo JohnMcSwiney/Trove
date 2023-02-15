@@ -11,19 +11,10 @@
     display: flex;
     width: 600px;
     background-color:var(--DBlue);
+    height: 60px;
 }
 
-.forwardBackward{
 
-    background:none;
-    border: none;
-    display: flex;
-    align-items: center;
-    font-family: monospace;
-    font-size: 16px;
-    cursor: pointer;
-    color: var(--White);
-}
 
 .forwardBackward:hover{
     
@@ -76,7 +67,7 @@
     background:var(--bar-bg) ;
     border-radius: 10px ;
     position: relative;
-    width: 100%;
+    width: 400px;
     height: 11px;
     outline: none;
 
@@ -189,5 +180,74 @@
 
     transform: scale(1.2);
     background: var(--selectedKnobby);
+
+}
+
+
+
+
+.trove__mp_img{
+    height: 600px;
+    width: 600px;
+    position: absolute;
+    pointer-events: none;
+    
+    
+}
+.SwipeRight, .SwipeLeft {
+    height: 600px;
+    width: 100px;
+    opacity: 0.50;
+    color: #FFFFFF;
+    top: 0;
+    top: 50%;
+    font-size: 30px;
+    font-weight: bold;
+    
+    
+}
+.SwipeLeft{
+    float:right;
+    background-color: #8650F4;
+    
+}
+.SwipeRight{
+    float:left;
+    background-color: #080C3D;
+    
+}
+
+.container{
+    position:absolute;
+    justify-content: center;
+    width: 600px;
+    
+}
+
+
+.SongName{
+  color: #FFFFFF;
+  width: 100%;
+  bottom: 0;
+  background-color: #080C3D;
+  top: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  height: 60px;
+  font-size: 40px;
+  display: flex;
+  justify-content: center;
+  
+  line-height: 60px;  /*change when you change hight so its centered*/
+    
+    
+}
+
+
+
+.showNumber{
+  text-align: center;
+  float:right;
 
 }

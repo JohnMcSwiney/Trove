@@ -4,7 +4,7 @@ import ReactAudioPlayer from 'react-audio-player';
 import './DiscoveryGame.css'
 import React from 'react';
 import { useSwipeable } from 'react-swipeable';
-import AudioPlayer from '../AudioPlayer/AudioPlayer';
+//import AudioPlayer from '../AudioPlayer/AudioPlayer';
 
 
  
