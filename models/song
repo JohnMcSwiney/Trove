@@ -9,15 +9,13 @@ const songSchema = new mongoose.Schema(
     },
     genre: [
         {
-            type: String
-            //type: mongoose.Schema.Types.ObjectId,
+            type: String,
             //ref :'Genre' //have not create this model
         }
     ],
     artistList: [
         {
             type:mongoose.Schema.Types.ObjectId,
-            required: true,
             ref: 'Artist',
         }
     ],
