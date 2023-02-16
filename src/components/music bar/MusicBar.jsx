@@ -193,55 +193,57 @@ const MusicBar = () => {
 
           </div>
 
-          {/* Song Image */}
+          {/* Song Image 
           <div className='hidden'>
-            <img src=""></img>
-          </div>
+            <img src="http://localhost:3000/cover.jpg"></img>
+          </div> */}
 
-          {/* Song/Artist Name */}
+          {/* Song/Artist Name 
           <div className='hidden'>
             <div><p>{obj.title}</p></div>
             <div className='hidden'>{obj.explicit ? <MdExplicit /> : <p />}</div>
             <div><p>{obj.artist}</p></div>
-          </div>
+          </div> */}
 
 
 
-          {/* Media Controls */}
+          {/* Media Controls 
           <div className=' hidden grid grid-flow-col'>
             <button><CgArrowLongLeftR /></button>
             <button onClick={togglePlayPause}>
               {isPlaying ? <BsPause /> : <BsPlay />}
             </button>
             <button><CgArrowLongRightR /></button>
-          </div>
+          </div> */}
 
-          {/* Media Time */}
+          {/* Media Time 
           <div className='hidden'>
             <div> {calculateTime(currentTime)} </div>
             <div>{(duration && !isNaN(duration)) && calculateTime(duration)}</div>
-          </div>
+          </div> */}
 
-          {/* Like Btn */}
+          {/* Like Btn 
           <button className='hidden' onClick={toggleLiked}>{isLiked ? <FaHeart /> : <FaRegHeart />}</button>
-
-          {/* Extra Buttons */}
+          */}
+          {/* Extra Buttons 
           <div className='hidden phone_md:hidden' >
 
             <button ><FaShareSquare /></button>
             <button ><MdOutlineQueueMusic /></button>
           </div>
-
-          {/* Mute Btn*/}
+          */}
+          {/* Mute Btn
           <div className='hidden'>
             <button onClick={toggleMute}>
               {isMuted ? <BiVolumeFull /> : <BiVolumeMute />}
             </button>
           </div>
-          {/* Vol */}
+          */}
+          {/* Vol*/} 
           <div className='hidden'>
             <input type="range" ref={volumeRef} defaultValue="50" onChange={changeVolumeLevel}></input>
           </div>
+          
 
 
         </div>

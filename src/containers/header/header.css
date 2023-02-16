@@ -1,26 +1,70 @@
+.nav-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    padding-top: 15px;
+    padding-bottom: 15px;
+
+}
+.bg-fglass{
+    background: rgba(20, 16, 58, 0.06);
+
+    backdrop-filter: blur(2.5px);
+    -webkit-backdrop-filter: blur(2.5px);
+
+}
+.bg-fglass-b{
+    background: #12164b98;
+    backdrop-filter: blur(6px);
+-webkit-backdrop-filter: blur(6px);
+
+
+}
+.logo-txt-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 .span{
     font-weight: 800;
 }
-
+.navbar-brand{
+    display: flex;
+    align-content: center;
+    margin: auto;
+}
 .loginbtn{
     border-radius: 30px;
 }
 
+.header-txt{
+    box-sizing: border-box;
+    padding: 2px;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-radius: 0.2em;
+    font-size: 22px;
+    margin-left: 40px;
+    margin-right: 40px;
+    color: white;
+}
 
 .signupbtn{
 
 }
 
 .trove-logo{
-    border-radius:30px ;
-    width:70px;
+    border-radius: 5px;
+    width:40px;
+    height: 40px;
 }
 
 .trove-logo-link{
     display: flex;
     justify-content: center;
-    align-items: center;
-   
+    align-content: center;
+    margin: auto;
+    
 }
 
 .dd-backg{
@@ -32,4 +76,41 @@
 
 .dd-backg:hover{
     background-color:#647DEE ;
+}
+
+.dropdown-style{
+    background-color: #393bd0; 
+}
+
+.dropdown-toggle-style{
+    height: 40px;
+    width: 40px;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    background:  linear-gradient(to top, #8650F4, #0034C4);
+    border-radius: 8px;
+    animation: 0.3s;
+    content: none;
+}
+.dropdown-toggle-style > button:hover {
+    filter:saturate(120%);
+}
+.dropdown-toggle-style > button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.test{
+    background-color: aqua;
+}
+.test > dropdown-toggle{
+    content: none
+}
+.test > dropdown-toggle::after{
+    content: none;
+}
+.dropdown-toggle::after::after {
+    content:none;
 }

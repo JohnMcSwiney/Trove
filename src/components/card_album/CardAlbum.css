@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities; 
+
+@layer base{
+    .bg{
+        @apply pb-1
+    }
+    .bg:hover{
+        @apply bg-gradient-to-t from-trv-Purple to-trv-Blue
+    }
+    .albtxt{
+        @apply w-full flex flex-wrap h-8 overflow-hidden text-trv-sm-Song-txt text-center m-auto items-center justify-center 
+    }
+    .arttxt{
+        @apply w-full flex flex-wrap h-6 p-0 my-0 overflow-hidden text-trv-sm-Artist-txt text-center m-auto items-center justify-center 
+    }
+
+}
+.cont{
+    transition: 0.4s;
+}
+.bg{
+    background-color: rgba(18, 22, 75, 0.7);
+    /* From https://css.glass */
+    /* background: rgba(8, 12, 61, 0.55); */
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(16.1px);
+    -webkit-backdrop-filter: blur(16.1px);
+    border:rgba(25, 29, 75, 0.7) 2px solid;
+    overflow: hidden;
+    
+  }
+
+.bg:hover{
+    background:  linear-gradient(to top, #8650F4, #0034C4);
+    border:rgba(78, 78, 78, 0.976) 2px solid;
+}
+
+.text{
+    text-decoration: none;
+}
+
+.albtxt{
+    font-size: x-small;
+    color: white;
+}
+
+.albtxt:focus, .albtxt:hover{
+    text-decoration: none;
+    color:white;
+    font-weight: bold;
+}
+.arttxt{
+    font-size: xx-small;
+    color: #878694;
+}
+
+.arttxt:focus, .arttxt:hover{
+    text-decoration: underline;
+    color:#b9b8c8;
+    
+}
+
+.text:focus, .text:hover{
+}

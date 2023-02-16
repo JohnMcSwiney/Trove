@@ -1,0 +1,42 @@
+
+
+.txt-container{
+    text-overflow: ellipsis;
+    overflow:hidden;
+    white-space: wrap;
+}
+
+.text{
+    color: #878694;
+    text-decoration: none;
+}
+.bg-fglass-1{
+    /* border: 1px solid rgba(255, 255, 255, 0); */
+    background: rgba(255, 255, 255, 0);
+    border-radius: 16px;
+    transition: 0.3s
+
+}
+.bg-fglass-1:hover{
+    background: #8750f450;
+    box-shadow:  0 0px 1px rgba(31, 31, 31, 0.354);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    /* border: 1px solid rgba(255, 255, 255, 0.098); */
+}
+
+.bg-fglass-1:hover > div > a{
+    color:white;
+}
+.bg-fglass-1:hover > div >.borderTest{
+    backdrop-filter: saturate(150%);
+    box-shadow: 0px 2px 5px #8750f480;
+}
+
+.borderTest{
+    background: linear-gradient(to top, #8650F4, #0034C4);
+    border-radius: 50%;
+    padding:5px;
+    filter: none;
+
+}

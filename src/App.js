@@ -41,7 +41,8 @@ function App() {
 
       
         <MusicBar/>
-        <NavBar/>
+        {/* send in a value of 0 - 3 to change the tab, send in any other value for no active tabs*/}
+        <NavBar activeTab={0} />
       
       <script src="/index2.js"></script>
     </div>
