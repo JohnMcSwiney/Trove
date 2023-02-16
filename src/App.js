@@ -22,7 +22,6 @@ function App() {
     <BrowserRouter>
 
     <div className="MainBg text-gray-500 font-body" style={{ height: '3000px' }}>
-      <Header/>
 
       <Routes>
     
@@ -40,8 +39,7 @@ function App() {
       
 
       
-        <MusicBar/>
-        <NavBar/>
+        
       
       <script src="/index2.js"></script>
     </div>

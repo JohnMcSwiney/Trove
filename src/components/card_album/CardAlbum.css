@@ -33,6 +33,7 @@
   }
 
 .bg:hover{
+    background:  linear-gradient(to top, #8650F4, #0034C4);
     border:rgba(78, 78, 78, 0.976) 2px solid;
 }
 

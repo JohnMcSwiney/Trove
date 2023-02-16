@@ -239,11 +239,11 @@ const MusicBar = () => {
             </button>
           </div>
           */}
-          {/* Vol 
+          {/* Vol*/} 
           <div className='hidden'>
             <input type="range" ref={volumeRef} defaultValue="50" onChange={changeVolumeLevel}></input>
           </div>
-          */}
+          
 
 
         </div>
