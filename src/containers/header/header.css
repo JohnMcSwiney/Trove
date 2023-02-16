@@ -36,15 +36,15 @@
 
 .back-icon{
     color: white;
-    height: 50px;
-    width: 50px;
+    height: 40px;
+    width: 40px;
   
     
     border: 15px;
 }
 
 .back-icon:hover{
- background-color: #bec0ca;
+ background-color: #6f49e8;
 opacity: .4;
 border-radius: 20px;
 }
