@@ -67,7 +67,7 @@ export default function Signup() {
                     </div>
 
                
-               <button disabled={isLoading&&checkPassword}  className='signupbtn-form btn mb-4' type='submit'>Sign up</button>
+               <button disabled={isLoading&&checkPassword}  className='signupbtn-form btn mb-4 text-white' type='submit'>Sign up</button>
                </div>
                {error && <div className='error'>{error}</div>}
               

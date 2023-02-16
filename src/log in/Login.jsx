@@ -50,7 +50,7 @@ const Login = () => {
                <button disabled={isLoading} className='loginbtn-form btn mb-4 text-light' type='submit'>
                     Log in
                </button>
-               <a href="/signup" class="signupbtn-form btn text-light" role="button" style={{borderColor:"#8650f4", borderRadius: "5px"}}>Sign up</a>
+               <a href="/signup" class="signupbtn-lform btn text-light" role="button" style={{borderColor:"#8650f4", borderRadius: "5px"}}>Sign up</a>
           </div>
           {error && <div className="error">{error}</div>}
           

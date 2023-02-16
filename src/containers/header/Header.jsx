@@ -8,6 +8,8 @@ import {GiHamburgerMenu} from 'react-icons/gi'
 import {AiOutlineUser} from 'react-icons/ai' 
 import {RiUser5Line} from 'react-icons/ri' //for signup
 import {RiLoginBoxLine, RiLogoutBoxLine, RiUpload2Line} from 'react-icons/ri' // login out , upload
+import {MdKeyboardBackspace} from 'react-icons/md' //back button
+import { useNavigate } from "react-router-dom";
 
 function Header() {
   const {logout} = useLogout();
@@ -16,9 +18,15 @@ function Header() {
     logout();
   }
 
+  const navigate = useNavigate();
+  const goBack = ()=> {
+    navigate(-1);
+  }
   return (
-    <div class="d-flex sticky-top">
-      
+    <div class="d-flex justify-content-between sticky-top">
+      <button className="back-button" onClick={goBack}>
+        <MdKeyboardBackspace className="back-icon" width={"50px"}/>
+      </button>
       <div class=" p-2">
         <a class="trove-logo-link navbar-brand" href="/">
         <img src="./img/troveIcon.png" alt="Trove logo" className="trove-logo"/>

@@ -33,3 +33,18 @@
 .dd-backg:hover{
     background-color:#647DEE ;
 }
+
+.back-icon{
+    color: white;
+    height: 50px;
+    width: 50px;
+  
+    
+    border: 15px;
+}
+
+.back-icon:hover{
+ background-color: #bec0ca;
+opacity: .4;
+border-radius: 20px;
+}
