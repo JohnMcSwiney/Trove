@@ -1,24 +1,23 @@
 import React from 'react'
-import {useNavigate } from 'react-router-dom';
 import { useLogin } from '../hooks/useLogin';
+<<<<<<< HEAD
 import Header from '../containers/header/Header';
+=======
+>>>>>>> parent of 6d506e53 (redirecting works for login, signup now)
 import './login.css'
 
 
 const Login = () => {
      const [email, setEmail] = React.useState('');
      const [password, setPassword] = React.useState('');
-     const {login, error, isLoading, isLogedIn} = useLogin();
-
-     const navigate = useNavigate();
-
+     const {login, error, isLoading} = useLogin();
+     
      const handleSubmit = async (e)=> {
           e.preventDefault();
-          const success =await login(email, password);
-         
-          if(!error && !isLoading){
-               navigate('/');
-          }
+          
+          await login(email, password);
+          
+          
      }
   return (
     <form className='login' onSubmit={handleSubmit}>
@@ -30,7 +29,7 @@ const Login = () => {
           
           <div className='login-container'>
                <div className='form-outline mb-4'>
-                    <label className='form-label' htmlFor='emailbox'>Email</label>
+                    <label className='form-label' for='emailbox'>Email</label>
                     <input type="email" id='emailbox' className='form-control' onChange={(e)=>setEmail(e.target.value)}
                     value={email}
                     />
@@ -38,7 +37,7 @@ const Login = () => {
                </div>
 
                <div className='form-outline mb-4'>
-                    <label className='form-label' htmlFor='passwordbox'>Password</label>
+                    <label className='form-label' for='passwordbox'>Password</label>
                     <input type="password" id='passwordbox' className='form-control' onChange={(e)=>setPassword(e.target.value)}
                      value = {password}
                      />
@@ -50,6 +49,7 @@ const Login = () => {
                          <a href="#!">Forgot password?</a>
                     </div>
                </div>
+<<<<<<< HEAD
 
                <div className='buttonCont'>
                <button disabled={isLoading} 
@@ -62,9 +62,13 @@ const Login = () => {
                ><button className="signupbtn">Sign up</button></a>
                </div>
                
+=======
+     
+               <button disabled={isLoading} className='loginbtn-form btn mb-4 text-light' type='submit'>Log in</button>
+               <a href="/signup" class="signupbtn-form btn text-light" role="button" style={{borderColor:"#8650f4", borderRadius: "5px"}}>Sign up</a>
+>>>>>>> parent of 6d506e53 (redirecting works for login, signup now)
           </div>
           {error && <div className="error">{error}</div>}
-          
      </form>
   )
 }
