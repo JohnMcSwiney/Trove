@@ -1,0 +1,12 @@
+{
+    "type": "service_account",
+    "project_id": "helical-analyst-376421",
+    "private_key_id": "b0028f5bad9bdd235a7d784b6f4f9f0728b7f124",
+    "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDaxnvUWRmskLbn\nAbXPFeyGKvXOYkPcxneN7aG0gbdxkpmMPBFcmiXm9aFG6gx2BfS9H5FSFoCFJ53o\n2tqh3rKHl8rS5k8KJa+IdVoXMGzn4Xpj9L4fKmLgSiZBChNUE6Ym82FkVewIAS1P\nd4T5NiRoh2PJhQpHnIEJHQoNep/o2pvnVCepL5g4eYWmsNjN//OohXBvfDHjmT6r\nRz+AfE0nP1ZCa65Y780mLtKrqAU0G+YjS3OSWHQmQg9o1KcAKgm4qGigWCgdRIQz\no+LYx0OoBQxLo9i2Oeo1DYmOvrpdutAiA/QNrw5HcQGZZGdSVFnRe/d3+NBfu+th\nVxQIvsI3AgMBAAECggEAGXGYGTw7lixGeVtjj7AXEAuTBuu6xMR4RxNqCRpFAXpx\nTTP3OPPckJ3koeC6jkdnDU/MkOV5EQNohBpf7w99Z/OpbRnH+4AiiBZN4gCJyfYZ\nS+K88db2JOu6wzmuwcp/Omx32Tl89/lbEbDu0CUR2u5UFq3YYje7chnkf2jRjD0Z\nTyu9jnzppc/7toHLkYEr34K1Ae3vXDpM396MCOCdRzvvNDELYjgf0k4/0VGcNGPX\nWrlHIpfGkWTtSTHQmZCYYg95ZIdkAPoNjI1NqVn4g0cch0V9HHW/YFdx1ddGOm3c\nGIDLK0tfprPrvnlUVgmCodavc2FjnDMM/EPZvjrGcQKBgQD+heNC7VnATo/TZuNe\njgdz35f9Ik1kPUfi8A2fYS235Hng9rddQiWw0k+Lt1YIpsexNYVC0BPE6U865hSX\nmtBxLCJNVwX1BfB7MG61QfTd0wwpu+9VTK8NxJLfdMNXIL7+DwZtDxrv5C4OAcV8\nuA9hj1S2y3PHV3gxL/t0CR52ZQKBgQDcC31/bX6lpKs9jTQd6MEIy/+AtwRwvhvZ\nz6pYvFaBHRz4ndmLn02z/fRMaPQX5FFTrO4YtwUIIxqB0MT4gqo01znh63PnLBVG\n7TaU4XbpUQ4eVVSTd/S7lps85o5/DuY9eSHP8UKJqXkC9jubKDaScc13A/O0aCqy\n5NGVC+bOawKBgQDQriufwwTURFVt6ay/6Mk5evidpdM4PXpEGbfBliaq4FwBU6cR\ngltut3BayE10uHF/3LbPCdU7nGLGksANcPQ35gyVxqTuuRjrl9EdMd+3RANz8E+R\na1cXfbVCGvTR6dpOaTlGj5zxVO9hspgd4rdRsPevC+54YUH9ai7Le3KLdQKBgQCw\nKjLK9epSysadfJKg71q7pDZl4iAX8ttxQaRrbj0DGT+8ewNTmLIoy8Pt+IiTKCNE\nDkqAVuYcYZ4zF+TZ4CJMM5MPn+UmylAufHMaNndwy4e2GTKg7YRtOmIGG78xUcha\npsO/KrPOanOLP37w9PzbuWh5RByz7kFg/3gbD3A1CQKBgQDy/N3fvOhv4prR1Pyn\nejkQqYkH/Mzu0DUUmOdhofdGUkL1swQILGj1tRF2UOQfh/IC6gfsxUR/qs9yh8t1\nSBEKIqd+UUlJqweuE40Gm7uyx+Ez4Gf6UK7P4k9vtoM+UR0Ti7ea6uQLRM+y9L+T\nPQw6lAtIMXpqeEjq3JnMZ3Sq2g==\n-----END PRIVATE KEY-----\n",
+    "client_email": "johnnymcswiney64-gmail-com@helical-analyst-376421.iam.gserviceaccount.com",
+    "client_id": "108117612911276973103",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/johnnymcswiney64-gmail-com%40helical-analyst-376421.iam.gserviceaccount.com"
+  }

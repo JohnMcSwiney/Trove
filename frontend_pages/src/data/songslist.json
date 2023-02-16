@@ -1,0 +1,60 @@
+[
+    {
+        "path":"/",
+        "name":"Cassie",
+        "cover": "../assets/aleenasong1.jpg",
+        "releaseDate": "2006",
+        "genre": "R&B",
+        "title": "Me & U", 
+        "artist": "Cassie"
+    },
+    {
+        "path":"/",
+        "name":"Flower Boy",
+        "cover": "../assets/cherrysong1.jpg",
+        "releaseDate": "2017",
+        "genre":"HIP-HOP",
+        "title": "See You Again", 
+        "artist": "Tyler the Creator, Kali Uchis"
+
+        
+    },
+    {
+        "path":"/",
+        "name":"Astro Lounge",
+        "cover": "../assets/bobbysong1.jpg",
+        "releaseDate": "1999",
+        "genre":"POP",
+        "title": "All Star", 
+        "artist": "Smash Mouth"
+    },
+    {
+        "path":"/",
+        "name":"Young and Beautiful",
+        "cover": "../assets/zhibeksong1.jpg",
+        "releaseDate": "2013",
+        "genre":"POP",
+        "title": "Young and Beautiful", 
+        "artist": "Lana Del Rey"
+        
+    },
+    {
+        "path":"/",
+        "name":"PARTYNEXTDOOR",
+        "cover": "../assets/nimasong1.jpg",
+        "releaseDate": "2013",
+        "genre":"R&B",
+        "title": "Break from Toronto", 
+        "artist": "PARTYNEXTDOOR"
+    },
+    {
+        "path":"/",
+        "name":"Ella and Louis Again",
+        "cover": "../assets/topazsong1.jpg",
+        "releaseDate": "1957",
+        "genre":"JAZZ",
+        "title": "Autumn in New York", 
+        "artist": "Ella Fitzgerald, Louis Armstrong"
+    }
+
+]

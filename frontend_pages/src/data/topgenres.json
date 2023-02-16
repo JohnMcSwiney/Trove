@@ -1,0 +1,31 @@
+[
+    {
+        "path":"/",
+        "name":"ROCK",
+        "cover": "../assets/recordg.png",
+        "percentage": 44
+   
+    },
+    {
+        "path":"/",
+        "name":"POP",
+        "cover": "../assets/recordg.png",
+        "percentage": 30
+  
+    },
+    {
+        "path":"/",
+        "name":"RAP",
+        "cover": "../assets/recordg.png",
+        "percentage": 15
+        
+    },
+    {
+        "path":"/",
+        "name":"COUNTRY",
+        "cover": "../assets/recordg.png",
+        "percentage": 11
+  
+    }
+
+]

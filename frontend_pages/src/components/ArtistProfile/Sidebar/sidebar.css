@@ -1,0 +1,97 @@
+
+  body{
+  /* ff 3.6+ */
+  /* background:-moz-linear-gradient(90deg, rgba(0, 0, 0, 1) 0%, rgba(67, 75, 76, 1) 100%);  */
+
+  /* safari 5.1+,chrome 10+ */
+  /* background:-webkit-linear-gradient(90deg, rgba(0, 0, 0, 1) 0%, rgba(67, 75, 76, 1) 100%); */
+
+  /* opera 11.10+ */
+  /* background:-o-linear-gradient(90deg, rgba(0, 0, 0, 1) 0%, rgba(67, 75, 76, 1) 100%); */
+
+  /* ie 6-9 */
+  /* filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#434B4C', endColorstr='#000000', GradientType=0 ); */
+
+  /* ie 10+ */
+  /* background:-ms-linear-gradient(90deg, rgba(0, 0, 0, 1) 0%, rgba(67, 75, 76, 1) 100%); */
+
+  /* global 94%+ browsers support */
+  /* background:linear-gradient(90deg, rgba(0, 0, 0, 1) 0%, rgba(67, 75, 76, 1) 100%); */
+
+  }
+
+
+
+  .trove__sb-container{
+    display:flex;
+    float:  left;
+    position: fixed;
+   
+    
+  }
+
+  main{
+    width: 100%;
+    
+  }
+  .trove__sidebar{
+    background:#090C39;
+    color: #fff;
+    height: 100vh;
+    transition: all 0.5s;
+  }
+  .trove__sb-top_section{
+    display: flex;
+    align-items:center;
+    padding:20px 15px;
+  }
+  .trove__logo{
+    font-size: 30px;
+  }
+ 
+  .trove__sb-link{
+    display: flex;
+    padding: 10px 15px;
+    gap: 15px;
+    transition: all 0.5s;
+  }
+  .trove__sb-link:hover{
+    background: skyblue;
+    color: #FFF;
+    transition: all 0.5s;
+  }
+  
+  .icon, .link_text{
+    font-size: 20px;
+    display: block;
+  }
+  .trove__sb-link_text{
+    text-decoration: none;
+  }
+
+      /*320px — 480px: Mobile devices
+481px — 768px: iPads, Tablets
+769px — 1024px: Small screens, laptops
+1025px — 1200px: Desktops, large screens  */
+
+@media  screen and (max-width:780px) {
+    .trove__sidebar{
+      width: 50px;
+      position: fixed;
+      height: 100vh;
+    }
+
+    .trove__sb-link_text{
+      display: none;
+    }
+    .trove__logo{
+      display: none;
+    }
+    
+}
+
+
+      
+  
+  
+  
