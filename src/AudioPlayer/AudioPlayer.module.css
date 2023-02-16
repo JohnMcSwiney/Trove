@@ -16,10 +16,7 @@
 
 
 
-.forwardBackward:hover{
-    
 
-}
 
 .playPause{
 
@@ -35,6 +32,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-left: 10px;
 }
 
 .play{
@@ -67,7 +65,7 @@
     background:var(--bar-bg) ;
     border-radius: 10px ;
     position: relative;
-    width: 400px;
+    width: 350px;
     height: 11px;
     outline: none;
 
@@ -250,4 +248,22 @@
   text-align: center;
   float:right;
 
+}
+
+
+
+.BackButton{
+    background: var(--Purple);
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 32px;
+    color: var(--White);
+    
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10px;
 }

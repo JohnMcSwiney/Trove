@@ -4,6 +4,7 @@ import style from './AudioPlayer.module.css'
 import {FaPlay} from 'react-icons/fa';
 import {FaPause} from 'react-icons/fa';
 
+import {BiArrowToLeft} from 'react-icons/bi';
 
 const AudioPlayer = () => {
     //state
@@ -168,7 +169,10 @@ const AudioPlayer = () => {
                 <div className={style.audioPlayer}>
                     <audio ref={audioPlayer} src ={slides[index].audio}></audio>
                     
-                    
+                    <button className={style.BackButton} onClick={() => {
+                    if (index === 0) return;
+                    setIndex((prevIndex) => (prevIndex + slides.length - 1) % slides.length);
+                    }}><BiArrowToLeft/></button>
                     
                     <button onClick={togglePlayPause} className={style.playPause}>
                         {isPlaying ? <FaPause/> : <FaPlay className={style.play}/>}
@@ -191,10 +195,7 @@ const AudioPlayer = () => {
                     <div className={style.duration}>{(duration && !isNaN(duration)) && calculateTime(duration)}</div>
 
                 </div>
-                <button onClick={() => {
-                if (index === 0) return;
-                setIndex((prevIndex) => (prevIndex + slides.length - 1) % slides.length);
-                }}>Previous</button>
+                
             
             </div>
                 
