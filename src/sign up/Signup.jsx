@@ -58,11 +58,9 @@ export default function Signup() {
                          <label className='form-label' for='Cpasswordbox'>Confirm Password</label>
                          <input type="password" id='Cpasswordbox' className='form-control'
                          onChange={(e)=>setConPassword(e.target.value)} value = {conPassword}
-                         />
-                         
+                         />      
                     </div>
 
-               
                <button disabled={isLoading&&checkPassword}  className='signupbtn-form btn mb-4 text-white' type='submit'>Sign up</button>
                </div>
                {error && <div className='error'>{error}</div>}
