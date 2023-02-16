@@ -1,7 +1,7 @@
 import React from 'react'
 import {useNavigate } from 'react-router-dom';
 import { useLogin } from '../hooks/useLogin';
-
+import Header from '../containers/header/Header';
 import './login.css'
 
 
@@ -22,6 +22,10 @@ const Login = () => {
      }
   return (
     <form className='login' onSubmit={handleSubmit}>
+     <Header headerTxt={["Trove", "Music"]} 
+              displayBack={0}
+              displayHamburger={0}
+              displayTitle={1}/>
           <h1 className='login-header'>Log in</h1>
           
           <div className='login-container'>
@@ -40,17 +44,24 @@ const Login = () => {
                      />
                </div>
 
-               <div class="row mb-4">
+               <div className="row mb-4">
 
-                    <div class="col">
+                    <div className="col">
                          <a href="#!">Forgot password?</a>
                     </div>
                </div>
-     
-               <button disabled={isLoading} className='loginbtn-form btn mb-4 text-light' type='submit'>
+
+               <div className='buttonCont'>
+               <button disabled={isLoading} 
+               className='loginbtn text-light' type='submit'>
                     Log in
                </button>
-               <a href="/signup" class="signupbtn-lform btn text-light" role="button" style={{borderColor:"#8650f4", borderRadius: "5px"}}>Sign up</a>
+
+               <a href="/signup" 
+               className="text-light" role="button" 
+               ><button className="signupbtn">Sign up</button></a>
+               </div>
+               
           </div>
           {error && <div className="error">{error}</div>}
           

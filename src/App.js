@@ -22,7 +22,6 @@ function App() {
     <BrowserRouter>
 
     <div className="MainBg text-gray-500 font-body" style={{ height: '3000px' }}>
-      <Header/>
 
       <Routes>
     
@@ -40,9 +39,7 @@ function App() {
       
 
       
-        <MusicBar/>
-        {/* send in a value of 0 - 3 to change the tab, send in any other value for no active tabs*/}
-        <NavBar activeTab={0} />
+        
       
       <script src="/index2.js"></script>
     </div>

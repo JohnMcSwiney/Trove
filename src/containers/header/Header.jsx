@@ -11,8 +11,13 @@ import {RiLoginBoxLine, RiLogoutBoxLine, RiUpload2Line} from 'react-icons/ri' //
 import {MdKeyboardBackspace} from 'react-icons/md' //back button
 import { useNavigate } from "react-router-dom";
 
-function Header() {
-  const headerTxt = ["Trove", "Music"];
+function Header(props) {
+  const prop1 = props.headerTxt;
+  const prop2 = props.displayBack;
+  const prop3 = props.displayHamburger;
+  const prop4 = props.displayTitle;
+
+  const headTxt = ["Trove", "Music"];
   const { logout } = useLogout();
   const { user } = useAuthContext();
   const logoutHandler = () => {
@@ -23,22 +28,39 @@ function Header() {
   const goBack = ()=> {
     navigate(-1);
   }
+
+  // for some reason only arrays work
+  // index 0 corresponds to back-button
+  // index 1 corresponds to dropdown
+  // index 2 corresponds to title
+  // ^ just in case <3
+  const doDisplay = ["hidden", "hidden", "hidden"];
+  if(prop2 == 1){
+    doDisplay[0] = "q";
+  }
+  if(prop3 == 1){
+    doDisplay[1] = "q";
+  }
+  if(prop4 == 2){
+    doDisplay[2] = "q";
+  }
+
   return (
-    <div class="d-flex sticky-top">
-      <button className="back-button" onClick={goBack}>
+    <div class="d-flex sticky-top nav-container bg-fglass">
+      <button className={ `back-button ${doDisplay[0]}`} onClick={goBack} >
         <MdKeyboardBackspace className="back-icon" width={"50px"}/>
       </button>
-      <div class=" p-2">
-        <a class="trove-logo-link navbar-brand" href="/">
-          <img src="./img/troveIcon.png" alt="Trove logo" className="trove-logo" />
+      <div className={` p-2  `}>
+        <a className={`trove-logo-link navbar-brand ${doDisplay[2]}`} href="/">
+          <img src="./img/troveIcon.png" alt="Trove logo" className="trove-logo hidden" />
           <h1 className="trove-logo-link">
             <div className="header-txt bg-fglass-b">
-              <span className="span">{headerTxt[0]}</span> {headerTxt[1]}
+              <span className="span">{prop1[0]}</span> {prop1[1]}
             </div>
           </h1>
         </a>
 
-        <Dropdown>
+        <Dropdown className={`${doDisplay[1]}`}>
           <Dropdown.Toggle className="dropdown-toggle-style" id="dropdown-toggle hidden-arrow" style={{ content: "-" }}>
             {/* work on this to get the id */}
             {user && (<div>{user._id}</div>)}
