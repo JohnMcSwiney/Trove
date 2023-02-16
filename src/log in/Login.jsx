@@ -1,7 +1,10 @@
 import React from 'react'
 import { useLogin } from '../hooks/useLogin';
 <<<<<<< HEAD
+<<<<<<< HEAD
 import Header from '../containers/header/Header';
+=======
+>>>>>>> parent of 6d506e53 (redirecting works for login, signup now)
 =======
 >>>>>>> parent of 6d506e53 (redirecting works for login, signup now)
 import './login.css'
@@ -50,6 +53,7 @@ const Login = () => {
                     </div>
                </div>
 <<<<<<< HEAD
+<<<<<<< HEAD
 
                <div className='buttonCont'>
                <button disabled={isLoading} 
@@ -63,6 +67,8 @@ const Login = () => {
                </div>
                
 =======
+=======
+>>>>>>> parent of 6d506e53 (redirecting works for login, signup now)
      
                <button disabled={isLoading} className='loginbtn-form btn mb-4 text-light' type='submit'>Log in</button>
                <a href="/signup" class="signupbtn-form btn text-light" role="button" style={{borderColor:"#8650f4", borderRadius: "5px"}}>Sign up</a>
