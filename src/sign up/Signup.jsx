@@ -1,7 +1,7 @@
 // import { ErrorResponse } from '@remix-run/router';
 import React from 'react';
 import { useSignup } from '../hooks/useSignup';
-
+import { useNavigate } from 'react-router-dom';
 // import { userSignup } from '../services/api';
 
 import './signup.css'
@@ -13,10 +13,14 @@ export default function Signup() {
     
      const checkPassword = password === conPassword ? true: false;
      const {signup,error,isLoading} = useSignup();
-     console.log(error);
+     const navigate = useNavigate();
+     
      const handleSubmit = async (e)=> {
           e.preventDefault();
           await signup(email, password);
+          if(!error && !isLoading){
+               navigate('/');
+          }
      }
 
      //axios method
@@ -39,7 +43,7 @@ export default function Signup() {
                
                <div className='signup-container'>
                     <div className='form-outline mb-4'>
-                         <label className='form-label' for='emailbox'>Email</label>
+                         <label className='form-label' htmlFor='emailbox'>Email</label>
                          <input type="email" id='emailbox' className='form-control'
                          onChange={(e)=>setEmail(e.target.value)} value={email}
                          />
@@ -47,7 +51,7 @@ export default function Signup() {
                     </div>
 
                     <div className='form-outline mb-4'>
-                         <label className='form-label' for='passwordbox'>Password</label>
+                         <label className='form-label' htmlFor='passwordbox'>Password</label>
                          <input type="password" id='passwordbox' className='form-control' 
                          onChange={(e)=>setPassword(e.target.value)} value = {password}
                          />
@@ -55,7 +59,7 @@ export default function Signup() {
                     </div>
 
                     <div className='form-outline mb-4'>
-                         <label className='form-label' for='Cpasswordbox'>Confirm Password</label>
+                         <label className='form-label' htmlFor='Cpasswordbox'>Confirm Password</label>
                          <input type="password" id='Cpasswordbox' className='form-control'
                          onChange={(e)=>setConPassword(e.target.value)} value = {conPassword}
                          />
@@ -63,7 +67,7 @@ export default function Signup() {
                     </div>
 
                
-               <button disabled={isLoading&&checkPassword}  className='signupbtn-form btn mb-4' type='submit'>Sign up</button>
+               <button disabled={isLoading&&checkPassword}  className='signupbtn-form btn mb-4 text-white' type='submit'>Sign up</button>
                </div>
                {error && <div className='error'>{error}</div>}
               

@@ -1,19 +1,24 @@
 import React from 'react'
+import {useNavigate } from 'react-router-dom';
 import { useLogin } from '../hooks/useLogin';
+
 import './login.css'
 
 
 const Login = () => {
      const [email, setEmail] = React.useState('');
      const [password, setPassword] = React.useState('');
-     const {login, error, isLoading} = useLogin();
-     
+     const {login, error, isLoading, isLogedIn} = useLogin();
+
+     const navigate = useNavigate();
+
      const handleSubmit = async (e)=> {
           e.preventDefault();
-          
-          await login(email, password);
-          
-          
+          const success =await login(email, password);
+         
+          if(!error && !isLoading){
+               navigate('/');
+          }
      }
   return (
     <form className='login' onSubmit={handleSubmit}>
@@ -21,7 +26,7 @@ const Login = () => {
           
           <div className='login-container'>
                <div className='form-outline mb-4'>
-                    <label className='form-label' for='emailbox'>Email</label>
+                    <label className='form-label' htmlFor='emailbox'>Email</label>
                     <input type="email" id='emailbox' className='form-control' onChange={(e)=>setEmail(e.target.value)}
                     value={email}
                     />
@@ -29,7 +34,7 @@ const Login = () => {
                </div>
 
                <div className='form-outline mb-4'>
-                    <label className='form-label' for='passwordbox'>Password</label>
+                    <label className='form-label' htmlFor='passwordbox'>Password</label>
                     <input type="password" id='passwordbox' className='form-control' onChange={(e)=>setPassword(e.target.value)}
                      value = {password}
                      />
@@ -42,10 +47,13 @@ const Login = () => {
                     </div>
                </div>
      
-               <button disabled={isLoading} className='loginbtn-form btn mb-4 text-light' type='submit'>Log in</button>
-               <a href="/signup" class="signupbtn-form btn text-light" role="button" style={{borderColor:"#8650f4", borderRadius: "5px"}}>Sign up</a>
+               <button disabled={isLoading} className='loginbtn-form btn mb-4 text-light' type='submit'>
+                    Log in
+               </button>
+               <a href="/signup" class="signupbtn-lform btn text-light" role="button" style={{borderColor:"#8650f4", borderRadius: "5px"}}>Sign up</a>
           </div>
           {error && <div className="error">{error}</div>}
+          
      </form>
   )
 }

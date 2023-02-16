@@ -2,14 +2,14 @@ import React from "react";
 import './header.css';
 import { useLogout } from "../../hooks/useLogout";
 import { useAuthContext } from "../../hooks/useAuthContext";
-import Dropdown2 from 'react-dropdown';
-import { Dropdown, ButtonGroup } from 'react-bootstrap';
-import { DropdownButton, MenuItem } from 'react-bootstrap';
-import { GiHamburgerMenu } from 'react-icons/gi'
-import { AiOutlineUser } from 'react-icons/ai'
-import { RiUser5Line } from 'react-icons/ri' //for signup
-import { RiLoginBoxLine, RiLogoutBoxLine, RiUpload2Line } from 'react-icons/ri' // login out , upload
-import DropdownItem from "react-bootstrap/esm/DropdownItem";
+
+import {Dropdown,ButtonGroup} from 'react-bootstrap';
+import {GiHamburgerMenu} from 'react-icons/gi'
+import {AiOutlineUser} from 'react-icons/ai' 
+import {RiUser5Line} from 'react-icons/ri' //for signup
+import {RiLoginBoxLine, RiLogoutBoxLine, RiUpload2Line} from 'react-icons/ri' // login out , upload
+import {MdKeyboardBackspace} from 'react-icons/md' //back button
+import { useNavigate } from "react-router-dom";
 
 function Header() {
   const headerTxt = ["Trove", "Music"];
@@ -19,10 +19,16 @@ function Header() {
     logout();
   }
 
+  const navigate = useNavigate();
+  const goBack = ()=> {
+    navigate(-1);
+  }
   return (
-    <div class="nav-container sticky-top bg-fglass">
-
-      <div class="logo-txt-container">
+    <div class="d-flex sticky-top">
+      <button className="back-button" onClick={goBack}>
+        <MdKeyboardBackspace className="back-icon" width={"50px"}/>
+      </button>
+      <div class=" p-2">
         <a class="trove-logo-link navbar-brand" href="/">
           <img src="./img/troveIcon.png" alt="Trove logo" className="trove-logo" />
           <h1 className="trove-logo-link">

@@ -114,3 +114,53 @@
 .dropdown-toggle::after::after {
     content:none;
 }
+.back-icon{
+    color: white;
+    height: 40px;
+    width: 40px;
+  
+    
+    border: 15px;
+}
+
+.back-icon:hover{
+ background-color: #6f49e8;
+opacity: .4;
+border-radius: 20px;
+}
+.dropdown-style{
+    background-color: #393bd0; 
+}
+
+.dropdown-toggle-style{
+    height: 40px;
+    width: 40px;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    background:  linear-gradient(to top, #8650F4, #0034C4);
+    border-radius: 8px;
+    animation: 0.3s;
+    content: none;
+}
+.dropdown-toggle-style > button:hover {
+    filter:saturate(120%);
+}
+.dropdown-toggle-style > button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.test{
+    background-color: aqua;
+}
+.test > dropdown-toggle{
+    content: none
+}
+.test > dropdown-toggle::after{
+    content: none;
+}
+.dropdown-toggle::after::after {
+    content:none;
+}
