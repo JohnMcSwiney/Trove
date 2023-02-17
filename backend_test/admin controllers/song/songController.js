@@ -61,6 +61,8 @@ const createSong = async (req, res) => {
 
                     album.songList.push(song._id);
 
+                    album.totalTracks++;
+
                     await album.save();
                 }
 

@@ -28,6 +28,7 @@ const albumSchema = new mongoose.Schema({
 
     totalTracks: {
         type: Number,
+        default: 0,
         required: [true, `Please provide number of tracks`],
     },
 
