@@ -21,6 +21,8 @@ registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview, F
 
 export default function AddSongs(props) {
 
+    const PageName = "AddSong";
+
     React.useEffect(() => {
         console.log("files changed!");
         console.log(props.files);
@@ -47,6 +49,8 @@ export default function AddSongs(props) {
 
 
             />
+
+             <input type="submit" value="Submit" className="gradient--btn submit--btn" onClick={props.handleSubmit} /> 
 
             {/* <h4>{fileRef.pond.getFiles()}</h4> */}
 {/* 

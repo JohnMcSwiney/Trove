@@ -19,7 +19,7 @@ export default function UploadMusic(props) {
 
     const windowBreakpoint = 480;
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (typeof window !== "undefined") {
       window.addEventListener("scroll", () =>
         setSmall(window.pageYOffset > 200)
@@ -141,6 +141,41 @@ export default function UploadMusic(props) {
     
   }
 
+    let viewPage;
+
+    const [pageName, setPageName] = React.useState("MusicDetails");
+    function handleFormNavigation(event) {
+      setPageName("AddSongs") 
+
+      if(pageName = "AddSongs") {
+        viewPage = <AddSongs 
+                    handleChange={handleChange}
+                    formData={formData}
+                    handleSubmit={handleSubmit}
+                    handleFormNavigation={handleFormNavigation}/>
+      } else if (pageName = "MusicDetails") {
+        viewPage = <MusicDetails 
+                    handleChange={handleChange}
+                    formData={formData}
+                    handleSubmit={handleSubmit}
+                    handleFormNavigation={handleFormNavigation}/>
+      }
+
+
+
+      // if(PageName === "MusicDetails") {
+      //   return{
+      //    viewPage = <AddSongs />;
+
+      //   }
+      // }
+    }
+    viewPage = <MusicDetails 
+              handleChange={handleChange}
+              formData={formData}
+              handleSubmit={handleSubmit}
+              handleFormNavigation={handleFormNavigation}/>;
+
     return( 
         <section>
         {menu}
@@ -185,11 +220,14 @@ export default function UploadMusic(props) {
                     {/* Uncomment below  to see music details section of form, 
                     will be adding feature to navigate through both effectively */}
 
-                    <MusicDetails
+                    {/* <MusicDetails
                       handleChange={handleChange}
                       formData={formData}
                       handleSubmit={handleSubmit}
-                    /> 
+                    />  */}
+
+                    {viewPage}
+
                  
                   </div>
               </form>

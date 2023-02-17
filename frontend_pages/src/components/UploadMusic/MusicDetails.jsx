@@ -2,6 +2,7 @@ import React from "react"
 
 export default function MusicDetails(props) {
 
+    const PageName = "MusicDetails";
 
     return (
         <div className="column song--form">
@@ -95,12 +96,26 @@ export default function MusicDetails(props) {
               </fieldset>
               <tr>
                 <td  className="columnt">
-                  <input type="submit" value="Submit" className="gradient--btn submit--btn" onClick={props.handleSubmit} /> 
+                  {/* <input type="submit" value="Submit" className="gradient--btn submit--btn" onClick={props.handleSubmit} />  */}
                 </td>
               </tr>
 
             </tbody>
             </table>
+            
+            <div className="navigate--form---btns"> 
+                <div className="back--btn">
+                  <img src="../assets/backbtn.png" id="back--icon" alt="back--icon"/>
+                  <br/>
+                  <label for="back--icon">Back</label>
+                </div>
+                <div className="next--btn">
+                  <img src="../../assets/nextbtn.png" id="next--icon" alt="next--icon"  onClick={props.handleFormNavigation}/>
+                  <br/>
+                  <label for="next--icon">Next</label>
+                </div>
+            
+            </div>
 
             [0].filename
 
