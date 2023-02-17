@@ -15,18 +15,68 @@ const createSong = async (req, res) => {
             console.log(err);
             res.status(400).send("Artist not found");
         } else {
-            const { title, genre, artist, featuredArtists, album, highlightStart, highlightStop, songUrl, imgUrl, releaseYear, isPublished, isLoved } = req.body;
 
-            try {
-                const song = new Song(req.body);
-                await song.save()
-                res.status(201).json(song);
-            } catch (err) {
-                console.log('err', err);
-                res.status(500).json({
-                    error: err,
-                });
-            }
+            Album.findOne({ albumName: req.body.album, artist: foundArtist._id }, async (err, foundAlbum) => {
+
+                if (err) {
+                    console.log(err);
+                    res.status(500).send(err);
+                } else if (!foundAlbum) {
+                    console.log(err);
+                    console.log("there is no album");
+                    console.log("Artist ID: " + foundArtist._id);
+                    //console.log("Album ID: " + foundAlbum._id);
+
+                    const { title, genre, artist, album, highlightStart, highlightStop, songUrl, imgUrl, releaseYear, isPublished, isLoved } = req.body;
+
+                    try {
+                        const song = new Song({
+                            title: title,
+                            genre: genre,
+                            artist: foundArtist._id,
+                            album: album,
+                            highlightStart: highlightStart,
+                            highlightStop, highlightStop,
+                            songUrl: songUrl,
+                            imgUrl: imgUrl,
+                            releaseYear: releaseYear,
+                            isPublished: isPublished,
+                            isLoved: isLoved
+                        });
+                        await song.save()
+                        console.log(song);
+                        res.status(201).json(song);
+                    } catch (err) {
+                        console.log('err', err);
+                        res.status(500).json({error: err});
+                    }
+                } else {
+
+                    const { title, genre, artist, album, highlightStart, highlightStop, songUrl, imgUrl, releaseYear, isPublished, isLoved } = req.body;
+
+                    try {
+                        const song = new Song({
+                            title: title,
+                            genre: genre,
+                            artist: foundArtist._id,
+                            album: foundAlbum._id,
+                            highlightStart: highlightStart,
+                            highlightStop, highlightStop,
+                            songUrl: songUrl,
+                            imgUrl: imgUrl,
+                            releaseYear: releaseYear,
+                            isPublished: isPublished,
+                            isLoved: isLoved
+                        });
+                        await song.save()
+                        console.log(song);
+                        res.status(201).json(song);
+                    } catch (err) {
+                        console.log('err', err);
+                        res.status(500).json({error: err});
+                    }
+                }
+            });
             //  Album.findOne({ albumName: req.body.album, artist: foundArtist._id }, async (err, foundAlbum) => {
 
             //     if (err) {

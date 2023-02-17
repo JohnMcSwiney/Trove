@@ -15,16 +15,16 @@ const albumSchema = new mongoose.Schema({
     artist: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Artist',
-        default: null
+        default: ''
     },
 
-    contributingArtistList: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Artist",
-            default: null
-        }
-    ],
+    // featuredArtists: [
+    //     {
+    //         type: mongoose.Schema.Types.ObjectId,
+    //         ref: 'Artist',
+    //         default: ''
+    //     }
+    // ],
 
     totalTracks: {
         type: Number,
@@ -50,8 +50,8 @@ const albumSchema = new mongoose.Schema({
     songList: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "Song",
-            default: null
+            ref: 'Song',
+            default: ''
         }
     ]
 })

@@ -45,9 +45,19 @@ const createAlbum = async (req, res) => {
                 } else if (!foundSong) {
                     console.log(err);
                     console.log("there are no songs");
-                    const { albumName, albumArt, artist, contributingArtistList, totalTracks, isPublished, publishDate, releaseType, releaseYear, songList } = req.body;
+                    const { albumName, albumArt, artist, featuredArtists, totalTracks, isPublished, publishDate, releaseType, releaseYear, songList } = req.body;
 
-                    const album = new Album(req.body);
+                    const album = new Album({
+                        albumName: albumName,
+                        albumArt: albumArt,
+                        artist: foundArtist._id,
+                        totalTracks: totalTracks,
+                        isPublished,
+                        publishDate: publishDate,
+                        releaseType: releaseType,
+                        releaseYear: releaseYear,
+                        songList: songList
+                    });
                     try {
                         await album.save();
                         res.status(201).json(album);
@@ -55,6 +65,27 @@ const createAlbum = async (req, res) => {
                         res.status(500).json({ message: err.message });
                     }
                     //res.status(400).send("Songs not found");
+                } else {
+
+                    const { albumName, albumArt, artist, featuredArtists, totalTracks, isPublished, publishDate, releaseType, releaseYear, songList } = req.body;
+
+                    const album = new Album({
+                        albumName: albumName,
+                        albumArt: albumArt,
+                        artist: foundArtist._id,
+                        totalTracks: totalTracks,
+                        isPublished,
+                        publishDate: publishDate,
+                        releaseType: releaseType,
+                        releaseYear: releaseYear,
+                        songList: foundSong._id
+                    });
+                    try {
+                        await album.save();
+                        res.status(201).json(album);
+                    } catch (err) {
+                        res.status(500).json({ message: err.message });
+                    }
                 }
             });
         }

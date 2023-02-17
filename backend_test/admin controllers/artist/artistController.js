@@ -1,8 +1,10 @@
 const express = require('express');
-const { default: mongoose } = require('mongoose');
+const mongoose = require('mongoose');
 const Song = require('../../models/song model/song-model')
 const Artist = require('../../models/artist model/artist-model')
 const Album = require('../../models/album model/album-model')
+
+//mongoose.connection().artists.getIndexes()
 
 //get all artists
 const getAllArtist = async (req, res) => {
@@ -40,7 +42,7 @@ const createArtist = async (req, res) => {
             console.log(err);
             res.status(500).send(err);
         } else if (!foundSong) {
-            //console.log(err);
+            console.log(err);
             console.log("there are no songs")
             //res.status(400).send("Songs not found");
 
@@ -55,6 +57,7 @@ const createArtist = async (req, res) => {
                     const {
                         email,
                         password,
+                        userName,
                         artistName,
                         artistFollowers,
                         albumArtURL,

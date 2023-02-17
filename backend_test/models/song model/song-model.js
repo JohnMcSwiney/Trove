@@ -11,12 +11,11 @@ const songSchema = new mongoose.Schema(
         artist: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Artist',
-            default: null
+            required: true
         },
 
         genre: {
             type: String,
-
         },
 
         featuredArtists: [
@@ -30,7 +29,7 @@ const songSchema = new mongoose.Schema(
         album: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Album',
-            default: null
+            default: '',
         },
 
         highlightStart: {
@@ -51,7 +50,7 @@ const songSchema = new mongoose.Schema(
         },
 
         releaseYear: {
-            type: String
+            type: Number
 
         },
 
