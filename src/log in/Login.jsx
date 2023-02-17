@@ -1,28 +1,31 @@
 import React from 'react'
-import { useLogin } from '../hooks/useLogin';
+import { useLogin } from '../hooks/user-hooks/useLogin';
 
 import Header from '../containers/header/Header';
 import './login.css'
+import { useNavigate } from 'react-router-dom';
 
 
 const Login = () => {
      const [email, setEmail] = React.useState('');
      const [password, setPassword] = React.useState('');
      const {login, error, isLoading} = useLogin();
-     
+
+     const navigate = useNavigate();
      const handleSubmit = async (e)=> {
           e.preventDefault();
-          
-          await login(email, password);
-          
+          try{
+               await login(email, password);
+               setTimeout(()=>{
+                    navigate('/');
+               })
+          }catch(err){
+               console.log(err.data?.message|| 'Please try again');
+          }
           
      }
   return (
     <form className='login' onSubmit={handleSubmit}>
-     <Header headerTxt={["Trove", "Music"]} 
-              displayBack={0}
-              displayHamburger={0}
-              displayTitle={1}/>
           <h1 className='login-header'>Log in</h1>
           
           <div className='login-container'>
@@ -59,12 +62,6 @@ const Login = () => {
                className="text-light" role="button" 
                ><button className="signupbtn">Sign up</button></a>
                </div>
-               
-
-
-     
-               <button disabled={isLoading} className='loginbtn-form btn mb-4 text-light' type='submit'>Log in</button>
-               <a href="/signup" class="signupbtn-form btn text-light" role="button" style={{borderColor:"#8650f4", borderRadius: "5px"}}>Sign up</a>
 
           </div>
           {error && <div className="error">{error}</div>}

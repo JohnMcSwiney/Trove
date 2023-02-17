@@ -1,6 +1,7 @@
 // import { ErrorResponse } from '@remix-run/router';
 import React from 'react';
-import { useSignup } from '../hooks/useSignup';
+import { useNavigate } from 'react-router-dom';
+import { useSignup } from '../hooks/user-hooks/useSignup';
 
 // import { userSignup } from '../services/api';
 
@@ -13,26 +14,21 @@ export default function Signup() {
     
      const checkPassword = password === conPassword ? true: false;
      const {signup,error,isLoading} = useSignup();
+     const navigate = useNavigate();
      console.log(error);
      const handleSubmit = async (e)=> {
           e.preventDefault();
-          await signup(email, password);
+          try{
+               await signup(email, password);
+               setTimeout(()=>{
+                    navigate('/');
+               })
+          }catch(err){
+               console.log(err.data?.message|| 'Please try again')
+          }
+          
      }
-
-     //axios method
-     // const handleSubmit = async(e) =>{
-     //      e.preventDefault();
-     //      // await signup(email, password) 
-     //      try {
-     //           const result = await userSignup({
-     //                email: email,
-     //                password: password
-     //           })
-     //           console.log('result',result)
-     //      } catch (err) {
-     //           console.log('signup is err', ErrorResponse)
-     //      }
-     // }
+     
   return (
     <form className='signup' onSubmit={handleSubmit}>
           <h1 className='signup-header'>Sign up</h1>

@@ -12,7 +12,7 @@ import './navbar.css'
 
 const NavBar = (props) => {
   const activeTab = props.activeTab;
-  console.log(activeTab);
+  
 
   const temp = [
     "q", "q", "q", "q"

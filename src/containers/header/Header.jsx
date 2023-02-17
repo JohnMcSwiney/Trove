@@ -1,6 +1,6 @@
 import React from "react";
 import './header.css';
-import { useLogout } from "../../hooks/useLogout";
+import { useLogout } from "../../hooks/user-hooks/useLogout";
 import { useAuthContext } from "../../hooks/useAuthContext";
 
 import {Dropdown,ButtonGroup} from 'react-bootstrap';

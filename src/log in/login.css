@@ -1,8 +1,7 @@
 .login{
-    max-width: 400px;
-    margin: auto;
-    margin-left: 30px;
-    margin-right: 30px;
+    max-width: 380px;
+    margin: 0 auto;
+
 }
 
 .login-container{
@@ -20,7 +19,7 @@
 .loginbtn{
     background-image: linear-gradient(to left, #8650f4, #0034c4);
     border-radius: 5px;
-    width: 150px;
+    width: 360px;
     padding: 5px;
     border: #8650f4 2px solid;
 }
@@ -30,7 +29,8 @@
     opacity: 0.8;
 }
 .form-outline{
-
+    margin-left: 5px;
+    margin-right: 5px;
 }
 
 .form-control {
@@ -50,12 +50,11 @@
     border-radius: 5px;
     border-style: solid;
     box-sizing: border-box;
-    width: 150px;
-    background-color: transparent;
-    background-image: none;
+    min-width: 360px;
     text-decoration: none;
     padding: 5px;
     text-align: center;
+  
 }
 
 .signupbtn:hover{

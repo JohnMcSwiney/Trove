@@ -1,5 +1,5 @@
 .signup{
-    max-width: 400px;
+    max-width: 380px;
     margin: auto;
 }
 
@@ -21,6 +21,7 @@
     background-image: linear-gradient(to left, #8650f4, #6f49e8, #5642dc, #393bd0, #0034c4);
     border-radius: 5px;
     color: white;
+    min-width: 380px;
 }
 
 .form-control {
@@ -37,4 +38,10 @@
 .signupbtn-form:hover{
     opacity: 0.8;
 }
+
+.form-outline{
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
 
