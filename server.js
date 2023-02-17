@@ -35,6 +35,8 @@ app.use((req,res,next) =>{
 //FOR USER
 app.use('/api/user', userlogin)
 
+// app.use('api/user/album')
+
 
 
 //FOR ADMIN
