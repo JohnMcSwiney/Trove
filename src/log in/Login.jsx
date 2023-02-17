@@ -5,6 +5,7 @@ import Header from '../containers/header/Header';
 import './login.css'
 import { useNavigate } from 'react-router-dom';
 
+import{ImFacebook, ImGoogle} from 'react-icons/im'
 
 const Login = () => {
      const [email, setEmail] = React.useState('');
@@ -25,7 +26,8 @@ const Login = () => {
           
      }
   return (
-    <form className='login' onSubmit={handleSubmit}>
+     <div className='login'>
+    <form onSubmit={handleSubmit}>
           <h1 className='login-header'>Log in</h1>
           
           <div className='login-container'>
@@ -66,6 +68,22 @@ const Login = () => {
           </div>
           {error && <div className="error">{error}</div>}
      </form>
+          <div className='go-fa'>
+               <p>Continue with</p>
+
+          <div className='go-fa-wrap'>
+                <div className='go'>
+                    <ImGoogle className='go-icon'/>
+               </div>
+
+               <div className='fa'>
+                    <ImFacebook className='fa-icon'/>
+               </div>
+          </div>
+               
+              
+          </div>
+     </div>
   )
 }
 
