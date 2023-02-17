@@ -141,40 +141,20 @@ export default function UploadMusic(props) {
     
   }
 
-    let viewPage;
+    // let viewPage;
 
-    const [pageName, setPageName] = React.useState("MusicDetails");
-    function handleFormNavigation(event) {
-      setPageName("AddSongs") 
+    
 
-      if(pageName = "AddSongs") {
-        viewPage = <AddSongs 
-                    handleChange={handleChange}
-                    formData={formData}
-                    handleSubmit={handleSubmit}
-                    handleFormNavigation={handleFormNavigation}/>
-      } else if (pageName = "MusicDetails") {
-        viewPage = <MusicDetails 
-                    handleChange={handleChange}
-                    formData={formData}
-                    handleSubmit={handleSubmit}
-                    handleFormNavigation={handleFormNavigation}/>
-      }
-
-
-
-      // if(PageName === "MusicDetails") {
-      //   return{
-      //    viewPage = <AddSongs />;
-
-      //   }
-      // }
+    const [pageName, setPageName] = React.useState('MusicDetails');
+    function handleFormNavigation(pageName) {
+        setPageName(pageName)
+      
     }
-    viewPage = <MusicDetails 
-              handleChange={handleChange}
-              formData={formData}
-              handleSubmit={handleSubmit}
-              handleFormNavigation={handleFormNavigation}/>;
+
+    
+  React.useEffect(() => {
+    console.log(pageName)
+  }, [pageName]); 
 
     return( 
         <section>
@@ -226,9 +206,33 @@ export default function UploadMusic(props) {
                       handleSubmit={handleSubmit}
                     />  */}
 
-                    {viewPage}
+                      {(() => {
+                              switch (pageName) {
+                                case 'MusicDetails':
+                                  return <MusicDetails 
+                                  handleChange={handleChange}
+                                  formData={formData}
+                                  handleSubmit={handleSubmit}
+                                  handleFormNavigation={handleFormNavigation}
+                                  pageName ={pageName}
+                                  setPageName={setPageName}/>
+                                case 'AddSongs':
+                                  return <AddSongs 
+                                  handleChange={handleChange}
+                                  formData={formData}
+                                  handleSubmit={handleSubmit}
+                                  handleFormNavigation={handleFormNavigation}
+                                  pageName ={pageName}
+                                  setPageName={setPageName}/>
+                                // case 'won':
+                                //   return <Won handleClick={handleClick} />
+                                // case 'lost':
+                                //   return <Lost handleClick={handleClick} />
+                                default:
+                                  return null
+                              }
+                            })()}
 
-                 
                   </div>
               </form>
               </div>

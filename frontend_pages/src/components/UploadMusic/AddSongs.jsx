@@ -21,8 +21,6 @@ registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview, F
 
 export default function AddSongs(props) {
 
-    const PageName = "AddSong";
-
     React.useEffect(() => {
         console.log("files changed!");
         console.log(props.files);
@@ -67,7 +65,20 @@ export default function AddSongs(props) {
 
             </div>
 
+            <div className="navigate--form---btns"> 
+                <div className="back--btn" onClick={ () => props.handleFormNavigation('MusicDetails')}>
+                  <img src="../assets/backbtn.png" id="back--icon" alt="back--icon"/>
+                  <br/>
+                  <label for="back--icon">Back</label>
+                </div>
+                <div className="next--btn" onClick={() => props.handleFormNavigation('MusicDetails')}>
+                  <img src="../../assets/nextbtn.png" id="next--icon" alt="next--icon"/>
+                  <br/>
+                  <label for="next--icon">Next</label>
+                </div>
             
+            </div>
+
 
         </div>
 

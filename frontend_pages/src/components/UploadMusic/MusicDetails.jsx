@@ -2,8 +2,6 @@ import React from "react"
 
 export default function MusicDetails(props) {
 
-    const PageName = "MusicDetails";
-
     return (
         <div className="column song--form">
         <h2>MUSIC DETAILS</h2>
@@ -104,13 +102,13 @@ export default function MusicDetails(props) {
             </table>
             
             <div className="navigate--form---btns"> 
-                <div className="back--btn">
+                <div className="back--btn" onClick={ () => props.handleFormNavigation('AddSongs')}>
                   <img src="../assets/backbtn.png" id="back--icon" alt="back--icon"/>
                   <br/>
                   <label for="back--icon">Back</label>
                 </div>
-                <div className="next--btn">
-                  <img src="../../assets/nextbtn.png" id="next--icon" alt="next--icon"  onClick={props.handleFormNavigation}/>
+                <div className="next--btn" onClick={() => props.handleFormNavigation('AddSongs')}>
+                  <img src="../../assets/nextbtn.png" id="next--icon" alt="next--icon"/>
                   <br/>
                   <label for="next--icon">Next</label>
                 </div>
