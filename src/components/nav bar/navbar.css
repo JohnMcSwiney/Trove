@@ -1,11 +1,3 @@
-.trovelinks{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-content: center;
-    margin: auto;
-}
-
 .Nav{
 display: flex;
 flex-direction: row;
@@ -27,7 +19,7 @@ padding-right:4px;
    
 }
 
-.trove-nav-icon{
+.trove-nav-icon{ /* this is for the container */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -50,38 +42,21 @@ padding-right:4px;
     padding-top: 0.7px;;
     font-size:11.25px;
 }
-.trove-nav-icon > AiOutlineHome, 
-.trove-nav-icon > GoSearch,
-.trove-nav-icon > GiOpenTreasureChest,
-.trove-nav-icon > VscAccount{
-    /*  bruh  */
-}
 
 
 .trove-nav-icon:hover{
     background-color: #222c5baf;
-    
 }
 
 .trove-nav-icon:hover > div > *{
     color: rgba(255, 255, 255, 0.861);
     text-shadow: 0 0 1 rgba(255, 255, 255, 0.735);
 }
-
-
 .trove-nav-icon:hover > .selection-indicator{
     background-color: #8750f4e6;
     box-shadow: 0px 1px 3px #8650F4;
 }
-
-.trove-links{
-    text-decoration: none;
-    color: white;
-    display: flex;
-    
-}
-
-.nav-icon{
+.nav-icon{ /* This is the icon itself */
     width: 20px;
     height: 20px;
     margin: auto;
@@ -91,13 +66,18 @@ padding-right:4px;
     height: 19px;
     text-align: center;
 }
-
 .nav-text-active{
-    border-color: #8650F4;
-    
+    border-color: #8650F4;   
 }
-.active{
+.trove-links{
+    text-decoration: none;
+    color: white;
+    display: flex;   
+}
 
+
+.active{
+    /* uh, hi - how's it goin'? */
 }
 .active > div > .nav-icon{
     color: white;
@@ -112,6 +92,7 @@ padding-right:4px;
     box-shadow: 0px 0.5px 3px #8750f4d2;
 }
 
+
 .selection-indicator{
     height: 1.5px;
     width: 40px;
@@ -121,6 +102,15 @@ padding-right:4px;
 }
 
 .divider-white{
+    height: 35px;
+    width: 1px;
+    border-radius: 1px;
+    background-color: rgba(255, 255, 255, 0.33);
+}
+/* Because the classname is already used up. 
+   this is an alternative styling method for 
+   the artist only divider */
+#divider-white{
     height: 35px;
     width: 1px;
     border-radius: 1px;

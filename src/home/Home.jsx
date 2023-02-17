@@ -3,7 +3,6 @@ import React from 'react'
 import TasteProfile from '../components/taste Profile/TasteProfile';
 import CardArtist from '../components/card_artist/CardArtist';
 import CardAlbum from '../components/card_album/CardAlbum'
-import LastestRecipe from '../components/lastest recipe/LastestRecipe';
 
 
 
@@ -27,8 +26,6 @@ const Home = () => {
           <CardAlbum />
           </div>
           
-        
-        <LastestRecipe/>
       </main>
 
     </div>
