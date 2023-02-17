@@ -8,26 +8,29 @@ const songSchema = new mongoose.Schema(
             maxlength: 75,
         },
 
+        artist: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Artist',
+            default: null
+        },
+
         genre: {
             type: String,
 
         },
 
-        artist: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Artist'
-        },
-
-        contributingArtistList: [
+        featuredArtists: [
             {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'Artist',
+                default: null
             }
         ],
 
         album: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Album'
+            ref: 'Album',
+            default: null
         },
 
         highlightStart: {

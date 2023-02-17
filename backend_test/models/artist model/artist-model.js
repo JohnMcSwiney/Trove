@@ -24,7 +24,9 @@ const artistSchema = mongoose.Schema({
         albumList:[
             {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: 'Artist'
+                ref: 'Artist',
+                default: null,
+                required: false
             }
         ],
         albumArtURL: {
@@ -34,7 +36,10 @@ const artistSchema = mongoose.Schema({
         songList: [
             {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: 'Song'
+                ref: 'Song',
+                default: null,
+                required: false
+
             }
         ],
         isPublished: {
@@ -46,9 +51,5 @@ const artistSchema = mongoose.Schema({
       }
     
     )
-
-    // artistSchema.statics.signup = async function (email,user,passwor){
-
-    // }
     
 module.exports = mongoose.model('Artist',artistSchema)

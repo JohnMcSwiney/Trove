@@ -54,6 +54,15 @@ export default function MusicDetails(props) {
           <tr>
             <td className="columnt">
               <label>
+                Featured Artists:
+                <br />
+                <input type="text" name="featuredArtists" placeholder="Featured Artists" onChange={props.handleFeaturedArtists} />
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td className="columnt">
+              <label>
                 Album Name:
                 <br />
                 <input type="text" name="albumName" placeholder="Album Name" onChange={props.handleAlbumName} />

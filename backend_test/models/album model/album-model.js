@@ -14,13 +14,15 @@ const albumSchema = new mongoose.Schema({
 
     artist: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Artist'
+        ref: 'Artist',
+        default: null
     },
 
     contributingArtistList: [
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Artist",
+            default: null
         }
     ],
 
@@ -48,7 +50,8 @@ const albumSchema = new mongoose.Schema({
     songList: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "Song"
+            ref: "Song",
+            default: null
         }
     ]
 })

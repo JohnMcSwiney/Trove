@@ -103,7 +103,7 @@ export default function UploadMusic(props) {
     const [title, setTitle] = useState('');
     const [genre, setGenre] = useState('');
     const [artist, setArtist] = useState('');
-    const [contributingArtistList, setContributingArtistList] = useState('');
+    const [featuredArtists, setFeaturedArtists] = useState('');
     const [album, setAlbum] = useState('');
     const [highlightStart, setHighlightStart] = useState(0);
     const [highlightStop, setHighlightStop] = useState(0);
@@ -119,6 +119,18 @@ export default function UploadMusic(props) {
         setTitle(e.target.value);
     }
 
+    const handleArtist = (e) => {
+        setArtist(e.target.value);
+    }
+
+    const handleGenre = (e) => {
+        setGenre(e.target.value);
+    }
+
+    const handleFeaturedArtists = (e) => {
+        setFeaturedArtists(e.target.value);
+    }
+
     const handleAlbumName = (e) => {
         setAlbum(e.target.value);
     }
@@ -129,10 +141,6 @@ export default function UploadMusic(props) {
 
     const handleHighlightStop = (e) => {
         setHighlightStop(e.target.value);
-    }
-
-    const handleGenre = (e) => {
-        setGenre(e.target.value);
     }
 
     const handleSongFileChange = (e) => {
@@ -151,9 +159,6 @@ export default function UploadMusic(props) {
         setReleaseYear(e.target.value);
     }
 
-    const handleArtist = (e) => {
-        setArtist(e.target.value);
-    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -220,13 +225,14 @@ export default function UploadMusic(props) {
                         fetch('/api/songs', {
                             method: 'POST',
                             headers: {
+                                'Accept': 'application/json',
                                 'Content-Type': 'application/json'
                             },
                             body: JSON.stringify({
                                 title,
                                 genre,
                                 artist,
-                                contributingArtistList,
+                                featuredArtists,
                                 album,
                                 highlightStart,
                                 highlightStop,
@@ -344,15 +350,16 @@ export default function UploadMusic(props) {
                         <MusicDetails
                             handleSubmit={handleSubmit}
                             handleTitle={handleTitle}
+                            handleArtist={handleArtist}
+                            handleGenre={handleGenre}
+                            handleFeaturedArtists={handleFeaturedArtists}
                             handleAlbumName={handleAlbumName}
                             handleHighlightStart={handleHighlightStart}
                             handleHighlightStop={handleHighlightStop}
-                            handleGenre={handleGenre}
                             handleSongFileChange={handleSongFileChange}
                             handleImageFileChange={handleImageFileChange}
                             handleReleaseType={handleReleaseType}
                             handleReleaseYear={handleReleaseYear}
-                            handleArtist={handleArtist}
                         />
                     </div>
                 </form>
