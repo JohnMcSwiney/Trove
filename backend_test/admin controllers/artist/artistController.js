@@ -36,47 +36,62 @@ const getAnArtist = async (req, res) => {
 //create an artist
 const createArtist = async (req, res) => {
 
-    Song.findOne({ title: req.body.song }, async (err, foundSong) => {
+    try {
+        
+        const artist = new Artist(req.body);
+        artist.songList = [];
+        artist.albumList = [];
 
-        if (err) {
-            console.log(err);
-            res.status(500).send(err);
-        } else if (!foundSong) {
-            console.log(err);
-            console.log("there are no songs")
-            //res.status(400).send("Songs not found");
+        await artist.save();
 
-            Album.findOne({ albumName: req.body.album}, async (err, foundAlbum) => {
+        res.status(201).json(artist);
+    }
+    catch (err) {
 
-                if (err) {
-                    console.log(err);
-                    res.status(500).send(err);
-                } else if (!foundAlbum) {
-                    console.log(err);
-                    console.log("there is no album");
-                    const {
-                        email,
-                        password,
-                        userName,
-                        artistName,
-                        artistFollowers,
-                        albumArtURL,
-                        isPublished,
-                        publishDate,
-                        albumList,
-                        songList
-                    } = req.body
-                    try {
-                        const artist = await Artist.create(req.body)
-                        res.status(200).json(artist);
-                    } catch (err) {
-                        res.status(400).json({ message: err.message })
-                    }
-                    //res.status(400).send("Album not found");
-                }
-            });
-        }
-    });
+        res.status(400).json({msg: err.message});
+    }
+
+    // Song.findOne({ title: req.body.song }, async (err, foundSong) => {
+
+    //     if (err) {
+    //         console.log(err);
+    //         res.status(500).send(err);
+    //     } else if (!foundSong) {
+    //         console.log(err);
+    //         console.log("there are no songs")
+    //         //res.status(400).send("Songs not found");
+
+    //         Album.findOne({ albumName: req.body.album}, async (err, foundAlbum) => {
+
+    //             if (err) {
+    //                 console.log(err);
+    //                 res.status(500).send(err);
+    //             } else if (!foundAlbum) {
+    //                 console.log(err);
+    //                 console.log("there is no album");
+    //                 const {
+    //                     email,
+    //                     password,
+    //                     userName,
+    //                     artistName,
+    //                     artistFollowers,
+    //                     albumArtURL,
+    //                     isPublished,
+    //                     publishDate,
+    //                     albumList,
+    //                     songList
+    //                 } = req.body
+    //                 try {
+    //                     const artist = await Artist.create(req.body)
+    //                     res.status(200).json(artist);
+    //                 } catch (err) {
+    //                     res.status(400).json({ message: err.message })
+    //                 }
+    //                 //res.status(400).send("Album not found");
+    //             }
+    //         });
+    //     }
+    // });
 }
 
 //update an artist

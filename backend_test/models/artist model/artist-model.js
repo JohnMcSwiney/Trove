@@ -8,11 +8,6 @@ const artistSchema = mongoose.Schema({
         maxLength: 50
     },
 
-    userName: {
-        type: String,
-        required: [true, `Please provide username`]
-    },
-
     email: {
         type: String,
         required: [true, `Please provide email`],
@@ -30,7 +25,7 @@ const artistSchema = mongoose.Schema({
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Artist',
-            default: '',
+            default: null,
         }
     ],
     albumArtURL: {
@@ -41,7 +36,7 @@ const artistSchema = mongoose.Schema({
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Song',
-            default: '',
+            default: null,
         }
     ],
     isPublished: {

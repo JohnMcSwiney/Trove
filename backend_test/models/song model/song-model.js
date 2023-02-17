@@ -29,7 +29,7 @@ const songSchema = new mongoose.Schema(
         album: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Album',
-            default: '',
+            default: null,
         },
 
         highlightStart: {
@@ -52,6 +52,11 @@ const songSchema = new mongoose.Schema(
         releaseYear: {
             type: Number
 
+        },
+
+        releaseType: {
+            type: String,
+            enum: ['Album', 'EP', 'Single']
         },
 
         isPublished: {
