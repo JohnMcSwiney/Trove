@@ -21,7 +21,7 @@ export default function MusicDetails(props) {
                 <label>
                   Album Name:
                   <br />
-                      <input type="text" name="albumName" placeholder="Album Name"  onChange={props.handleChange} />
+                      <input type="text" name="albumName" placeholder="Album Name"  onChange={props.handleAlbumName} />
                 </label>
                 </td>                          
               </tr>
@@ -37,16 +37,23 @@ export default function MusicDetails(props) {
                   <label>
                   Start:
                   </label>
-                  <input type="number" name="highlightStart" placeholder="00:00"  onChange={props.handleChange}/>
+                  <input type="number" name="highlightStart" placeholder="00:00"  onChange={props.handleHighlightStart}/>
                 </td>   
                 <td colspan="2" className="hotspot--stop">
                   <label>
                   Stop: 
                   </label>
-                  <input type="number" name="highlightStop" placeholder="00:00"  onChange={props.handleChange}/>
+                  <input type="number" name="highlightStop" placeholder="00:00"  onChange={props.handleHighlightStop}/>
                   <br/> 
                 </td>                
               </tr>
+              <td className="columnt">
+              <label>
+                Release Year:
+                <br />
+                <input type="number" name="releaseYear" placeholder="YYYY" min="1900" max="2024" onChange={props.handleReleaseYear} />
+              </label>
+              </td>
               <tr>
                   <td  className="columnt">
                     <label>
@@ -57,18 +64,18 @@ export default function MusicDetails(props) {
               <fieldset>
               <tr>
                   <td className="genre--radio">
-                        <input type="radio" name="genre" value="pop" checked={props.formData.genre === "pop"} onChange={props.handleChange}/>POP
+                        <input type="radio" name="genre" value="pop" checked={props.handleGenre === "pop"} onChange={props.handleChange}/>POP
                   </td>
                   <td className="genre--radio">
-                        <input type="radio" name="genre" value="rock" checked={props.formData.genre === "rock"} onChange={props.handleChange}/>ROCK
+                        <input type="radio" name="genre" value="rock" checked={props.handleGenre === "rock"} onChange={props.handleChange}/>ROCK
                   </td>
               </tr>
               <tr>
                   <td className="genre--radio">
-                        <input type="radio" name="genre" value="country" checked={props.formData.genre === "country"} onChange={props.handleChange} />COUNTRY
+                        <input type="radio" name="genre" value="country" checked={props.handleGenre === "country"} onChange={props.handleChange} />COUNTRY
                   </td>
                   <td className="genre--radio">
-                        <input type="radio" name="genre" value="hiphop"checked={props.formData.genre === "hiphop"} onChange={props.handleChange} />HIP-HOP
+                        <input type="radio" name="genre" value="hiphop"checked={props.handleGenre === "hiphop"} onChange={props.handleChange} />HIP-HOP
                   </td>
               </tr>
               </fieldset>
@@ -82,13 +89,13 @@ export default function MusicDetails(props) {
               <fieldset>
               <tr>
                   <td className="release--radio">
-                        <input type="radio" name="releasetype" value="album" checked={props.formData.releasetype === "album"} onChange={props.handleChange}/>ALBUM
+                        <input type="radio" name="releasetype" value="album" checked={props.handleReleaseType === "album"} onChange={props.handleChange}/>ALBUM
                   </td>
                   <td className="release--radio">
-                        <input type="radio" name="releasetype" value="ep" checked={props.formData.releasetype === "ep"} onChange={props.handleChange}/>EP
+                        <input type="radio" name="releasetype" value="ep" checked={props.handleReleaseType === "ep"} onChange={props.handleChange}/>EP
                   </td>
                   <td className="release--radio">
-                        <input type="radio" name="releasetype" value="single" checked={props.formData.releasetype === "single"} onChange={props.handleChange} />SINGLE
+                        <input type="radio" name="releasetype" value="single" checked={props.handleReleaseType === "single"} onChange={props.handleChange} />SINGLE
                   </td>
               </tr>
               </fieldset>

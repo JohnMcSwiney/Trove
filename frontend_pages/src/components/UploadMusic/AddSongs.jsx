@@ -29,28 +29,27 @@ export default function AddSongs(props) {
     return (
         <div className="column song--form">
             <h2>ADD SONGS</h2>
-            {/* <label className="custom-file-upload">
-            <input type="file" name="song" value="" accept="image/*" className="gradient--btn image--btn" onChange={props.handleChange}/> 
-                Add Song <img src="../../assets/upload_icon.png" id="upload--icon" alt="upload_icon"/>
-            </label>  */}
+            <label className="custom-song-upload">
+                <input type="file" name="songFile" value="" accept="audio/*" className="gradient--btn image--btn hide--file" onChange={props.handleSongFileChange} />
+                Add Song 
+                {/* <img src="../../assets/upload_icon.png" id="upload--icon" alt="upload_icon" /> */}
+            </label>
             <div className="add--song">
 
+            {/* 
             <FilePond
                 files={props.files}
                 onupdatefiles={props.setFiles}
                 allowMultiple={true}
-                maxFiles={8}
-                //server="/"
-                name="files" /* sets the file input name, it's filepond by default */
-                labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
-                allowFileEncode={true}
-
-
-            />
+                maxFiles={8} */}
+                {/* //server="/" */}
+                {/* name="files"  */}
+                {/* /* sets the file input name, it's filepond by default */ }
+                {/* labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>' */}
+                {/* allowFileEncode={true} */}
+            {/* /> */}
 
              <input type="submit" value="Submit" className="gradient--btn submit--btn" onClick={props.handleSubmit} /> 
-
-            {/* <h4>{fileRef.pond.getFiles()}</h4> */}
 {/* 
             {
                     props.files && props.files.map((item, index)=>{
