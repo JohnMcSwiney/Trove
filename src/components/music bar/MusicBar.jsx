@@ -8,7 +8,8 @@ import { MdExplicit, MdOutlineQueueMusic } from "react-icons/md"
 import { BiVolumeFull, BiVolumeLow, BiVolume, BiVolumeMute } from "react-icons/bi";
 import { FaHeart, FaShareSquare, FaRegHeart } from "react-icons/fa";
 import NoSong from './NoSong.png';
-import 'react-tooltip/dist/react-tooltip.css';
+
+import 'react-tooltip/dist/react-tooltip.css'
 import HeartIcon from '../../assets/Trv_icons/Trv_likeIcon_outline.svg';
 import { RiFolderMusicFill, RiFolderMusicLine } from "react-icons/ri";
 import { BsSkipStart, BsSkipEnd, BsPlay, BsPause } from "react-icons/bs";
