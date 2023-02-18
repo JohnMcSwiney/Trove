@@ -268,48 +268,60 @@ const updateSong = async (req, res) => {
 }
 
 
-const deleteSong = async (request, response) => {
+const deleteSong = async (req, res) => {
 
-    const { id } = request.params;
+    const { id } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
 
-        return response.status(404).json({ error: "song not found" });
+        return res.status(404).json({ error: "song not found" });
     }
 
-    const artist = await Artist.findOne({ artistName: req.body.artist });
-    if (!artist) {
-        throw new Error(`Artist "${req.body.artist}" not found`);
-    }
+    try {
 
-    const album = await Album.findOne({ albumName: req.body.album });
-    if (!album) {
-        throw new Error(`Album "${req.body.album}" not found`);
-    }
+        //console.log("Artist: " + req.body.artist);
 
-    const featuredArtists = await Promise.all(req.body.featuredArtists.map(async (name) => {
+        const song = Song.findById(id);
 
-        const featuredArtist = await Artist.findOne({ artistName: name });
+        const artist = await Artist.findOne({ artistName: song.artist });
 
-        if (!featuredArtist) {
-            throw new Error(`Featured artist "${name}" not found`);
+        if (!artist) {
+            throw new Error(`Artist "${song.artist}" not found`);
         }
 
-        return featuredArtist._id;
-    }));
+        const album = await Album.findOne({ albumName: song.album });
+        if (!album) {
+            throw new Error(`Album "${song.album}" not found`);
+        }
 
-    const song = await Song.findOneAndDelete({ _id: id })
+        const featuredArtists = await Promise.all(song.featuredArtists.map(async (name) => {
 
-    if (!song) {
-        console.log("song not found");
+            const featuredArtist = await Artist.findOne({ artistName: name });
 
-        return response.status(404).json({ error: "song not found" });
-    }
-    else {
+            if (!featuredArtist) {
+                throw new Error(`Featured artist "${name}" not found`);
+            }
+
+            return featuredArtist._id;
+        }));
+
+        await Artist.updateOne({ _id: artist._id }, { $pull: { songList: song._id } });
+
+        await Album.updateOne({ _id: album._id }, { $pull: { songList: song._id } });
+
+
+        await Song.deleteOne({ _id: id });
+
         console.log("song is deleted");
 
-        response.status(200).json({ msg: "song deleted!" });
+        res.status(200).json({ msg: "song deleted!" });
     }
+    catch (err) {
+
+        console.log(err);
+        res.status(400).json({ message: err.message });
+    }
+
 }
 
 module.exports = {
