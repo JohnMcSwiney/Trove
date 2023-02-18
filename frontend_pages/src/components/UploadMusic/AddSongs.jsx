@@ -70,7 +70,7 @@ export default function AddSongs(props) {
                   <br/>
                   <label for="back--icon">Back</label>
                 </div>
-                <div className="next--btn" onClick={() => props.handleFormNavigation('MusicDetails')}>
+                <div className="next--btn" onClick={() => props.handleFormNavigation('ReviewSongs')}>
                   <img src="../../assets/nextbtn.png" id="next--icon" alt="next--icon"/>
                   <br/>
                   <label for="next--icon">Next</label>

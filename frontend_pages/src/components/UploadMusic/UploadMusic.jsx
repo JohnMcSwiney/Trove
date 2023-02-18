@@ -8,6 +8,8 @@ import './UploadMusic.css';
 // Import the functions you need from the SDKs you need
 import firebase from "firebase/compat/app";
 import "firebase/compat/storage";
+import ReviewSongs from "./ReviewSongs";
+import SongInfo from "./SongInfo";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -108,7 +110,7 @@ export default function UploadMusic(props) {
     const [highlightStart, setHighlightStart] = useState(0);
     const [highlightStop, setHighlightStop] = useState(0);
     const [genre, setGenre] = useState('');
-    const [songFile, setSongFile] = useState(null);
+    const [songFile, setSongFile] = useState([]);
     const [imageFile, setImageFile] = useState();
     const [releaseType, setReleaseType] = useState('');
     const [releaseYear, setReleaseYear] = useState(0);
@@ -139,7 +141,7 @@ export default function UploadMusic(props) {
 
   const handleSongFileChange = (e) => {
       setSongFile(e.target.files[0]);
-      console.log(songFile[0].name);
+      // console.log(songFile[0].name);
   };
 
   const handleImageFileChange = (e) => {
@@ -165,7 +167,7 @@ export default function UploadMusic(props) {
       setIsUploading(true);
 
       const storageRef = storage.ref();
-      const songRef = storageRef.child(`songs/${songFile.name}`);
+      const songRef = storageRef.child(`songs/${songFile[0].name}`);
       const songUploadTask = songRef.put(songFile, { contentType: 'audio/mp3' });
 
       console.log("songFile: " + songFile);
@@ -315,13 +317,24 @@ export default function UploadMusic(props) {
     //   console.log(formData)
     // }
 
-    // let viewPage;
+    let songsList;
 
       React.useEffect(() => {
+       
+        let toUploadSongs = Array.from(songFile);
+
         if(songFile) {
           console.log(songFile.name);
-        }
-      }, [songFile]);
+
+          songsList = toUploadSongs && toUploadSongs.map((item, index)=>{
+            return(          
+                <SongInfo
+                    key={index}
+                    {...item}
+                    songFile={songFile}
+                    />)
+        })
+      }}, [songFile]);
 
     const [pageName, setPageName] = React.useState('MusicDetails');
     function handleFormNavigation(pageName) {
@@ -388,30 +401,36 @@ export default function UploadMusic(props) {
                               switch (pageName) {
                                 case 'MusicDetails':
                                   return <MusicDetails 
-                                  handleSubmit={handleSubmit}
-                                  handleTitle={handleTitle}
-                                  handleAlbumName={handleAlbumName}
-                                  handleHighlightStart={handleHighlightStart}
-                                  handleHighlightStop={handleHighlightStop}
-                                  handleGenre={handleGenre}
-                                  handleSongFileChange={handleSongFileChange}
-                                  handleImageFileChange={handleImageFileChange}
-                                  handleReleaseType={handleReleaseType}
-                                  handleReleaseYear={handleReleaseYear}
-                                  handleArtist={handleArtist}
-                                  handleFormNavigation={handleFormNavigation}
-                                  pageName={pageName}
-                                  setPageName={setPageName}/>
+                                    handleSubmit={handleSubmit}
+                                    handleTitle={handleTitle}
+                                    handleAlbumName={handleAlbumName}
+                                    handleHighlightStart={handleHighlightStart}
+                                    handleHighlightStop={handleHighlightStop}
+                                    handleGenre={handleGenre}
+                                    handleSongFileChange={handleSongFileChange}
+                                    handleImageFileChange={handleImageFileChange}
+                                    handleReleaseType={handleReleaseType}
+                                    handleReleaseYear={handleReleaseYear}
+                                    handleArtist={handleArtist}
+                                    handleFormNavigation={handleFormNavigation}
+                                    pageName={pageName}
+                                    setPageName={setPageName}/>
                                 case 'AddSongs':
                                   return <AddSongs 
-                                  handleSongFileChange={handleSongFileChange}
-                                  handleTitle={handleTitle}
-                                  handleSubmit={handleSubmit}
-                                  handleFormNavigation={handleFormNavigation}
-                                  pageName ={pageName}
-                                  setPageName={setPageName}/>
-                                // case 'ReviewSongs':
-                                //   return <Won handleClick={handleClick} />
+                                    handleSongFileChange={handleSongFileChange}
+                                    handleTitle={handleTitle}
+                                    handleSubmit={handleSubmit}
+                                    handleFormNavigation={handleFormNavigation}
+                                    pageName ={pageName}
+                                    setPageName={setPageName}/>
+                                case 'ReviewSongs':
+                                  return <ReviewSongs 
+                                    handleSongFileChange={handleSongFileChange}
+                                    handleTitle={handleTitle}
+                                    handleSubmit={handleSubmit}
+                                    handleFormNavigation={handleFormNavigation}
+                                    pageName ={pageName}
+                                    setPageName={setPageName}/>
                                 // case 'lost':
                                 //   return <Lost handleClick={handleClick} />
                                 default:
