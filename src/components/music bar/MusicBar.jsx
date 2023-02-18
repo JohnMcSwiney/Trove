@@ -8,10 +8,12 @@ import { MdExplicit, MdOutlineQueueMusic } from "react-icons/md"
 import { BiVolumeFull, BiVolumeLow, BiVolume, BiVolumeMute } from "react-icons/bi";
 import { FaHeart, FaShareSquare, FaRegHeart } from "react-icons/fa";
 import NoSong from './NoSong.png';
-
+import 'react-tooltip/dist/react-tooltip.css';
 import HeartIcon from '../../assets/Trv_icons/Trv_likeIcon_outline.svg';
 import { RiFolderMusicFill, RiFolderMusicLine } from "react-icons/ri";
 import { BsSkipStart, BsSkipEnd, BsPlay, BsPause } from "react-icons/bs";
+
+import { Tooltip } from 'react-tooltip' //react tool tip used in explicit tag
 
 import './musicbar.css';
 
@@ -47,6 +49,7 @@ const MusicBar = () => {
   //isMuted is totally screwed... but it works. So i'm just gonna leave it as it is <3 sorry if it's confusing (I don't actually know what's happening lol)
   const [prevVolume, updatePrevVol] = useState(0.5);
   const [isLiked, setIsLiked] = useState(false);
+  const [isExplicit, setExplicit] = useState(true);
 
   //refrences
   const audioPlayer = useRef(); //reference audio component
@@ -172,14 +175,24 @@ const MusicBar = () => {
 
             <div className='song-img'>
               <img src={obj.img_url}></img>
+              {obj.explicit ? 
+                <div className="explicit-containter">
+                  <MdExplicit 
+                      data-tooltip-id="my-tooltip" data-tooltip-content={"Explicit: This song includes prophane language"} 
+                      className='explicitActions' data-tooltip-variant='light'/>
+                  <Tooltip className='tooltip-style' 
+                          place='bottom'  id="my-tooltip"
+                          delayShow={100}
+                          />     
+                </div> : <p />}{/* explicit-containter */}
             </div>
-
+            
             <div className='song-txt-container-container'>
               <div className='song-info-txt-container'>
                 <div className='song-txt'><a>{obj.title}</a></div>
                 <div className='artist-txt'><a>{obj.artist}</a></div>
               </div>
-              <div className='hidden '>{obj.explicit ? <MdExplicit /> : <p />}</div>{/* explicit-containter */}
+                  
             </div>
 
             <div className='control-container'>
