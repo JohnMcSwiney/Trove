@@ -109,24 +109,24 @@ const NavBar = (props) => {
         <div className={isArtist === true ? '' : 'hidden'} id='divider-white'></div>{/*Yes there's a divider too*/}
         
         <div  className={isArtist === true ? '' : 'hidden'} >
-        <Link to={'/upload'} className='trove-links'>
-          <div
-            className={active === 4 ? "active" : ""}
-            onClick={() => setActive(4)}
-          >
-            <h1 hidden>Upload (Artist)</h1>
-            <div className="trove-nav-icon">
-              <div className='nav-icon'>
-                <RiUpload2Line size={20}/>
-              </div>
-              <div className='nav-text '>
-                <p className='text-pad-t  '>Upload</p>
-              </div>
-              <div className="selection-indicator">
+          <Link to={'/upload'} className='trove-links'>
+            <div
+              className={active === 4 ? "active" : ""}
+              onClick={() => setActive(4)}
+            >
+              <h1 hidden>Upload (Artist)</h1>
+              <div className="trove-nav-icon">
+                <div className='nav-icon'>
+                  <RiUpload2Line size={20}/>
+                </div>
+                <div className='nav-text '>
+                  <p className='text-pad-t  '>Upload</p>
+                </div>
+                <div className="selection-indicator">
+                </div>
               </div>
             </div>
-          </div>
-        </Link>
+          </Link>
         </div>
         
       </div>
