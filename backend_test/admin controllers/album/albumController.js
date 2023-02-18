@@ -41,35 +41,34 @@ const createAlbum = async (req, res) => {
             throw new Error("Artist not found");
         }
 
-        // const featuredArtists = await Artist.findOne({artistName: req.body.artist});
+        const featuredArtists = await Promise.all(req.body.featuredArtists.map(async (name) => {
 
-        // console.log(featuredArtists);
+            const featuredArtist = await Artist.findOne({ artistName: name });
 
-        // if (!featuredArtists) {
+            if (!featuredArtist) {
+              throw new Error(`Featured artist "${name}" not found`);
+            }
 
-        //     console.log("featured artist not found");
+            return featuredArtist._id;
+          }));
 
-        //     throw new Error("featured artist not found");
-        // }
-
-        const featuredArtists = req.body.album.featuredArtists.map((id) => mongoose.Types.ObjectId(id));
-
-        album.artist = artist._id;
-        album.featuredArtists = featuredArtists;
+          console.log(featuredArtists);
 
         const album = new Album({
             ...req.body,
             artist: artist._id,
-            featuredArtists: featuredArtists._id
+            featuredArtists: featuredArtists
         });
+
 
         album.songList = [];
         artist.albumList.push(album._id);
 
-        // const featuredArtists = album.featuredArtists.map((id) => mongoose.Types.ObjectId(id));
-
-        // album.artist = artist._id;
-        // album.featuredArtists = featuredArtists;
+        for (const featuredArtistId of featuredArtists) {
+            const featuredArtist = await Artist.findById(featuredArtistId);
+            featuredArtist.albumList.push(album._id);
+            await featuredArtist.save();
+        }
 
         await album.save();
         await artist.save();
@@ -77,7 +76,7 @@ const createAlbum = async (req, res) => {
         res.status(201).json(album);
     }
     catch (err) {
-
+        console.log(err);
         res.status(400).json({ message: err.message });
     }
 
