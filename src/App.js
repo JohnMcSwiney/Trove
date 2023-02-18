@@ -21,7 +21,7 @@ function App() {
 
     <BrowserRouter>
 
-    <div className="MainBg text-gray-500 font-body" style={{ height: '3000px' }}>
+    <div className="MainBg text-gray-500 font-body">
       <Header/>
 
       <Routes>
