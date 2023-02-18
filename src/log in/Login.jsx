@@ -7,12 +7,40 @@ import { useNavigate } from 'react-router-dom';
 
 import{ImFacebook, ImGoogle} from 'react-icons/im'
 
+import {app} from '../config/firebase.config'
+import {FacebookAuthProvider, getAuth, GoogleAuthProvider, initializeAuth, signInWithPopup} from 'firebase/auth'
 const Login = () => {
      const [email, setEmail] = React.useState('');
      const [password, setPassword] = React.useState('');
      const {login, error, isLoading} = useLogin();
-
      const navigate = useNavigate();
+
+     //login with google
+     const firebaseAuth = getAuth(app);
+     const provider = new GoogleAuthProvider();
+     const loginWithGoogle = async () => {
+          try {
+            const userCred = await signInWithPopup(firebaseAuth, provider);
+            console.log(userCred);
+          } catch (error) {
+            console.log(error.message);
+            
+          }
+        };
+     
+
+     // Login with facebook
+     const firebaseAuthFacebook = getAuth(app);
+     const facebookProvider = new FacebookAuthProvider();
+     const loginWithFacebook = async ()=> {
+          try{
+               const userCred = signInWithPopup(firebaseAuthFacebook, facebookProvider);
+          }catch(error){
+               console.log(console.message)
+          }
+     } 
+
+     
      const handleSubmit = async (e)=> {
           e.preventDefault();
           try{
@@ -72,11 +100,11 @@ const Login = () => {
                <p>Continue with</p>
 
           <div className='go-fa-wrap'>
-                <div className='go'>
+                <div className='go' onClick={loginWithGoogle}>
                     <ImGoogle className='go-icon'/>
                </div>
 
-               <div className='fa'>
+               <div className='fa' onClick={loginWithFacebook}>
                     <ImFacebook className='fa-icon'/>
                </div>
           </div>
