@@ -104,7 +104,7 @@ const createSong = async (req, res) => {
                         ...req.body,
                         artist: artist._id
                     });
-    
+
                     artist.songList.push(song._id);
 
                     await song.save();
@@ -117,31 +117,31 @@ const createSong = async (req, res) => {
                     const featuredArtists = await Promise.all(req.body.featuredArtists.map(async (name) => {
 
                         const featuredArtist = await Artist.findOne({ artistName: name });
-    
+
                         if (!featuredArtist) {
                             throw new Error(`Featured artist "${name}" not found`);
                         }
-    
+
                         return featuredArtist._id;
                     }));
-    
+
                     console.log(featuredArtists);
-    
+
                     const song = new Song({
                         ...req.body,
                         artist: artist._id,
                         featuredArtists: featuredArtists,
                     });
-    
+
                     artist.songList.push(song._id);
-    
-    
+
+
                     for (const featuredArtistId of featuredArtists) {
                         const featuredArtist = await Artist.findById(featuredArtistId);
                         featuredArtist.songList.push(song._id);
                         await featuredArtist.save();
                     }
-    
+
                     await song.save();
                     await artist.save();
                     res.status(201).json(song);
@@ -219,16 +219,40 @@ const updateSong = async (req, res) => {
         return res.status(404).json({ err: 'No such song' })
     }
 
-    const song = await Song.findOneAndUpdate({ _id: id }, {
-
-        ...req.body
-    });
-
-    if (!song) {
-
-        return res.status(404).json({ error: "Song not found" });
+    const artist = await Artist.findOne({ artistName: req.body.artist });
+    if (!artist) {
+        throw new Error(`Artist "${req.body.artist}" not found`);
     }
-    else {
+
+    const album = await Album.findOne({ albumName: req.body.album });
+    if (!album) {
+        throw new Error(`Album "${req.body.album}" not found`);
+    }
+
+    const featuredArtists = await Promise.all(req.body.featuredArtists.map(async (name) => {
+
+        const featuredArtist = await Artist.findOne({ artistName: name });
+
+        if (!featuredArtist) {
+            throw new Error(`Featured artist "${name}" not found`);
+        }
+
+        return featuredArtist._id;
+    }));
+
+
+    try {
+
+        const song = await Song.findOneAndUpdate(
+            { _id: id },
+            { $set: { ...req.body, artist: artist._id, album: album._id, featuredArtists: featuredArtists } },
+            { new: true }
+        );
+
+        if (!song) {
+
+            return res.status(404).json({ error: "Song not found" });
+        }
 
         console.log(song);
 
@@ -236,10 +260,12 @@ const updateSong = async (req, res) => {
 
         res.status(200).json(song);
     }
+    catch (err) {
+
+        console.log(err);
+        res.status(400).json({ message: err.message });
+    }
 }
-
-
-
 
 
 const deleteSong = async (request, response) => {
@@ -250,6 +276,27 @@ const deleteSong = async (request, response) => {
 
         return response.status(404).json({ error: "song not found" });
     }
+
+    const artist = await Artist.findOne({ artistName: req.body.artist });
+    if (!artist) {
+        throw new Error(`Artist "${req.body.artist}" not found`);
+    }
+
+    const album = await Album.findOne({ albumName: req.body.album });
+    if (!album) {
+        throw new Error(`Album "${req.body.album}" not found`);
+    }
+
+    const featuredArtists = await Promise.all(req.body.featuredArtists.map(async (name) => {
+
+        const featuredArtist = await Artist.findOne({ artistName: name });
+
+        if (!featuredArtist) {
+            throw new Error(`Featured artist "${name}" not found`);
+        }
+
+        return featuredArtist._id;
+    }));
 
     const song = await Song.findOneAndDelete({ _id: id })
 
@@ -263,7 +310,6 @@ const deleteSong = async (request, response) => {
 
         response.status(200).json({ msg: "song deleted!" });
     }
-    // }
 }
 
 module.exports = {
