@@ -7,8 +7,14 @@ import Header from './containers/header/Header';
 import MusicBar from './components/music bar/MusicBar';
 import NavBar from './components/nav bar/NavBar';
 
-import {Home, Search,MyTrove, MyAccount, Login} from './pages'
-import Auth from './auth/Auth';
+import {Home, Search,MyTrove, MyAccount, Login,Signup} from './pages'
+
+
+
+
+
+
+
 function App() {
   
   return (
@@ -25,13 +31,18 @@ function App() {
         <Route path='/mytrove' element = {<MyTrove/>}></Route>
         <Route path = '/myaccount' element = {<MyAccount/>}></Route>
         <Route path='/login' element={<Login/>}></Route>
+        <Route path='/signup' element ={<Signup/>}></Route>
         {/* <Route path='/artist' element ={<Artist/>}></Route> */}
         {/* <Route path='/upload' element= {<UploadMusic/>}></Route> */}
-        <Route path='/auth' element={<Auth/>}></Route>
+
         
-      </Routes> 
+      </Routes>
+      
+
+      
         <MusicBar/>
         <NavBar/>
+      
       {/* <script src="/index2.js"></script> */}
     </div>
 
