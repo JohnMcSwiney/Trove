@@ -613,6 +613,7 @@ body {
 
         .submit--button {
           height: 5vmin;
+
         }
 
         .upload--form {
@@ -773,11 +774,12 @@ body {
 
       h2 {
         margin-left: 3vmin;
+        text-align: center;
       }
 
       .navigate--form---btns {
         display: flex;
-        margin-left: 31vmin;
+        margin-left: 25vmin;
         margin-top: 2vmin;
       }
 
@@ -802,6 +804,18 @@ body {
         margin-right: 10vmin;
       }
 
-      
+      .song--info {
+        display: flex;
+        margin-left: 10vmin;
+        padding-top: 3vmin;
+        padding-bottom: 3vmin;
+      }
 
+      .songfile--name {
+        width: 20vmin;
+      }
+      
+      .upload--songfile {
+        margin-left: 10vmin;
+      }
 }

@@ -122,8 +122,6 @@ export default function MusicDetails(props) {
             
             </div>
 
-            [0].filename
-
         </div>
     )
 }

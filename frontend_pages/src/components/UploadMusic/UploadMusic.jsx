@@ -140,7 +140,7 @@ export default function UploadMusic(props) {
   }
 
   const handleSongFileChange = (e) => {
-      setSongFile(e.target.files[0]);
+      setSongFile(prevSongFile => {return[...prevSongFile, e.target.files[0]] });
       // console.log(songFile[0].name);
   };
 
@@ -317,23 +317,26 @@ export default function UploadMusic(props) {
     //   console.log(formData)
     // }
 
-    let songsList;
+    let songsList =[null];
+    // let toUploadSongs;
+    const [toUploadSongs, setToUploadSongs] = React.useState([]);
 
       React.useEffect(() => {
        
-        let toUploadSongs = Array.from(songFile);
+        // toUploadSongs = Array.from(songFile);
+        setToUploadSongs(songFile);
 
         if(songFile) {
           console.log(songFile.name);
 
-          songsList = toUploadSongs && toUploadSongs.map((item, index)=>{
-            return(          
-                <SongInfo
-                    key={index}
-                    {...item}
-                    songFile={songFile}
-                    />)
-        })
+        //   songsList = toUploadSongs && toUploadSongs.map((item, index)=>{
+        //     return(          
+        //         <SongInfo
+        //             key={index}
+        //             {...item}
+        //             songFile={songFile}
+        //             />)
+        // })
       }}, [songFile]);
 
     const [pageName, setPageName] = React.useState('MusicDetails');
@@ -422,7 +425,10 @@ export default function UploadMusic(props) {
                                     handleSubmit={handleSubmit}
                                     handleFormNavigation={handleFormNavigation}
                                     pageName ={pageName}
-                                    setPageName={setPageName}/>
+                                    setPageName={setPageName}
+                                    songsList={songsList}
+                                    toUploadSongs={toUploadSongs}
+                                    songFile={songFile}/>
                                 case 'ReviewSongs':
                                   return <ReviewSongs 
                                     handleSongFileChange={handleSongFileChange}

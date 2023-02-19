@@ -26,14 +26,18 @@ export default function AddSongs(props) {
         console.log(props.files);
       }, [props.files]);
 
+      let songsList =[null];
+
+
     return (
         <div className="column song--form">
             <h2>ADD SONGS</h2>
-            <label className="custom-song-upload">
-                <input type="file" name="songFile" value="" accept="audio/*" className="gradient--btn image--btn hide--file" onChange={props.handleSongFileChange} />
+            <div className="upload--songfile"><label className="custom-song-upload">
+                <input type="file" multiple name="songFile" value="" accept="audio/*" className="gradient--btn image--btn hide--file" onChange={props.handleSongFileChange} />
                 Add Song 
                 {/* <img src="../../assets/upload_icon.png" id="upload--icon" alt="upload_icon" /> */}
             </label>
+          
             <div className="add--song">
 
             {/* 
@@ -49,20 +53,16 @@ export default function AddSongs(props) {
                 {/* allowFileEncode={true} */}
             {/* /> */}
 
-             <input type="submit" value="Submit" className="gradient--btn submit--btn" onClick={props.handleSubmit} /> 
-{/* 
-            {
-                    props.files && props.files.map((item, index)=>{
-                    return(          
-                        <SongInfo
-                            key={index}
-                            {...item}
-                            files={props.files}
-                            />
-
-                ) })} */}
-
-            </div>
+            { props.toUploadSongs && props.toUploadSongs.map((item, index)=>{
+            return(          
+                <SongInfo
+                    key={index}
+                    {...item}
+                    i={index}
+                    songFile={props.songFile}
+                    /> )
+        })}
+        </div>
 
             <div className="navigate--form---btns"> 
                 <div className="back--btn" onClick={ () => props.handleFormNavigation('MusicDetails')}>
@@ -77,6 +77,11 @@ export default function AddSongs(props) {
                 </div>
             
             </div>
+
+             <input type="submit" value="Submit" className="gradient--btn submit--btn" onClick={props.handleSubmit} /> 
+
+            </div>
+
 
 
         </div>
