@@ -20,11 +20,10 @@ const userSchema = new mongoose.Schema({
         }
     ],
 
-    displayedName:{
+    displayName:{
         type:String,
-        default:'My Account'
     },
-    isAdmin:{
+    isArtist:{
         type:Boolean,
         default:false
     },
