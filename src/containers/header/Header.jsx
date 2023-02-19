@@ -1,7 +1,6 @@
 import React from "react";
 import './header.css';
-import { useLogout } from "../../hooks/user-hooks/useLogout";
-import { useAuthContext } from "../../hooks/useAuthContext";
+
 
 import {Dropdown,ButtonGroup} from 'react-bootstrap';
 import {GiHamburgerMenu} from 'react-icons/gi'
@@ -12,11 +11,7 @@ import {MdKeyboardBackspace} from 'react-icons/md' //back button
 import { useNavigate } from "react-router-dom";
 
 function Header() {
-  const {logout} = useLogout();
-  const {user} = useAuthContext();
-  const logoutHandler = ()=> {
-    logout();
-  }
+ 
 
   const navigate = useNavigate();
   const goBack = ()=> {
@@ -40,8 +35,8 @@ function Header() {
         <Dropdown>
           <Dropdown.Toggle  id="dropdown-basic" style={{backgroundColor:"#393bd0"}}>
           {/* work on this to get the id */}
-            {user&& (<div>{user._id}</div>)} 
-            {!user && (<div><AiOutlineUser/>Me</div>)}
+            
+            <div><AiOutlineUser/>Me</div>
           </Dropdown.Toggle>
 
           <Dropdown.Menu style={{backgroundColor:"#393bd0"}} >
@@ -49,28 +44,21 @@ function Header() {
                 <RiUpload2Line style={{color:"white"}}/>
               <a href="/upload" className="uploadbtn btn text-light">Upload</a>
               </div>
-              {user && (
+             
                 <div className="dd-backg">
                   <RiLogoutBoxLine  style={{color:"white"}} />
                     <button className="logout btn text-light"
-                    onClick={logoutHandler}
+                 
                     >Log out</button>
-                </div>
-              )}
-
-              {!user && (
+                </div>    
                 <>
-              <div className="dd-backg">
-                <RiUser5Line style={{color:"white"}}/>
-                <a href="/signup" class="signupbtn-nav btn text-light">  Sign up</a>
-              </div>
 
               <div className="dd-backg">
                 <RiLoginBoxLine  style={{color:"white"}} />
                 <a href="/login "className="loginbtn-nav btn text-light" >Log in</a>  
               </div>
               </>
-              )}
+
         
           </Dropdown.Menu>
       </Dropdown>
