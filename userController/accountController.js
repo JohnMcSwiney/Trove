@@ -1,45 +1,52 @@
 const User  = require('../models/user model/user-model')
 const jwt = require('jsonwebtoken')
+const stytch = require('stytch')
+require('dotenv').config()
+// const createToken = (_id)=> {
+//     return jwt.sign({_id: _id},process.env.SECRET, {expiresIn: "1h"})
+// }
 
-const createToken = (_id)=> {
-    return jwt.sign({_id: _id},process.env.SECRET, {expiresIn: "3d"})
-}
-
-
+const client =  new stytch.Client({
+    project_id: process.env.STYTCH_PROJECT_ID,
+    secret:process.env.STYTCH_SECRET,
+    env: stytch.envs.test
+    //diploy will be live
+})
 //login user
-const loginUser = async (req,res) =>{
-    const {email, password} = req.body;
-
-    try{
-        const user = await User.login(email, password);
-        //create a token
-        const token = createToken(user._id);
-
-        res.status(200).json({email, token, id: user._id});
-
-    }catch(err){
-        res.status(400).json({err:err.message});
-    }
+const loginUser = async (req, res) => {
+    const email = req.body.email;
+    const params = {
+      email,
+      login_magic_link_url: "http://localhost:3000/auth",
+      signup_magic_link_url: "http://localhost:3000/auth",
+    };
+  
+    const response = await client.magicLinks.email.loginOrCreate(params);
+    res.json(response);
 }
 
-//sign up user
+// const authMiddleWare = (req, res, next)=> {
+//     const sessionToken=req.headers.sessiontoken
+//     client.sessions.authenticate({session_token: sessionToken})
+//     .then(()=> {
+//         next()
+//     }).catch(err){
+//         res.status(401).json({err:err.message})
+//     }
+// }
 
-const signupUser = async(req,res)=>{
-
-    const {email, password,isAdmin,displayedName} = req.body;
-
-    try{ 
-        const user = await User.signup(email, password);
-
-        //create a token
-        const token = createToken(user._id);
-
-        res.status(200).json({email, token, id: user._id});
+const loginAuth = async (req,res)=>{
+    try{
+        const token = req.body.token;
+        const sessionToken= await client.magicLinks.authenticate(token, {session_duration_minutes: 120});
+     
+        res.json(sessionToken)
     }catch(err){
-        res.status(400).json({err:err.message});
+        res.json(err)
     }
+
 }
 module.exports={
     loginUser,
-    signupUser
+    loginAuth
 }
