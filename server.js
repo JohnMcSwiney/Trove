@@ -1,7 +1,7 @@
 require('dotenv').config()
 const express = require('express');
-const stytch = require('stytch')
-const cors = require('cors')
+const mongoose = require('mongoose');
+
 //For admin
 const userRouter = require('./admin routes/user-route/user-route');
 const albumRouter = require('./admin routes//album-route/album-route');
@@ -15,11 +15,7 @@ const songRouter = require('./admin routes//song-route/song-route');
 const userlogin = require('./user routes/user-login-route/user');
 
 
-
-
 const app = express();
-app.use(cors());
-const mongoose = require('mongoose')
 mongoose.set('strictQuery', true);
 mongoose.connect(process.env.DB_URL, {useNewUrlParser: true})
     .then(()=>{
@@ -38,8 +34,6 @@ app.use((req,res,next) =>{
 
 //FOR USER
 app.use('/api/user', userlogin)
-
-// app.use('api/user/album')
 
 
 
