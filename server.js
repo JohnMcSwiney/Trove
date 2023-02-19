@@ -35,6 +35,7 @@ app.use((req,res,next) =>{
 //FOR USER
 app.use('/api/user', userlogin)
 
+//Verify account
 
 
 //FOR ADMIN

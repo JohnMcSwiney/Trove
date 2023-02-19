@@ -24,7 +24,7 @@ const getAUser = async (req,res)=>{
 
 //create a new user
 const createUser = async (req, res) => {
-    const {email, password, displayedName,isAdmin,imageURL, favourites} = req.body;
+    const {email, password, displayedName,isAdmin,imageURL, favourites, isVerified} = req.body;
     const user = new User(req.body);
     const condition1 = await User.findOne({ email });
 

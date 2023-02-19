@@ -38,7 +38,12 @@ const userSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'playlist'
         }
-    ]
+    ],
+
+    isVerified: {
+        type: Boolean,
+        default:false
+    }
 
 }, {timestamps:true})
 
@@ -99,5 +104,7 @@ userSchema.statics.login = async function (email, password) {
 
     return user;
 }
+
+
 
 module.exports = mongoose.model("User",userSchema );
