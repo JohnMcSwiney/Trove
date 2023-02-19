@@ -4,3 +4,4 @@ export {default as MyTrove } from './my trove/MyTrove'
 export {default as MyAccount} from './my account/MyAccount'
 
 export {default as Login} from './log in/Login'
+export {default as Signup} from './sign up/Signup'

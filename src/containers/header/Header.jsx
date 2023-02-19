@@ -1,36 +1,27 @@
 import React from "react";
 import './header.css';
-import Axios from "axios";
+import { useLogout } from "../../hooks/user-hooks/useLogout";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 import {Dropdown,ButtonGroup} from 'react-bootstrap';
 import {GiHamburgerMenu} from 'react-icons/gi'
 import {AiOutlineUser} from 'react-icons/ai' 
+import {RiUser5Line} from 'react-icons/ri' //for signup
 import {RiLoginBoxLine, RiLogoutBoxLine, RiUpload2Line} from 'react-icons/ri' // login out , upload
 import {MdKeyboardBackspace} from 'react-icons/md' //back button
-import { useNavigate, Navigate } from "react-router-dom";
-import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Header() {
- 
+  const {logout} = useLogout();
+  const {user} = useAuthContext();
+  const logoutHandler = ()=> {
+    logout();
+  }
 
   const navigate = useNavigate();
-  //back button
   const goBack = ()=> {
     navigate(-1);
   }
-
-  // logout function
-  function handleLogout() {
-    axios.post('/api/user/logout')
-      .then((response) => {
-        console.log(response.data); // Log success message
-        document.cookie = 'sessiontoken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'; // Delete cookie
-      })
-      .catch((error) => {
-        console.error(error); // Log error message
-      });
-  }
-  
   return (
     <div className="d-flex justify-content-between sticky-top bg-fglass-b">
       <button className="back-button" onClick={goBack}>
@@ -49,8 +40,8 @@ function Header() {
         <Dropdown>
           <Dropdown.Toggle  id="dropdown-basic" style={{backgroundColor:"#393bd0"}}>
           {/* work on this to get the id */}
-            
-            <div><AiOutlineUser/>Me</div>
+            {user&& (<div>{user._id}</div>)} 
+            {!user && (<div><AiOutlineUser/>Me</div>)}
           </Dropdown.Toggle>
 
           <Dropdown.Menu style={{backgroundColor:"#393bd0"}} >
@@ -58,21 +49,28 @@ function Header() {
                 <RiUpload2Line style={{color:"white"}}/>
               <a href="/upload" className="uploadbtn btn text-light">Upload</a>
               </div>
-             
+              {user && (
                 <div className="dd-backg">
                   <RiLogoutBoxLine  style={{color:"white"}} />
                     <button className="logout btn text-light"
-                  onClick={handleLogout}
+                    onClick={logoutHandler}
                     >Log out</button>
-                </div>    
+                </div>
+              )}
+
+              {!user && (
                 <>
+              <div className="dd-backg">
+                <RiUser5Line style={{color:"white"}}/>
+                <a href="/signup" class="signupbtn-nav btn text-light">  Sign up</a>
+              </div>
 
               <div className="dd-backg">
                 <RiLoginBoxLine  style={{color:"white"}} />
                 <a href="/login "className="loginbtn-nav btn text-light" >Log in</a>  
               </div>
               </>
-
+              )}
         
           </Dropdown.Menu>
       </Dropdown>

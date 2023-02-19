@@ -1,5 +1,5 @@
 .login{
-    max-width: 360px;
+    max-width: 380px;
     margin: 0 auto;
 
 }
@@ -28,6 +28,11 @@
     background-image: linear-gradient(to left, #8650f4, #0034c4);
     opacity: 0.8;
 }
+.form-outline{
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
 .form-control {
     background-color: transparent;
     transform: none;
@@ -64,44 +69,4 @@
     flex-direction: column;
     gap: 10px;
 }
-/* google and facebook */
-.go-fa{
-    text-align: center;
-    margin-top: 10vh;
-   
- 
-}
-.go-fa-wrap{
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-}
 
-.go{
-    border: solid 1px white;
-    width: 40px;
-    height: 40px;
-    border-radius: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.fa{
-    border: solid 1px white;
-    width: 40px;
-    height: 40px;
-    border-radius: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.go-icon{
-    width: 20px;
-    height: 20px;
-}
-
-.fa-icon{
-    width: 20px;
-    height: 20px;
-}
