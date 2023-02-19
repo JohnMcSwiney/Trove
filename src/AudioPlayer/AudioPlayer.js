@@ -15,7 +15,7 @@ const AudioPlayer = () => {
 
 
 
-    const [isPlaying, setIsPlaying] =  useState(false);
+    const [isPlaying, setIsPlaying] =  useState(true);
     const [duration, setDuration] = useState(0);
     const [currentTime, setCurrentTime] = useState(0);
 
@@ -167,7 +167,7 @@ const AudioPlayer = () => {
                 </div>
 
                 <div className={style.audioPlayer}>
-                    <audio ref={audioPlayer} src ={slides[index].audio}></audio>
+                    <audio ref={audioPlayer} src ={slides[index].audio} autoplay></audio> {/* not working properly tried messing with it but going to sleep so will fix it in the moring*/}
                     
                     <button className={style.BackButton} onClick={() => {
                     if (index === 0) return;
