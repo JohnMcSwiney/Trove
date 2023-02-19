@@ -13,6 +13,7 @@ const Auth = () => {
       cookie.set("sessionToken", response.data)
     })
   })
+
   return (
     <>
     <Navigate to ='/' replace/>

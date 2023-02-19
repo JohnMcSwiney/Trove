@@ -1,22 +1,36 @@
 import React from "react";
 import './header.css';
-
+import Axios from "axios";
 
 import {Dropdown,ButtonGroup} from 'react-bootstrap';
 import {GiHamburgerMenu} from 'react-icons/gi'
 import {AiOutlineUser} from 'react-icons/ai' 
-import {RiUser5Line} from 'react-icons/ri' //for signup
 import {RiLoginBoxLine, RiLogoutBoxLine, RiUpload2Line} from 'react-icons/ri' // login out , upload
 import {MdKeyboardBackspace} from 'react-icons/md' //back button
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
+import axios from "axios";
 
 function Header() {
  
 
   const navigate = useNavigate();
+  //back button
   const goBack = ()=> {
     navigate(-1);
   }
+
+  // logout function
+  function handleLogout() {
+    axios.post('/api/user/logout')
+      .then((response) => {
+        console.log(response.data); // Log success message
+        document.cookie = 'sessiontoken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'; // Delete cookie
+      })
+      .catch((error) => {
+        console.error(error); // Log error message
+      });
+  }
+  
   return (
     <div className="d-flex justify-content-between sticky-top bg-fglass-b">
       <button className="back-button" onClick={goBack}>
@@ -48,7 +62,7 @@ function Header() {
                 <div className="dd-backg">
                   <RiLogoutBoxLine  style={{color:"white"}} />
                     <button className="logout btn text-light"
-                 
+                  onClick={handleLogout}
                     >Log out</button>
                 </div>    
                 <>

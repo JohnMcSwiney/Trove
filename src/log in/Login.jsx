@@ -33,10 +33,10 @@ const Login = () => {
 
           </div>
     
-          <div className='go-fa'>
+          {/* <div className='go-fa'>
                <p>Continue with</p>
 
-          {/* <div className='go-fa-wrap'>
+          <div className='go-fa-wrap'>
                 <div className='go'>
                     <ImGoogle className='go-icon'/>
                </div>
@@ -44,10 +44,10 @@ const Login = () => {
                <div className='fa' >
                     <ImFacebook className='fa-icon'/>
                </div>
-          </div> */}
+          </div>
                
               
-          </div>
+          </div> */}
      </div>
   )
 }
