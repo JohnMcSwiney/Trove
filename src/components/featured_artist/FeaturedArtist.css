@@ -1,0 +1,16 @@
+.featArtCont{
+    background-color: rgb(135, 164, 164);
+    width: 200px;
+    height: fit-content;
+
+    display: flex;
+}
+
+.featArtImg{
+    padding: 3px;
+}
+.featArtImg > img{
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+}

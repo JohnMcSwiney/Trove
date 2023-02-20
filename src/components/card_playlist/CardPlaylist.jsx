@@ -10,9 +10,9 @@ function CardArtist({props}){
         {
           playlistData.map((playlist, index)=>(
             <div>
-              <div className='cont '>
+              <div className='contPlaylist'>
                    <div className='rounded-md m-auto  '>
-                     <div className='overflow-hidden p-0.5 ' > 
+                     <div className='overflow-hidden' > 
                        <img 
                           className='playlist-img' 
                           src={playlist.picUrl} 
@@ -21,15 +21,21 @@ function CardArtist({props}){
                      </div>
                    </div>
 
-                   <div className='grid grid-flow-row gap-0 h-14 align-middle m-auto'>
-                      <a 
-                      className='albtxt text'>
+                   <div className='plytxtcont'>
+                    
+                    <a 
+                      className='plytxt text'>
                         {playlist.name} 
                         </a>
+                    
+                      
                         <a 
-                      className='arttxt text'>
-                        {playlist.artist} 
+                      className='plyUntxt text'>
+                        {playlist.user_name} 
                         </a>
+                        <div className='plybotcol'>
+
+                        </div>
                     </div>
                 </div>
             </div>
