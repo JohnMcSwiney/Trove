@@ -1,5 +1,6 @@
 import React from "react"
 
+// Related Artist Component
 export default function RelatedArtist(props) {
 
     return (

@@ -11,12 +11,17 @@ import  './userProfile.css';
 
 // This is how the normal users will see the artist profile
 export default function UserProfile(props) {
-    const [small, setSmall] = useState(false);
-    const [follow, setFollow] = React.useState(false)
-    const [followers, setFollowers] = React.useState(200)
-    const [following, setFollowing] = React.useState(392)
-    const [showMenu, setShowMenu] = React.useState(false)
+      // State for large vs small header
+      const [small, setSmall] = useState(false);
+      // following states 
+        const [follow, setFollow] = React.useState(false)
+        const [followers, setFollowers] = React.useState(200)
+        const [following, setFollowing] = React.useState(392)
+      // menu 
+        const [showMenu, setShowMenu] = React.useState(false)
 
+
+  // Checking window size 
     const windowBreakpoint = 480;
 
   useEffect(() => {
@@ -54,6 +59,7 @@ export default function UserProfile(props) {
 
   } 
 
+  // Set followers 
     function handleClick(event)
         
      {
@@ -81,6 +87,8 @@ export default function UserProfile(props) {
     return( 
         <section>
         {menu}
+
+        {/* HEADER */}
         <div className={`header ${
           small ? "small" : "header"
         }`}>
@@ -100,7 +108,6 @@ export default function UserProfile(props) {
                 <img width="215vmin" src="../assets/artist_icon.png" alt="genre"/>
             </div>
             </div>
-            {/* <div className="artist--genre"><h5>ROCK</h5></div> */}
             <span><h1>USERNAME</h1> 
             <div className="row">
             <div className="column">
@@ -128,6 +135,7 @@ export default function UserProfile(props) {
         }`}>
         <br/><br/><br/><br/><br/><br/><br/><br/><br/>
 
+        {/* User Top Recommendation Section */}
         <div className="latest--release">
         <h2>[User]'s Top Find</h2>
             {/* playing song w album cover, song title, and release date */}
@@ -163,7 +171,8 @@ export default function UserProfile(props) {
             
 
         </div>
-        
+
+        {/* User's Liked Music */}
         <div className="discography">
             {/* albums, singles displayed in a side scrolling section*/}
             <div className="music--section">
@@ -186,6 +195,8 @@ export default function UserProfile(props) {
             </div>
         
         </div>
+
+        {/* User's top genres */}
         <div className="top--genres">
             <div className="music--section">
                     <h4>TOP GENRES</h4>
@@ -199,12 +210,8 @@ export default function UserProfile(props) {
                             index={index + 1}
                             {...item}
                             /> 
-                          
-                          
-
                 ) })}
 
-                
 
                     </div>
 

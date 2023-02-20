@@ -11,22 +11,24 @@ import  './ArtistProfile.css';
  
 // This is how the normal users will see the artist profile
 export default function ArtistProfile(props) {
+  // State for large vs small header
     const [small, setSmall] = useState(false);
+  // following states 
     const [follow, setFollow] = React.useState(false)
     const [followers, setFollowers] = React.useState(200)
+  // menu 
     const [showMenu, setShowMenu] = React.useState(false)
-    const [mobileMode, setMobileMode] = useState(false)
-   
 
+  // Checking window size 
     const windowBreakpoint = 480;
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      window.addEventListener("scroll", () =>
-        setSmall(window.pageYOffset > 200)
-      );
-    }
-  }, []); 
+    useEffect(() => {
+      if (typeof window !== "undefined") {
+        window.addEventListener("scroll", () =>
+          setSmall(window.pageYOffset > 200)
+        );
+      }
+    }, []); 
 
     const useViewport = () => {
     const [width, setWidth] = React.useState(window.innerWidth);
@@ -55,6 +57,7 @@ export default function ArtistProfile(props) {
 
   } 
 
+  // Handle clicks
     function handleClick(event)
         
      {
@@ -83,15 +86,15 @@ export default function ArtistProfile(props) {
         <section>
         {/* {menu} */}
         <SideBar />
+
+          {/* HEADER 
+            artist name, main genre, follower count, follow button */}
         <div className={`header ${
           small ? "small" : "header"
         }`}>
             <img className="waves "name="waves" src={WavesBG} alt="waves"/>
 
 
-            {/* artist name, main genre, follower count, follow button '
-                also display the artist's description
-            */}
             {width > windowBreakpoint ? 
              "": <div 
               className="menu"
@@ -133,6 +136,7 @@ export default function ArtistProfile(props) {
         }`}>
         <br/><br/><br/><br/><br/><br/><br/><br/><br/>
 
+        {/* Artist Recommendation Section */}
         <div className="latest--release">
         <h2>Artist's Pick</h2>
             {/* playing song w album cover, song title, and release date */}
@@ -165,6 +169,7 @@ export default function ArtistProfile(props) {
 
         </div>
         
+        {/* Discography Section */}
         <div className="discography">
             {/* albums, singles displayed in a side scrolling section*/}
             <div className="music--section">
@@ -187,6 +192,8 @@ export default function ArtistProfile(props) {
             </div>
         
         </div>
+
+        {/* Similar Artists Section */}
         <div className="similar--artists">
             {/* recommends artists that are similar to the  */}
             <div className="music--section">

@@ -5,17 +5,15 @@ import WavesBG from "../../Vector.svg"
 import MusicDetails from "./MusicDetails";
 import AddSongs from './AddSongs';
 import './UploadMusic.css';
+import ReviewSongs from "./ReviewSongs";
+import SongInfo from "./SongInfo";
 // Import the functions you need from the SDKs you need
 import firebase from "firebase/compat/app";
 import "firebase/compat/storage";
-import ReviewSongs from "./ReviewSongs";
-import SongInfo from "./SongInfo";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
- 
-  
-// This is how the normal users will see the artist profile
+//  ARTISTS MUSIC SUBMISSION PAGE
 export default function UploadMusic(props) {
       // Your web app's Firebase configuration
     // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -34,11 +32,12 @@ export default function UploadMusic(props) {
 
   const storage = firebase.storage();
 
-
-
-    const [small, setSmall] = useState(false);
+  // State for large vs small header
+  const [small, setSmall] = useState(false);
+  // following states 
     const [follow, setFollow] = React.useState(false)
     const [followers, setFollowers] = React.useState(200)
+  // menu 
     const [showMenu, setShowMenu] = React.useState(false)
 
    
@@ -80,29 +79,7 @@ export default function UploadMusic(props) {
 
   } 
 
-    function handleClick(event)
-        
-     {
-        const {name} = event.target
-
-        if(name === "follow") {
-        setFollow(prevFollow => !prevFollow) 
-        if(!follow) {
-            setFollowers(prevFollowers => prevFollowers+1) 
-        } else {
-            setFollowers(prevFollowers => prevFollowers-1) 
-        }
-
-        console.log(follow)
-
-        } else if(name === "menu") {
-            setShowMenu(prevShowMenu => !prevShowMenu) 
-            console.log(name) 
-            
-        }
-
-        
-     };
+  
 
     //  Submission Value States
     const [title, setTitle] = useState([]);
@@ -119,6 +96,7 @@ export default function UploadMusic(props) {
     const [uploadProgress, setUploadProgress] = useState(0);
     
 
+    // Handle State Changes
     const handleTitle = (e) => {
       const { value, name } = e.target
       setTitle({...title, [name]: value});
@@ -165,6 +143,7 @@ export default function UploadMusic(props) {
       setArtist(e.target.value);
   }
 
+  // When music is submitted
   const handleSubmit = (e) => {
       e.preventDefault();
       setIsUploading(true);
@@ -264,91 +243,32 @@ export default function UploadMusic(props) {
       );
   }
 
-
+// Initial Album Cover Display
   const default_album = "../../assets/default_upload.png";
   const [previewCover, setPreviewCover] = React.useState(default_album);
-    // const [formData, setFormData] = React.useState(
-    //   {
-    //       songName: "",
-    //       albumName: "", 
-    //       highlightStart: 0,
-    //       highlightStop: 0,
-    //       genre: "", 
-    //       cover: albumCover,
-    //       releasetype:"",
-    //       artist: "", 
-    //       files: files, 
-    //       filePond: files
+   
 
-
-    //   }
-
-    // );
-
-    // function onChange(event) {
-    //   console.log(event.target.files[0]);
-    //   // setAlbumCover(event.target.files[0])
-    //   setAlbumCover(URL.createObjectURL(event.target.files[0]))
-    // }
-
-    // React.useEffect(() => {
-    //   console.log("files changed!");
-    //   console.log(files);
-    // }, [files]);
-
-    // function handleChange(event) {
-    //   const {name, value, type, checked} = event.target;
-
-    //   if(type === "file") {
-    //     setAlbumCover(URL.createObjectURL(event.target.files[0]));
-
-    //   }
-
-    //   setFormData(prevFormData => {
-       
-    //     return {
-    //         ...prevFormData,
-    //         [name]: type === "checkbox" ? checked : value,
-    //         files: files
-    //         // [name]: type === "file" ? value === setAlbumCover(URL.createObjectURL(event.target.files[0]))  : value
-
-            
-    //     }
-        
-    //   })
-
-    //   console.log(formData)
-    // }
-
+    // When song files changes
     let songsList =[null];
-    // let toUploadSongs;
     const [toUploadSongs, setToUploadSongs] = React.useState([]);
 
       React.useEffect(() => {
        
-        // toUploadSongs = Array.from(songFile);
+
         setToUploadSongs(songFile);
 
         if(songFile) {
           console.log(songFile.name);
 
-        //   songsList = toUploadSongs && toUploadSongs.map((item, index)=>{
-        //     return(          
-        //         <SongInfo
-        //             key={index}
-        //             {...item}
-        //             songFile={songFile}
-        //             />)
-        // })
       }}, [songFile]);
 
+    // To change page name from music details to add songs
     const [pageName, setPageName] = React.useState('MusicDetails');
     function handleFormNavigation(pageName) {
         setPageName(pageName)
       
     }
 
-    
   React.useEffect(() => {
     console.log(pageName)
   }, [pageName]); 
@@ -356,21 +276,20 @@ export default function UploadMusic(props) {
     return( 
         <section>
         {menu}
+
+        {/* HEADER */}
         <div className={`header ${
           small ? "small" : "header"
         }`}>
             <img className="waves "name="waves" src={WavesBG} alt="waves"/>
 
 
-            {/* artist name, main genre, follower count, follow button '
-                also display the artist's description
-            */}
-
               <div>
               <span><h1>SUBMIT MUSIC</h1></span>
               </div>
 
               </div>
+              {/* Form starts */}
               <div className="upload--form">
               {/* <form className="upload--form"
                 onSubmit={handleSubmit}> */}
@@ -426,16 +345,14 @@ export default function UploadMusic(props) {
                                     toUploadSongs={toUploadSongs}
                                     songFile={songFile}
                                     title={title}/>
-                                case 'ReviewSongs':
-                                  return <ReviewSongs 
-                                    handleSongFileChange={handleSongFileChange}
-                                    handleTitle={handleTitle}
-                                    handleSubmit={handleSubmit}
-                                    handleFormNavigation={handleFormNavigation}
-                                    pageName ={pageName}
-                                    setPageName={setPageName}/>
-                                // case 'lost':
-                                //   return <Lost handleClick={handleClick} />
+                                // case 'ReviewSongs':
+                                //   return <ReviewSongs 
+                                //     handleSongFileChange={handleSongFileChange}
+                                //     handleTitle={handleTitle}
+                                //     handleSubmit={handleSubmit}
+                                //     handleFormNavigation={handleFormNavigation}
+                                //     pageName ={pageName}
+                                //     setPageName={setPageName}/>
                                 default:
                                   return null
                               }

@@ -1,5 +1,6 @@
 import React from "react"
 
+// User's Top Genres
 export default function TopGenres(props) {
 
     return (

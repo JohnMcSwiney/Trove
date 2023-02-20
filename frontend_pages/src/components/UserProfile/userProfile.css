@@ -22,12 +22,14 @@ body {
     
 }
 
+/* DESKTOP */
 @media only screen and (min-width: 769px) {
     .profile--body {
         margin-left: 25vmin;
         
       }
 
+    /* HEADER */
     .header{
         position: relative;
         /* background-color: #0C081C; */
@@ -133,6 +135,7 @@ body {
 
     }
 
+    /* LIKED SONGS AND TOP GENRES SECTION */
     .song--cover {
         border-radius: 1vmin;
         height: 35vmin;

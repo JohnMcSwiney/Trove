@@ -1,6 +1,7 @@
 import React from "react"
 
-export default function ArtistAlbum(props) {
+// User's Liked Song List
+export default function SongList(props) {
 
     return (
         <div className="slide" id={"slide-" + props.index}><div className="album--cover">

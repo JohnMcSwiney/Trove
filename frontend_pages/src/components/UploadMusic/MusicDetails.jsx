@@ -1,22 +1,16 @@
 import React from "react"
 
+// Music Information page
 export default function MusicDetails(props) {
 
     return (
         <div className="column song--form">
         <h2>MUSIC DETAILS</h2>
+
+        {/* Album name, Highlight Start/Stop, Release Year, Genre, Release Type */}
         <div className="music--details">
             <table>
               <tbody>
-              <tr>
-                <td className="columnt">
-                {/* <label>
-                Song Name:
-                <br />
-                    <input type="text" name="songName" placeholder="Song Name"  onChange={props.handleChange}/>
-                </label>   */}
-                </td>                          
-              </tr>
               <tr>
                 <td  className="columnt">
                 <label>
@@ -111,15 +105,7 @@ export default function MusicDetails(props) {
             </div>
             
             <div className="navigate--form--btns"> 
-                {/* <div className="back--btn" onClick={ () => props.handleFormNavigation('AddSongs')}>
-                  <img src="../assets/backbtn.png" id="back--icon" alt="back--icon"/>
-                  <br/>
-                  <label for="back--icon">Back</label>
-                </div> */}
                 <div className="next--btn" onClick={() => props.handleFormNavigation('AddSongs')}>
-                  {/* <img src="../../assets/nextbtn.png" id="next--icon" alt="next--icon"/>
-                  <br/>
-                  <label for="next--icon">Next</label> */}
                   <button 
                   className={"gradient--btn submit--btn"}
                   onClick={() => props.handleFormNavigation('AddSongs')}

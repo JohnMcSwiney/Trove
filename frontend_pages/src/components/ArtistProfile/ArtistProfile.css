@@ -23,12 +23,14 @@ body {
     
 }
 
+/* DESKTOP */
 @media only screen and (min-width: 769px) {
     .profile--body {
         margin-left: 25vmin;
         
       }
 
+    /* HEADER */
     .header{
         position: relative;
         /* background-color: #0C081C; */
@@ -132,6 +134,7 @@ body {
 
     }
 
+    /* MUSIC RECOMMENDATION SECTION */
     .song--cover {
         border-radius: 1vmin;
         height: 35vmin;
@@ -236,7 +239,8 @@ body {
           
             }
 
-            
+          
+        /* RELATED ARTIST + DISCOGRAPHY */
         .artist--cover {
           border-radius:20vmin;
           margin-top: 2%;
@@ -282,6 +286,7 @@ body {
         .related--name {
           background-color: none;
         }
+
     /* SLIDER */
     .slider {
         width: 180vmin;
@@ -559,6 +564,7 @@ body {
         
 }
 
+/* MOBILE VIEW (WIP) */
 @media only screen and (max-width: 768px) { 
 
   .profile--body {
@@ -566,7 +572,8 @@ body {
     
   }
 
-.header{
+  /* HEADER */
+  .header{
     position: relative;
     /* background-color: #0C081C; */
     background-image: linear-gradient(to right, #0c081c, #0e0924, #0d0a2c, #0b0b35, #080c3d);
@@ -669,7 +676,8 @@ border-radius: 20vmin;
 
 }
 
-.song--cover {
+/* MUSIC RECOMMENDATION SECTION */
+  .song--cover {
     border-radius: 1vmin;
     height: 35vmin;
     width: 35vmin;
@@ -760,6 +768,7 @@ border-radius: 20vmin;
       }
 
 
+      /* RELATED ARTIST / DISCOGRAPHY SECTION */
       .album--cover {
         border-radius: 1vmin;
         height: 30vmin;

@@ -1,5 +1,6 @@
 import React from "react"
 
+// Album Component
 export default function ArtistAlbum(props) {
 
     function handleMouseOver(event) {

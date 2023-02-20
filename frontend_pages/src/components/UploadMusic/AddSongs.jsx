@@ -19,15 +19,14 @@ import FilePondPluginFileEncode from 'filepond-plugin-file-encode';
 // Register the plugins
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview, FilePondPluginFileEncode)
 
+
+// Add Songs (song files, song title)
 export default function AddSongs(props) {
 
     React.useEffect(() => {
         console.log("files changed!");
         console.log(props.files);
       }, [props.files]);
-
-      let songsList =[null];
-
 
     return (
         <div className="column song--form">
@@ -40,6 +39,7 @@ export default function AddSongs(props) {
           
             <div className="add--song">
 
+        {/* Filepond, don't think we are using atm */}
             {/* 
             <FilePond
                 files={props.files}
@@ -53,6 +53,7 @@ export default function AddSongs(props) {
                 {/* allowFileEncode={true} */}
             {/* /> */}
 
+            {/* When a song is added, display the song title input */}
             { props.toUploadSongs && props.toUploadSongs.map((item, index)=>{
             return(          
                 <SongInfo
@@ -68,9 +69,6 @@ export default function AddSongs(props) {
 
             <div className="navigate--form--btns navigate--add--songs"> 
                 <div className="back--btn" onClick={ () => props.handleFormNavigation('MusicDetails')}>
-                  {/* <img src="../assets/backbtn.png" id="back--icon" alt="back--icon"/>
-                  <br/>
-                  <label for="back--icon">Back</label> */}
                    <button 
                   className={"gradient--btn submit--btn"}
                   onClick={() => props.handleFormNavigation('MusicDetails')}
@@ -78,15 +76,10 @@ export default function AddSongs(props) {
                   name="musicdet">Music Details</button>
                 </div>
                 <div className="next--btn" >
-                  {/* <img src="../../assets/nextbtn.png" id="next--icon" alt="next--icon"/>
-                  <br/>
-                  <label for="next--icon">Next</label> */}
                    <input type="submit" value="Submit" className="gradient--btn submit--btn" onClick={props.handleSubmit} /> 
                 </div>
             
             </div>
-
-             {/* <input type="submit" value="Submit" className="gradient--btn submit--btn" onClick={props.handleSubmit} />  */}
 
             </div>
 
