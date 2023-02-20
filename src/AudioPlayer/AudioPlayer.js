@@ -167,7 +167,7 @@ const AudioPlayer = () => {
                 </div>
 
                 <div className={style.audioPlayer}>
-                    <audio ref={audioPlayer} src ={slides[index].audio} autoplay></audio> {/* not working properly tried messing with it but going to sleep so will fix it in the moring*/}
+                    <audio ref={audioPlayer} src ={slides[index].audio} autoplay></audio>
                     
                     <button className={style.BackButton} onClick={() => {
                     if (index === 0) return;
