@@ -210,7 +210,7 @@ const getSong = async (request, response) => {
 }
 
 
-//update song
+//WIP
 const updateSong = async (req, res) => {
 
     const { id } = req.params;
@@ -226,6 +226,7 @@ const updateSong = async (req, res) => {
             try {
 
                 const artist = await Artist.findOne({ artistName: req.body.artist });
+                
                 if (!artist) {
                     throw new Error("artist not found");
                 }
@@ -275,11 +276,11 @@ const updateSong = async (req, res) => {
                         { new: true }
                     );
 
-                    // for (const featuredArtistId of featuredArtists) {
-                    //     const featuredArtist = await Artist.findById(featuredArtistId);
-                    //     featuredArtist.songList.push(song._id);
-                    //     await featuredArtist.save();
-                    // }
+                    for (const featuredArtistId of featuredArtists) {
+                        const featuredArtist = await Artist.findById(featuredArtistId);
+                        featuredArtist.songList.push(song._id);
+                        await featuredArtist.save();
+                    }
 
                     if (!song) {
 
