@@ -54,6 +54,8 @@
     text-decoration: none;
     padding: 5px;
     text-align: center;
+    margin-top: 1vh;
+   
   
 }
 
@@ -70,3 +72,39 @@
     gap: 10px;
 }
 
+
+.go-fa-div{
+    margin-top:5vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.go{
+    display: flex;
+    border-color: azure;
+    
+}
+
+.fa{
+    display: flex;
+    
+}
+
+.go-fa-wrap{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    gap: 50px;
+}
+
+.go-icon{
+    width: 25px;
+    height: 25px;
+}
+
+.fa-icon{
+    width:25px;
+    height:25px;
+    
+}

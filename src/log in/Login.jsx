@@ -3,10 +3,9 @@ import { useLogin } from '../hooks/user-hooks/useLogin';
 import { useNavigate } from 'react-router-dom';
 import './login.css';
 
-//icons
 import {BsGoogle, BsFacebook} from 'react-icons/bs'
-
-
+import { GoogleLoginButton } from "react-social-login-buttons";
+import { LoginSocialGoogle } from "reactjs-social-login";
 
 
 const Login = () => {
@@ -25,6 +24,8 @@ const Login = () => {
           }
           
      }
+
+    
   return (
      <>
     <form className='login' onSubmit={handleSubmit}>
@@ -69,12 +70,28 @@ const Login = () => {
                     className="text-light" role="button" 
                     ><button className="signupbtn">Sign up</button></a>
                </div>
-          <div>
-               <p>Continue with</p>
-               <BsGoogle/>
-               <BsFacebook/>
-               
-          </div>
+
+                    <div className='go-fa-div'>
+                         <p>Continue with</p>
+                         <div className='go-fa-wrap'>
+                              <div className='go'><BsGoogle className='go-icon'/></div>
+                              <div className='fa'><BsFacebook className='fa-icon'/></div>
+                    </div>
+                    {/* <LoginSocialGoogle
+                    client_id={"client-id"}
+                    scope="openid profile email"
+                    discoveryDocs="claims_supported"
+                    access_type="offline"
+                    onResolve={({ provider, data }) => {
+                         console.log(provider, data);
+                    }}
+                    onReject={(err) => {
+                         console.log(err);
+                    }}
+                    >
+                    <GoogleLoginButton />
+                    </LoginSocialGoogle> */}
+               </div>
      </>
   )
 }
