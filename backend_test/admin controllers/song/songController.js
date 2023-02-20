@@ -35,14 +35,8 @@ const createSong = async (req, res) => {
 
                 const album = await Album.findOne({ albumName: req.body.album });
 
-                if (req.body.album) {
-
-                    console.log(album);
-
-                    if (!album) {
-                        throw new Error('Album not found');
-                    }
-
+                if (!album) {
+                    throw new Error('Album not found');
                 }
 
                 const song = new Song({
@@ -68,7 +62,7 @@ const createSong = async (req, res) => {
 
                 for (const featuredArtistId of featuredArtists) {
                     const featuredArtist = await Artist.findById(featuredArtistId);
-                    featuredArtist.albumList.push(song._id);
+                    featuredArtist.songList.push(song._id);
                     await featuredArtist.save();
                 }
 
@@ -226,7 +220,7 @@ const updateSong = async (req, res) => {
             try {
 
                 const artist = await Artist.findOne({ artistName: req.body.artist });
-                
+
                 if (!artist) {
                     throw new Error("artist not found");
                 }
@@ -380,7 +374,7 @@ const updateSong = async (req, res) => {
                             const featuredArtist = await Artist.findById(featuredArtistId);
                             featuredArtist.songList.push(song._id);
                             await featuredArtist.save();
-                        } 
+                        }
                     }
 
                     console.log(song);
@@ -409,7 +403,7 @@ const deleteSong = async (req, res) => {
 
     const { id } = req.params;
 
-    const {artist, album, featuredArtists} = req.body;
+    const { artist, album, featuredArtists } = req.body;
 
     console.log(artist);
 
@@ -453,7 +447,7 @@ const deleteSong = async (req, res) => {
         }));
 
 
-        await Artist.updateOne({ _id: artist._id }, { $pull: { songList: song._id, featuredArtistsSongList: featuredArtists.songList}});
+        await Artist.updateOne({ _id: artist._id }, { $pull: { songList: song._id, featuredArtistsSongList: featuredArtists.songList } });
 
         await Album.updateOne({ _id: album._id }, { $pull: { songList: song._id } });
 
