@@ -1,18 +1,40 @@
 
-.cont{
+.contPlaylist{
     transition: 0.4s;
-    min-height: 130px;
-    min-width: 130px;
+    height: 80px;
+    width: 150px;
     margin: 2px;
-    background-color: aqua;
+    background-color: #12164B;
     display: flex;
     flex-direction: row;
-    overflow: scroll;
+    overflow: hidden;
+    border-radius: 10px;
+    padding: 0;
+    border: #878694 solid 1.5px;
+    align-items: center;
+
+}
+.plytxtcont{
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    width: 70px;
+    /* margin-top: auto;
+    margin-bottom: auto; */
+    
+    align-items: flex-start;
+    
+    gap: 0;
+    position: relative;
+
 }
 .playlist-img{
-    width: 50px;
-    height: 50px;
+    width: 80px;
+    height: 80px;
     background-size:cover;
+    justify-self: start;
+    object-fit: cover;
+    overflow: hidden;
 }
 .bg{
     background-color: rgba(18, 22, 75, 0.7);
@@ -34,23 +56,51 @@
 .text{
     text-decoration: none;
 }
-
-.albtxt{
+.plytxt{
     font-size: x-small;
     color: white;
+    width: inherit;
+    max-width:70px;
+    max-height: 1150px;
+    overflow-wrap: normal;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    padding-left: 2.5px;
+    z-index: 2;
+    background-color: #12164B;
 }
 
-.albtxt:focus, .albtxt:hover{
+
+.plytxt:focus, .plytxt:hover{
     text-decoration: none;
     color:white;
     font-weight: bold;
 }
-.arttxt{
-    font-size: xx-small;
-    color: #878694;
-}
 
-.arttxt:focus, .arttxt:hover{
+.plyUntxt{
+    font-size: xx-small;
+    color: #9b99aa;
+    max-height: 30px;
+    overflow-wrap: normal;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    background-color: #080C3D;
+    flex-grow: 1;
+    margin: 0;
+    width: inherit;
+    padding-left: 2.5px;
+    padding-right: 2.5;
+    z-index: 2;
+}
+.plybotcol{
+    background-color: #080C3D;
+    height: 40px;
+    width: inherit;
+    position: absolute;
+    margin-top: 20px;
+    z-index: 1;
+}
+.plyUntxt:focus, .plyUntxt:hover{
     text-decoration: underline;
     color:#b9b8c8;
     
