@@ -105,7 +105,7 @@ export default function UploadMusic(props) {
      };
 
     //  Submission Value States
-    const [title, setTitle] = useState('');
+    const [title, setTitle] = useState([]);
     const [album, setAlbum] = useState('');
     const [highlightStart, setHighlightStart] = useState(0);
     const [highlightStop, setHighlightStop] = useState(0);
@@ -120,7 +120,10 @@ export default function UploadMusic(props) {
     
 
     const handleTitle = (e) => {
-      setTitle(e.target.value);
+      const { value, name } = e.target
+      setTitle({...title, [name]: value});
+      console.log(title);
+      // setTitle(e.target.value);
   }
 
   const handleAlbumName = (e) => {
@@ -383,22 +386,6 @@ export default function UploadMusic(props) {
                   </label>
                 
                   </div>
-                    
-                    {/* Comment this component out to aid in viewing the music details section */}
-                    {/* <AddSongs 
-                      handleChange={handleChange}
-                      files={files}
-                      setFiles={setFiles}
-                    /> */}
-
-                    {/* Uncomment below  to see music details section of form, 
-                    will be adding feature to navigate through both effectively */}
-
-                    {/* <MusicDetails
-                      handleChange={handleChange}
-                      formData={formData}
-                      handleSubmit={handleSubmit}
-                    />  */}
 
                       {(() => {
                               switch (pageName) {
@@ -417,6 +404,15 @@ export default function UploadMusic(props) {
                                     handleArtist={handleArtist}
                                     handleFormNavigation={handleFormNavigation}
                                     pageName={pageName}
+                                    album={album}
+                                    genre={genre}
+                                    title={title}
+                                    imageFile={imageFile}
+                                    songFile={songFile}
+                                    highlightStart={highlightStart}
+                                    highlightStop={highlightStop}
+                                    releaseType={releaseType}
+                                    releaseYear={releaseYear}
                                     setPageName={setPageName}/>
                                 case 'AddSongs':
                                   return <AddSongs 
@@ -428,7 +424,8 @@ export default function UploadMusic(props) {
                                     setPageName={setPageName}
                                     songsList={songsList}
                                     toUploadSongs={toUploadSongs}
-                                    songFile={songFile}/>
+                                    songFile={songFile}
+                                    title={title}/>
                                 case 'ReviewSongs':
                                   return <ReviewSongs 
                                     handleSongFileChange={handleSongFileChange}

@@ -5,6 +5,7 @@ export default function MusicDetails(props) {
     return (
         <div className="column song--form">
         <h2>MUSIC DETAILS</h2>
+        <div className="music--details">
             <table>
               <tbody>
               <tr>
@@ -21,7 +22,7 @@ export default function MusicDetails(props) {
                 <label>
                   Album Name:
                   <br />
-                      <input type="text" name="albumName" placeholder="Album Name"  onChange={props.handleAlbumName} />
+                      <input type="text" value={props.album} name="albumName" placeholder="Album Name"  onChange={props.handleAlbumName} />
                 </label>
                 </td>                          
               </tr>
@@ -37,13 +38,13 @@ export default function MusicDetails(props) {
                   <label>
                   Start:
                   </label>
-                  <input type="number" name="highlightStart" placeholder="00:00"  onChange={props.handleHighlightStart}/>
+                  <input type="number" value={props.highlightStart} name="highlightStart" placeholder="00:00"  onChange={props.handleHighlightStart}/>
                 </td>   
                 <td colspan="2" className="hotspot--stop">
                   <label>
                   Stop: 
                   </label>
-                  <input type="number" name="highlightStop" placeholder="00:00"  onChange={props.handleHighlightStop}/>
+                  <input type="number"  value={props.highlightStop} name="highlightStop" placeholder="00:00"  onChange={props.handleHighlightStop}/>
                   <br/> 
                 </td>                
               </tr>
@@ -51,7 +52,7 @@ export default function MusicDetails(props) {
               <label>
                 Release Year:
                 <br />
-                <input type="number" name="releaseYear" placeholder="YYYY" min="1900" max="2024" onChange={props.handleReleaseYear} />
+                <input type="number" name="releaseYear" value={props.releaseYear} placeholder="YYYY" min="1900" max="2024" onChange={props.handleReleaseYear} />
               </label>
               </td>
               <tr>
@@ -64,18 +65,18 @@ export default function MusicDetails(props) {
               <fieldset>
               <tr>
                   <td className="genre--radio">
-                        <input type="radio" name="genre" value="pop" checked={props.handleGenre === "pop"} onChange={props.handleChange}/>POP
+                        <input type="radio" name="genre" value='pop' checked={props.genre === "pop"} onChange={props.handleGenre}/>POP
                   </td>
                   <td className="genre--radio">
-                        <input type="radio" name="genre" value="rock" checked={props.handleGenre === "rock"} onChange={props.handleChange}/>ROCK
+                        <input type="radio" name="genre" value='rock' checked={props.genre === "rock"} onChange={props.handleGenre}/>ROCK
                   </td>
               </tr>
               <tr>
                   <td className="genre--radio">
-                        <input type="radio" name="genre" value="country" checked={props.handleGenre === "country"} onChange={props.handleChange} />COUNTRY
+                        <input type="radio" name="genre" value='country' checked={props.genre === "country"} onChange={props.handleGenre} />COUNTRY
                   </td>
                   <td className="genre--radio">
-                        <input type="radio" name="genre" value="hiphop"checked={props.handleGenre === "hiphop"} onChange={props.handleChange} />HIP-HOP
+                        <input type="radio" name="genre" value='hiphop' checked={props.genre === "hiphop"} onChange={props.handleGenre} />HIP-HOP
                   </td>
               </tr>
               </fieldset>
@@ -89,13 +90,13 @@ export default function MusicDetails(props) {
               <fieldset>
               <tr>
                   <td className="release--radio">
-                        <input type="radio" name="releasetype" value="album" checked={props.handleReleaseType === "album"} onChange={props.handleChange}/>ALBUM
+                        <input type="radio" name="releasetype" value='album' checked={props.releaseType === "album"} onChange={props.handleReleaseType}/>ALBUM
                   </td>
                   <td className="release--radio">
-                        <input type="radio" name="releasetype" value="ep" checked={props.handleReleaseType === "ep"} onChange={props.handleChange}/>EP
+                        <input type="radio" name="releasetype" value='ep' checked={props.releaseType === "ep"} onChange={props.handleReleaseType}/>EP
                   </td>
                   <td className="release--radio">
-                        <input type="radio" name="releasetype" value="single" checked={props.handleReleaseType === "single"} onChange={props.handleChange} />SINGLE
+                        <input type="radio" name="releasetype" value='single' checked={props.releaseType === "single"} onChange={props.handleReleaseType} />SINGLE
                   </td>
               </tr>
               </fieldset>
@@ -107,17 +108,23 @@ export default function MusicDetails(props) {
 
             </tbody>
             </table>
+            </div>
             
-            <div className="navigate--form---btns"> 
-                <div className="back--btn" onClick={ () => props.handleFormNavigation('AddSongs')}>
+            <div className="navigate--form--btns"> 
+                {/* <div className="back--btn" onClick={ () => props.handleFormNavigation('AddSongs')}>
                   <img src="../assets/backbtn.png" id="back--icon" alt="back--icon"/>
                   <br/>
                   <label for="back--icon">Back</label>
-                </div>
+                </div> */}
                 <div className="next--btn" onClick={() => props.handleFormNavigation('AddSongs')}>
-                  <img src="../../assets/nextbtn.png" id="next--icon" alt="next--icon"/>
+                  {/* <img src="../../assets/nextbtn.png" id="next--icon" alt="next--icon"/>
                   <br/>
-                  <label for="next--icon">Next</label>
+                  <label for="next--icon">Next</label> */}
+                  <button 
+                  className={"gradient--btn submit--btn"}
+                  onClick={() => props.handleFormNavigation('AddSongs')}
+                  value="addsongz"
+                  name="addsongz">Add Music</button>
                 </div>
             
             </div>

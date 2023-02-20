@@ -583,8 +583,13 @@ body {
           height:100%;
           margin-top: 25vmin;
           padding-left: 15vmin;
+          text-align: center;
           
 
+        }
+
+        input[type="radio"] {
+          margin-left: 25vmin;
         }
 
         table, th, td, tr {
@@ -598,7 +603,15 @@ body {
 
         td {
           position: relative;
+          display: inline-flex;
+          
         }
+
+        /* td > label {
+          padding-top: 2vmin;
+          padding-bottom: 3vmin;
+        } */
+
 
         .hotspot--start {
           width: 5%;
@@ -619,7 +632,7 @@ body {
         .upload--form {
           height: 100%;
           width: 100%;
-          padding-bottom: 5vmin;
+          margin-bottom: 10vmin;
 
         }
 
@@ -732,12 +745,16 @@ body {
         margin-top: -5vmin;
         padding-left: 3vmin;
         padding: none;
+        margin-right: -30vmin;
+        width: 50vmin;
       }
 
       .release--radio {
         margin-top: -5vmin;
-        padding-left: 3vmin;
+        /* padding-left: 3vmin; */
         padding: none; 
+        margin-right: -40vmin;
+        width: 50vmin;
         
       }
   
@@ -750,14 +767,17 @@ body {
         margin-left: -110vmin;
       } */
 
-      td:nth-child(1) {
-        width: 40%;
+      /* td:nth-child(1) {
+        width: 35%;
       }
 
       td:nth-child(2) {
-      width: 40%;
+      width: 50%;
       }
 
+      td:nth-child(3) {
+        width: 15%;
+        } */
 
       input[type="number"] {
         width: 10vmin;
@@ -777,10 +797,26 @@ body {
         text-align: center;
       }
 
-      .navigate--form---btns {
+      .navigate--form--btns {
         display: flex;
-        margin-left: 25vmin;
-        margin-top: 2vmin;
+        /* margin-left: -25vmin; */
+        /* margin-top: 2vmin; */ 
+      }
+
+      .navigate--add--songs {
+          display: flex;
+          margin-left: -25vmin;
+
+      }
+
+      .navigate--add--songs > .next--btn {
+        margin-left: -20vmin;
+
+      }
+
+      .navigate--add--songs > .back--btn {
+        margin-left: 5vmin;
+
       }
 
       .next--btn > img, .back--btn > img  {
@@ -801,7 +837,8 @@ body {
 
 
       .back--btn {
-        margin-right: 10vmin;
+        /* margin-right: 10vmin; */
+        
       }
 
       .song--info {
@@ -818,4 +855,5 @@ body {
       .upload--songfile {
         margin-left: 10vmin;
       }
+
 }

@@ -33,8 +33,8 @@ export default function AddSongs(props) {
         <div className="column song--form">
             <h2>ADD SONGS</h2>
             <div className="upload--songfile"><label className="custom-song-upload">
-                <input type="file" multiple name="songFile" value="" accept="audio/*" className="gradient--btn image--btn hide--file" onChange={props.handleSongFileChange} />
-                Add Song 
+                <input type="file" name="songFile" value="" accept="audio/*" className="gradient--btn image--btn hide--file" onChange={props.handleSongFileChange} />
+                Upload Song 
                 {/* <img src="../../assets/upload_icon.png" id="upload--icon" alt="upload_icon" /> */}
             </label>
           
@@ -60,25 +60,33 @@ export default function AddSongs(props) {
                     {...item}
                     i={index}
                     songFile={props.songFile}
+                    handleTitle={props.handleTitle}
+                    title={props.title}
                     /> )
         })}
         </div>
 
-            <div className="navigate--form---btns"> 
+            <div className="navigate--form--btns navigate--add--songs"> 
                 <div className="back--btn" onClick={ () => props.handleFormNavigation('MusicDetails')}>
-                  <img src="../assets/backbtn.png" id="back--icon" alt="back--icon"/>
+                  {/* <img src="../assets/backbtn.png" id="back--icon" alt="back--icon"/>
                   <br/>
-                  <label for="back--icon">Back</label>
+                  <label for="back--icon">Back</label> */}
+                   <button 
+                  className={"gradient--btn submit--btn"}
+                  onClick={() => props.handleFormNavigation('MusicDetails')}
+                  value="musicdet"
+                  name="musicdet">Music Details</button>
                 </div>
-                <div className="next--btn" onClick={() => props.handleFormNavigation('ReviewSongs')}>
-                  <img src="../../assets/nextbtn.png" id="next--icon" alt="next--icon"/>
+                <div className="next--btn" >
+                  {/* <img src="../../assets/nextbtn.png" id="next--icon" alt="next--icon"/>
                   <br/>
-                  <label for="next--icon">Next</label>
+                  <label for="next--icon">Next</label> */}
+                   <input type="submit" value="Submit" className="gradient--btn submit--btn" onClick={props.handleSubmit} /> 
                 </div>
             
             </div>
 
-             <input type="submit" value="Submit" className="gradient--btn submit--btn" onClick={props.handleSubmit} /> 
+             {/* <input type="submit" value="Submit" className="gradient--btn submit--btn" onClick={props.handleSubmit} />  */}
 
             </div>
 
