@@ -27,3 +27,6 @@
 .hide-scroll::-webkit-scrollbar{
     display: none;
 }
+.home-height{
+    height: 1000px;
+}

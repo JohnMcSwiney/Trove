@@ -1,11 +1,19 @@
-import React from 'react'
+
 import './myaccount.css'
+
+import React from 'react';
+import './UserAccStyle.css';
+import tempImg from './temp-imgs/derek.png';
+import CardPlaylist from '../components/card_playlist/CardPlaylist';
+
+const userFollowers = 124;
 const MyAccount = () => {
     const [img, setImg] = React.useState('./img/user-demo.png');
     const [displayName, setDisplayName] = React.useState('') //user.displayName
     const [changeEmail, setChangeEmail] = React.useState(''); //user.email
     const [changePassword, setChangePassword] = React.useState('')//user.password
   return (
+    <>
     <form className='myAccount'>
 
       <div className='myAccount-wrap'>
@@ -26,6 +34,41 @@ const MyAccount = () => {
 
        
     </form>
+
+    <div className='container'>
+      <div className='pfp_name_follower_cont'>
+        <div className='borderuserimg'>
+            <img src={tempImg} className='user-img'></img>
+        </div>
+        <div className='name_follower_cont'>
+          <div className='txt-container'>
+              <h1>Oath</h1>
+          </div>
+          <div className='follower_cont'>
+            <div>
+            <h2>{userFollowers}</h2><h1>Followers</h1>
+            </div>
+            <button>Follow</button>
+          </div>
+          
+        </div>
+        
+      </div>
+      <div className='account-splitter'></div>
+      <div className='account-showcase'>
+        <h1>Created Playlists:</h1>
+        <div className='CardCont'>
+          <CardPlaylist/>
+        </div>
+      </div>
+      <div className='account-splitter'></div>
+      <div className='account-showcase'>
+        <h1>Top Genre(s):</h1>
+      </div>
+      
+      
+    </div>
+    </>
   )
 }
 
