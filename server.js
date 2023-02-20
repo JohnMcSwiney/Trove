@@ -1,7 +1,8 @@
 require('dotenv').config()
 const express = require('express');
 const mongoose = require('mongoose');
-
+const passport = require('passport')
+const cookieSession = require('cookie-session');
 //For admin
 const userRouter = require('./admin routes/user-route/user-route');
 const albumRouter = require('./admin routes//album-route/album-route');
@@ -13,7 +14,8 @@ const songRouter = require('./admin routes//song-route/song-route');
 
 //For User
 const userlogin = require('./user routes/user-login-route/user');
-
+const passportSetup = require('./passport')
+const googleAuthRoute= require('./user routes/auth/auth')
 
 const app = express();
 mongoose.set('strictQuery', true);
@@ -31,11 +33,24 @@ app.use((req,res,next) =>{
     next();
 })
 
+//loggin with google
+
+app.use(cookieSession({
+    name: "session",
+    keys: ["TroveMusic"],
+    maxAge: 24*60*60*100,
+}))
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+// app.use('/auth', googleAuthRoute)
+
 
 //FOR USER
 app.use('/api/user', userlogin)
 
-//Verify account
+
 
 
 //FOR ADMIN

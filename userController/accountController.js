@@ -77,18 +77,16 @@ const signupUser = async(req,res)=>{
 }
 
 const verifyUser = async (req,res)=> {
-    const {id} =req.params;
+    const {id} =req.params.id;
     try{
-        const user  = await User.findOne({_id: id})
+        const user  = await User.findOneAndUpdate({id}, {isVerified:true})
         if(!user){
             return res.status(404).json('User not found');
         }
-        user.isVerified = true;
-        await user.save();
-        return res.render('verify-success');
+        return res.send('verify-success');
     } catch (err) {
       console.error(err);
-      return res.status(500).send('Internal Server Error');
+      return res.status(500).send('Error verifying email');
     }
 }
 module.exports={
