@@ -19,9 +19,7 @@ const Login = () => {
           e.preventDefault();
           try{
                await login(email, password);
-               setTimeout(()=>{
-                    navigate('/');
-               })
+             
           }catch(err){
                console.log(err.data?.message|| 'Please try again');
           }
@@ -61,16 +59,16 @@ const Login = () => {
                className='loginbtn text-light' type='submit'>
                     Log in
                </button>
-
-               <a href="/signup" 
-               className="text-light" role="button" 
-               ><button className="signupbtn">Sign up</button></a>
                </div>
 
           </div>
           {error && <div className="error">{error}</div>}
-     </form>
-
+     </form>   
+               <div className='buttonCont'>
+                    <a href="/signup" 
+                    className="text-light" role="button" 
+                    ><button className="signupbtn">Sign up</button></a>
+               </div>
           <div>
                <p>Continue with</p>
                <BsGoogle/>

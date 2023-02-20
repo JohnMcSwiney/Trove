@@ -9,10 +9,9 @@ import './signup.css'
 export default function Signup() {
      const [email, setEmail] = React.useState('');
      const [password, setPassword] = React.useState('');
-     const [conPassword,setConPassword] = React.useState('');
+
 
     
-     const checkPassword = password === conPassword ? true: false;
      const {signup,error,isLoading} = useSignup();
      const navigate = useNavigate();
      console.log(error);
@@ -20,9 +19,6 @@ export default function Signup() {
           e.preventDefault();
           try{
                await signup(email, password);
-               setTimeout(()=>{
-                    navigate('/');
-               })
           }catch(err){
                console.log(err.data?.message|| 'Please try again')
           }
@@ -50,14 +46,9 @@ export default function Signup() {
                          
                     </div>
 
-                    <div className='form-outline mb-4'>
-                         <label className='form-label' for='Cpasswordbox'>Confirm Password</label>
-                         <input type="password" id='Cpasswordbox' className='form-control'
-                         onChange={(e)=>setConPassword(e.target.value)} value = {conPassword}
-                         />      
-                    </div>
+                   
 
-               <button disabled={isLoading&&checkPassword}  className='signupbtn-form btn mb-4 text-white' type='submit'>Sign up</button>
+               <button disabled={isLoading}  className='signupbtn-form btn mb-4 text-white' type='submit'>Sign up</button>
                </div>
                {error && <div className='error'>{error}</div>}
               
