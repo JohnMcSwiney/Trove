@@ -219,51 +219,103 @@ const updateSong = async (req, res) => {
         return res.status(404).json({ err: 'No such song' })
     }
 
-    const artist = await Artist.findOne({ artistName: req.body.artist });
-    if (!artist) {
-        throw new Error(`Artist "${req.body.artist}" not found`);
-    }
+    switch (req.body.releaseType) {
 
-    const album = await Album.findOne({ albumName: req.body.album });
-    if (!album) {
-        throw new Error(`Album "${req.body.album}" not found`);
-    }
+        case "Album" || "EP":
 
-    const featuredArtists = await Promise.all(req.body.featuredArtists.map(async (name) => {
+            try {
 
-        const featuredArtist = await Artist.findOne({ artistName: name });
+                const artist = await Artist.findOne({ artistName: req.body.artist });
+                if (!artist) {
+                    throw new Error("artist not found");
+                }
+    
+                const album = await Album.findOne({ albumName: req.body.album });
+                if (!album) {
+                    throw new Error("album not found");
+                }
+    
+                const featuredArtists = await Promise.all(req.body.featuredArtists.map(async (name) => {
+    
+                    const featuredArtist = await Artist.findOne({ artistName: name });
+    
+                    if (!featuredArtist) {
+                        throw new Error("featured artist(s) not found");
+                    }
+    
+                    return featuredArtist._id;
+                }));
 
-        if (!featuredArtist) {
-            throw new Error(`Featured artist "${name}" not found`);
-        }
+                const song = await Song.findOneAndUpdate(
+                    { _id: id },
+                    { $set: { ...req.body, artist: artist._id, album: album._id, featuredArtists: featuredArtists} },
+                    { new: true }
+                );
 
-        return featuredArtist._id;
-    }));
+                if (!song) {
+
+                    return res.status(404).json({ error: "Song not found" });
+                }
+
+                console.log(song);
+
+                console.log("updateSong method working");
+
+                res.status(200).json(song);
+            }
+            catch (err) {
+
+                console.log(err);
+                res.status(400).json({ message: err.message });
+            }
+            break;
+
+        case "Single":
+
+            const artist = await Artist.findOne({ artistName: req.body.artist });
+            if (!artist) {
+                throw new Error("artist not found");
+            }
+
+            const featuredArtists = await Promise.all(req.body.featuredArtists.map(async (name) => {
+
+                const featuredArtist = await Artist.findOne({ artistName: name });
+
+                if (!featuredArtist) {
+                    throw new Error("featured artist(s) not found");
+                }
+
+                return featuredArtist._id;
+            }));
 
 
-    try {
+            try {
 
-        const song = await Song.findOneAndUpdate(
-            { _id: id },
-            { $set: { ...req.body, artist: artist._id, album: album._id, featuredArtists: featuredArtists } },
-            { new: true }
-        );
+                const song = await Song.findOneAndUpdate(
+                    { _id: id },
+                    { $set: { ...req.body, artist: artist._id, featuredArtists: featuredArtists } },
+                    { new: true }
+                );
 
-        if (!song) {
+                if (!song) {
 
-            return res.status(404).json({ error: "Song not found" });
-        }
+                    return res.status(404).json({ error: "Song not found" });
+                }
 
-        console.log(song);
+                console.log(song);
 
-        console.log("updateSong method working");
+                console.log("updateSong method working");
 
-        res.status(200).json(song);
-    }
-    catch (err) {
+                res.status(200).json(song);
+            }
+            catch (err) {
 
-        console.log(err);
-        res.status(400).json({ message: err.message });
+                console.log(err);
+                res.status(400).json({ message: err.message });
+            }
+        default:
+            //throw new Error("Release Type undefined");
+            break;
     }
 }
 
