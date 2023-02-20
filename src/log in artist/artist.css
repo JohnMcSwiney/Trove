@@ -1,0 +1,118 @@
+.login{
+    max-width: 380px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+}
+
+.login-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    margin:auto;
+}
+
+
+.login-header{
+    text-align: center;
+    color: white;
+    width: fit-content;
+    margin: auto;
+    padding-bottom: 15px;
+}
+
+
+.loginbtn-form:hover{
+    background-image: linear-gradient(to left, #8650f4, #0034c4);
+    opacity: 0.8;
+}
+.form-outline{
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.form-control {
+    background-color: transparent;
+    transform: none;
+    color: white;
+    border-color: rgb(116, 122, 122);
+}
+
+.form-label{
+    color: white;
+}
+
+.loginbtn{
+    background-image: linear-gradient(to left, #8650f4, #0034c4);
+    border-radius: 5px;
+    width: 120px;
+    padding: 5px;
+    border: #8650f4 2px solid;
+}
+.signupbtn{
+    border-color: #8650f4;
+    border-width: 2px;
+    border-radius: 5px;
+    border-style: solid;
+    box-sizing: border-box;
+    min-width: 120px;
+    text-decoration: none;
+    padding: 5px;
+    text-align: center;
+  
+}
+
+.signupbtn:hover{
+    background-color: rgba(240, 248, 255, 0.071);
+    -webkit-backdrop-filter: blur(5px);
+}
+
+.buttonCont{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+
+}
+
+
+.continue-social-media{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    background-color: aquamarine;
+    flex-direction: column;
+    min-width: 100px;
+    max-width: 200px;
+    margin-top: 20px;
+    gap: 2px;
+    margin: auto;
+}
+
+.continue-header{
+    order:2;
+}
+.continue-btns{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #8650f4;
+    order:3;
+}
+.continue-btns > button{
+    width: fit-content;
+    padding: 4px;
+    background-color: bisque;
+    align-content: center;
+    justify-content: center;
+    margin: auto;
+}
+.splitter{
+    height: 2px;
+    width: 100px;
+    background-color: gray;
+    border-radius: 0.7px;
+    margin: 5px;
+    order: 1;
+}
