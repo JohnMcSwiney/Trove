@@ -4,13 +4,22 @@
     height: fit-content;
 
     display: flex;
+    flex-direction: column;
+
+    justify-items: center;
+    align-items: center;
+    
 }
 
 .featArtImg{
-    padding: 3px;
+    padding: 3.5px;
+    background-color: palevioletred;
+    border-radius: 50%;
+    border: 2px rgba(255, 0, 0, 0.4) solid;
+    width: 80px;
+    height: 80px;
 }
 .featArtImg > img{
-    width: 70px;
-    height: 70px;
     border-radius: 50%;
 }
+

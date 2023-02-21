@@ -2,11 +2,12 @@
     display: flex;
     flex-direction: column;
     gap: 2px;
-    background-color: rgb(56, 58, 118);
+    /* background-color: rgb(56, 58, 118); */
     height: fit-content;
     align-items: center;
     overflow: hidden;
     width: 100%;
+    
     
 }
 .account-splitter{
@@ -140,10 +141,28 @@
     justify-content: center;
     margin-top: 0;
     margin-bottom: 0;
-    background-color: #412e67;
+    /* background-color: #412e67; */
     width: inherit;
     position: relative;
     height: 130px;
+}
+.account-showcase-lg{
+    display: flex;
+    justify-content: center;
+    margin-top: 0;
+    margin-bottom: 0;
+    /* background-color: #412e67; */
+    width: inherit;
+    position: relative;
+    height: 200px;
+}
+.account-showcase-lg > h1{
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: large;
+    color: rgba(255, 255, 255, 0.8);
+    margin-left: 10px;
 }
 .account-showcase > h1{
     position: absolute;
