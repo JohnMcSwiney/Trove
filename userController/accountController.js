@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken')
 const nodemailer = require('nodemailer')
 require('dotenv').config();
 const createToken = (_id)=> {
-    return jwt.sign({_id: _id},process.env.SECRET, {expiresIn: "3d"})
+    return jwt.sign({_id: _id},process.env.SECRET, {expiresIn: "1d"})
 }
 
 
