@@ -5,6 +5,7 @@ import UploadMusic from './components/UploadMusic/UploadMusic';
 import UploadSongConnect from './components/UploadSong/UploadSongConnect';
 import UploadSong from './components/UploadSong/avauploadsong'
 import AlbumPage from './components/AlbumPage/AlbumPage'
+import PlaylistPage from './components/PlaylistPage/PlaylistPage';
 
 function App() {
   return (
@@ -14,7 +15,8 @@ function App() {
       {/* <UploadMusic /> */}
       {/* <UploadSong /> */}
       {/* <UploadSongConnect /> */}
-      <AlbumPage />
+      {/* <AlbumPage /> */}
+      <PlaylistPage />
 
  
 
