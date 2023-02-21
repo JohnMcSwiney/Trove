@@ -1,9 +1,19 @@
-.audioPlayer{
+/*Container that holds the block of the entire discovery game*/
+.container{
+  position:absolute;
+  justify-content: center;
+  width: 600px;
+  
   --Purple: #8650F4;
   --Blue: #0034C4 ;
   --DBlue: #080C3D;
   --Black: #000000;
   --White: #FFFFFF;
+
+}
+
+.audioPlayer{
+  
   
   
   
@@ -212,13 +222,6 @@
 .SwipeRight{
   float:left;
   background-color: #080C3D;
-  
-}
-
-.container{
-  position:absolute;
-  justify-content: center;
-  width: 600px;
   
 }
 

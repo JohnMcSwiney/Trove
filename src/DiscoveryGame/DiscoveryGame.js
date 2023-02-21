@@ -28,13 +28,19 @@ const DiscoveryGame = () => {
 
 
     useEffect(() => {
-        const seconds = Math.floor(audioPlayer.current.duration);
-        setDuration(seconds);
-        progressBar.current.max = seconds;
+      const seconds = Math.floor(audioPlayer.current.duration);
+      setDuration(seconds);
+      progressBar.current.max = seconds;
 
 
 
-    }, [audioPlayer?.current?.loadmetadata, audioPlayer?.current?.readyState]);
+  }, [audioPlayer?.current?.loadmetadata, audioPlayer?.current?.readyState]);
+
+
+  /* maybe replaceing useEffect 
+    const onLoadedMetaData = () =>
+    setTotalAudioTime(audioPlayer.current?.duration); 
+    */
     
     const calculateTime = (secs) => {
         const minutes = Math.floor(secs / 60);
@@ -70,6 +76,9 @@ const DiscoveryGame = () => {
 
 
     }
+
+  
+
 
     const whilePlaying = () => {
         progressBar.current.value = audioPlayer.current.currentTime;
@@ -167,7 +176,10 @@ const DiscoveryGame = () => {
                 </div>
 
                 <div className={style.audioPlayer}>
-                    <audio ref={audioPlayer} src ={slides[index].audio} autoplay></audio>
+
+
+                    <audio ref={audioPlayer} src ={slides[index].audio} autoPlay preload="metadata"></audio>
+                    {/*testing maybe going in audio player to fix not loading the proggress bar on start up onLoadedMetaData={onLoadedMetaData}  */}
                     
                     <button className={style.BackButton} onClick={() => {
                     if (index === 0) return;
