@@ -6,11 +6,11 @@ import './App.css';
 import Header from './containers/header/Header';
 import MusicBar from './components/music bar/MusicBar';
 import NavBar from './components/nav bar/NavBar';
-
+import 'bootstrap/dist/css/bootstrap.min.css'
 import {Home, Search,MyTrove, MyAccount, Login,Signup, Artist} from './pages'
-import AccountSetting from './my account/child-link/AccountSetting';
-import PasswordSetting from './my account/child-link/PasswordSetting';
-import HelpSetting from './my account/child-link/HelpSetting';
+// import AccountSetting from './my account/child-link/AccountSetting';
+// import PasswordSetting from './my account/child-link/PasswordSetting';
+// import HelpSetting from './my account/child-link/HelpSetting';
 function App() {
   
   return (
@@ -25,9 +25,9 @@ function App() {
         <Route path='/' element={<Home/>}></Route>
         <Route path='/search' element = {<Search/>}></Route>
         <Route path='/mytrove' element = {<MyTrove/>}>
-            <Route path='account'  element = {<AccountSetting/>}/>
+            {/* <Route path='account'  element = {<AccountSetting/>}/>
             <Route path='password' element={<PasswordSetting/>}/>
-            <Route path='help' element={<HelpSetting/>}/>
+            <Route path='help' element={<HelpSetting/>}/> */}
         </Route>
         <Route path = '/myaccount' element = {<MyAccount/>}></Route>
         <Route path='/login' element={<Login/>}></Route>

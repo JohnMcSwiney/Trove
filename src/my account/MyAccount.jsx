@@ -2,8 +2,7 @@
 import './myaccount.css'
 
 import React from 'react';
-import {BrowserRouter, Route, Routes, Outlet, NavLink} from 'react-router-dom'
-import Minibar from './miniBar/Minibar';
+import MyAccountTabs from './MyAccountTabs';
 
 const MyAccount = () => {
     const [img, setImg] = React.useState('./img/user-demo.png');
@@ -15,7 +14,7 @@ const MyAccount = () => {
                   <h1> Account Settings</h1>
                   <p>Chage your profile and account settings</p>
                   <div className='my-account-wrap'>
-                    <Minibar/>
+                    <MyAccountTabs/>
                   </div>
 
               {/* <div className='my-account-wrap'>
@@ -36,7 +35,7 @@ const MyAccount = () => {
                     </div>
                   </form>
                 </div> */}
-            <Outlet/>
+         
           </div>
 
   )

@@ -6,11 +6,5 @@
 
 
 .my-account-wrap{
-
-}
-
-.setting-options{
-    display: flex;
-    flex-direction: column;
-    
+    background-color: aqua;
 }
