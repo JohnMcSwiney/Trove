@@ -1,11 +1,9 @@
 .my-account-page{
     max-width: 80%;
-    max-height: 80%;
+    position: relative;
     margin: auto;
+    overflow: scroll;
+    
+   
 }
 
-
-.my-account-wrap{
-    background-color: black;
-    height: 300px;
-}

@@ -63,10 +63,18 @@ html {
 
 body {
   margin: 0;
-  /* 1 */
-  line-height: inherit;
-  /* 2 */
+  background-image: url("./assets/Trv_bg/trove bg.png");
+  background-color: #0C081C;
+  background-repeat: no-repeat;
+  background-size:cover;
+  background-position:center;
+  position: relative;
+  min-height:100vh;
   
+}
+
+.footer{
+  height: 250px;
 }
 
 /*
@@ -442,14 +450,7 @@ video {
   letter-spacing: 0.05em;
 }
 
-.MainBg{
-  background-image: url("./assets/Trv_bg/trove bg.png");
-  background-color: #0C081C;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position:center;
-  height: 100vh;
-}
+
 
 .headerBg{
   background-image: linear-gradient(#080C3D, #080c3d69);

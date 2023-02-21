@@ -56,14 +56,6 @@
     @apply fill-trv-sm-Artist-txt
   }
 
-  .MainBg{
-    background-image: url("./assets/Trv_bg/trove bg.png");
-    background-color: #0C081C;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    height:800px;
-  }
   .headerBg{
     background-image: linear-gradient(#080C3D, #080c3d69);
 

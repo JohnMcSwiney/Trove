@@ -15,7 +15,7 @@ function App() {
 
     <BrowserRouter>
 
-    <div className="MainBg text-gray-500 font-body">
+    <div className="text-gray-500 font-body">
       <Header/>
 
       <Routes>
@@ -34,9 +34,10 @@ function App() {
 
         
       </Routes>
+        <footer className='footer'></footer>
         <MusicBar/>
         <NavBar/>
-      {/* <script src="/index2.js"></script> */}
+       
     </div>
 
     </BrowserRouter>
