@@ -219,9 +219,9 @@ const deleteAlbum = async (req, res) => {
 
             await Album.findOneAndDelete({ _id: id });
 
-            await Artist.updateOne({ _id: artist._id }, { $pull: { albumList: album._id } });
+            await Artist.updateOne({ _id: artist._id }, { $pull: { albumList: album._id, songList: artist.songList } });
 
-            await Song.deleteMany({ _id: songs }, { $pull: { songList: artist.songList } })
+            await Song.deleteMany({ _id: album.songs });
 
             if (!album) {
 
