@@ -4,15 +4,17 @@ import UploadMusic from './components/UploadMusic/UploadMusic';
 // import UploadSong from './components/UploadSong/UploadSong'
 import UploadSongConnect from './components/UploadSong/UploadSongConnect';
 import UploadSong from './components/UploadSong/avauploadsong'
+import AlbumPage from './components/AlbumPage/AlbumPage'
 
 function App() {
   return (
     <div className="App">
       {/* <ArtistProfile /> */}
       {/* <UserProfile /> */}
-      <UploadMusic />
+      {/* <UploadMusic /> */}
       {/* <UploadSong /> */}
       {/* <UploadSongConnect /> */}
+      <AlbumPage />
 
  
 
