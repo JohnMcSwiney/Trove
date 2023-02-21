@@ -197,7 +197,7 @@ const updateAlbum = async (req, res) => {
 //WIP
 const deleteAlbum = async (req, res) => {
 
-    const { id } = req.params;
+    const id = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(404).json({ err: 'No such album' })

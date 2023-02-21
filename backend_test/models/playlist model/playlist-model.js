@@ -1,20 +1,20 @@
-const mongoose= require('mongoose');
+const mongoose = require('mongoose');
 
 const playlistSchema = new mongoose.Schema(
   {
-    
-    playlistName:{
-        type: String,
-        maxlength: 75,
-        default:'My Trove list'
+
+    playlistName: {
+      type: String,
+      maxlength: 75,
+      default: 'My Trove list'
     },
     playlistCreator: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
     },
     isPublished: {
-        type: Boolean,
-        default: false
+      type: Boolean,
+      default: false
     },
     songList: [
       {
@@ -22,9 +22,8 @@ const playlistSchema = new mongoose.Schema(
         ref: "Song"
       }
     ]
-        
-    
+
   }
 
 )
-  module.exports = mongoose.model('Playlist', playlistSchema);
+module.exports = mongoose.model('Playlist', playlistSchema);

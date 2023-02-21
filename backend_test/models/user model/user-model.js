@@ -25,7 +25,7 @@ const userSchema = new mongoose.Schema({
         }
     ],
 
-    displayedName:{
+    displayName:{
         type:String,
         default:'My Account'
     },
