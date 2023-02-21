@@ -22,6 +22,8 @@ export default function AlbumSong(props) {
                 <div className="album--song--info">
                         <h5>{props.title}</h5>
                         <h6>{props.artist}</h6>
+                        <h5><span>{props.duration}</span></h5>
+                       
                 </div>
                 <div className="album--song--options">
                         <img src={likedSong} id="album--song--heart" alt="heart" onClick={ () =>  handleLike()} />
