@@ -498,12 +498,16 @@ const deleteSong = async (req, res) => {
 
             await Artist.updateOne({ _id: artist._id }, { $pull: { songList: song._id } });
 
-            for (const featuredArtist of featuredArtists) {
-                await Artist.updateMany({ _id: { $in: featuredArtists._id } }, { $pull: { songList: song._id } });
-                //artist.songList.pop(song._id);
+            for (const featuredArtistId of featuredArtists) {
+
+                await Artist.updateOne({ _id: featuredArtistId }, { $pull: { songList: song._id } });
             }
 
-            await Album.updateOne({ _id: album._id }, { $pull: { songList: song._id } }, { totalTracks: (album.totalTracks--) });
+            await Album.updateOne(
+                { _id: album._id },
+                { $pull: { songList: song._id }},
+                {$inc: { totalTracks: album.totalTracks-- }}
+            );
 
             // for (const featuredArtistId of featuredArtists) {
             //     const featuredArtist = await Artist.findById(featuredArtistId);
@@ -521,7 +525,6 @@ const deleteSong = async (req, res) => {
         console.log(err);
         res.status(400).json({ message: err.message });
     }
-
 }
 
 module.exports = {
