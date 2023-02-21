@@ -573,108 +573,160 @@ body {
   }
 
   /* HEADER */
-  .header{
-    position: relative;
-    /* background-color: #0C081C; */
-    background-image: linear-gradient(to right, #0c081c, #0e0924, #0d0a2c, #0b0b35, #080c3d);
-    height: 40vmin;
-    font-size: 5vmin;
-    text-align:left;
-    color: white;
-    position: fixed; 
-    top: 0;
+  .album--header {
+    text-align: center;
+    padding-top: 6vmin;
+    font-size: 3vmin;
+    display: flex;
+    padding-left: 5vmin;
+
+  }
+
+  .album--header > h1 {
+    margin-left: 30vmin;
+  }
+
+  .album--back {
+    width:10vmin;
+    height: 10vmin;
+    /* padding-right: 5vmin; */
+  }
+
+  .album--circle--border {
+    width: 11vmin;
+    height: 11vmin;
+    /* position: absolute; */
+    border-color: #0034C4;
+    border-radius: 25vmin;
+    border-width: 0.75vmin;
+    border-style: solid;
+    /* margin-top: 2%; */
+    margin-left: 25%;
+  
+  }
+
+  .album--artist--icon > img {
+    background-color: transparent;
+    max-width: 85%;
+    margin-left: 2%;
+    margin-top: 8%;
+    margin-bottom: -1%;
+    border-radius: 20vmin;
+  }  
+
+
+  /* ALBUM INFO */
+  .album--info {
+    display: flex;
+    position: fixed;
     width: 100%;
-    margin-left: 12.5vmin;
-    border-bottom: 2.5px solid #12164B;
-    /* background-image: url(../assets/vector.png); */
-    background-repeat: no-repeat;
-    background-size: cover;
-    z-index: 200;
+
     
+  }
+
+  .album--songs {
+    margin-top: 60vmin;
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: 50vh;
+    padding-bottom: 15vmin;
     
-    }
-    
+  }
 
-.header .artist--genre {
-  background-image: linear-gradient(to left, #8650f4, #6f49e8, #5642dc, #393bd0, #0034c4);
-  font-size: 4vmin;
-  font-weight:bold;
-  position: absolute;
-  bottom: 25vmin;
-  left: 80vmin;
-  margin-right: -55%;
-  margin-left: -39vmin;
-  padding: 1vmin;
-  border-radius: 1vmin;
-  padding-left: 2vmin;
-  padding-right: 2vmin;
-}
+  .album--song--cover {
+    border-radius: 1vmin;
+    height: 40vmin;
+    width: 40vmin;
+    margin-left: 7%;
+    margin-top: 10%;
+  }
 
-.header span {
-    position: absolute ;
-    bottom: 0;
-    left: 0;
-    margin-left: 50vmin;
-    }
+  .album--song--cover img {
+    border-radius: 1vmin;
+    height: 40vmin;
+    width: 40vmin;
+  }
 
-.header span h1 {
-    margin-left: -10vmin;
-    font-size: 8vmin;
-}
+  .album--stats--info  {
+    margin-top: 10vmin;
+    margin-left: 5vmin;
+  }
 
-.header span > .column {
-position: relative;
-margin-left: 3vmin;
-font-size: 2vmin;
-float: left;
-width: 50%;
+  .album--stats--info > h3 {
+    font-size: 6vmin;
+  }
 
-}
+  .album--stats--info > h4 {
+    font-weight: 200;
+  }
 
-.column > h5 {
-font-size: 2vmin;
-font-weight:bold;
-position: absolute;
-bottom: 4vmin;
-left: 50vmin;
-margin-right: -55%;
-margin-left: -33vmin;
+  .album--release--info  {
+    display: flex;
+  }
 
-}
+  .album--release--info > h5 {
+    padding-right: 2vmin;
+    font-weight: 400;
+  }
 
-.column > button {
-bottom: 0vmin;
-right: 8vmin;
-margin-left: -2%
-}
+  .album--release--info > h6 {
+    font-size: 3vmin;
+    font-weight: 100;
+  }
+
+  .album--song {
+    background-color: #12164B;
+    width: 90%;
+    height: 20vmin;
+    margin: auto;
+    margin-top: 10vmin;
+    border-radius: 3vmin;
+
+  }
+
+  .album--tiny--cover {
+    border-radius: 1vmin;
+    height: 12vmin;
+    width: 12vmin;
+    margin-left: 7%;
+    margin-top: 10%;
+  }
+
+  .album--tiny--cover img {
+    border-radius: 1vmin;
+    height: 12vmin;
+    width: 12vmin;
+    margin-top: 4vmin;
+  }
+
+  .album--song--info {
+    margin-left: 25vmin;
+    margin-top: -8vmin;
+  }
+
+  .album--song--info > h5 {
+    font-weight: 400;
+  }
+
+  .album--song--info > h6 {
+    font-weight: 300;
+    color: #878694;
+    width: 30vmin;
+  }
+
+  .album--song--options {
+    display: flex;
+    margin-left: 65vmin;
+    margin-top: -5vmin;
+  }
+
+  #album--song--heart, #album--song--share, #album--song--more {
+    height: 4.5vmin;
+    /* width: 20vmin; */
+    padding-right: 3vmin;
+  }
 
 
-
-.genre--record > img {
-background-color: transparent;
-max-width: 90%;
-margin-left: 5%;
-margin-top: 5%;
-margin-bottom: -1%;
-border-radius: 20vmin;
-
-
-
-}
-
-.circle--border {
-  width: 33vmin;
-  height: 33vmin;
-  position: absolute;
-  border-color: #0034C4;
-  border-radius: 25vmin;
-  border-width: 0.75vmin;
-  border-style: solid;
-  margin-top: 2%;
-  margin-left: 2%;
-
-
-}
 
 /* MUSIC RECOMMENDATION SECTION */
   .song--cover {
@@ -684,7 +736,7 @@ border-radius: 20vmin;
     margin-left: 30%;
     /* margin-top: 8%; */
     /* background-color: #12164B; */
-    
+     
     
     
     } 
@@ -1056,63 +1108,5 @@ border-radius: 20vmin;
     margin-left: 3vmin;
     
     }
-
-    /* Scrolling Smaller HEADER */
-    .small {
-      position: relative ;
-      height: 20vmin;
-      font-size: 1.5vmin;
-      text-align:center;
-      color: white;
-      position: fixed;
-      top: 0;
-      width: 100%;
-      padding-top: 3vmin;
-      
-    }
-  
-    .small span {
-      text-align: center;
-      position: relative;
-  
-    }
-  
-    .small > .genre--record {
-      height: 0;
-      display: none;
-      
-    }
-  
-    .small span > button  {
-        display: none;
-    }
-  
-    .small span .column {
-      display: none;
-  
-  }
-  
-    .small .menu {
-      display: none;
-    }
-
-    .small .circle--border {
-      display: none;
-    }
-
-    .small .waves {
-      object-fit: cover;
-      width: 100%;
-      position: absolute;
-      object-position:5% 35%;
-      mix-blend-mode: soft-light;
-      margin-left: -75vmin;
-      height: 15vmin;
-      
-  
-    }
-
-
-
 
 }
