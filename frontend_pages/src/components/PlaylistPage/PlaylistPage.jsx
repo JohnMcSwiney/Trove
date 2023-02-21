@@ -30,7 +30,7 @@ export default function PlaylistPage(props) {
                         <h3>Playlist Name</h3>
                        <div className="playlist--release--info">
                         <h5>2014</h5>
-                        <h6>PLAYLST</h6>
+                        <h6>PLAYLIST</h6>
                         </div>
                         <h4>Creator Username</h4>
                 </div>

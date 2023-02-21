@@ -15,8 +15,8 @@ function App() {
       {/* <UploadMusic /> */}
       {/* <UploadSong /> */}
       {/* <UploadSongConnect /> */}
-      {/* <AlbumPage /> */}
-      <PlaylistPage />
+      <AlbumPage />
+      {/* <PlaylistPage /> */}
 
  
 

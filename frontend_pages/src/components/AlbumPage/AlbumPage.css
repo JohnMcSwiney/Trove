@@ -684,6 +684,17 @@ body {
 
   }
 
+  .album--song:hover {
+    transform: scale(1.01); 
+    box-shadow: 0 0 11px #0034C4;
+  }
+
+  .album--song:hover >  .album--tiny--cover > #playmask {
+    position: absolute;
+    display:inline;
+    margin-left: -12vmin;
+  }
+
   .album--tiny--cover {
     border-radius: 1vmin;
     height: 12vmin;
@@ -697,6 +708,18 @@ body {
     height: 12vmin;
     width: 12vmin;
     margin-top: 4vmin;
+    
+  }
+
+  .album--tiny--cover > #playmask {
+    position: absolute;
+    display: none;
+  }
+
+  .album--tiny--cover:hover > #playmask {
+    position: absolute;
+    display:inline;
+    margin-left: -12vmin;
   }
 
   .album--song--info {

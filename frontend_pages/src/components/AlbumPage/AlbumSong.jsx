@@ -18,6 +18,7 @@ export default function AlbumSong(props) {
         <div className="album--song">
                 <div className="album--tiny--cover">
                         <img src={props.cover} alt="albumcover"/>
+                        <img src='../assets/playmask.png' id="playmask" alt="albumcover"/>
                 </div>                
                 <div className="album--song--info">
                         <h5>{props.title}</h5>
