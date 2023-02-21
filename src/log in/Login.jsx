@@ -1,6 +1,6 @@
 import React from 'react'
 import { useLogin } from '../hooks/user-hooks/useLogin';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import './login.css';
 
 import {BsGoogle, BsFacebook} from 'react-icons/bs'
@@ -12,16 +12,22 @@ const Login = () => {
      const [email, setEmail] = React.useState('');
      const [password, setPassword] = React.useState('');
      const {login, error, isLoading} = useLogin();
-
+     const[isLoggedIn, setIsLoggedIn] =React.useState(false)
      const navigate = useNavigate();
+
      const handleSubmit = async (e)=> {
           e.preventDefault();
           try{
                await login(email, password);
-             
+               if(localStorage.getItem("user")){
+                    navigate('/')
+               }
+
           }catch(err){
                console.log(err.data?.message|| 'Please try again');
+               return;
           }
+               
           
      }
 
