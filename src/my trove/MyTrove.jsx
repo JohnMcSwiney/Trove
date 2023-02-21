@@ -41,7 +41,7 @@ const MyTrove = () => {
 
   return (
     <div>
-      <div className='myTrvcontainer'>
+      <div className='myTrvcontainer container'>
         <div className='pfp_name_follower_cont'>
           <div className='borderuserimg'>
             <img src={tempUser1.imageURL} className='user-img'></img>

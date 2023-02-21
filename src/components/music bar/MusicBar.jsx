@@ -175,7 +175,7 @@ const MusicBar = () => {
             </div>
 
             <div className='song-img'>
-              <img src={obj.img_url}></img>
+              {/* <img src={obj.img_url} ></img> */}
               {obj.explicit ? 
                 <div className="explicit-containter">
                   <MdExplicit 

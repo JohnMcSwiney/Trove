@@ -109,7 +109,7 @@ const NavBar = (props) => {
         <div className={isArtist === true ? '' : 'hidden'} id='divider-white'></div>{/*Yes there's a divider too*/}
         
         <div  className={isArtist === true ? '' : 'hidden'} >
-          <Link to={'/upload'} className='trove-links'>
+          <Link to={'/uploadmusic'} className='trove-links'>
             <div
               className={active === 4 ? "active" : ""}
               onClick={() => setActive(4)}

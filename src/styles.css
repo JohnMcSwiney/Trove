@@ -69,11 +69,11 @@ body {
   background-size:cover;
   background-position:center;
   position: relative;
-  min-height:100vh;
+  min-height:100%;
   
 }
 
-.footer{
+.footer-div{
   height: 250px;
 }
 

@@ -10,7 +10,7 @@ import CardAlbum from '../components/card_album/CardAlbum'
 const Home = () => {
   
   return (
-    <div className=''>
+    <div className='container'>
         <main className="row-span-1 md:col-span-2 relative home-height">
         <TasteProfile/>
         
