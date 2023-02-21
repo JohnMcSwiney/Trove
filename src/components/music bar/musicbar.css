@@ -5,7 +5,11 @@
         background: #12164B;
         border-radius: 0px 0px 8px 8px;
         /* overflow: hidden;  */
-       
+        position: relative;
+        z-index: 15;
+        padding: 2px;
+        box-shadow: 1px 1px 1px #ffffff;
+        
     }
     
     .musicbar-wrap{
@@ -13,8 +17,13 @@
       margin: auto;
       bottom: 1%;
       position: fixed;
-      height: 80px;
-      border-radius: 0px 0px 12px 12px;
+      height: 90px;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      padding-left: 10px;
+      padding-right: 10px;
+      padding-top: 10px;
      
     }
     
@@ -36,6 +45,7 @@
         margin:0;
         display: block;
         position: relative;
+        order: 2;
         
     }
     .tooltip-style{
@@ -58,11 +68,12 @@
         width: 20px;
         height: 20px;
         padding: 0;
-        margin: auto;
+        margin: 5px;
         width: fit-content;
         align-items: center;
         display: flex;
         justify-content: center;
+        order:2;
     }
     .like-btn :hover{
         color: white;
@@ -70,22 +81,24 @@
     }
     
     .player-info-container{
-        height: 80px;
+        height: 60px;
         align-items: center;
         justify-items: center;
         margin: 1px;
         display: flex;
         flex-direction: row;
         padding-right: 4px;
+        order: 1;
     }
     .song-txt-container-container{
         max-height: 90%;
-        min-width: 45%;
+        min-width: 28%;
         max-width: 50px;
         overflow: hidden;
         display: flex;
         justify-content: space-between;
         position: relative;
+        order: 3;
     
     }
     .song-info-txt-container{
@@ -124,6 +137,7 @@
         display: flex;
         align-items: center;
         position: relative;
+        order: 1;
     
     }
     .song-img > img{
@@ -131,15 +145,21 @@
     }
     
     .control-container{  
+        
         display: flex;
         justify-content:center;
         align-items: center;
         width: fit-content;
         width: fit-content;
-        align-items: center;
-        display: flex;
-        justify-content: center;
         padding: 0;
+        position: absolute;
+        
+        gap: 5px;
+        top: 45%;  /* position the top  edge of the element at the middle of the parent */
+        left: 50.25%; /* position the left edge of the element at the middle of the parent */
+    
+        transform: translate(-50%, -50%);
+        
     
     }
     .control-container > button{
@@ -147,12 +167,42 @@
         margin: auto;
         width: fit-content;
         color: white;
-        height: 20px;
-        width: 20px;
+    
         align-items: center;
         display: flex;
         justify-content: center;
-        font-size: x-large;
+        font-size:xx-large;
+    }
+    .control-container > .playbtnstyle{
+        height: 50px;
+        width: 50px;
+        background-image: linear-gradient(to top,#5725d5, #8650F4);
+        object-fit:fill;
+        border-radius: 50%;
+        font-size:  70px;
+        transform: none;
+        border: 1.5px solid rgba(255, 255, 255, 0.753);
+
+
+        background: linear-gradient(-45deg, #e39800, #8650F4, #2a4ff6, #0034C4);
+        background-size: 400% 400%;
+        animation: gradient 20s ease infinite;
+        /* https://codepen.io/P1N2O/pen/pyBNzX */
+    }
+    @keyframes gradient {
+        0% {
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
+    .control-container > .playbtnstyle >.BsPlayStyleLg {
+       margin-left: 5px;
     }
     
     .bg1{
@@ -176,12 +226,6 @@
         padding: 0px;
         opacity: 50%;
         margin: 2px;
-    }
-    .explicitActions{
-    
-    }
-    .explicitActions:hover{
-        
     }
     .tooltip {
         position:relative; /* making the .tooltip span a container for the tooltip text */
@@ -215,10 +259,11 @@
     .progressBar{
         appearance: none;
         border-radius: 10px;
-        width: 90%;
+        width: 70%;
         outline:none;
         position: fixed;
-        transform: translate(0px, -40%);
+        /* transform: translate(0px, -40%); */
+        margin-left: 10%;
     }
     /*safari*/
     .progressBar::-webkit-slider-runnable-track{
@@ -249,14 +294,14 @@
     }
     .progressBar::-webkit-slider-thumb{
         -webkit-appearance: none;
-        height:7px;
-        width: 7px;
+        height:10px;
+        width: 10px;
         border-radius: 50%;
         border: none;
         background-color: #8650F4;
         cursor: pointer;
         position: relative;
-        margin: -1px 0 0 0;
+        margin: -3px -1px 0 0;
         z-index: 3;
         box-sizing: border-box;
         box-shadow: -1px 0px 5px rgba(3, 3, 59, 0.363);
@@ -307,9 +352,36 @@
         border-radius: 50%;
         box-shadow: rgba(255, 255, 255, 0.671); 
     }
+    .volumeContainter{
+         order: 6;
+         justify-self: flex-end;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+         position: absolute;
+         gap: 5px;
+        
+         top: 50%;  /* position the top  edge of the element at the middle of the parent */
+         left: 90%; /* position the left edge of the element at the middle of the parent */
+     
+         transform: translate(-50%, -50%);/* This is a shorthand of
+                                        translateX(-50%) and translateY(-50%) */
+}
+    .volumeContainter > input{
+        width: 80px;
+        height: 5px;
+        
+    }
+    .fillerDivPlayer{
+        margin: auto;
+        background: #0034c400;
+        z-index: -1;
+        order:4;
+    }
 }
 
-@media screen and (max-width:800px) {
+@media screen and (max-width:799px) {
     .musicbar{
         margin-top: 10vh;
         width: 96%;
@@ -617,6 +689,15 @@
         border: 1px solid whitesmoke;
         border-radius: 50%;
         box-shadow: rgba(255, 255, 255, 0.671); 
+    }
+    .volumeContainter{
+        display: none;
+    }
+    
+    .fillerDivPlayer{
+        display: none;
+        z-index: -1;
+        position: fixed;
     }
     
 }

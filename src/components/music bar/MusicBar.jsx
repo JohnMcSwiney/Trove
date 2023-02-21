@@ -164,17 +164,15 @@ const MusicBar = () => {
             <input className='progressBar' type="range" ref={progressBar} defaultValue="0 " 
             onMouseDown={togglePlayPause} onMouseUp={togglePlayPause} 
             onChange={changeRange} />
-          </div>
-
-          
-          <div className='player-info-container'>
+          </div>       
+          <div className='player-info-container '>
 
             {/*  */}
-            <div className='like-btn'>
+            <div className='like-btn '>
               <button onClick={toggleLiked}>{isLiked ? <FaHeart className='text-white' /> : <FaRegHeart />}</button>
             </div>
 
-            <div className='song-img'>
+            <div className='song-img '>
               <img src={obj.img_url} ></img>
               {obj.explicit ? 
                 <div className="explicit-containter">
@@ -188,25 +186,32 @@ const MusicBar = () => {
                 </div> : <p />}{/* explicit-containter */}
             </div>
             
-            <div className='song-txt-container-container'>
+            <div className='song-txt-container-container '>
               <div className='song-info-txt-container'>
                 <div className='song-txt'><a>{obj.title}</a></div>
                 <div className='artist-txt'><a>{obj.artist}</a></div>
               </div>
                   
             </div>
+            <div className='fillerDivPlayer'>
 
+            </div>
             <div className='control-container'>
               <button><BsSkipStart /></button>
-              <button onClick={togglePlayPause}>
-                {isPlaying ? <BsPause /> : <BsPlay />}
+              <button className='playbtnstyle' onClick={togglePlayPause}>
+                {isPlaying ? <BsPause /> : <BsPlay className='BsPlayStyleLg'/>}
               </button>
               <button><BsSkipEnd /></button>
+              
             </div>
-
-
           </div>
 
+          <div className='volumeContainter'>
+                <button onClick={toggleMute}>
+                {isMuted ? <BiVolumeFull /> : <BiVolumeMute />}
+                </button>
+                <input type="range" ref={volumeRef} defaultValue="50" onChange={changeVolumeLevel} min="0" max="100" step="5" ></input>
+              </div>
           {/* Song Image 
           <div className='hidden'>
             <img src="http://localhost:3000/cover.jpg"></img>
@@ -254,9 +259,9 @@ const MusicBar = () => {
           </div>
           */}
           {/* Vol*/} 
-          <div className='hidden'>
+          {/* <div className='hidden'>
             <input type="range" ref={volumeRef} defaultValue="50" onChange={changeVolumeLevel}></input>
-          </div>
+          </div> */}
           
 
 
