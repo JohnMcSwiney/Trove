@@ -58,7 +58,7 @@ const signupUser = async(req,res)=>{
             <p>Thank you for signing up for My Awesome App!</p>
             <p>We're thrilled to have you join our community.</p>
             <p>Please click the following link to verify your email address:</p>
-            <a href="${process.env.APP_URL}/verify-email/${user._id}">${process.env.APP_URL}/verify-email/${user._id}</a>
+            <a href="${process.env.APP_URL_BACKEND}/api/user/verify-email/${user._id}">Verify Here</a>
           `
         };
 
@@ -77,9 +77,10 @@ const signupUser = async(req,res)=>{
 }
 
 const verifyUser = async (req,res)=> {
-    const {id} =req.params.id;
+    const id =req.params.id;
+    
     try{
-        const user  = await User.findOneAndUpdate({id}, {isVerified:true})
+        const user  = await User.findOneAndUpdate({_id: id}, {isVerified:true})
         if(!user){
             return res.status(404).json('User not found');
         }

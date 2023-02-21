@@ -3,6 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const passport = require('passport')
 const cookieSession = require('cookie-session');
+const cors = require('cors')
 //For admin
 const userRouter = require('./admin routes/user-route/user-route');
 const albumRouter = require('./admin routes//album-route/album-route');
@@ -14,7 +15,7 @@ const songRouter = require('./admin routes//song-route/song-route');
 
 //For User
 const userlogin = require('./user routes/user-login-route/user');
-const passportSetup = require('./passport')
+// const passportSetup = require('./passport')
 const googleAuthRoute= require('./user routes/auth/auth')
 
 const app = express();
@@ -32,6 +33,8 @@ app.use((req,res,next) =>{
     console.log(req.path, req.method);
     next();
 })
+
+
 
 //loggin with google
 
