@@ -1,7 +1,7 @@
 import React from "react";
 import './header.css';
 import { useLogout } from "../../hooks/user-hooks/useLogout";
-import { useAuthContext } from "../../hooks/useAuthContext";
+import { useAuthContext } from "../../hooks/user-hooks/useAuthContext";
 
 import {Dropdown,ButtonGroup} from 'react-bootstrap';
 import {GiHamburgerMenu} from 'react-icons/gi'

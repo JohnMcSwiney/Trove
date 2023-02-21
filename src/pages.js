@@ -5,4 +5,5 @@ export {default as MyAccount} from './my account/MyAccount'
 
 export {default as Login} from './log in/Login'
 export {default as Signup} from './sign up/Signup'
-export {default as Artist} from './log in artist/Artist'
+export {default as ArtistLogin} from './log in artist/ArtistLogin'
+export {default as Artist} from './artist/Artist'

@@ -34,10 +34,10 @@ const Login = () => {
     
   return (
      <>
-    <form className='login' onSubmit={handleSubmit}>
-          <h1 className='login-header'>Log in</h1>
+    <form className='user-login' onSubmit={handleSubmit}>
+          <h1 className='user-login-header'>Log in</h1>
           
-          <div className='login-container'>
+          <div className='user-login-container'>
                <div className='form-outline mb-4'>
                     <label className='form-label' for='emailbox'>Email</label>
                     <input type="email" id='emailbox' className='form-control' onChange={(e)=>setEmail(e.target.value)}
@@ -63,7 +63,7 @@ const Login = () => {
 
                <div className='buttonCont'>
                <button disabled={isLoading} 
-               className='loginbtn text-light' type='submit'>
+               className='user-loginbtn text-light' type='submit'>
                     Log in
                </button>
                </div>
@@ -74,29 +74,16 @@ const Login = () => {
                <div className='buttonCont'>
                     <a href="/signup" 
                     className="text-light" role="button" 
-                    ><button className="signupbtn">Sign up</button></a>
+                    ><button className="user-signupbtn">Sign up</button></a>
                </div>
 
-                    <div className='go-fa-div'>
+                    <div className='user-go-fa-div'>
                          <p>Continue with</p>
-                         <div className='go-fa-wrap'>
+                         <div className='user-go-fa-wrap'>
                               <div className='go'><BsGoogle className='go-icon'/></div>
                               <div className='fa'><BsFacebook className='fa-icon'/></div>
                     </div>
-                    {/* <LoginSocialGoogle
-                    client_id={"client-id"}
-                    scope="openid profile email"
-                    discoveryDocs="claims_supported"
-                    access_type="offline"
-                    onResolve={({ provider, data }) => {
-                         console.log(provider, data);
-                    }}
-                    onReject={(err) => {
-                         console.log(err);
-                    }}
-                    >
-                    <GoogleLoginButton />
-                    </LoginSocialGoogle> */}
+                   
                </div>
      </>
   )

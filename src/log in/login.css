@@ -1,22 +1,22 @@
-.login{
+.user-login{
     max-width: 380px;
     margin: 0 auto;
 
 }
 
-.login-container{
+.user-login-container{
     display: flex;
     flex-direction: column;
     justify-content: center; 
 }
 
 
-.login-header{
+.user-login-header{
     text-align: center;
     color: white;
 }
 
-.loginbtn{
+.user-loginbtn{
     background-image: linear-gradient(to left, #8650f4, #0034c4);
     border-radius: 5px;
     width: 360px;
@@ -24,7 +24,7 @@
     border: #8650f4 2px solid;
 }
 
-.loginbtn-form:hover{
+.user-loginbtn:hover{
     background-image: linear-gradient(to left, #8650f4, #0034c4);
     opacity: 0.8;
 }
@@ -44,7 +44,7 @@
     color: white;
 }
 
-.signupbtn{
+.user-signupbtn{
     border-color: #8650f4;
     border-width: 2px;
     border-radius: 5px;
@@ -59,7 +59,7 @@
   
 }
 
-.signupbtn:hover{
+.user-signupbtn:hover{
     background-color: rgba(240, 248, 255, 0.071);
     -webkit-backdrop-filter: blur(5px);
 }
@@ -73,7 +73,7 @@
 }
 
 
-.go-fa-div{
+.user-go-fa-div{
     margin-top:5vh;
     display: flex;
     flex-direction: column;
@@ -82,16 +82,13 @@
 }
 .go{
     display: flex;
-    border-color: azure;
-    
 }
 
 .fa{
     display: flex;
-    
 }
 
-.go-fa-wrap{
+.user-go-fa-wrap{
     display: flex;
     justify-content: center;
     align-content: center;

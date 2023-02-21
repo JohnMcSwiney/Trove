@@ -17,24 +17,7 @@ const MyAccount = () => {
                     <MyAccountTabs/>
                   </div>
 
-              {/* <div className='my-account-wrap'>
-                  <h1>Account Settings</h1>
-                  
-                  <form className=''>
-                   <div className=''>
-                   <img src={img} alt="user-image"  className='user-img' onChange={(e)=> setImg(e.target.value)} value={img}/>
-                    <label htmlFor='displayName' className='label-tag'>Display Name</label>
-                    <input type='text'  id='displayName' className='form' onChange={(e)=> setDisplayName(e.target.value)} value={displayName} />
-
-                    <label htmlFor='email' className='label-tag'>Email</label>
-                    <input type='text' id='email'  className='form' onChange={(e)=> setChangeEmail(e.target.value)} value= {changeEmail}/>
-                    
-                    <label htmlFor='email' className='label-tag'>password</label>
-                    <input type='password' id='password'  className='form' onChange={(e)=> setChangePassword(e.target.value)} value= {changePassword}/>
-                    <button className='savebtn btn btn-primary' type='submit'>Save</button>
-                    </div>
-                  </form>
-                </div> */}
+              
          
           </div>
 

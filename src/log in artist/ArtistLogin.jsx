@@ -9,7 +9,7 @@ import {BsGoogle, BsFacebook} from 'react-icons/bs'
 
 
 
-const Login = () => {
+const ArtistLogin = () => {
      const [email, setEmail] = React.useState('');
      const [password, setPassword] = React.useState('');
      const {login, error, isLoading} = useLogin();
@@ -96,4 +96,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default ArtistLogin
