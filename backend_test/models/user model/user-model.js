@@ -3,56 +3,57 @@ const bcrypt = require('bcrypt');
 const validator = require('validator')
 
 const userSchema = new mongoose.Schema({
-    email:{
+    email: {
         type: String,
-        required:true,
-        unique:true
-    }, 
-    password:{
-        type:String,
-        required:true
+        required: true,
+        unique: true
+    },
+    password: {
+        type: String,
+        required: true
     },
 
     imageURL: {
         type: String,
-        
+
     },
-    
+
     favouriteSongs: [
         {
-            type: mongoose.Schema.Types.ObjectId, 
+            type: mongoose.Schema.Types.ObjectId,
             ref: 'Song'
         }
     ],
 
-    displayName:{
-        type:String,
-        default:'My Account'
+    displayName: {
+        type: String,
+        required: [true, `Please provide email`],
+        default: 'My Account'
     },
-    isAdmin:{
-        type:Boolean,
-        default:false
+    isAdmin: {
+        type: Boolean,
+        default: false
     },
-    playlist : [
+    playlists: [
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'playlist'
         }
     ]
 
-}, {timestamps:true})
+}, { timestamps: true })
 
 //static sign up method
 
-userSchema.statics.signup = async function (email ,password) {
+userSchema.statics.signup = async function (email, password) {
 
     // validation
 
-    if(!email || !password){
-        throw Error ('All fields must be filled')
+    if (!email || !password) {
+        throw Error('All fields must be filled')
     }
 
-    if(!validator.isEmail(email)){
+    if (!validator.isEmail(email)) {
         throw Error('Email is not valid')
     }
 
@@ -62,7 +63,7 @@ userSchema.statics.signup = async function (email ,password) {
 
     const condition2 = await this.findOne({ email });
 
-    if(condition2){
+    if (condition2) {
         throw Error('Email already in use');
     }
 
@@ -70,10 +71,10 @@ userSchema.statics.signup = async function (email ,password) {
     // salt to make password to be different from the same password
     const salt = await bcrypt.genSalt(10);
 
-    const hash = await bcrypt.hash(password,salt);
+    const hash = await bcrypt.hash(password, salt);
 
     const user = await this.create({ email, password: hash })
-    
+
     return user;
 
 }
@@ -81,23 +82,23 @@ userSchema.statics.signup = async function (email ,password) {
 //static login method
 
 userSchema.statics.login = async function (email, password) {
-    if( !password || !email){
-        throw Error ('All fields must be filled')
+    if (!password || !email) {
+        throw Error('All fields must be filled')
     }
 
     const user = await this.findOne({ email });
 
-    if(!user){
+    if (!user) {
         throw Error('Incorrect email');
     }
 
     const match = await bcrypt.compare(password, user.password);
 
-    if(!match){
-        throw Error ('Incorrect password')
+    if (!match) {
+        throw Error('Incorrect password')
     }
 
     return user;
 }
 
-module.exports = mongoose.model("User",userSchema );
+module.exports = mongoose.model("User", userSchema);

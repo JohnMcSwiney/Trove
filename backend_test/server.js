@@ -3,7 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 
 //For admin
-const userRouter = require('./admin routes/user-route/user-route');
+const userRouter = require('./admin routes//user-route/user-route');
 const albumRouter = require('./admin routes//album-route/album-route');
 const artistRouter = require('./admin routes//artist-route/artist-route');
 const collectionRouter = require('./admin routes//collection-route/collection-route');
@@ -54,7 +54,7 @@ app.use('/api/collections',collectionRouter);
 app.use('/api/tasteps',tastepRouter);
 
 // //playlist
-app.use('api/playlists',playlistRouter);
+app.use('/api/playlists',playlistRouter);
 
 //song
 app.use('/api/songs', songRouter);

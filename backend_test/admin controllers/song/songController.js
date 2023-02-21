@@ -441,7 +441,6 @@ const deleteSong = async (req, res) => {
 
     const { id } = req.params;
 
-
     if (!mongoose.Types.ObjectId.isValid(id)) {
 
         return res.status(404).json({ error: "song not found" });
@@ -471,12 +470,11 @@ const deleteSong = async (req, res) => {
 
         if (req.body.featuredArtist == null || !req.body.featuredArtists) {
 
+            await Song.findOneAndDelete({ _id: id });
+
             await Artist.updateOne({ _id: artist._id }, { $pull: { songList: song._id } });
 
             await Album.updateOne({ _id: album._id }, { $pull: { songList: song._id } });
-
-
-            await Song.findOneAndDelete({ _id: id })
 
             console.log("song is deleted");
 
@@ -496,25 +494,22 @@ const deleteSong = async (req, res) => {
                 return featuredArtist._id;
             }));
 
+            await Song.findOneAndDelete({ _id: id });
 
             await Artist.updateOne({ _id: artist._id }, { $pull: { songList: song._id } });
 
             for (const featuredArtist of featuredArtists) {
-
                 await Artist.updateMany({ _id: { $in: featuredArtists._id } }, { $pull: { songList: song._id } });
                 //artist.songList.pop(song._id);
-
             }
 
-            await Album.updateOne({ _id: album._id }, { $pull: { songList: song._id } }, {totalTracks: (album.totalTracks--)});
+            await Album.updateOne({ _id: album._id }, { $pull: { songList: song._id } }, { totalTracks: (album.totalTracks--) });
 
             // for (const featuredArtistId of featuredArtists) {
             //     const featuredArtist = await Artist.findById(featuredArtistId);
             //     featuredArtist.songList.pop(song._id);
             //     await featuredArtist.save();
             // }
-
-            await Song.findOneAndDelete({ _id: id });
 
             console.log("song is deleted");
 

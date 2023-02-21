@@ -21,14 +21,20 @@ const getAPlaylist = async (req, res) => {
     return res.status(404).json({ err: 'No such playlist' })
   }
 
-  const playlist = await Playlist.findById(id);
+  const playlist = await Playlist.findById(id)
+  .populate("playlistCreator", "displayName")
+
+  console.log(playlist);
 
   if (!playlist) {
-
     return res.status(404).json({ err: "No such playlist" });
-
   }
-  res.status(200).json(playlist)
+
+  else {
+    console.log(playlist);
+
+    res.status(200).json(playlist)
+  }
 
 }
 
@@ -38,8 +44,8 @@ const createPlaylist = async (req, res) => {
   console.log(req.body);
 
   try {
-    
-    const user = await User.findOne({displayName: req.body.user});
+
+    const user = await User.findOne({ displayName: req.body.user });
 
     console.log(user);
 
@@ -48,16 +54,10 @@ const createPlaylist = async (req, res) => {
       throw new Error("User not found");
     }
 
-    // const songs = await Song.find({}).sort({createdAt: -1});
 
-    // if (!songs) {
-
-    //   throw new Error("Songs not found");
-    // }
-
-    const playlist = new Playlist ({
+    const playlist = new Playlist({
       ...req.body,
-      user: user._id
+      playlistCreator: user._id
       //songs: songs._id
     });
 
@@ -69,39 +69,85 @@ const createPlaylist = async (req, res) => {
 
     console.log(err);
 
-    res.status(400).json({message: err.message});
+    res.status(400).json({ message: err.message });
   }
 }
 //update a new pl
 
 const updatePlaylist = async (req, res) => {
+
   const { id } = req.params;
+
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ err: 'No such playlist' })
   }
 
-  const playlist = await Playlist.findOneAndUpdate({ _id: id }, {
-    ...req.body
-  })
+  try {
 
-  if (!playlist) {
-    return res.status(404).json({ err: 'No such playlist' })
+    const user = await User.findOne({ displayName: req.body.user });
+
+    if (!user) {
+
+      throw new Error("User now found");
+    }
+
+    const songs = await Song.find({}).sort({ createdAt: -1 });
+
+    if (!songs) {
+
+      throw new Error("Songs not found");
+    }
+
+    const playlist = await Playlist.findOneAndUpdate(
+      { _id: id },
+      { $set: { ...req.body, playlistCreator: user._id, songList: songs._id } },
+      { new: true }
+    );
+
+    if (!playlist) {
+
+      return res.status(404).json({ message: 'No such playlist' });
+
+    }
+
+    res.status(200).json(album);
+
+  } catch (err) {
+
+    console.log(err);
+    res.status(400).json({ message: err.message });
   }
-  res.status(200).json(playlist);
 }
 //Delete a pl
 const deletePlaylist = async (req, res) => {
+
   const { id } = req.params;
+
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ err: 'No such playlist' })
   }
 
-  const playlist = await Playlist.findOneAndDelete({ _id: id })
+  try {
 
-  if (!playlist) {
-    return res.status(404).json({ err: 'No such playlist' })
+    const playlist = await Playlist.findById(id);
+
+    const user = await User.findOne({ _id: playlist.user._id });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    await User.updateOne({ _id: user._id }, { $pull: { playlists: playlist._id } });
+
+    await Playlist.findOneAndDelete({ _id: id });
+
+    res.status(200).json({ msg: "playlist deleted" });
+
+  } catch (err) {
+
+    console.log(err);
+    res.status(400).json({ message: err.message });
   }
-  res.status(200).json(playlist);
 }
 
 module.exports = {
