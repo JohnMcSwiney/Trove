@@ -58,10 +58,13 @@ const createPlaylist = async (req, res) => {
     const playlist = new Playlist({
       ...req.body,
       playlistCreator: user._id
-      //songs: songs._id
     });
 
     playlist.songList = [];
+    user.playlists.push(playlist._id);
+
+    await playlist.save();
+    await user.save();
 
     res.status(201).json(playlist);
 
@@ -84,11 +87,13 @@ const updatePlaylist = async (req, res) => {
 
   try {
 
-    const user = await User.findOne({ displayName: req.body.user });
+    const playlist = await Playlist.findById(id);
+
+    const user = await User.findOne({ _id: playlist.playlistCreator });
 
     if (!user) {
-
-      throw new Error("User now found");
+      console.log(user);
+      throw new Error("User not found");
     }
 
     const songs = await Song.find({}).sort({ createdAt: -1 });
@@ -98,11 +103,15 @@ const updatePlaylist = async (req, res) => {
       throw new Error("Songs not found");
     }
 
-    const playlist = await Playlist.findOneAndUpdate(
+    let songList = songs.map(song => song._id);
+
+    await Playlist.findOneAndUpdate(
       { _id: id },
-      { $set: { ...req.body, playlistCreator: user._id, songList: songs._id } },
+      { $set: { ...req.body, playlistCreator: user._id, songList: songList._id } },
       { new: true }
     );
+
+    //figure out how to remove songs...
 
     if (!playlist) {
 
@@ -110,7 +119,7 @@ const updatePlaylist = async (req, res) => {
 
     }
 
-    res.status(200).json(album);
+    res.status(200).json(playlist);
 
   } catch (err) {
 
@@ -131,7 +140,7 @@ const deletePlaylist = async (req, res) => {
 
     const playlist = await Playlist.findById(id);
 
-    const user = await User.findOne({ _id: playlist.user._id });
+    const user = await User.findOne({ _id: playlist.playlistCreator });
 
     if (!user) {
       throw new Error("User not found");

@@ -220,11 +220,11 @@ const getSong = async (request, response) => {
     const { id } = request.params;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).json({ err: 'No such song' })
+        return res.status(404).json({ err: 'No such song' });
     }
 
     const song = await Song.findById(id)
-        .populate('featuredArtists', 'artistName')
+        .populate('featuredArtists', 'artistName');
 
     if (!song) {
 
@@ -248,7 +248,7 @@ const updateSong = async (req, res) => {
     const { id } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).json({ err: 'No such song' })
+        return res.status(404).json({ err: 'No such song' });
     }
 
     switch (req.body.releaseType) {
