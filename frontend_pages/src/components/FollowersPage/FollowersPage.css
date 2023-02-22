@@ -756,6 +756,11 @@ body {
     font-weight: 500;
   }
 
+  .follower--info > h5:hover {
+    font-weight: 500;
+    text-decoration: underline;
+  }
+
   .follower--info > h6 {
     font-weight: 300;
     color: #878694;
@@ -808,6 +813,7 @@ body {
   .followers--song--info > h5 {
     font-weight: 400;
   }
+  
 
   .followers--song--info > h5 > span {
     font-weight: 200;
