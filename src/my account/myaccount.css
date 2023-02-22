@@ -1,50 +1,60 @@
-
-
-.alertBox{
+/* .alertBox{
     width: 150px;
     height: 70px;
     position: absolute;
     left: 12%;
     top: 30%;
     z-index: 16;
+} */
+
+.account-content{
+   display: flex;
+   flex-direction: column;
 }
 
-.acccount-content{
- 
+.account-tab{
+    display: flex;
+    flex-direction: row;
+    justify-content:space-between;
+ }
 
-}
 
-.acccount-tab{
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  height: 200px;
-  justify-content: left;
-  margin: 0;
-  justify-content: space-between;
-  background-color: aquamarine;
-  width: 100%;
-}
 
 .tabs{
     display: flex;
+    flex-direction: column;
+    
+}
+
+.privacy-display {
+    width: 20%;
+  
 }
 
 .account-display {
-    /* background-color: aliceblue;
-    width: 15%;
-    background-color: blue;
-    position: relative; */
-    width: 100px;
-    margin: 0;
-    background-color: red;
+  width: 20%;
+  
 }
-.acccount-content{
-    /* background-color: rgb(0, 255, 85);
-    position: relative; */
-    min-width: 100px;
-    max-width: 200px;
-    flex-grow: 1;
-    margin: 0;
-    background-color: green;
-}
+
+.privacy-content{
+    display: flex;
+    flex-direction: column;
+    
+ }
+ 
+ .privacy-tab{
+     display: flex;
+     flex-direction: row;
+     justify-content:space-between;
+     background-color: aquamarine;
+  }
+
+  .inner-form{
+    max-width: fit-content;
+  }
+
+  .user-avatar{
+        width: 100px;
+        height: 100px;
+        border-radius: 50px; ;
+  }
