@@ -89,30 +89,30 @@ export default function ArtistProfile(props) {
 
           {/* HEADER 
             artist name, main genre, follower count, follow button */}
-        <div className={`header ${
-          small ? "small" : "header"
+        <div className={`artist--header ${
+          small ? "artist--small" : "artist--header"
         }`}>
-            <img className="waves "name="waves" src={WavesBG} alt="waves"/>
+            <img className="artist--waves "name="waves" src={WavesBG} alt="waves"/>
 
 
             {width > windowBreakpoint ? 
              "": <div 
-              className="menu"
+              className="artist--menu"
               onClick={handleClick}
               name="menu">
               {/* <img name="menu" width="30vmin" src="../assets/menuicon.jpg" alt="menu"/> */}
               </div>}
 
         
-            <div className="circle--border"> 
-            <div className="genre--record">
+            <div className="artist--circle--border"> 
+            <div className="artist--genre--record">
                 <img width="215vmin" src="../assets/artist_icon.png" alt="genre"/>
             </div>
             </div>
             <div className="artist--genre"><h5>ROCK</h5></div>
             <span><h1>ARTIST NAME</h1> 
-            <div className="row">
-            <div className="column">
+            <div className="artist--row">
+            <div className="artist--column">
             <button 
                 className={`
                 ${
@@ -125,32 +125,32 @@ export default function ArtistProfile(props) {
                 follow ? "FOLLOWING" : "FOLLOW"
               } `}</button>
               </div>
-            <div className="column">
+            <div className="artist--column">
             <h5>{followers} FOLLOWERS</h5>
             </div></div>
             </span>
 
         </div>
-        <div className={`profile--body ${
-          showMenu ? "no--profile--view" : ""
+        <div className={`artist--profile--body ${
+          showMenu ? "artist--no--profile--view" : ""
         }`}>
         <br/><br/><br/><br/><br/><br/><br/><br/><br/>
 
         {/* Artist Recommendation Section */}
-        <div className="latest--release">
+        <div className="artist--latest--release">
         <h2>Artist's Pick</h2>
             {/* playing song w album cover, song title, and release date */}
            
-           <div className="music--section">
-           <div className="release--playing">
+           <div className="artist--music--section">
+           <div className="artist--release--playing">
                     <br/>
-                    <div className="row">
-                    <div className="column rec--album">
-                    <div className="song--cover">
+                    <div className="artist--row">
+                    <div className="artist--column rec--album">
+                    <div className="artist--song--cover">
                         <img src="../assets/reccover.jpg" alt="albumcover"/>
                     </div>
 
-                    <AudioPlayer className="AudioPlayer" 
+                    <AudioPlayer className="artist--AudioPlayer" 
                     // autoPlay 
                     src={"../assets/song7.mp3"}
                     onPlay={e => console.log("onPlay")}
@@ -158,7 +158,7 @@ export default function ArtistProfile(props) {
                     </div>
                     </div>
                     </div>
-                    <div className="column rec--desc">
+                    <div className="artist--column artist--rec--desc">
                         <h3>Song Name</h3>
                         <p>Prism church-key yr, seitan kale chips poutine live-edge. Drinking vinegar green juice trust fund hexagon kale chips mustache chicharrones XOXO try-hard everyday carry forage. Brooklyn wolf godard, banh mi messenger bag sustainable gastropub banjo lo-fi brunch umami. Dreamcatcher chambray cray vibecession you probably haven't heard of them farm-to-table.</p>
                     </div>
@@ -170,11 +170,11 @@ export default function ArtistProfile(props) {
         </div>
         
         {/* Discography Section */}
-        <div className="discography">
+        <div className="artist--discography">
             {/* albums, singles displayed in a side scrolling section*/}
-            <div className="music--section">
+            <div className="artist--music--section">
                 <h4>DISCOGRAPHY</h4>
-                <div className="slider discography">
+                <div className="artist--slider artist--discography">
                 {
                     albumList && albumList.map((item, index)=>{
                     return(
@@ -194,11 +194,11 @@ export default function ArtistProfile(props) {
         </div>
 
         {/* Similar Artists Section */}
-        <div className="similar--artists">
+        <div className="artist--similar--artists">
             {/* recommends artists that are similar to the  */}
-            <div className="music--section">
+            <div className="artist--music--section">
                     <h4>SIMILAR ARTISTS</h4>
-                    <div className="slider artists">
+                    <div className="artist--slider artist--artists">
                 {
                     relatedArtists && relatedArtists.map((item, index)=>{
                     return(          

@@ -1,6 +1,6 @@
 import React from "react"
 
-import './FollowersPage.css';
+import './FollowingPage.css';
 import NavBar from './nav bar/NavBar';
 import followers from "../../data/followers.json"
 import Follower from "./Follower";

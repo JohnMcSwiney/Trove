@@ -29,15 +29,15 @@ export default function AddSongs(props) {
       }, [props.files]);
 
     return (
-        <div className="column song--form">
+        <div className="uploadmusic--column uploadmusic--song--form">
             <h2>ADD SONGS</h2>
-            <div className="upload--songfile"><label className="custom-song-upload">
-                <input type="file" name="songFile" value="" accept="audio/*" className="gradient--btn image--btn hide--file" onChange={props.handleSongFileChange} />
+            <div className="uploadmusic--upload--songfile"><label className="uploadmusic--custom-song-upload">
+                <input type="file" name="songFile" value="" accept="audio/*" className="uploadmusic--gradient--btn uploadmusic--image--btn uploadmusic--hide--file" onChange={props.handleSongFileChange} />
                 Upload Song 
                 {/* <img src="../../assets/upload_icon.png" id="upload--icon" alt="upload_icon" /> */}
             </label>
           
-            <div className="add--song">
+            <div className="uploadmusic--add--song">
 
         {/* Filepond, don't think we are using atm */}
             {/* 
@@ -67,16 +67,16 @@ export default function AddSongs(props) {
         })}
         </div>
 
-            <div className="navigate--form--btns navigate--add--songs"> 
-                <div className="back--btn" onClick={ () => props.handleFormNavigation('MusicDetails')}>
+            <div className="uploadmusic--navigate--form--btns uploadmusic--navigate--add--songs"> 
+                <div className="uploadmusic--back--btn" onClick={ () => props.handleFormNavigation('MusicDetails')}>
                    <button 
-                  className={"gradient--btn submit--btn"}
+                  className={"uploadmusic--gradient--btn uploadmusic--submit--btn"}
                   onClick={() => props.handleFormNavigation('MusicDetails')}
                   value="musicdet"
                   name="musicdet">Music Details</button>
                 </div>
-                <div className="next--btn" >
-                   <input type="submit" value="Submit" className="gradient--btn submit--btn" onClick={props.handleSubmit} /> 
+                <div className="uploadmusic--next--btn" >
+                   <input type="submit" value="Submit" className="uploadmusic--gradient--btn uploadmusic--submit--btn" onClick={props.handleSubmit} /> 
                 </div>
             
             </div>

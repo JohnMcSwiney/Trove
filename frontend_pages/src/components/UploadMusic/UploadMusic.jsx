@@ -278,10 +278,10 @@ export default function UploadMusic(props) {
         {menu}
 
         {/* HEADER */}
-        <div className={`header ${
-          small ? "small" : "header"
+        <div className={`uploadmusic--header ${
+          small ? "uploadmusic--small" : "uploadmusic--header"
         }`}>
-            <img className="waves "name="waves" src={WavesBG} alt="waves"/>
+            <img className="uploadmusic--waves "name="waves" src={WavesBG} alt="waves"/>
 
 
               <div>
@@ -290,17 +290,17 @@ export default function UploadMusic(props) {
 
               </div>
               {/* Form starts */}
-              <div className="upload--form">
+              <div className="uploadmusic--upload--form">
               {/* <form className="upload--form"
                 onSubmit={handleSubmit}> */}
 
-              <div className="row">
-                  <div className="upload--image">
-                  <div className="column upload--zone">
+              <div className="uploadmusic--row">
+                  <div className="uploadmusic--upload--image">
+                  <div className="uploadmusic--column uploadmusic--upload--zone">
                   <img src={previewCover} id="album--icon" alt="default_album"/>
                   </div>
-                  <label className="custom-file-upload">
-                  <input type="file" name="cover" value="" accept="image/*" className="gradient--btn image--btn hide--file" onChange={handleImageFileChange}/> 
+                  <label className="uploadmusic--custom-file-upload">
+                  <input type="file" name="cover" value="" accept="image/*" className="uploadmusic--gradient--btn uploadmusic--image--btn uploadmusic--hide--file" onChange={handleImageFileChange}/> 
                       Choose Image <img src="../../assets/upload_icon.png" id="upload--icon" alt="upload_icon"/>
                   </label>
                 

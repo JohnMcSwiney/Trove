@@ -271,7 +271,6 @@ body {
   .followers--song--info > h5 {
     font-weight: 400;
   }
-  
 
   .followers--song--info > h5 > span {
     font-weight: 200;
@@ -550,7 +549,6 @@ body {
   .followers--song--info > h5 {
     font-weight: 400;
   }
-  
 
   .followers--song--info > h5 > span {
     font-weight: 200;
@@ -576,9 +574,6 @@ body {
     /* width: 20vmin; */
     padding-right: 3vmin;
   }
-
-
-
 
 
 }

@@ -14,10 +14,10 @@ function App() {
     <div className="App">
       {/* <ArtistProfile /> */}
       {/* <UserProfile /> */}
-      {/* <UploadMusic /> */}
+      <UploadMusic />
       {/* <UploadSong /> */}
       {/* <UploadSongConnect /> */}
-      <AlbumPage />
+      {/* <AlbumPage /> */}
       {/* <PlaylistPage /> */}
       {/* <FollowersPage /> */}
       {/* <FollowingPage /> */}
