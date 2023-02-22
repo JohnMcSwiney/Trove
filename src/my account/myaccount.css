@@ -1,8 +1,4 @@
-.my-account-page{
-    width: 90%;
-    position: relative;
-    margin: auto;
-}
+
 
 .alertBox{
     width: 150px;
@@ -11,4 +7,22 @@
     left: 12%;
     top: 30%;
     z-index: 16;
+}
+
+.acccount-content{
+ 
+
+}
+
+.acccount-tab{
+  
+}
+
+.tabs{
+
+}
+
+.account-display {
+    background-color: aliceblue;
+    width: 15%;
 }
