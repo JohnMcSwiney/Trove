@@ -73,7 +73,7 @@ app.use('/api/collections',collectionRouter);
 app.use('/api/tasteps',tastepRouter);
 
 // //playlist
-app.use('api/playlists',playlistRouter);
+app.use('/api/playlists',playlistRouter);
 
 //song
 app.use('/api/songs', songRouter);

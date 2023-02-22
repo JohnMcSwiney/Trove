@@ -1,58 +1,52 @@
 const mongoose = require('mongoose');
 
 const artistSchema = mongoose.Schema({
-        
-        artistName: {
-            type: String,
-            required: [true, `Please provide artist's name`],
-            maxLength: 50
-        },
-        
-        email:{
-            type:String,
-            required: true,
-            unique: true
-        },
 
-        password: {
-            type:String,
-            required:true
-        },
-        artistFollowers: {
-            type: Number
-        },
-        albumList:[
-            {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'Artist'
-            }
-        ],
-        albumArtURL: {
-            type: String,
-        },
+    artistName: {
+        type: String,
+        required: [true, `Please provide artist's name`],
+        maxLength: 50
+    },
 
-        songList: [
-            {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'Song'
-            }
-        ],
-        isPublished: {
-            type: Boolean
-        },
-        publishDate: {
-            type: Date
-        },
-        releaseType: {
-            type: String, 
-            enum: ['Album', 'EP', 'Single']
-        }, 
-      }
-    
-    )
+    email: {
+        type: String,
+        required: [true, `Please provide email`],
+        unique: true
+    },
 
-    // artistSchema.statics.signup = async function (email,user,passwor){
+    password: {
+        type: String,
+        required: [true, `Please provide password`],
+    },
+    artistFollowers: {
+        type: Number
+    },
+    albumList: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Artist',
+            default: null,
+        }
+    ],
+    albumArtURL: {
+        type: String,
+    },
 
-    // }
-    
-module.exports = mongoose.model('Artist',artistSchema)
+    songList: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Song',
+            default: null,
+        }
+    ],
+    isPublished: {
+        type: Boolean
+    },
+    publishDate: {
+        type: Date
+    }
+}
+
+)
+
+module.exports = mongoose.model('Artist', artistSchema)
