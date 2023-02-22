@@ -92,7 +92,8 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    width: 25%;
+    min-width: 15%;
+    max-width: 20%;
     align-items: center;
     padding-top: 120px;
     gap: 2px;
