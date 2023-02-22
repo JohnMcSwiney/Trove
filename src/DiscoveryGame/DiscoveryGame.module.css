@@ -3,6 +3,7 @@
   position:absolute;
   justify-content: center;
   width: 600px;
+
   
   --Purple: #8650F4;
   --Blue: #0034C4 ;
@@ -235,15 +236,34 @@ top: 0;
 left: 0;
 right: 0;
 text-align: center;
-height: 60px;
+height: 50px;
 font-size: 40px;
 display: flex;
 justify-content: center;
 
-line-height: 60px;  /*change when you change hight so its centered*/
+line-height: 50px;  /*change when you change hight so its centered*/
   
   
 }
+
+.author{
+  color: #FFFFFF;
+  width: 100%;
+  bottom: 0;
+  background-color: #080C3D;
+  top: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  height: 40px;
+  font-size: 30px;
+  display: flex;
+  justify-content: center;
+  
+  line-height: 40px;  /*change when you change hight so its centered*/
+    
+    
+  }
 
 
 

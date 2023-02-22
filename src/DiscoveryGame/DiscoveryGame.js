@@ -106,28 +106,32 @@ const DiscoveryGame = () => {
         {
           url: require('../imgs/Reflection.jpg'),
           alt: 'Image 1',
-          header: 'Reflection',
+          songName: 'Reflection',
+          author:'Lena Raine',
           audio: require('../mp3/Reflection.mp3'),
           startTime: ('59'),
         },
         {
           url: require('../imgs/Resurrections.jpg'),
           alt: 'Image 2',
-          header: 'Resurrections',
+          songName: 'Resurrections',
+          author:'Lena Raine',
           audio: require('../mp3/Resurrections.mp3'),
           startTime: ('20'),
         },
         {
           url: require('../imgs/Farewell.jpg'),
           alt: 'Image 3',
-          header: 'Farewell',
+          songName: 'Farewell',
+          author:'Lena Raine',
           audio: require('../mp3/Farewell.mp3'),
           startTime: ('45'),
         },
         {
           url: require('../imgs/Farewell.jpg'),
           alt: 'Image 3',
-          header: 'Discovery Game Song List Done',
+          songName: 'Discovery Game Song List Done',
+          author:' ',
           audio: require('../mp3/Farewell.mp3'),
           startTime: ('30'),
         },
@@ -155,7 +159,8 @@ const DiscoveryGame = () => {
         <div className="div">
             <div className={style.container} {...swipeableProps}>
 
-                <h2 className={style.SongName}>{slides[index].header}</h2>
+                <h2 className={style.SongName}>{slides[index].songName}</h2>
+                <h2 className={style.author}>{slides[index].author}</h2>
 
 
                 <div className={style.Redux}>
