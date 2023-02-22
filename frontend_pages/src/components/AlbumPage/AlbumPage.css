@@ -625,7 +625,7 @@ body {
   }
 
   .album--songs {
-    margin-top: 60vmin;
+    margin-top: 55vmin;
     overflow-x: hidden;
     overflow-y: auto;
     max-height: 50vh;
@@ -662,6 +662,7 @@ body {
 
   .album--release--info  {
     display: flex;
+    margin-top: 2vmin;
   }
 
   .album--release--info > h5 {
@@ -672,6 +673,18 @@ body {
   .album--release--info > h6 {
     font-size: 3vmin;
     font-weight: 100;
+  }
+
+  
+  .album--stats--info > h6 > span {
+    font-size: 3vmin;
+    font-weight: 300;
+    background-image: linear-gradient(to left, #8650f4, #6f49e8, #5642dc, #393bd0, #0034c4);
+    padding: 0.5vmin;
+    padding-left: 3vmin;
+    padding-right: 3vmin;
+    border-radius: 1vmin;
+
   }
 
   .album--song {
@@ -714,12 +727,6 @@ body {
   .album--tiny--cover > #playmask {
     position: absolute;
     display: none;
-  }
-
-  .album--tiny--cover:hover > #playmask {
-    position: absolute;
-    display:inline;
-    margin-left: -12vmin;
   }
 
   .album--song--info {

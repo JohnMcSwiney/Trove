@@ -17,10 +17,10 @@ function App() {
       {/* <UploadMusic /> */}
       {/* <UploadSong /> */}
       {/* <UploadSongConnect /> */}
-      {/* <AlbumPage /> */}
+      <AlbumPage />
       {/* <PlaylistPage /> */}
       {/* <FollowersPage /> */}
-      <FollowingPage />
+      {/* <FollowingPage /> */}
 
  
 
