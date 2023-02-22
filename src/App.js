@@ -15,10 +15,11 @@ function App() {
 
     <BrowserRouter>
 
-    <div className="text-gray-500 font-body">
+    <div className=" text-gray-500 font-body">
       
       <Header/>
-
+    <div className='body-wrap'>
+      <NavBar/>
       <Routes>
     
         <Route path='/' element={<Home/>}></Route>
@@ -36,13 +37,11 @@ function App() {
 
         
       </Routes>
-        <div className='footer-div'></div>
+      <div className='footer-div'></div>
+        </div>
         <MusicBar/>
-
-        <NavBar/>
-       
     </div>
-
+   
     </BrowserRouter>
   );
 }

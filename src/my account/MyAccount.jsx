@@ -2,8 +2,7 @@
 import './myaccount.css'
 
 import React from 'react';
-
-
+import {Alert} from "@mui/material"
 const MyAccount = () => {
 
   const options = [
@@ -122,7 +121,11 @@ const MyAccount = () => {
 
       setVisibleOptions(returnItems)
     };
+    const userinfo = localStorage.getItem("user") !== null
+  
   return (
+      <>
+          {userinfo ? (
           <div className='my-account-page'>
                  <div className="container my-5">
                     <h1>Setting</h1>
@@ -156,8 +159,8 @@ const MyAccount = () => {
                  </div>
 
              
-          </div>
-
+          </div>): (<Alert severity="warning" className='alertBox'>Login Required</Alert>)}
+          </>
   )
 }
 

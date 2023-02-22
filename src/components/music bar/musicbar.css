@@ -2,13 +2,10 @@
     .musicbar{
         width: 90%;
         margin: auto;
-        background: #12164B;
-        border-radius: 0px 0px 8px 8px;
-        /* overflow: hidden;  */
         position: relative;
         z-index: 15;
         padding: 2px;
-        box-shadow: 1px 1px 1px #ffffff;
+       
         
     }
     

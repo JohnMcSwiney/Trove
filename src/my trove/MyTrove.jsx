@@ -40,8 +40,8 @@ const MyTrove = () => {
   const userFollowers = 124;
 
   return (
-    <div>
-      <div className='myTrvcontainer container'>
+    <div className='container'>
+      <div className='myTrvcontainer '>
         <div className='pfp_name_follower_cont'>
           <div className='borderuserimg'>
             <img src={tempUser1.imageURL} className='user-img'></img>

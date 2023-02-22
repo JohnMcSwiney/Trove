@@ -7,3 +7,11 @@
    
 }
 
+.alertBox{
+    width: 150px;
+    height: 70px;
+    position: absolute;
+    left: 12%;
+    top: 30%;
+    z-index: 16;
+}
