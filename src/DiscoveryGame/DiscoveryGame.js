@@ -205,6 +205,7 @@ const DiscoveryGame = () => {
                     {/*progress bar*/}
                     <div>
                         <input type="range" className={style.progressBar} defaultValue="0" ref={progressBar} onChange={changeRange} />
+
                     </div>
 
 
