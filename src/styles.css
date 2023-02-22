@@ -72,8 +72,8 @@ body {
   min-height:100vh;
   display: flex;
   flex-direction: column;
-
-
+  padding-bottom: 200px;
+  
 }
 
 .footer-div{
@@ -85,6 +85,22 @@ body {
   justify-content: start;
   /* height: 100vh; */
 }
+
+@media screen and (min-width: 800px) {
+  .clone-nav{
+    position:relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 25%;
+    align-items: center;
+    padding-top: 120px;
+    gap: 2px;
+    transition: 3ms;
+}
+}
+
+
 /*
 1. Add the correct height in Firefox.
 2. Correct the inheritance of border color in Firefox. (https://bugzilla.mozilla.org/show_bug.cgi?id=190655)

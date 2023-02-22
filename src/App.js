@@ -20,6 +20,7 @@ function App() {
       <Header/>
     <div className='body-wrap'>
       <NavBar/>
+      <div className='clone-nav'></div>
       <Routes>
     
         <Route path='/' element={<Home/>}></Route>
@@ -37,9 +38,11 @@ function App() {
 
         
       </Routes>
-      <div className='footer-div'></div>
+      
         </div>
         <MusicBar/>
+     
+       
     </div>
    
     </BrowserRouter>

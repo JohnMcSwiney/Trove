@@ -1,10 +1,7 @@
 .my-account-page{
-    max-width: 90%;
+    width: 90%;
     position: relative;
     margin: auto;
-    overflow: scroll;
-    
-   
 }
 
 .alertBox{
