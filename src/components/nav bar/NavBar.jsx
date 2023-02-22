@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { RiFolderMusicLine } from 'react-icons/ri'
 import { Link } from 'react-router-dom'
 import MusicBar from '../music bar/MusicBar'
@@ -21,8 +21,9 @@ const NavBar = (props) => {
 
   return (
     <>
+    
+   
       <div className="Nav">
-
         <Link className='trove-links' to={'/'}>
           <div
             className={active === 0 ? "active" : ""}

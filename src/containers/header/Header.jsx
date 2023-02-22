@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import './header.css';
 import { useLogout } from "../../hooks/user-hooks/useLogout";
 import { useAuthContext } from "../../hooks/user-hooks/useAuthContext";
@@ -24,19 +24,35 @@ function Header() {
   const goBack = ()=> {
     navigate(-1);
   }
+
+  
+  //responsive
+  const [logo, setLogo] = React.useState(window.innerWidth<800)
+ React.useEffect(()=> {
+  window.addEventListener('resize', ()=> {
+      setLogo(window.innerWidth<800);
+  })
+ })
   return (
-    <div className="d-flex justify-content-between sticky-top bg-fglass-b">
-      <button className="back-button" onClick={goBack}>
+    <div className="trove-header d-flex justify-content-between sticky-top bg-fglass-b">
+        {logo ?(<button className="back-button" onClick={goBack}>
         <MdKeyboardBackspace className="back-icon"/>
-      </button>
-      <div className=" p-2">
+        </button>):(<div className=" p-2">
         <a className="trove-logo-link navbar-brand" href="/">
         <img src="./img/troveIcon.png" alt="Trove logo" className="trove-logo"/>
           <h1 className="trove-logo-link">
             <span className="span">Trove</span> Music
           </h1>
         </a>
-      </div>
+      </div>)}
+        {logo && (<div className=" p-2">
+        <a className="trove-logo-link navbar-brand" href="/">
+        <img src="./img/troveIcon.png" alt="Trove logo" className="trove-logo"/>
+          <h1 className="trove-logo-link">
+            <span className="span">Trove</span> Music
+          </h1>
+        </a>
+      </div>)}
 
       <div className="p-2">
         <Dropdown>
