@@ -6,6 +6,7 @@ import UploadSongConnect from './components/UploadSong/UploadSongConnect';
 import UploadSong from './components/UploadSong/avauploadsong'
 import AlbumPage from './components/AlbumPage/AlbumPage'
 import PlaylistPage from './components/PlaylistPage/PlaylistPage';
+import FollowersPage from './components/FollowersPage/FollowersPage';
 
 function App() {
   return (
@@ -16,7 +17,8 @@ function App() {
       {/* <UploadSong /> */}
       {/* <UploadSongConnect /> */}
       {/* <AlbumPage /> */}
-      <PlaylistPage />
+      {/* <PlaylistPage /> */}
+      <FollowersPage />
 
  
 

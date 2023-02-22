@@ -7,8 +7,6 @@ import AlbumSong from "./AlbumSong";
 
 // User's Top Genres
 export default function AlbumPage(props) {
-    // State for liking song 
-
 
     return (
         <section>
