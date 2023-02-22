@@ -83,6 +83,7 @@ body {
 .body-wrap{
   display: flex;
   justify-content: start;
+  margin: auto;
   /* height: 100vh; */
 }
 

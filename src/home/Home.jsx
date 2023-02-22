@@ -11,7 +11,7 @@ const Home = () => {
   
   return (
     <div className='container'>
-        <main className="row-span-1 md:col-span-2 relative home-height">
+        <main className="home-main row-span-1 md:col-span-2 relative home-height">
         <TasteProfile/>
         
 
