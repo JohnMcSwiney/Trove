@@ -3,6 +3,7 @@ import React from 'react'
 import TasteProfile from '../components/taste Profile/TasteProfile';
 import CardArtist from '../components/card_artist/CardArtist';
 import CardAlbum from '../components/card_album/CardAlbum'
+import { Navigate, useNavigate, Link } from 'react-router-dom';
 
 
 
@@ -12,7 +13,10 @@ const Home = () => {
   return (
     <div className='container'>
         <main className="home-main row-span-1 md:col-span-2 relative home-height">
-        <TasteProfile/>
+        <div>
+          <Link to={'/discoverygame'}><TasteProfile/></Link>
+        </div>
+        
         
 
           <h4 className="mainHeadertxt">Artists you love:</h4>

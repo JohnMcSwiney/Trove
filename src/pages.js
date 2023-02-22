@@ -8,3 +8,5 @@ export {default as Login} from './log in/Login'
 export {default as Signup} from './sign up/Signup'
 export {default as ArtistLogin} from './log in artist/ArtistLogin'
 export {default as Artist} from './artist/Artist'
+
+export {default as DiscoveryGame} from './discoverygame/discoverygamepage'

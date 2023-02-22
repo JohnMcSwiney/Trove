@@ -7,7 +7,7 @@ import Header from './containers/header/Header';
 import MusicBar from './components/music bar/MusicBar';
 import NavBar from './components/nav bar/NavBar';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import {Home, Search,MyTrove, MyAccount, Login,Signup, Artist, ArtistLogin, UploadMusic} from './pages'
+import {Home, Search,MyTrove, MyAccount, Login,Signup, Artist, ArtistLogin, UploadMusic, DiscoveryGame} from './pages'
 
 function App() {
   
@@ -34,6 +34,7 @@ function App() {
         <Route path='/signup' element ={<Signup/>}></Route>
         <Route path='/artist' element ={<Artist/>}></Route>
         <Route path='/login-artist' element ={<ArtistLogin/>}></Route>
+        <Route path='/discoverygame' element={<DiscoveryGame/>}></Route>
         {/* <Route path='/upload' element= {<UploadMusic/>}></Route> */}
 
         

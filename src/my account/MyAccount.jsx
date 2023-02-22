@@ -2,7 +2,7 @@
 import './myaccount.css'
 
 import React from 'react';
-import {Alert} from "@mui/material"
+import { Alert } from "@mui/material"
 const MyAccount = () => {
 
   // const options = [
@@ -78,15 +78,15 @@ const MyAccount = () => {
   //     ]
   //   }
   // ]
-      
+
   //   const [visibleOptions, setVisibleOptions] = React.useState(options)
 
   //   const onChangeHandle = (e)=> {
   //     e.preventDefault();
 
   //     const value = e.target.value;
-      
-      
+
+
   //     if( value.trim().length ===0){
   //       setVisibleOptions(options);
   //       return;
@@ -115,83 +115,84 @@ const MyAccount = () => {
   //             header:{
   //               name:option.header.name,
   //             },
-  
+
   //             values:options[index].values
-  
+
   //           };
   //         }
   //     });
 
   //     setVisibleOptions(returnItems)
   //   };
-    const userinfo = localStorage.getItem("user") !== null
+  // const userinfo = localStorage.getItem("user") !== null
 
-    const  [expanded, setExpanded] = React.useState(false);
-    const  [expanded2, setExpanded2] = React.useState(false);
-    const  [expanded3, setExpanded3] = React.useState(false);
+  const [expanded, setExpanded] = React.useState(false);
+  const [expanded2, setExpanded2] = React.useState(false);
+  const [expanded3, setExpanded3] = React.useState(false);
 
-    const toggleExpanded =()=> {
-      setExpanded(!expanded);
-    }
+  const toggleExpanded = () => {
+    setExpanded(!expanded);
+  }
 
-    const toggleExpanded2 =()=> {
-      setExpanded2(!expanded2);
-    }
+  const toggleExpanded2 = () => {
+    setExpanded2(!expanded2);
+  }
 
-    const toggleExpanded3 =()=> {
-      setExpanded3(!expanded3);
-    }
-    
-    const user = localStorage.getItem("user")
-  
-    const [imgPath, setImagePath] = React.useState("./img/user-demo.png")
+  const toggleExpanded3 = () => {
+    setExpanded3(!expanded3);
+  }
+
+  // const user = localStorage.getItem("user")
+
+  const [imgPath, setImagePath] = React.useState("./img/user-demo.png")
   return (
-      
-          <div className='container'>
-              <h1>Settings</h1>
 
-              <div className='tabs mt-5'>
-                <div className='account-tab'>
+    <div className='container'>
+      <h1>Settings</h1>
 
-                      <div className='account-display' onClick={toggleExpanded}> 
-                      <h3 className='account-header'>Account</h3>
-                      <p className='acount-summary'>Detail about your personal information</p>
-                      </div>
+      <div className='tabs mt-5'>
+        <div className='account-tab'>
 
+          <div className='account-display' onClick={toggleExpanded}>
+            <h3 className='account-header'>Account</h3>
+            <p className='acount-summary'>Detail about your personal information</p>
+          </div>
 
-                      {expanded &&(
-                        <div className='acccount-content '  >
-                        <form>
-                        <img src={imgPath} className='user-avatar' alt="your-avatar" />
+          <div className='acccount-content '  >
+          {expanded && (
+            
+              <form>
+                <img src={imgPath} className='user-avatar' alt="your-avatar" />
 
-                        <label htmlFor='email'>Email</label>
-                        <input type='email' id='email' className='form-control' defaultValue={user.email} />
+                <label htmlFor='email'>Email</label>
+                {/* <input type='email' id='email' className='form-control' defaultValue={user.email} /> */}
+                <input type='email' id='email' className='form-control' />
+                <label htmlFor='name'>Display name</label>
+                {/* <input type='text' id='name' className='form-control' defaultValue={user.displayName} /> */}
 
-                        <label htmlFor='name'>Display name</label>
-                        <input type='text' id='name' className='form-control' defaultValue={user.displayName} />
+                <input type='text' id='name' className='form-control' />
+                <label htmlFor="dob">Date of birth:</label>
+                <input
+                  type="date"
+                  id="dob"
+                  name="dob"
+                  // value={dob}
+                  // onChange={handleDobChange}
+                  className='form-control'
+                />
 
+                <label htmlFor='name'>Display name</label>
+                {/* <input type='text' id='name' className='form-control' defaultValue={user.displayName} /> */}
+                <input type='text' id='name' className='form-control' />
+                <button className='btn btn-primary mt-3'>Save</button>
+              </form>
 
-                        <label htmlFor="dob">Date of birth:</label>
-                        <input
-                          type="date"
-                          id="dob"
-                          name="dob"
-                          // value={dob}
-                          // onChange={handleDobChange}
-                          className='form-control'
-                        />
+            
+          )}
+          </div>
+        </div>
 
-                        <label htmlFor='name'>Display name</label>
-                        <input type='text' id='name' className='form-control' defaultValue={user.displayName} />
-
-                        <button className='btn btn-primary mt-3'>Save</button>
-                        </form>
-
-                      </div>
-                      )}
-                </div>
-
-
+        {/* 
                 <div className='privacy-tab'>
 
                       <div className='privacy-display mt-3' onClick={toggleExpanded2}>
@@ -223,13 +224,13 @@ const MyAccount = () => {
                        </div>
                       )}
                 </div>     
+ */}
 
 
+      </div>
+    </div>
 
-              </div>
-          </div>
 
-              
   )
 }
 

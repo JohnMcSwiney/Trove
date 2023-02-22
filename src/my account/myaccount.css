@@ -15,14 +15,36 @@
 }
 
 .acccount-tab{
-  
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  height: 200px;
+  justify-content: left;
+  margin: 0;
+  justify-content: space-between;
+  background-color: aquamarine;
+  width: 100%;
 }
 
 .tabs{
-
+    display: flex;
 }
 
 .account-display {
-    background-color: aliceblue;
+    /* background-color: aliceblue;
     width: 15%;
+    background-color: blue;
+    position: relative; */
+    width: 100px;
+    margin: 0;
+    background-color: red;
+}
+.acccount-content{
+    /* background-color: rgb(0, 255, 85);
+    position: relative; */
+    min-width: 100px;
+    max-width: 200px;
+    flex-grow: 1;
+    margin: 0;
+    background-color: green;
 }
