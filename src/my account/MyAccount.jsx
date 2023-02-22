@@ -37,7 +37,7 @@ const MyAccount = () => {
               <h1>Settings</h1>
 
               <div className='tabs mt-5'> 
-                <div className='account-tab container'>
+                <div className='account-tab '>
 
                       <div className='account-display' onClick={toggleExpanded}> 
                       <h3 className='account-header'>Account</h3>
@@ -49,8 +49,8 @@ const MyAccount = () => {
                         
                         <form className='account-tab'>
                         
-                        <div className='inner-form'>
-                        <div className=''>
+                        <div className='inner-form container'>
+                        <div className='user-img-div'>
                         <img src={imgPath} className='user-avatar' alt="your-avatar" />
                         </div>
 

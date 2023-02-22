@@ -1,4 +1,7 @@
-/* .alertBox{
+
+
+@media screen and (min-width: 800px) {
+    /* .alertBox{
     width: 150px;
     height: 70px;
     position: absolute;
@@ -8,53 +11,114 @@
 } */
 
 .account-content{
-   display: flex;
-   flex-direction: column;
-}
-
-.account-tab{
-    display: flex;
-    flex-direction: row;
-    justify-content:space-between;
- }
-
-
-
-.tabs{
     display: flex;
     flex-direction: column;
-    
-}
-
-.privacy-display {
-    width: 20%;
-  
-}
-
-.account-display {
-  width: 20%;
-  
-}
-
-.privacy-content{
-    display: flex;
-    flex-direction: column;
-    
  }
  
- .privacy-tab{
+ .account-tab{
      display: flex;
      flex-direction: row;
      justify-content:space-between;
-     background-color: aquamarine;
   }
+ 
+ 
+ 
+ .tabs{
+     display: flex;
+     flex-direction: column;
+     
+ }
+ 
+ .privacy-display {
+     width: 20%;
+   
+ }
+ 
+ .account-display {
+   width: 20%;
+   
+ }
+ 
+ .privacy-content{
+     display: flex;
+     flex-direction: column;
+     
+  }
+  
+  .privacy-tab{
+      display: flex;
+      flex-direction: row;
+      justify-content:space-between;
+      background-color: aquamarine;
+   }
+ 
+  
+ 
+   .user-avatar{
+         width: 100px;
+         height: 100px;
+         border-radius: 50px; ;
+   }
+ 
+   .user-img-div{
+     margin-left: 100px; ;
+   }
+ 
+   .inner-form{
+     display: flex;
+     
+   }
+}
 
-  .inner-form{
-    max-width: fit-content;
-  }
 
-  .user-avatar{
-        width: 100px;
-        height: 100px;
-        border-radius: 50px; ;
-  }
+@media screen and (max-width:800px) {
+    .account-content{
+        display: flex;
+        flex-direction: column;
+     }
+     
+     .account-tab{
+         display: flex;
+         flex-direction: row;
+         justify-content:space-between;
+      }
+     
+     
+     
+     .tabs{
+         display: flex;
+         flex-direction: column;
+         
+     }
+     
+     .privacy-display {
+         width: 20%;
+       
+     }
+     
+     .account-display {
+       width: 20%;
+       
+     }
+     
+     .privacy-content{
+         display: flex;
+         flex-direction: column;
+         
+      }
+      
+      .privacy-tab{
+          display: flex;
+          flex-direction: row;
+          justify-content:space-between;
+          background-color: aquamarine;
+       }
+     
+      
+     
+       .user-avatar{
+             width: 100px;
+             height: 100px;
+             border-radius: 50px; ;
+       }
+}
