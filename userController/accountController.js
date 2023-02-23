@@ -2,6 +2,11 @@ const User = require("../models/user model/user-model");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
 require("dotenv").config();
+
+const handleErrors = (err) => {
+  console.log(err.message, err.code);
+};
+
 const createToken = (_id) => {
   return jwt.sign({ _id: _id }, process.env.SECRET, { expiresIn: "1d" });
 };
@@ -12,15 +17,27 @@ const loginUser = async (req, res) => {
 
   try {
     const verify = await User.findOne({ email: email });
-    if (verify.isVerified) {
-      return res.status(400).json({ err: "Account is not verified" });
+
+    if (verify == null) {
+      return res.status(400).json({ err: "Email or password is not correct" });
+    }
+    if (!verify.isVerified) {
+      return res
+        .status(400)
+        .json({ err: "Please check your email to verify the email" });
     }
 
     const user = await User.login(email, password);
     //create a token
     const token = createToken(user._id);
 
-    res.status(200).json({ email, token, id: user._id });
+    res.status(200).json({
+      email,
+      token,
+      id: user._id,
+      displayName: user.displayName,
+      useImg: user.imageURL,
+    });
   } catch (err) {
     res.status(400).json({ err: err.message });
   }
@@ -61,20 +78,25 @@ const signupUser = async (req, res) => {
 
     transporter.sendMail(mailOptions, function (error, info) {
       if (error) {
-        console.log(error);
+        handleErrors(error);
       } else {
         console.log("Email sent: " + info.response);
       }
     });
 
-    res
-      .status(200)
-      .json({
-        email,
-        id: user._id,
-        token,
-        message: "You have successfully sign up !",
-      });
+    // res.status(200).json({
+    //   email,
+    //   id: user._id,
+    //   token,
+    //   message: "You have successfully sign up !",
+    // });
+    res.status(200).json({
+      email,
+      token,
+      id: user._id,
+      displayName: user.displayName,
+      useImg: user.imageURL,
+    });
   } catch (err) {
     res.status(400).json({ err: err.message });
   }
@@ -90,7 +112,6 @@ const verifyUser = async (req, res) => {
     }
     return res.send("verify-success");
   } catch (err) {
-    console.error(err);
     return res.status(500).send("Error verifying email");
   }
 };

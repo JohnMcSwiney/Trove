@@ -54,7 +54,7 @@ app.use(passport.session());
 //FOR USER
 app.use("/api/user", userlogin);
 
-//FOR ADMIN
+//FOR globals
 //user
 app.use("/api/users", userRouter);
 
