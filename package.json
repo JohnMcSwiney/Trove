@@ -25,12 +25,14 @@
     "react-pro-sidebar": "^1.0.0",
     "react-router-dom": "^6.8.1",
     "react-scripts": "^5.0.1",
+    "react-slick": "^0.29.0",
     "react-social-login-buttons": "^3.6.1",
     "react-sticky": "^6.0.3",
     "react-swipeable": "^7.0.0",
     "react-toastify": "^9.1.1",
     "react-tooltip": "^5.8.1",
     "reactjs-social-login": "^2.6.2",
+    "slick-carousel": "^1.8.1",
     "styled-components": "^5.3.6"
   },
   "scripts": {

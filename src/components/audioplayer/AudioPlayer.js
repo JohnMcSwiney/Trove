@@ -27,6 +27,8 @@ const json = `
 const obj = JSON.parse(json);
 
 const AudioPlayer = () => {
+// const AudioPlayer = () => {
+    
     //state
     const [isPlaying, setIsPlaying] = useState(false);
     const [duration, setDuration] = useState(0);
