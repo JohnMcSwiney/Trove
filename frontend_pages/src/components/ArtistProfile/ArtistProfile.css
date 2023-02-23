@@ -396,6 +396,14 @@ body {
 
       }
 
+      .artist--artist--name {
+        text-align: center;
+        margin-right: 20%;
+      }
+
+      .artist--song--title {
+        
+      }
 
     /* FOLLOW BUTTON  */
     .follow--button {
