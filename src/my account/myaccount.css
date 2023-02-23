@@ -1,124 +1,80 @@
-
-
 @media screen and (min-width: 800px) {
-    /* .alertBox{
-    width: 150px;
-    height: 70px;
-    position: absolute;
-    left: 12%;
-    top: 30%;
-    z-index: 16;
-} */
-
-.account-content{
+  .my-account {
+    border: solid 2px;
+    display: grid;
+    grid-template-columns: 10% 90%;
+  }
+  .user-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+  }
+  .tabs {
     display: flex;
     flex-direction: column;
- }
- 
- .account-tab{
-     display: flex;
-     flex-direction: row;
-     justify-content:space-between;
+    width: 100px;
   }
- 
- 
- 
- .tabs{
-     display: flex;
-     flex-direction: column;
-     
- }
- 
- .privacy-display {
-     width: 20%;
-   
- }
- 
- .account-display {
-   width: 20%;
-   
- }
- 
- .privacy-content{
-     display: flex;
-     flex-direction: column;
-     
+
+  .tab {
+    position: relative;
+    cursor: poiter;
   }
-  
-  .privacy-tab{
-      display: flex;
-      flex-direction: row;
-      justify-content:space-between;
-      background-color: aquamarine;
-   }
- 
-  
- 
-   .user-avatar{
-         width: 100px;
-         height: 100px;
-         border-radius: 50px; ;
-   }
- 
-   .user-img-div{
-     margin-left: 100px; ;
-   }
- 
-   .inner-form{
-     display: flex;
-     
-   }
+
+  .active-tab::after {
+    background-color: transparent;
+    opacity: 0.6;
+  }
+
+  .contents {
+  }
+
+  .content {
+    display: none;
+    position: relative;
+    border: solid 2px;
+  }
+
+  .active-content {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    border: solid 2px;
+    padding: 50px;
+  }
 }
 
+@media screen and (max-width: 800px) {
+  .my-account {
+    border: solid 2px;
+  }
+  .user-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+  }
+  .tabs {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
 
-@media screen and (max-width:800px) {
-    .account-content{
-        display: flex;
-        flex-direction: column;
-     }
-     
-     .account-tab{
-         display: flex;
-         flex-direction: row;
-         justify-content:space-between;
-      }
-     
-     
-     
-     .tabs{
-         display: flex;
-         flex-direction: column;
-         
-     }
-     
-     .privacy-display {
-         width: 20%;
-       
-     }
-     
-     .account-display {
-       width: 20%;
-       
-     }
-     
-     .privacy-content{
-         display: flex;
-         flex-direction: column;
-         
-      }
-      
-      .privacy-tab{
-          display: flex;
-          flex-direction: row;
-          justify-content:space-between;
-          background-color: aquamarine;
-       }
-     
-      
-     
-       .user-avatar{
-             width: 100px;
-             height: 100px;
-             border-radius: 50px; ;
-       }
+  .tab {
+    position: relative;
+    cursor: poiter;
+  }
+
+  .contents {
+    position: relative;
+  }
+
+  .content {
+    display: none;
+    position: relative;
+    border: solid 2px;
+  }
+
+  .active-content {
+    position: relative;
+    padding: 50px;
+  }
 }
