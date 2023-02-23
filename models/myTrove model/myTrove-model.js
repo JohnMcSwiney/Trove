@@ -9,13 +9,35 @@ const myTroveSchema = new mongoose.Schema(
         likedSongs: [
             {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: "Song"
+                ref: "Song",
+                validate: {
+                    validator: async (v) => {
+
+                        if (v) {
+                            const song = await mongoose.model('Song').findById(v);
+                            return song !== null;
+                        }
+                        return true;
+                    },
+                    message: 'Invalid song ID'
+                }
             }
         ],
         dislikedSongs: [
             {
-                type: [mongoose.Schema.Types.ObjectId],
-                ref: 'Song'
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Song",
+                validate: {
+                    validator: async (v) => {
+
+                        if (v) {
+                            const song = await mongoose.model('Song').findById(v);
+                            return song !== null;
+                        }
+                        return true;
+                    },
+                    message: 'Invalid song ID'
+                }
             }
         ],
         likedGenres: [
