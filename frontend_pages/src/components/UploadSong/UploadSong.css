@@ -25,12 +25,12 @@ body {
 }
 
 @media only screen and (min-width: 769px) {
-    .profile--body {
+    .uploadsong--profile--body {
         margin-left: 25vmin;
         
       }
 
-    .header{
+    .uploadsong--header{
         position: relative;
         /* background-color: #0C081C; */
         background-image: linear-gradient(to right, #0c081c, #0e0924, #0d0a2c, #0b0b35, #080c3d);
@@ -51,7 +51,7 @@ body {
         }
         
   
-    .header .artist--genre {
+    .uploadsong--header .uploadsong--artist--genre {
       background-image: linear-gradient(to left, #8650f4, #6f49e8, #5642dc, #393bd0, #0034c4);
       font-size: 4vmin;
       font-weight:bold;
@@ -66,19 +66,19 @@ body {
       padding-right: 2vmin;
     }
 
-    .header span {
+    .uploadsong--header span {
         position: absolute ;
         bottom: 0;
         left: 0;
         margin-left: 50vmin;
         }
 
-    .header span h1 {
+    .uploadsong--header span h1 {
         margin-left: 5vmin;
         font-size: 80px;
     }
     
-    .header span > .column {
+    .uploadsong--header span > .uploadsong--column {
     position: relative;
     margin-left: 3vmin;
     font-size: 2vmin;
@@ -198,7 +198,7 @@ body {
         }
 
         /* Scrolling Smaller HEADER */
-        .small {
+        .uploadsong--small {
           position: relative ;
           height: 20vmin;
           font-size: 1.5vmin;
@@ -211,49 +211,62 @@ body {
           
         }
       
-        .small span {
+        .uploadsong--small span {
           text-align: center;
           position: relative;
       
         }
       
-        .small > .genre--record {
+        .uploadsong--small > .uploadsong--genre--record {
           height: 0;
           display: none;
           
         }
       
-        .small span > button  {
+        .uploadsong--small span > button  {
             display: none;
         }
       
-        .small span .column {
+        .uploadsong--small span .uploadsong--column {
           display: none;
       
       }
       
-        .small .menu {
+        .uploadsong--small .uploadsong--menu {
           display: none;
         }
 
-        .small .circle--border {
+        .uploadsong--small .uploadsong--circle--border {
           display: none;
         }
 
-        .small .waves {
+        .uploadsong--small .uploadsong--waves {
           object-fit: cover;
           width: 100%;
           position: absolute;
           object-position:5% 35%;
           mix-blend-mode: soft-light;
-          margin-left: -75vmin;
+          margin-left: -50vw;
           height: 15vmin;
+          
+      
+        }
+
+
+        .uploadsong--waves {
+          object-fit: cover;
+          width: 100%;
+          position: absolute;
+          object-position:5% 35%;
+          mix-blend-mode: soft-light;
+          /* margin-left: -75vmin; */
+          height: 20vmin;
           
       
         }
       
         /* UPLOAD SONG NEW */
-        .upload--zone {
+        .uploadsong--upload--zone {
           width: 50vmin;
           flex-shrink: 0;
           height: 50vmin;
@@ -265,7 +278,7 @@ body {
     
         }
 
-        .upload--image {
+        .uploadsong--upload--image {
           width: 45%;
           background-color: none;
           border-radius: 1vmin;
@@ -273,7 +286,7 @@ body {
 
         
 
-        .song--form {
+        .uploadsong--song--form {
           width: 50%;
           height:100%;
           margin-top: 25vmin;
@@ -284,25 +297,25 @@ body {
         
 
 
-        .row {
+        .uploadsong--row {
           display: flex;
           flex-wrap: wrap;
           
           
         }
 
-        .submit--button {
+        .uploadsong--submit--btn  {
           height: 5vmin;
         }
 
-        .upload--form {
+        .uploadsong--upload--form {
           height: 100%;
           width: 100%;
           padding-bottom: 5vmin;
 
         }
 
-        .gradient--btn, .custom-file-upload{
+        .uploadsong--gradient--btn, .uploadsong--custom-file-upload{
           align-items: center;
           appearance: none;
           background-image: linear-gradient(to left, #8650f4, #6f49e8, #5642dc, #393bd0, #0034c4);
@@ -338,35 +351,37 @@ body {
           margin-left: 3vmin;
         }
 
-        .image--btn {
+        .uploadsong--image--btn {
           margin-top: 5vmin;
           margin-left: 55vmin;
         }
 
-        .submit--btn {
+        .uploadsong--submit--btn {
           margin-top: 5vmin;
           margin-left: 30vmin;
           padding-left: 5vmin;
           padding-right: 5vmin;
         }
 
-        input[type="file"] {
+        .uploadsong--upload--form > input[type="file"] {
           display: none;
       }
 
-      .add--song > input[type="file"] {
+      .uploadsong--add--song > input[type="file"] {
         display: block;
       }
 
-      .add--song {
+      .uploadsong--add--song {
         margin-left: 3vmin;
       }
       
-      .gradient--btn .image--btn .hide--file > input[type="file"] {
+      .uploadsong--hide--file  {
           display: none;
       }
 
-      .custom-file-upload {
+      
+
+      .uploadsong--custom-file-upload {
         /* border: 1px solid #ccc;
         display: inline-block;
         padding: 6px 12px; */
@@ -375,7 +390,7 @@ body {
         margin-left: 52vmin;
       }
 
-      .custom-song-upload {
+      .uploadsong--custom-song-upload {
         cursor: pointer;
         margin-top: 5vmin;
         /* margin-left: 52vmin; */
@@ -430,39 +445,40 @@ body {
         border-radius: 1vmin;
       }
 
-      input {
+      .uploadsong--upload--form  input {
         background-color: transparent;
         padding: 1vmin;
         border-radius: 1vmin;
         color: #D9D9D9;
       }
 
-      .columnt {
+
+      .uploadsong--columnt {
         /* padding-left: 3vmin; */
         /* padding-right: -3vmin; */
         /* padding-top: 0;
         padding-bottom: 1vmin; */
       }
 
-      label {
+      .uploadsong--upload--form > label {
         padding-right: 2vmin;
         font-size: 2vmin;
       }
       
-      .genre--radio {
+      .uploadsong--genre--radio {
         margin-top: -5vmin;
         padding-left: 3vmin;
         padding: none;
       }
 
-      .release--radio {
+      .uploadsong--release--radio {
         margin-top: -5vmin;
         padding-left: 3vmin;
         padding: none; 
         
       }
   
-      .hotspot--start {
+      .uploadsong--hotspot--start {
         padding-left: 3vmin;
         width:200px;
       }
@@ -480,16 +496,16 @@ body {
       } */
 
 
-      input[type="number"] {
+      .uploadsong--upload--form > input[type="number"] {
         width: 10vmin;
         padding: 1vmin;
       }
       
-      fieldset {
+      .uploadsong--upload--form fieldset {
         border: none;
       }
 
-      h2 {
+      .uploadsong--upload--form > h2 {
         margin-left: 3vmin;
       }
 

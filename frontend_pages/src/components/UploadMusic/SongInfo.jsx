@@ -4,8 +4,8 @@ import React from "react"
 export default function SongInfo(props) { 
 
     return(
-        <div className="song--info">
-            <div className="songfile--name">
+        <div className="uploadmusic--song--info">
+            <div className="upload--music--songfile--name">
             <label>{props.songFile[props.i].name}</label>
             </div>
             <div>

@@ -470,7 +470,7 @@ body {
 
         
 
-        .uploadmusic--song--form {
+        .uploadmusic--song--form  {
           width: 50%;
           height:100%;
           margin-top: 25vmin;
@@ -528,7 +528,7 @@ body {
 
         }
 
-        .uploadmusic--gradient--btn,.uploadmusic--custom-file-upload {
+        .uploadmusic--gradient--btn, .uploadmusic--custom-song-upload, .uploadmusic--custom-file-upload {
           align-items: center;
           appearance: none;
           background-image: linear-gradient(to left, #8650f4, #6f49e8, #5642dc, #393bd0, #0034c4);
@@ -599,6 +599,18 @@ body {
         cursor: pointer;
         margin-top: 5vmin;
         margin-left: 52vmin;
+      }
+
+      .uploadmusic--custom-song-upload {
+        /* /* border: 1px solid #ccc; */
+        /* display: inline-block; */
+        padding: 5vw; 
+        padding-left: 10vw;
+        padding-right: 10vw;
+        cursor: pointer;
+        margin-top: 2vmin;
+        margin-left: -5vmin; 
+        font-size: 3vmin;
       }
 
       #upload--icon {
@@ -741,11 +753,19 @@ body {
       }
 
       .uploadmusic--songfile--name {
-        width: 20vmin;
+        width: 100vw;
+        display: flex;
       }
       
       .uploadmusic--upload--songfile {
         margin-left: 10vmin;
+      }
+
+      .uploadmusic--music--details {
+        /* margin-left: 5vw; */
+        justify-content: center;
+        align-content: center;
+        display: flex;
       }
 
 }

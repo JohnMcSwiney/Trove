@@ -303,9 +303,10 @@ export default function UploadMusic(props) {
     return (
         <section>
             {menu}
-            <div className={`header ${small ? "small" : "header"
-                }`}>
-                <img className="waves " name="waves" src={WavesBG} alt="waves" />
+            <div className={`uploadsong--header`}>
+         {/* ${//small ? "uploadsong--small" : "uploadsong--header" */} 
+            {/* //     }`}> */}
+                <img className="uploadsong--waves " name="waves" src={WavesBG} alt="waves" />
 
 
                 {/* artist name, main genre, follower count, follow button '
@@ -317,17 +318,17 @@ export default function UploadMusic(props) {
                 </div>
 
             </div>
-            <div className="upload--form">
-                <form className="upload--form"
+            <div className="uploadsong--upload--form">
+                <form className="uploadsong--upload--form"
                     onSubmit={handleSubmit}>
 
-                    <div className="row">
-                        <div className="upload--image">
-                            <div className="column upload--zone">
+                    <div className="uploadsong--row">
+                        <div className="uploadsong--upload--image">
+                            <div className="uploadsong--column uploadsong--upload--zone">
                                 <img src={previewCover} id="album--icon" alt="default_album" />
                             </div>
-                            <label className="custom-file-upload">
-                                <input type="file" name="imageFile" value="" accept="image/*" className="gradient--btn image--btn hide--file" onChange={handleImageFileChange} />
+                            <label className="uploadsong--custom-file-upload">
+                                <input type="file" name="imageFile" value="" accept="image/*" className="uploadsong--gradient--btn uploadsong--image--btn uploadsong--hide--file" onChange={handleImageFileChange} />
                                 Choose Image <img src="../../assets/upload_icon.png" id="upload--icon" alt="upload_icon" />
                             </label>
 

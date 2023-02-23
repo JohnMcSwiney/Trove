@@ -89,28 +89,28 @@ export default function UserProfile(props) {
         {menu}
 
         {/* HEADER */}
-        <div className={`header ${
-          small ? "small" : "header"
+        <div className={`user--header ${
+          small ? "user--small" : "user--header"
         }`}>
-            <img className="waves "name="waves" src={WavesBG} alt="waves"/>
+            <img className="user--waves "name="waves" src={WavesBG} alt="waves"/>
 
             {width > windowBreakpoint ? 
              "": <div 
-              className="menu"
+              className="user--menu"
               onClick={handleClick}
               name="menu">
               <img name="menu" width="30vmin" src="../assets/menuicon.jpg" alt="menu"/>
               </div>}
 
         
-            <div className="circle--border"> 
-            <div className="genre--record">
+            <div className="user--circle--border"> 
+            <div className="user--genre--record">
                 <img width="215vmin" src="../assets/artist_icon.png" alt="genre"/>
             </div>
             </div>
             <span><h1>USERNAME</h1> 
-            <div className="row">
-            <div className="column">
+            <div className="user--row">
+            <div className="user--column">
             <button 
                 className={`
                 ${
@@ -123,33 +123,33 @@ export default function UserProfile(props) {
                 follow ? "FOLLOWING" : "FOLLOW"
               } `}</button>
               </div>
-            <div className="column">
+            <div className="user--column">
             <h5>{followers} FOLLOWERS</h5>
             <h5 id="following">{following} FOLLOWING</h5>
             </div></div>
             </span>
 
         </div>
-        <div className={`profile--body ${
-          showMenu ? "no--profile--view" : ""
+        <div className={`user--profile--body ${
+          showMenu ? "user--no--profile--view" : ""
         }`}>
         <br/><br/><br/><br/><br/><br/><br/><br/><br/>
 
         {/* User Top Recommendation Section */}
-        <div className="latest--release">
+        <div className="user--latest--release">
         <h2>[User]'s Top Find</h2>
             {/* playing song w album cover, song title, and release date */}
            
-           <div className="music--section">
-           <div className="release--playing">
+           <div className="user--music--section">
+           <div className="user--release--playing">
                     <br/>
-                    <div className="row">
-                    <div className="column rec--album">
-                    <div className="song--cover">
+                    <div className="user--row">
+                    <div className="user--column rec--album">
+                    <div className="user--song--cover">
                         <img src="../assets/reccover.jpg" alt="albumcover"/>
                     </div>
 
-                    <AudioPlayer className="AudioPlayer" 
+                    <AudioPlayer className="user--AudioPlayer" 
                     // autoPlay 
                     src={"../assets/song7.mp3"}
                     onPlay={e => console.log("onPlay")}
@@ -157,11 +157,11 @@ export default function UserProfile(props) {
                     </div>
                     </div>
                     </div>
-                    <div className="column rec--desc">
+                    <div className="user--column user--rec--desc">
                         <h3>Song Name</h3>
-                        <div className="row rec--namegenre">
-                         <div className="column rec--artistname"><h4>ARTIST NAME</h4></div> 
-                         <div className="column rec--genre"><h4>GENRE</h4></div> 
+                        <div className="user--row user--rec--namegenre">
+                         <div className="user--column user--rec--artistname"><h4>ARTIST NAME</h4></div> 
+                         <div className="user--column user--rec--genre"><h4>GENRE</h4></div> 
                         </div>
                         <p>Prism church-key yr, seitan kale chips poutine live-edge. Drinking vinegar green juice trust fund hexagon kale chips mustache chicharrones XOXO try-hard everyday carry forage. Brooklyn wolf godard, banh mi messenger bag sustainable gastropub banjo lo-fi brunch umami. Dreamcatcher chambray cray vibecession you probably haven't heard of them farm-to-table.</p>
                     </div>
@@ -173,11 +173,11 @@ export default function UserProfile(props) {
         </div>
 
         {/* User's Liked Music */}
-        <div className="discography">
+        <div className="user--discography">
             {/* albums, singles displayed in a side scrolling section*/}
-            <div className="music--section">
+            <div className="user--music--section">
                 <h4>DISCOVERIES</h4>
-                <div className="slider discography">
+                <div className="user--slider user--discography">
                 {
                     songsList && songsList.map((item, index)=>{
                     return(
@@ -197,10 +197,10 @@ export default function UserProfile(props) {
         </div>
 
         {/* User's top genres */}
-        <div className="top--genres">
-            <div className="music--section">
+        <div className="user--top--genres">
+            <div className="user--music--section">
                     <h4>TOP GENRES</h4>
-                    <div className="slider artists">
+                    <div className="user--slider user--artists">
                 {
                     topGenres && topGenres.map((item, index)=>{
                       console.log(index)

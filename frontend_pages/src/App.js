@@ -12,9 +12,9 @@ import FollowingPage from './components/FollowingPage/FollowingPage';
 function App() {
   return (
     <div className="App">
-      {/* <ArtistProfile /> */}
+      <ArtistProfile />
       {/* <UserProfile /> */}
-      <UploadMusic />
+      {/* <UploadMusic /> */}
       {/* <UploadSong /> */}
       {/* <UploadSongConnect /> */}
       {/* <AlbumPage /> */}

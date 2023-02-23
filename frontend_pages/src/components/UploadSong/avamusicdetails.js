@@ -25,9 +25,9 @@ export default function MusicDetails(props) {
   // }, [props.songFile]);
 
   return (
-    <div className="column song--form">
-      <label className="custom-song-upload">
-        <input type="file" name="songFile" value="" accept="audio/*" className="gradient--btn image--btn hide--file" onChange={props.handleSongFileChange} />
+    <div className="uploadsong--column uploadsong--song--form">
+      <label className="uploadsong--custom-song-upload">
+        <input type="file" name="songFile" value="" accept="audio/*" className="uploadsong--hide--file" onChange={props.handleSongFileChange} />
         Add Song 
         {/* <img src="../../assets/upload_icon.png" id="upload--icon" alt="upload_icon" /> */}
       </label>
@@ -35,7 +35,7 @@ export default function MusicDetails(props) {
       <table>
         <tbody>
           <tr>
-            <td className="columnt">
+            <td className="uploadsong--columnt">
               <label>
                 Song Name:
                 <br />
@@ -44,7 +44,7 @@ export default function MusicDetails(props) {
             </td>
           </tr>
           <tr>
-            <td className="columnt">
+            <td className="uploadsong--columnt">
               <label>
                 Artist:
                 <br />
@@ -53,7 +53,7 @@ export default function MusicDetails(props) {
             </td>
           </tr>
           <tr>
-            <td className="columnt">
+            <td className="uploadsong--columnt">
               <label>
                 Album Name:
                 <br />
@@ -62,18 +62,18 @@ export default function MusicDetails(props) {
             </td>
           </tr>
           <tr>
-            <th colSpan="1" className="columnt">
+            <th colSpan="1" className="uploadsong--columnt">
                 Hot Spot:
             </th>
           </tr>
           <tr>
-            <td className="hotspot--start">
+            <td className="uploadsong--hotspot--start">
               <label>
                 Start:
               </label>
               <input type="number" name="highlightStart" placeholder="00:00" min="0" onChange={props.handleHighlightStart} />
             </td>
-            <td className="hotspot--stop">
+            <td className="uploadsong--hotspot--stop">
               <label>
                 Stop:
               </label>
@@ -81,7 +81,7 @@ export default function MusicDetails(props) {
               <br />
             </td>
           </tr>
-          <td className="columnt">
+          <td className="uploadsong--columnt">
             <label>
               Release Year:
               <br />
@@ -89,7 +89,7 @@ export default function MusicDetails(props) {
             </label>
           </td>
           <tr>
-            <td className="columnt">
+            <td className="uploadsong--columnt">
               <label>
                 Genre:
               </label>
@@ -97,24 +97,24 @@ export default function MusicDetails(props) {
           </tr>
           <fieldset>
             <tr>
-              <td className="genre--radio">
+              <td className="uploadsong--genre--radio">
                 <input type="radio" name="genre" value="pop" checked={props.genre === "pop"} onChange={props.handleGenre}/>POP
               </td>
-              <td className="genre--radio">
+              <td className="uploadsong--genre--radio">
                 <input type="radio" name="genre" value="rock" checked={props.genre === "rock"} onChange={props.handleGenre}/>ROCK
               </td>
             </tr>
             <tr>
-              <td className="genre--radio">
+              <td className="uploadsong--genre--radio">
                 <input type="radio" name="genre" value="country" checked={props.genre === "country"} onChange={props.handleGenre}/>COUNTRY
               </td>
-              <td className="genre--radio">
+              <td className="uploadsong--genre--radio">
                 <input type="radio" name="genre" value="hiphop" checked={props.genre === "hiphop"} onChange={props.handleGenre}/>HIP-HOP
               </td>
             </tr>
           </fieldset>
           <tr>
-            <td className="columnt">
+            <td className="uploadsong--columnt">
               <label>
                 Release Type:
               </label>
@@ -122,20 +122,20 @@ export default function MusicDetails(props) {
           </tr>
           <fieldset>
             <tr>
-              <td className="release--radio">
+              <td className="uploadsong--release--radio">
                 <input type="radio" name="releasetype" value="album" checked={props.releaseType === "album"} onChange={props.handleReleaseType} />ALBUM
               </td>
-              <td className="release--radio">
+              <td className="uploadsong--release--radio">
                 <input type="radio" name="releasetype" value="ep" checked={props.releaseType === "ep"} onChange={props.handleReleaseType} />EP
               </td>
-              <td className="release--radio">
+              <td className="uploadsong--release--radio">
                 <input type="radio" name="releasetype" value="single" checked={props.releaseType === "single"} onChange={props.handleReleaseType} />SINGLE
               </td>
             </tr>
           </fieldset>
           <tr>
-            <td className="columnt">
-              <input type="submit" value="Submit" className="gradient--btn submit--btn" onClick={props.handleSubmit} />
+            <td className="uploadsong--columnt">
+              <input type="submit" value="Submit" className="uploadsong--gradient--btn uploadsong--submit--btn" onClick={props.handleSubmit} />
             </td>
           </tr>
 
