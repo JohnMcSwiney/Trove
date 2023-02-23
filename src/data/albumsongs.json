@@ -1,0 +1,91 @@
+[
+    {
+        "idno":"1",
+        "path":"/", 
+        "artist": "Pitbull, John Ryan",
+        "cover": "../assets/reccover.jpg",
+        "title": "Fireball",
+        "duration": "3:56"
+    },
+    {
+        "idno":"2",
+        "path":"/", 
+        "artist": "Pitbull, Sean Paul",
+        "cover": "../assets/reccover.jpg",
+        "title": "Ah Leke",
+        "duration": "3:04"
+    },
+    {
+        "idno":"3",
+        "path":"/", 
+        "artist": "Pitbull, Chris Brown",
+        "cover": "../assets/reccover.jpg",
+        "title": "Fun",
+        "duration": "3:22"
+    },
+    {
+        "idno":"4",
+        "path":"/", 
+        "artist": "Pitbull, Ne-Yo",
+        "cover": "../assets/reccover.jpg",
+        "title": "Time of Our Lives",
+        "duration": "3:49"
+    },
+    {
+        "idno":"5",
+        "path":"/", 
+        "artist": "Pitbull",
+        "cover": "../assets/reccover.jpg",
+        "title": "Celebrate",
+        "duration": "3:12"
+    },
+    {
+        "idno":"6",
+        "path":"/", 
+        "artist": "Pitbull, Chloe Angelides",
+        "cover": "../assets/reccover.jpg",
+        "title": "Sexy Beaches",
+        "duration": "3:57"
+    },
+    {
+        "idno":"7",
+        "path":"/", 
+        "artist": "Pitbull, Heymous Molly",
+        "cover": "../assets/reccover.jpg",
+        "title": "Day Drinking",
+        "duration": "3:08"
+    },
+    {
+        "idno":"8",
+        "path":"/", 
+        "artist": "Pitbull, Jason Derulo, Juicy J",
+        "cover": "../assets/reccover.jpg",
+        "title": "Drive You Crazy",
+        "duration": "3:50"
+    },
+    {
+        "idno":"9",
+        "path":"/", 
+        "artist": "Pitbull, G.R.L.",
+        "cover": "../assets/reccover.jpg",
+        "title": "Wild Wild Love",
+        "duration": "3:23"
+    },
+    {
+        "idno":"10",
+        "path":"/", 
+        "artist": "Pitbull, Bebe Rexha",
+        "cover": "../assets/reccover.jpg",
+        "title": "This is Not a Drill",
+        "duration": "3:24"
+    },
+    {
+        "idno":"11",
+        "path":"/", 
+        "artist": "Pitbull, Jennifer Lopez, Claudia Leitte",
+        "cover": "../assets/reccover.jpg",
+        "title": "We Are One",
+        "duration": "3:42"
+    }
+
+]

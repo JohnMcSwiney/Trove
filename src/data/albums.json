@@ -1,0 +1,39 @@
+[
+    {
+        "path":"/",
+        "name":"Cassie",
+        "cover": "../assets/aleenasong1.jpg",
+        "releaseDate": "2006"
+    },
+    {
+        "path":"/",
+        "name":"Flower Boy",
+        "cover": "../assets/cherrysong1.jpg",
+        "releaseDate": "2017"
+    },
+    {
+        "path":"/",
+        "name":"Astro Lounge",
+        "cover": "../assets/bobbysong1.jpg",
+        "releaseDate": "1999"
+    },
+    {
+        "path":"/",
+        "name":"Young and Beautiful",
+        "cover": "../assets/zhibeksong1.jpg",
+        "releaseDate": "2013"
+    },
+    {
+        "path":"/",
+        "name":"PARTYNEXTDOOR",
+        "cover": "../assets/nimasong1.jpg",
+        "releaseDate": "2013"
+    },
+    {
+        "path":"/",
+        "name":"Ella and Louis Again",
+        "cover": "../assets/topazsong1.jpg",
+        "releaseDate": "1957"
+    }
+
+]
