@@ -1,0 +1,73 @@
+[
+    {
+        "idno":"1",
+        "path":"/",
+        "username":"bobbyboo",
+        "acctype": "LISTENER",
+        "pfp": "../assets/bobby.png"
+    },
+    {
+        "idno":"2",
+        "path":"/",
+        "username":"Luna",
+        "acctype": "ARTIST",
+        "pfp": "../assets/aleena1.png"
+    },
+    {
+        "idno":"3",
+        "path":"/",
+        "username":"peanut",
+        "acctype": "LISTENER",
+        "pfp": "../assets/haiden.png"
+    },
+    {
+        "idno":"4",
+        "path":"/",
+        "username":"RealOfficial_Zhibek",
+        "acctype": "LISTENER",
+        "pfp": "../assets/zhibek1.png"
+    },
+    {
+        "idno":"5",
+        "path":"/",
+        "username":"riki_rat",
+        "acctype": "LISTENER",
+        "pfp": "../assets/riki.png"
+    },
+    {
+        "idno":"6",
+        "path":"/",
+        "username":"manwithaG",
+        "acctype": "LISTENER",
+        "pfp": "../assets/marzhan.png"
+    },
+    {
+        "idno":"7",
+        "path":"/",
+        "username":"kikiQ",
+        "acctype": "ARTIST",
+        "pfp": "../assets/kiki.png"
+    },
+    {
+        "idno":"8",
+        "path":"/",
+        "username":"TOPAZ",
+        "acctype": "LISTENER",
+        "pfp": "../assets/topaz.png"
+    },
+    {
+        "idno":"9",
+        "path":"/",
+        "username":"cherry",
+        "acctype": "LISTENER",
+        "pfp": "../assets/cherry.png"
+    },
+    {
+        "idno":"10",
+        "path":"/",
+        "username":"ROCKster",
+        "acctype": "LISTENER",
+        "pfp": "../assets/nima1.png"
+    }
+
+]

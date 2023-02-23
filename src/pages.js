@@ -10,3 +10,8 @@ export {default as ArtistLogin} from './log in artist/ArtistLogin'
 export {default as Artist} from './artist/Artist'
 
 export {default as DiscoveryGame} from './discoverygame/discoverygamepage'
+
+export {default as AlbumPage} from './AlbumPage/AlbumPage.jsx'
+export {default as FollowersPage} from './FollowersPage/FollowersPage.jsx'
+export {default as FollowingPage} from './FollowingPage/FollowingPage.jsx'
+export {default as PlaylistPage} from './PlaylistPage/PlaylistPage.jsx'
