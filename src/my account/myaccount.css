@@ -2,7 +2,14 @@
   .my-account {
     border: solid 2px;
     display: grid;
-    grid-template-columns: 10% 90%;
+    grid-template-columns: max(15%) max(85%);
+    color: white;
+    min-height: 100%;
+    background-color: #2d3436;
+  }
+
+  .my-account-header {
+    color: white;
   }
   .user-avatar {
     width: 100px;
@@ -12,38 +19,57 @@
   .tabs {
     display: flex;
     flex-direction: column;
-    width: 100px;
+    align-items: center;
+    border-right: 1px solid;
+    min-height: 500px;
+    padding: 10px;
   }
 
   .tab {
     position: relative;
     cursor: poiter;
+    padding: 5px;
   }
 
-  .active-tab::after {
+  .active-tab:hover {
     background-color: transparent;
     opacity: 0.6;
+    cursor: poiter;
+  }
+
+  .tab:hover {
+    background-color: transparent;
+    opacity: 0.6;
+  }
+
+  .active-tab {
+    border-bottom: solid 1px #8750f4e6;
+    cursor: poiter;
   }
 
   .contents {
   }
 
+  .form-control {
+    max-width: 400px;
+  }
   .content {
     display: none;
     position: relative;
-    border: solid 2px;
   }
 
   .active-content {
     display: flex;
     flex-direction: column;
     position: relative;
-    border: solid 2px;
     padding: 50px;
   }
 }
 
 @media screen and (max-width: 800px) {
+  .my-account-header {
+    color: white;
+  }
   .my-account {
     border: solid 2px;
   }
@@ -60,7 +86,13 @@
 
   .tab {
     position: relative;
+
     cursor: poiter;
+  }
+
+  .active-tab {
+    background-color: rgb(159, 176, 190);
+    border: 1px solid;
   }
 
   .contents {
