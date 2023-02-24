@@ -9,6 +9,7 @@ const userRouter = require("./admin routes/user-route/user-route");
 const albumRouter = require("./admin routes/album-route/album-route");
 const artistRouter = require("./admin routes/artist-route/artist-route");
 const collectionRouter = require("./admin routes/collection-route/collection-route");
+const myTroveRouter = require("./admin routes/myTrove-route/myTrove-route");
 
 // const tastepRouter = require("./admin routes/tastep-route/tastep-route");
 const playlistRouter = require("./admin routes/playlist-route/playlist-route");
@@ -68,7 +69,7 @@ app.use("/api/artists", artistRouter);
 app.use("/api/collections", collectionRouter);
 
 //taste profile
-// app.use("/api/tasteps", tastepRouter);
+app.use("/api/mytrove", myTroveRouter);
 
 // //playlist
 app.use("/api/playlists", playlistRouter);
