@@ -79,13 +79,13 @@ export default function UploadMusic(props) {
   //  Submission Value States
   const [title, setTitle] = useState([]);
   const [album, setAlbum] = useState("");
-  const [highlightStart, setHighlightStart] = useState(0);
-  const [highlightStop, setHighlightStop] = useState(0);
+  const [highlightStart, setHighlightStart] = useState();
+  const [highlightStop, setHighlightStop] = useState();
   const [genre, setGenre] = useState("");
   const [songFile, setSongFile] = useState([]);
   const [imageFile, setImageFile] = useState();
   const [releaseType, setReleaseType] = useState("");
-  const [releaseYear, setReleaseYear] = useState(0);
+  const [releaseYear, setReleaseYear] = useState();
   const [artist, setArtist] = useState("");
   const [isUploading, setIsUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);

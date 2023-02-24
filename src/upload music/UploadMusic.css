@@ -1228,7 +1228,7 @@ border-radius: 20vmin;
       width: 50%;
       height:100%;
       margin-top: 10vmin;
-      padding-left: 15vmin;
+      margin-left: 25vmin;
       text-align: center;
       
 
@@ -1297,7 +1297,7 @@ border-radius: 20vmin;
       display: inline-flex;
       fill: currentcolor;
       /* font-family: "Google Sans",Roboto,Arial,sans-serif; */
-      font-size: 2vmin;
+      font-size: 3vmin;
       font-weight: bold;
       height: 5vmin;
       justify-content: center;
@@ -1305,7 +1305,7 @@ border-radius: 20vmin;
       line-height: normal;
       max-width: 100%;
       overflow: visible;
-      padding: 2px 24px;
+      padding: 3vmin;
       position: relative;
       text-align: center;
       text-transform: none;
@@ -1327,7 +1327,7 @@ border-radius: 20vmin;
 
     .uploadmusic--submit--btn {
       margin-top: 5vmin;
-      margin-left: 30vmin;
+      margin-left: 14vw;
       padding-left: 5vmin;
       padding-right: 5vmin;
     }
@@ -1383,14 +1383,14 @@ border-radius: 20vmin;
   }
 
   .uploadmusic--song--form  input {
-    background-color: transparent;
+    /* background-color: transparent; */
     padding: 1vmin;
     border-radius: 1vmin;
     color: #D9D9D9;
   }
 
   .uploadmusic--columnt {
-    padding-left: 3vmin;
+    /* padding-left: 3vmin; */
     /* padding-right: -3vmin; */
     padding-top: 0;
     padding-bottom: 1vmin;
@@ -1404,10 +1404,9 @@ border-radius: 20vmin;
   .uploadmusic--genre--radio {
     margin-top: -5vmin;
     /* padding-left: 3vmin; */
-    padding: none;
-    /* margin-left: 8vw; */
+    margin-left: 5vmin;
     display: inline-flex;
-    width: 12vw;
+    width: 20vw;
     /* align-items: center; */
     /* justify-content: center; */
     
@@ -1423,8 +1422,8 @@ border-radius: 20vmin;
   }
 
   .uploadmusic--hotspot--start {
-    padding-left: 3vmin;
-    width:200px;
+    /* padding-left: 3vmin; */
+    width:27vw;
   }
 
   /* .hotspot--stop {
@@ -1444,7 +1443,7 @@ border-radius: 20vmin;
     } */
 
     .uploadmusic--song--form input[type="number"] {
-    width: 10vmin;
+    width: 13vmin;
     padding: 1vmin;
   }
   
@@ -1454,7 +1453,7 @@ border-radius: 20vmin;
   
   .uploadmusic--song--form  fieldset {
     border: none;
-    margin-left: 10vw;
+
     
   }
 
