@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { StickyContainer, Sticky } from 'react-sticky';
-import { AudioPlayer } from './components/audioplayer/AudioPlayer';
+import { AudioPlayer } from './components/audioplayerOLD/AudioPlayer';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 import Header from './containers/header/Header';
