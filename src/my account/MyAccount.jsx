@@ -7,7 +7,7 @@ import { AiOutlineEyeInvisible } from "react-icons/ai";
 import { Navigate } from "react-router-dom";
 import { useUpdateAccount } from "../hooks/user-hooks/useUpdateAccount";
 import { useUpdateEmail } from "../hooks/user-hooks/useUpdateEmail";
-
+import { useUpdatePassword } from "../hooks/user-hooks/useUpdatePassword";
 const MyAccount = () => {
   const [state, setState] = React.useState(1);
 
@@ -65,6 +65,19 @@ const MyAccount = () => {
       await updateEmail(newEmail, cPassword);
     } catch (error) {
       console.log(error.data?.message || "Please try again");
+      return;
+    }
+  };
+
+  const { updatePassword, passwordError, passwordIsLoading } =
+    useUpdatePassword();
+
+  const handleUpdatePassword = async (e) => {
+    e.preventDefault();
+    try {
+      await updatePassword(password, newPassword);
+    } catch (error) {
+      console.log(error);
       return;
     }
   };
@@ -178,7 +191,7 @@ const MyAccount = () => {
               )}
             </form>
 
-            <form>
+            <form onSubmit={handleUpdatePassword}>
               <h5 onClick={toggleShowPasswordTab}>Password</h5>
               {showPasswordTab && (
                 <div>
@@ -200,7 +213,7 @@ const MyAccount = () => {
                   )}
                   <input
                     type={showPassword ? "text" : "password"}
-                    id="newnewpasswordname"
+                    id="newpassword"
                     className="form-control"
                     placeholder="New password"
                     onChange={(e) => setNewPassword(e.target.value)}
