@@ -23,31 +23,31 @@ const getDiscoveryGame = async (req, res) => {
             myTroveOwner: req.user._id
         });
 
-        const recommendedSongs = await songMetadata.getRecommendations(myTrove);
+        // const recommendedSongs = await songMetadata.getRecommendations(myTrove);
 
-        let song;
+        // let song;
 
-        for (let i = 0; i < recommendedSongs.length; i++) {
+        // for (let i = 0; i < recommendedSongs.length; i++) {
 
-            const recommendedSong = recommendedSongs[i];
-            const metadata = await songMetadata.getSongMetaData(recommendedSong.id);
+        //     const recommendedSong = recommendedSongs[i];
+        //     const metadata = await songMetadata.getSongMetaData(recommendedSong.id);
 
-            if (!metadata) {
-                continue;
-            }
+        //     if (!metadata) {
+        //         continue;
+        //     }
 
-            const similarity = calculateSongSimilarity(metadata, myTrove);
+        //     const similarity = calculateSongSimilarity(metadata, myTrove);
 
-            if (similarity >= 0.5) {
-                const existingSwipe = myTrove.swipes.find(swipe => swipe.song === recommendedSong.id);
+        //     if (similarity >= 0.5) {
+        //         const existingSwipe = myTrove.swipes.find(swipe => swipe.song === recommendedSong.id);
 
-                if (!existingSwipe) {
-                    song = { ...recommendedSong, metadata };
-                    break;
-                }
-            }
+        //         if (!existingSwipe) {
+        //             song = { ...recommendedSong, metadata };
+        //             break;
+        //         }
+        //     }
 
-        }
+        // }
 
         // const likedSongs = myTrove.swipes.filter(
         //     swipe => swipe.direction === 'right'
@@ -58,16 +58,15 @@ const getDiscoveryGame = async (req, res) => {
         //         tempo: myTrove.pr
         //     }
 
-        // const song = await DiscoveryGame.findOne({
-        //     //songList: {$in: myTrove.likedSongs},
-        //     genre: {$in: myTrove.likedGenres},
-        //     tempo: {$gte: myTrove.minTempo, $lte: myTrove.maxTempo},
-        //     //isLoved: true,
-        //     isPublished: true,
-        //     _id: {$nin: myTrove.swipes.map(swipe => swipe.song)}
+        const song = await DiscoveryGame.findOne({
+            genre: {$in: myTrove.likedSongs},
+            tempo: {$gte: myTrove.minTempo, $lte: myTrove.maxTempo},
+            //isLoved: true,
+            isPublished: true,
+            _id: {$nin: myTrove.swipes.map(swipe => swipe.song)}
 
-        // })
-        //.populate('myTrove', ['genres']);
+        })
+        .populate('myTrove', ['genres']);
 
         if (!song || song == null) {
             console.log("song not found");

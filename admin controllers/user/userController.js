@@ -117,14 +117,18 @@ const updateUserPassword = async (req, res) => {
     return res.status(404).json({ err: "No such user" });
   }
 
+  //const { password, newPassword } = req.body;
+
   const { password, newPassword } = req.body;
+
+
   try {
     const user = await User.findById(id);
 
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
-      return res.status(401).json({ err: "Password is not corrent" });
+      return res.status(401).json({ err: "Password is not correct" });
     }
 
     const salt = await bcrypt.genSalt(10);
@@ -142,15 +146,18 @@ const updateUserPassword = async (req, res) => {
         user: process.env.GOOGLE_USER,
         pass: process.env.GOOGLE_PASSWORD,
       },
+      tls: {
+        rejectUnauthorized: false
+      }
     });
 
     const mailOptions = {
-      from: process.env.AUTH_EMAIL_ACCOUNT,
-      to: email,
+      from: process.env.GOOGLE_USER,
+      to: user.email,
       subject: "Change Password Successfully With TroveMusic",
       html: `
-            <p>Hi ${email},</p>
-            <p>Your action of changing password is successfully, let us know if you did not attemp to change password</p>
+            <p>Hi ${user.email},</p>
+            <p>Your action of changing password is successfully, let us know if you did not attempt to change password</p>
           `,
     };
 
