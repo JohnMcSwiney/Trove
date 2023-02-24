@@ -37,7 +37,9 @@ const DiscoveryGame = () => {
 
     const [volumeLevel, setVolumeLevel] = useState(0);
     const [isPlaying, setIsPlaying] =  useState(true);
+
     const [duration, setDuration] = useState(0);
+    
     const [currentTime, setCurrentTime] = useState(0);
 
     const [isMuted, setIsMuted] = useState(true);
@@ -62,7 +64,8 @@ const DiscoveryGame = () => {
       setIndex(musicSlides.current);
       changeVolumeLevel(10);
 
-
+      
+      
 
   }, [audioPlayer?.current?.loadmetadata, audioPlayer?.current?.readyState]);
   /* maybe replaceing useEffect 
@@ -85,11 +88,15 @@ const DiscoveryGame = () => {
     setIsPlaying(!prevValue);
     changeVolumeLevel();
     if (!prevValue) {
+      console.log('test- this is the if true');
       audioPlayer.current.play();
       animationRef.current = requestAnimationFrame(whilePlaying); //fix this
+
     } else {
+      console.log('test- this is the if false');
       audioPlayer.current.pause();
       cancelAnimationFrame(animationRef.current);
+
     }
 
   }
@@ -155,14 +162,18 @@ const DiscoveryGame = () => {
           likedIndexs.push(slides[state].audio);
           gotoNext();
           setState(state+1);
-        },
-        onSwipedRight: () => {
+
+
+          },
+          onSwipedRight: () => {
           if (state === slides.length - 1) return;
           setIndex((prevIndex) => (prevIndex + 1) % slides.length);
           setDeny(deny + 1);
           dislikedIndexs.push(slides[state].audio);
           gotoNext();
           setState(state+1);
+
+
         },
     });
 
@@ -227,7 +238,7 @@ const DiscoveryGame = () => {
                 <button onClick={toggleMute}>
                 {isMuted ? <BiVolumeFull /> : <BiVolumeMute />}
                 </button>
-                <input type="range" ref={volumeRef} defaultValue="15" onChange={changeVolumeLevel} min="0" max="100" step="5" ></input>
+                <input type="range" ref={volumeRef} defaultValue="10" onChange={changeVolumeLevel} min="0" max="100" step="5" ></input>
               </div>
 
                       {/* </div> */}
@@ -281,15 +292,16 @@ const DiscoveryGame = () => {
 
                 {/* dislike */}
                 <button onClick={() => {if (state === slides.length - 1) return;
+                
                 setIndex((prevIndex) => (prevIndex + 1) % slides.length);
                 setDeny(deny + 1);
                 dislikedIndexs.push(slides[state].audio);
                 gotoNext();
                 }} className='Discovery-Disike'><BsXLg/></button>
 
-
                 {/* like */}
                 <button onClick={() => {if (state === slides.length - 1) return;
+
                 setIndex((prevIndex) => (prevIndex + 1) % slides.length);
                 setAccept(accept + 1);
                 likedIndexs.push(slides[state].audio);
@@ -309,7 +321,9 @@ const DiscoveryGame = () => {
                     <audio ref={audioPlayer} src ={slides[state].audio} 
                     autoPlay 
                     // 
-                    preload="metadata"></audio>
+                    preload="metadata" 
+                    isPlaying={animationRef.current = requestAnimationFrame(whilePlaying)}>
+                    </audio>
                     {/*testing maybe going in audio player to fix not loading the proggress bar on start up onLoadedMetaData={onLoadedMetaData}  */} 
                     
                     {/*current time*/}
@@ -320,13 +334,16 @@ const DiscoveryGame = () => {
                         <input type="range" 
                         // className={style.DGprogressBar}
                         className='DGprogressBar'
-                        defaultValue="0" ref={progressBar} onChange={changeRange} />
+                        defaultValue="0" ref={progressBar} onChange={() => {
+                          changeRange();
+                          animationRef.current = requestAnimationFrame(whilePlaying);
+                          } }  />
                     </div>
                     {/*Duration*/}
                     {/* removed for testing*/}
                     {/* <div className={style.DGduration}>{(duration && !isNaN(duration)) && calculateTime(duration)}</div> */}
                     <div className='DGpsbutsCont'>
-                      <button onClick={togglePlayPause} className="DGplayPause">
+                      <button onClick={togglePlayPause} className="DGplayPause" id="playPauseBtn">
                           {isPlaying ? <FaPause/> : <FaPlay className="DGplay"/>}   
                       
                       </button>
@@ -336,11 +353,11 @@ const DiscoveryGame = () => {
             </div>
             <div className='Discovery-TestingItem-Container'>
                     {/* Like */}
-                <div>{accept}Left swipes       
+                <div>{accept} [ Likes ]       
                 {/* {console.log(likedIndexs)} */}
                 </div>
                 {/* Dislike */}
-                <div>{deny}Right swipes        
+                <div>{deny} [ Dislikes ]        
                 {/* {console.log(dislikedIndexs)} */}
                 </div>
 

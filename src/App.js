@@ -45,7 +45,7 @@ function App() {
       </Routes>
       
         </div>
-        <MusicBar/>
+        {/* <MusicBar/> */}
      
        
     </div>
