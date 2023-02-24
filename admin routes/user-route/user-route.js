@@ -24,13 +24,13 @@ router.post("/", createUser);
 router.patch("/:id", updateUser);
 
 //update user password
-router.patch("/up", updateUserPassword);
+router.patch("/up/:id", updateUserPassword);
 
 //update user email
-router.patch("/ue", updateUserEmail);
+router.patch("/ue/:id", updateUserEmail);
 
 //update user general info
-router.patch("/ua", updateUserAccountTab);
+router.patch("/ua/:id", updateUserAccountTab);
 
 // Deleting One
 router.delete("/:id", deleteUser);

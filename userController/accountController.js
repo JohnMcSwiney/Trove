@@ -37,6 +37,7 @@ const loginUser = async (req, res) => {
       id: user._id,
       displayName: user.displayName,
       useImg: user.imageURL,
+      dob: user.dob,
     });
   } catch (err) {
     res.status(400).json({ err: err.message });
@@ -96,6 +97,7 @@ const signupUser = async (req, res) => {
       id: user._id,
       displayName: user.displayName,
       useImg: user.imageURL,
+      dob: user.dob,
     });
   } catch (err) {
     res.status(400).json({ err: err.message });

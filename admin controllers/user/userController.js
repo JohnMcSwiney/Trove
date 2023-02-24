@@ -78,14 +78,15 @@ const updateUser = async (req, res) => {
 
 // UPDATE USER ACCOUNT TAB
 const updateUserAccountTab = async (req, res) => {
-  const userInfo = localStorage.getItem("user");
-  const id = JSON.parse(userInfo).id;
-
+  // const userInfo = localStorage.getItem("user");
+  // const id = JSON.parse(userInfo).id;
+  const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ err: "No such user" });
   }
 
   const { displayName, dob } = req.body;
+  // , dob
 
   try {
     const user = await User.findById(id);
@@ -93,18 +94,24 @@ const updateUserAccountTab = async (req, res) => {
     user.displayName = displayName;
     user.dob = dob;
 
+    console.log(user.dob);
+    if (!displayName || displayName === null) {
+      user.displayName = "My account";
+    }
     await user.save();
     res
       .status(200)
       .json({ message: `we just update your account, ${displayName} !` });
   } catch (err) {
-    res.status(500).json({ error: "Please try again" });
+    res.status(500).json({ error: err.message });
   }
 };
 // UPDATE USER PASSWORD only
 const updateUserPassword = async (req, res) => {
-  const userInfo = localStorage.getItem("user");
-  const id = JSON.parse(userInfo).id;
+  // const userInfo = localStorage.getItem("user");
+  // const id = JSON.parse(userInfo).id;
+
+  const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ err: "No such user" });
@@ -161,15 +168,13 @@ const updateUserPassword = async (req, res) => {
 
 //// UPDATE USER EMAIL only
 const updateUserEmail = async (req, res) => {
-  const userInfo = localStorage.getItem("user");
-  const id = JSON.parse(userInfo).id;
-  const email = JSON.parse(userInfo).email;
+  const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ err: "No such user" });
   }
 
-  const { password, newEmail } = req.body;
+  const { newEmail, password } = req.body;
   try {
     const user = await User.findById(id);
 
