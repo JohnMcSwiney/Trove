@@ -6,11 +6,11 @@ const playlistSchema = new mongoose.Schema(
     playlistName: {
       type: String,
       maxlength: 75,
-      default: 'My Trove list'
+      default: "My Trove List"
     },
     playlistCreator: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User'
+      ref: "User"
     },
     isPublished: {
       type: Boolean,

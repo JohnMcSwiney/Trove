@@ -43,9 +43,11 @@ const createPlaylist = async (req, res) => {
 
   console.log(req.body);
 
+  //const {id} = req.params;
+
   try {
 
-    const user = await User.findOne({ displayName: req.body.user });
+    const user = await User.findOne({ displayName: req.body.playlistCreator });
 
     console.log(user);
 

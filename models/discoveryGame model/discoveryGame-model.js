@@ -1,7 +1,5 @@
 const mongoose = require('mongoose')
 
-
-
 const discoveryGameSchema = new mongoose.Schema({
 
     songName: {
@@ -72,6 +70,17 @@ const discoveryGameSchema = new mongoose.Schema({
     myTrove: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'MyTrove'
+    },
+    similarity: {
+
+        beat: {
+            type: Number,
+            required: true
+        },
+        tempo: {
+            type: Number,
+            required: true,
+        }
     }
 
 });
