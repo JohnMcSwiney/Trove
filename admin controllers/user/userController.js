@@ -175,18 +175,21 @@ const updateUserEmail = async (req, res) => {
   }
 
   const { newEmail, password } = req.body;
+
+  
   try {
     const user = await User.findById(id);
 
+    const isMatch = await bcrypt.compare(password, user.password);
+
     if (!isMatch) {
-      return res.status(401).json({ err: "Password is not corrent" });
+      return res.status(401).json({ err: "Password is not correct" });
     }
 
     //update user password
 
     user.email = newEmail;
     await user.save();
-    res.status(200).json({ message: "Email changed successfully" });
 
     const transporter = nodemailer.createTransport({
       service: "gmail",
@@ -194,25 +197,57 @@ const updateUserEmail = async (req, res) => {
         user: process.env.GOOGLE_USER,
         pass: process.env.GOOGLE_PASSWORD,
       },
+      tls: {
+        rejectUnauthorized: false
+      }
     });
 
     const mailOptions = {
-      from: process.env.AUTH_EMAIL_ACCOUNT,
-      to: email,
+      from: process.env.GOOGLE_USER,
+      to: newEmail,
       subject: "Change Email Successfully With TroveMusic",
       html: `
-            <p>Hi ${email},</p>
+            <p>Hi ${newEmail},</p>
             <p>Your action of changing Email is successfully, let us know if you need help</p>
           `,
     };
 
-    transporter.sendMail(mailOptions, function (error, info) {
-      if (error) {
+
+    transporter.sendMail(mailOptions, function (err, info) {
+      if (err) {
         console.log(err);
       } else {
         console.log("Email sent: " + info.response);
       }
     });
+  
+    res.status(200).json({ message: "Email changed successfully" });
+
+    // const transporter = nodemailer.createTransport({
+    //   service: "gmail",
+    //   auth: {
+    //     user: process.env.GOOGLE_USER,
+    //     pass: process.env.GOOGLE_PASSWORD,
+    //   },
+    // });
+
+    // const mailOptions = {
+    //   from: process.env.AUTH_EMAIL_ACCOUNT,
+    //   to: email,
+    //   subject: "Change Email Successfully With TroveMusic",
+    //   html: `
+    //         <p>Hi ${email},</p>
+    //         <p>Your action of changing Email is successfully, let us know if you need help</p>
+    //       `,
+    // };
+
+    // transporter.sendMail(mailOptions, function (error, info) {
+    //   if (error) {
+    //     console.log(err);
+    //   } else {
+    //     console.log("Email sent: " + info.response);
+    //   }
+    // });
   } catch (err) {
     res.status(500).json({ error: "Please try again" });
   }
