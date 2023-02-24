@@ -22,7 +22,9 @@ const NavBar = (props) => {
   /* Starts line 109 */
 
   const [isArtist, setIsArtist] = useState(true);
-  const user = localStorage.getItem("user");
+  let user = localStorage.getItem("user");
+
+  const isLoginID = user ? JSON.parse(user).id : "";
 
   //responsive
   const [displayLogout, setDisplayLogout] = useState(window.innerWidth > 800);
@@ -31,15 +33,17 @@ const NavBar = (props) => {
       setDisplayLogout(window.innerWidth > 800);
     });
   });
-  const { userAuth } = useAuthContext();
+
   const { logout } = useLogout();
 
   const navigate = useNavigate();
-  const logoutHandler = () => {
-    logout();
-    setTimeout(() => {
-      navigate("/");
-    }, "1200");
+
+  const logoutHandler = async () => {
+    await logout();
+    navigate("/login");
+    // setTimeout(() => {
+    //   navigate("/");
+    // }, "1200");
   };
   return (
     <>
@@ -105,7 +109,8 @@ const NavBar = (props) => {
         {user && (
           <>
             <div className="divider-white"></div>
-            <Link to={"/myaccount"} className="trove-links">
+            {/* <Link to={`/myaccount/${isLoginID}`} className="trove-links"> */}
+            <Link to="/myaccount" className="trove-links">
               <div
                 className={active === 3 ? "active" : ""}
                 onClick={() => setActive(3)}

@@ -32,13 +32,13 @@ export default function MusicDetails(props) {
                   <label>
                   Start:
                   </label>
-                  <input type="number" value={props.highlightStart} name="highlightStart" placeholder="00:00"  onChange={props.handleHighlightStart}/>
+                  <input type="number" value={props.highlightStart} name="highlightStart" placeholder="00:00" min="0" onChange={props.handleHighlightStart}/>
                 </td>   
                 <td colspan="2" className="uploadmusic--hotspot--stop">
                   <label>
                   Stop: 
                   </label>
-                  <input type="number"  value={props.highlightStop} name="highlightStop" placeholder="00:00"  onChange={props.handleHighlightStop}/>
+                  <input type="number"  value={props.highlightStop} name="highlightStop" placeholder="00:00" min="0"  onChange={props.handleHighlightStop}/>
                   <br/> 
                 </td>                
               </tr>
