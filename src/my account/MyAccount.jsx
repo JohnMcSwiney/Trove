@@ -5,14 +5,13 @@ import { Alert } from "@mui/material";
 import { BiShow } from "react-icons/bi";
 import { AiOutlineEyeInvisible } from "react-icons/ai";
 import { Navigate } from "react-router-dom";
+import { useUpdateAccount } from "../hooks/user-hooks/useUpdateAccount";
 
 const MyAccount = () => {
   const [state, setState] = React.useState(1);
 
   const action = (index) => {
     setState(index);
-
-    console.log(index);
   };
 
   //states for forms
@@ -23,12 +22,40 @@ const MyAccount = () => {
   const [displayName, setDisPlayName] = React.useState(userInfo.displayName);
   const [password, setPassword] = React.useState("");
   const [newPassword, setNewPassword] = React.useState("");
+  const [dob, setDOB] = React.useState(userInfo.dob);
   const [newEmail, setNewEmail] = React.useState("");
+  const [cPassword, setCPassword] = React.useState("");
 
+  //toggle
   const [showPassword, setShowPassword] = React.useState(false);
   const toggleHidden = () => {
     setShowPassword(!showPassword);
   };
+
+  //toggle
+  const [showEmailTab, setShowEmailTab] = React.useState(false);
+  const toggleShowEmail = () => {
+    setShowEmailTab(!showEmailTab);
+  };
+
+  //toggle
+  const [showPasswordTab, setShowPasswordTab] = React.useState(false);
+  const toggleShowPasswordTab = () => {
+    setShowPasswordTab(!showPasswordTab);
+  };
+
+  const { updateAccount, error, isLoading } = useUpdateAccount();
+
+  const handleUpdateAccount = async (e) => {
+    e.preventDefault();
+    try {
+      await updateAccount(displayName, dob);
+    } catch (error) {
+      console.log(error.data?.message || "Please try again");
+      return;
+    }
+  };
+
   return (
     <>
       {user ? (
@@ -61,7 +88,7 @@ const MyAccount = () => {
             <div className="contents">
               <div className={`${state === 1 ? "active-content" : "content"}`}>
                 <h3>Detail about your personal information</h3>
-                <form>
+                <form onSubmit={handleUpdateAccount}>
                   <div className="inner-form">
                     <div className="user-img-div">
                       <img
@@ -95,8 +122,9 @@ const MyAccount = () => {
                         type="date"
                         id="dob"
                         name="dob"
-                        // value={dob}
-                        // onChange={handleDobChange}
+                        defaultValue={dob}
+                        onChange={(e) => setDOB(e.target.value)}
+                        value={dob}
                         className="form-control"
                       />
 
@@ -107,56 +135,73 @@ const MyAccount = () => {
               </div>
 
               <div className={`${state === 2 ? "active-content" : "content"}`}>
-                <h3>Detail about your personal account information</h3>
+                <h3>Change your personal account information</h3>
 
                 <form>
-                  <div>
-                    <label htmlFor="newemail">New email</label>
-                    <input
-                      type="email"
-                      id="newemail"
-                      className="form-control"
-                      placeholder="Change your email here"
-                      onChange={(e) => setNewEmail(e.target.value)}
-                      value={newEmail}
-                    />
-                    <button className="btn btn-primary mt-3 mb-3">
-                      Update Email
-                    </button>
-                  </div>
+                  <h5 onClick={toggleShowEmail}>Email</h5>
+                  {showEmailTab && (
+                    <div>
+                      <label htmlFor="newemail">New email</label>
+                      <input
+                        type="email"
+                        id="newemail"
+                        className="form-control"
+                        placeholder="Change your email here"
+                        onChange={(e) => setNewEmail(e.target.value)}
+                        value={newEmail}
+                      />
+
+                      <label htmlFor="Cpassword">Confirm password</label>
+                      <input
+                        type={"password"}
+                        id="Cpassword"
+                        className="form-control"
+                        placeholder="Current password"
+                        onChange={(e) => setCPassword(e.target.value)}
+                        value={cPassword}
+                      />
+
+                      <button className="btn btn-primary mt-3 mb-3">
+                        Update Email
+                      </button>
+                    </div>
+                  )}
                 </form>
 
                 <form>
-                  <div>
-                    <label htmlFor="password">Current password</label>
-                    <input
-                      type={"password"}
-                      id="name"
-                      className="form-control"
-                      placeholder="Current password"
-                      onChange={(e) => setPassword(e.target.value)}
-                      value={password}
-                    />
+                  <h5 onClick={toggleShowPasswordTab}>Password</h5>
+                  {showPasswordTab && (
+                    <div>
+                      <label htmlFor="password">Current password</label>
+                      <input
+                        type={"password"}
+                        id="password"
+                        className="form-control"
+                        placeholder="Current password"
+                        onChange={(e) => setPassword(e.target.value)}
+                        value={password}
+                      />
 
-                    <label htmlFor="newpassword">New password</label>
-                    {showPassword ? (
-                      <BiShow onClick={toggleHidden} />
-                    ) : (
-                      <AiOutlineEyeInvisible onClick={toggleHidden} />
-                    )}
-                    <input
-                      type={showPassword ? "text" : "password"}
-                      id="newnewpasswordname"
-                      className="form-control"
-                      placeholder="New password"
-                      onChange={(e) => setNewPassword(e.target.value)}
-                      value={newPassword}
-                    />
+                      <label htmlFor="newpassword">New password</label>
+                      {showPassword ? (
+                        <BiShow onClick={toggleHidden} />
+                      ) : (
+                        <AiOutlineEyeInvisible onClick={toggleHidden} />
+                      )}
+                      <input
+                        type={showPassword ? "text" : "password"}
+                        id="newnewpasswordname"
+                        className="form-control"
+                        placeholder="New password"
+                        onChange={(e) => setNewPassword(e.target.value)}
+                        value={newPassword}
+                      />
 
-                    <button className="btn btn-primary mt-3">
-                      Change Password
-                    </button>
-                  </div>
+                      <button className="btn btn-primary mt-3">
+                        Change Password
+                      </button>
+                    </div>
+                  )}
                 </form>
               </div>
 
