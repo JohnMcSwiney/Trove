@@ -1255,6 +1255,10 @@ border-radius: 20vmin;
       
     }
 
+    .uploadmusic--addsongs--form {
+      /* margin-left: 5vmin; */
+    }
+
     /* td > label {
       padding-top: 2vmin;
       padding-bottom: 3vmin;
@@ -1328,8 +1332,29 @@ border-radius: 20vmin;
     .uploadmusic--submit--btn {
       margin-top: 5vmin;
       margin-left: 14vw;
-      padding-left: 5vmin;
-      padding-right: 5vmin;
+      /* padding-left: 5vmin; */
+      /* padding-right: 5vmin; */
+    }
+
+ 
+    .uploadmusic--musicdets--btn {
+      /* padding: 10vmin;
+      padding-top: 8vmin;
+      padding-bottom: 8vmin;
+      display: flex; */
+      padding: 0;
+    
+    }
+
+    .uploadmusic--finish--btn > input[type="submit"] {
+      width: 30vw;
+      height: 6vw;
+    }
+
+    .uploadmusic--musicdets--btn > button {
+      width: 40vw;
+      margin-left: 0;
+
     }
 
     .uploadmusic--song--form > input[type="file"] {
@@ -1426,21 +1451,6 @@ border-radius: 20vmin;
     width:27vw;
   }
 
-  /* .hotspot--stop {
-    margin-left: -110vmin;
-  } */
-
-  /* td:nth-child(1) {
-    width: 35%;
-  }
-
-  td:nth-child(2) {
-  width: 50%;
-  }
-
-  td:nth-child(3) {
-    width: 15%;
-    } */
 
     .uploadmusic--song--form input[type="number"] {
     width: 13vmin;
@@ -1462,25 +1472,24 @@ border-radius: 20vmin;
     text-align: center;
   }
 
-  .uploadmusic--navigate--form--btns {
+  .uploadmusic--navigate--form--btns  {
     display: flex;
-    /* margin-left: -25vmin; */
     /* margin-top: 2vmin; */ 
   }
 
   .uploadmusic--navigate--add--songs {
       display: flex;
-      margin-left: -17vw;
+      /* margin-left: -17vw; */
 
   }
 
   .uploadmusic--navigate--add--songs > .uploadmusic--next--btn {
-    margin-left: -20vmin;
+    /* margin-left: -20vmin; */
 
   }
 
   .uploadmusic--navigate--add--songs > .uploadmusic--back--btn {
-    margin-left: 5vmin;
+    margin-left: -15vmin;
 
   }
 
@@ -1501,14 +1510,15 @@ border-radius: 20vmin;
   }
 
 
-  .uploadmusic--back--btn {
+  .uploadmusic--back--btn > button {
     /* margin-right: 10vmin; */
+   
     
   }
 
   .uploadmusic--song--info {
     display: flex;
-    margin-left: 10vmin;
+    /* margin-left: 10vmin; */
     padding-top: 3vmin;
     padding-bottom: 3vmin;
   }
@@ -1519,7 +1529,7 @@ border-radius: 20vmin;
   }
   
   .uploadmusic--upload--songfile {
-    margin-left: 10vmin;
+    /* margin-left: 10vmin; */
   }
 
   .uploadmusic--music--details {

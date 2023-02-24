@@ -15,6 +15,7 @@ export default function AddSongs(props) {
 
     return (
         <div className="uploadmusic--column uploadmusic--song--form">
+            <div className="uploadmusic--addsongs--form">
             <h2>ADD SONGS</h2>
             <div className="uploadmusic--upload--songfile"><label className="uploadmusic--custom-song-upload">
                 <input type="file" name="songFile" value="" accept="audio/*" className="uploadmusic--hide--file" onChange={props.handleSongFileChange} />
@@ -53,14 +54,14 @@ export default function AddSongs(props) {
         </div>
 
             <div className="uploadmusic--navigate--form--btns uploadmusic--navigate--add--songs"> 
-                <div className="uploadmusic--back--btn" onClick={ () => props.handleFormNavigation('MusicDetails')}>
+                <div className="uploadmusic--back--btn uploadmusic--musicdets--btn" onClick={ () => props.handleFormNavigation('MusicDetails')}>
                    <button 
                   className={"uploadmusic--gradient--btn uploadmusic--submit--btn"}
                   onClick={() => props.handleFormNavigation('MusicDetails')}
                   value="musicdet"
                   name="musicdet">Music Details</button>
                 </div>
-                <div className="uploadmusic--next--btn" >
+                <div className="uploadmusic--next--btn uploadmusic--finish--btn" >
                    <input type="submit" value="Submit" className="uploadmusic--gradient--btn uploadmusic--submit--btn" onClick={props.handleSubmit} /> 
                 </div>
             
@@ -70,6 +71,7 @@ export default function AddSongs(props) {
 
 
 
+            </div>
         </div>
 
     ) 
