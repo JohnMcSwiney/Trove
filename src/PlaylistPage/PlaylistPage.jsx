@@ -11,15 +11,6 @@ export default function PlaylistPage(props) {
     return (
         <section>
             {/* HEADER */}
-            <div className="playlist--header">
-                <img className="playlist--back" src="../../assets/backpage.png" alt="back--button"  />
-                <h1>Playlist</h1> 
-                <div className="playlist--circle--border"> 
-                    <div className="playlist--artist--icon">
-                    <img width="215vmin" src="../assets/artist_icon.png" alt="genre"/>
-                    </div>
-                </div>
-            </div>
 
             {/* ALBUM COVER / INFO */}
             <div className="playlist--info">

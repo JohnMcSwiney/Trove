@@ -11,15 +11,6 @@ export default function AlbumPage(props) {
     return (
         <section>
             {/* HEADER */}
-            <div className="album--header">
-                <img className="album--back" src="../../assets/backpage.png" alt="back--button"  />
-                <h1>Album</h1> 
-                <div className="album--circle--border"> 
-                    <div className="album--artist--icon">
-                    <img width="215vmin" src="../assets/artist_icon.png" alt="genre"/>
-                    </div>
-                </div>
-            </div>
 
             {/* ALBUM COVER / INFO */}
             <div className="album--info">

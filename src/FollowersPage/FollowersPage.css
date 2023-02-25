@@ -84,6 +84,7 @@ body {
     margin: auto;
     margin-top: 5vmin;
     border-radius: 1.5vmin;
+    color: white;
 
     
   }
@@ -145,11 +146,12 @@ body {
 
   .followers--count {
     margin-top: 8vmin;
+    margin-left: 2.5vw;
   }
   
   .followers--count > h5 {
     font-weight: 200;
-    margin-left: 5vmin;
+    margin-left: 5vw;
 
   }
 
@@ -158,6 +160,7 @@ body {
     overflow-x: hidden;
     overflow-y: auto;
     max-height: 60vh;
+    width: 85vw;
     /* padding-bottom: 15vmin; */
   }
 
@@ -171,6 +174,8 @@ body {
     border-width: 0.5vmin;
     display: flex;
     /* border-radius: 3vmin; */
+    border: none;
+    border-radius: 1vmin;
 
   }
 
@@ -228,6 +233,12 @@ body {
     height: 10vmin;
     margin-left: 20vmin;
     margin-top: 5vmin;
+
+  }
+
+  .follower--follow--icon {
+    margin-left: 30vw;
+    margin-right: 10vw;
 
   }
 
@@ -363,6 +374,7 @@ body {
     margin: auto;
     margin-top: 5vmin;
     border-radius: 1.5vmin;
+    color: white;
 
     
   }
@@ -437,6 +449,7 @@ body {
     overflow-x: hidden;
     overflow-y: auto;
     max-height: 60vh;
+    width: 100vw;
     /* padding-bottom: 15vmin; */
   }
 
@@ -449,7 +462,8 @@ body {
     border-bottom: #0c081c solid;
     border-width: 0.5vmin;
     display: flex;
-    /* border-radius: 3vmin; */
+    border-radius: 1vmin;
+    border: none;
 
   }
 

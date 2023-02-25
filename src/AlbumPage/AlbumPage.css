@@ -82,6 +82,7 @@ body {
     display: flex;
     /* position: fixed; */
     width: 100%;
+    margin-top: 5vmin;
 
     
   }
@@ -113,7 +114,7 @@ body {
   }
 
   .album--stats--info  {
-    /* margin-top: 10vmin; */
+    margin-top: 2vmin;
     margin-left: 15vw;
     width: 50%;
   }
@@ -308,6 +309,7 @@ body {
     overflow-x: hidden;
     overflow-y: auto;
     max-height: 50vh;
+    width: 100vw;
     padding-bottom: 15vmin;
     
   }
@@ -351,7 +353,7 @@ body {
 
   .album--release--info > h6 {
     font-size: 3vmin;
-    font-weight: 100;
+    font-weight: 200;
   }
 
   
@@ -400,6 +402,7 @@ body {
     height: 12vmin;
     width: 12vmin;
     margin-top: 4vmin;
+    display: inline;
     
   }
 
@@ -415,6 +418,7 @@ body {
 
   .album--song--info > h5 {
     font-weight: 400;
+    font-size: 3vmin;
   }
 
   .album--song--info > h5 > span {

@@ -79,6 +79,7 @@ body {
     display: flex;
     /* position: fixed; */
     width: 100%;
+    margin-top: 5vmin;
 
     
   }
@@ -110,6 +111,7 @@ body {
     /* margin-top: 10vmin; */
     margin-left: 15vw;
     width: 50%;
+    margin-top: 2vmin;
   }
 
   .playlist--stats--info > h3 {
@@ -282,6 +284,7 @@ body {
     overflow-x: hidden;
     overflow-y: auto;
     max-height: 50vh;
+    width: 100vw;
     padding-bottom: 15vmin;
     
   }
@@ -324,7 +327,7 @@ body {
 
   .playlist--release--info > h6 {
     font-size: 3vmin;
-    font-weight: 100;
+    font-weight: 200;
   }
 
   .playlist--song {
@@ -361,6 +364,7 @@ body {
     height: 12vmin;
     width: 12vmin;
     margin-top: 4vmin;
+    display: inline;
   }
 
   .playlist--tiny--cover > #playmask {
@@ -370,11 +374,12 @@ body {
 
   .playlist--song--info {
     margin-left: 25vmin;
-    margin-top: -8vmin;
+    margin-top: -10vmin;
   }
 
   .playlist--song--info > h5 {
     font-weight: 400;
+    font-size: 3vmin;
   }
 
   .playlist--song--info > h5 > span {
