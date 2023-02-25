@@ -20,6 +20,7 @@ const userlogin = require("./user routes/user-login-route/user");
 // const passportSetup = require('./passport')
 const googleAuthRoute = require("./user routes/auth/auth");
 
+
 const app = express();
 mongoose.set("strictQuery", true);
 mongoose
@@ -30,9 +31,14 @@ mongoose
   .catch((error) => {
     console.error("Database connect failed, error: ", error);
   });
+
+  // CORS
+app.use(cors());
+
 //middle ware
 app.use(express.json());
 app.use((req, res, next) => {
+  // res.header('Access-Control-Allow-Origin', '*');
   console.log(req.path, req.method);
   next();
 });

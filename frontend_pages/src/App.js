@@ -12,12 +12,12 @@ import FollowingPage from './components/FollowingPage/FollowingPage';
 function App() {
   return (
     <div className="App">
-      <ArtistProfile />
+      {/* <ArtistProfile /> */}
       {/* <UserProfile /> */}
       {/* <UploadMusic /> */}
       {/* <UploadSong /> */}
       {/* <UploadSongConnect /> */}
-      {/* <AlbumPage /> */}
+      <AlbumPage />
       {/* <PlaylistPage /> */}
       {/* <FollowersPage /> */}
       {/* <FollowingPage /> */}

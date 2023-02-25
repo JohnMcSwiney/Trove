@@ -1,12 +1,29 @@
-import React from "react"
+import React from "react";
 
+import axios from "axios";
 import './AlbumPage.css';
 import NavBar from './nav bar/NavBar';
-import albumsongs from "../../data/albumsongs.json"
+// import albumsongs from "../../data/albumsongs.json"
 import AlbumSong from "./AlbumSong";
+
+const client = axios.create({
+    baseURL: "http://localhost:8080/api/songs",
+
+  });
 
 // User's Top Genres
 export default function AlbumPage(props) {
+    const [albumSongs, setAlbumSongs] = React.useState(null);
+
+    React.useEffect(() => {
+        async function getAlbumSongs() {
+          const response = await client.get("/");
+          setAlbumSongs(response.data);
+        }
+        getAlbumSongs();
+      }, []);
+    
+      if (!albumSongs) return null;
 
     return (
         <section>
@@ -39,7 +56,7 @@ export default function AlbumPage(props) {
 
             {/* SONGS */}
             <div className="album--songs">
-            {
+            {/* {
                     albumsongs && albumsongs.map((item, index)=>{
                     return(
                         <AlbumSong
@@ -49,7 +66,7 @@ export default function AlbumPage(props) {
                         />
                 
                 
-                ) })}
+                ) })} */}
             </div>
 
             <NavBar />
