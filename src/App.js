@@ -7,6 +7,9 @@ import Header from "./containers/header/Header";
 import MusicBar from "./components/music bar/MusicBar";
 import NavBar from "./components/nav bar/NavBar";
 import "bootstrap/dist/css/bootstrap.min.css";
+// will be Removed when taste profile is changed
+import TasteyProfile from "./components/taste Profile/TasteyProfile";
+
 import {
   Home,
   Search,
@@ -41,6 +44,11 @@ function App() {
             <Route path="/search" element={<Search />}></Route>
             <Route path="/mytrove" element={<MyTrove />}></Route>
             <Route path="/uploadmusic" element={<UploadMusic />}></Route>
+            
+            <Route path="tasty" element={<TasteyProfile />}
+            // will be Removed when taste profile is changed
+            >  
+            </Route>
 
             <Route
               // path={`/myaccount/${isLoginId}`}
@@ -52,6 +60,7 @@ function App() {
             <Route path="/artist" element={<Artist />}></Route>
             <Route path="/login-artist" element={<ArtistLogin />}></Route>
             <Route path="/discoverygame" element={<DiscoveryGame />}></Route>
+
             {/* <Route path='/upload' element= {<UploadMusic/>}></Route> */}
 
             <Route path="/albumpage" element={<AlbumPage />}></Route>
