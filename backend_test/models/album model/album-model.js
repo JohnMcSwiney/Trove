@@ -2,50 +2,59 @@ const mongoose = require('mongoose')
 
 const albumSchema = new mongoose.Schema({
 
-    albumName:{
-        type:String,
-        required:[true,`Please provide album's name`],
-        maxlength:75,
+    albumName: {
+        type: String,
+        required: [true, `Please provide album's name`],
+        maxlength: 75,
     },
 
     albumArt: {
-            type:String,
+        type: String,
     },
 
-    totalTracks:{
-        type:Number,
+    artist: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Artist',
+        required: true
+    },
+
+    featuredArtists: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Artist',
+            default: null
+        }
+    ],
+
+    totalTracks: {
+        type: Number,
+        default: 0,
         required: [true, `Please provide number of tracks`],
     },
 
-    isPublished:{
+    isPublished: {
         type: Boolean,
-        require:true
+        require: true
     },
 
     publishDate: {
-        type:Date,
+        type: Date,
     },
 
-    releaseType:{
-        type:String,
-        enum:['Album','EP','Single']
+    releaseType: {
+        type: String,
+        enum: ['Album', 'EP', 'Single']
     },
-    songList:[
+    releaseYear: {
+        type: Number
+    },
+    songList: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "Song"
-        }  
-    ],
-
-    artistList: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Artist",
+            ref: 'Song',
+            default: null
         }
     ]
-        
-    
-
 })
 
-module.exports = mongoose.model('Album',albumSchema);
+module.exports = mongoose.model('Album', albumSchema);

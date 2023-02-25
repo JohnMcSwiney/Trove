@@ -1,45 +1,124 @@
-const User  = require('../models/user model/user-model')
-const jwt = require('jsonwebtoken')
+const User = require("../models/user model/user-model");
+const jwt = require("jsonwebtoken");
+const nodemailer = require("nodemailer");
+require("dotenv").config();
 
-const createToken = (_id)=> {
-    return jwt.sign({_id: _id},process.env.SECRET, {expiresIn: "3d"})
-}
+const handleErrors = (err) => {
+  console.log(err.message, err.code);
+};
 
+const createToken = (_id) => {
+  return jwt.sign({ _id: _id }, process.env.SECRET, { expiresIn: "1d" });
+};
 
 //login user
-const loginUser = async (req,res) =>{
-    const {userName, password} = req.body;
+const loginUser = async (req, res) => {
+  const { email, password } = req.body;
 
-    try{
-        const user = await User.login(userName, password);
-        //create a token
-        const token = createToken(user._id);
+  try {
+    const verify = await User.findOne({ email: email });
 
-        res.status(200).json({userName, token});
-
-    }catch(err){
-        res.status(400).json({err:err.message});
+    if (verify == null) {
+      return res.status(400).json({ err: "Email or password is not correct" });
     }
-}
+    if (!verify.isVerified) {
+      return res
+        .status(400)
+        .json({ err: "Please check your email to verify the email" });
+    }
+
+    const user = await User.login(email, password);
+    //create a token
+    const token = createToken(user._id);
+
+    res.status(200).json({
+      email,
+      token,
+      id: user._id,
+      displayName: user.displayName,
+      useImg: user.imageURL,
+      dob: user.dob,
+    });
+  } catch (err) {
+    res.status(400).json({ err: err.message });
+  }
+};
 
 //sign up user
 
-const signupUser = async(req,res)=>{
+const signupUser = async (req, res) => {
+  const { email, password, isAdmin, displayedName } = req.body;
 
-    const {email,userName, password,isAdmin,displayedName} = req.body;
+  try {
+    const user = await User.signup(email, password);
 
-    try{ 
-        const user = await User.signup(email,userName, password);
+    //create a token
+    const token = createToken(user._id);
 
-        //create a token
-        const token = createToken(user._id);
+    //send email
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.GOOGLE_USER,
+        pass: process.env.GOOGLE_PASSWORD,
+      },
+    });
 
-        res.status(200).json({email,userName, token});
-    }catch(err){
-        res.status(400).json({err:err.message});
+    const mailOptions = {
+      from: process.env.AUTH_EMAIL_ACCOUNT,
+      to: email,
+      subject: "Welcome to TroveMusic!",
+      html: `
+            <p>Hi ${email},</p>
+            <p>Thank you for signing up for My Awesome App!</p>
+            <p>We're thrilled to have you join our community.</p>
+            <p>Please click the following link to verify your email address:</p>
+            <a href="${process.env.APP_URL_BACKEND}/api/user/verify-email/${user._id}">Verify Here</a>
+          `,
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        handleErrors(error);
+      } else {
+        console.log("Email sent: " + info.response);
+      }
+    });
+
+    // res.status(200).json({
+    //   email,
+    //   id: user._id,
+    //   token,
+    //   message: "You have successfully sign up !",
+    // });
+    res.status(200).json({
+      email,
+      token,
+      id: user._id,
+      displayName: user.displayName,
+      useImg: user.imageURL,
+      dob: user.dob,
+    });
+  } catch (err) {
+    res.status(400).json({ err: err.message });
+  }
+};
+
+const verifyUser = async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const user = await User.findOneAndUpdate({ _id: id }, { isVerified: true });
+    if (!user) {
+      return res.status(404).json("User not found");
     }
-}
-module.exports={
-    loginUser,
-    signupUser
-}
+    return res.send("verify-success");
+  } catch (err) {
+    return res.status(500).send("Error verifying email");
+  }
+};
+module.exports = {
+  loginUser,
+  signupUser,
+  verifyUser,
+};
