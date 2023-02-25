@@ -274,20 +274,6 @@ export default function UploadMusic(props) {
       {menu}
 
       {/* HEADER */}
-      <div className={`uploadmusic--header`}>
-        <img
-          className="uploadmusic--waves "
-          name="waves"
-          src={WavesBG}
-          alt="waves"
-        />
-
-        <div>
-          <span>
-            <h1>SUBMIT MUSIC</h1>
-          </span>
-        </div>
-      </div>
       {/* Form starts */}
       <div className="uploadmusic--upload--form">
         {/* <form className="upload--form"
