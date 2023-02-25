@@ -1,7 +1,7 @@
 import React from "react";
 
 export const useUpdatePassword = () => {
-  const [passwordError, setPasswordError] = React.useState(false);
+  const [passwordError, setPasswordError] = React.useState(null);
   const [passwordIsLoading, setPasswordIsLoading] = React.useState(false);
 
   const updatePassword = async (password, newPassword) => {

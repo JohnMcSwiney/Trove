@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 export const useUpdateEmail = () => {
-  const [emailError, setEmailError] = useState(false);
+  const [emailError, setEmailError] = useState(null);
   const [emailIsLoading, setEmailIsLoading] = useState(false);
 
   const updateEmail = async (newEmail, password) => {
@@ -23,6 +23,9 @@ export const useUpdateEmail = () => {
     }
 
     setEmailIsLoading(false);
+    const user = JSON.parse(localStorage.getItem("user"));
+    user.email = newEmail;
+    localStorage.setItem("user", JSON.stringify(user));
   };
   return { updateEmail, emailError, emailIsLoading };
 };
