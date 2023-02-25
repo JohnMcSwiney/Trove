@@ -12,9 +12,10 @@ import {
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    {/* <AuthArtistContextProvider></AuthArtistContextProvider> */}
-    <AuthContextProvider>
-      <App />
-    </AuthContextProvider>
+    <AuthArtistContextProvider>
+      <AuthContextProvider>
+        <App />
+      </AuthContextProvider>
+    </AuthArtistContextProvider>
   </React.StrictMode>
 );

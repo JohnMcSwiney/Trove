@@ -7,21 +7,21 @@ export const authArtistReducer = (state, action) => {
     case "LOGIN":
       return { artist: action.payload };
 
-    case "LOGOUT": {
+    case "LOGOUT":
       return { artist: null };
-    }
 
     default:
       return state;
   }
 };
-export const AuthArtistContextProvider = ({ chilren }) => {
+
+export const AuthArtistContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authArtistReducer, {
     artist: null,
   });
 
   useEffect(() => {
-    const artist = JSON.parse(localStorage.setItem("artist"));
+    const artist = JSON.parse(localStorage.getItem("artist"));
 
     if (artist) {
       dispatch({ type: "LOGIN", payload: artist });
@@ -30,7 +30,7 @@ export const AuthArtistContextProvider = ({ chilren }) => {
 
   return (
     <AuthArtistContext.Provider value={{ ...state, dispatch }}>
-      {chilren}
+      {children}
     </AuthArtistContext.Provider>
   );
 };
