@@ -37,11 +37,12 @@ body {
     font-size: 3vmin;
     display: flex;
     padding-left: 5vmin;
+    margin-bottom: 5vmin;
 
   }
 
   .playlist--header > h1 {
-    margin-left: 30vmin;
+    margin-left: 33vw;
   }
 
   .playlist--back {
@@ -51,15 +52,15 @@ body {
   }
 
   .playlist--circle--border {
-    width: 11vmin;
-    height: 11vmin;
+    width: 3vw;
+    height: 3vw;
     /* position: absolute; */
     border-color: #0034C4;
     border-radius: 25vmin;
-    border-width: 0.75vmin;
+    border-width: 2vw;
     border-style: solid;
     /* margin-top: 2%; */
-    margin-left: 25%;
+    margin-left: 45%;
   
   }
 
@@ -76,14 +77,14 @@ body {
   /* ALBUM INFO */
   .playlist--info {
     display: flex;
-    position: fixed;
+    /* position: fixed; */
     width: 100%;
 
     
   }
 
   .playlist--songs {
-    margin-top: 60vmin;
+    margin-top: -15vmin;
     overflow-x: hidden;
     overflow-y: auto;
     max-height: 50vh;
@@ -93,10 +94,10 @@ body {
 
   .playlist--song--cover {
     border-radius: 1vmin;
-    height: 40vmin;
-    width: 40vmin;
-    margin-left: 7%;
-    margin-top: 10%;
+    height: 60vmin;
+    width: 60vmin;
+    margin-left: 17%;
+    margin-top: 2%;
   }
 
   .playlist--song--cover img {
@@ -106,12 +107,14 @@ body {
   }
 
   .playlist--stats--info  {
-    margin-top: 10vmin;
-    margin-left: 5vmin;
+    /* margin-top: 10vmin; */
+    margin-left: 15vw;
+    width: 50%;
   }
 
   .playlist--stats--info > h3 {
     font-size: 6vmin;
+    color: white;
   }
 
   .playlist--stats--info > h4 {
@@ -134,11 +137,14 @@ body {
 
   .playlist--song {
     background-color: #12164B;
-    width: 90%;
-    height: 20vmin;
+    /* width: 90%; */
+    height: 12vmin;
     margin: auto;
     margin-top: -5vmin;
-    border-radius: 3vmin;
+    border-radius: 2vmin;
+    margin-left: 20vmin;
+    font: 'Poppins' sans-serif;
+    color: white;
 
   }
 
@@ -150,22 +156,23 @@ body {
   .playlist--song:hover >  .playlist--tiny--cover > #playmask {
     position: absolute;
     display:inline;
-    margin-left: -12vmin;
+    margin-left: -8vmin;
   }
 
   .playlist--tiny--cover {
     border-radius: 1vmin;
-    height: 12vmin;
-    width: 12vmin;
-    margin-left: 7%;
-    margin-top: 10%;
+    height: 8vmin;
+    width: 8vmin;
+    margin-left: 3%;
+    margin-top: 10vmin;
   }
 
   .playlist--tiny--cover img {
     border-radius: 1vmin;
-    height: 12vmin;
-    width: 12vmin;
-    margin-top: 4vmin;
+    height: 8vmin;
+    width: 8vmin;
+    margin-top: 2vmin;
+    display: inline;
   }
 
   .playlist--tiny--cover > #playmask {
@@ -175,16 +182,17 @@ body {
 
   .playlist--song--info {
     margin-left: 25vmin;
-    margin-top: -8vmin;
+    margin-top: -6vmin;
   }
 
   .playlist--song--info > h5 {
     font-weight: 400;
+    font-size: 2vmin;
   }
 
   .playlist--song--info > h5 > span {
     font-weight: 200;
-    font-size: 3vmin;
+    font-size: 2vmin;
     color: #878694;
   }
 
@@ -192,17 +200,17 @@ body {
     font-weight: 300;
     color: #878694;
     width: 30vmin;
-    font-size: 2.3vmin;
+    font-size: 2vmin;
   }
 
   .playlist--song--options {
     display: flex;
-    margin-left: 65vmin;
-    margin-top: -10vmin;
+    margin-left: 105vmin;
+    margin-top: -8vmin;
   }
 
   #playlist--song--heart, #playlist--song--share, #playlist--song--more {
-    height: 4.5vmin;
+    height: 4vmin;
     /* width: 20vmin; */
     padding-right: 3vmin;
   }
