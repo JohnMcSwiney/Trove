@@ -19,6 +19,8 @@ export default function AlbumPage(props) {
         async function getAlbumSongs() {
           const response = await client.get("/");
           setAlbumSongs(response.data);
+
+          console.log(albumSongs)
         }
         getAlbumSongs();
       }, []);
@@ -41,11 +43,13 @@ export default function AlbumPage(props) {
             {/* ALBUM COVER / INFO */}
             <div className="album--info">
                 <div className="album--song--cover">
-                        <img src="../assets/reccover.jpg" alt="albumcover"/>
+                        <img src={albumSongs[0].imgUrl} alt="albumcover"/>
+                        {/* "../assets/reccover.jpg"  */}
                 </div>
                 <div className="album--stats--info">
-                        <h3>Album Name</h3>
-                        <h6><span>POP</span></h6>
+                        <h3>{albumSongs[0].title}</h3> 
+                        {/* ^ Should be album's name, but can't use it yet, so improvising */}
+                        <h6><span>{albumSongs[0].genre}</span></h6>
                        <div className="album--release--info">
                         <h5>2014</h5>
                         <h6>ALBUM</h6>
@@ -56,8 +60,8 @@ export default function AlbumPage(props) {
 
             {/* SONGS */}
             <div className="album--songs">
-            {/* {
-                    albumsongs && albumsongs.map((item, index)=>{
+            {
+                    albumSongs && albumSongs.map((item, index)=>{
                     return(
                         <AlbumSong
                         key={index}
@@ -66,7 +70,7 @@ export default function AlbumPage(props) {
                         />
                 
                 
-                ) })} */}
+                ) })}
             </div>
 
             <NavBar />

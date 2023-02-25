@@ -17,12 +17,12 @@ export default function AlbumSong(props) {
     return (
         <div className="album--song">
                 <div className="album--tiny--cover">
-                        <img src={props.cover} alt="albumcover"/>
+                        <img src={props.imgUrl} alt="albumcover"/>
                         <img src='../assets/playmask.png' id="playmask" alt="albumcover"/>
                 </div>                
                 <div className="album--song--info">
                         <h5>{props.title}</h5>
-                        <h6>{props.artist}</h6>
+                        <h6>Pitbull</h6>
                         <h5><span>{props.duration}</span></h5>
                        
                 </div>
