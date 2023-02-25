@@ -40,10 +40,10 @@ const NavBar = (props) => {
 
   const logoutHandler = async () => {
     await logout();
-    navigate("/login");
-    // setTimeout(() => {
-    //   navigate("/");
-    // }, "1200");
+
+    setTimeout(() => {
+      navigate("/");
+    }, "1000");
   };
   return (
     <>
@@ -156,28 +156,20 @@ const NavBar = (props) => {
             </div>
           </Link>
         </div>
+        {user && displayLogout && <div id="divider-white"></div>}
         {user && displayLogout && (
-          <div
-          id="divider-white"
-          ></div>
-        )}
-        {user && displayLogout && (
-          
-        <div
-        className={active === 4 ? "active" : ""}
-        onClick={logoutHandler}
-        >
-        <h1 hidden>Log out</h1>
-        <div className="trove-nav-icon">
-          <div className="nav-icon">
-            <RiLogoutBoxLine size={20} />
+          <div onClick={logoutHandler}>
+            <h1 hidden>Log out</h1>
+            <div className="trove-nav-icon">
+              <div className="nav-icon">
+                <RiLogoutBoxLine size={20} />
+              </div>
+              <div className="nav-text ">
+                <p className="text-pad-t  ">Log out</p>
+              </div>
+              <div className="selection-indicator"></div>
+            </div>
           </div>
-          <div className="nav-text ">
-            <p className="text-pad-t  ">Log out</p>
-          </div>
-          <div className="selection-indicator"></div>
-        </div>
-        </div>
           // Replaced with my style <3
           // <div className="logoutbtn">
           //   <RiLogoutBoxLine style={{ color: "white" }} />
