@@ -11,17 +11,28 @@ for the page
 */
 
 import React, { useState} from 'react';
+import DiscoveryGame from '../discoverygame/DiscoveryGame';
+import Hardcodedgsongs from '../discoverygame/hardcodedgsongs';
+
 
 const TasteyProfile = () => {
 
-  const [likeArray, setlikeArray] = useState([]);
-  const [dislikeArray, setdislikeArray] = useState([]);
+  const [likeArray, setlikeArray] = useState();
+  const [dislikeArray, setdislikeArray] = useState();
+
+  const [likedSongArray, setlikedSongArray] = useState([]);
+  const [dislikedSongArray, setdislikedSongArray] = useState([]);
 
   return (
     <div>
-        <div className="like">Likes: {likeArray}</div>
+        <div className="TPlike">Likes: {likeArray}</div>
 
-        <div className="dislike">Dislikes: {dislikeArray}</div>
+        <div className="TPdislike">Dislikes: {dislikeArray}</div>
+
+
+        <div className="TPlikedSongs">{likedSongArray}{Hardcodedgsongs[0].songName}</div>
+
+        <div className="TPdislikedSongs">{dislikedSongArray}</div>
 
 
     </div>
