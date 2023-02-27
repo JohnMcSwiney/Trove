@@ -20,6 +20,15 @@ const userSchema = new mongoose.Schema(
       type: Date,
     },
 
+    provider_id: {
+      type: String,
+      unique: true,
+    },
+
+    provider: {
+      type: String,
+    },
+
     imageURL: {
       type: String,
     },

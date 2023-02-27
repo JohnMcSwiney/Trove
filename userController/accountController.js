@@ -55,6 +55,10 @@ const signupUser = async (req, res) => {
     //create a token
     const token = createToken(user._id);
 
+    //provide its provider
+    user.provider = "TroveMusic";
+    console.log(user.provider);
+    user.save();
     //send email
     const transporter = nodemailer.createTransport({
       service: "gmail",
@@ -85,12 +89,6 @@ const signupUser = async (req, res) => {
       }
     });
 
-    // res.status(200).json({
-    //   email,
-    //   id: user._id,
-    //   token,
-    //   message: "You have successfully sign up !",
-    // });
     res.status(200).json({
       email,
       token,
