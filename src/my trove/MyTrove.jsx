@@ -1,12 +1,22 @@
-import React from 'react'
+import React, { useState} from 'react';
 import './UserAccStyle.css';
 import tempImg from './temp-imgs/derek.png';
 import CardPlaylist from '../components/cards/card_playlist/CardPlaylist';
 import FeaturedArtist from '../components/featured_artist/FeaturedArtist';
 import GenreCard from '../components/cards/card_genre/CardGenre';
 
+import DiscoveryGame from '../components/discoverygame/DiscoveryGame';
+
+
 
 const MyTrove = () => {
+
+  const [likeArray, setlikeArray] = useState();
+  const [dislikeArray, setdislikeArray] = useState();
+
+  const [likedSongArray, setlikedSongArray] = useState([]);
+  const [dislikedSongArray, setdislikedSongArray] = useState([]);
+
   const tempUser1 = {
     userId: "U0001",
 
@@ -117,7 +127,19 @@ const MyTrove = () => {
         </div>
         <div className='account-splitter'></div>
         <div className='account-showcase'>
-          <h1></h1>
+          <h1>Discovery Game Likes and Dislikes</h1>
+          <br/>
+          <div className="TPlike">Likes: {likeArray}</div>
+          <br/>
+          <div className="TPdislike">Dislikes: {dislikeArray}</div>
+          <br/>
+
+          <div className="TPlikedSongs">liked Song IDs{likedSongArray}</div>
+          <br/>
+          
+          <div className="TPdislikedSongs">Disliked song IDS {dislikedSongArray}</div>
+
+
         </div>
         <div className='account-splitter'></div>
         <div className='account-showcase'>

@@ -8,7 +8,7 @@ import MusicBar from "./components/music bar/MusicBar";
 import NavBar from "./components/nav bar/NavBar";
 import "bootstrap/dist/css/bootstrap.min.css";
 // will be Removed when taste profile is changed
-import TasteyProfile from "./components/taste Profile/TasteyProfile";
+
 
 import {
   Home,
@@ -43,11 +43,7 @@ function App() {
             <Route path="/mytrove" element={<MyTrove />}></Route>
             {/* <Route path="/uploadmusic" element={<UploadMusic />}></Route> */}
 
-            <Route
-              path="tasty"
-              element={<TasteyProfile />}
-              // will be Removed when taste profile is changed
-            ></Route>
+
 
             <Route
               // path={`/myaccount/${isLoginId}`}
