@@ -1,0 +1,25 @@
+### create a song
+POST http://localhost:8080/api/songs
+Content-Type: application/json
+
+{
+    "title" : "song 1",
+    "artistList": "63e7eb4bbf7ad83c786a8192",
+    "songUrl" : "asdjadakdha"
+}
+
+
+### get all song
+GET http://localhost:8080/api/songs
+
+###
+### Update a song
+PATCH  http://localhost:8080/api/songs
+Content-Type: application/json
+
+{
+    "title" : "song 1",
+    "artistList": "63e7eb4bbf7ad83c786a8192",
+    "songUrl" : "asdjadakdha"
+
+}

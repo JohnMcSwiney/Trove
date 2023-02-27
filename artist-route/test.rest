@@ -1,0 +1,29 @@
+### get an artist
+GET http://localhost:8080/api/artists/63e7eb4bbf7ad83c786a8192
+
+### get all artists
+GET http://localhost:8080/api/artists
+
+### create an artist
+POST http://localhost:8080/api/artists
+Content-Type: application/json
+
+{
+    "artistName": "artist1",
+    "email": "email1",
+    "userName": "user1",
+    "password": "password"
+}
+
+
+### update
+PATCH  http://localhost:8080/api/artists/63e7eb4bbf7ad83c786a8192
+Content-Type: application/json
+
+{
+    "artistName": "artist1",
+    "email": "email1",
+    "userName": "user1",
+    "password": "password",
+    "songList": "63e7f63cce9a02bff1d43e20"
+}
