@@ -4,8 +4,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import "./login.css";
 
 import { BsGoogle, BsFacebook } from "react-icons/bs";
-import { GoogleLoginButton } from "react-social-login-buttons";
-import { LoginSocialGoogle } from "reactjs-social-login";
+import useFBLogin from "../hooks/facebook-auth/useFBLogin";
 
 const Login = () => {
   const [email, setEmail] = React.useState("");
@@ -24,6 +23,15 @@ const Login = () => {
     } catch (err) {
       console.log(err.data?.message || "Please try again");
       return;
+    }
+  };
+
+  const { loginFB, fbisLoading, fberror } = useFBLogin();
+  const handleFaceBookLogin = () => {
+    try {
+      loginFB();
+    } catch (fberror) {
+      console.log(fberror.data?.message || "Facebook is having some errors");
     }
   };
 
@@ -89,7 +97,7 @@ const Login = () => {
           <div className="go">
             <BsGoogle className="go-icon" />
           </div>
-          <div className="fa">
+          <div className="fa" onClick={handleFaceBookLogin}>
             <BsFacebook className="fa-icon" />
           </div>
         </div>

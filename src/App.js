@@ -18,7 +18,6 @@ import {
   Login,
   Signup,
   Artist,
-  ArtistLogin,
   DiscoveryGame,
   AlbumPage,
   FollowersPage,
@@ -43,11 +42,12 @@ function App() {
             <Route path="/search" element={<Search />}></Route>
             <Route path="/mytrove" element={<MyTrove />}></Route>
             {/* <Route path="/uploadmusic" element={<UploadMusic />}></Route> */}
-            
-            <Route path="tasty" element={<TasteyProfile />}
-            // will be Removed when taste profile is changed
-            >  
-            </Route>
+
+            <Route
+              path="tasty"
+              element={<TasteyProfile />}
+              // will be Removed when taste profile is changed
+            ></Route>
 
             <Route
               // path={`/myaccount/${isLoginId}`}
@@ -57,7 +57,7 @@ function App() {
             <Route path="/login" element={<Login />}></Route>
             <Route path="/signup" element={<Signup />}></Route>
             <Route path="/artist" element={<Artist />}></Route>
-            <Route path="/login-artist" element={<ArtistLogin />}></Route>
+
             <Route path="/discoverygame" element={<DiscoveryGame />}></Route>
 
             {/* <Route path='/upload' element= {<UploadMusic/>}></Route> */}
