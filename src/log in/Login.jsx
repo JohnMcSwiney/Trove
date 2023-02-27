@@ -10,7 +10,6 @@ const Login = () => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const { login, error, isLoading } = useLogin();
-  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -27,9 +26,13 @@ const Login = () => {
   };
 
   const { loginFB, fbisLoading, fberror } = useFBLogin();
-  const handleFaceBookLogin = () => {
+  const handleFaceBookLogin = (e) => {
+    e.preventDefault();
     try {
       loginFB();
+      if (localStorage.getItem("user")) {
+        navigate("/");
+      }
     } catch (fberror) {
       console.log(fberror.data?.message || "Facebook is having some errors");
     }
