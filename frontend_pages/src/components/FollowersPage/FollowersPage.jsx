@@ -6,7 +6,7 @@ import followers from "../../data/followers.json"
 import Follower from "./Follower";
 // import AlbumSong from "./AlbumSong";
 
-// User's Top Genres
+// Followers Page
 export default function FollowersPage(props) {
 
     return (

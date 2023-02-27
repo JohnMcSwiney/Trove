@@ -8,6 +8,7 @@ import AlbumPage from './components/AlbumPage/AlbumPage'
 import PlaylistPage from './components/PlaylistPage/PlaylistPage';
 import FollowersPage from './components/FollowersPage/FollowersPage';
 import FollowingPage from './components/FollowingPage/FollowingPage';
+import CreatePlaylist from './components/CreatePlaylist/CreatePlaylist';
 
 function App() {
   return (
@@ -17,10 +18,11 @@ function App() {
       {/* <UploadMusic /> */}
       {/* <UploadSong /> */}
       {/* <UploadSongConnect /> */}
-      <AlbumPage />
+      {/* <AlbumPage /> */}
       {/* <PlaylistPage /> */}
       {/* <FollowersPage /> */}
       {/* <FollowingPage /> */}
+      <CreatePlaylist />
 
  
 
