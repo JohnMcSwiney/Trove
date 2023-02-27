@@ -1,112 +1,119 @@
-.featArtCont{
-    background-color: rgb(135, 164, 164);
-    max-width: 500px;
-    height: 150px;
+.featArtCont {
+  background-color: rgb(135, 164, 164);
+  max-width: 500px;
+  height: 150px;
+
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-items: center;
+  align-items: center;
+  margin: auto;
+  flex-flow: row;
+  /* overflow: hidden; */
+}
+.leftCont{
 
     display: flex;
-    flex-direction: column;
-
-    justify-items: center;
+    justify-items: auto;
     align-items: center;
-    margin: auto;
-    flex-flow: row;
-    /* overflow: hidden; */
-    
-}
-
-.featArtImg{
-    padding: 3.5px;
-    background-color: palevioletred;
-    border-radius: 50%;
-    border: 2px rgba(255, 0, 0, 0.4) solid;
-    width: 80px;
-    height: 80px;
-    margin-right: 10px;
-}
-.featArtImg > img{
-    border-radius: 50%;
-    
-}
-.artistBioCont{
-    display: flex;
     flex-direction: column;
-    margin: 0;
-    max-width: 200px;
-    height: 150px;
+    width: auto;
+    gap: 2px;
 }
-.artistBio{
-    
-    margin-left: 2px;
-    padding-left: 5px;
-    border-left: 1px rgba(85, 85, 85, 0.205) solid;
-    height: inherit;
-    width: inherit;
-    font-size: small;
-    background: white;
-    overflow: hidden;
-    text-overflow: ellipsis;
+.featArtImg {
+  padding: 3.5px;
+  background-color: palevioletred;
+  border-radius: 50%;
+  border: 2px rgba(255, 0, 0, 0.4) solid;
+  width: 80px;
+  height: 80px;
+  margin-right: 10px;
+  object-fit: cover;
 }
-.imgNameCont{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin:3px;
-    background-color: blue;
-    width: 200px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    }
-    .bioOnClickCont{
-        background-color: #080C3D;
-        
-        overflow: scroll;
-        width: 80%;
-        height:400px;
-        margin: auto;
-        word-wrap: break-word;
-        font-size: x-large;
-        margin-bottom: 100px;
-        border-radius: 20px;
-        box-shadow: 5px 5px 10px #07081a;
-        margin-top: 100px;
-        border: #12164B solid 2px;
-        position: relative;
-    }
-    .bioOnClickCont > .bioContBio{
-        margin-top: 10px;
-        margin-left: 20px;
-        margin-right: 20px;
-        margin-bottom: 20px;
-        overflow: scroll;
-    }
-    .modalTitle{
-        width: 100%;
-        height:fit-content;
-        padding: 10px;
-        font-size: xx-large;
-        font-weight: bold;
-        background-color: #12164B;
-        text-align: center;
-        display: inline-block;
-    }
-    .modalTitle > button{
-        position: fixed;
-        top:0;
-        right: 0;
-        margin-top: 122px;
-        margin-right: 28px ;
-        background-color:#12164B;
-        height: 40px;
-        width: 40px;
-        font-size:large;
-        border-radius: 50% ;
-        text-align: center;
-        justify-content: center;
-        display: block;
-        box-shadow: -1px 1px 2px rgba(0, 0, 0, 0.374) ;
-        color: gray;
-    }
-    .modalTitle > span{
-        font-weight: normal;
-    }
+.featArtImg > img {
+  border-radius: 50%;
+  
+}
+.artistBioCont {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  max-width: 200px;
+  height: 150px;
+}
+.artistBio {
+  margin-left: 2px;
+  padding-left: 5px;
+  border-left: 1px rgba(85, 85, 85, 0.205) solid;
+  height: inherit;
+  width: inherit;
+  font-size: small;
+  background: white;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.imgNameCont {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 3px;
+  width: 200px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.userArtistListens {
+}
+.bioOnClickCont {
+  background-color: #080c3d;
 
+  overflow: scroll;
+  width: 80%;
+  height: 400px;
+  margin: auto;
+  word-wrap: break-word;
+  font-size: x-large;
+  margin-bottom: 100px;
+  border-radius: 20px;
+  box-shadow: 5px 5px 10px #07081a;
+  margin-top: 100px;
+  border: #12164b solid 2px;
+  position: relative;
+}
+.bioOnClickCont > .bioContBio {
+  margin-top: 10px;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  overflow: scroll;
+}
+.modalTitle {
+  width: 100%;
+  height: fit-content;
+  padding: 10px;
+  font-size: xx-large;
+  font-weight: bold;
+  background-color: #12164b;
+  text-align: center;
+  display: inline-block;
+}
+.modalTitle > button {
+  position: fixed;
+  top: 0;
+  right: 0;
+  margin-top: 122px;
+  margin-right: 28px;
+  background-color: #12164b;
+  height: 40px;
+  width: 40px;
+  font-size: large;
+  border-radius: 50%;
+  text-align: center;
+  justify-content: center;
+  display: block;
+  box-shadow: -1px 1px 2px rgba(0, 0, 0, 0.374);
+  color: gray;
+}
+.modalTitle > span {
+  font-weight: normal;
+}

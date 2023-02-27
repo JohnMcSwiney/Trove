@@ -131,11 +131,10 @@ const NavBar = (props) => {
         )}
 
         {/* Reads if the user is an artist or not. Right now this is hard coded. It won't be for long <3 */}
-        <div
+        {/* <div
           className={isArtist === true ? "" : "hidden"}
           id="divider-white"
         ></div>
-        {/*Yes there's a divider too*/}
 
         <div className={isArtist === true ? "" : "hidden"}>
           <Link to={"/uploadmusic"} className="trove-links">
@@ -156,6 +155,8 @@ const NavBar = (props) => {
             </div>
           </Link>
         </div>
+         */}
+         
         {user && displayLogout && <div id="divider-white"></div>}
         {user && displayLogout && (
           <div onClick={logoutHandler}>
