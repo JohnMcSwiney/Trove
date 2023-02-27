@@ -5,6 +5,10 @@
   --textColor: #eee;
 }
 
+.trovemusic-span {
+  font-weight: 1000;
+  font-family: Georgia, "Times New Roman", Times, serif;
+}
 .active-tab {
   opacity: 0.6;
   text-decoration: none;
@@ -46,30 +50,40 @@
   width: 80%;
 }
 .home {
+  padding-top: 50px;
   background-color: rgb(36, 44, 44);
-  padding-bottom: 100px;
+  padding-bottom: 50px;
 }
 
-.about {
+.help {
   background-color: rgb(37, 36, 44);
-  padding-bottom: 100px;
+  padding-bottom: 50px;
+  padding-top: 50px;
 }
 
 .discovery {
   background-color: blue;
-  padding-bottom: 100px;
+  padding-bottom: 50px;
+  padding-top: 50px;
 }
 
-.contact {
-  background-color: red;
-  padding-bottom: 100px;
+.uploadmusic {
+  background-color: gold;
+  padding-bottom: 50px;
+  padding-top: 50px;
+}
+
+.provider {
+  background-color: gold;
+  padding-bottom: 50px;
+  padding-top: 50px;
 }
 
 .home-color {
   background-color: rgb(36, 44, 44);
 }
 
-.about-color {
+.help-color {
   background-color: rgb(37, 36, 44);
 }
 
@@ -77,17 +91,21 @@
   background-color: blue;
 }
 
-.contact-color {
-  background-color: red;
+.uploadmusic-color {
+  background-color: gold;
+}
+.provider-color {
+  background-color: gold;
 }
 
-header {
+.header-nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
   height: 80px;
   padding: 0 2rem;
-  background-color: rgb(36, 44, 44);
+  /* background-color: rgb(36, 44, 44); */
+  /* background-color: black; */
   color: var(--textColor);
 }
 
@@ -99,6 +117,11 @@ nav a {
 
 nav a:hover {
   color: var(--secondaryColor);
+}
+
+.nav-brand {
+  text-decoration: none;
+  color: white;
 }
 
 header .nav-btn {
@@ -119,7 +142,14 @@ nav {
   align-items: center;
 }
 
-@media only screen and (max-width: 1024px) {
+@media screen and (min-width: 800px) {
+  .vl {
+    border-left: 1px solid white;
+    height: max-content;
+  }
+}
+
+@media only screen and (max-width: 800px) {
   header .nav-btn {
     visibility: visible;
     opacity: 1;
@@ -134,7 +164,7 @@ nav {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 30%;
+    padding-top: 10%;
     gap: 1.5rem;
     background-color: black;
     transition: 1s;
@@ -153,5 +183,10 @@ nav {
 
   nav a {
     font-size: 1.5rem;
+  }
+  .signup-div {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
   }
 }

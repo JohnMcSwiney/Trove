@@ -6,27 +6,10 @@ import "./navbar.css";
 const ArtistNavbar = () => {
   const [state, setState] = React.useState(1);
 
-  const [colorbg, setColorBg] = React.useState("");
+  const [colorbg, setColorBg] = React.useState("home-color");
 
   const action = (index) => {
     setState(index);
-
-    if (state == 1) {
-      setColorBg("home-color");
-    }
-
-    if (setState(index) == 2) {
-      setColorBg("home-about");
-    }
-
-    if (setState(index) === 3) {
-      setColorBg("home-discovery");
-    }
-
-    if (setState(index) === 4) {
-      setColorBg("context-color");
-    }
-    console.log(colorbg);
   };
 
   const navRef = React.useRef();
@@ -37,38 +20,73 @@ const ArtistNavbar = () => {
   return (
     <div>
       <div>
-        <header className={`${colorbg}`}>
-          <h3>TroveMusic for Artist</h3>
+        <header className={`header-nav ${colorbg}`}>
+          <a className="nav-brand" href="/">
+            <h3>
+              <span className="trovemusic-span">TroveMusic.</span> for Artist
+            </h3>
+          </a>
+
           <nav ref={navRef}>
             <NavLink
               to="/"
               className={`${state === 1 ? "active-tab " : ""} `}
-              onClick={() => action(1)}
+              onClick={() => {
+                action(1);
+                setColorBg("home-color");
+              }}
             >
               Home
             </NavLink>
             <NavLink
-              to="/about"
+              to="/help"
               className={`${state === 2 ? "active-tab " : ""} `}
-              onClick={() => action(2)}
+              onClick={() => {
+                action(2);
+                setColorBg("help-color");
+              }}
             >
-              About
+              Help
             </NavLink>
             <NavLink
-              to="/discover"
+              to="/discovery"
               className={`${state === 3 ? "active-tab " : ""} `}
-              onClick={() => action(3)}
+              onClick={() => {
+                action(3);
+                setColorBg("discovery-color");
+              }}
             >
               Discovery
             </NavLink>
+
             <NavLink
-              to="/contact"
+              to="/uploadmusic"
               className={`${state === 4 ? "active-tab " : ""} `}
-              onClick={() => action(4)}
+              onClick={() => {
+                action(4);
+                setColorBg("uploadmusic-color");
+              }}
             >
-              Contact
+              Upload Music
             </NavLink>
 
+            <NavLink
+              to="/provider"
+              className={`${state === 5 ? "active-tab " : ""} `}
+              onClick={() => {
+                action(5);
+                setColorBg("provider-color");
+              }}
+            >
+              Provider
+            </NavLink>
+
+            <div class="vl">
+              <div className="signup-div">
+                <a href="/login"> Login</a>
+                <a href="/access">Get Access</a>
+              </div>
+            </div>
             <button className="nav-btn nav-close-btn" onClick={showNavbar}>
               <FaTimes />
             </button>
@@ -95,7 +113,7 @@ const ArtistNavbar = () => {
         <div
           className={`${
             state === 2 ? "active-content text-light" : "content"
-          } about`}
+          } help`}
           onClick={() => action(2)}
         >
           <div className="about-contain">
@@ -119,12 +137,24 @@ const ArtistNavbar = () => {
         <div
           className={`${
             state === 4 ? "active-content text-light" : "content"
-          } contact`}
+          } uploadmusic`}
           onClick={() => action(4)}
         >
           <div className="contact-contain">
             <h1>4</h1>
             <p>4</p>
+          </div>
+        </div>
+
+        <div
+          className={`${
+            state === 5 ? "active-content text-light" : "content"
+          } provider`}
+          onClick={() => action(5)}
+        >
+          <div className="contact-contain">
+            <h1>5</h1>
+            <p>5</p>
           </div>
         </div>
       </div>
