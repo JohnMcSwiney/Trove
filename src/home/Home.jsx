@@ -2,19 +2,32 @@ import React from 'react'
 
 import TasteProfile from '../components/taste Profile/TasteProfile';
 import CardArtist from '../components/cards/card_artist/CardArtist';
-import CardAlbum from '../components/cards/card_album/CardAlbum'
+import CardAlbum from '../components/cards/card_album/CardAlbum';
+import CardDiscovery from '../components/cards/card_discoverygame/CardDiscovery'
 import { Navigate, useNavigate, Link } from 'react-router-dom';
 
 
 
-
 const Home = () => {
-  
+
+  const navigate = useNavigate()
+  const redirectDiscovery = () => {
+    navigate('./discoverygame')
+  }
+    
   return (
     <div className='container'>
         <main className="home-main row-span-1 md:col-span-2 relative home-height">
         <div>
-          <Link to={'/discoverygame'}><TasteProfile/></Link>
+        <h3 className=''>Find Musical Treasures</h3>
+          <div href={'/discoverygame'} 
+               className='DG-card-home' 
+               onClick={redirectDiscovery}>
+
+            <CardDiscovery/>
+            
+          </div>
+          
         </div>
         
         

@@ -2,8 +2,6 @@ import React from 'react';
 
 const TasteProfile = () => {
 
-
-
   return (
     <div>
       <header>

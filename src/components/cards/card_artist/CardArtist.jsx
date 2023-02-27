@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import artistTemp from './artistPicPlaceholder.png';
 import PropTypes from 'prop-types';
-import './CardArtist.css'
+import './CardArtist.css';
+import placeholder from './artistPicPlaceholder.png'
 
 import artistData from '../../../hardcodedTestData/hardcodeArtists.js'
 function CardArtist({ props }) {
@@ -19,7 +20,9 @@ function CardArtist({ props }) {
                 <img
                   className='rounded-full w-14 overflow-hidden object-cover h-14 '
                   src={artist.picUrl}
-                  alt={artist.name} />
+                  alt={artist.name} 
+                  
+                  />
               </div>
             </div>
             <div className='flex h-12 align-middle m-auto '>
