@@ -29,7 +29,7 @@ app.use(
 app.use(
   session({
     secret: process.env.secret,
-    resave: false,
+    resave: true,
     saveUninitialized: false,
   })
 );
