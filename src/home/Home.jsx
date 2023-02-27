@@ -1,8 +1,8 @@
 import React from 'react'
 
 import TasteProfile from '../components/taste Profile/TasteProfile';
-import CardArtist from '../components/card_artist/CardArtist';
-import CardAlbum from '../components/card_album/CardAlbum'
+import CardArtist from '../components/cards/card_artist/CardArtist';
+import CardAlbum from '../components/cards/card_album/CardAlbum'
 import { Navigate, useNavigate, Link } from 'react-router-dom';
 
 

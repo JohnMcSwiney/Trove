@@ -12,7 +12,7 @@ for the page
 
 import React, { useState} from 'react';
 import DiscoveryGame from '../discoverygame/DiscoveryGame';
-import Hardcodedgsongs from '../discoverygame/hardcodedgsongs';
+import Hardcodedgsongs from '../../hardcodedTestData/hardcodeDGsongs';
 
 
 const TasteyProfile = () => {

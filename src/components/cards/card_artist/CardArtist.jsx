@@ -3,7 +3,7 @@ import artistTemp from './artistPicPlaceholder.png';
 import PropTypes from 'prop-types';
 import './CardArtist.css'
 
-import artistData from '../../hardcodeArtists'
+import artistData from '../../../hardcodedTestData/hardcodeArtists.js'
 function CardArtist({ props }) {
 
 

@@ -16,7 +16,7 @@ import { AudioPlayer } from '../audioplayerOLD/AudioPlayer';
 import './DGstyle.css'
 
 
-import DGdata from './hardcodedgsongs';
+import DGdata from '../../hardcodedTestData/hardcodeDGsongs';
 
 import Slider from "react-slick";
 import $ from 'jquery';
@@ -46,7 +46,8 @@ const DiscoveryGame = () => {
   //isMuted is totally screwed... but it works. So i'm just gonna leave it as it is <3 sorry if it's confusing (I don't actually know what's happening lol)
   const [prevVolume, updatePrevVol] = useState(0.5);
   const [isLiked, setIsLiked] = useState(false);
-
+  const [likedIds, setLikedIds] = useState([]);
+  const [dislikedIds, setDisikedIds] = useState([]);
 
 
   //reference
@@ -143,24 +144,28 @@ const DiscoveryGame = () => {
     setIsMuted(true);
     audioPlayer.current.volume = (volumeRef.current.value / 100);
   }
+
   const likedIndexs = [];
   const dislikedIndexs = [];
+
   const swipeableProps = useSwipeable({
     trackMouse: true,
+    // Dislike
     onSwipedLeft: () => {
       if (state === slides.length - 1) return;
       setIndex((prevIndex) => (prevIndex + 1) % slides.length);
       setAccept(accept + 1);
-      likedIndexs.push(slides[state].audio);
+      dislikedIds.push(slides[state].id);
       gotoNext();
       setState(state + 1);
 
     },
+    // Like
     onSwipedRight: () => {
       if (state === slides.length - 1) return;
       setIndex((prevIndex) => (prevIndex + 1) % slides.length);
       setDeny(deny + 1);
-      dislikedIndexs.push(slides[state].audio);
+      likedIds.push(slides[state].id);
       gotoNext();
       setState(state + 1);
 
@@ -194,12 +199,12 @@ const DiscoveryGame = () => {
       // className='Discovery-Top-Container'
       >
         {/* Back button - plays song just swipped  */}
-        {/* <div className="Discovery-PrevImg-Container"> */}
         <button className='hidden' onClick={() => {
           if (state === 0) return;
           setIndex((prevIndex) => (prevIndex + slides.length - 1) % slides.length);
         }}><BiArrowToLeft />
         </button>
+
         {/* volume */}
         <div className='volumeContainter'>
           <button onClick={toggleMute}>
@@ -208,7 +213,7 @@ const DiscoveryGame = () => {
           <input type="range" ref={volumeRef} defaultValue="10" onChange={changeVolumeLevel} min="0" max="100" step="5" ></input>
         </div>
 
-        {/* </div> */}
+
         <div className="Discovery-Top-Container">
 
           <Slider ref={musicSlides}{...settings} id='carousel'>
@@ -259,22 +264,23 @@ const DiscoveryGame = () => {
 
         {/* dislike */}
         <button onClick={() => {
-          if (state === slides.length - 1) return;
 
+          if (state === slides.length - 1) return;
           setIndex((prevIndex) => (prevIndex + 1) % slides.length);
           setDeny(deny + 1);
-          dislikedIndexs.push(slides[state].id);
+          dislikedIds.push(slides[state].id);
           gotoNext();
           setState(state + 1);
         }} className='Discovery-Disike'><BsXLg /></button>
 
         {/* like */}
         <button onClick={() => {
-          if (state === slides.length - 1) return;
 
+          if (state === slides.length - 1) return;
           setIndex((prevIndex) => (prevIndex + 1) % slides.length);
           setAccept(accept + 1);
-          likedIndexs.push(slides[state].id);
+          console.log(slides[state].id);
+          likedIds.push(slides[state].id);
           gotoNext();
           setState(state + 1);
         }} className='Discovery-Like'><BsCheckLg /></button>
@@ -328,7 +334,7 @@ const DiscoveryGame = () => {
         </div>
         
         <div>
-              <button onClick={() => {console.log("Liked ids:" + likedIndexs + " | " + "Disliked ids:" + dislikedIndexs)}}> View Likes & Dislikes</button>
+              <button onClick={() => {console.log("Liked ids:" + likedIds + " | " + "Disliked ids:" + dislikedIds)}}> View Likes & Dislikes</button>
         </div>
 
       </div>

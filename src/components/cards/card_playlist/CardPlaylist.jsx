@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import './CardPlaylist.css';
 
-import playlistData from '../../hardcodePlaylists'
+import playlistData from '../../../hardcodedTestData/hardcodePlaylists'
 
 function CardArtist({props}){
 

@@ -226,7 +226,7 @@
     /* margin-top: 3px; */
     transform:scaleY(1.1);
     padding-left: 2px;
-    box-shadow: -1px 0px 5px #8750f43b;
+    box-shadow: -1px 0px 5px #8750f46f;
     margin-left: -1px;
     margin-right: -1px;
 }
@@ -240,12 +240,13 @@
     cursor: pointer;
     position: relative;
     margin-top: -5px;
-    margin-right: 0px;
+    margin-right: 1px;
     z-index: 3;
     box-sizing: border-box;
-    box-shadow: -1px 0px 5px rgba(95, 8, 153, 0.512);
+    box-shadow: -1px 0px 15px rgba(95, 8, 153, 0.692);
     display: flex;
     align-items: flex-end;
+
     
 }
 .DGprogressBar:active::-webkit-slider-thumb{

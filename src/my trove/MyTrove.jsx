@@ -1,9 +1,9 @@
 import React from 'react'
 import './UserAccStyle.css';
 import tempImg from './temp-imgs/derek.png';
-import CardPlaylist from '../components/card_playlist/CardPlaylist';
+import CardPlaylist from '../components/cards/card_playlist/CardPlaylist';
 import FeaturedArtist from '../components/featured_artist/FeaturedArtist';
-import GenreCard from '../components/genre_card/CardGenre';
+import GenreCard from '../components/cards/card_genre/CardGenre';
 
 
 const MyTrove = () => {

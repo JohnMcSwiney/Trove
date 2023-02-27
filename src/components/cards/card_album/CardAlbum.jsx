@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import './CardAlbum.css';
 
-import albumData from '../../hardcodeAlbums'
+import albumData from '../../../hardcodedTestData/hardcodeAlbums'
 
 function CardArtist({props}){
 
