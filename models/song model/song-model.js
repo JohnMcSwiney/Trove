@@ -32,12 +32,22 @@ const songSchema = new mongoose.Schema(
             default: null,
         },
 
-        highlightStart: {
-            type: Number
+        // highlightStart: {
+        //     type: Number
+        // },
+
+        // highlightStop: {
+        //     type: Number
+        // },
+
+        beat: {
+            type: Number,
+            required: true
         },
 
-        highlightStop: {
-            type: Number
+        tempo: {
+            type: Number,
+            required: true
         },
 
         songUrl: {

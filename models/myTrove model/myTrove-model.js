@@ -40,12 +40,12 @@ const myTroveSchema = new mongoose.Schema(
                 }
             }
         ],
-        likedGenres: [
-            {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'Genre'
-            }
-        ],
+        // likedGenres: [
+        //     {
+        //         type: mongoose.Schema.Types.ObjectId,
+        //         ref: 'Genre'
+        //     }
+        // ],
     }
 
 )

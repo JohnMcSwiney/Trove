@@ -82,63 +82,142 @@ const getDiscoveryGame = async (req, res) => {
 }
 
 
-//create an artist
+//WIP
 const uploadToDiscoveryGame = async (req, res) => {
 
-    const { songId, direction } = req.body;
+    // const { songId, direction } = req.body;
 
-    try {
+    // try {
 
-        const myTrove = await MyTrove.findOne({
-            myTroveOwner: req.user._id
+    //     const myTrove = await MyTrove.findOne({
+    //         myTroveOwner: req.user._id
+    //     });
+
+    //     const existingSwipe = myTrove.swipes.find(swipe => swipe.song === songId);
+
+    //     if (existingSwipe) {
+    //         return res.status(400).json({ msg: 'already swiped on this song' });
+    //     }
+
+    //     myTrove.swipes.push({ song: songId, direction });
+
+    //     await myTrove.save();
+
+    //     const discoveryGame = await DiscoveryGame.findOne({ songList: songId });
+
+    //     if (discoveryGame) {
+    //         if (direction === 'like' || 'right') {
+
+    //             discoveryGame.swipes.set(songId, 'like');
+    //         }
+    //         else if (direction === 'dislike' || 'left') {
+
+    //             discoveryGame.swipes.set(songId, 'dislike');
+    //         }
+
+    //         await discoveryGame.save();
+
+    //         // const swipe = myTrove.swipes.find(
+    //         //     swipe => swipe.song.toString() === songId
+    //         // );
+
+    //         // if (swipe) {
+    //         //     return res.status(400).json({ msg: 'alread swiped on this song' });
+    //         // }
+
+    //         // myTrove.swipes.push({ song: songId, direction });
+    //         // await myTrove.save();
+
+    //         // await DiscoveryGame.updateOne(
+    //         //     { _id: songId },
+    //         //     { $inc: { [`swipeCount.${direction}`]: 1 } }
+    //         // );
+    //     }
+    //     res.status(200).send('swiped');
+    // } catch (err) {
+
+    //     console.log(err);
+    //     res.status(500).send('server error');
+    // }
+//TESTING DIFFERENT IMPLEMENTATIONS
+
+const {myTroveId, songId, swipeDirection} = req.body;
+
+const troveUser = await myTrove.findById(myTroveId);
+
+if (!troveUser) {
+
+    return res.status(404).send('MyTrove profile not found');
+}
+
+const song = await Song.findById(songId);
+
+if (!song) {
+
+    return res.status(404).send('Song not found');
+}
+
+const audioContext = new AudioContext();
+
+const response = await fetch(song);
+const songData = await response.arrayBuffer();
+const songBuffer = await audioContext.decodeAudioData(songData);
+
+const beatDetector = new BeatDetector(audioContext);
+const source = audioContext.createBufferSource();
+source.buffer = songBuffer;
+source.connect(beatDetector);
+beatDetector.connect(audioContext.destination);
+
+const tempo = await beatDetector.getTempo();
+const beat = await beatDetector.getBeat();
+
+if (swipeDirection === 'left') {
+    
+    const nextSong = await getNextSong(troveUser);
+    res.send(nextSong);
+
+    async function getNextSong(troveUser) {
+
+        const troveUser = await MyTrove.findById(troveUser).populate({
+            path: 'myTrove.likedSongs',
+            options: {sort: {createdAt: -1}},
+            limit: 1
         });
-
-        const existingSwipe = myTrove.swipes.find(swipe => swipe.song === songId);
-
-        if (existingSwipe) {
-            return res.status(400).json({ msg: 'already swiped on this song' });
-        }
-
-        myTrove.swipes.push({ song: songId, direction });
-
-        await myTrove.save();
-
-        const discoveryGame = await DiscoveryGame.findOne({ songList: songId });
-
-        if (discoveryGame) {
-            if (direction === 'like' || 'right') {
-
-                discoveryGame.swipes.set(songId, 'like');
-            }
-            else if (direction === 'dislike' || 'left') {
-
-                discoveryGame.swipes.set(songId, 'dislike');
-            }
-
-            await discoveryGame.save();
-
-            // const swipe = myTrove.swipes.find(
-            //     swipe => swipe.song.toString() === songId
-            // );
-
-            // if (swipe) {
-            //     return res.status(400).json({ msg: 'alread swiped on this song' });
-            // }
-
-            // myTrove.swipes.push({ song: songId, direction });
-            // await myTrove.save();
-
-            // await DiscoveryGame.updateOne(
-            //     { _id: songId },
-            //     { $inc: { [`swipeCount.${direction}`]: 1 } }
-            // );
-        }
-        res.status(200).send('swiped');
-    } catch (err) {
-
-        console.log(err);
-        res.status(500).send('server error');
     }
+}
+
+else {
+    troveUser.likedSongs.push(songId);
+}
+
+// const nextSong = await getNextSong(troveUser);
+// res.send(nextSong);
+
+// async function getNextSong(troveUser) {
+
+//     const troveUser = await MyTrove.findById(troveUser).populate({
+//         path: 'myTrove.likedSongs',
+//         options: {sort: {createdAt: -1}},
+//         limit: 1
+//     });
+// }
+
+const lastlikedSong = troveUser.likedSongs[0];
+
+const similarSongs = await Song.find({
+    $and: [
+        {_id: {$ne: lastlikedSong._id}},
+        {genre: lastlikedSong.genre},
+        {'similarity.beat' : {$gte: lastlikedSong.similarity.beat - 0.1, $lte: lastlikedSong.similarity.beat + 0.1}},
+        {'similarity.tempo' : {$gte: lastlikedSong.similarity.tempo - 5, $lte: lastlikedSong.similarity.tempo + 5}}
+    ]
+}).limit(10);
+
+const nextSong = similarSongs[Math.floor(Math.random() * similarSongs.length)];
+return nextSong;
+
+
 
 }
 
