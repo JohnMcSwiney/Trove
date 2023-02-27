@@ -19,7 +19,6 @@ import {
   Signup,
   Artist,
   ArtistLogin,
-  UploadMusic,
   DiscoveryGame,
   AlbumPage,
   FollowersPage,
@@ -43,7 +42,7 @@ function App() {
             <Route path="/" element={<Home />}></Route>
             <Route path="/search" element={<Search />}></Route>
             <Route path="/mytrove" element={<MyTrove />}></Route>
-            <Route path="/uploadmusic" element={<UploadMusic />}></Route>
+            {/* <Route path="/uploadmusic" element={<UploadMusic />}></Route> */}
             
             <Route path="tasty" element={<TasteyProfile />}
             // will be Removed when taste profile is changed
