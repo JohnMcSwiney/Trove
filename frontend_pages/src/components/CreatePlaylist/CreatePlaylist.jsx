@@ -34,6 +34,17 @@ export default function CreatePlaylist(props) {
                         {/* <h4>Creator Username</h4> */}
                 </div>
             </div>
+
+            <div className="createplaylist--addsongs">
+                <div className="createplaylist--searchbar">
+                <input type="text" id="searchbar" placeholder="Search Songs"/>
+
+                <div className="createplaylist--addedsongs">
+                    
+                </div>
+            </div>
+
+            </div>
     </section>
 
     )

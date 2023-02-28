@@ -81,13 +81,24 @@ body {
       
     }
   
-    .createplaylist--songs {
+    .createplaylist--addsongs {
       margin-top: 60vmin;
       overflow-x: hidden;
       overflow-y: auto;
       max-height: 50vh;
       padding-bottom: 15vmin;
       
+    }
+
+    #searchbar {
+      width: 90%;
+      margin-left: 5vw;
+      height: 10vmin;
+      padding-left: 5vw;
+      border-radius: 5vmin;
+      color: white;
+      background-color: transparent;
+      outline-color: white;
     }
   
     .createplaylist--song--cover {
