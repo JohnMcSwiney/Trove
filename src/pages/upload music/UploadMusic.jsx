@@ -78,8 +78,8 @@ export default function UploadMusic(props) {
   //  Submission Value States
   const [title, setTitle] = useState([]);
   const [album, setAlbum] = useState("");
-  const [highlightStart, setHighlightStart] = useState();
-  const [highlightStop, setHighlightStop] = useState();
+  // const [highlightStart, setHighlightStart] = useState();
+  // const [highlightStop, setHighlightStop] = useState();
   const [genre, setGenre] = useState("");
   const [songFile, setSongFile] = useState([]);
   const [imageFile, setImageFile] = useState();
@@ -101,13 +101,13 @@ export default function UploadMusic(props) {
     setAlbum(e.target.value);
   };
 
-  const handleHighlightStart = (e) => {
-    setHighlightStart(e.target.value);
-  };
+  // const handleHighlightStart = (e) => {
+  //   setHighlightStart(e.target.value);
+  // };
 
-  const handleHighlightStop = (e) => {
-    setHighlightStop(e.target.value);
-  };
+  // const handleHighlightStop = (e) => {
+  //   setHighlightStop(e.target.value);
+  // };
 
   const handleGenre = (e) => {
     setGenre(e.target.value);
@@ -120,12 +120,20 @@ export default function UploadMusic(props) {
     // console.log(songFile[0].name);
   };
 
+  // const handleMultipleSongFileChange = (e) => {
+  //   setSongFile((prevSongFile) => {
+  //     return [...prevSongFile, Array.from(e.target.files[0])];
+  //   });
+  //   // console.log(songFile[0].name);
+  // };
+
   const handleImageFileChange = (e) => {
     setImageFile(e.target.files[0]);
     setPreviewCover(URL.createObjectURL(e.target.files[0]));
   };
 
   const handleReleaseType = (e) => {
+
     setReleaseType(e.target.value);
   };
 
@@ -213,8 +221,6 @@ export default function UploadMusic(props) {
               body: JSON.stringify({
                 title,
                 album,
-                highlightStart,
-                highlightStop,
                 genre,
                 songUrl,
                 imgUrl,
@@ -309,8 +315,8 @@ export default function UploadMusic(props) {
                     handleSubmit={handleSubmit}
                     handleTitle={handleTitle}
                     handleAlbumName={handleAlbumName}
-                    handleHighlightStart={handleHighlightStart}
-                    handleHighlightStop={handleHighlightStop}
+                    // handleHighlightStart={handleHighlightStart}
+                    // handleHighlightStop={handleHighlightStop}
                     handleGenre={handleGenre}
                     handleSongFileChange={handleSongFileChange}
                     handleImageFileChange={handleImageFileChange}
@@ -324,8 +330,8 @@ export default function UploadMusic(props) {
                     title={title}
                     imageFile={imageFile}
                     songFile={songFile}
-                    highlightStart={highlightStart}
-                    highlightStop={highlightStop}
+                    // highlightStart={highlightStart}
+                    // highlightStop={highlightStop}
                     releaseType={releaseType}
                     releaseYear={releaseYear}
                     setPageName={setPageName}
