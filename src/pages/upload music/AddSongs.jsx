@@ -14,33 +14,21 @@ export default function AddSongs(props) {
         console.log(props.files);
     }, [props.files]);
 
-    console.log("release type: " + props.releaseType);
+    const { releaseType } = props;
 
     const [isMultiple, setIsMultiple] = useState(false);
 
-    const value = props.releaseType
+    console.log("dsfdsfdsfdsf " + releaseType);
 
-    console.log("release type value: " + value);
+    // if (value === "album" || value === "ep") {
+    //     props.handleReleaseType();
 
-    if (value === "album" || value === "ep") {
-        props.handleReleaseType();
-
-    }
+    // }
 
     // const handleReleaseType = (e) => {
     //     const value = e.target.value;
 
     //     console.log("release type value: " + value);
-
-    //     if (value === "album" || value === "ep") {
-    //         isMultiple = true;
-    //         props.handleReleaseType(e);
-
-    //     }
-    //     else {
-    //         isMultiple = false
-    //         props.handleReleaseType(e);
-    //     }
     // }
 
     return (
@@ -48,10 +36,9 @@ export default function AddSongs(props) {
             <div className="uploadmusic--addsongs--form">
                 <h2>ADD SONGS</h2>
                 <div className="uploadmusic--upload--songfile"><label className="uploadmusic--custom-song-upload">
-                    {isMultiple && (
+                    {isMultiple ? (
                         <input type="file" name="songFile" value="" accept="audio/*" className="uploadmusic--hide--file" multiple onChange={props.handleSongFileChange} />
-                    )}
-                    {!isMultiple && (
+                    ) : (
                         <input type="file" name="songFile" value="" accept="audio/*" className="uploadmusic--hide--file" onChange={props.handleSongFileChange} />
 
                     )}

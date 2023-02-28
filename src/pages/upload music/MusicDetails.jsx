@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import AddSongs from "./AddSongs";
 
 // Music Information page
 export default function MusicDetails(props) {
@@ -52,13 +53,13 @@ export default function MusicDetails(props) {
             <fieldset>
               <tr>
                 <td className="uploadmusic--release--radio">
-                  <input type="radio" name="releasetype" value='album' checked={props.releaseType === "album"} onChange={handleReleaseType} />ALBUM
+                  <input type="radio" name="releasetype" value='album' checked={props.releaseType === "album"} onChange={handleReleaseType} releaseType={props.releaseType} />ALBUM
                 </td>
                 <td className="uploadmusic--release--radio">
-                  <input type="radio" name="releasetype" value='ep' checked={props.releaseType === "ep"} onChange={handleReleaseType} />EP
+                  <input type="radio" name="releasetype" value='ep' checked={props.releaseType === "ep"} onChange={handleReleaseType} releaseType={props.releaseType} />EP
                 </td>
                 <td className="uploadmusic--release--radio">
-                  <input type="radio" name="releasetype" value='single' checked={props.releaseType === "single"} onChange={handleReleaseType} />SINGLE
+                  <input type="radio" name="releasetype" value='single' checked={props.releaseType === "single"} onChange={handleReleaseType} releaseType={props.releaseType} />SINGLE
                 </td>
               </tr>
             </fieldset>
@@ -165,7 +166,7 @@ export default function MusicDetails(props) {
             value="addsongz"
             name="addsongz">Add Music</button>
         </div>
-
+        <AddSongs releaseType={props.releaseType}/>
       </div>
 
     </div>
