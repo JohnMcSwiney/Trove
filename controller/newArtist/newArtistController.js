@@ -17,9 +17,17 @@ const signupArtist = async (req, res) => {
     }
 
     const artist = await Artist.signup(req.body);
+    artist = await Artist.signup(
+      email,
+      confirmEmail,
+      password,
+      confirmPassword
+    );
+    await artist.save();
 
     const token = createToken(artist._id);
     res.json({
+      email,
       token,
       id: artist._id,
       artistName: artist.artistName,
@@ -34,6 +42,8 @@ const signupArtist = async (req, res) => {
 //Login
 const loginArtist = async (req, res) => {
   const { email, password } = req.body;
+
+  console.log("artist" + req.body.email);
 
   try {
     const verify = await Artist.findOne({ email: email });
