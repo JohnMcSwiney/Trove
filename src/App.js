@@ -1,7 +1,16 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ArtistNavbar from "./components/navbar/ArtistNavbar";
-import { Home, Provider, Discovery, Help, UploadMusic } from "./pages/pages";
+
+import {
+  Home,
+  Provider,
+  Discovery,
+  Help,
+  UploadMusic,
+  Login,
+  Signup,
+} from "./pages/pages";
 
 const App = () => {
   return (
@@ -14,7 +23,8 @@ const App = () => {
             <Route path="/help" element={<Help />}></Route>
             <Route path="/discovery" element={<Discovery />}></Route>
             <Route path="/uploadmusic" element={<UploadMusic />}></Route>
-            <Route path="/provider" element={<Provider />}></Route>
+            <Route path="/signup" element={<Signup />}></Route>
+            <Route path="/login" element={<Login />}></Route>
           </Routes>
         </div>
       </BrowserRouter>

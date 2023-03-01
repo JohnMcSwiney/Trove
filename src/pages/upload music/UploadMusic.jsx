@@ -274,7 +274,7 @@ export default function UploadMusic(props) {
 
       {/* HEADER */}
       {/* Form starts */}
-      <div className="uploadmusic--upload--form">
+      <div className="uploadmusic--upload--form container">
         {/* <form className="upload--form"
                 onSubmit={handleSubmit}> */}
 
