@@ -6,7 +6,7 @@ const artistSchema = mongoose.Schema({
   artistName: {
     type: String,
     maxLength: 50,
-    require: [true, `Please provide your name or nickname`],
+    required: [true, `Please provide your name or nickname`],
   },
 
   email: {
@@ -17,7 +17,7 @@ const artistSchema = mongoose.Schema({
 
   password: {
     type: String,
-    required: true
+    required: true,
   },
 
   isArtist: {
@@ -54,36 +54,27 @@ const artistSchema = mongoose.Schema({
 
   dob: {
     type: Date,
-    required: true
+    required: true,
   },
 
   gender: {
     type: String,
-    required: true
+    required: true,
   },
 });
 
 //static methods
 
 artistSchema.statics.signup = async function ({
-  // email: email,
-  // confirmEmail: confirmEmail,
-  // password: password,
-  // confirmPassword: confirmPassword,
-  // artistName: artistName,
-  // dob: dob,
-  // gender: gender
   email,
-  confirmEmail,
   password,
-  confirmPassword,
   artistName,
   dob,
   gender,
 }) {
-  // if (!email || !password || !artistName || !dob || !gender) {
-  //   throw Error("All fields must be filled");
-  // }
+  if (!email || !password || !artistName || !dob || !gender) {
+    throw Error("All fields must be filled");
+  }
 
   if (!validator.isEmail(email)) {
     throw Error("Email is not valid");
@@ -92,9 +83,6 @@ artistSchema.statics.signup = async function ({
   const emailCheck = await this.findOne({ email });
   if (emailCheck) {
     throw Error("Email already in use");
-  }
-  if (password !== confirmPassword) {
-    throw Error("Password or confirm password is not correct");
   }
 
   const salt = await bcrypt.genSalt(10);
@@ -106,14 +94,14 @@ artistSchema.statics.signup = async function ({
     dob,
     gender,
   });
-};
 
-module.exports = mongoose.model("Artist", artistSchema);
+  return artist;
+};
 
 //static methods for login
 
 artistSchema.statics.login = async function (email, password) {
-  if (!password || email) {
+  if (!password || !email) {
     throw Error("Please fill both to login");
   }
 
@@ -131,3 +119,5 @@ artistSchema.statics.login = async function (email, password) {
 
   return artist;
 };
+
+module.exports = mongoose.model("Artist", artistSchema);

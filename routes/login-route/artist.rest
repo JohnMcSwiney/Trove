@@ -1,0 +1,14 @@
+###
+POST http://localhost:6280/api/artist/signup
+
+Content-Type: application/json
+
+{
+    "artistName": "Floppa",
+    "email": "bhattirehan.rb@gmail.com",
+    "confirmEmail": "bhattirehan.rb@gmail.com",
+    "password": "bonger04",
+    "confirmPassword": "bonger04",
+    "dob": "Jul 31, 2001",
+    "gender": "Male"
+}

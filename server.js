@@ -6,6 +6,7 @@ const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const app = express();
 
+app.use(cors());
 mongoose.set("strictQuery", true);
 mongoose
   .connect(process.env.DB_URL, { useNewUrlParser: true })
@@ -19,8 +20,13 @@ mongoose
 app.use(express.json());
 app.use((req, res, next) => {
   console.log(req.path, req.method);
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
   next();
-})
+});
 
 app.use(
   session({
@@ -39,6 +45,6 @@ app.get("/api/session", (req, res) => {
 const loginArtist = require("./routes/login-route/login-route");
 app.use("/api/artist", loginArtist);
 
-app.listen(process.env.PORT, () => {
-  console.log("Listenting to " + process.env.PORT);
+app.listen(process.env.PORT, "0.0.0.0", () => {
+  console.log(`Listening to port ` + process.env.PORT);
 });
