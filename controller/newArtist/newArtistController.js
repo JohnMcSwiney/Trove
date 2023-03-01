@@ -12,6 +12,9 @@ const createToken = (_id) => {
 
 //Signup
 const signupArtist = async (req, res) => {
+
+  console.log(req.body);
+
   const {
     email,
     confirmEmail,
