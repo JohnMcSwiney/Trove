@@ -114,9 +114,25 @@ export default function UploadMusic(props) {
   };
 
   const handleSongFileChange = (e) => {
-    setSongFile((prevSongFile) => {
-      return [...prevSongFile, e.target.files[0]];
-    });
+
+    console.log("relerwerwsdfdsfds: " + releaseType);
+
+    if (releaseType === "single") {
+
+      setSongFile(e.target.files[0]);
+    }
+    else {
+
+      setSongFile(Array.from(e.target.files));
+      // const files = e.target.files;
+
+      // setSongFile([...songFile, ...files]);
+    }
+
+    //setSongFile(e.target.files[0]);
+    // setSongFile((prevSongFile) => {
+    //   return [...prevSongFile, e.target.files[0]];
+    // });
     // console.log(songFile[0].name);
   };
 
@@ -151,35 +167,36 @@ export default function UploadMusic(props) {
     setIsUploading(true);
 
     const storageRef = storage.ref();
-    const songRef = storageRef.child(`songs/${songFile[0].name}`);
-    const songUploadTask = songRef.put(songFile, { contentType: "audio/mp3" });
 
-    console.log("songFile: " + songFile);
+    Promise.all(
+      songFile.map((file) => {
 
-    console.log("songFile[0]: " + songFile[0]);
+        const songRef = storageRef.child(`songs/${file.name}`);
+        const songUploadTask = songRef.put(file, { contentType: "audio/mp3" });
 
-    console.log("songRef: " + songRef);
+        return new Promise((resolve, reject) => {
 
-    songUploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        setUploadProgress(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
+          songUploadTask.on(
+            "state_changed",
+            (snapshot) => {
+              setUploadProgress(
+                (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+              );
+            },
+            (err) => {
+              console.log(err);
+              reject(err);
+            },
+            async () => {
+              const songUrl = await songRef.getDownloadURL();
+              resolve(songUrl);
+            }
+          );
 
-        console.log("Bytes Transferred: " + snapshot.bytesTransferred);
-
-        console.log("Total Bytes: " + snapshot.totalBytes);
-
-        console.log((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-      },
-      (error) => {
-        console.error(error);
-        setIsUploading(false);
-      },
-
-      async () => {
-        const songUrl = await songRef.getDownloadURL();
+        });
+      })
+    )
+      .then((songUrls) => {
 
         const imageRef = storageRef.child(`images/${imageFile.name}`);
         const imageUploadTask = imageRef.put(imageFile);
@@ -222,7 +239,7 @@ export default function UploadMusic(props) {
                 title,
                 album,
                 genre,
-                songUrl,
+                songUrl: releaseType === "single" ? songUrls[0] : songUrls,
                 imgUrl,
                 releaseType,
                 releaseYear,
@@ -244,9 +261,105 @@ export default function UploadMusic(props) {
               });
           }
         );
-      }
-    );
-  };
+    });
+  }
+
+  // const songRef = storageRef.child(`songs/${songFile[0].name}`);
+  // const songUploadTask = songRef.put(songFile, { contentType: "audio/mp3" });
+
+  // console.log("songFile: " + songFile);
+
+  // console.log("songFile[0]: " + songFile[0]);
+
+  // console.log("songRef: " + songRef);
+
+  // songUploadTask.on(
+  //   "state_changed",
+  //   (snapshot) => {
+  //     setUploadProgress(
+  //       (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+  //     );
+
+  //     console.log("Bytes Transferred: " + snapshot.bytesTransferred);
+
+  //     console.log("Total Bytes: " + snapshot.totalBytes);
+
+  //     console.log((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+  //   },
+  //   (error) => {
+  //     console.error(error);
+  //     setIsUploading(false);
+  //   },
+
+  //     async () => {
+  //       const songUrl = await songRef.getDownloadURL();
+
+  //       const imageRef = storageRef.child(`images/${imageFile.name}`);
+  //       const imageUploadTask = imageRef.put(imageFile);
+
+  //       console.log("imageFile: " + imageFile);
+
+  //       console.log("imageFile[0]: " + imageFile[0]);
+
+  //       console.log("imageRef: " + imageRef);
+
+  //       imageUploadTask.on(
+  //         "state_changed",
+  //         (snapshot) => {
+  //           setUploadProgress(
+  //             (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+  //           );
+
+  //           console.log("Bytes Transferred: " + snapshot.bytesTransferred);
+
+  //           console.log("Total Bytes: " + snapshot.totalBytes);
+
+  //           console.log(
+  //             (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+  //           );
+  //         },
+  //         (error) => {
+  //           console.error(error);
+  //           setIsUploading(false);
+  //         },
+
+  //         async () => {
+  //           const imgUrl = await imageRef.getDownloadURL();
+
+  //           fetch("/api/songs", {
+  //             method: "POST",
+  //             headers: {
+  //               "Content-Type": "application/json",
+  //             },
+  //             body: JSON.stringify({
+  //               title,
+  //               album,
+  //               genre,
+  //               songUrl: releaseType === "single" ? songUrl[0] : songUrl,
+  //               imgUrl,
+  //               releaseType,
+  //               releaseYear,
+  //               artist,
+  //             }),
+  //           })
+  //             .then((res) => res.json())
+
+  //             .then((res) => {
+  //               console.log("End Response: " + res);
+  //               console.log("End Response Data: " + res.data);
+  //               setIsUploading(false);
+  //               setUploadProgress(0);
+  //             })
+  //             .catch((err) => {
+  //               console.error(err);
+  //               setIsUploading(false);
+  //               setUploadProgress(0);
+  //             });
+  //         }
+  //       );
+  //     }
+  //   );
+  // };
 
   // Initial Album Cover Display
   const default_album = "../assets/default_upload.png";
@@ -347,6 +460,8 @@ export default function UploadMusic(props) {
                     handleFormNavigation={handleFormNavigation}
                     pageName={pageName}
                     setPageName={setPageName}
+                    setSongFile={setSongFile}
+                    setToUploadSongs={setToUploadSongs}
                     songsList={songsList}
                     toUploadSongs={toUploadSongs}
                     songFile={songFile}

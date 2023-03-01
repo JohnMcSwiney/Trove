@@ -1,5 +1,7 @@
 import React, { useState } from "react"
 import AddSongs from "./AddSongs";
+import SongInfo from "./SongInfo"
+
 
 // Music Information page
 export default function MusicDetails(props) {
@@ -157,18 +159,45 @@ export default function MusicDetails(props) {
           </tbody>
         </table>
       </div>
+      {isSingle ? (
+        <>
+          <div className="uploadmusic--upload--songfile">
+            <label className="uploadmusic--custom-song-upload">
+              <input type="file" name="songFile" value="" accept="audio/*" className="uploadmusic--hide--file" onChange={props.handleSongFileChange} />
+              Upload Song
+            </label>
 
-      <div className="uploadmusic--navigate--form--btns">
-        <div className="next--btn" onClick={() => props.handleFormNavigation('AddSongs')}>
-          <button
-            className={"uploadmusic--gradient--btn uploadmusic--submit--btn"}
-            onClick={() => props.handleFormNavigation('AddSongs')}
-            on
-            value="addsongz"
-            releaseType={props.releaseType}
-            name="addsongz">Add Music</button>
+            {props.toUploadSongs && props.toUploadSongs.map((item, index) => {
+              return (
+                <SongInfo
+                  key={index}
+                  {...item}
+                  i={index}
+                  songFile={props.songFile}
+                  handleTitle={props.handleTitle}
+                  setSongFile={props.setSongFile}
+                  setToUploadSongs={props.setToUploadSongs}
+                  title={props.title}
+                />)
+            })}
+
+          </div><div className="uploadmusic--next--btn uploadmusic--finish--btn">
+            <input type="submit" value="Submit" className="uploadmusic--gradient--btn uploadmusic--submit--btn" onClick={props.handleSubmit} />
+          </div>
+        </>
+      ) : (
+        <div className="uploadmusic--navigate--form--btns">
+          <div className="next--btn" onClick={() => props.handleFormNavigation('AddSongs')}>
+            <button
+              className={"uploadmusic--gradient--btn uploadmusic--submit--btn"}
+              onClick={() => props.handleFormNavigation('AddSongs')}
+              on
+              value="addsongz"
+              releaseType={props.releaseType}
+              name="addsongz">Add Music</button>
+          </div>
         </div>
-      </div>
+      )}
 
     </div>
   )

@@ -16,9 +16,27 @@ export default function AddSongs(props) {
 
     const { releaseType } = props;
 
-    const [isMultiple, setIsMultiple] = useState(false);
+    //const [isSingle, setIsSingle] = useState(false);
 
     console.log("dsfdsfdsfdsf " + releaseType);
+
+    // const handleReleaseType = (releaseType) => {
+
+    //     setIsSingle(releaseType === "single");
+
+    // }
+
+    let isSingle = false;
+
+    if (releaseType === "single") {
+
+        isSingle = true;
+    }
+    else {
+        isSingle = false;
+    }
+
+    console.log("isSingle value " + isSingle);
 
     // if (value === "album" || value === "ep") {
     //     props.handleReleaseType();
@@ -36,17 +54,15 @@ export default function AddSongs(props) {
             <div className="uploadmusic--addsongs--form">
                 <h2>ADD SONGS</h2>
                 <div className="uploadmusic--upload--songfile"><label className="uploadmusic--custom-song-upload">
-                    {isMultiple ? (
-                        <input type="file" name="songFile" value="" accept="audio/*" className="uploadmusic--hide--file" multiple onChange={props.handleSongFileChange} />
-                    ) : (
+                    {isSingle ? (
                         <input type="file" name="songFile" value="" accept="audio/*" className="uploadmusic--hide--file" onChange={props.handleSongFileChange} />
-
+                    ) : (
+                        <input type="file" name="songFile" value="" accept="audio/*" className="uploadmusic--hide--file" multiple onChange={props.handleSongFileChange} />
                     )}
                     {/* <input type="file" name="songFile" value="" accept="audio/*" className="uploadmusic--hide--file" onChange={props.handleSongFileChange} /> */}
                     Upload Song
                     {/* <img src="../../assets/upload_icon.png" id="upload--icon" alt="upload_icon" /> */}
                 </label>
-
                     <div className="uploadmusic--add--song">
 
                         {/* Filepond, don't think we are using atm */}
@@ -68,10 +84,14 @@ export default function AddSongs(props) {
                             return (
                                 <SongInfo
                                     key={index}
+                                    {...props.songFile.name}{..." "}
                                     {...item}
                                     i={index}
                                     songFile={props.songFile}
                                     handleTitle={props.handleTitle}
+                                    setSongFile={props.setSongFile}
+                                    setToUploadSongs={props.setToUploadSongs}
+                                    // handRemoveSong = {props.handRemoveSong}
                                     title={props.title}
                                 />)
                         })}
