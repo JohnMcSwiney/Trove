@@ -83,8 +83,8 @@ const ArtistNavbar = () => {
 
             <div class="vl">
               <div className="signup-div">
-                <a href="/login"> Login</a>
-                <a href="/access">Get Access</a>
+                <NavLink to={"/signup"}>Sign up</NavLink>
+                <NavLink to={"/access"}>Get access</NavLink>
               </div>
             </div>
             <button className="nav-btn nav-close-btn" onClick={showNavbar}>
