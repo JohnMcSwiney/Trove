@@ -15,6 +15,7 @@ const artistSchema = mongoose.Schema({
 
   password: {
     type: String,
+    required: true
   },
 
   isArtist: {
@@ -51,10 +52,12 @@ const artistSchema = mongoose.Schema({
 
   dob: {
     type: Date,
+    required: true
   },
 
   gender: {
     type: String,
+    required: true
   },
 });
 
@@ -62,14 +65,13 @@ const artistSchema = mongoose.Schema({
 
 artistSchema.statics.signup = async function (
   email,
-  confirmEmail,
   password,
-  confirmPassword,
   artistName,
   dob,
   gender
 ) {
-  if (!email || !password) {
+  if (!email || !password || !artistName || !dob || !gender) {
+    console.log(email, password, artistName, dob, gender);
     throw Error("All fields must be filled");
   }
 

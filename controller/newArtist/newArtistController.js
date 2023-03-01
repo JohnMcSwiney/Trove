@@ -24,17 +24,19 @@ const signupArtist = async (req, res) => {
     gender,
   } = req.body;
 
+
   try {
-    const artist = Artist.findOne({ email: email });
-    if (artist) {
-      return res.status(400).json({ error: "Artist email already exists" });
-    }
+
+    //const artist = Artist.findOne({ email: email });
+
+    // if (artist) {
+    //   return res.status(400).json({ error: "Artist email already exists" });
+    // }
     if (password !== confirmPassword) {
       return res.status(400).json({ error: "Passwords do not match" });
     }
-
-    artist = await Artist.signup(req.body);
-    await artist.save();
+    
+    const artist = await Artist.signup(req.body);
     const token = createToken(artist._id);
     res.json({
       token,
