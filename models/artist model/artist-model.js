@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
+const validator = require("validator");
 
 const artistSchema = mongoose.Schema({
   artistName: {
@@ -63,17 +65,25 @@ const artistSchema = mongoose.Schema({
 
 //static methods
 
-artistSchema.statics.signup = async function (
+artistSchema.statics.signup = async function ({
+  // email: email,
+  // confirmEmail: confirmEmail,
+  // password: password,
+  // confirmPassword: confirmPassword,
+  // artistName: artistName,
+  // dob: dob,
+  // gender: gender
   email,
+  confirmEmail,
   password,
+  confirmPassword,
   artistName,
   dob,
-  gender
-) {
-  if (!email || !password || !artistName || !dob || !gender) {
-    console.log(email, password, artistName, dob, gender);
-    throw Error("All fields must be filled");
-  }
+  gender,
+}) {
+  // if (!email || !password || !artistName || !dob || !gender) {
+  //   throw Error("All fields must be filled");
+  // }
 
   if (!validator.isEmail(email)) {
     throw Error("Email is not valid");
