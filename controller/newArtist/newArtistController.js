@@ -36,15 +36,20 @@ const signupArtist = async (req, res) => {
       return res.status(400).json({ error: "Passwords do not match" });
     }
 
-    const artist = await Artist.signup(req.body);
+    const artist = await Artist.signup(
+      email,
+      confirmEmail,
+      password,
+      confirmPassword,
+    );
     await artist.save();
     const token = createToken(artist._id);
     res.json({
+      email,
       token,
       artist: {
         id: artist._id,
         artistName: artist.artistName,
-        email: artist.email,
       },
     });
   } catch (error) {
@@ -56,6 +61,8 @@ const signupArtist = async (req, res) => {
 //Login
 const loginArtist = async (req, res) => {
   const { email, password } = req.body;
+
+  console.log("artist" +  req.body.email);
 
   try {
     const verify = await Artist.findOne({ email: email });
