@@ -15,6 +15,7 @@ export default function MusicDetails(props) {
     setIsSingle(value === "single");
 
     props.handleReleaseType(e);
+
   }
 
   // const handleReleaseType = (e) => {
@@ -75,14 +76,14 @@ export default function MusicDetails(props) {
               </tr>
             ) : (
               <tr>
-              <td className="uploadmusic--columnt">
-                <label>
-                  Album Name:
-                  <br />
-                  <input type="text" value={props.album} name="albumName" placeholder="Album Name" onChange={props.handleAlbumName} />
-                </label>
-              </td>
-            </tr>
+                <td className="uploadmusic--columnt">
+                  <label>
+                    Album Name:
+                    <br />
+                    <input type="text" value={props.album} name="albumName" placeholder="Album Name" onChange={props.handleAlbumName} />
+                  </label>
+                </td>
+              </tr>
             )}
             {/* <tr>
               <td className="uploadmusic--columnt">
@@ -164,9 +165,9 @@ export default function MusicDetails(props) {
             onClick={() => props.handleFormNavigation('AddSongs')}
             on
             value="addsongz"
+            releaseType={props.releaseType}
             name="addsongz">Add Music</button>
         </div>
-        <AddSongs releaseType={props.releaseType}/>
       </div>
 
     </div>
