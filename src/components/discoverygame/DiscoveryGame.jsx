@@ -16,7 +16,7 @@ import { AudioPlayer } from '../audioplayerOLD/AudioPlayer';
 import './DGstyle.css'
 
 
-import DGdata from '../../hardcodedTestData/hardcodeDGsongs';
+import DGdata from '../../data/hardcodedTestData/hardcodeDGsongs';
 
 import Slider from "react-slick";
 import $ from 'jquery';

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import DiscoveryGame from '../components/discoverygame/DiscoveryGame'
+import DiscoveryGame from '../../components/discoverygame/DiscoveryGame'
 
 import './discoverygamestyle.css';
 

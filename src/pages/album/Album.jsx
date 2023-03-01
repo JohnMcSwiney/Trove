@@ -1,26 +1,26 @@
-import React from "react"
+import React from 'react';
 
-import './AlbumPage.css';
+import './Album.css';
 // import NavBar from './nav bar/NavBar';
-import albumsongs from "../data/albumsongs.json"
+import albumsongs from "../../data/albumsongs.json"
 import AlbumSong from "./AlbumSong";
 
-// User's Top Genres
-export default function AlbumPage() {
+const Album = () => {
+  
 
     return (
-        <section>
+    <section>
             {/* HEADER */}
 
             {/* ALBUM COVER / INFO */}
-            <div className="album--info">
-                <div className="album--song--cover">
-                        <img src="../../assets/reccover.jpg" alt="albumcover"/>
+            <div className="trv-album--info">
+                <div className="trv-album--song--cover">
+                        <img src="../../assets/reccover.jpg" alt="trv-albumcover"/>
                 </div>
-                <div className="album--stats--info">
+                <div className="trv-album--stats--info">
                         <h3>Album Name</h3>
                         <h6><span>POP</span></h6>
-                       <div className="album--release--info">
+                       <div className="trv-album--release--info">
                         <h5>2014</h5>
                         <h6>ALBUM</h6>
                         </div>
@@ -29,7 +29,7 @@ export default function AlbumPage() {
             </div>
 
             {/* SONGS */}
-            <div className="album--songs">
+            <div className="trv-album--songs">
             {
                     albumsongs && albumsongs.map((item, index)=>{
                     return(
@@ -45,6 +45,8 @@ export default function AlbumPage() {
 
             {/* <NavBar /> */}
         </section>
-    )
+  )
 
 }
+
+export default Album

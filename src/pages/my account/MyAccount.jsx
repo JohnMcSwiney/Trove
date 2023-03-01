@@ -5,9 +5,9 @@ import { Alert } from "@mui/material";
 import { BiShow } from "react-icons/bi";
 import { AiOutlineEyeInvisible } from "react-icons/ai";
 import { Navigate } from "react-router-dom";
-import { useUpdateAccount } from "../hooks/user-hooks/useUpdateAccount";
-import { useUpdateEmail } from "../hooks/user-hooks/useUpdateEmail";
-import { useUpdatePassword } from "../hooks/user-hooks/useUpdatePassword";
+import { useUpdateAccount } from "../../hooks/user-hooks/useUpdateAccount";
+import { useUpdateEmail } from "../../hooks/user-hooks/useUpdateEmail";
+import { useUpdatePassword } from "../../hooks/user-hooks/useUpdatePassword";
 const MyAccount = () => {
   const [state, setState] = React.useState(1);
 

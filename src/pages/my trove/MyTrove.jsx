@@ -1,11 +1,12 @@
 import React, { useState} from 'react';
 import './UserAccStyle.css';
 import tempImg from './temp-imgs/derek.png';
-import CardPlaylist from '../components/cards/card_playlist/CardPlaylist';
-import FeaturedArtist from '../components/featured_artist/FeaturedArtist';
-import GenreCard from '../components/cards/card_genre/CardGenre';
+import CardPlaylist from '../../components/cards/card_playlist/CardPlaylist';
+import FeaturedArtist from '../../components/featured_artist/FeaturedArtist';
+import GenreCard from '../../components/cards/card_genre/CardGenre';
 
-import DiscoveryGame from '../components/discoverygame/DiscoveryGame';
+import DiscoveryGame from '../../components/discoverygame/DiscoveryGame';
+
 
 
 

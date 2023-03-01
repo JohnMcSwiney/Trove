@@ -1,10 +1,10 @@
 import React from "react";
-import { useLogin } from "../hooks/user-hooks/useLogin";
+import { useLogin } from "../../hooks/user-hooks/useLogin";
 import { Navigate, useNavigate } from "react-router-dom";
 import "./login.css";
 
 import { BsGoogle, BsFacebook } from "react-icons/bs";
-import useFBLogin from "../hooks/facebook-auth/useFBLogin";
+import useFBLogin from "../../hooks/facebook-auth/useFBLogin";
 
 const Login = () => {
   const [email, setEmail] = React.useState("");

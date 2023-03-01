@@ -1,9 +1,9 @@
 import React from 'react'
 
-import TasteProfile from '../components/taste Profile/TasteProfile';
-import CardArtist from '../components/cards/card_artist/CardArtist';
-import CardAlbum from '../components/cards/card_album/CardAlbum';
-import CardDiscovery from '../components/cards/card_discoverygame/CardDiscovery'
+import TasteProfile from '../../components/taste Profile/TasteProfile';
+import CardArtist from '../../components/cards/card_artist/CardArtist';
+import CardAlbum from '../../components/cards/card_album/CardAlbum';
+import CardDiscovery from '../../components/cards/card_discoverygame/CardDiscovery'
 import { Navigate, useNavigate, Link } from 'react-router-dom';
 
 

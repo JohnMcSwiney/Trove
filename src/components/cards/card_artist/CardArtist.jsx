@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import './CardArtist.css';
 import placeholder from './artistPicPlaceholder.png'
 
-import artistData from '../../../hardcodedTestData/hardcodeArtists.js'
+import artistData from '../../../data/hardcodedTestData/hardcodeArtists.js'
 function CardArtist({ props }) {
 
 
@@ -33,9 +33,8 @@ function CardArtist({ props }) {
             </div>
           </div>
         ))
-      }</>
-
-
+      }
+    </>
   )
 
 }
