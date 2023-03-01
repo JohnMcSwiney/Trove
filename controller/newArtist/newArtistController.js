@@ -12,7 +12,6 @@ const createToken = (_id) => {
 
 //Signup
 const signupArtist = async (req, res) => {
-
   console.log(req.body);
 
   const {
@@ -26,7 +25,7 @@ const signupArtist = async (req, res) => {
   } = req.body;
 
   try {
-    const artist = Artist.findOne({ email });
+    const artist = Artist.findOne({ email: email });
     if (artist) {
       return res.status(400).json({ error: "Artist email already exists" });
     }
@@ -35,6 +34,7 @@ const signupArtist = async (req, res) => {
     }
 
     artist = await Artist.signup(req.body);
+    await artist.save();
     const token = createToken(artist._id);
     res.json({
       token,
