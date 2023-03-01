@@ -342,6 +342,7 @@ export default function UploadMusic(props) {
                   <AddSongs
                     handleSongFileChange={handleSongFileChange}
                     handleTitle={handleTitle}
+                    handleReleaseType={handleReleaseType}
                     handleSubmit={handleSubmit}
                     handleFormNavigation={handleFormNavigation}
                     pageName={pageName}
@@ -350,6 +351,7 @@ export default function UploadMusic(props) {
                     toUploadSongs={toUploadSongs}
                     songFile={songFile}
                     title={title}
+                    releaseType={releaseType}
                   />
                 );
               // case 'ReviewSongs':
