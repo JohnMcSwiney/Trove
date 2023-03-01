@@ -10,28 +10,19 @@ const createToken = (_id) => {
 const signupArtist = async (req, res) => {
   const { email, confirmEmail, password, artistName, dob, gender } = req.body;
 
-  console.log(req.body.email);
   try {
     if (email !== confirmEmail) {
       return res.status(400).json({ error: "Emails do not match" });
     }
 
     const artist = await Artist.signup(req.body);
-    artist = await Artist.signup(
-      email,
-      confirmEmail,
-      password,
-      confirmPassword
-    );
-    await artist.save();
-
     const token = createToken(artist._id);
+    req.session.artist = artist; // Set the session here
     res.json({
       email,
       token,
       id: artist._id,
       artistName: artist.artistName,
-      email: artist.email,
     });
   } catch (error) {
     console.error(error);
@@ -43,23 +34,21 @@ const signupArtist = async (req, res) => {
 const loginArtist = async (req, res) => {
   const { email, password } = req.body;
 
-  console.log("artist" + req.body.email);
-
+  console.log(email);
   try {
-    const verify = await Artist.findOne({ email: email });
-
-    if (verify == null) {
+    const artist = await Artist.findOne({ email: email });
+    console.log(artist);
+    if (!artist) {
       return res.status(400).json({ err: "Email or password is not correct" });
     }
-    const artist = await Artist.login(email, password);
+    await Artist.login(email, password);
     const token = createToken(artist._id);
+    req.session.artist = artist; // Set the session here
     res.json({
       token,
-      artist: {
-        id: artist._id,
-        artistName: artist.artistName,
-        email: artist.email,
-      },
+      id: artist._id,
+      artistName: artist.artistName,
+      email: artist.email,
     });
   } catch (error) {
     res.status(400).json({ err: err.message });
