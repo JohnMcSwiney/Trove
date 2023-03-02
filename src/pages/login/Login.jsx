@@ -1,19 +1,23 @@
 import React from "react";
 import { useLogin } from "../../hooks/useLogin";
 import { useNavigate } from "react-router-dom";
-const Login = () => {
+const Login = (props) => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const navigate = useNavigate();
   const { login, error, isLoading } = useLogin();
+  const sessionToken = sessionStorage.getItem("artistToken");
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
       await login(email, password);
 
-      if (sessionStorage.getItem("artistToken")) {
-        navigate("/");
+      if (sessionToken) {
+        props.setArtistTk(sessionToken);
+        setTimeout(() => {
+          navigate("/");
+        }, "1000");
       }
     } catch (error) {
       console.log({ error: error.message });

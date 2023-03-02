@@ -5,12 +5,14 @@ import { FaBars, FaTimes } from "react-icons/fa";
 import "./navbar.css";
 import { useLogout } from "../../hooks/useLogout";
 
-const ArtistNavbar = () => {
+const ArtistNavbar = ({ artistTk }) => {
   const [state, setState] = React.useState(1);
 
   const [colorbg, setColorBg] = React.useState("home-color");
 
-  const sessionToken = sessionStorage.getItem("artistToken");
+  // const sessionToken = sessionStorage.getItem("artistToken");
+
+  // console.log(sessionToken);
   const action = (index) => {
     setState(index);
   };
@@ -87,17 +89,18 @@ const ArtistNavbar = () => {
             </NavLink>
 
             <div class="vl">
-              {sessionToken && (
+              {artistTk !== null ? (
                 <button className="btn text-white" onClick={logout}>
                   Logout
                 </button>
-              )}
-              {!sessionToken && (
+              ) : (
                 <div className="signup-div">
                   <NavLink to={"/signup"}>Sign up</NavLink>
-                  <NavLink to={"/access"}>Get access</NavLink>
                 </div>
               )}
+              <div className="signup-div">
+                <NavLink to={"/access"}>Get access</NavLink>
+              </div>
             </div>
             <button className="nav-btn nav-close-btn" onClick={showNavbar}>
               <FaTimes />

@@ -13,10 +13,11 @@ import {
 } from "./pages/pages";
 
 const App = () => {
+  const [artistToken, setArtistToken] = React.useState(null);
   return (
     <div>
       <BrowserRouter>
-        <ArtistNavbar />
+        <ArtistNavbar artistTk={artistToken} />
         <div className="container">
           <Routes>
             <Route path="/" element={<Home />}></Route>
@@ -24,7 +25,12 @@ const App = () => {
             <Route path="/discovery" element={<Discovery />}></Route>
             <Route path="/uploadmusic" element={<UploadMusic />}></Route>
             <Route path="/signup" element={<Signup />}></Route>
-            <Route path="/login" element={<Login />}></Route>
+            <Route
+              path="/login"
+              element={
+                <Login artistTk={artistToken} setArtistTk={setArtistToken} />
+              }
+            ></Route>
           </Routes>
         </div>
       </BrowserRouter>
