@@ -33,19 +33,19 @@ function CardArtist({props}){
 
                    <div className='plytxtcont'>
                     
+                    <div className='plytxt'>
                     <a 
-                      className='plytxt text'>
+                      className='testingplaylisttext'>
                         {playlist.name} 
                         </a>
-                    
-                      
-                        <a 
-                      className='plyUntxt text'>
+                    </div>
+                    <div className='plyUntxt'>
+                    <a 
+                      className='text'>
                         {playlist.user_name} 
                         </a>
-                        <div className='plybotcol'>
-
-                        </div>
+                    </div>
+                        
                     </div>
                 </div>
             </div>

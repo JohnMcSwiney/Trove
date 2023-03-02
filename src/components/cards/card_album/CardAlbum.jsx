@@ -3,16 +3,26 @@ import PropTypes from 'prop-types';
 import './CardAlbum.css';
 
 import albumData from '../../../data/hardcodedTestData/hardcodeAlbums'
+import { Navigate, useNavigate, Link } from 'react-router-dom';
 
-function CardArtist({props}){
 
+
+
+
+function CardAlbum({props}){
+  const navigate = useNavigate()
+  const redirectAlbum = () => {
+    navigate('./AlbumPage')
+  }
     return(
       <>
         {
           albumData.map((album, index)=>(
             <div className='bg mx-3 flex flex-col align-middle 
                             justify-center text-center text-ellipsis w-24 rounded-lg 
-                            overflow-hidden cont '>
+                            overflow-hidden cont 
+                            '
+                            onClick={redirectAlbum}>
                    <div className='rounded-md m-auto  '>
                      <div className='overflow-hidden p-0.5 ' > 
                        <img 
@@ -41,4 +51,4 @@ function CardArtist({props}){
     )
      
 }
-export default CardArtist;
+export default CardAlbum;

@@ -1,33 +1,42 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import artistTemp from './artistPicPlaceholder.png';
 import PropTypes from 'prop-types';
 import './CardArtist.css';
-import placeholder from './artistPicPlaceholder.png'
+import placeholder from './artistPicPlaceholder.png';
 
-import artistData from '../../../data/hardcodedTestData/hardcodeArtists.js'
+import artistData from '../../../data/hardcodedTestData/hardcodeArtists.js';
+import { Navigate, useNavigate, Link } from 'react-router-dom';
+
 function CardArtist({ props }) {
 
+  const navigate = useNavigate()
+  const redirectArtist = () => {
+    navigate('./Artist')
+  }
 
   return (
     <>
       {
         artistData.map((artist, index) => (
 
-          <div className='flex flex-col align-middle justify-center text-center text-ellipsis w-24 rounded p-0.5 m-0.5 shadow-md bg-fglass-1' >
+          <div className='flex flex-col align-middle justify-center text-center text-ellipsis rounded p-2 m-0.5 artistCard-bg-fglass-1' 
+                onClick={redirectArtist}>
 
             <div className='bg-transparent p-1 m-auto '>
-              <div className='overflow-hidden borderTest' >
-                <img
-                  className='rounded-full w-14 overflow-hidden object-cover h-14 '
-                  src={artist.picUrl}
-                  alt={artist.name} 
-                  
-                  />
+              <div className='artistCard-border' >
+                <div className='artistCard-img-cont'>
+                  <img
+                    className='artistCard-img'
+                    src={artist.picUrl}
+                    alt={artist.name} 
+                    
+                    />
+                </div>
               </div>
             </div>
-            <div className='flex h-12 align-middle m-auto '>
+            <div className='artistCard-txt-container'>
               <a
-                className='txt-container text flex flex-wrap h-12 overflow-hidden text-center m-auto items-center justify-center  hover:text-trv-White'>
+                className=' artistCard-text hover:text-trv-White'>
                 {artist.name}
               </a>
             </div>

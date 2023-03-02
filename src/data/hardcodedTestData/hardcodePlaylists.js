@@ -9,7 +9,7 @@ export default [
     {
         "user_id": "U0001",
         "user_name": "User",
-        "name": 'Brap hiuge text for thesting purpoasjdlh;jashgkjashd;lfkhasd;kjfa;skdjhfasljhfl;skAJD;LKaj;ldkjlKJA;SLKDJ;LKASJD;Laj;lkAJSLDKJaldkj',
+        "name": 'hiuge text for testing purpoasasdfa',
         "picUrl": 'https://storage.googleapis.com/trv_test/TempPlaylistImgs/tempPlaylistimg2.jpg'
     },
 

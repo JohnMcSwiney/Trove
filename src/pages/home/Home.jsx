@@ -5,6 +5,7 @@ import CardArtist from '../../components/cards/card_artist/CardArtist';
 import CardAlbum from '../../components/cards/card_album/CardAlbum';
 import CardDiscovery from '../../components/cards/card_discoverygame/CardDiscovery'
 import { Navigate, useNavigate, Link } from 'react-router-dom';
+import "./home.css";
 
 
 
@@ -21,7 +22,7 @@ const Home = () => {
         <div>
         <h3 className=''>Find Musical Treasures</h3>
           <div href={'/discoverygame'} 
-               className='DG-card-home' 
+               className='my-3' 
                onClick={redirectDiscovery}>
 
             <CardDiscovery/>
@@ -33,7 +34,7 @@ const Home = () => {
         
 
           <h4 className="mainHeadertxt">Artists you love:</h4>
-          <div className='cardartist1 grid grid-flow-col overflow-scroll '>
+          <div className='art-card-cont'>
           <CardArtist/>      
           </div>
 

@@ -33,3 +33,11 @@
     display: none;
 }
 
+.art-card-cont{
+    display: flex;
+    flex-direction: row;
+    overflow: scroll;
+    gap: 2px;
+    margin-bottom: 5px;
+    
+}
