@@ -15,19 +15,6 @@ export const authReducer = (state, action) => {
   }
 };
 
-// export const ArtistAuthContextProvider = ({ children }) => {
-//   const [state, dispatch] = useReducer(authReducer, {
-//     artist: null,
-//   });
-
-//   useEffect(() => {
-//     const artist = JSON.parse(localStorage.getItem("artist"));
-
-//     if (artist) {
-//       dispatch({ type: "LOGIN", payload: artist });
-//     }
-//   }, []);
-
 export const ArtistAuthContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, {
     artist: null,
@@ -50,3 +37,16 @@ export const ArtistAuthContextProvider = ({ children }) => {
     </ArtistAuthContext.Provider>
   );
 };
+
+// export const ArtistAuthContextProvider = ({ children }) => {
+//   const [state, dispatch] = useReducer(authReducer, {
+//     artist: null,
+//   });
+
+//   useEffect(() => {
+//     const artist = JSON.parse(localStorage.getItem("artist"));
+
+//     if (artist) {
+//       dispatch({ type: "LOGIN", payload: artist });
+//     }
+//   }, []);
