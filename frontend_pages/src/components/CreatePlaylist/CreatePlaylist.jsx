@@ -1,10 +1,22 @@
 import React from "react"
 
 import './CreatePlaylist.css';
+import NavBar from './nav bar/NavBar';
+import albumsongs from "../../data/albumsongs.json"
+import PlaylistSong from "./PlaylistSong";
 
 // To create a playlist
 export default function CreatePlaylist(props) {
+    const default_album = "../assets/default_playlistcover.png";
+    const [previewCover, setPreviewCover] = React.useState(default_album);
     
+    const [imageFile, setImageFile] = React.useState();
+    const handleImageFileChange = (e) => {
+        setImageFile(e.target.files[0]);
+        setPreviewCover(URL.createObjectURL(e.target.files[0]));
+  
+    };
+
     return(
     <section>
         {/* HEADER */}
@@ -21,11 +33,15 @@ export default function CreatePlaylist(props) {
         {/* PLAYLIST'S INFO */}
             <div className="createplaylist--info">
                 <div className="createplaylist--song--cover">
-                        <img src="../assets/default_upload.png" alt="playlist"/>
+                        <img src={previewCover} alt="playlist"/>
+                        <label className="createplaylist--custom-file-upload">
+                        <input type="file" name="cover" value="" accept="image/*" className="createplaylist--gradient--btn createplaylist--image--btn createplaylist--hide--file" onChange={handleImageFileChange}/> 
+                            Choose Image <img src="../../assets/upload_icon.png" id="upload--icon" alt="upload_icon"/>
+                        </label>
                 </div>
                 <div className="createplaylist--stats--info">
                         <h5>Playlist Name</h5>
-                        <input type="text" placeholder="Playlist Name"/>
+                        <input type="text" id="playlisttitle" placeholder="Playlist Name"/>
                        <div className="createplaylist--release--info">
                         {/* <h5>2014</h5> */}
                         <input type="textarea" id="playlistdesc" placeholder="Add Description (Optional)" name="playlist description"/>
@@ -45,6 +61,22 @@ export default function CreatePlaylist(props) {
             </div>
 
             </div>
+
+            <div className="createplaylist--songs">
+            {
+                    albumsongs && albumsongs.map((item, index)=>{
+                    return(
+                        <PlaylistSong
+                        key={index}
+                        {...item}
+
+                        />
+                
+                
+                ) })}
+            </div>
+
+            <NavBar />
     </section>
 
     )

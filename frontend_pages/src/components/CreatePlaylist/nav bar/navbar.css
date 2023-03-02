@@ -1,0 +1,118 @@
+.Nav{
+display: flex;
+flex-direction: row;
+justify-content: space-around;
+grid-template-columns: repeat(4,auto);
+width: 100%;
+position: fixed;
+bottom: 0;
+height: 60px;   /* Height of the footer */
+background-image: linear-gradient(#12164B, #080C3D);
+box-shadow: 0px -10px 20px #00000084;
+margin-left: auto;
+align-items: center;
+z-index: 1;
+border-top-left-radius: 15px;
+border-top-right-radius: 15px;
+padding-left: 4px;
+padding-right:4px;
+   
+}
+
+.trove-nav-icon{ /* this is for the container */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 10px;
+    color: #878694;
+    margin: auto;
+    height: 50px;
+    width: 60px;
+    overflow:visible;
+    padding: 5px;
+    box-sizing: border-box;
+}
+.trove-nav-icon > div{
+    font-size: 12px;
+}
+.text-pad-t{
+    padding-top: 0.5px;
+}
+.text-small{
+    padding-top: 0.7px;;
+    font-size:11.25px;
+}
+
+
+.trove-nav-icon:hover{
+    background-color: #222c5baf;
+}
+
+.trove-nav-icon:hover > div > *{
+    color: rgba(255, 255, 255, 0.861);
+    text-shadow: 0 0 1 rgba(255, 255, 255, 0.735);
+}
+.trove-nav-icon:hover > .selection-indicator{
+    background-color: #8750f4e6;
+    box-shadow: 0px 1px 3px #8650F4;
+}
+.nav-icon{ /* This is the icon itself */
+    width: 20px;
+    height: 20px;
+    margin: auto;
+}
+
+.nav-text{
+    height: 19px;
+    text-align: center;
+}
+.nav-text-active{
+    border-color: #8650F4;   
+}
+.trove-links{
+    text-decoration: none;
+    color: white;
+    display: flex;   
+}
+
+
+.active{
+    /* uh, hi - how's it goin'? */
+}
+.active > div > .nav-icon{
+    color: white;
+}
+
+.active > div > .nav-text{
+    color: white;
+}
+
+.active > div > .selection-indicator{
+    background-color: #8650F4;
+    box-shadow: 0px 0.5px 3px #8750f4d2;
+}
+
+
+.selection-indicator{
+    height: 1.5px;
+    width: 40px;
+    border-radius: 2px;
+    margin: auto;
+    background-color: transparent;
+}
+
+.divider-white{
+    height: 35px;
+    width: 1px;
+    border-radius: 1px;
+    background-color: rgba(255, 255, 255, 0.33);
+}
+/* Because the classname is already used up. 
+   this is an alternative styling method for 
+   the artist only divider */
+#divider-white{
+    height: 35px;
+    width: 1px;
+    border-radius: 1px;
+    background-color: rgba(255, 255, 255, 0.33);
+}
