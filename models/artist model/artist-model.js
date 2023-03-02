@@ -65,39 +65,6 @@ const artistSchema = mongoose.Schema({
 
 //static methods
 
-artistSchema.statics.signup = async function ({
-  email,
-  password,
-  artistName,
-  dob,
-  gender,
-}) {
-  if (!email || !password || !artistName || !dob || !gender) {
-    throw Error("All fields must be filled");
-  }
-
-  if (!validator.isEmail(email)) {
-    throw Error("Email is not valid");
-  }
-
-  const emailCheck = await this.findOne({ email });
-  if (emailCheck) {
-    throw Error("Email already in use");
-  }
-
-  const salt = await bcrypt.genSalt(10);
-  const hash = await bcrypt.hash(password, salt);
-  const artist = await this.create({
-    email,
-    password: hash,
-    artistName,
-    dob,
-    gender,
-  });
-
-  return artist;
-};
-
 //static methods for login
 
 artistSchema.statics.login = async function (email, password) {
