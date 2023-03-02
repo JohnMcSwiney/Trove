@@ -80,7 +80,7 @@ export default function MusicDetails(props) {
               <tr>
                 <td className="uploadmusic--columnt">
                   <label>
-                    Album Name:
+                    Album/EP Name:
                     <br />
                     <input type="text" value={props.album} name="albumName" placeholder="Album Name" onChange={props.handleAlbumName} />
                   </label>

@@ -16,15 +16,8 @@ export default function AddSongs(props) {
 
     const { releaseType } = props;
 
-    //const [isSingle, setIsSingle] = useState(false);
-
     console.log("dsfdsfdsfdsf " + releaseType);
 
-    // const handleReleaseType = (releaseType) => {
-
-    //     setIsSingle(releaseType === "single");
-
-    // }
 
     let isSingle = false;
 
@@ -37,17 +30,6 @@ export default function AddSongs(props) {
     }
 
     console.log("isSingle value " + isSingle);
-
-    // if (value === "album" || value === "ep") {
-    //     props.handleReleaseType();
-
-    // }
-
-    // const handleReleaseType = (e) => {
-    //     const value = e.target.value;
-
-    //     console.log("release type value: " + value);
-    // }
 
     return (
         <div className="uploadmusic--column uploadmusic--song--form">
@@ -84,15 +66,13 @@ export default function AddSongs(props) {
                             return (
                                 <SongInfo
                                     key={index}
-                                    {...props.songFile.name}{..." "}
                                     {...item}
                                     i={index}
                                     songFile={props.songFile}
+                                    title={props.title}
                                     handleTitle={props.handleTitle}
                                     setSongFile={props.setSongFile}
                                     setToUploadSongs={props.setToUploadSongs}
-                                    // handRemoveSong = {props.handRemoveSong}
-                                    title={props.title}
                                 />)
                         })}
                     </div>
