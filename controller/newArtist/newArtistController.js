@@ -87,7 +87,6 @@ const logoutArtist = (req, res) => {
       console.log(err);
       res.status(500).json({ err: "Server error" });
     } else {
-      res.redirect("http://localhost:3000");
       res.send("Logged out successfully");
     }
   });
