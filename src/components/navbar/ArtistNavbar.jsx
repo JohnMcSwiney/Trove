@@ -3,11 +3,16 @@ import { NavLink } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
 
 import "./navbar.css";
-const ArtistNavbar = () => {
+import { useLogout } from "../../hooks/useLogout";
+
+const ArtistNavbar = ({ artistTk }) => {
   const [state, setState] = React.useState(1);
 
   const [colorbg, setColorBg] = React.useState("home-color");
 
+  // const sessionToken = sessionStorage.getItem("artistToken");
+
+  // console.log(sessionToken);
   const action = (index) => {
     setState(index);
   };
@@ -17,6 +22,8 @@ const ArtistNavbar = () => {
   const showNavbar = () => {
     navRef.current.classList.toggle("responsive_nav");
   };
+
+  const { logout } = useLogout();
   return (
     <div>
       <div>
@@ -82,8 +89,16 @@ const ArtistNavbar = () => {
             </NavLink>
 
             <div class="vl">
+              {artistTk !== null ? (
+                <button className="btn text-white" onClick={logout}>
+                  Logout
+                </button>
+              ) : (
+                <div className="signup-div">
+                  <NavLink to={"/signup"}>Sign up</NavLink>
+                </div>
+              )}
               <div className="signup-div">
-                <NavLink to={"/signup"}>Sign up</NavLink>
                 <NavLink to={"/access"}>Get access</NavLink>
               </div>
             </div>
