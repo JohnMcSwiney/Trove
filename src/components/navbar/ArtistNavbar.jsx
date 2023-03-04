@@ -4,13 +4,14 @@ import { FaBars, FaTimes } from "react-icons/fa";
 
 import "./navbar.css";
 import { useLogout } from "../../hooks/useLogout";
-
-const ArtistNavbar = ({ artistTk }) => {
+import Dropdown from "react-bootstrap/Dropdown";
+import DropdownButton from "react-bootstrap/DropdownButton";
+const ArtistNavbar = () => {
   const [state, setState] = React.useState(1);
 
   const [colorbg, setColorBg] = React.useState("home-color");
 
-  // const sessionToken = sessionStorage.getItem("artistToken");
+  const sessionToken = sessionStorage.getItem("artistToken");
 
   // console.log(sessionToken);
   const action = (index) => {
@@ -24,6 +25,9 @@ const ArtistNavbar = ({ artistTk }) => {
   };
 
   const { logout } = useLogout();
+  const logoutArtist = () => {
+    logout();
+  };
   return (
     <div>
       <div>
@@ -89,18 +93,32 @@ const ArtistNavbar = ({ artistTk }) => {
             </NavLink>
 
             <div class="vl">
-              {artistTk !== null ? (
-                <button className="btn text-white" onClick={logout}>
-                  Logout
-                </button>
+              {sessionToken !== null ? (
+                <>
+                  <button className="btn text-white" onClick={logout}>
+                    Logout
+                  </button>
+
+                  <DropdownButton
+                    id="dropdown-basic-button"
+                    variant="info"
+                    title="Settings"
+                    menuVariant="dark"
+                  >
+                    <Dropdown>
+                      <NavLink to={"/access"}>Get Access</NavLink>
+                    </Dropdown>
+                    <Dropdown>
+                      <NavLink to={"/settings"}>Account Setting</NavLink>
+                    </Dropdown>
+                  </DropdownButton>
+                </>
               ) : (
                 <div className="signup-div">
                   <NavLink to={"/signup"}>Sign up</NavLink>
+                  <NavLink to={"/access"}>Get access</NavLink>
                 </div>
               )}
-              <div className="signup-div">
-                <NavLink to={"/access"}>Get access</NavLink>
-              </div>
             </div>
             <button className="nav-btn nav-close-btn" onClick={showNavbar}>
               <FaTimes />

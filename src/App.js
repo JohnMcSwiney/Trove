@@ -10,6 +10,7 @@ import {
   UploadMusic,
   Login,
   Signup,
+  AccountSetting,
 } from "./pages/pages";
 
 const App = () => {
@@ -17,7 +18,7 @@ const App = () => {
   return (
     <div>
       <BrowserRouter>
-        <ArtistNavbar artistTk={artistToken} />
+        <ArtistNavbar />
         <div className="container">
           <Routes>
             <Route path="/" element={<Home />}></Route>
@@ -25,12 +26,8 @@ const App = () => {
             <Route path="/discovery" element={<Discovery />}></Route>
             <Route path="/uploadmusic" element={<UploadMusic />}></Route>
             <Route path="/signup" element={<Signup />}></Route>
-            <Route
-              path="/login"
-              element={
-                <Login artistTk={artistToken} setArtistTk={setArtistToken} />
-              }
-            ></Route>
+            <Route path="/login" element={<Login />}></Route>
+            <Route path="/settings" element={<AccountSetting />}></Route>
           </Routes>
         </div>
       </BrowserRouter>
