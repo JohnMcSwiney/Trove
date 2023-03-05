@@ -7,7 +7,7 @@ const Song = ({ song }) => {
         <img src={song.imgUrl} alt={song.title} />
       </div>
       <span>{song.title}</span>
-      <p>{song.artist}</p>
+      <p>{song.artist.artistName}</p>
       <p>{song.genre}</p>
       <a href={song.songUrl}>song</a>
     </div>
