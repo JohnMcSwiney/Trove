@@ -5,7 +5,7 @@ import CardPlaylist from '../../components/cards/card_playlist/CardPlaylist';
 import FeaturedArtist from '../../components/featured_artist/FeaturedArtist';
 import GenreCard from '../../components/cards/card_genre/CardGenre';
 
-import DiscoveryGame from '../../components/discoverygame/DiscoveryGame';
+import {dislikedIds, likedIds} from '../../components/discoverygame/DiscoveryGame';
 
 
 
@@ -17,6 +17,9 @@ const MyTrove = () => {
 
   const [likedSongArray, setlikedSongArray] = useState([]);
   const [dislikedSongArray, setdislikedSongArray] = useState([]);
+
+  const DLids = dislikedIds;
+  const Lids = likedIds; 
 
   const tempUser1 = {
     userId: "U0001",
@@ -132,13 +135,13 @@ const MyTrove = () => {
           <br/>
           <div className="TPlike">Likes: {likeArray}</div>
           <br/>
-          <div className="TPdislike">Dislikes: {dislikeArray}</div>
+          <div className="TPdislike">Dislikes: {dislikeArray} </div>
           <br/>
 
-          <div className="TPlikedSongs">liked Song IDs{likedSongArray}</div>
+          <div className="TPlikedSongs">liked Song IDs{likedSongArray}{Lids}</div>
           <br/>
           
-          <div className="TPdislikedSongs">Disliked song IDS {dislikedSongArray}</div>
+          <div className="TPdislikedSongs">Disliked song IDS {dislikedSongArray}{DLids}</div>
 
 
         </div>

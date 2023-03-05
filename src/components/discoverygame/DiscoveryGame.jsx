@@ -345,5 +345,6 @@ const DiscoveryGame = () => {
   );
 
 }
-
+export const likedIds = [];
+export const dislikedIds = [];
 export default DiscoveryGame;
