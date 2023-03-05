@@ -43,7 +43,11 @@ app.get("/api/session", (req, res) => {
 });
 
 const loginArtist = require("./routes/login-route/login-route");
+
 app.use("/api/artist", loginArtist);
+
+const songRoutes = require("./routes/song-route/song-route");
+app.use("/api/songs", songRoutes);
 
 app.listen(process.env.PORT, "0.0.0.0", () => {
   console.log(`Listening to port ` + process.env.PORT);

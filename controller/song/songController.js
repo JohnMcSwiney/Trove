@@ -6,11 +6,11 @@ const mongoose = require('mongoose')
 
 const createSong = async (req, res) => {
 
-    console.log('createSong', req.body)
+    console.log('createSong', req.body);
 
     switch (req.body.releaseType) {
 
-        case "Album" || "EP":
+        case "Album" || "EP" || "album" || "ep":
             try {
 
                 const artist = await Artist.findOne({ artistName: req.body.artist });
@@ -119,9 +119,10 @@ const createSong = async (req, res) => {
             }
             break;
 
-        case "Single":
+        case "Single" || "single":
 
             try {
+
                 const artist = await Artist.findOne({ artistName: req.body.artist });
                 console.log(artist);
 
@@ -129,6 +130,8 @@ const createSong = async (req, res) => {
 
                     throw new Error('Artist not found');
                 }
+
+                const artistId = artist._id;
 
                 if (req.body.featuredArtist == null || !req.body.featuredArtists) {
 
@@ -138,7 +141,7 @@ const createSong = async (req, res) => {
 
                     const song = new Song({
                         ...req.body,
-                        artist: artist._id
+                        artist: artistId
                     });
 
                     artist.songList.push(song._id);
