@@ -15,6 +15,8 @@ const createSong = async (req, res) => {
 
                 const artist = await Artist.findOne({ artistName: req.body.artist });
 
+                const artistId = artist._id;
+
                 console.log(artist);
 
                 if (!artist) {
@@ -22,6 +24,8 @@ const createSong = async (req, res) => {
                 }
 
                 const album = await Album.findOne({ albumName: req.body.album });
+
+                const albumId = album._id;
 
                 if (!album) {
                     throw new Error('Album not found');
@@ -31,8 +35,8 @@ const createSong = async (req, res) => {
 
                     const song = new Song({
                         ...req.body,
-                        artist: artist._id,
-                        album: album._id,
+                        artist: artistId,
+                        album: albumId,
                         releaseType: "Album"
                     });
 
