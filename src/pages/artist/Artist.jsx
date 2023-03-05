@@ -112,21 +112,21 @@ const Artist = () => {
       
       <div className='account-splitter'></div>
 
-      <div className='account-showcase-lg'>
+      <div className='artist-showcase-lg'>
         <h1>{tempArtist1.displayedName}'s Top Songs: </h1>
         <div className='CardCont'>
           
         </div>
       </div>
       <div className='account-splitter'></div>
-      <div className='account-showcase'>
+      <div className='artist-showcase'>
         <h1>Albums:</h1>
         <div className='CardCont'>
           <CardAlbum />
         </div>
       </div>
       <div className='account-splitter'></div>
-      <div className='account-showcase'>
+      <div className='artist-showcase'>
       <h1>Created Playlists:</h1>
         <div className='CardCont'>
           <CardPlaylist />
@@ -136,7 +136,7 @@ const Artist = () => {
       <div className='account-splitter'></div>
       
       <div className='account-splitter'></div>
-      <div className='account-showcase'>
+      <div className='artist-showcase'>
         <h1></h1>
       </div>
 

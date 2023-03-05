@@ -18,29 +18,24 @@ function CardAlbum({props}){
       <>
         {
           albumData.map((album, index)=>(
-            <div className='bg mx-3 flex flex-col align-middle 
-                            justify-center text-center text-ellipsis w-24 rounded-lg 
-                            overflow-hidden cont 
+            <div className='bg card-alb-cont 
                             '
                             onClick={redirectAlbum}>
-                   <div className='rounded-md m-auto  '>
-                     <div className='overflow-hidden p-0.5 ' > 
+                   <div className='card-alb-img-cont'>
                        <img 
-                          className='rounded-md w-full overflow-hidden 
-                                     object-cover h-full' 
+                          className='' 
                           src={album.picUrl} 
                           alt={album.name}
                           />
-                     </div>
                    </div>
 
-                   <div className='grid grid-flow-row gap-0 h-14 align-middle m-auto'>
+                   <div className='card-alb-text-cont'>
                       <a 
-                      className='albtxt text'>
+                      className='albtxt alb-card-text'>
                         {album.name} 
                         </a>
                         <a 
-                      className='arttxt text'>
+                      className='arttxt alb-card-text'>
                         {album.artist} 
                         </a>
                     </div>
