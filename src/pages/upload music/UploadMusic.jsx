@@ -7,27 +7,12 @@ import AddSongs from "./AddSongs";
 import "./UploadMusic.css";
 import SongInfo from "./SongInfo";
 // Import the functions you need from the SDKs you need
-import firebase from "firebase/compat/app";
-import "firebase/compat/storage";
+import firebase from "./firebaseConfig";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 //  ARTISTS MUSIC SUBMISSION PAGE
 export default function UploadMusic(props) {
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "AIzaSyAMBOXMTHSEKxID-wKEex3nmNoRqmm_wD4",
-    authDomain: "helical-analyst-376421.firebaseapp.com",
-    projectId: "helical-analyst-376421",
-    storageBucket: "helical-analyst-376421.appspot.com",
-    messagingSenderId: "376243716539",
-    appId: "1:376243716539:web:224230609e73c04d8b049e",
-    measurementId: "G-47B2D6EVKF",
-  };
-
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
 
   const storage = firebase.storage();
 
@@ -76,38 +61,29 @@ export default function UploadMusic(props) {
   }
 
   //  Submission Value States
-  const [title, setTitle] = useState([]);
+  // const [title, setTitle] = useState([]);
+  const [title, setTitle] = useState();
   const [album, setAlbum] = useState("");
-  // const [highlightStart, setHighlightStart] = useState();
-  // const [highlightStop, setHighlightStop] = useState();
   const [genre, setGenre] = useState("");
   const [songFile, setSongFile] = useState([]);
   const [imageFile, setImageFile] = useState();
   const [releaseType, setReleaseType] = useState("");
-  const [releaseYear, setReleaseYear] = useState();
+  const [releaseYear, setReleaseYear] = useState("");
   const [artist, setArtist] = useState("");
   const [isUploading, setIsUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
 
   // Handle State Changes
   const handleTitle = (e) => {
-    const { value, name } = e.target;
-    setTitle({ ...title, [name]: value });
-    console.log(title);
-    // setTitle(e.target.value);
+    // const { value, name } = e.target;
+    // setTitle({ ...title, [name]: value });
+    // console.log(title);
+     setTitle(e.target.value);
   };
 
   const handleAlbumName = (e) => {
     setAlbum(e.target.value);
   };
-
-  // const handleHighlightStart = (e) => {
-  //   setHighlightStart(e.target.value);
-  // };
-
-  // const handleHighlightStop = (e) => {
-  //   setHighlightStop(e.target.value);
-  // };
 
   const handleGenre = (e) => {
     setGenre(e.target.value);
@@ -124,24 +100,8 @@ export default function UploadMusic(props) {
     else {
 
       setSongFile(Array.from(e.target.files));
-      // const files = e.target.files;
-
-      // setSongFile([...songFile, ...files]);
     }
-
-    //setSongFile(e.target.files[0]);
-    // setSongFile((prevSongFile) => {
-    //   return [...prevSongFile, e.target.files[0]];
-    // });
-    // console.log(songFile[0].name);
   };
-
-  // const handleMultipleSongFileChange = (e) => {
-  //   setSongFile((prevSongFile) => {
-  //     return [...prevSongFile, Array.from(e.target.files[0])];
-  //   });
-  //   // console.log(songFile[0].name);
-  // };
 
   const handleImageFileChange = (e) => {
     setImageFile(e.target.files[0]);
@@ -232,6 +192,8 @@ export default function UploadMusic(props) {
               async () => {
                 const imgUrl = await imageRef.getDownloadURL();
 
+                console.log("before song post");
+
                 fetch("/api/songs", {
                   method: "POST",
                   headers: {
@@ -239,15 +201,16 @@ export default function UploadMusic(props) {
                   },
                   body: JSON.stringify({
                     title,
-                    album,
                     genre,
                     songUrl,
                     imgUrl,
                     releaseType,
                     releaseYear,
                     artist,
-                  }),
+                  })
                 })
+
+                
                   .then((res) => res.json())
 
                   .then((res) => {
@@ -331,7 +294,7 @@ export default function UploadMusic(props) {
             async () => {
               const imgUrl = await imageRef.getDownloadURL();
 
-              fetch("/api/songs", {
+              fetch("/api/albums", {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",
