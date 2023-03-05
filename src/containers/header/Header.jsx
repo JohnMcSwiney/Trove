@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 function Header() {
   const { logout } = useLogout();
   const { user } = useAuthContext();
+  const userData = JSON.parse(localStorage.getItem("user"));
   const logoutHandler = () => {
     logout();
   };
@@ -73,21 +74,9 @@ function Header() {
           >
             {/* work on this to get the id */}
             {user && <div>{user._id}</div>}
-            {!user && (
-              <div>
-                <AiOutlineUser />
-                Me
-              </div>
-            )}
+            {user ? <div>{user.displayName}</div> : <AiOutlineUser />}
           </Dropdown.Toggle>
-
           <Dropdown.Menu style={{ backgroundColor: "#393bd0" }}>
-            <div className="dd-backg">
-              <RiUpload2Line style={{ color: "white" }} />
-              <a href="/upload" className="uploadbtn btn text-light">
-                Upload
-              </a>
-            </div>
             {user && logo && (
               <div className="dd-backg">
                 <RiLogoutBoxLine style={{ color: "white" }} />
