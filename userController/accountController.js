@@ -1,6 +1,7 @@
 const User = require("../models/user model/user-model");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
+const Cookie = require("js-cookie");
 require("dotenv").config();
 
 const handleErrors = (err) => {
@@ -31,6 +32,29 @@ const loginUser = async (req, res) => {
     //create a token
     const token = createToken(user._id);
 
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+      expires: new Date(Date.now() + 86400 * 1000), // Set the cookie to expire in 1 day
+    });
+
+    const listener = {
+      email,
+      token,
+      id: user._id,
+      displayName: user.displayName,
+      useImg: user.imageURL,
+      dob: user.dob,
+    };
+
+    res.cookie("user", listener, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+      expires: new Date(Date.now() + 86400 * 1000), // Set the cookie to expire in 1 day
+    });
+
     res.status(200).json({
       email,
       token,
@@ -47,7 +71,7 @@ const loginUser = async (req, res) => {
 //sign up user
 
 const signupUser = async (req, res) => {
-  const { email, password, isAdmin, displayedName } = req.body;
+  const { email, password } = req.body;
 
   try {
     const user = await User.signup(email, password);
@@ -55,6 +79,28 @@ const signupUser = async (req, res) => {
     //create a token
     const token = createToken(user._id);
 
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+      expires: new Date(Date.now() + 86400 * 1000), // Set the cookie to expire in 1 day
+    });
+
+    const listener = {
+      email,
+      token,
+      id: user._id,
+      displayName: user.displayName,
+      useImg: user.imageURL,
+      dob: user.dob,
+    };
+
+    res.cookie("user", listener, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+      expires: new Date(Date.now() + 86400 * 1000), // Set the cookie to expire in 1 day
+    });
     //provide its provider
     user.provider = "TroveMusic";
     console.log(user.provider);
@@ -102,6 +148,11 @@ const signupUser = async (req, res) => {
   }
 };
 
+const logoutUser = (req, res) => {
+  res.clearCookie("token");
+  res.clearCookie("user");
+  res.status(200).json({ message: "Logged out successfully" });
+};
 const verifyUser = async (req, res) => {
   const id = req.params.id;
 
@@ -118,5 +169,6 @@ const verifyUser = async (req, res) => {
 module.exports = {
   loginUser,
   signupUser,
+  logoutUser,
   verifyUser,
 };
