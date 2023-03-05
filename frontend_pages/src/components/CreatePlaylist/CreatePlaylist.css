@@ -233,9 +233,9 @@ body {
   .createplaylist--song {
     background-color: #12164B;
     width: 90%;
-    height: 20vmin;
+    height: 16vmin;
     margin: auto;
-    margin-top: -5vmin;
+    margin-top: -2vmin;
     border-radius: 3vmin;
 
   }
@@ -248,22 +248,39 @@ body {
   .createplaylist--song:hover >  .createplaylist--tiny--cover > #playmask {
     position: absolute;
     display:inline;
-    margin-left: -12vmin;
+    margin-left: -11vmin;
+  }
+
+  .createplaylist--delsong > img{
+    width: 7.5vw;
+    margin-right: -2vmin;
+    margin-top: -4vmin;
+  }
+
+  .createplaylist--delsong:hover > img{
+    transform: scale(1.01); 
+    box-shadow: 0 0 22px #0034C4;
+    border-radius: 5vmin;
+  }
+
+  .createplaylist--delsong {
+    float: right;
+    padding-bottom: 5vw;
   }
 
   .createplaylist--tiny--cover {
     border-radius: 1vmin;
-    height: 12vmin;
-    width: 12vmin;
-    margin-left: 7%;
+    height: 11vmin;
+    width: 11vmin;
+    margin-left: 5%;
     margin-top: 10%;
   }
 
   .createplaylist--tiny--cover img {
     border-radius: 1vmin;
-    height: 12vmin;
-    width: 12vmin;
-    margin-top: 4vmin;
+    height: 11vmin;
+    width: 11vmin;
+    margin-top: 3vmin;
   }
 
   .createplaylist--tiny--cover > #playmask {
@@ -272,31 +289,32 @@ body {
   }
 
   .createplaylist--song--info {
-    margin-left: 25vmin;
+    margin-left: 20vmin;
     margin-top: -8vmin;
   }
 
   .createplaylist--song--info > h5 {
     font-weight: 400;
+    font-size: 2.5vmin;
   }
 
   .createplaylist--song--info > h5 > span {
     font-weight: 200;
-    font-size: 3vmin;
-    color: #878694;
+    font-size: 2vmin;
+    color: white;
   }
 
   .createplaylist--song--info > h6 {
     font-weight: 300;
     color: #878694;
     width: 30vmin;
-    font-size: 2.3vmin;
+    font-size: 2vmin;
   }
 
   .createplaylist--song--options {
     display: flex;
-    margin-left: 65vmin;
-    margin-top: -10vmin;
+    margin-left: 62vmin;
+    margin-top: -8vmin;
   }
 
   #createplaylist--song--heart, #createplaylist--song--share, #createplaylist--song--more {
