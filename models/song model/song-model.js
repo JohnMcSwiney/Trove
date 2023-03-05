@@ -42,19 +42,19 @@ const songSchema = new mongoose.Schema(
 
         duration: {
             type: Number,
-            required: true,
+            //required: true,
             minlength: 2,
             maxlength: 4
         },
 
         beat: {
             type: Number,
-            required: true
+            //required: true
         },
 
         tempo: {
             type: Number,
-            required: true
+            //required: true
         },
 
         songUrl: {
