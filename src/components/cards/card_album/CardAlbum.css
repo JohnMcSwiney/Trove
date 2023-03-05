@@ -37,13 +37,16 @@
     border:rgba(78, 78, 78, 0.976) 2px solid;
 }
 
-.text{
+.alb-card-text{
     text-decoration: none;
+
 }
 
 .albtxt{
-    font-size: x-small;
+    font-size: medium;
     color: white;
+    width: 130px;
+    max-height: 50px;
 }
 
 .albtxt:focus, .albtxt:hover{
@@ -52,7 +55,7 @@
     font-weight: bold;
 }
 .arttxt{
-    font-size: xx-small;
+    font-size: small;
     color: #878694;
 }
 
@@ -63,4 +66,27 @@
 }
 
 .text:focus, .text:hover{
+}
+.card-alb-cont{
+    width: 130px;
+    height: 180px;
+    margin-left: 5px;
+    margin-right: 5px;
+    background-color: chocolate;
+
+}
+.card-alb-img-cont{
+    width:110px;
+    height:110px;
+    background-color: aquamarine;
+    margin: 9px;
+}
+.card-alb-text-cont{
+    width: 130px;
+    height: 50px;
+    background-color: #cf2b2b;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    
 }

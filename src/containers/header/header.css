@@ -9,6 +9,12 @@
 
 .trove-header{
     z-index: 1;
+    height:70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    padding-top: 15px;
+    padding-bottom: 15px;
 }
 .bg-fglass{
     background: rgba(20, 16, 58, 0.06);
@@ -28,9 +34,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    
 }
 .span{
     font-weight: 800;
+    
 }
 .navbar-brand{
     display: flex;
@@ -68,27 +76,73 @@
     justify-content: center;
     align-content: center;
     margin: auto;
-    
+    color: #878694;
+    background-color: rgba(102, 51, 153, 0);
+    padding: 2px;
+    padding-left: 4px;
+    padding-right: 4px;
+    border-radius: 8px;
+    transition: background-color 0.2s ease-in-out, color 0.2s;
+}
+.trove-logo-link:hover{
+    color: white;
+    background-color: #12164B;
+    transition: background-color 0.4s ease-in-out, color 0.2s;
 }
 
 .dd-backg{
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-left: 5px
+    border-radius:5px;
+    padding-left: 5px;
+    margin-left: 5px;
+
+    padding-right: 5px;
+    margin-right: 5px;
+    background-color:#647dee0d ;
+    transition: background-color 0.2s ease-in-out, color 0.2s;
+    text-align: center;
+
+}
+.dd-backg:hover > a {
+    color:#f9f9f9;
+}
+.dd-backg > a {
+    color: #878694;
 }
 
+.dd-backg:hover > a > span{
+    color:#8650F4;
+}
+.dd-backg > a > span{
+    color: #878694;
+}
+.dd-backg > button{
+    color:#878694;
+}
+.dd-backg:hover > button{
+    color:white;
+}
+.dd-backg:hover > button > span{
+    color:#8650F4;
+}
+.dd-backg > button > span{
+    color: #878694;
+}
+
+
 .dd-backg:hover{
-    background-color:#647DEE ;
+    background-color:#647dee5d ;
+    transition: background-color 0.2s ease-in-out, color 0.2s;
 }
 
 .dropdown-style{
-    background-color: #393bd0; 
+    background-color: #12164B; 
 }
 
 .dropdown-toggle-style{
     height: 40px;
-    width: 35px;
     width: 40px;
     display: flex;
     align-content: center;
@@ -119,20 +173,35 @@
 .dropdown-toggle::after::after {
     content:none;
 }
-.back-icon{
-    color: white;
+backBtn-container{
+    
+    /* background-color: '#12164B'; */
+    border: rgba(255, 255, 255, 0) solid 1px;
+    border-radius: 50%;
+    margin: 4px;
+    font-size: small;
+    
+}
+.titleback-icon{
     height: 50px;
     width: 50px;
-  
-    
-    border: 15px;
+    color: "#878694";
+    border-radius: 50%;
+    margin: 4px;
+    background-color: transparent;
+    background-color: #12164b00;
+    transition: background-color 0.2s ease-in-out , color 0.2s;
+
 }
 
-.back-icon:hover{
- background-color: #bec0ca;
- opacity: .4;
-/* border-radius: 20px; */
+.titleback-icon:hover{
+    color: rgb(255, 255, 255);
+    background-color: #12164B;
+    transition: background-color 0.5s ease-in-out, color 0.3s;
+
+    /* border-radius: 20px; */
 }
+
 .dropdown-style{
     background-color: #393bd0; 
 }

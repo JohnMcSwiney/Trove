@@ -138,16 +138,18 @@
 
 }
 
-.account-showcase{
+.artist-showcase{
     display: flex;
-    justify-content: center;
+    justify-content: left;
     margin-top: 0;
     margin-bottom: 0;
     /* background-color: #412e67; */
     width: inherit;
     position: relative;
+   flex-direction: column;
+   gap: 0;
 }
-.account-showcase-lg{
+.artist-showcase-lg{
     display: flex;
     justify-content: left;
     margin-top: 0;
@@ -176,15 +178,19 @@
 }
 .CardCont{
     display: flex;
-    margin-top: 30px;
+    margin-top: 10px;
     margin-bottom: 10px;
     overflow: scroll;
     padding-left: 5px;
     padding-right: 5px;
+    width: 100%;
+    justify-items: left;
+    justify-content: space-between;
+
 
     
 }
 .test-container{
     display: flex;
-    
+
 }
