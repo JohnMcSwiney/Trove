@@ -344,6 +344,7 @@ const DiscoveryGame = () => {
   );
 
 }
+//the test it to just see if it actually shows up on the MyTrove page which it does im just trying to figure out how to actually send the likedIDS and dislikedIDS instead 
 export const likedIds = ['test',1 ,2 ,3];
 export const dislikedIds = ['test', 4, 5, 6];
 export default DiscoveryGame;
