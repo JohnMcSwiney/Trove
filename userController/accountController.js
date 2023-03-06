@@ -2,11 +2,15 @@ const User = require("../models/user model/user-model");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
 const Cookie = require("js-cookie");
+const crypto = require("crypto");
+const maskEmailsPhones = require("mask-email-phone");
 require("dotenv").config();
 
 const handleErrors = (err) => {
   console.log(err.message, err.code);
 };
+
+// hashing email
 
 const createToken = (_id) => {
   return jwt.sign({ _id: _id }, process.env.SECRET, { expiresIn: "1d" });
@@ -55,14 +59,10 @@ const loginUser = async (req, res) => {
       expires: new Date(Date.now() + 86400 * 1000), // Set the cookie to expire in 1 day
     });
 
-    res.status(200).json({
-      email,
-      token,
-      id: user._id,
-      displayName: user.displayName,
-      useImg: user.imageURL,
-      dob: user.dob,
-    });
+    // Mask the email before sending it in the response
+    listener.email = maskEmailsPhones(listener.email);
+
+    res.status(200).json(listener);
   } catch (err) {
     res.status(400).json({ err: err.message });
   }
@@ -134,7 +134,7 @@ const signupUser = async (req, res) => {
         console.log("Email sent: " + info.response);
       }
     });
-
+    listener.email = maskEmailsPhones(listener.email);
     res.status(200).json({
       email,
       token,
