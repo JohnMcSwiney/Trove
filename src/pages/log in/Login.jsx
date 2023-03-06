@@ -12,6 +12,13 @@ const Login = () => {
   const { login, error, isLoading } = useLogin();
   const navigate = useNavigate();
 
+  // Redirect the user to the home page if they are already logged in
+  React.useEffect(() => {
+    if (localStorage.getItem("user")) {
+      navigate("/");
+    }
+  }, [localStorage.getItem("user"), navigate]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
