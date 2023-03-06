@@ -9,6 +9,7 @@ import PlaylistSong from "./PlaylistSong";
 export default function CreatePlaylist(props) {
     const default_album = "../assets/default_playlistcover.png";
     const [previewCover, setPreviewCover] = React.useState(default_album);
+    const [albumSongs, setAlbumSongs] = React.useState(albumsongs);
     
     const [imageFile, setImageFile] = React.useState();
     const handleImageFileChange = (e) => {
@@ -16,6 +17,16 @@ export default function CreatePlaylist(props) {
         setPreviewCover(URL.createObjectURL(e.target.files[0]));
   
     };
+
+    function handleRemoveSong(index) {
+        console.log(index);
+        const newList = albumSongs.filter((item) => item.idno != index);
+
+        
+        setAlbumSongs(newList);
+
+    }
+
 
     return(
     <section>
@@ -40,7 +51,6 @@ export default function CreatePlaylist(props) {
                         </label>
                 </div>
                 <div className="createplaylist--stats--info">
-                        <h5>Playlist Name</h5>
                         <input type="text" id="playlisttitle" placeholder="Playlist Name"/>
                        <div className="createplaylist--release--info">
                         {/* <h5>2014</h5> */}
@@ -48,8 +58,13 @@ export default function CreatePlaylist(props) {
                         {/* <h6>PLAYLIST</h6> */}
                         </div>
                         {/* <h4>Creator Username</h4> */}
+                        
                 </div>
+              
             </div>
+            <div className="createplaylist--createbtn">
+                    <input type="submit" value="Create" className="createplaylist--gradient--btn createplaylist--submit--btn" /> 
+                </div>
 
             <div className="createplaylist--addsongs">
                 <div className="createplaylist--searchbar">
@@ -57,25 +72,27 @@ export default function CreatePlaylist(props) {
 
                 <div className="createplaylist--addedsongs">
                     
-                </div>
+
             </div>
 
             </div>
 
             <div className="createplaylist--songs">
             {
-                    albumsongs && albumsongs.map((item, index)=>{
+                    albumSongs && albumSongs.map((item, index)=>{
                     return(
                         <PlaylistSong
                         key={index}
                         {...item}
-
+                        index={index}
+                        handleRemoveSong={handleRemoveSong}
                         />
                 
                 
                 ) })}
             </div>
 
+            </div>
             <NavBar />
     </section>
 

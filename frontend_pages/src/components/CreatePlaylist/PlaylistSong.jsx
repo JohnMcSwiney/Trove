@@ -17,7 +17,7 @@ export default function PlaylistSong(props) {
     return (
         <div className="createplaylist--song">
                 <div className="createplaylist--delsong">
-                    <img src="../assets/xsongsymbol.png" alt="deletesongicon"/>
+                    <img src="../assets/xsongsymbol.png" alt="deletesongicon" onClick={ () =>  props.handleRemoveSong(props.idno)} />
                 </div>
                 <div className="createplaylist--tiny--cover">
                         <img src={props.cover} alt="playlistcover"/>

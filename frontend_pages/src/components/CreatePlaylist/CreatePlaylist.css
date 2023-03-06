@@ -77,6 +77,7 @@ body {
       display: flex;
       position: fixed;
       width: 100%;
+      margin-top: 2vh;
   
       
     }
@@ -222,7 +223,7 @@ body {
   }
     
   .createplaylist--songs {
-    margin-top: -10vmin;
+    /* margin-top: -10vmin; */
     overflow-x: hidden;
     overflow-y: auto;
     max-height: 50vh;
@@ -235,7 +236,7 @@ body {
     width: 90%;
     height: 16vmin;
     margin: auto;
-    margin-top: -2vmin;
+    margin-top: -3vmin;
     border-radius: 3vmin;
 
   }
@@ -323,5 +324,51 @@ body {
     padding-right: 3vmin;
   }
 
+ .createplaylist--submit--btn {
+   display: block; 
+
+   align-items: center;
+   appearance: none;
+   background-image: linear-gradient(to left, #8650f4, #6f49e8, #5642dc, #393bd0, #0034c4);
+   border-radius: 5vmin;
+   border-style: none;
+   box-shadow: rgba(0, 0, 0, .2) 0 3px 5px -1px,rgba(0, 0, 0, .14) 0 6px 10px 0,rgba(0, 0, 0, .12) 0 1px 18px 0;
+   box-sizing: border-box;
+   color: #fff;
+   cursor: pointer;
+   display: inline-flex;
+   fill: currentcolor;
+   /* font-family: "Google Sans",Roboto,Arial,sans-serif; */
+   font-size: 3vmin;
+   font-weight: bold;
+   height: 5vmin;
+   justify-content: center;
+   letter-spacing: .25px;
+   line-height: normal;
+   max-width: 100%;
+   overflow: visible;
+   position: relative;
+   text-align: center;
+   text-transform: none;
+   transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1),opacity 15ms linear 30ms,transform 270ms cubic-bezier(0, 0, .2, 1) 0ms;
+   user-select: none;
+   -webkit-user-select: none;
+   touch-action: manipulation;
+   width: auto;
+   will-change: transform,opacity;
+   z-index: 0;
+   margin-bottom: 3vmin;
+   margin-right: 3vw;
+   margin-top: 4vw;
+   padding-left: 5vmin;
+   padding-right: 5vmin;
+   padding-bottom: 5vmin;
+   padding-top: 1vmin;
+   float: right;
+  }
+
+  .createplaylist--createbtn {
+    /* margin-bottom: -10vmin; */
+  }
 
 }
