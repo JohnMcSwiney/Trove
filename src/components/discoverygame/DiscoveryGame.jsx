@@ -145,8 +145,7 @@ const DiscoveryGame = () => {
     audioPlayer.current.volume = (volumeRef.current.value / 100);
   }
 
-  const likedIndexs = [];
-  const dislikedIndexs = [];
+
 
   const swipeableProps = useSwipeable({
     trackMouse: true,
@@ -326,11 +325,11 @@ const DiscoveryGame = () => {
       <div className='Discovery-TestingItem-Container'>
         {/* Like */}
         <div>{accept} [ Likes ]
-          {/* {console.log(likedIndexs)} */}
+  
         </div>
         {/* Dislike */}
         <div>{deny} [ Dislikes ]
-          {/* {console.log(dislikedIndexs)} */}
+
         </div>
         
         <div>
@@ -345,6 +344,6 @@ const DiscoveryGame = () => {
   );
 
 }
-export const likedIds = [];
-export const dislikedIds = [];
+export const likedIds = ['test',1 ,2 ,3];
+export const dislikedIds = ['test', 4, 5, 6];
 export default DiscoveryGame;

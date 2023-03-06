@@ -15,11 +15,10 @@ const MyTrove = () => {
   const [likeArray, setlikeArray] = useState();
   const [dislikeArray, setdislikeArray] = useState();
 
-  const [likedSongArray, setlikedSongArray] = useState([]);
-  const [dislikedSongArray, setdislikedSongArray] = useState([]);
+  const [likedSongArray, setlikedSongArray] = useState([likedIds]);
+  const [dislikedSongArray, setdislikedSongArray] = useState([dislikedIds]);
 
-  const DLids = dislikedIds;
-  const Lids = likedIds; 
+
 
   const tempUser1 = {
     userId: "U0001",
@@ -138,12 +137,12 @@ const MyTrove = () => {
           <div className="TPdislike">Dislikes: {dislikeArray} </div>
           <br/>
 
-          <div className="TPlikedSongs">liked Song IDs{likedSongArray}{Lids}</div>
+          <div className="TPlikedSongs"> liked Song IDs {likedSongArray}</div>
           <br/>
           
-          <div className="TPdislikedSongs">Disliked song IDS {dislikedSongArray}{DLids}</div>
+          <div className="TPdislikedSongs"> Disliked song IDS {dislikedSongArray}</div>
 
-
+              
         </div>
         <div className='account-splitter'></div>
         <div className='account-showcase'>
