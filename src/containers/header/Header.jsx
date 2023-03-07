@@ -34,8 +34,8 @@ function Header() {
   return (
     <div className="trove-header d-flex justify-content-between sticky-top bg-fglass-b">
       {logo ? (
-        <button className="back-button" onClick={goBack}>
-          <MdKeyboardBackspace className="back-icon" />
+        <button className="backBtn-container" onClick={goBack}>
+          <MdKeyboardBackspace className="titleback-icon" />
         </button>
       ) : (
         <div className=" p-2">
@@ -43,7 +43,7 @@ function Header() {
             <img
               src="./img/troveIcon.png"
               alt="Trove logo"
-              className="trove-logo"
+              className="trove-logo hidden"
             />
             <h1 className="trove-logo-link">
               <span className="span">Trove</span> Music
@@ -57,7 +57,7 @@ function Header() {
             <img
               src="./img/troveIcon.png"
               alt="Trove logo"
-              className="trove-logo"
+              className="trove-logo hidden"
             />
             <h1 className="trove-logo-link">
               <span className="span">Trove</span> Music

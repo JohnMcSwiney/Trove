@@ -1,24 +1,13 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities; 
-
-@layer base{
-    .bg{
-        @apply pb-1
-    }
-    .bg:hover{
-        @apply bg-gradient-to-t from-trv-Purple to-trv-Blue
-    }
-    .albtxt{
-        @apply w-full flex flex-wrap h-8 overflow-hidden text-trv-sm-Song-txt text-center m-auto items-center justify-center 
-    }
-    .arttxt{
-        @apply w-full flex flex-wrap h-6 p-0 my-0 overflow-hidden text-trv-sm-Artist-txt text-center m-auto items-center justify-center 
-    }
-
-}
 .cont{
     transition: 0.4s;
+}
+.bg1test{
+    width: fit-content;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    margin:0;
+    padding-left: 10px ;
 }
 .bg{
     background-color: rgba(18, 22, 75, 0.7);
@@ -39,14 +28,34 @@
 
 .alb-card-text{
     text-decoration: none;
+    overflow: hidden;
+    margin: 0;
 
 }
-
+.art-card-text-cont-1{
+    height: 40px;
+    text-align: center;
+    margin: auto;
+}
+.art-card-text-cont-2{
+    height: 30px;
+    text-align: center;
+    margin: auto;
+    background-color: #8750f400;
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    padding-left: 3px;
+    padding-right: 3px;
+}
 .albtxt{
-    font-size: medium;
+    font-size: small;
     color: white;
-    width: 130px;
+    width: 90px;
     max-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .albtxt:focus, .albtxt:hover{
@@ -55,7 +64,7 @@
     font-weight: bold;
 }
 .arttxt{
-    font-size: small;
+    font-size:x-small;
     color: #878694;
 }
 
@@ -68,25 +77,29 @@
 .text:focus, .text:hover{
 }
 .card-alb-cont{
-    width: 130px;
-    height: 180px;
-    margin-left: 5px;
-    margin-right: 5px;
-    background-color: chocolate;
+    width: 100px;
+    height: 170px;
+    border-radius: 10px;
+    flex-direction: column;
+    align-items: center;
+    display: flex;
 
 }
 .card-alb-img-cont{
-    width:110px;
-    height:110px;
-    background-color: aquamarine;
-    margin: 9px;
+    width:90px;
+    height:90px;
+    background-color: rgba(127, 255, 212, 0);
+    border-radius: 7px;
+    overflow: hidden;
+    margin-top: 3px;
+
 }
 .card-alb-text-cont{
-    width: 130px;
-    height: 50px;
-    background-color: #cf2b2b;
+    width: 100px;
+    height: 70px;
     display: flex;
     flex-direction: column;
     text-align: center;
+    margin-top: 4px;
     
 }

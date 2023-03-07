@@ -14,7 +14,7 @@ const Home = () => {
   }
 
   return (
-    <div className='container'>
+    <div className='container mar-t'>
       <main className='home-main row-span-1 md:col-span-2 relative home-height'>
         <div>
           <h3 className=''>Find Musical Treasures</h3>

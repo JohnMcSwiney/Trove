@@ -173,7 +173,7 @@
 .dropdown-toggle::after::after {
     content:none;
 }
-backBtn-container{
+.backBtn-container{
     
     /* background-color: '#12164B'; */
     border: rgba(255, 255, 255, 0) solid 1px;
@@ -191,7 +191,6 @@ backBtn-container{
     background-color: transparent;
     background-color: #12164b00;
     transition: background-color 0.2s ease-in-out , color 0.2s;
-
 }
 
 .titleback-icon:hover{
