@@ -263,21 +263,13 @@ export default function UploadMusic(props) {
         artist,
         featuredArtists
       })
-    })
-       .then(res => res.json())
+    });
 
-      .then((res) => {
-        console.log("song data: " + res.data);
-        setIsUploading(false);
-        setUploadProgress(0);
-      })
-      .catch((err) => {
-        console.error(err);
-        setIsUploading(false);
-        setUploadProgress(0);
-      });
+    const data = await res.json();
 
-    //return data;
+    console.log("Song Data: " + data);
+
+    return data;
 
 
 
