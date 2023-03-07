@@ -22,7 +22,7 @@ import { BsSkipStart, BsSkipEnd, BsPlay, BsPause } from 'react-icons/bs'
 
 import { Tooltip } from 'react-tooltip' //react tool tip used in explicit tag
 
-import './musicbar.css'
+import './fullscreenMusicBar.css';
 
 import Trv_Chest from '../../assets/Trv_icons/Tvr_lib_icon.ico'
 
@@ -187,7 +187,7 @@ const MusicBarFullscreen = () => {
             
 
             <div className='fullscreen-song-img '>
-              <img src={obj.img_url}></img>
+              <img src={obj.img_url} className="fullscreen-img"></img>
               {obj.explicit ? (
                 <div className='explicit-containter'>
                   <MdExplicit
@@ -218,10 +218,10 @@ const MusicBarFullscreen = () => {
               </button>
             </div>
               <div className='fullscreen-song-info-txt-container'>
-                <div className='song-txt'>
+                <div className='fc-song-txt'>
                   <a>{obj.title}</a>
                 </div>
-                <div className='artist-txt'>
+                <div className='fc-artist-txt'>
                   <a>{obj.artist}</a>
                 </div>
               </div>
@@ -232,14 +232,14 @@ const MusicBarFullscreen = () => {
             </div>
             </div>
             
-            <div className='control-container'>
-              <button>
+            <div className='fullscreen-control-container'>
+              <button className='fullscreen-mediabtn1'>
                 <BsSkipStart />
               </button>
-              <button className='playbtnstyle' onClick={togglePlayPause}>
-                {isPlaying ? <BsPause /> : <BsPlay className='BsPlayStyleLg' />}
+              <button className='fullscreen-playbtnstyle' onClick={togglePlayPause}>
+                {isPlaying ? <BsPause /> : <BsPlay className='FullscreenBsPlayStyleLg' />}
               </button>
-              <button>
+              <button className='fullscreen-mediabtn1'>
                 <BsSkipEnd />
               </button>
             </div>

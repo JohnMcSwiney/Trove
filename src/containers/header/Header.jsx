@@ -74,7 +74,8 @@ function Header() {
           >
             {/* work on this to get the id */}
             {user && <div>{user._id}</div>}
-            {user ? <div>{user.displayName}</div> : <AiOutlineUser />}
+            {/* I removed the user name from the dropdown */}
+            {user ? <div></div> : <AiOutlineUser />}
           </Dropdown.Toggle>
           <Dropdown.Menu style={{ backgroundColor: "#393bd0" }}>
             {user && logo && (

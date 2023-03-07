@@ -1,0 +1,215 @@
+.fullsc-player-container{
+
+}
+.player-container{
+
+}
+
+.fullscreenMusicBar{
+    width: 100%;
+    background-color: #e39800;
+
+    margin: auto;
+    position: fixed;
+    z-index: 0;
+
+}
+.fullsc-musicbar-wrap{
+  width: inherit;
+  margin: auto;
+  bottom: 1%;
+  height: 100%;
+  width: 100%;
+  margin: auto;
+  position: fixed;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 10px;
+  background-color: #e39800;
+  padding-top: 20px;
+}
+.fullscreen-player-info-container{
+    width: 100%;
+    margin-top: 60px;
+    background-color: rgb(233, 172, 92);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding:10px;
+}
+.fullscreen-song-img{
+   position: relative;
+    order: 1;
+    border-radius: 8px;
+    overflow: hidden;
+    
+}
+.fullscreen-song-img > .fullscreen-img{
+    width: 250px;
+    width: 250px;
+    background-color: aliceblue;
+    
+}
+
+.fullscreen-progressbarContainer{
+    padding: 0;
+    margin:0;
+    display: block;
+    position: relative;
+    order: 3;
+
+    width: 70%;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+.fullscreen-song-txt-container-container{
+    width: 250px;
+    display: flex;
+    flex-direction: row;
+
+    order:2;
+}
+.fullscreen-song-info-txt-container{
+        
+    display: flex;
+    flex-grow: 3;
+    flex-direction: column;
+    justify-items: center;
+    text-align: left;
+    overflow: hidden;
+    padding-left: 1px; 
+    margin: 2px;
+}
+.fullscreen-playbtnstyle{
+    background-color: aquamarine;
+    border-radius: 50px;
+    box-sizing: border-box;
+    padding: 2px;
+}
+.FullscreenBsPlayStyleLg{
+    padding-left: 3px;
+}
+.fullscreen-mediabtn1{
+    font-size: 50px;
+
+}
+.fullscreen-control-container{
+    order:4;
+    height: 60px;
+    font-size: 60px;
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    gap: 5px;
+    color: white;
+}
+
+.fc-song-txt{
+    text-align: center;
+    font-size: small;
+    color: white;
+}
+.fc-artist-txt{
+    text-align: center;
+    font-size: smaller;
+}
+.fullscreen-progressBar{
+    appearance: none;
+    border-radius: 10px;
+    width: 100%;
+    outline:none;
+    transform: translate(0px, -40%);
+    background-color:#12164b85;
+    
+}
+/*safari*/
+.fullscreen-progressBar::-webkit-slider-runnable-track{
+    background-color: rgba(255, 255, 255, 0.289);
+    border-radius: 10px;
+    position: relative;
+    width: 100%;
+    height: 5px;
+    outline:none; 
+}
+/*chrome & safari*/
+.fullscreen-progressBar::before{
+    content: '';
+    height: 5px;
+    width: var(--seek-before-width);
+    background-image: linear-gradient(to right,#0034c4, #8650F4);
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+    /* border-radius: 10px; */
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    cursor: pointer;
+    
+}
+.fullscreen-progressBar::-webkit-slider-thumb{
+    -webkit-appearance: none;
+    height:7px;
+    width: 7px;
+    border-radius: 50%;
+    border: none;
+    background-color: #8650F4;
+    cursor: pointer;
+    position: relative;
+    margin: -1px 0 0 0;
+    z-index: 3;
+    box-sizing: border-box;
+    box-shadow: -1px 0px 5px rgba(3, 3, 59, 0.363);
+    
+}
+.fullscreen-progressBar:active::-webkit-slider-thumb{
+    transform: scale(1.6);
+    transition: ease-in-out .05s;
+    border: 1px solid rgba(245, 245, 245, 0.447);
+    border-radius: 50%;
+    box-shadow: rgba(255, 255, 255, 0.318); 
+    background-color: #8650F4;
+}
+/* firefox */
+.fullscreen-progressBar::-moz-range-track{
+    background: rgba(19, 13, 103, 0.74);
+    border-radius: 10px;
+    position: relative;
+    width: 100%;
+    height: 5px;
+    outline:none;
+    z-index: 1;
+}
+.fullscreen-progressBar::-moz-focus-outer{
+    border:0;
+}
+.fullscreen-progressBar::-moz-range-progress{
+    background-image: linear-gradient(to right,#0034c4, #8650F4);
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    height: 5px;
+}
+.fullscreen-progressBar::-moz-range-thumb{
+    height:7px;
+    width: 7px;
+    border-radius: 50%;
+    border: transparent;
+    background-color: #8650F4;
+    cursor: pointer;
+    position: relative;
+    box-sizing: border-box;
+    box-shadow: -1px 0px 5px #8750f43b;
+}
+.fullscreen-progressBar:active::-moz-range-thumb{
+    transform: scale(1.6);
+    transition: ease-in-out .05s;
+    border: 1px solid rgba(245, 245, 245, 0.197);
+    border-radius: 50%;
+    box-shadow: rgba(255, 255, 255, 0.671); 
+}
