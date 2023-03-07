@@ -105,9 +105,9 @@ export const useUploadSong = ()=> {
     
       const createSongObject = async (songUrl, imgUrl) => {
     
-        
+        const endpoint = "http://localhost:6280/api/songs/"
     
-        const res = await fetch("/api/songs", {
+        const res = await fetch("api/songs/", {
           method: "POST",
           headers: {
             "Accept": "application/json",
