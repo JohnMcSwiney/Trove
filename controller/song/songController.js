@@ -11,6 +11,7 @@ const createSong = async (req, res) => {
     switch (req.body.releaseType) {
 
         case "Album" || "EP" || "album" || "ep":
+
             try {
 
                 const artist = await Artist.findOne({ artistName: req.body.artist });
@@ -120,7 +121,7 @@ const createSong = async (req, res) => {
             break;
 
         case "Single" || "single":
-
+        
             try {
 
                 const artist = await Artist.findOne({ artistName: req.body.artist });

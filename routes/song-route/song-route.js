@@ -8,11 +8,11 @@ const {
     updateSong
 } = require("../../controller/song/songController");
 
+router.post('/', createSong);
+
 router.get('/', getAllSongs);
 
 router.get('/:id', getSong)
-
-router.post('/', createSong);
 
 router.patch('/:id', updateSong);
 
