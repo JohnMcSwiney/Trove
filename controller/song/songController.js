@@ -14,13 +14,13 @@ const createSong = async (req, res) => {
 
         const artistId = artist._id;
 
-<<<<<<< Updated upstream
-        case "Album" || "EP" || "album" || "ep":
+// <<<<<<< Updated upstream
+//         case "Album" || "EP" || "album" || "ep":
 
-            try {
-=======
+//             try {
+// =======
         console.log(artist);
->>>>>>> Stashed changes
+
 
         if (!artist) {
           throw new Error("Artist not found");
@@ -155,19 +155,19 @@ const createSong = async (req, res) => {
 
           console.log(featuredArtists);
 
-<<<<<<< Updated upstream
-        case "Single" || "single":
+// <<<<<<< Updated upstream
+//         case "Single" || "single":
         
-            try {
-=======
-          const song = new Song({
-            ...req.body,
-            artist: artist._id,
-            featuredArtists: featuredArtists,
-          });
+//             try {
+// =======
+//           const song = new Song({
+//             ...req.body,
+//             artist: artist._id,z
+//             featuredArtists: featuredArtists,
+//           });
 
-          artist.songList.push(song._id);
->>>>>>> Stashed changes
+//           artist.songList.push(song._id);
+// >>>>>>> Stashed changes
 
           for (const featuredArtistId of featuredArtists) {
             const featuredArtist = await Artist.findById(featuredArtistId);
