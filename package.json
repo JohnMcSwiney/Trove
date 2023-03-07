@@ -1,10 +1,5 @@
 {
-  "proxy": {
-    "/api": {
-      "target": "http://localhost:6280",
-      "secure": false
-    }
-  },
+  "proxy": "http://localhost:6280/",
   "name": "artist-frontend",
   "version": "0.1.0",
   "private": true,

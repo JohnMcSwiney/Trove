@@ -243,11 +243,14 @@ export default function UploadMusic(props) {
 
   const createSongObject = async (songUrl, imgUrl) => {
 
+    const endpoint = "http://localhost:6280/api/songs";
+
     const res = await fetch("/api/songs", {
       method: "POST",
       headers: {
         "Accept": "application/json",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
       },
       body: JSON.stringify({
         title,
@@ -260,112 +263,121 @@ export default function UploadMusic(props) {
         artist,
         featuredArtists
       })
-    });
-    const data = await res.json();
+    })
+       .then(res => res.json())
 
-    console.log("Data: " + data);
+      .then((res) => {
+        console.log("song data: " + res.data);
+        setIsUploading(false);
+        setUploadProgress(0);
+      })
+      .catch((err) => {
+        console.error(err);
+        setIsUploading(false);
+        setUploadProgress(0);
+      });
 
-    return data;
+    //return data;
 
 
 
 
-  // const songRef = storageRef.child(`songs/${songFile.name}`);
-  // const songUploadTask = songRef.put(songFile, { contentType: "audio/mp3" });
+    // const songRef = storageRef.child(`songs/${songFile.name}`);
+    // const songUploadTask = songRef.put(songFile, { contentType: "audio/mp3" });
 
-  // console.log("songFile: " + songFile);
+    // console.log("songFile: " + songFile);
 
-  // console.log("songFile[0]: " + songFile[0]);
+    // console.log("songFile[0]: " + songFile[0]);
 
-  // console.log("songRef: " + songRef);
+    // console.log("songRef: " + songRef);
 
-  // songUploadTask.on(
-  //   "state_changed",
-  //   (snapshot) => {
-  //     setUploadProgress(
-  //       (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-  //     );
+    // songUploadTask.on(
+    //   "state_changed",
+    //   (snapshot) => {
+    //     setUploadProgress(
+    //       (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+    //     );
 
-  //     console.log("Bytes Transferred: " + snapshot.bytesTransferred);
+    //     console.log("Bytes Transferred: " + snapshot.bytesTransferred);
 
-  //     console.log("Total Bytes: " + snapshot.totalBytes);
+    //     console.log("Total Bytes: " + snapshot.totalBytes);
 
-  //     console.log((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-  //   },
-  //   (error) => {
-  //     console.error(error);
-  //     setIsUploading(false);
-  //   },
+    //     console.log((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+    //   },
+    //   (error) => {
+    //     console.error(error);
+    //     setIsUploading(false);
+    //   },
 
-  //   async () => {
-  //     const songUrl = await songRef.getDownloadURL();
+    //   async () => {
+    //     const songUrl = await songRef.getDownloadURL();
 
-  //     const imageRef = storageRef.child(`images/${imageFile.name}`);
-  //     const imageUploadTask = imageRef.put(imageFile);
+    //     const imageRef = storageRef.child(`images/${imageFile.name}`);
+    //     const imageUploadTask = imageRef.put(imageFile);
 
-  //     console.log("imageFile: " + imageFile);
+    //     console.log("imageFile: " + imageFile);
 
-  //     console.log("imageFile[0]: " + imageFile[0]);
+    //     console.log("imageFile[0]: " + imageFile[0]);
 
-  //     console.log("imageRef: " + imageRef);
+    //     console.log("imageRef: " + imageRef);
 
-  //     imageUploadTask.on(
-  //       "state_changed",
-  //       (snapshot) => {
-  //         setUploadProgress(
-  //           (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-  //         );
+    //     imageUploadTask.on(
+    //       "state_changed",
+    //       (snapshot) => {
+    //         setUploadProgress(
+    //           (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+    //         );
 
-  //         console.log("Bytes Transferred: " + snapshot.bytesTransferred);
+    //         console.log("Bytes Transferred: " + snapshot.bytesTransferred);
 
-  //         console.log("Total Bytes: " + snapshot.totalBytes);
+    //         console.log("Total Bytes: " + snapshot.totalBytes);
 
-  //         console.log(
-  //           (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-  //         );
-  //       },
-  //       (error) => {
-  //         console.error(error);
-  //         setIsUploading(false);
-  //       },
+    //         console.log(
+    //           (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+    //         );
+    //       },
+    //       (error) => {
+    //         console.error(error);
+    //         setIsUploading(false);
+    //       },
 
-  //       async () => {
-  //         const imgUrl = await imageRef.getDownloadURL();
+    //       async () => {
+    //         const imgUrl = await imageRef.getDownloadURL();
 
-  //         fetch("/api/songs", {
-  //           method: "POST",
-  //           headers: {
-  //             "Content-Type": "application/json",
-  //           },
-  //           body: JSON.stringify({
-  //             title,
-  //             album,
-  //             genre,
-  //             songUrl,
-  //             imgUrl,
-  //             releaseType,
-  //             releaseYear,
-  //             artist,
-  //           }),
-  //         })
-  //           //.then((res) => res.json())
+    //         fetch("/api/songs", {
+    //           method: "POST",
+    //           headers: {
+    //             "Content-Type": "application/json",
+    //           },
+    //           body: JSON.stringify({
+    //             title,
+    //             album,
+    //             genre,
+    //             songUrl,
+    //             imgUrl,
+    //             releaseType,
+    //             releaseYear,
+    //             artist,
+    //           }),
+    //         })
+    //           //.then((res) => res.json())
 
-  //           .then((res) => {
-  //             console.log("End Response: " + res);
-  //             console.log("End Response Data: " + res.data);
-  //             setIsUploading(false);
-  //             setUploadProgress(0);
-  //           })
-  //           .catch((err) => {
-  //             console.error(err);
-  //             setIsUploading(false);
-  //             setUploadProgress(0);
-  //           });
-  //       }
-  //     );
-  //   }
-  // );
-  // }
+    //           .then((res) => {
+    //             console.log("End Response: " + res);
+    //             console.log("End Response Data: " + res.data);
+    //             setIsUploading(false);
+    //             setUploadProgress(0);
+    //           })
+    //           .catch((err) => {
+    //             console.error(err);
+    //             setIsUploading(false);
+    //             setUploadProgress(0);
+    //           });
+    //       }
+    //     );
+    //   }
+    // );
+    // }
 
   }
 
