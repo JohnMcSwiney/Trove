@@ -22,6 +22,8 @@ export const useUploadSong = ()=> {
     
     const uploadSongToFirebase = async () => {
 
+        setIsUploading(true)
+    
         const songRef = storageRef.child(`songs/${songFile.name}`);
     
         const songUploadTask = songRef.put(songFile, { contentType: "audio/mp3" });
@@ -103,7 +105,7 @@ export const useUploadSong = ()=> {
     
       const createSongObject = async (songUrl, imgUrl) => {
     
-        const endpoint = "http://localhost:6280/api/songs";
+        
     
         const res = await fetch("/api/songs", {
           method: "POST",
@@ -128,7 +130,10 @@ export const useUploadSong = ()=> {
         const data = await res.json();
     
         console.log("Song Data: " + data);
-    
+        
+        if(!res.ok){
+            setError(data.error)
+        }
         
     }
     try {
@@ -150,6 +155,7 @@ export const useUploadSong = ()=> {
         setIsUploading(false);
         setUploadProgress(0);
       }
+      setIsUploading(false)
 }
     return {uploadMusic,isUploading, error};
 
