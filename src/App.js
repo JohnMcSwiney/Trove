@@ -25,6 +25,7 @@ import {
   FollowingPage,
   PlaylistPage,
 } from "./pages";
+import CreatePlaylist from "./pages/create playlist/CreatePlaylist";
 
 function App() {
   // const userId = JSON.parse(localStorage.getItem("user")).id;
@@ -69,6 +70,7 @@ function App() {
             <Route path="/followers" element={<FollowersPage />}></Route>
             <Route path="/following" element={<FollowingPage />}></Route>
             <Route path="/playlist" element={<PlaylistPage />}></Route>
+            <Route path="/createplaylist" element={<CreatePlaylist />}></Route>
           </Routes>
         </div>
         <button className="fullscreen-btn-test" onClick={toggleFull}> fullscreen</button>
