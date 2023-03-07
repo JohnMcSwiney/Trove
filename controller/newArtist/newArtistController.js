@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const validator = require("validator");
 const cookie = require("js-cookie");
-
+const maskEmailsPhones = require("mask-email-phone");
 const createToken = (_id) => {
   return jwt.sign({ _id: _id }, process.env.SECRET, { expiresIn: "1h" });
 };
@@ -40,85 +40,94 @@ const signupArtist = async (req, res) => {
       gender,
     });
 
+    const hashEmail = maskEmailsPhones(artist.email);
+    const artistInfo = {
+      email: hashEmail,
+      password: hash,
+      artistName,
+      dob,
+      gender,
+    };
+    console.log(hashEmail);
     res.cookie("artist", artist, {
-      httpOnly: true, 
-      secure: true, 
-      sameSite: "strict", 
-      expires: new Date(Date.now() + 86400 * 1000)
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+      expires: new Date(Date.now() + 86400 * 1000),
     }); // Set the cookie to expire in 1 day     });
 
-      const token = createToken(artist._id);
-      req.session.artist = artist;
-      res.json({
-        email,
-        token,
-        id: artist._id,
-        artistName: artist.artistName,
-      });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: error.message });
-    }
-  };
-
-  //Login
-  const loginArtist = async (req, res) => {
-    const { email, password } = req.body;
-
-    try {
-      const artist = await Artist.findOne({ email: email });
-      if (!artist) {
-        return res
-          .status(400)
-          .json({ error: "Email or password is not correct" });
-      }
-      await Artist.login(email, password);
-      const token = createToken(artist._id);
-      req.session.artist = artist; // Set the session here
-
-      const artistInfo = {
-        email,
-        token,
-        id: artist._id,
-        artistName: artist.artistName
-      }
-
-      res.cookie("artist", artistInfo, {
-        httpOnly: true, 
-        secure: true, 
-        sameSite: "strict", 
-        expires: new Date(Date.now() + 86400 * 1000)
-      });
-
-      res.json({
-        token,
-        id: artist._id,
-        artistName: artist.artistName,
-        email: artist.email,
-      });
-    } catch (error) {
-      res.status(400).json({ error: error.message });
-    }
-  };
-
-  //log out
-
-  const logoutArtist = (req, res) => {
-
-    res.clearCookie("artist");
-
-    req.session.destroy((err) => {
-      if (err) {
-        console.log(err);
-        res.status(500).json({ err: "Server error" });
-      } else {
-        res.send("Logged out successfully");
-      }
+    const token = createToken(artist._id);
+    req.session.artist = artist;
+    res.json({
+      email,
+      token,
+      id: artist._id,
+      artistName: artist.artistName,
     });
-  };
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: error.message });
+  }
+};
 
-  module.exports = {
-    loginArtist,
-    signupArtist,
-    logoutArtist,
-  };
+//Login
+const loginArtist = async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const artist = await Artist.findOne({ email: email });
+    if (!artist) {
+      return res
+        .status(400)
+        .json({ error: "Email or password is not correct" });
+    }
+    await Artist.login(email, password);
+    const token = createToken(artist._id);
+    req.session.artist = artist; // Set the session here
+
+    const hashEmail = maskEmailsPhones(email);
+    const artistInfo = {
+      email: hashEmail,
+      token,
+      id: artist._id,
+      artistName: artist.artistName,
+    };
+
+    res.cookie("artist", artistInfo, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+      expires: new Date(Date.now() + 86400 * 1000),
+    });
+
+    res.json({
+      token,
+      id: artist._id,
+      artistName: artist.artistName,
+      email: artist.email,
+    });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+//log out
+
+const logoutArtist = (req, res) => {
+  res.clearCookie("artist");
+
+  req.session.destroy((err) => {
+    if (err) {
+      console.log(err);
+      res.status(500).json({ err: "Server error" });
+    } else {
+      res.send("Logged out successfully");
+    }
+  });
+};
+
+module.exports = {
+  loginArtist,
+  signupArtist,
+  logoutArtist,
+};
