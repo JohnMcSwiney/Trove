@@ -8,6 +8,7 @@ import "./UploadMusic.css";
 import SongInfo from "./SongInfo";
 // Import the functions you need from the SDKs you need
 import firebase from "./firebaseConfig";
+import { async, reject } from "q";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -70,6 +71,7 @@ export default function UploadMusic(props) {
   const [releaseType, setReleaseType] = useState("");
   const [releaseYear, setReleaseYear] = useState("");
   const [artist, setArtist] = useState("");
+  const [featuredArtists, setFeaturedArtists] = useState("");
   const [isUploading, setIsUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
 
@@ -91,16 +93,18 @@ export default function UploadMusic(props) {
 
   const handleSongFileChange = (e) => {
 
-    console.log("relerwerwsdfdsfds: " + releaseType);
+    setSongFile(e.target.files[0]);
 
-    if (releaseType === "single") {
+    //console.log("relerwerwsdfdsfds: " + releaseType);
 
-      setSongFile(e.target.files[0]);
-    }
-    else {
+    // if (releaseType === "single") {
 
-      setSongFile(Array.from(e.target.files));
-    }
+    //   setSongFile(e.target.files[0]);
+    // }
+    // else {
+
+    //   setSongFile(Array.from(e.target.files));
+    // }
   };
 
   const handleImageFileChange = (e) => {
@@ -121,23 +125,54 @@ export default function UploadMusic(props) {
     setArtist(e.target.value);
   };
 
+  const handleFeaturedArtists = (e) => {
+    setFeaturedArtists(e.target.value);
+  }
+
+  const storageRef = storage.ref();
+
+
   // When music is submitted
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+
     e.preventDefault();
+
     setIsUploading(true);
 
-    const storageRef = storage.ref();
+    try {
 
-    if (releaseType === "single") {
+      const songUrl = await uploadSongToFirebase();
 
-      const songRef = storageRef.child(`songs/${songFile.name}`);
-      const songUploadTask = songRef.put(songFile, { contentType: "audio/mp3" });
+      const imgUrl = await uploadImageToFirebase();
 
-      console.log("songFile: " + songFile);
+      const data = await createSongObject(songUrl, imgUrl);
 
-      console.log("songFile[0]: " + songFile[0]);
+      console.log("End Response Data: " + data);
 
-      console.log("songRef: " + songRef);
+      setIsUploading(false);
+      setUploadProgress(0);
+
+    } catch (err) {
+      console.log(err);
+
+      setIsUploading(false);
+      setUploadProgress(0);
+    }
+  }
+
+  const uploadSongToFirebase = async () => {
+
+    const songRef = storageRef.child(`songs/${songFile.name}`);
+
+    const songUploadTask = songRef.put(songFile, { contentType: "audio/mp3" });
+
+    console.log("songFile: " + songFile);
+
+    console.log("songFile[0]: " + songFile[0]);
+
+    console.log("songRef: " + songRef);
+
+    return new Promise((resolve, reject) => {
 
       songUploadTask.on(
         "state_changed",
@@ -152,179 +187,384 @@ export default function UploadMusic(props) {
 
           console.log((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
         },
-        (error) => {
-          console.error(error);
+        (err) => {
+          console.log(err);
           setIsUploading(false);
+          reject(err);
         },
-
         async () => {
           const songUrl = await songRef.getDownloadURL();
-
-          const imageRef = storageRef.child(`images/${imageFile.name}`);
-          const imageUploadTask = imageRef.put(imageFile);
-
-          console.log("imageFile: " + imageFile);
-
-          console.log("imageFile[0]: " + imageFile[0]);
-
-          console.log("imageRef: " + imageRef);
-
-          imageUploadTask.on(
-            "state_changed",
-            (snapshot) => {
-              setUploadProgress(
-                (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-              );
-
-              console.log("Bytes Transferred: " + snapshot.bytesTransferred);
-
-              console.log("Total Bytes: " + snapshot.totalBytes);
-
-              console.log(
-                (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-              );
-            },
-            (error) => {
-              console.error(error);
-              setIsUploading(false);
-            },
-
-            async () => {
-              const imgUrl = await imageRef.getDownloadURL();
-
-              fetch("/api/songs", {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                  title,
-                  album,
-                  genre,
-                  songUrl,
-                  imgUrl,
-                  releaseType,
-                  releaseYear,
-                  artist,
-                }),
-              })
-                .then((res) => res.json())
-
-                .then((res) => {
-                  console.log("End Response: " + res);
-                  console.log("End Response Data: " + res.data);
-                  setIsUploading(false);
-                  setUploadProgress(0);
-                })
-                .catch((err) => {
-                  console.error(err);
-                  setIsUploading(false);
-                  setUploadProgress(0);
-                });
-            }
-          );
+          resolve(songUrl);
         }
-      );
-    }
-
-    else {
-
-      Promise.all(
-        songFile.map((file) => {
-
-          const songRef = storageRef.child(`songs/${file.name}`);
-          const songUploadTask = songRef.put(file, { contentType: "audio/mp3" });
-
-          return new Promise((resolve, reject) => {
-
-            songUploadTask.on(
-              "state_changed",
-              (snapshot) => {
-                setUploadProgress(
-                  (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-                );
-              },
-              (err) => {
-                console.log(err);
-                reject(err);
-              },
-              async () => {
-                const songUrl = await songRef.getDownloadURL();
-                resolve(songUrl);
-              }
-            );
-
-          });
-        })
       )
-        .then((songUrls) => {
-
-          const imageRef = storageRef.child(`images/${imageFile.name}`);
-          const imageUploadTask = imageRef.put(imageFile);
-
-          console.log("imageFile: " + imageFile);
-
-          console.log("imageFile[0]: " + imageFile[0]);
-
-          console.log("imageRef: " + imageRef);
-
-          imageUploadTask.on(
-            "state_changed",
-            (snapshot) => {
-              setUploadProgress(
-                (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-              );
-
-              console.log("Bytes Transferred: " + snapshot.bytesTransferred);
-
-              console.log("Total Bytes: " + snapshot.totalBytes);
-
-              console.log(
-                (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-              );
-            },
-            (error) => {
-              console.error(error);
-              setIsUploading(false);
-            },
-
-            async () => {
-              const imgUrl = await imageRef.getDownloadURL();
-
-              fetch("/api/albums", {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                  title,
-                  album,
-                  genre,
-                  songUrl: releaseType === "single" ? songUrls[0] : songUrls,
-                  imgUrl,
-                  releaseType,
-                  releaseYear,
-                  artist,
-                }),
-              })
-                .then((res) => res.json())
-
-                .then((res) => {
-                  console.log("End Response: " + res);
-                  console.log("End Response Data: " + res.data);
-                  setIsUploading(false);
-                  setUploadProgress(0);
-                })
-                .catch((err) => {
-                  console.error(err);
-                  setIsUploading(false);
-                  setUploadProgress(0);
-                });
-            }
-          );
-        });
-    }
+    });
   }
+
+  const uploadImageToFirebase = async () => {
+
+    const imageRef = storageRef.child(`images/${imageFile.name}`);
+
+    const imageUploadTask = imageRef.put(imageFile);
+
+    console.log("imageFile: " + imageFile);
+
+    console.log("imageFile[0]: " + imageFile[0]);
+
+    console.log("imageRef: " + imageRef);
+
+    return new Promise((resolve, reject) => {
+
+      imageUploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          setUploadProgress(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          );
+
+          console.log("Bytes Transferred: " + snapshot.bytesTransferred);
+
+          console.log("Total Bytes: " + snapshot.totalBytes);
+
+          console.log((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+        },
+        (err) => {
+          console.log(err);
+          setIsUploading(false);
+          reject(err);
+        },
+        async () => {
+          const imgUrl = await imageRef.getDownloadURL();
+          resolve(imgUrl);
+        }
+      )
+    });
+
+  }
+
+  const createSongObject = async (songUrl, imgUrl) => {
+
+    const res = await fetch("/api/songs", {
+      method: "POST",
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        title,
+        album,
+        genre,
+        songUrl,
+        imgUrl,
+        releaseType,
+        releaseYear,
+        artist,
+        featuredArtists
+      })
+    });
+    const data = await res.json();
+
+    console.log("Data: " + data);
+
+    return data;
+
+
+
+
+  // const songRef = storageRef.child(`songs/${songFile.name}`);
+  // const songUploadTask = songRef.put(songFile, { contentType: "audio/mp3" });
+
+  // console.log("songFile: " + songFile);
+
+  // console.log("songFile[0]: " + songFile[0]);
+
+  // console.log("songRef: " + songRef);
+
+  // songUploadTask.on(
+  //   "state_changed",
+  //   (snapshot) => {
+  //     setUploadProgress(
+  //       (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+  //     );
+
+  //     console.log("Bytes Transferred: " + snapshot.bytesTransferred);
+
+  //     console.log("Total Bytes: " + snapshot.totalBytes);
+
+  //     console.log((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+  //   },
+  //   (error) => {
+  //     console.error(error);
+  //     setIsUploading(false);
+  //   },
+
+  //   async () => {
+  //     const songUrl = await songRef.getDownloadURL();
+
+  //     const imageRef = storageRef.child(`images/${imageFile.name}`);
+  //     const imageUploadTask = imageRef.put(imageFile);
+
+  //     console.log("imageFile: " + imageFile);
+
+  //     console.log("imageFile[0]: " + imageFile[0]);
+
+  //     console.log("imageRef: " + imageRef);
+
+  //     imageUploadTask.on(
+  //       "state_changed",
+  //       (snapshot) => {
+  //         setUploadProgress(
+  //           (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+  //         );
+
+  //         console.log("Bytes Transferred: " + snapshot.bytesTransferred);
+
+  //         console.log("Total Bytes: " + snapshot.totalBytes);
+
+  //         console.log(
+  //           (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+  //         );
+  //       },
+  //       (error) => {
+  //         console.error(error);
+  //         setIsUploading(false);
+  //       },
+
+  //       async () => {
+  //         const imgUrl = await imageRef.getDownloadURL();
+
+  //         fetch("/api/songs", {
+  //           method: "POST",
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //           },
+  //           body: JSON.stringify({
+  //             title,
+  //             album,
+  //             genre,
+  //             songUrl,
+  //             imgUrl,
+  //             releaseType,
+  //             releaseYear,
+  //             artist,
+  //           }),
+  //         })
+  //           //.then((res) => res.json())
+
+  //           .then((res) => {
+  //             console.log("End Response: " + res);
+  //             console.log("End Response Data: " + res.data);
+  //             setIsUploading(false);
+  //             setUploadProgress(0);
+  //           })
+  //           .catch((err) => {
+  //             console.error(err);
+  //             setIsUploading(false);
+  //             setUploadProgress(0);
+  //           });
+  //       }
+  //     );
+  //   }
+  // );
+  // }
+
+  }
+
+  //   if (releaseType === "single") {
+
+  // const songRef = storageRef.child(`songs/${songFile.name}`);
+  // const songUploadTask = songRef.put(songFile, { contentType: "audio/mp3" });
+
+  // console.log("songFile: " + songFile);
+
+  // console.log("songFile[0]: " + songFile[0]);
+
+  // console.log("songRef: " + songRef);
+
+  // songUploadTask.on(
+  //   "state_changed",
+  //   (snapshot) => {
+  //     setUploadProgress(
+  //       (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+  //     );
+
+  //     console.log("Bytes Transferred: " + snapshot.bytesTransferred);
+
+  //     console.log("Total Bytes: " + snapshot.totalBytes);
+
+  //     console.log((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+  //   },
+  //   (error) => {
+  //     console.error(error);
+  //     setIsUploading(false);
+  //   },
+
+  //   async () => {
+  //     const songUrl = await songRef.getDownloadURL();
+
+  //     const imageRef = storageRef.child(`images/${imageFile.name}`);
+  //     const imageUploadTask = imageRef.put(imageFile);
+
+  //     console.log("imageFile: " + imageFile);
+
+  //     console.log("imageFile[0]: " + imageFile[0]);
+
+  //     console.log("imageRef: " + imageRef);
+
+  //     imageUploadTask.on(
+  //       "state_changed",
+  //       (snapshot) => {
+  //         setUploadProgress(
+  //           (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+  //         );
+
+  //         console.log("Bytes Transferred: " + snapshot.bytesTransferred);
+
+  //         console.log("Total Bytes: " + snapshot.totalBytes);
+
+  //         console.log(
+  //           (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+  //         );
+  //       },
+  //       (error) => {
+  //         console.error(error);
+  //         setIsUploading(false);
+  //       },
+
+  //       async () => {
+  //         const imgUrl = await imageRef.getDownloadURL();
+
+  //         fetch("/api/songs", {
+  //           method: "POST",
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //           },
+  //           body: JSON.stringify({
+  //             title,
+  //             album,
+  //             genre,
+  //             songUrl,
+  //             imgUrl,
+  //             releaseType,
+  //             releaseYear,
+  //             artist,
+  //           }),
+  //         })
+  //           //.then((res) => res.json())
+
+  //           .then((res) => {
+  //             console.log("End Response: " + res);
+  //             console.log("End Response Data: " + res.data);
+  //             setIsUploading(false);
+  //             setUploadProgress(0);
+  //           })
+  //           .catch((err) => {
+  //             console.error(err);
+  //             setIsUploading(false);
+  //             setUploadProgress(0);
+  //           });
+  //       }
+  //     );
+  //   }
+  // );
+  // }
+
+  // else {
+
+  //   Promise.all(
+  //     songFile.map((file) => {
+
+  //       const songRef = storageRef.child(`songs/${file.name}`);
+  //       const songUploadTask = songRef.put(file, { contentType: "audio/mp3" });
+
+  //       return new Promise((resolve, reject) => {
+
+  //         songUploadTask.on(
+  //           "state_changed",
+  //           (snapshot) => {
+  //             setUploadProgress(
+  //               (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+  //             );
+  //           },
+  //           (err) => {
+  //             console.log(err);
+  //             reject(err);
+  //           },
+  //           async () => {
+  //             const songUrl = await songRef.getDownloadURL();
+  //             resolve(songUrl);
+  //           }
+  //         );
+
+  //       });
+  //     })
+  //   )
+  //     .then((songUrls) => {
+
+  //       const imageRef = storageRef.child(`images/${imageFile.name}`);
+  //       const imageUploadTask = imageRef.put(imageFile);
+
+  //       console.log("imageFile: " + imageFile);
+
+  //       console.log("imageFile[0]: " + imageFile[0]);
+
+  //       console.log("imageRef: " + imageRef);
+
+  //       imageUploadTask.on(
+  //         "state_changed",
+  //         (snapshot) => {
+  //           setUploadProgress(
+  //             (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+  //           );
+
+  //           console.log("Bytes Transferred: " + snapshot.bytesTransferred);
+
+  //           console.log("Total Bytes: " + snapshot.totalBytes);
+
+  //           console.log(
+  //             (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+  //           );
+  //         },
+  //         (error) => {
+  //           console.error(error);
+  //           setIsUploading(false);
+  //         },
+
+  //         async () => {
+  //           const imgUrl = await imageRef.getDownloadURL();
+
+  //           fetch("/api/albums", {
+  //             method: "POST",
+  //             headers: {
+  //               "Content-Type": "application/json",
+  //             },
+  //             body: JSON.stringify({
+  //               title,
+  //               album,
+  //               genre,
+  //               songUrl: releaseType === "single" ? songUrls[0] : songUrls,
+  //               imgUrl,
+  //               releaseType,
+  //               releaseYear,
+  //               artist,
+  //             }),
+  //           })
+  //             .then((res) => res.json())
+
+  //             .then((res) => {
+  //               console.log("End Response: " + res);
+  //               console.log("End Response Data: " + res.data);
+  //               setIsUploading(false);
+  //               setUploadProgress(0);
+  //             })
+  //             .catch((err) => {
+  //               console.error(err);
+  //               setIsUploading(false);
+  //               setUploadProgress(0);
+  //             });
+  //         }
+  //       );
+  //     });
+  // }
 
 
 
@@ -591,23 +831,22 @@ export default function UploadMusic(props) {
                     handleSubmit={handleSubmit}
                     handleTitle={handleTitle}
                     handleAlbumName={handleAlbumName}
-                    // handleHighlightStart={handleHighlightStart}
-                    // handleHighlightStop={handleHighlightStop}
                     handleGenre={handleGenre}
                     handleSongFileChange={handleSongFileChange}
                     handleImageFileChange={handleImageFileChange}
                     handleReleaseType={handleReleaseType}
                     handleReleaseYear={handleReleaseYear}
                     handleArtist={handleArtist}
+                    handleFeaturedArtists={handleFeaturedArtists}
                     handleFormNavigation={handleFormNavigation}
                     pageName={pageName}
                     album={album}
                     genre={genre}
                     title={title}
+                    artist={artist}
+                    featuredArtists={featuredArtists}
                     imageFile={imageFile}
                     songFile={songFile}
-                    // highlightStart={highlightStart}
-                    // highlightStop={highlightStop}
                     releaseType={releaseType}
                     releaseYear={releaseYear}
                     setPageName={setPageName}

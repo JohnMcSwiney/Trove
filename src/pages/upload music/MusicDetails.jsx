@@ -75,6 +75,15 @@ export default function MusicDetails(props) {
                   </label>
                 </td>
               </tr>
+              <tr>
+                <td className="uploadmusic--columnt">
+                  <label>
+                    Featured Artists:
+                    <br />
+                    <input type="text" value={props.featuredArtists} name="artistName" placeholder="Artist Name" onChange={props.handleFeaturedArtists} />
+                  </label>
+                </td>
+              </tr>
             {isSingle ? (
               <tr>
                 <td className="uploadmusic--columnt">
