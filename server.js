@@ -49,6 +49,6 @@ app.use("/api/artist", loginArtist);
 const songRoutes = require("./routes/song-route/song-route");
 app.use("/api/songs", songRoutes);
 
-app.listen(process.env.PORT, "0.0.0.0", () => {
+app.listen(process.env.PORT, () => {
   console.log(`Listening to port ` + process.env.PORT);
 });
