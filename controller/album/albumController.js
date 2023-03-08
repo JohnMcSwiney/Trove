@@ -26,7 +26,7 @@ const getAlbum = async (req, res) => {
 
 const createAlbum = async (req, res) => {
   try {
-    const artist = await Artist.findOne({ email: req.body.email });
+    const artist = await Artist.findOne({ email: req.body.artist });
 
     console.log(artist);
 

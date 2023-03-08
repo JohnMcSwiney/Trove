@@ -50,6 +50,8 @@ const artistRoute = require("./routes/artist-route/artist-route");
 app.use("/api/artists", artistRoute);
 const songRoutes = require("./routes/song-route/song-route");
 app.use("/api/songs", songRoutes);
+const albumRoutes = require("./routes/album-route/album-route");
+app.use("/api/albums", albumRoutes);
 
 app.listen(process.env.PORT, () => {
   console.log(`Listening to port ` + process.env.PORT);

@@ -6,7 +6,7 @@ const {
     createAlbum,
     updateAlbum,
     deleteAlbum
-} = require('../../admin controllers/album/albumController')
+} = require('../../controller/album/albumController')
 
 router.get('/', getAllAlbum);
 

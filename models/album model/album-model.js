@@ -29,7 +29,7 @@ const albumSchema = new mongoose.Schema({
     totalTracks: {
         type: Number,
         default: 0,
-        required: [true, `Please provide number of tracks`],
+        //required: [true, `Please provide number of tracks`],
     },
 
     isPublished: {
@@ -43,7 +43,7 @@ const albumSchema = new mongoose.Schema({
 
     releaseType: {
         type: String,
-        enum: ['Album', 'EP', 'Single']
+        enum: ['album', 'ep', 'single']
     },
     releaseYear: {
         type: Number
