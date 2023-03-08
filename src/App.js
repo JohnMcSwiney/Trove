@@ -6,6 +6,7 @@ import "./App.css";
 import Header from "./containers/header/Header";
 import MusicBar from "./components/music bar/MusicBar";
 import NavBar from "./components/nav bar/NavBar";
+import MusicBarFullscreen from "./components/music bar/MusicBarFullscreen";
 import "bootstrap/dist/css/bootstrap.min.css";
 // will be Removed when taste profile is changed
 
@@ -24,15 +25,22 @@ import {
   FollowingPage,
   PlaylistPage,
 } from "./pages";
+import CreatePlaylist from "./pages/create playlist/CreatePlaylist";
 
 function App() {
   // const userId = JSON.parse(localStorage.getItem("user")).id;
   const user = localStorage.getItem("user");
 
+  const [useFullscreenPlayer, setFullscreenPlayer] = useState(false);
+
   const isLoginId = user ? JSON.parse(user).id : "";
+  const toggleFull = () => {
+    const oldVal = useFullscreenPlayer;
+    setFullscreenPlayer(!oldVal);
+  }
   return (
     <BrowserRouter>
-      <div className=" text-gray-500 font-body">
+      <div className=" text-gray-500 font-body" >
         <Header />
         <div className="body-wrap">
           <NavBar />
@@ -62,9 +70,12 @@ function App() {
             <Route path="/followers" element={<FollowersPage />}></Route>
             <Route path="/following" element={<FollowingPage />}></Route>
             <Route path="/playlist" element={<PlaylistPage />}></Route>
+            <Route path="/createplaylist" element={<CreatePlaylist />}></Route>
           </Routes>
         </div>
-        <MusicBar />
+        <button className="fullscreen-btn-test" onClick={toggleFull}> fullscreen</button>
+        {useFullscreenPlayer === false ? <MusicBar /> :  <MusicBarFullscreen />}
+        {/* <MusicBarFullscreen/> */}
       </div>
     </BrowserRouter>
   );

@@ -9,6 +9,17 @@
 .pad-t-10{
     padding-top: 10px;
 }
+@media screen and (max-width:380px){
+    .mar-t{
+        margin-top: 25px;
+    }
+}
+@media screen and (min-width:380px){
+    .mar-t{
+        margin-top: 100px;
+    }
+}
+
 .mar-l-5{
     margin-left: 5px;
 }
@@ -22,6 +33,8 @@
     margin-top:5px;
     margin-bottom: 5px;
 }
+
+
 .txt-white{
     color: white;
 }

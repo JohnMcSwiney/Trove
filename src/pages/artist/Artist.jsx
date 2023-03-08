@@ -60,7 +60,6 @@ const Artist = () => {
   const userFollowers = 124;
 
   return (
-    <div className='container'>
     <div className='myTrvcontainer '>
       <div className='pfp_name_follower_bio_cont'>
         <div className='test-container'>
@@ -81,8 +80,8 @@ const Artist = () => {
         </div>
         </div>
 
-        <div className='artistBioCont'>
-        <p className='artistBio'>{tempArtist1.bio}</p>
+        <div className='artist-profile-bio-cont'>
+        <p className='artist-profile-bio'>{tempArtist1.bio}</p>
         <Popup
           trigger={<button className='btn'> Show More </button>}
           modal
@@ -118,13 +117,16 @@ const Artist = () => {
           
         </div>
       </div>
+
       <div className='account-splitter'></div>
-      <div className='artist-showcase'>
-        <h1>Albums:</h1>
-        <div className='CardCont'>
+        <div className='artist-showcase'>
+          <h1>Albums:</h1>
+          <div className='CardCont'>
           <CardAlbum />
-        </div>
-      </div>
+          </div>
+          
+        </div> 
+
       <div className='account-splitter'></div>
       <div className='artist-showcase'>
       <h1>Created Playlists:</h1>
@@ -142,8 +144,6 @@ const Artist = () => {
 
 
     </div>
-
-  </div>
   )
 }
 

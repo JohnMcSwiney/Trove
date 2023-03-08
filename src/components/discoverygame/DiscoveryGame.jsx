@@ -145,8 +145,7 @@ const DiscoveryGame = () => {
     audioPlayer.current.volume = (volumeRef.current.value / 100);
   }
 
-  const likedIndexs = [];
-  const dislikedIndexs = [];
+
 
   const swipeableProps = useSwipeable({
     trackMouse: true,
@@ -326,11 +325,11 @@ const DiscoveryGame = () => {
       <div className='Discovery-TestingItem-Container'>
         {/* Like */}
         <div>{accept} [ Likes ]
-          {/* {console.log(likedIndexs)} */}
+  
         </div>
         {/* Dislike */}
         <div>{deny} [ Dislikes ]
-          {/* {console.log(dislikedIndexs)} */}
+
         </div>
         
         <div>
@@ -345,5 +344,7 @@ const DiscoveryGame = () => {
   );
 
 }
-
+//the test it to just see if it actually shows up on the MyTrove page which it does im just trying to figure out how to actually send the likedIDS and dislikedIDS instead 
+export const likedIds = ['test',1 ,2 ,3];
+export const dislikedIds = ['test', 4, 5, 6];
 export default DiscoveryGame;

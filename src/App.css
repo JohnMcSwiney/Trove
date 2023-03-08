@@ -39,3 +39,21 @@
 .zintex-6{
   z-index: 6;
 }
+.zindex-12{
+  z-index: 13;
+  position: relative;
+}
+.fullscreen-btn-test{
+  z-index: 70;
+  position: fixed;
+  bottom: 0;
+  background-color: cadetblue;
+  text-transform:uppercase;
+  padding: 3px;
+  margin: 10px;
+  font-size: xx-small;
+  color: wheat;
+  border-radius: 5px;
+  opacity: 0.5;
+
+}

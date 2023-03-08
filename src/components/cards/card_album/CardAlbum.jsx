@@ -15,9 +15,10 @@ function CardAlbum({props}){
     navigate('./AlbumPage')
   }
     return(
-      <>
+      <ul className='bg1test'>
         {
           albumData.map((album, index)=>(
+            <li>
             <div className='bg card-alb-cont 
                             '
                             onClick={redirectAlbum}>
@@ -31,18 +32,19 @@ function CardAlbum({props}){
 
                    <div className='card-alb-text-cont'>
                       <a 
-                      className='albtxt alb-card-text'>
+                      className='albtxt alb-card-text art-card-text-cont-1'>
                         {album.name} 
                         </a>
                         <a 
-                      className='arttxt alb-card-text'>
+                      className='arttxt alb-card-text art-card-text-cont-2'>
                         {album.artist} 
                         </a>
                     </div>
                    </div>
+                   </li>
           ))
         }
-      </>
+      </ul>
     )
      
 }
