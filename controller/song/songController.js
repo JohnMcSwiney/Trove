@@ -6,186 +6,48 @@ const mongoose = require("mongoose");
 
 const createSong = async (req, res) => {
   console.log("createSong", req.body);
+  const id = req.body;
+  console.log(id);
+  try {
+    // artist id check
+    const artist = await Artist.findOne({ _id: id });
+    console.log(artist);
 
-  switch (req.body.releaseType) {
-    case "Album" || "EP" || "album" || "ep":
-      try {
-        const artist = await Artist.findOne({ artistName: req.body.artist });
+    if (!artist) {
+      throw new Error("Artist not found");
+    }
 
-        const artistId = artist._id;
+    const artistId = artist._id;
+    if (req.body.featuredArtist == null || !req.body.featuredArtists) {
+      console.log(req.body.featuredArtist);
 
-// <<<<<<< Updated upstream
-//         case "Album" || "EP" || "album" || "ep":
+      //check why is it null (did user decide to do solo or other artists cannot be found?);
 
-//             try {
-// =======
-        console.log(artist);
+      const song = new Song({
+        ...req.body,
+        artist: artistId,
+      });
 
+      artist.songList.push(song._id);
 
-        if (!artist) {
-          throw new Error("Artist not found");
-        }
+      await song.save();
+      await artist.save();
+      res.status(201).json(song);
+    } else {
+      const featuredArtists = await Promise.all(
+        req.body.featuredArtists.map(async (name) => {
+          const featuredArtist = await Artist.findOne({ artistName: name });
 
-        const album = await Album.findOne({ albumName: req.body.album });
-
-        const albumId = album._id;
-
-        if (!album) {
-          throw new Error("Album not found");
-        }
-
-        if (req.body.featuredArtists == null || !req.body.featuredArtists) {
-          const song = new Song({
-            ...req.body,
-            artist: artistId,
-            album: albumId,
-            releaseType: "Album",
-          });
-
-          if (song.album) {
-            album.songList.push(song._id);
-
-            album.totalTracks++;
-
-            song.releaseYear = album.releaseYear;
-
-            await album.save();
+          if (!featuredArtist) {
+            throw new Error("featured artist(s) not found");
           }
 
-          artist.songList.push(song._id);
-
-          await song.save();
-          await artist.save();
-          res.status(201).json(song);
-        } else {
-          const featuredArtists = await Promise.all(
-            req.body.featuredArtists.map(async (name) => {
-              const featuredArtist = await Artist.findOne({ artistName: name });
-
-              if (!featuredArtist) {
-                throw new Error("Featured artist not found");
-              }
-
-              return featuredArtist._id;
-            })
-          );
-
-          console.log(featuredArtists);
-
-          const song = new Song({
-            ...req.body,
-            artist: artist._id,
-            album: album._id,
-            releaseType: "Album",
-            featuredArtists: featuredArtists,
-          });
-
-          if (song.album) {
-            album.songList.push(song._id);
-
-            album.totalTracks++;
-
-            song.releaseYear = album.releaseYear;
-
-            await album.save();
-          }
-
-          artist.songList.push(song._id);
-
-          for (const featuredArtistId of featuredArtists) {
-            const featuredArtist = await Artist.findById(featuredArtistId);
-            featuredArtist.songList.push(song._id);
-
-            // if (!featuredArtist.album._id || featuredArtist.album._id == null) {
-
-            //     featuredArtist.albumList.push(album._id);
-            // }
-
-            await featuredArtist.save();
-          }
-
-          await song.save();
-          await artist.save();
-          res.status(201).json(song);
-        }
-      } catch (err) {
-        console.log(err);
-        res.status(400).json({ message: err.message });
-      }
-      break;
-
-    case "Single" || "single":
-      try {
-        const artist = await Artist.findOne({ artistName: req.body.artist });
-        console.log(artist);
-
-        if (!artist) {
-          throw new Error("Artist not found");
-        }
-
-        const artistId = artist._id;
-
-        if (req.body.featuredArtist == null || !req.body.featuredArtists) {
-          console.log(req.body.featuredArtist);
-
-          //check why is it null (did user decide to do solo or other artists cannot be found?);
-
-          const song = new Song({
-            ...req.body,
-            artist: artistId,
-          });
-
-          artist.songList.push(song._id);
-
-          await song.save();
-          await artist.save();
-          res.status(201).json(song);
-        } else {
-          const featuredArtists = await Promise.all(
-            req.body.featuredArtists.map(async (name) => {
-              const featuredArtist = await Artist.findOne({ artistName: name });
-
-              if (!featuredArtist) {
-                throw new Error("featured artist(s) not found");
-              }
-
-              return featuredArtist._id;
-            })
-          );
-
-          console.log(featuredArtists);
-
-// <<<<<<< Updated upstream
-//         case "Single" || "single":
-        
-//             try {
-// =======
-//           const song = new Song({
-//             ...req.body,
-//             artist: artist._id,z
-//             featuredArtists: featuredArtists,
-//           });
-
-//           artist.songList.push(song._id);
-// >>>>>>> Stashed changes
-
-          for (const featuredArtistId of featuredArtists) {
-            const featuredArtist = await Artist.findById(featuredArtistId);
-            featuredArtist.songList.push(song._id);
-            await featuredArtist.save();
-          }
-
-          await song.save();
-          await artist.save();
-          res.status(201).json(song);
-        }
-      } catch (err) {
-        console.log(err);
-        res.status(400).json({ message: err.message });
-      }
-      break;
-    default:
-      break;
+          return featuredArtist._id;
+        })
+      );
+    }
+  } catch (error) {
+    console.log(error);
   }
 };
 

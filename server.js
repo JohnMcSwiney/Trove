@@ -46,6 +46,8 @@ const loginArtist = require("./routes/login-route/login-route");
 
 app.use("/api/artist", loginArtist);
 
+const artistRoute = require("./routes/artist-route/artist-route");
+app.use("/api/artists", artistRoute);
 const songRoutes = require("./routes/song-route/song-route");
 app.use("/api/songs", songRoutes);
 
