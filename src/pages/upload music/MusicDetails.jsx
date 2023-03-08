@@ -15,22 +15,6 @@ export default function MusicDetails(props) {
     props.handleReleaseType(e);
   };
 
-  // const handleReleaseType = (e) => {
-  //     const value = e.target.value;
-
-  //     console.log("release type value: " + value);
-
-  //     if (value === "album" || value === "ep") {
-  //         props.handleReleaseType(e);
-  //         //isMultiple = true;
-
-  //     }
-  //     else {
-  //         props.handleReleaseType(e);
-  //         //isMultiple = false;
-
-  //     }
-  // }
 
   return (
     <div className="uploadmusic--column uploadmusic--song--form">
@@ -82,21 +66,6 @@ export default function MusicDetails(props) {
                 </td>
               </tr>
             </fieldset>
-            {/* <tr>
-              <td className="uploadmusic--columnt">
-                <label>
-                  Artist Name:
-                  <br />
-                  <input
-                    type="text"
-                    value={props.getArtistAPI}
-                    name="artistName"
-                    placeholder="Artist Name"
-                    // onChange={props.getArtistAPI}
-                  />
-                </label>
-              </td>
-            </tr> */}
             <tr>
               <td className="uploadmusic--columnt">
                 <label>

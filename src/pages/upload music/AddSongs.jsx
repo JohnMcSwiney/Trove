@@ -71,6 +71,7 @@ export default function AddSongs(props) {
                                     songFile={props.songFile}
                                     title={props.title}
                                     handleTitle={props.handleTitle}
+                                    handleSongFileChange={props.handleSongFileChange}
                                     setSongFile={props.setSongFile}
                                     setToUploadSongs={props.setToUploadSongs}
                                 />)
@@ -87,6 +88,7 @@ export default function AddSongs(props) {
                         </div>
                         <div className="uploadmusic--next--btn uploadmusic--finish--btn" >
                             <input type="submit" value="Submit" className="uploadmusic--gradient--btn uploadmusic--submit--btn" onClick={props.handleSubmit} />
+
                         </div>
 
                     </div>

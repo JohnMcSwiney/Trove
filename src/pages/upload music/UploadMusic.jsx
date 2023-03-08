@@ -91,16 +91,16 @@ export default function UploadMusic(props) {
   const handleSongFileChange = (e) => {
     setSongFile(e.target.files[0]);
 
-    //console.log("relerwerwsdfdsfds: " + releaseType);
+    console.log("relerwerwsdfdsfds: " + releaseType);
 
-    // if (releaseType === "single") {
+    if (releaseType === "single") {
 
-    //   setSongFile(e.target.files[0]);
-    // }
-    // else {
+      setSongFile(e.target.files[0]);
+    }
+    else {
 
-    //   setSongFile(Array.from(e.target.files));
-    // }
+      setSongFile(Array.from(e.target.files));
+    }
   };
 
   const handleImageFileChange = (e) => {
@@ -142,6 +142,7 @@ export default function UploadMusic(props) {
   const { uploadMusic, isUploading, error } = useUploadSong();
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
       await uploadMusic(
         title,
@@ -157,7 +158,7 @@ export default function UploadMusic(props) {
     } catch (error) {
       console.log(error);
     }
-  };
+  }
 
   // Initial Album Cover Display
   const default_album = "../assets/default_upload.png";
@@ -263,6 +264,7 @@ export default function UploadMusic(props) {
                     toUploadSongs={toUploadSongs}
                     songFile={songFile}
                     title={title}
+                    album={album}
                     releaseType={releaseType}
                   />
                 );
