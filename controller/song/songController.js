@@ -11,13 +11,17 @@ const createSong = async (req, res) => {
   try {
     // artist id check
     const artist = await Artist.findOne({ email: email });
+
     console.log(artist);
-    const artist_id = artist._id;
+
+    const artistId = artist._id;
+
     if (!artist) {
       throw new Error("Artist not found");
     }
 
     if (req.body.releaseType === "single") {
+
       console.log(req.body.releaseType);
 
       if (req.body.featuredArtist == null || !req.body.featuredArtists) {
@@ -25,7 +29,7 @@ const createSong = async (req, res) => {
 
         const song = new Song({
           ...req.body,
-          artist: artist_id,
+          artist: artistId,
         });
 
         artist.songList.push(song._id);
@@ -60,9 +64,12 @@ const createSong = async (req, res) => {
       }
 
       if (req.body.featuredArtists == null || !req.body.featuredArtists) {
+
+        console.log("before song is made");
+
         const song = new Song({
           ...req.body,
-          artist: artist_id,
+          artist: artistId,
           album: albumId,
           releaseType: "album",
         });
@@ -77,9 +84,14 @@ const createSong = async (req, res) => {
           await album.save();
         }
 
+        console.log("after song is made");
+
         artist.songList.push(song._id);
 
         await song.save();
+
+        console.log("BONGUGSS");
+        
         await artist.save();
         res.status(201).json(song);
       } else {
