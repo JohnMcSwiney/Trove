@@ -27,6 +27,7 @@ export const useLogin = () => {
       setIsLoading(false);
       setLoggedIn(true);
       sessionStorage.setItem("artistToken", json.token);
+      localStorage.setItem("artistID", json.id);
     } else {
       setIsLoading(false);
     }

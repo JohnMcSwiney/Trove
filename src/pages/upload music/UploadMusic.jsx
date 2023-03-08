@@ -15,7 +15,6 @@ import { async, reject } from "q";
 import { useUploadSong } from "../../hooks/useUploadSong";
 //  ARTISTS MUSIC SUBMISSION PAGE
 export default function UploadMusic(props) {
-
   const storage = firebase.storage();
 
   // State for large vs small header
@@ -38,6 +37,7 @@ export default function UploadMusic(props) {
 
   const useViewport = () => {
     const [width, setWidth] = React.useState(window.innerWidth);
+    const [artistList, setArtistList] = React.useState([]);
 
     React.useEffect(() => {
       const handleWindowResize = () => setWidth(window.innerWidth);
@@ -62,8 +62,6 @@ export default function UploadMusic(props) {
     //  menu = <SideBar />
   }
 
-  //  Submission Value States
-  // const [title, setTitle] = useState([]);
   const [title, setTitle] = useState();
   const [album, setAlbum] = useState("");
   const [genre, setGenre] = useState("");
@@ -71,10 +69,8 @@ export default function UploadMusic(props) {
   const [imageFile, setImageFile] = useState();
   const [releaseType, setReleaseType] = useState("");
   const [releaseYear, setReleaseYear] = useState("");
-  const [artist, setArtist] = useState("");
-  const [featuredArtists, setFeaturedArtists] = useState("");
 
-  
+  const [featuredArtists, setFeaturedArtists] = useState("");
 
   // Handle State Changes
   const handleTitle = (e) => {
@@ -93,7 +89,6 @@ export default function UploadMusic(props) {
   };
 
   const handleSongFileChange = (e) => {
-
     setSongFile(e.target.files[0]);
 
     //console.log("relerwerwsdfdsfds: " + releaseType);
@@ -114,38 +109,56 @@ export default function UploadMusic(props) {
   };
 
   const handleReleaseType = (e) => {
-
     setReleaseType(e.target.value);
   };
 
   const handleReleaseYear = (e) => {
     setReleaseYear(e.target.value);
   };
-
-  const handleArtist = (e) => {
-    setArtist(e.target.value);
+  const [artist, setArtist] = useState("");
+  const artistID = localStorage.getItem("artistID");
+  const getArtistAPI = React.useEffect(() => {
+    const fetchArtist = async () => {
+      const response = await fetch(`/api/artists/${artistID}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+      const json = await response.json();
+      if (response.ok) {
+        setArtist(json.artistName);
+        console.log(artist);
+        console.log(artist.artistName);
+      }
+    };
+    fetchArtist();
+  }, []);
+  const handleArtist = () => {
+    setArtist(artist.artistName);
   };
 
   const handleFeaturedArtists = (e) => {
     setFeaturedArtists(e.target.value);
-  }
-
-  
-
+  };
 
   // When music is submitted
-  const {uploadMusic,isUploading, error} = useUploadSong();
+  const { uploadMusic, isUploading, error } = useUploadSong();
   const handleSubmit = async (e) => {
-    
     e.preventDefault();
-    try{
-      await uploadMusic(title, album, genre, songFile, imageFile,releaseType,releaseYear, featuredArtists);
-    }catch(error){
-      console.log(error)
+    try {
+      await uploadMusic(
+        title,
+        album,
+        genre,
+        songFile,
+        imageFile,
+        releaseType,
+        releaseYear,
+        featuredArtists
+      );
+    } catch (error) {
+      console.log(error);
     }
-    
-    
-  }
+  };
 
   // Initial Album Cover Display
   const default_album = "../assets/default_upload.png";

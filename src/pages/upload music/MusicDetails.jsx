@@ -1,24 +1,19 @@
-import React, { useState } from "react"
+import React, { useState } from "react";
 import AddSongs from "./AddSongs";
-import SongInfo from "./SongInfo"
-
+import SongInfo from "./SongInfo";
 
 // Music Information page
 export default function MusicDetails(props) {
-
   // const [isMultiple, setIsMultiple] = useState(false);
-
   const [isSingle, setIsSingle] = useState(false);
 
   const handleReleaseType = (e) => {
-
     const value = e.target.value;
 
     setIsSingle(value === "single");
 
     props.handleReleaseType(e);
-
-  }
+  };
 
   // const handleReleaseType = (e) => {
   //     const value = e.target.value;
@@ -28,7 +23,6 @@ export default function MusicDetails(props) {
   //     if (value === "album" || value === "ep") {
   //         props.handleReleaseType(e);
   //         //isMultiple = true;
-
 
   //     }
   //     else {
@@ -48,49 +42,89 @@ export default function MusicDetails(props) {
           <tbody>
             <tr>
               <td className="uploadmusic--columnt">
-                <label>
-                  Release Type:
-                </label>
+                <label>Release Type:</label>
               </td>
             </tr>
             <fieldset>
               <tr>
                 <td className="uploadmusic--release--radio">
-                  <input type="radio" name="releasetype" value='album' checked={props.releaseType === "album"} onChange={handleReleaseType} releaseType={props.releaseType} />ALBUM
+                  <input
+                    type="radio"
+                    name="releasetype"
+                    value="album"
+                    checked={props.releaseType === "album"}
+                    onChange={handleReleaseType}
+                    releaseType={props.releaseType}
+                  />
+                  ALBUM
                 </td>
                 <td className="uploadmusic--release--radio">
-                  <input type="radio" name="releasetype" value='ep' checked={props.releaseType === "ep"} onChange={handleReleaseType} releaseType={props.releaseType} />EP
+                  <input
+                    type="radio"
+                    name="releasetype"
+                    value="ep"
+                    checked={props.releaseType === "ep"}
+                    onChange={handleReleaseType}
+                    releaseType={props.releaseType}
+                  />
+                  EP
                 </td>
                 <td className="uploadmusic--release--radio">
-                  <input type="radio" name="releasetype" value='single' checked={props.releaseType === "single"} onChange={handleReleaseType} releaseType={props.releaseType} />SINGLE
+                  <input
+                    type="radio"
+                    name="releasetype"
+                    value="single"
+                    checked={props.releaseType === "single"}
+                    onChange={handleReleaseType}
+                    releaseType={props.releaseType}
+                  />
+                  SINGLE
                 </td>
               </tr>
             </fieldset>
             <tr>
-                <td className="uploadmusic--columnt">
-                  <label>
-                    Artist Name:
-                    <br />
-                    <input type="text" value={props.artist} name="artistName" placeholder="Artist Name" onChange={props.handleArtist} />
-                  </label>
-                </td>
-              </tr>
-              <tr>
-                <td className="uploadmusic--columnt">
-                  <label>
-                    Featured Artists:
-                    <br />
-                    <input type="text" value={props.featuredArtists} name="artistName" placeholder="Artist Name" onChange={props.handleFeaturedArtists} />
-                  </label>
-                </td>
-              </tr>
+              <td className="uploadmusic--columnt">
+                <label>
+                  Artist Name:
+                  <br />
+                  <input
+                    type="text"
+                    value={props.artist}
+                    name="artistName"
+                    placeholder="Artist Name"
+                    onChange={props.handleArtist}
+                  />
+                </label>
+              </td>
+            </tr>
+            <tr>
+              <td className="uploadmusic--columnt">
+                <label>
+                  Featured Artists:
+                  <br />
+                  <input
+                    type="text"
+                    value={props.featuredArtists}
+                    name="artistName"
+                    placeholder="Artist Name"
+                    onChange={props.handleFeaturedArtists}
+                  />
+                </label>
+              </td>
+            </tr>
             {isSingle ? (
               <tr>
                 <td className="uploadmusic--columnt">
                   <label>
                     Song Name:
                     <br />
-                    <input type="text" value={props.song} name="songName" placeholder="Song Name" onChange={props.handleTitle} />
+                    <input
+                      type="text"
+                      value={props.song}
+                      name="songName"
+                      placeholder="Song Name"
+                      onChange={props.handleTitle}
+                    />
                   </label>
                 </td>
               </tr>
@@ -100,7 +134,13 @@ export default function MusicDetails(props) {
                   <label>
                     Album/EP Name:
                     <br />
-                    <input type="text" value={props.album} name="albumName" placeholder="Album Name" onChange={props.handleAlbumName} />
+                    <input
+                      type="text"
+                      value={props.album}
+                      name="albumName"
+                      placeholder="Album Name"
+                      onChange={props.handleAlbumName}
+                    />
                   </label>
                 </td>
               </tr>
@@ -140,31 +180,65 @@ export default function MusicDetails(props) {
               <label>
                 Release Year:
                 <br />
-                <input type="number" name="releaseYear" value={props.releaseYear} placeholder="YYYY" min="1900" max="2024" onChange={props.handleReleaseYear} />
+                <input
+                  type="number"
+                  name="releaseYear"
+                  value={props.releaseYear}
+                  placeholder="YYYY"
+                  min="1900"
+                  max="2024"
+                  onChange={props.handleReleaseYear}
+                />
               </label>
             </td>
             <tr>
               <td className="uploadmusic--columnt">
-                <label>
-                  Genre:
-                </label>
+                <label>Genre:</label>
               </td>
             </tr>
             <fieldset>
               <tr>
                 <td className="uploadmusic--genre--radio">
-                  <input type="radio" name="genre" value='pop' checked={props.genre === "pop"} onChange={props.handleGenre} />POP
+                  <input
+                    type="radio"
+                    name="genre"
+                    value="pop"
+                    checked={props.genre === "pop"}
+                    onChange={props.handleGenre}
+                  />
+                  POP
                 </td>
                 <td className="uploadmusic--genre--radio">
-                  <input type="radio" name="genre" value='rock' checked={props.genre === "rock"} onChange={props.handleGenre} />ROCK
+                  <input
+                    type="radio"
+                    name="genre"
+                    value="rock"
+                    checked={props.genre === "rock"}
+                    onChange={props.handleGenre}
+                  />
+                  ROCK
                 </td>
               </tr>
               <tr>
                 <td className="uploadmusic--genre--radio">
-                  <input type="radio" name="genre" value='country' checked={props.genre === "country"} onChange={props.handleGenre} />COUNTRY
+                  <input
+                    type="radio"
+                    name="genre"
+                    value="country"
+                    checked={props.genre === "country"}
+                    onChange={props.handleGenre}
+                  />
+                  COUNTRY
                 </td>
                 <td className="uploadmusic--genre--radio">
-                  <input type="radio" name="genre" value='hiphop' checked={props.genre === "hiphop"} onChange={props.handleGenre} />HIP-HOP
+                  <input
+                    type="radio"
+                    name="genre"
+                    value="hiphop"
+                    checked={props.genre === "hiphop"}
+                    onChange={props.handleGenre}
+                  />
+                  HIP-HOP
                 </td>
               </tr>
             </fieldset>
@@ -173,7 +247,6 @@ export default function MusicDetails(props) {
                 {/* <input type="submit" value="Submit" className="gradient--btn submit--btn" onClick={props.handleSubmit} />  */}
               </td>
             </tr>
-
           </tbody>
         </table>
       </div>
@@ -181,42 +254,61 @@ export default function MusicDetails(props) {
         <>
           <div className="uploadmusic--upload--songfile">
             <label className="uploadmusic--custom-song-upload">
-              <input type="file" name="songFile" value="" accept="audio/*" className="uploadmusic--hide--file" onChange={props.handleSongFileChange} />
+              <input
+                type="file"
+                name="songFile"
+                value=""
+                accept="audio/*"
+                className="uploadmusic--hide--file"
+                onChange={props.handleSongFileChange}
+              />
               Upload Song
             </label>
 
-            {props.toUploadSongs && props.toUploadSongs.map((item, index) => {
-              return (
-                <SongInfo
-                  key={index}
-                  {...item}
-                  i={index}
-                  songFile={props.songFile}
-                  handleTitle={props.handleTitle}
-                  setSongFile={props.setSongFile}
-                  setToUploadSongs={props.setToUploadSongs}
-                  title={props.title}
-                />)
-            })}
-
-          </div><div className="uploadmusic--next--btn uploadmusic--finish--btn">
-            <input type="submit" value="Submit" className="uploadmusic--gradient--btn uploadmusic--submit--btn" onClick={props.handleSubmit} />
+            {props.toUploadSongs &&
+              props.toUploadSongs.map((item, index) => {
+                return (
+                  <SongInfo
+                    key={index}
+                    {...item}
+                    i={index}
+                    songFile={props.songFile}
+                    handleTitle={props.handleTitle}
+                    setSongFile={props.setSongFile}
+                    setToUploadSongs={props.setToUploadSongs}
+                    title={props.title}
+                  />
+                );
+              })}
+          </div>
+          <div className="uploadmusic--next--btn uploadmusic--finish--btn">
+            <input
+              type="submit"
+              value="Submit"
+              className="uploadmusic--gradient--btn uploadmusic--submit--btn"
+              onClick={props.handleSubmit}
+            />
           </div>
         </>
       ) : (
         <div className="uploadmusic--navigate--form--btns">
-          <div className="next--btn" onClick={() => props.handleFormNavigation('AddSongs')}>
+          <div
+            className="next--btn"
+            onClick={() => props.handleFormNavigation("AddSongs")}
+          >
             <button
               className={"uploadmusic--gradient--btn uploadmusic--submit--btn"}
-              onClick={() => props.handleFormNavigation('AddSongs')}
+              onClick={() => props.handleFormNavigation("AddSongs")}
               on
               value="addsongz"
               releaseType={props.releaseType}
-              name="addsongz">Add Music</button>
+              name="addsongz"
+            >
+              Add Music
+            </button>
           </div>
         </div>
       )}
-
     </div>
-  )
+  );
 }
