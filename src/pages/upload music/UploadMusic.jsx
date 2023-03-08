@@ -125,17 +125,14 @@ export default function UploadMusic(props) {
       });
       const json = await response.json();
       if (response.ok) {
-        setArtist(json.artistName);
-        console.log("JSON: " + json.artistName);
+        setArtist(json.email);
+        console.log("JSON: " + json._id);
         // console.log("Artist: " + artist);
         // console.log("Artist name: " + artist.artistName);
       }
     };
     fetchArtist();
   }, []);
-  const handleArtist = () => {
-    setArtist(artist.artistName);
-  };
 
   const handleFeaturedArtists = (e) => {
     setFeaturedArtists(e.target.value);
@@ -148,6 +145,7 @@ export default function UploadMusic(props) {
     try {
       await uploadMusic(
         title,
+        artist,
         album,
         genre,
         songFile,
@@ -235,7 +233,6 @@ export default function UploadMusic(props) {
                     handleReleaseYear={handleReleaseYear}
                     handleFeaturedArtists={handleFeaturedArtists}
                     handleFormNavigation={handleFormNavigation}
-                    handleArtist={handleArtist}
                     getArtistAPI={getArtistAPI}
                     pageName={pageName}
                     album={album}
