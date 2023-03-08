@@ -16,8 +16,6 @@ export default function SongInfo(props) {
                     <>
                         <label>{props.songFile[props.i].name}</label>
                         <button onClick={handleRemoveSong}>Remove</button>
-                        {console.log("props.i: " + props.i)}
-                        {console.log("name: " + props.songFile[props.i].name)}
                     </>
                 )}
             </div>
