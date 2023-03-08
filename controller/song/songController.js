@@ -12,7 +12,7 @@ const createSong = async (req, res) => {
     // artist id check
     const artist = await Artist.findOne({ email: email });
     console.log(artist);
-
+    const artist_id = artist._id;
     if (!artist) {
       throw new Error("Artist not found");
     }
@@ -22,7 +22,6 @@ const createSong = async (req, res) => {
 
       if (req.body.featuredArtist == null || !req.body.featuredArtists) {
         console.log(req.body.featuredArtist);
-        const artist_id = artist._id;
 
         const song = new Song({
           ...req.body,
@@ -46,6 +45,85 @@ const createSong = async (req, res) => {
             return featuredArtist._id;
           })
         );
+      }
+    }
+    if (req.body.releaseType === "album") {
+      console.log(req.body.releaseType);
+      const album = await Album.findOne({ albumName: req.body.album });
+
+      const albumId = album._id;
+
+      if (!album) {
+        throw new Error("Album not found");
+      }
+
+      if (req.body.featuredArtists == null || !req.body.featuredArtists) {
+        const song = new Song({
+          ...req.body,
+          artist: artist_id,
+          album: albumId,
+          releaseType: "Album",
+        });
+
+        if (song.album) {
+          album.songList.push(song._id);
+
+          album.totalTracks++;
+
+          song.releaseYear = album.releaseYear;
+
+          await album.save();
+        }
+
+        artist.songList.push(song._id);
+
+        await song.save();
+        await artist.save();
+        res.status(201).json(song);
+      } else {
+        const featuredArtists = await Promise.all(
+          req.body.featuredArtists.map(async (name) => {
+            const featuredArtist = await Artist.findOne({ artistName: name });
+
+            if (!featuredArtist) {
+              throw new Error("Featured artist not found");
+            }
+
+            return featuredArtist._id;
+          })
+        );
+
+        console.log(featuredArtists);
+
+        const song = new Song({
+          ...req.body,
+          artist: artist._id,
+          album: album._id,
+          releaseType: "album",
+          featuredArtists: featuredArtists,
+        });
+
+        if (song.album) {
+          album.songList.push(song._id);
+
+          album.totalTracks++;
+
+          song.releaseYear = album.releaseYear;
+
+          await album.save();
+        }
+
+        artist.songList.push(song._id);
+
+        for (const featuredArtistId of featuredArtists) {
+          const featuredArtist = await Artist.findById(featuredArtistId);
+          featuredArtist.songList.push(song._id);
+          await featuredArtist.save();
+        }
+
+        await song.save();
+        await artist.save();
+        res.status(201).json(song);
       }
     }
   } catch (error) {
