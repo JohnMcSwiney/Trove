@@ -48,7 +48,9 @@ const createSong = async (req, res) => {
       }
     }
     if (req.body.releaseType === "album") {
-      console.log(req.body.releaseType);
+
+      console.log("INSIDE ALBUM SIDE");
+
       const album = await Album.findOne({ albumName: req.body.album });
 
       const albumId = album._id;
@@ -62,7 +64,7 @@ const createSong = async (req, res) => {
           ...req.body,
           artist: artist_id,
           album: albumId,
-          releaseType: "Album",
+          releaseType: "album",
         });
 
         if (song.album) {
