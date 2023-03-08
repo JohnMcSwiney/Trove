@@ -1,76 +1,75 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 
 const songSchema = new mongoose.Schema(
-    {
-        title: {
-            type: String,
-            required: [true, `Please provide song's name`],
-            maxlength: 75,
-        },
+  {
+    title: {
+      type: String,
+      required: [true, `Please provide song's name`],
+      maxlength: 75,
+    },
 
-        artist: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Artist',
-            required: true
-        },
+    artist: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Artist",
+      required: true,
+    },
 
-        genre: {
-            type: String,
-        },
+    genre: {
+      type: String,
+    },
 
-        featuredArtists: [
-            {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'Artist',
-                default: null
-            }
-        ],
+    featuredArtists: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Artist",
+        default: null,
+      },
+    ],
 
-        album: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Album',
-            default: null,
-        },
+    album: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Album",
+      default: null,
+    },
 
-        highlightStart: {
-            type: Number
-        },
+    highlightStart: {
+      type: Number,
+    },
 
-        highlightStop: {
-            type: Number
-        },
+    highlightStop: {
+      type: Number,
+    },
 
-        songUrl: {
-            type: String,
-            required: [true, `Please provide song`]
-        },
+    songUrl: {
+      type: String,
+      required: [true, `Please provide song`],
+    },
 
-        imgUrl: {
-            type: String,
-        },
+    imgUrl: {
+      type: String,
+    },
 
-        releaseYear: {
-            type: Number
+    releaseYear: {
+      type: Number,
+    },
+    //double check releaseType with album model, may conflict.
+    releaseType: {
+      type: String,
+      enum: ["album", "ep", "single"],
+    },
 
-        },
-        //double check releaseType with album model, may conflict.
-        releaseType: {
-            type: String,
-            enum: ['Album', 'EP', 'Single']
-        },
+    isPublished: {
+      type: Boolean,
+    },
 
-        isPublished: {
-            type: Boolean
-        },
-
-        isLoved: [
-            {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'User'
-            }
-        ]
-    }, { timestamps: true }
-
+    isLoved: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
+  },
+  { timestamps: true }
 );
 
-module.exports = mongoose.model('Song', songSchema);
+module.exports = mongoose.model("Song", songSchema);

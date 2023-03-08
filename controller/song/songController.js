@@ -6,7 +6,7 @@ const mongoose = require("mongoose");
 
 const createSong = async (req, res) => {
   console.log("createSong", req.body);
-  const email = req.body.email;
+  const email = req.body.artist;
   console.log(email);
   try {
     // artist id check
@@ -17,34 +17,36 @@ const createSong = async (req, res) => {
       throw new Error("Artist not found");
     }
 
-    const artistId = artist._id;
-    if (req.body.featuredArtist == null || !req.body.featuredArtists) {
-      console.log(req.body.featuredArtist);
+    if (req.body.releaseType === "single") {
+      console.log(req.body.releaseType);
 
-      //check why is it null (did user decide to do solo or other artists cannot be found?);
+      if (req.body.featuredArtist == null || !req.body.featuredArtists) {
+        console.log(req.body.featuredArtist);
+        const artist_id = artist._id;
 
-      const song = new Song({
-        ...req.body,
-        artist: artistId,
-      });
+        const song = new Song({
+          ...req.body,
+          artist: artist_id,
+        });
 
-      artist.songList.push(song._id);
+        artist.songList.push(song._id);
 
-      await song.save();
-      await artist.save();
-      res.status(201).json(song);
-    } else {
-      const featuredArtists = await Promise.all(
-        req.body.featuredArtists.map(async (name) => {
-          const featuredArtist = await Artist.findOne({ artistName: name });
+        await song.save();
+        await artist.save();
+        res.status(201).json(song);
+      } else {
+        const featuredArtists = await Promise.all(
+          req.body.featuredArtists.map(async (name) => {
+            const featuredArtist = await Artist.findOne({ artistName: name });
 
-          if (!featuredArtist) {
-            throw new Error("featured artist(s) not found");
-          }
+            if (!featuredArtist) {
+              throw new Error("featured artist(s) not found");
+            }
 
-          return featuredArtist._id;
-        })
-      );
+            return featuredArtist._id;
+          })
+        );
+      }
     }
   } catch (error) {
     console.log(error);
