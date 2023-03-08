@@ -371,4 +371,59 @@ body {
     /* margin-bottom: -10vmin; */
   }
 
+
+  .createplaylist--addsongsbtn {
+    display: block;
+
+    align-items: center;
+    appearance: none;
+    background-image: linear-gradient(to left, #8650f4, #6f49e8, #5642dc, #393bd0, #0034c4);
+    border-radius: 8vmin;
+    border-style: none;
+    box-shadow: rgba(0, 0, 0, .2) 0 3px 5px -1px,rgba(0, 0, 0, .14) 0 6px 10px 0,rgba(0, 0, 0, .12) 0 1px 18px 0;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    display: inline-flex;
+    fill: currentcolor;
+    /* font-family: "Google Sans",Roboto,Arial,sans-serif; */
+    font-size: 4vmin;
+    font-weight: bold;
+    height: 5vmin;
+    justify-content: center;
+    letter-spacing: .25px;
+    line-height: normal;
+    max-width: 100%;
+    overflow: visible;
+    position: relative;
+    text-align: center;
+    text-transform: none;
+    transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1),opacity 15ms linear 30ms,transform 270ms cubic-bezier(0, 0, .2, 1) 0ms;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    width: auto;
+    will-change: transform,opacity;
+    z-index: 0;
+    margin-bottom: 3vmin;
+    margin-left: 5vw;
+    margin-top: 4vw;
+    padding-left: 35vmin;
+    padding-right: 35vmin;
+    padding-bottom: 10vmin;
+    padding-top: 5vmin;
+    
+    
+  }
+
+  .createplaylist--modal {
+    position: absolute;
+    z-index: 300;
+    height: 80vh;
+    padding: 25vmin;
+    margin-top: 1vmin;
+    width: 90%;
+    border-radius: 5vmin;
+    background-color: #12164B;
+  }
 }

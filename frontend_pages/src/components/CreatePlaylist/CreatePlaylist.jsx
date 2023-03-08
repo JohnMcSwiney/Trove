@@ -4,6 +4,8 @@ import './CreatePlaylist.css';
 import NavBar from './nav bar/NavBar';
 import albumsongs from "../../data/albumsongs.json"
 import PlaylistSong from "./PlaylistSong";
+import Modal from 'react-modal';
+import PopUp from "./Popup"; 
 
 // To create a playlist
 export default function CreatePlaylist(props) {
@@ -27,6 +29,47 @@ export default function CreatePlaylist(props) {
 
     }
 
+    // let subtitle;
+    // const [modalIsOpen, setIsOpen] = React.useState(false);
+  
+    // const customStyles = {
+    //     content: {
+    //       top: '50%',
+    //       left: '50%',
+    //       right: 'auto',
+    //       bottom: 'auto',
+    //       marginRight: '-50%',
+    //       transform: 'translate(-50%, -50%)',
+    //     },
+    //   };
+
+    // function openModal() {
+    //   setIsOpen(true);
+    // }
+  
+    // function afterOpenModal() {
+    //   // references are now sync'd and can be accessed.
+    //   subtitle.style.color = '#f00';
+    // }
+  
+    // function closeModal() {
+    //   setIsOpen(false);
+    // }
+    
+    const [modalIsOpen, setIsOpen] = React.useState(true);
+    
+    function togglePop() {
+        setIsOpen(prevModalIsOpen => !prevModalIsOpen);
+        console.log("OPENED!")
+
+    }
+
+
+    function handleAddSongsClick() {
+
+    
+    }
+
 
     return(
     <section>
@@ -41,7 +84,10 @@ export default function CreatePlaylist(props) {
                 </div>
             </div>
 
+
+
         {/* PLAYLIST'S INFO */}
+        {modalIsOpen ? <PopUp togglePop={togglePop} /> : null}
             <div className="createplaylist--info">
                 <div className="createplaylist--song--cover">
                         <img src={previewCover} alt="playlist"/>
@@ -58,6 +104,8 @@ export default function CreatePlaylist(props) {
                         {/* <h6>PLAYLIST</h6> */}
                         </div>
                         {/* <h4>Creator Username</h4> */}
+
+                        
                         
                 </div>
               
@@ -67,11 +115,10 @@ export default function CreatePlaylist(props) {
                 </div>
 
             <div className="createplaylist--addsongs">
-                <div className="createplaylist--searchbar">
-                <input type="text" id="searchbar" placeholder="Search Songs"/>
-
+                <div className="createplaylist--searchbar" >
+                {/* <input type="text" id="searchbar" placeholder="Search Songs"/> */}
+                <input type="button" value="Add Songs" className="createplaylist--gradient--btn createplaylist--addsongsbtn"   onClick={togglePop}/> 
                 <div className="createplaylist--addedsongs">
-                    
 
             </div>
 
