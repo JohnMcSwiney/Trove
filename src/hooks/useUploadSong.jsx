@@ -9,6 +9,7 @@ export const useUploadSong = () => {
 
   const uploadMusic = async (
     title,
+    artist,
     album,
     genre,
     songFile,
@@ -116,6 +117,7 @@ export const useUploadSong = () => {
         },
         body: JSON.stringify({
           title,
+          artist,
           album,
           genre,
           songUrl,

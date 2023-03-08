@@ -69,7 +69,7 @@ export default function UploadMusic(props) {
   const [imageFile, setImageFile] = useState();
   const [releaseType, setReleaseType] = useState("");
   const [releaseYear, setReleaseYear] = useState("");
-
+  const [artist, setArtist] = useState("");
   const [featuredArtists, setFeaturedArtists] = useState("");
 
   // Handle State Changes
@@ -115,7 +115,7 @@ export default function UploadMusic(props) {
   const handleReleaseYear = (e) => {
     setReleaseYear(e.target.value);
   };
-  const [artist, setArtist] = useState("");
+
   const artistID = localStorage.getItem("artistID");
   const getArtistAPI = React.useEffect(() => {
     const fetchArtist = async () => {
@@ -126,8 +126,9 @@ export default function UploadMusic(props) {
       const json = await response.json();
       if (response.ok) {
         setArtist(json.artistName);
-        console.log(artist);
-        console.log(artist.artistName);
+        console.log("JSON: " + json.artistName);
+        // console.log("Artist: " + artist);
+        // console.log("Artist name: " + artist.artistName);
       }
     };
     fetchArtist();
@@ -232,9 +233,10 @@ export default function UploadMusic(props) {
                     handleImageFileChange={handleImageFileChange}
                     handleReleaseType={handleReleaseType}
                     handleReleaseYear={handleReleaseYear}
-                    handleArtist={handleArtist}
                     handleFeaturedArtists={handleFeaturedArtists}
                     handleFormNavigation={handleFormNavigation}
+                    handleArtist={handleArtist}
+                    getArtistAPI={getArtistAPI}
                     pageName={pageName}
                     album={album}
                     genre={genre}

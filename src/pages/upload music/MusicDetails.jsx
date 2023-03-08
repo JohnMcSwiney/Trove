@@ -82,21 +82,21 @@ export default function MusicDetails(props) {
                 </td>
               </tr>
             </fieldset>
-            <tr>
+            {/* <tr>
               <td className="uploadmusic--columnt">
                 <label>
                   Artist Name:
                   <br />
                   <input
                     type="text"
-                    value={props.artist}
+                    value={props.getArtistAPI}
                     name="artistName"
                     placeholder="Artist Name"
-                    onChange={props.handleArtist}
+                    // onChange={props.getArtistAPI}
                   />
                 </label>
               </td>
-            </tr>
+            </tr> */}
             <tr>
               <td className="uploadmusic--columnt">
                 <label>
