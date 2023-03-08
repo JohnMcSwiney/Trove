@@ -63,14 +63,14 @@ export default function UploadMusic(props) {
   }
 
   const [title, setTitle] = useState();
-  const [album, setAlbum] = useState("");
+  const [album, setAlbum] = useState(null);
   const [genre, setGenre] = useState("");
   const [songFile, setSongFile] = useState([]);
   const [imageFile, setImageFile] = useState();
   const [releaseType, setReleaseType] = useState("");
   const [releaseYear, setReleaseYear] = useState("");
   const [artist, setArtist] = useState("");
-  const [featuredArtists, setFeaturedArtists] = useState("");
+  const [featuredArtists, setFeaturedArtists] = useState(null);
 
   // Handle State Changes
   const handleTitle = (e) => {
