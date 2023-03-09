@@ -161,7 +161,7 @@ export const useUploadSong = () => {
           artist,
           album,
           genre,
-          //songUrl,
+          songUrl,
           //songUrl: releaseType === "single" ? songUrl : songUrl[0],
           imgUrl,
           releaseType,
@@ -177,9 +177,10 @@ export const useUploadSong = () => {
       }
     }
 
-    const createAlbumObject = async (albumName, albumArt, artist, releaseType, releaseYear, featuredArtists, songUrl, imgUrl, songList) => {
+    const createAlbumObject = async (songUrl, imgUrl) => {
 
-      //const songList = [];
+      const songList = [];
+
       console.log("before fetch");
       const albumResponse = await fetch("api/albums/", {
         method: "POST",
@@ -189,13 +190,13 @@ export const useUploadSong = () => {
           "Access-Control-Allow-Origin": "*",
         },
         body: JSON.stringify({
-          albumName,
-          albumArt,
+          albumName: album,
+          albumArt: imgUrl,
           artist,
           featuredArtists,
           releaseType,
           releaseYear,
-          songList
+          songList: [title]
         }),
       });
       console.log("after fetch: " + albumResponse);
@@ -212,7 +213,7 @@ export const useUploadSong = () => {
       //   await createSongObject(songUrl, imgUrl);
       // }
 
-      //createSongObject(songUrl, imgUrl);
+      createSongObject(songUrl, imgUrl);
 
 
       // await Promise.all(
@@ -251,6 +252,7 @@ export const useUploadSong = () => {
       //     }
       //   })
       // )
+      // return songUrlList;
     }
 
     switch (releaseType) {
