@@ -20,10 +20,19 @@ import DGdata from '../../data/hardcodedTestData/hardcodeDGsongs';
 
 import Slider from "react-slick";
 import $ from 'jquery';
+
+import MyTrove from '../../pages/my trove/MyTrove';
+
 // import "~slick-carousel/slick/slick.css"; 
 // import "~slick-carousel/slick/slick-theme.css";
 
 // import styles from '../audioplayer/AudioPlayer.module.css'
+
+
+// temporary so im not getting an error while im testing
+const likedIds = [];
+// same with this one
+const dislikedIds = [];
 
 const DiscoveryGame = () => {
   //state
@@ -167,7 +176,7 @@ const DiscoveryGame = () => {
       likedIds.push(slides[state].id);
       gotoNext();
       setState(state + 1);
-
+    
     },
   });
   {/* slider */ }
@@ -270,6 +279,7 @@ const DiscoveryGame = () => {
           dislikedIds.push(slides[state].id);
           gotoNext();
           setState(state + 1);
+          
         }} className='Discovery-Disike'><BsXLg /></button>
 
         {/* like */}
@@ -282,6 +292,7 @@ const DiscoveryGame = () => {
           likedIds.push(slides[state].id);
           gotoNext();
           setState(state + 1);
+          
         }} className='Discovery-Like'><BsCheckLg /></button>
       </div>
 
@@ -333,7 +344,8 @@ const DiscoveryGame = () => {
         </div>
         
         <div>
-              <button onClick={() => {console.log("Liked ids:" + likedIds + " | " + "Disliked ids:" + dislikedIds)}}> View Likes & Dislikes</button>
+              <button onClick={() => {console.log("Liked ids:" + likedIds + " | " + "Disliked ids:" + dislikedIds)}} > View Likes & Dislikes</button>
+              
         </div>
 
       </div>
@@ -342,9 +354,11 @@ const DiscoveryGame = () => {
     </div>
 
   );
+    
 
 }
+
 //the test it to just see if it actually shows up on the MyTrove page which it does im just trying to figure out how to actually send the likedIDS and dislikedIDS instead 
-export const likedIds = ['test',1 ,2 ,3];
-export const dislikedIds = ['test', 4, 5, 6];
+export const Likeid = likedIds;
+export const Dislikeid = dislikedIds;
 export default DiscoveryGame;
