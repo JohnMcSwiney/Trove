@@ -7,12 +7,11 @@ const mongoose = require("mongoose");
 const createSong = async (req, res) => {
   console.log("createSong", req.body);
   const email = req.body.artist;
-  console.log(email);
   try {
     // artist id check
     const artist = await Artist.findOne({ email: email });
 
-    console.log(artist);
+    //console.log(artist);
 
     const artistId = artist._id;
 

@@ -28,7 +28,7 @@ const createAlbum = async (req, res) => {
   try {
     const artist = await Artist.findOne({ email: req.body.artist });
 
-    console.log(artist);
+    //console.log(artist);
 
     if (!artist) {
       console.log("artist not found");
@@ -36,7 +36,8 @@ const createAlbum = async (req, res) => {
       throw new Error("Artist not found");
     }
 
-    if (!req.body.featuredArtists) {
+    if (!req.body.featuredArtists || featuredArtists == null) {
+      console.log("inside album method")
       const album = new Album({
         ...req.body,
         artist: artist._id,
