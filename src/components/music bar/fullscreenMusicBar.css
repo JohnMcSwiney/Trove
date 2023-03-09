@@ -7,11 +7,14 @@
 
 .fullscreenMusicBar{
     width: 100%;
-    background-color: #e39800;
+    /* background-color: #e39800; */
 
     margin: auto;
     position: fixed;
     z-index: 0;
+    
+
+    
 
 }
 .fullsc-musicbar-wrap{
@@ -28,13 +31,15 @@
   padding-left: 10px;
   padding-right: 10px;
   padding-top: 10px;
-  background-color: #e39800;
+  background: linear-gradient(0deg, #0C081C 0%, #080C3D 112.5%);
   padding-top: 20px;
+  overflow: scroll;
+  
 }
 .fullscreen-player-info-container{
     width: 100%;
     margin-top: 60px;
-    background-color: rgb(233, 172, 92);
+    /* background-color: rgb(233, 172, 92); */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -49,8 +54,7 @@
     
 }
 .fullscreen-song-img > .fullscreen-img{
-    width: 250px;
-    width: 250px;
+    width: 225px;
     background-color: aliceblue;
     
 }
@@ -85,10 +89,11 @@
     margin: 2px;
 }
 .fullscreen-playbtnstyle{
-    background-color: aquamarine;
+    background: linear-gradient(15deg, #a37df0, #714bbd);
     border-radius: 50px;
     box-sizing: border-box;
     padding: 2px;
+    box-shadow: 0px 1px 1px black;
 }
 .FullscreenBsPlayStyleLg{
     padding-left: 3px;
@@ -212,4 +217,12 @@
     border: 1px solid rgba(245, 245, 245, 0.197);
     border-radius: 50%;
     box-shadow: rgba(255, 255, 255, 0.671); 
+}
+.brihgleggmoie{
+    height: fit-content;
+    padding-top: 10px;
+    padding-bottom: 100px; 
+
+
+    background-color: rgba(60, 60, 60, 0);
 }

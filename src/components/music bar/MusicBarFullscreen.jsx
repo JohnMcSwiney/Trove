@@ -11,7 +11,7 @@ import {
   BiVolume,
   BiVolumeMute
 } from 'react-icons/bi'
-import {AiOutlineShareAlt} from 'react-icons/ai'
+import { AiOutlineShareAlt } from 'react-icons/ai'
 import { FaHeart, FaShareSquare, FaRegHeart } from 'react-icons/fa'
 import NoSong from './NoSong.png'
 
@@ -21,10 +21,13 @@ import { RiFolderMusicFill, RiFolderMusicLine } from 'react-icons/ri'
 import { BsSkipStart, BsSkipEnd, BsPlay, BsPause } from 'react-icons/bs'
 
 import { Tooltip } from 'react-tooltip' //react tool tip used in explicit tag
-
+import CardSong from '../cards/card_song/CardSong';
 import './fullscreenMusicBar.css';
 
 import Trv_Chest from '../../assets/Trv_icons/Tvr_lib_icon.ico'
+
+// Hardcoded data
+import queue from "../../data/albumsongs.json"
 
 const json = `
 {
@@ -62,6 +65,9 @@ const MusicBarFullscreen = () => {
   const progressBar = useRef() //reference progress bar
   const animationRef = useRef()
   const volumeRef = useRef()
+
+
+
 
   useEffect(() => {
     const seconds = Math.floor(audioPlayer.current.duration)
@@ -154,7 +160,6 @@ const MusicBarFullscreen = () => {
     setIsLiked(!isLiked)
   }
 
-
   return (
     <>
       {/* player-container musicbar */}
@@ -165,8 +170,8 @@ const MusicBarFullscreen = () => {
             src={obj.song_url}
             preload='metadata'
           ></audio>
-
-          <div className='fullscreen-player-info-container '>
+          {/* Attempting to change on scroll */}
+          <div id='fcplayerbox' className='fullscreen-player-info-container '>
             {/* Progress Bar */}
             <div
               className='fullscreen-progressbarContainer'
@@ -184,7 +189,7 @@ const MusicBarFullscreen = () => {
               />
             </div>
             {/*  */}
-            
+
 
             <div className='fullscreen-song-img '>
               <img src={obj.img_url} className="fullscreen-img"></img>
@@ -212,11 +217,11 @@ const MusicBarFullscreen = () => {
             </div>
 
             <div className='fullscreen-song-txt-container-container '>
-            <div className='like-btn '>
-              <button onClick={toggleLiked}>
-                {isLiked ? <FaHeart className='text-white' /> : <FaRegHeart />}
-              </button>
-            </div>
+              <div className='like-btn '>
+                <button onClick={toggleLiked}>
+                  {isLiked ? <FaHeart className='text-white' /> : <FaRegHeart />}
+                </button>
+              </div>
               <div className='fullscreen-song-info-txt-container'>
                 <div className='fc-song-txt'>
                   <a>{obj.title}</a>
@@ -226,12 +231,12 @@ const MusicBarFullscreen = () => {
                 </div>
               </div>
               <div className='like-btn'>
-              <button onClick={toggleLiked}>
-                <AiOutlineShareAlt/>
-              </button>
+                <button onClick={toggleLiked}>
+                  <AiOutlineShareAlt />
+                </button>
+              </div>
             </div>
-            </div>
-            
+
             <div className='fullscreen-control-container'>
               <button className='fullscreen-mediabtn1'>
                 <BsSkipStart />
@@ -243,8 +248,22 @@ const MusicBarFullscreen = () => {
                 <BsSkipEnd />
               </button>
             </div>
-          </div>
 
+
+          </div>
+          {/* Queue */}
+          <div className="brihgleggmoie">
+            <h6 className='queueHeader'>Song Queue:</h6>
+            {
+              queue && queue.map((item, index) => {
+                return (
+                  <CardSong
+                    key={index}
+                    {...item}
+                  />
+                )
+              })}
+          </div>
           <div className='volumeContainter'>
             <button onClick={toggleMute}>
               {isMuted ? <BiVolumeFull /> : <BiVolumeMute />}

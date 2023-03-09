@@ -104,8 +104,38 @@
     order: 2;
     text-align: center;
     margin: auto;
+    margin-top: 10px;
+    height: 80px;
+    /* background-color: cornflowerblue; */
+    width: 100%;
 
 }
+
+.DGsongtxt{
+    color: white;
+    font-weight: 500;
+  }
+.DGalbtxt{
+    color: #878694;
+    font-weight: 300;
+    
+  }
+.DGarrowcont{
+    display: inline-flex;
+    color: #47419b;
+    margin: 2.5px;
+    font-size: x-large;
+    width: fit-content;
+    background-blend-mode:multiply;
+}
+.DGarrowcont > .DGarrow{
+    padding: 0%;
+    /* background-color: aquamarine; */
+    margin: 0%;
+    display: flex;
+
+}
+
 .Discovery-Player-Container{
     width: 80%;
     margin: auto;
@@ -129,7 +159,10 @@
     display: flex;
     font-size: 40px;
     margin: 5px;
-    margin-top: 23px;
+    margin-top: 30px;
+    padding-top: 30px;
+    width: 20%;
+    margin: auto;
 }
 .Discovery-Swipe-Container{
     display: flex;
@@ -144,7 +177,7 @@
     position: relative;
     justify-content: space-between;
     border-radius: 50px;
-    margin-top: 10px;
+    margin-top: 20px;
 
 }
 .Discovery-Like, .Discovery-Disike{
@@ -185,7 +218,6 @@
     height: fit-content;
     padding: 0;
     margin: 1px;
-    color: white;
     font-size:x-small;
 }
 
@@ -196,6 +228,7 @@
     outline:none;
     position: relative;
     --seek-before-width: 0;
+    background-color: #12164b85;
     /* transform: translate(0px, -40%); */
 }
 /*safari*/

@@ -7,13 +7,14 @@ import { FaPause } from 'react-icons/fa';
 import { BiArrowToLeft } from 'react-icons/bi';
 import { BiVolumeFull, BiVolumeLow, BiVolume, BiVolumeMute } from "react-icons/bi";
 import { BsXLg, BsCheckLg } from 'react-icons/bs';
+import {MdOutlineArrowBackIos,MdOutlineArrowForwardIos} from 'react-icons/md'
 import tempImg from './NoSong.png';
 import tempImg2 from '../../assets/testImgs/roast_turkey_dinner.jpg';
 import tempImg3 from '../../assets/testImgs/chicken.jpg';
 
 import { AudioPlayer } from '../audioplayerOLD/AudioPlayer';
 
-import './DGstyle.css'
+import './DGstyle.css';
 
 
 import DGdata from '../../data/hardcodedTestData/hardcodeDGsongs';
@@ -253,9 +254,9 @@ const DiscoveryGame = () => {
 
       <div className='Discovery-Text-Container'>
         {/* Song title */}
-        <h2 className=""> {slides[state].songName} </h2>
+        <h2 className="DGsongtxt"> {slides[state].songName} </h2>
         {/* Song Artist */}
-        <h2 className=""> {slides[state].author} </h2>
+        <h2 className="DGalbtxt"> {slides[state].author} </h2>
       </div>
 
       {/* Swipe Box */}
@@ -271,7 +272,8 @@ const DiscoveryGame = () => {
           gotoNext();
           setState(state + 1);
         }} className='Discovery-Disike'><BsXLg /></button>
-
+        <div className='DGarrowcont'><MdOutlineArrowBackIos className='DGarrow'/><MdOutlineArrowBackIos/><MdOutlineArrowBackIos/></div>
+        <div className='DGarrowcont'> <MdOutlineArrowForwardIos/><MdOutlineArrowForwardIos/><MdOutlineArrowForwardIos/>  </div>
         {/* like */}
         <button onClick={() => {
 
@@ -283,7 +285,9 @@ const DiscoveryGame = () => {
           gotoNext();
           setState(state + 1);
         }} className='Discovery-Like'><BsCheckLg /></button>
+        
       </div>
+      
 
       {/*Audio Player*/}
       <div className='Discovery-Player-Container'>

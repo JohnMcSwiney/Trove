@@ -23,12 +23,7 @@
   height: 60px;
 }
 
-
-
-
-
 .DGplayPause{
-
   background: var(--Purple);
   border: none;
   border-radius: 50%;
@@ -36,8 +31,6 @@
   height: 50px;
   font-size: 32px;
   color: var(--White);
-  
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -50,7 +43,6 @@
 }
 
 .DGcurrentTime, .DGduration{
-
   font-family: monospace;
   font-size: 16px;
   color: var(--White);
@@ -60,43 +52,33 @@
   margin-left: 25px;
 }
 
-
 .DGprogressBar{
   --bar-bg:var(--Black);
   --seek-before-width: 0;
   --seek-before-color: var(--Purple) ;
   --knobby: var(--Purple) ;
   --selectedKnobby:var(--Purple) ;
-
-
   appearance:none ;
-
   background:var(--bar-bg) ;
   border-radius: 10px ;
   position: relative;
-  width: 350px;
+  width: 60%;
   height: 11px;
   outline: none;
-
-  
 }
 
 /* progress bar -safari*/
-
 .DGprogressBar::-webkit-slider-runnable-track{
-  
   background:var(--bar-bg) ;
   border-radius: 10px ;
   position: relative;
   width: 100%;
   height: 11px;
   outline: none;
-
 }
 
 
 /* progress bar -firefox*/
-
 .DGprogressBar::-moz-range-track{
   background:var(--bar-bg) ;
   border-radius: 10px ;
@@ -110,9 +92,7 @@
   border: 0;
 }
 
-
 /* progress bar - chrome and safari */
-
 .DGprogressBar::before{
   content: "";
   height: 11px;
@@ -128,22 +108,16 @@
 }
 
 /* progress bar - firefox */
-
-
 .DGprogressBar::-moz-range-progress{
-
   background-color: var(--seek-before-color);
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
   height: 11px;
-
 }
 
 
 /*knobby -chrome and safari*/
-
 .DGprogressBar::-webkit-slider-thumb{
-
   -webkit-appearance: none;
   height: 15px;
   width: 15px;
@@ -155,21 +129,16 @@
   margin: -2px 0 0 0;
   z-index: 3;
   box-sizing: border-box;
-
 }
 /*knobby while dragging -chrome and safari*/
 .DGprogressBar::-webkit-slider-thumb{
-
   transform: scale(1.2);
   background: var(--selectedKnobby);
-
 }
 
 
 /*knobby for Firefox*/
-
 .DGprogressBar::-moz-range-thumb{
-
   height: 15px;
   width: 15px;
   border-radius: 50%;
@@ -177,30 +146,30 @@
   background-color: var(--knobby);
   cursor: pointer;
   position: relative;
-  
   z-index: 3;
   box-sizing: border-box;
-
 }
+
 /*knobby while dragging -firefox*/
 .DGprogressBar:active:-moz-range-thumb{
-
   transform: scale(1.2);
   background: var(--selectedKnobby);
-
 }
 
-
-
+.DGsongtxt{
+  color: white;
+}
+.DGalbtxt{
+  color: #878694;
+}
 
 .DGtrove__mp_img{
   height: 600px;
   width: 600px;
   position: absolute;
   pointer-events: none;
-  
-  
 }
+
 .DGSwipeRight, .DGSwipeLeft {
   margin-top: auto;
   margin-bottom: auto;
@@ -213,19 +182,17 @@
   font-weight: bold;
   position: relative;
   display: flex;
-  
 }
+
 .DGSwipeLeft{
   float:right;
   background-color: #8650F4;
-  
 }
+
 .DGSwipeRight{
   float:left;
   background-color: #080C3D;
-  
 }
-
 
 .DGSongName{
 color: #FFFFFF;
@@ -240,10 +207,7 @@ height: 50px;
 font-size: 40px;
 display: flex;
 justify-content: center;
-
-line-height: 50px;  /*change when you change hight so its centered*/
-  
-  
+line-height: 50px;  /*change when you change hight so its centered*/ 
 }
 
 .DGauthor{
@@ -259,21 +223,13 @@ line-height: 50px;  /*change when you change hight so its centered*/
   font-size: 30px;
   display: flex;
   justify-content: center;
-  
   line-height: 40px;  /*change when you change hight so its centered*/
-    
-    
   }
-
-
 
 .DGshowNumber{
 text-align: center;
 float:right;
-
 }
-
-
 
 .DGBackButton{
   background: var(--Purple);
@@ -283,12 +239,10 @@ float:right;
   height: 50px;
   font-size: 32px;
   color: var(--White);
-  
   display: flex;
   justify-content: center;
   align-items: center;
   margin-left: 10px;
-
   position: fixed;
   top: 0;
   left: 0;
