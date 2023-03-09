@@ -185,7 +185,7 @@ export const useUploadSong = () => {
       const songList = [];
 
       await Promise.all(
-        songUrlList.map(async (songUrl) => {
+        songUrlList.map(async (songUrl, imgUrl) => {
 
           const res = await fetch("api/songs/", {
             method: "POST",
@@ -234,7 +234,7 @@ export const useUploadSong = () => {
           featuredArtists,
           releaseType,
           releaseYear,
-          songList
+          songList: [songList.title]
         }),
       });
       console.log("after fetch");
