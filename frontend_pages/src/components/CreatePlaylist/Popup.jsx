@@ -6,12 +6,12 @@ export default function PopUp(props) {
         props.togglePop();
        };
 
-      const [songSearched, setSongSearched] = React.useState();
+      const [songSearched, setSongSearched] = React.useState({
+        title: ""
+      });
       function handleChange(event) {
         const {name, value} = event.target
-        setSongSearched(prevSongSearched => ({
-            value
-        }))
+        setSongSearched( prevSongSearched => ({...prevSongSearched, title: value}))
       }
      
        return (
@@ -21,13 +21,14 @@ export default function PopUp(props) {
                     <img src="../assets/xsongsymbol.png" alt="deletesongicon" onClick={handleClick} />
           </div>
           {/* <span className="createplaylist--close" onClick={handleClick}>&times;    </span> */}
-          <input type="text" id="searchbar" name="songSearch" placeholder="Search Songs" onChange={handleChange}/>
+          <input type="text" id="searchbar" value={songSearched.title} name="songSearch" placeholder="Search Songs" onChange={handleChange}/>
           {/* <p>I'm A Pop Up!!!</p> */}
 
           <div className="createplaylist--songs">
             {
+              
                     props.albumSongs && props.albumSongs.map((item, index)=>{
-                    if(item.title.startsWith(songSearched)) {
+                    if(item.title.startsWith(songSearched.title)) {
                       return(
                         <PlaylistSong
                         key={index}
@@ -35,8 +36,9 @@ export default function PopUp(props) {
                         index={index}
                         handleRemoveSong={props.handleRemoveSong}
                         />
-                      
+                        
                 
+
                 ) }})}
             </div>
          </div>
