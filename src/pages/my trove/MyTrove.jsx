@@ -5,7 +5,7 @@ import CardPlaylist from '../../components/cards/card_playlist/CardPlaylist';
 import FeaturedArtist from '../../components/featured_artist/FeaturedArtist';
 import GenreCard from '../../components/cards/card_genre/CardGenre';
 
-import {dislikedIds, likedIds} from '../../components/discoverygame/DiscoveryGame';
+import {Likeid, Dislikeid} from '../../components/discoverygame/DiscoveryGame';
 
 
 
@@ -15,8 +15,8 @@ const MyTrove = () => {
   const [likeArray, setlikeArray] = useState();
   const [dislikeArray, setdislikeArray] = useState();
 
-  const [likedSongArray, setlikedSongArray] = useState([likedIds]);
-  const [dislikedSongArray, setdislikedSongArray] = useState([dislikedIds]);
+  const [likedSongArray, setlikedSongArray] = useState([Likeid]);
+  const [dislikedSongArray, setdislikedSongArray] = useState([Dislikeid]);
 
 
 
