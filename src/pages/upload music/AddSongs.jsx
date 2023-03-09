@@ -16,8 +16,6 @@ export default function AddSongs(props) {
 
     const { releaseType } = props;
 
-    console.log("dsfdsfdsfdsf " + releaseType);
-
 
     let isSingle = false;
 
@@ -28,8 +26,6 @@ export default function AddSongs(props) {
     else {
         isSingle = false;
     }
-
-    console.log("isSingle value " + isSingle);
 
     return (
         <div className="uploadmusic--column uploadmusic--song--form">

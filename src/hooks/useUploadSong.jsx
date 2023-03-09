@@ -98,7 +98,7 @@ export const useUploadSong = () => {
               },
               async () => {
                 const songUrl = await songRef.getDownloadURL();
-                resolve(songUrl);
+                resolve(songUrl)
               }
             );
           });
@@ -149,7 +149,6 @@ export const useUploadSong = () => {
 
     const createSongObject = async (songUrl, imgUrl) => {
       // const endpoint = "http://localhost:6280/api/songs/"
-      console.log("before fetch");
       const res = await fetch("api/songs/", {
         method: "POST",
         headers: {
@@ -163,17 +162,15 @@ export const useUploadSong = () => {
           album,
           genre,
           //songUrl,
-          songUrl: releaseType === "single" ? songUrl[0] : songUrl,
+          //songUrl: releaseType === "single" ? songUrl : songUrl[0],
           imgUrl,
           releaseType,
           releaseYear,
           featuredArtists,
         }),
       });
-      console.log("after fetch");
 
       const data = await res.json();
-      console.log("Song Data: " + data);
 
       if (!res.ok) {
         setError(data.error);
@@ -182,44 +179,8 @@ export const useUploadSong = () => {
 
     const createAlbumObject = async (songUrl, imgUrl) => {
 
-      const songList = [];
-
-      await Promise.all(
-        songUrlList.map(async (songUrl, imgUrl) => {
-
-          const res = await fetch("api/songs/", {
-            method: "POST",
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-              "Access-Control-Allow-Origin": "*",
-            },
-            body: JSON.stringify({
-              title,
-              artist,
-              album,
-              genre,
-              songUrl,
-              imgUrl,
-              releaseType,
-              releaseYear,
-              featuredArtists,
-            }),
-          });
-          console.log("after fetch");
-
-          const data = await res.json();
-          console.log("Song Data: " + data);
-
-          songList.push(data.title);
-
-
-          if (!res.ok) {
-            setError(data.error);
-          }
-        })
-      )
-
+      //const songList = [];
+      console.log("before fetch");
       const albumResponse = await fetch("api/albums/", {
         method: "POST",
         headers: {
@@ -234,10 +195,10 @@ export const useUploadSong = () => {
           featuredArtists,
           releaseType,
           releaseYear,
-          songList: [songList.title]
+          songList: [title]
         }),
       });
-      console.log("after fetch");
+      console.log("after fetch: " + albumResponse);
 
       const albumData = await albumResponse.json();
       console.log("Album Data: " + albumData);
@@ -245,6 +206,46 @@ export const useUploadSong = () => {
       if (!albumResponse.ok) {
         setError(albumData.error);
       }
+
+      createSongObject(songUrl, imgUrl);
+
+
+      // await Promise.all(
+      //   songUrlList.map(async (songUrl, imgUrl) => {
+
+      //     const res = await fetch("api/songs/", {
+      //       method: "POST",
+      //       headers: {
+      //         Accept: "application/json",
+      //         "Content-Type": "application/json",
+      //         "Access-Control-Allow-Origin": "*",
+      //       },
+      //       body: JSON.stringify({
+      //         title,
+      //         artist,
+      //         album,
+      //         genre,
+      //         songUrl,
+      //         imgUrl,
+      //         releaseType,
+      //         releaseYear,
+      //         featuredArtists,
+      //       }),
+      //     });
+      //     console.log("after fetch");
+
+      //     const data = await res.json();
+          
+      //     console.log("Song Data: " + data);
+
+      //     songList.push(data.title);
+
+
+      //     if (!res.ok) {
+      //       setError(data.error);
+      //     }
+      //   })
+      // )
     }
 
     switch (releaseType) {
