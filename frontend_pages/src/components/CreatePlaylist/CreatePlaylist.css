@@ -103,8 +103,8 @@ body {
       height: 10vmin;
       padding-left: 5vw;
       border-radius: 5vmin;
-      color: white;
-      background-color: transparent;
+      color: black;
+      /* background-color: transparent; */
       outline-color: white;
     }
   
@@ -419,11 +419,30 @@ body {
   .createplaylist--modal {
     position: absolute;
     z-index: 300;
-    height: 80vh;
-    padding: 25vmin;
-    margin-top: 1vmin;
-    width: 90%;
-    border-radius: 5vmin;
+    height: 75vh;
+    margin-top: 3vh;
+    width: 85%;
+    margin-left: 8vw;
+    border-radius: 1vmin;
     background-color: #12164B;
+    /* margin: auto; */
+
   }
+
+  .createplaylist--modal_content {
+    /* margin-top: 20vmin; */
+    /* display: inline-block; */
+
+  }
+
+  .createplaylist--popupmask {
+    background: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+  }
+
 }
