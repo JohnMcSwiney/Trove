@@ -177,7 +177,7 @@ export const useUploadSong = () => {
       }
     }
 
-    const createAlbumObject = async (songUrl, imgUrl) => {
+    const createAlbumObject = async (albumName, albumArt, artist, releaseType, releaseYear, featuredArtists, songUrl, imgUrl, songList) => {
 
       //const songList = [];
       console.log("before fetch");
@@ -189,13 +189,13 @@ export const useUploadSong = () => {
           "Access-Control-Allow-Origin": "*",
         },
         body: JSON.stringify({
-          albumName: album,
-          albumArt: imgUrl,
+          albumName,
+          albumArt,
           artist,
           featuredArtists,
           releaseType,
           releaseYear,
-          songList: [title]
+          songList
         }),
       });
       console.log("after fetch: " + albumResponse);
@@ -207,7 +207,12 @@ export const useUploadSong = () => {
         setError(albumData.error);
       }
 
-      createSongObject(songUrl, imgUrl);
+      // for (const song of songList) {
+
+      //   await createSongObject(songUrl, imgUrl);
+      // }
+
+      //createSongObject(songUrl, imgUrl);
 
 
       // await Promise.all(
