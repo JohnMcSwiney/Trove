@@ -23,7 +23,7 @@ export const useUploadSong = () => {
 
     const songUrls = [];
 
-    const uploadSongToFirebase = async () => {
+    const uploadSongToFirebase = async (songFile) => {
       setIsUploading(true);
 
       const songRef = storageRef.child(`songs/${songFile.name}`);
@@ -65,49 +65,10 @@ export const useUploadSong = () => {
             resolve(songUrl);
           }
         );
-      });
-    }
-
-    const uploadManySongs = async () => {
-      setIsUploading(true);
-
-      const songUrls = [];
-
-      await Promise.all(
-        songFile.map((file) => {
-
-          const songRef = storageRef.child(`songs/${file.name}`);
-
-          const songUploadTask = songRef.put(file, { contentType: "audio/mp3" });
-
-          console.log("songFile: " + file);
-
-          console.log("songFile[0]: " + file);
-
-          console.log("songRef: " + songRef);
-
-          return new Promise((resolve, reject) => {
-
-            songUploadTask.on(
-              "state_changed",
-              (snapshot) => {
-                setUploadProgress(
-                  (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-                );
-              },
-              (err) => {
-                console.log(err);
-                reject(err);
-              },
-              async () => {
-                const songUrl = await songRef.getDownloadURL();
-                resolve(songUrl);
-                console.log("Song URLs: " + songUrl);
-              }
-            );
-          });
-        })
-      )
+      }).then((songUrl) => {
+        console.log("return songurl: " + songUrl);
+        return songUrl;
+      })
     }
 
     const uploadImageToFirebase = async () => {
@@ -151,7 +112,7 @@ export const useUploadSong = () => {
       });
     }
 
-    const createSongObject = async (songUrl, imgUrl) => {
+    const createSongObject = async (title, songUrl, imgUrl) => {
       // const endpoint = "http://localhost:6280/api/songs/"
       const res = await fetch("api/songs/", {
         method: "POST",
@@ -166,7 +127,6 @@ export const useUploadSong = () => {
           album,
           genre,
           songUrl: songUrl,
-          // songUrl: releaseType === "single" ? songUrl[0] : songUrl,
           imgUrl: imgUrl,
           releaseType,
           releaseYear,
@@ -181,10 +141,12 @@ export const useUploadSong = () => {
       }
     }
 
-    const createAlbumObject = async (songUrl, imgUrl) => {
+    const createAlbumObject = async (imgUrl) => {
+
+      let songUrl = "";
 
       console.log("before fetch");
-      const albumResponse = await fetch("api/albums/", {
+      const res = await fetch("api/albums/", {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -198,39 +160,44 @@ export const useUploadSong = () => {
           featuredArtists,
           releaseType,
           releaseYear,
-          songList: [title]
+          songList: []
         }),
       });
-      console.log("after fetch: " + albumResponse);
 
-      const albumData = await albumResponse.json();
-      console.log("Album Data: " + albumData);
+      console.log("after fetch: " + res);
 
-      if (!albumResponse.ok) {
-        setError(albumData.error);
+      const data = await res.json();
+      console.log("Album Data: " + data);
+
+      if (!data.ok) {
+        setError(data.error);
       }
 
-      for (const file of songFile)
-      createSongObject(songUrl);
-    }
+      for (const file of songFile) {
 
-    console.log("FIIINNALLLLLLYY");
+        songUrl = await uploadSongToFirebase(file);
+
+        console.log("for loop song url: " + songUrl);
+
+        const title = file.name;
+
+        console.log("the song title: " + title);
+
+        res.songList.push({title});
+
+        await createSongObject(songUrl, imgUrl);
+      }
+
+      console.log("songs created!");
+    }
 
     switch (releaseType) {
       case "album":
         try {
-          //const songUrl = await uploadManySongs();
-
-          for (const file of songFile) {
-
-            const songUrl = await uploadSongToFirebase();
-
-            songUrls.push(songUrl);
-          }
 
           const imgUrl = await uploadImageToFirebase();
 
-          const data = await createAlbumObject(songUrls, imgUrl);
+          const data = await createAlbumObject(imgUrl);
 
           console.log("End Response Data: " + data);
 
@@ -249,11 +216,11 @@ export const useUploadSong = () => {
       case "single":
 
         try {
-          const songUrl = await uploadSongToFirebase();
+          const songUrl = await uploadSongToFirebase(songFile);
 
           const imgUrl = await uploadImageToFirebase();
 
-          const data = await createSongObject(songUrl, imgUrl);
+          const data = await createSongObject(title, songUrl, imgUrl);
 
           console.log("End Response Data: " + data);
 
