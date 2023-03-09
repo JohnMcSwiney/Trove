@@ -21,7 +21,7 @@ export const useUploadSong = () => {
   ) => {
     const storageRef = storage.ref();
 
-    const songUrlList = [];
+    const songUrls = [];
 
     const uploadSongToFirebase = async () => {
       setIsUploading(true);
@@ -61,6 +61,7 @@ export const useUploadSong = () => {
           },
           async () => {
             const songUrl = await songRef.getDownloadURL();
+            console.log("single song url: " + songUrl);
             resolve(songUrl);
           }
         );
@@ -70,7 +71,9 @@ export const useUploadSong = () => {
     const uploadManySongs = async () => {
       setIsUploading(true);
 
-      Promise.all(
+      const songUrls = [];
+
+      await Promise.all(
         songFile.map((file) => {
 
           const songRef = storageRef.child(`songs/${file.name}`);
@@ -98,7 +101,8 @@ export const useUploadSong = () => {
               },
               async () => {
                 const songUrl = await songRef.getDownloadURL();
-                resolve(songUrl)
+                resolve(songUrl);
+                console.log("Song URLs: " + songUrl);
               }
             );
           });
@@ -161,9 +165,9 @@ export const useUploadSong = () => {
           artist,
           album,
           genre,
-          songUrl,
-          //songUrl: releaseType === "single" ? songUrl : songUrl[0],
-          imgUrl,
+          songUrl: songUrl,
+          // songUrl: releaseType === "single" ? songUrl[0] : songUrl,
+          imgUrl: imgUrl,
           releaseType,
           releaseYear,
           featuredArtists,
@@ -178,8 +182,6 @@ export const useUploadSong = () => {
     }
 
     const createAlbumObject = async (songUrl, imgUrl) => {
-
-      const songList = [];
 
       console.log("before fetch");
       const albumResponse = await fetch("api/albums/", {
@@ -208,61 +210,27 @@ export const useUploadSong = () => {
         setError(albumData.error);
       }
 
-      // for (const song of songList) {
-
-      //   await createSongObject(songUrl, imgUrl);
-      // }
-
-      createSongObject(songUrl, imgUrl);
-
-
-      // await Promise.all(
-      //   songUrlList.map(async (songUrl, imgUrl) => {
-
-      //     const res = await fetch("api/songs/", {
-      //       method: "POST",
-      //       headers: {
-      //         Accept: "application/json",
-      //         "Content-Type": "application/json",
-      //         "Access-Control-Allow-Origin": "*",
-      //       },
-      //       body: JSON.stringify({
-      //         title,
-      //         artist,
-      //         album,
-      //         genre,
-      //         songUrl,
-      //         imgUrl,
-      //         releaseType,
-      //         releaseYear,
-      //         featuredArtists,
-      //       }),
-      //     });
-      //     console.log("after fetch");
-
-      //     const data = await res.json();
-          
-      //     console.log("Song Data: " + data);
-
-      //     songList.push(data.title);
-
-
-      //     if (!res.ok) {
-      //       setError(data.error);
-      //     }
-      //   })
-      // )
-      // return songUrlList;
+      for (const file of songFile)
+      createSongObject(songUrl);
     }
+
+    console.log("FIIINNALLLLLLYY");
 
     switch (releaseType) {
       case "album":
         try {
-          await uploadManySongs();
+          //const songUrl = await uploadManySongs();
+
+          for (const file of songFile) {
+
+            const songUrl = await uploadSongToFirebase();
+
+            songUrls.push(songUrl);
+          }
 
           const imgUrl = await uploadImageToFirebase();
 
-          const data = await createAlbumObject(songUrlList, imgUrl);
+          const data = await createAlbumObject(songUrls, imgUrl);
 
           console.log("End Response Data: " + data);
 
@@ -305,6 +273,45 @@ export const useUploadSong = () => {
   }
   return { uploadMusic, isUploading, error };
 }
+
+
+      // await Promise.all(
+      //   songUrlList.map(async (songUrl, imgUrl) => {
+
+      //     const res = await fetch("api/songs/", {
+      //       method: "POST",
+      //       headers: {
+      //         Accept: "application/json",
+      //         "Content-Type": "application/json",
+      //         "Access-Control-Allow-Origin": "*",
+      //       },
+      //       body: JSON.stringify({
+      //         title,
+      //         artist,
+      //         album,
+      //         genre,
+      //         songUrl,
+      //         imgUrl,
+      //         releaseType,
+      //         releaseYear,
+      //         featuredArtists,
+      //       }),
+      //     });
+      //     console.log("after fetch");
+
+      //     const data = await res.json();
+          
+      //     console.log("Song Data: " + data);
+
+      //     songList.push(data.title);
+
+
+      //     if (!res.ok) {
+      //       setError(data.error);
+      //     }
+      //   })
+      // )
+      // return songUrlList;
 
 // const songRef = storageRef.child(`songs/${songUrl.name}`);
 // const songUploadTask = songRef.put(songUrl, { contentType: "audio/mp3" });
