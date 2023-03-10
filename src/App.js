@@ -44,7 +44,7 @@ function App () {
         <div className='body-wrap'>
           <NavBar />
           <div className='clone-nav'></div>
-          <Routes>
+          <Routes >
             <Route path='/' element={<Home />}></Route>
             <Route path='/search' element={<Search />}></Route>
             <Route path='/mytrove' element={<MyTrove />}></Route>
@@ -72,10 +72,6 @@ function App () {
             <Route path='/createplaylist' element={<CreatePlaylist />}></Route>
           </Routes>
         </div>
-        <button className='fullscreen-btn-test' onClick={toggleFull}>
-          {' '}
-          fullscreen
-        </button>
         <MusicBar 
          /> 
         {/* <MusicBarFullscreen/> */}

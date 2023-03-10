@@ -371,7 +371,7 @@
     }
 }
 
-@media screen and (max-width:800px) {
+@media screen and (max-width:799px) {
     .musicbar{
         margin-top: 10vh;
         width: 96%;

@@ -11,14 +11,20 @@
 }
 @media screen and (max-width:380px){
     .mar-t{
-        margin-top: 25px;
+        margin-top: 20px;
     }
 }
 @media screen and (min-width:380px){
     .mar-t{
-        margin-top: 100px;
+        margin-top: 50px;
     }
 }
+@media screen and (min-width:800px) {
+    .test123456{
+      background-color: crimson;
+      margin-left: 2%;
+    }
+  }
 
 .mar-l-5{
     margin-left: 5px;

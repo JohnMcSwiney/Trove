@@ -8,13 +8,9 @@
 .fullscreenMusicBar{
     width: 100%;
     /* background-color: #e39800; */
-
     margin: auto;
     position: fixed;
     z-index: 0;
-    
-
-    
 
 }
 .fullsc-musicbar-wrap{
