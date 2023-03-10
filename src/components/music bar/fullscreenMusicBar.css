@@ -131,6 +131,17 @@
     background-color:#12164b85;
     
 }
+/* This is for the small player it only worked if styled here <3 */
+.fcBtn{
+    position: fixed;
+    color: rgba(255, 255, 255, 0.215);
+    margin-left: 35vmin;
+    margin-top: 2vmin;
+    width: 43vmin;
+    height: 18vmin;
+    /* background-color: #a37df0; */
+}
+
 /*safari*/
 .fullscreen-progressBar::-webkit-slider-runnable-track{
     background-color: rgba(255, 255, 255, 0.289);
@@ -225,4 +236,23 @@
 
 
     background-color: rgba(60, 60, 60, 0);
+}
+.exitBtn{
+    display: flex;
+    color: white;
+    background-color: #0C081C;
+    height: 30px;
+    width: 30px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    position: fixed;
+    z-index: 40;
+    right: 0;
+    top: 0;
+    margin-top: 25vmin;
+    margin-right: 5vmin;
+    padding-left: 0px;
+    padding-bottom: 2px;
+    font-size: large;
 }

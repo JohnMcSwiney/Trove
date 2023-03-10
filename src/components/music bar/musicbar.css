@@ -119,6 +119,7 @@
         font-size: x-small;
         overflow: hidden;
         padding-left: 2px;
+        width: fit-content;
     }
     .song-img{
         width: 60px;

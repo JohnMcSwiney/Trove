@@ -12,7 +12,20 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
-
+.appBackground{
+  background: linear-gradient(0deg, #0C081C 0%, #080C3D 112.5%);
+  z-index: -50;
+  display: block;
+}
+.appBackground2{
+  background-image: url('./assets/Trv_bg/trove bg.png');
+  background-size: cover;
+  background-position: center;
+  /* position: fixed; */
+  z-index: -49;
+  background-blend-mode: multiply;
+  background-repeat: no-repeat;
+}
 .App-header {
   background-color: #282c34;
   min-height: 100%;
@@ -50,7 +63,7 @@
   background-color: cadetblue;
   text-transform:uppercase;
   padding: 3px;
-  margin: 10px;
+  margin: 1px;
   font-size: xx-small;
   color: wheat;
   border-radius: 5px;
