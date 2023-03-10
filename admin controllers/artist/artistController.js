@@ -28,7 +28,7 @@ const getAnArtist = async (req, res) => {
     .populate("songList")
     .populate("albumList");
   if (!artist) {
-    return res.status(404).json({ message: error.message });
+    return res.status(404).json({ error: error.message });
   }
   res.status(200).json(artist);
 };
