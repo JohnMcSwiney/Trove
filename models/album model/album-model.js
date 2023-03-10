@@ -10,6 +10,7 @@ const albumSchema = new mongoose.Schema({
 
     albumArt: {
         type: String,
+        default: "https://firebasestorage.googleapis.com/v0/b/helical-analyst-376421.appspot.com/o/images%2FDefaultAlbumCover.png?alt=media&token=402df276-39d5-4d7f-9a82-9a7b06d91349"
     },
 
     artist: {
