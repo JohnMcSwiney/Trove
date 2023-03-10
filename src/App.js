@@ -34,12 +34,21 @@ function App () {
 
   const isLoginId = user ? JSON.parse(user).id : ''
   const toggleFull = () => {
+<<<<<<< Updated upstream
     const oldVal = useFullscreenPlayer
     setFullscreenPlayer(!oldVal)
   }
   return (
     <BrowserRouter>
       <div className=' text-gray-500 font-body'>
+=======
+    const oldVal = useFullscreenPlayer;
+    setFullscreenPlayer(!oldVal);
+  };
+  return (
+    <BrowserRouter>
+      <div className=" text-gray-500 font-body">
+>>>>>>> Stashed changes
         <Header />
         <div className='body-wrap'>
           <NavBar />
@@ -58,13 +67,14 @@ function App () {
             <Route path="/login" element={<Login />}></Route>
             <Route path="/signup" element={<Signup />}></Route>
             <Route path="/artist/">
-              <Route path=":id"  element={<Artist />}></Route>
+              <Route path=":id" element={<Artist />}></Route>
             </Route>
 
             <Route path='/discoverygame' element={<DiscoveryGame />}></Route>
 
             {/* <Route path='/upload' element= {<UploadMusic/>}></Route> */}
 
+<<<<<<< Updated upstream
             <Route path='/albumpage' element={<AlbumPage />}></Route>
             <Route path='/followers' element={<FollowersPage />}></Route>
             <Route path='/following' element={<FollowingPage />}></Route>
@@ -74,6 +84,22 @@ function App () {
         </div>
         <MusicBar 
          /> 
+=======
+            <Route path="/albumpage/" element={<AlbumPage />}>
+              <Route path=":id" element={<AlbumPage />}></Route>
+            </Route>
+            <Route path="/followers" element={<FollowersPage />}></Route>
+            <Route path="/following" element={<FollowingPage />}></Route>
+            <Route path="/playlist" element={<PlaylistPage />}></Route>
+            <Route path="/createplaylist" element={<CreatePlaylist />}></Route>
+          </Routes>
+        </div>
+        <button className="fullscreen-btn-test" onClick={toggleFull}>
+          {" "}
+          fullscreen
+        </button>
+        {useFullscreenPlayer === false ? <MusicBar /> : <MusicBarFullscreen />}
+>>>>>>> Stashed changes
         {/* <MusicBarFullscreen/> */}
       </div>
     </BrowserRouter>
