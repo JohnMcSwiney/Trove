@@ -1,4 +1,5 @@
 import React from "react";
+import {NavLink} from'react-router-dom'
 import "./song.css";
 const Song = ({ song }) => {
   return (
@@ -7,7 +8,7 @@ const Song = ({ song }) => {
         <img src={song.imgUrl} alt={song.title} />
       </div>
       <span>{song.title}</span>
-      <p>{song.artist.artistName}</p>
+      <NavLink to={`/artist/${song.artist._id}`} artist={song.artist._id}>{song.artist.artistName}</NavLink>
       <p>{song.genre}</p>
       <a href={song.songUrl}>song</a>
     </div>
