@@ -511,9 +511,23 @@ const deleteSong = async (req, res) => {
   }
 };
 
+const getArtistSong = async (req, res) => {
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error });
+  }
+
+  const songs = await Song.find({ artist: id }).sort({ createdAt: -1 });
+  if (!songs) {
+    return res.status(404).json({ error: "You don't have any song" });
+  }
+  res.status(200).json(songs);
+};
+
 module.exports = {
   getAllSongs,
   getSong,
+  getArtistSong,
   createSong,
   deleteSong,
   updateSong,

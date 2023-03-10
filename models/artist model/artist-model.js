@@ -7,6 +7,15 @@ const artistSchema = mongoose.Schema({
     maxLength: 50,
   },
 
+  bio: {
+    type: String,
+    maxLength: [250, "Max lenght is 250 words"],
+  },
+
+  artistImg: {
+    type: String,
+  },
+
   email: {
     type: String,
     required: [true, `Please provide email`],
