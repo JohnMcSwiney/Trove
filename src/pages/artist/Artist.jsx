@@ -38,8 +38,8 @@ const Artist = () => {
     findArtist();
   }, [id]);
 
-  const [artistSongs, setArtistSongs] = React.useState(null);
-  const [artistAlbums, setArtistAlbum] = React.useState(null);
+  const [songs, setSongs] = React.useState(null);
+  const [albums, setAlbum] = React.useState(null);
 
   React.useEffect(() => {
     const fetchSongs = async () => {
@@ -49,7 +49,7 @@ const Artist = () => {
       });
       const songJson = await songResponse.json();
       if (songResponse.ok) {
-        setArtistSongs(songJson);
+        setSongs(songJson);
       }
     };
     fetchSongs();
@@ -57,13 +57,13 @@ const Artist = () => {
 
   React.useEffect(() => {
     const fetchAlbums = async () => {
-      const albumResponse = await fetch(`/api/albums/artist-album/${id}`, {
+      const albumResponse = await fetch(`/api/albums/artist-albums/${id}`, {
         method: "GET",
         headers: { "Content-Type": "application/json" },
       });
       const albumJson = await albumResponse.json();
       if (albumResponse.ok) {
-        setArtistAlbum(albumJson);
+        setAlbum(albumJson);
       }
     };
     fetchAlbums();
@@ -130,7 +130,8 @@ const Artist = () => {
       <div className="artist-showcase">
         <h1>Albums:</h1>
         <div className="CardCont">
-          <CardAlbum />
+          {albums &&
+            albums.map((data) => <CardAlbum key={data._id} album={data} />)}
         </div>
       </div>
 
