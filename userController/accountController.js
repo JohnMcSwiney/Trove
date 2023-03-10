@@ -35,6 +35,15 @@ const loginUser = async (req, res) => {
     const user = await User.login(email, password);
     //create a token
     const token = createToken(user._id);
+    
+    const listener = {
+      email,
+      token,
+      id: user._id,
+      displayName: user.displayName,
+      useImg: user.imageURL,
+      dob: user.dob,
+    };
     // Mask the email before sending it in the response
     listener.email = maskEmailsPhones(listener.email);
     res.cookie("token", token, {
@@ -44,14 +53,6 @@ const loginUser = async (req, res) => {
       expires: new Date(Date.now() + 86400 * 1000), // Set the cookie to expire in 1 day
     });
 
-    const listener = {
-      email,
-      token,
-      id: user._id,
-      displayName: user.displayName,
-      useImg: user.imageURL,
-      dob: user.dob,
-    };
 
     res.cookie("user", listener, {
       httpOnly: true,
