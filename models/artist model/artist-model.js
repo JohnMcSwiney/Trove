@@ -5,8 +5,17 @@ const validator = require("validator");
 const artistSchema = mongoose.Schema({
   artistName: {
     type: String,
+    required: [true, `Please provide artist's name`],
     maxLength: 50,
-    required: [true, `Please provide your name or nickname`],
+  },
+
+  bio: {
+    type: String,
+    maxLength: [250, "Max length is 250 words"],
+  },
+
+  artistImg: {
+    type: String,
   },
 
   email: {
@@ -17,12 +26,15 @@ const artistSchema = mongoose.Schema({
 
   password: {
     type: String,
-    required: true,
+    required: [true, `Please provide password`],
   },
 
-  isArtist: {
-    type: Boolean,
-    default: false,
+  dob: {
+    type: Date,
+  },
+
+  gender: {
+    type: String,
   },
   artistFollowers: {
     type: Number,
@@ -50,16 +62,6 @@ const artistSchema = mongoose.Schema({
   },
   publishDate: {
     type: Date,
-  },
-
-  dob: {
-    type: Date,
-    required: true,
-  },
-
-  gender: {
-    type: String,
-    required: true,
   },
 });
 

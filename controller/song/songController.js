@@ -11,7 +11,6 @@ const createSong = async (req, res) => {
     // artist id check
     const artist = await Artist.findOne({ email: email });
 
-    //console.log(artist);
 
     const artistId = artist._id;
 

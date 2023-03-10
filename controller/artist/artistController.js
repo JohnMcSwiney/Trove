@@ -28,7 +28,7 @@ const getAnArtist = async (req, res) => {
         .populate('songList')
         .populate('albumList')
     if (!artist) {
-        return res.status(404).json({ message: err.message });
+        return res.status(404).json({ message: "artist not found" });
     }
     res.status(200).json(artist)
 }
