@@ -21,8 +21,6 @@ export const useUploadSong = () => {
   ) => {
     const storageRef = storage.ref();
 
-    const songUrls = [];
-
     const uploadSongToFirebase = async (songFile) => {
       setIsUploading(true);
 
@@ -122,7 +120,7 @@ export const useUploadSong = () => {
           "Access-Control-Allow-Origin": "*",
         },
         body: JSON.stringify({
-          title,
+          title: title,
           artist,
           album,
           genre,
@@ -135,6 +133,10 @@ export const useUploadSong = () => {
       });
 
       const data = await res.json();
+
+      console.log("Create Song Object: " + data);
+
+      console.log("Song title: ");
 
       if (!res.ok) {
         setError(data.error);
@@ -179,13 +181,11 @@ export const useUploadSong = () => {
 
         console.log("for loop song url: " + songUrl);
 
-        const title = file.name;
-
         console.log("the song title: " + title);
 
-        res.songList.push({title});
+        //res.songList.push({title});
 
-        await createSongObject(songUrl, imgUrl);
+        await createSongObject(title, songUrl, imgUrl);
       }
 
       console.log("songs created!");

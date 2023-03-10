@@ -74,10 +74,11 @@ export default function UploadMusic(props) {
 
   // Handle State Changes
   const handleTitle = (e) => {
-    // const { value, name } = e.target;
-    // setTitle({ ...title, [name]: value });
-    // console.log(title);
-    setTitle(e.target.value);
+    const { value, name } = e.target;
+    setTitle({ ...title, [name]: value });
+    console.log("Upload Music title: " + title);
+
+    //setTitle(e.target.value);
   };
 
   const handleAlbumName = (e) => {

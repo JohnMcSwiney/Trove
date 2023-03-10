@@ -20,8 +20,11 @@ export default function SongInfo(props) {
                 )}
             </div>
             <div>
-                <h3>{props.title}</h3>
-                <input type="text" placeholder="Song Title" onChange={props.handleTitle}></input>
+                {/* <h3>{props.title}</h3> */}
+                {/* <input type="text" placeholder="Song Title" value={props.title} onChange={props.handleTitle}></input> */}
+                {props.songFile[props.i].name && (
+                    <input type="text" placeholder="Song Title" value={props.title} onChange={props.handleTitle}></input>
+                )}
             </div>
         </div>
     )
