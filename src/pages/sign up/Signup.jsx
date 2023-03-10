@@ -1,10 +1,6 @@
-// import { ErrorResponse } from '@remix-run/router';
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useSignup } from "../../hooks/user-hooks/useSignup";
-
-// import { userSignup } from '../services/api';
-
 import "./signup.css";
 export default function Signup() {
   const [email, setEmail] = React.useState("");
