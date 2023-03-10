@@ -20,7 +20,6 @@ const createSong = async (req, res) => {
     }
 
     if (req.body.releaseType === "single") {
-
       console.log(req.body.releaseType);
 
       if (req.body.featuredArtist == null || !req.body.featuredArtists) {
@@ -51,7 +50,6 @@ const createSong = async (req, res) => {
       }
     }
     if (req.body.releaseType === "album") {
-
       console.log("INSIDE ALBUM SIDE");
 
       const album = await Album.findOne({ albumName: req.body.album });
@@ -63,7 +61,6 @@ const createSong = async (req, res) => {
       }
 
       if (req.body.featuredArtists == null || !req.body.featuredArtists) {
-
         console.log("before song is made");
 
         const song = new Song({
@@ -90,7 +87,7 @@ const createSong = async (req, res) => {
         await song.save();
 
         console.log("BONGUGSS");
-        
+
         await artist.save();
         res.status(201).json(song);
       } else {
@@ -186,6 +183,19 @@ const getSong = async (request, response) => {
 
     response.status(200).json(song);
   }
+};
+// get My song
+const getMySong = async (req, res) => {
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: "You have not sign in" });
+  }
+
+  const songs = await Song.find({ artist: id }).sort({ createdAt: -1 });
+  if (!songs) {
+    return res.status(404).json({ error: "You don't have any song" });
+  }
+  res.status(200).json(songs);
 };
 
 //WIP
@@ -485,6 +495,7 @@ const deleteSong = async (req, res) => {
 
 module.exports = {
   getAllSongs,
+  getMySong,
   getSong,
   createSong,
   deleteSong,

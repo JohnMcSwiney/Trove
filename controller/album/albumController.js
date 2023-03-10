@@ -37,7 +37,7 @@ const createAlbum = async (req, res) => {
     }
 
     if (!req.body.featuredArtists || featuredArtists == null) {
-      console.log("inside album method")
+      console.log("inside album method");
       const album = new Album({
         ...req.body,
         artist: artist._id,
@@ -304,8 +304,22 @@ const deleteAlbum = async (req, res) => {
   }
 };
 
+const getMyAlbum = async (req, res) => {
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ err: err.message });
+  }
+
+  const albums = await Album.find({ artist: id }).sort({ createdAt: -1 });
+  if (!albums) {
+    return res.status(404).json({ error: "You don't have any song" });
+  }
+  res.status(200).json(albums);
+};
+
 module.exports = {
   getAlbum,
+  getMyAlbum,
   getAllAlbum,
   createAlbum,
   updateAlbum,
