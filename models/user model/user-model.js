@@ -20,10 +20,10 @@ const userSchema = new mongoose.Schema(
       type: Date,
     },
 
-    provider_id: {
-      type: String,
-      unique: true,
-    },
+    // provider_id: {
+    //   type: String,
+    //   unique: true,
+    // },
 
     provider: {
       type: String,

@@ -24,7 +24,7 @@ const loginUser = async (req, res) => {
     const verify = await User.findOne({ email: email });
 
     if (verify == null) {
-      return res.status(400).json({ err: "Email or password is not correct" });
+      return res.status(400).json({ err: "You haven't signed up" });
     }
     if (!verify.isVerified) {
       return res
@@ -35,7 +35,8 @@ const loginUser = async (req, res) => {
     const user = await User.login(email, password);
     //create a token
     const token = createToken(user._id);
-
+    // Mask the email before sending it in the response
+    listener.email = maskEmailsPhones(listener.email);
     res.cookie("token", token, {
       httpOnly: true,
       secure: true,
@@ -58,9 +59,6 @@ const loginUser = async (req, res) => {
       sameSite: "strict",
       expires: new Date(Date.now() + 86400 * 1000), // Set the cookie to expire in 1 day
     });
-
-    // Mask the email before sending it in the response
-    listener.email = maskEmailsPhones(listener.email);
 
     res.status(200).json(listener);
   } catch (err) {
@@ -101,6 +99,8 @@ const signupUser = async (req, res) => {
       sameSite: "strict",
       expires: new Date(Date.now() + 86400 * 1000), // Set the cookie to expire in 1 day
     });
+
+    listener.email = maskEmailsPhones(listener.email);
     //provide its provider
     user.provider = "TroveMusic";
     console.log(user.provider);
@@ -134,7 +134,7 @@ const signupUser = async (req, res) => {
         console.log("Email sent: " + info.response);
       }
     });
-    listener.email = maskEmailsPhones(listener.email);
+
     res.status(200).json({
       email,
       token,
