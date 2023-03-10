@@ -121,7 +121,7 @@ export const useUploadSong = () => {
           "Access-Control-Allow-Origin": "*",
         },
         body: JSON.stringify({
-          title: title,
+          title,
           artist,
           album,
           genre,
@@ -135,7 +135,7 @@ export const useUploadSong = () => {
 
       const data = await res.json();
 
-      console.log("Create Song Object: " + data);
+      console.log("Create Song Object: " + res.title);
 
       console.log("Song title: ");
 
@@ -184,18 +184,10 @@ export const useUploadSong = () => {
 
         console.log("the song title: " + title);
 
-        if (!imageFile || imageFile == null) {
-
-          console.log("no image selected");
-
-          let imgUrl = "https://firebasestorage.googleapis.com/v0/b/helical-analyst-376421.appspot.com/o/images%2FDefaultAlbumCover.png?alt=media&token=402df276-39d5-4d7f-9a82-9a7b06d91349";
+        const imgUrl = process.env.DEFAULT_COVER;
     
-          await createSongObject(title, songUrl, imgUrl);
-        }
-
-        //res.songList.push({title});
-
         await createSongObject(title, songUrl, imgUrl);
+
       }
 
       console.log("songs created!");
@@ -205,16 +197,22 @@ export const useUploadSong = () => {
       case "album":
         try {
 
+          let imgUrl;
+
           if (!imageFile || imageFile == null) {
 
             console.log("no image selected");
 
-            let imgUrl = "https://firebasestorage.googleapis.com/v0/b/helical-analyst-376421.appspot.com/o/images%2FDefaultAlbumCover.png?alt=media&token=402df276-39d5-4d7f-9a82-9a7b06d91349";
+            imgUrl = process.env.DEFAULT_COVER;
       
             await createAlbumObject(imgUrl);
           }
 
-          const imgUrl = await uploadImageToFirebase();
+          else {
+
+            imgUrl = await uploadImageToFirebase();
+          }
+
 
           const data = await createAlbumObject(imgUrl);
 
@@ -235,18 +233,25 @@ export const useUploadSong = () => {
       case "single":
 
         try {
+
           const songUrl = await uploadSongToFirebase(songFile);
 
-          // if (!imageFile || imageFile == null) {
+          let imgUrl;
 
-          //   console.log("no image selected");
+          if (!imageFile || imageFile == null) {
 
-          //   let imgUrl = "https://firebasestorage.googleapis.com/v0/b/helical-analyst-376421.appspot.com/o/images%2FDefaultAlbumCover.png?alt=media&token=402df276-39d5-4d7f-9a82-9a7b06d91349";
+            console.log("no image selected");
+
+            imgUrl = process.env.DEFAULT_COVER;
       
-          //   await createSongObject(title, songUrl, imgUrl);
-          // }
+            await createSongObject(title, songUrl, imgUrl);
+          }
 
-          const imgUrl = await uploadImageToFirebase();
+          else {
+
+            imgUrl = await uploadImageToFirebase();
+          }
+
 
           const data = await createSongObject(title, songUrl, imgUrl);
 
