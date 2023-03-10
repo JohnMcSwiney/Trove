@@ -94,11 +94,8 @@ export default function UploadMusic(props) {
     console.log("relerwerwsdfdsfds: " + releaseType);
 
     if (releaseType === "single") {
-
       setSongFile(e.target.files[0]);
-    }
-    else {
-
+    } else {
       setSongFile(Array.from(e.target.files));
     }
   };
@@ -158,7 +155,7 @@ export default function UploadMusic(props) {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   // Initial Album Cover Display
   const default_album = "../assets/default_upload.png";

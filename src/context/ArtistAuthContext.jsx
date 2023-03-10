@@ -1,4 +1,4 @@
-import { createContext, useReducer, useEffect } from "react";
+import { createContext, useReducer, useEffect, useState } from "react";
 
 export const ArtistAuthContext = createContext();
 
@@ -25,6 +25,7 @@ export const ArtistAuthContextProvider = ({ children }) => {
       .then((res) => res.json())
       .then((data) => {
         if (data.artist) {
+          const artist = JSON.parse(localStorage.getItem("artist"));
           dispatch({ type: "LOGIN", payload: data.artist }); // If there's an artist in the session, set it as the current authenticated user
         }
       })
@@ -37,16 +38,3 @@ export const ArtistAuthContextProvider = ({ children }) => {
     </ArtistAuthContext.Provider>
   );
 };
-
-// export const ArtistAuthContextProvider = ({ children }) => {
-//   const [state, dispatch] = useReducer(authReducer, {
-//     artist: null,
-//   });
-
-//   useEffect(() => {
-//     const artist = JSON.parse(localStorage.getItem("artist"));
-
-//     if (artist) {
-//       dispatch({ type: "LOGIN", payload: artist });
-//     }
-//   }, []);

@@ -1,28 +1,17 @@
-import { useState } from "react";
 import { useArtistAuthContext } from "./useArtistAuthContext";
-
+import { useNavigate } from "react-router-dom";
 export const useLogout = () => {
-  const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const logout = async () => {
-    setIsLoading(true);
-    setError(null);
-
-    try {
-      const response = await fetch("/api/artist/logout");
-      const data = await response.json();
-      if (response.ok) {
-        setIsLoading(false);
-      } else {
-        setError(data.message);
-      }
-    } catch (error) {
-      setError("An error occurred while logging out.");
-    } finally {
-      setIsLoading(false);
-      sessionStorage.removeItem("artistToken");
-    }
+  const { dispatch } = useArtistAuthContext();
+  const navigate = useNavigate();
+  const logout = () => {
+    sessionStorage.removeItem("artistToken");
+    localStorage.removeItem("artistID");
+    fetch("/api/artist/logout").then(() => {
+      // dispatch logout action
+      dispatch({ type: "LOGOUT" });
+      navigate("/");
+    });
   };
-  return { logout, isLoading, error };
+
+  return { logout };
 };

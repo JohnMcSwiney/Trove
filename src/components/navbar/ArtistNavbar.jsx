@@ -1,19 +1,18 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
 
 import "./navbar.css";
 import { useLogout } from "../../hooks/useLogout";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
+import { useArtistAuthContext } from "../../hooks/useArtistAuthContext";
 const ArtistNavbar = () => {
   const [state, setState] = React.useState(1);
 
   const [colorbg, setColorBg] = React.useState("home-color");
-
-  const sessionToken = sessionStorage.getItem("artistToken");
-
-  // console.log(sessionToken);
+  const { artist } = useArtistAuthContext();
+  const navigate = useNavigate();
   const action = (index) => {
     setState(index);
   };
@@ -27,6 +26,7 @@ const ArtistNavbar = () => {
   const { logout } = useLogout();
   const logoutArtist = () => {
     logout();
+    navigate("/");
   };
   return (
     <div>
@@ -93,7 +93,7 @@ const ArtistNavbar = () => {
             </NavLink>
 
             <div class="vl">
-              {sessionToken !== null ? (
+              {artist ? (
                 <>
                   <button className="btn text-white" onClick={logout}>
                     Logout
