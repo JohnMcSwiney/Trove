@@ -11,6 +11,7 @@ import GenreCard from '../../components/cards/card_genre/CardGenre';
 import DiscoveryGame from '../../components/discoverygame/DiscoveryGame';
 
 import Popup from 'reactjs-popup'
+import { useParams } from 'react-router-dom';
 
 const Artist = () => {
   
@@ -59,6 +60,24 @@ const Artist = () => {
   }
   const userFollowers = 124;
 
+  let {artistID} = useParams()
+  const [artist, setArtist] =useState(null)
+  console.log(artistID)
+  React.useEffect(()=> {
+    const findArtist = async () => {
+      
+      const response = await fetch (`/api/artists/${artistID}`)
+      
+      const json =await response.json();
+      
+      if(!response.ok){
+        console.log(json.error)
+      }
+      console.log(json._id)
+      findArtist()
+    setArtist(json)
+  }
+  }, [])
   return (
     <div className='myTrvcontainer '>
       <div className='pfp_name_follower_bio_cont'>
