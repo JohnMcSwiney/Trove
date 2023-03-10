@@ -9,6 +9,7 @@ export default function PopUp(props) {
       const [songSearched, setSongSearched] = React.useState({
         title: ""
       });
+
       function handleChange(event) {
         const {name, value} = event.target
         setSongSearched( prevSongSearched => ({...prevSongSearched, title: value}))
@@ -28,7 +29,7 @@ export default function PopUp(props) {
             {
               
                     props.albumSongs && props.albumSongs.map((item, index)=>{
-                    if(item.title.startsWith(songSearched.title)) {
+                    if(item.title.includes(songSearched.title) && songSearched.title != "") {
                       return(
                         <PlaylistSong
                         key={index}
@@ -36,12 +37,9 @@ export default function PopUp(props) {
                         index={index}
                         handleRemoveSong={props.handleRemoveSong}
                         />
-                        
-                
-
-                ) }})}
+                        ) }})}
             </div>
-         </div>
+          </div>
         </div>
        );
 
