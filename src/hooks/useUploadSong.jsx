@@ -69,6 +69,7 @@ export const useUploadSong = () => {
       })
     }
 
+
     const uploadImageToFirebase = async () => {
       const imageRef = storageRef.child(`images/${imageFile.name}`);
 
@@ -183,6 +184,15 @@ export const useUploadSong = () => {
 
         console.log("the song title: " + title);
 
+        if (!imageFile || imageFile == null) {
+
+          console.log("no image selected");
+
+          let imgUrl = "https://firebasestorage.googleapis.com/v0/b/helical-analyst-376421.appspot.com/o/images%2FDefaultAlbumCover.png?alt=media&token=402df276-39d5-4d7f-9a82-9a7b06d91349";
+    
+          await createSongObject(title, songUrl, imgUrl);
+        }
+
         //res.songList.push({title});
 
         await createSongObject(title, songUrl, imgUrl);
@@ -194,6 +204,15 @@ export const useUploadSong = () => {
     switch (releaseType) {
       case "album":
         try {
+
+          if (!imageFile || imageFile == null) {
+
+            console.log("no image selected");
+
+            let imgUrl = "https://firebasestorage.googleapis.com/v0/b/helical-analyst-376421.appspot.com/o/images%2FDefaultAlbumCover.png?alt=media&token=402df276-39d5-4d7f-9a82-9a7b06d91349";
+      
+            await createAlbumObject(imgUrl);
+          }
 
           const imgUrl = await uploadImageToFirebase();
 
@@ -217,6 +236,15 @@ export const useUploadSong = () => {
 
         try {
           const songUrl = await uploadSongToFirebase(songFile);
+
+          // if (!imageFile || imageFile == null) {
+
+          //   console.log("no image selected");
+
+          //   let imgUrl = "https://firebasestorage.googleapis.com/v0/b/helical-analyst-376421.appspot.com/o/images%2FDefaultAlbumCover.png?alt=media&token=402df276-39d5-4d7f-9a82-9a7b06d91349";
+      
+          //   await createSongObject(title, songUrl, imgUrl);
+          // }
 
           const imgUrl = await uploadImageToFirebase();
 
