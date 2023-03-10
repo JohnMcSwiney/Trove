@@ -9,7 +9,7 @@ const artistSchema = mongoose.Schema({
 
   bio: {
     type: String,
-    maxLength: [250, "Max lenght is 250 words"],
+    maxLength: [250, "Max length is 250 words"],
   },
 
   artistImg: {
