@@ -121,7 +121,7 @@ export const useUploadSong = () => {
           "Access-Control-Allow-Origin": "*",
         },
         body: JSON.stringify({
-          title,
+          title: title,
           artist,
           album,
           genre,
@@ -183,8 +183,6 @@ export const useUploadSong = () => {
         console.log("for loop song url: " + songUrl);
 
         console.log("the song title: " + title);
-
-        const imgUrl = process.env.DEFAULT_COVER;
     
         await createSongObject(title, songUrl, imgUrl);
 
@@ -197,21 +195,23 @@ export const useUploadSong = () => {
       case "album":
         try {
 
-          let imgUrl;
+          const imgUrl = await uploadImageToFirebase();
 
-          if (!imageFile || imageFile == null) {
+          // let imgUrl = "";
 
-            console.log("no image selected");
+          // if (!imageFile || imageFile == null) {
 
-            imgUrl = process.env.DEFAULT_COVER;
+          //   console.log("no image selected");
+
+          //   imgUrl = process.env.DEFAULT_COVER;
       
-            await createAlbumObject(imgUrl);
-          }
+          //   await createAlbumObject(imgUrl);
+          // }
 
-          else {
+          // else {
 
-            imgUrl = await uploadImageToFirebase();
-          }
+          //   imgUrl = await uploadImageToFirebase();
+          // }
 
 
           const data = await createAlbumObject(imgUrl);
@@ -236,22 +236,23 @@ export const useUploadSong = () => {
 
           const songUrl = await uploadSongToFirebase(songFile);
 
-          let imgUrl;
+          const imgUrl = await uploadImageToFirebase();
 
-          if (!imageFile || imageFile == null) {
+          // let imgUrl = "";
 
-            console.log("no image selected");
+          // if (!imageFile || imageFile == null) {
 
-            imgUrl = process.env.DEFAULT_COVER;
+          //   console.log("no image selected");
+
+          //   imgUrl = process.env.DEFAULT_COVER;
       
-            await createSongObject(title, songUrl, imgUrl);
-          }
+          //   await createSongObject(title, songUrl, imgUrl);
+          // }
 
-          else {
+          // else {
 
-            imgUrl = await uploadImageToFirebase();
-          }
-
+          //   imgUrl = await uploadImageToFirebase();
+          // }
 
           const data = await createSongObject(title, songUrl, imgUrl);
 

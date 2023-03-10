@@ -21,14 +21,12 @@ export default function SongInfo(props) {
             </div>
             <div>
                 {/* <h3>{props.title}</h3> */}
-                <input type="text" placeholder="Song Title" onChange={props.handleTitle}></input>
-                {[props.i].forEach(title => {
-                    <input type="text" placeholder="Song Title" value={title} onChange={props.handleTitle}></input>
+                {/* {console.log("index: " + [props.i])}
+                {console.log("file: " + props.songFile[props.i])}
+                {console.log("file name: " + props.songFile[props.i].name)} */}
 
-                })}
-                {/* {props.songFile[props.i].name && (
-                    <input type="text" placeholder="Song Title" onChange={props.handleTitle}></input>
-                )} */}
+                <input type="text" placeholder="Song Title" onChange={props.handleTitle}></input>
+
             </div>
         </div>
     )
