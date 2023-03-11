@@ -8,16 +8,19 @@ export default function PlaylistSong(props) {
 
         if (likedSong === '../assets/heart.png') {
             setLikedSong('../assets/likedHeart.png')
+            console.log(props.song);
         } else {
             setLikedSong('../assets/heart.png')
         }
 
     }
- 
+
+    
+    
     return (
         <div className="createplaylist--song">
                 <div className="createplaylist--delsong">
-                    <img src="../assets/xsongsymbol.png" alt="deletesongicon" onClick={ () =>  props.handleRemoveSong(props.idno)} />
+                    <img src={props.songActionImg} alt="deletesongicon" onClick={ () =>  props.handleRemoveSong(props.song, props.songAction)} />
                 </div>
                 <div className="createplaylist--tiny--cover">
                         <img src={props.cover} alt="playlistcover"/>
@@ -33,7 +36,8 @@ export default function PlaylistSong(props) {
                         <img src={likedSong} id="playlist--song--heart" alt="heart" onClick={ () =>  handleLike()} />
                         <img src="../assets/share.png" id="playlist--song--share" alt="share"/>
                         <img src="../assets/more.png" id="playlist--song--more" alt="more"/>
-                </div>           
+                </div>     
+                      
 
             </div>
 

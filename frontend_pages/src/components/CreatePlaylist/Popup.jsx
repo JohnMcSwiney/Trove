@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import PlaylistSong from "./PlaylistSong";
 
 export default function PopUp(props) { 
@@ -25,7 +25,7 @@ export default function PopUp(props) {
           <input type="text" id="searchbar" value={songSearched.title} name="songSearch" placeholder="Search Songs" onChange={handleChange}/>
           {/* <p>I'm A Pop Up!!!</p> */}
 
-          <div className="createplaylist--songs">
+          <div className="createplaylist--songs createplaylist--add">
             {
               
                     props.albumSongs && props.albumSongs.map((item, index)=>{
@@ -35,7 +35,11 @@ export default function PopUp(props) {
                         key={index}
                         {...item}
                         index={index}
+                        song={item}
                         handleRemoveSong={props.handleRemoveSong}
+                        addPlaylistSongs={props.addPlaylistSongs}
+                        songActionImg={props.songActionImg}
+                        songAction={"add"}
                         />
                         ) }})}
             </div>

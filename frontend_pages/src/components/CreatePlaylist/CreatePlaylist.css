@@ -445,4 +445,28 @@ body {
 
   }
 
+  .createplaylist--add {
+    max-height: 60vh;
+    padding-bottom: 0;
+
+  }
+
+  .createplaylist--add > .createplaylist--song{
+    margin-left: 2vw;
+    background-color: #080c3d;
+    width: 95%;
+
+  
+  }
+
+  .createplaylist--add > .createplaylist--song > .createplaylist--song--options{
+    margin-left: 55vw; 
+  }
+
+  .createplaylist--add > .createplaylist--song > .createplaylist--delsong > img{
+    width: 6vw;
+    margin-right: -2vmin;
+    margin-top: -4vmin;
+  }
+
 }

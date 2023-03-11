@@ -9,9 +9,12 @@ import PopUp from "./Popup";
 // To create a playlist
 export default function CreatePlaylist(props) {
     const default_album = "../assets/default_playlistcover.png";
+    const addSongImg = "../assets/addsongsymbol.png";
+    const removeSongImg = "../assets/xsongsymbol.png";
     const [previewCover, setPreviewCover] = React.useState(default_album);
     const [albumSongs, setAlbumSongs] = React.useState(albumsongs);
-    
+    const [playlistSongList, setPlaylistSongList] = React.useState(albumsongs);
+
     const [imageFile, setImageFile] = React.useState();
     const handleImageFileChange = (e) => {
         setImageFile(e.target.files[0]);
@@ -19,12 +22,19 @@ export default function CreatePlaylist(props) {
   
     };
 
-    function handleRemoveSong(index) {
-        console.log(index);
-        const newList = albumSongs.filter((item) => item.idno != index);
+    function handleRemoveSong(song, songAction) {
+        console.log(song.idno);
 
+        if(songAction === "remove") {
+        const newList = playlistSongList.filter((item) => item.idno != song.idno);
+
+            setPlaylistSongList(newList);
         
-        setAlbumSongs(newList);
+        }
+
+        else if(songAction === "add") {
+            setPlaylistSongList(prevPlaylistSongs => [...prevPlaylistSongs, song]);
+        }
 
     }
 
@@ -37,8 +47,8 @@ export default function CreatePlaylist(props) {
     }
 
 
-    function handleAddSongsClick() {
-
+    function addPlaylistSongs(newSong) {
+        setAlbumSongs(prevAlbumSongs => [...prevAlbumSongs, newSong]);
     
     }
 
@@ -60,7 +70,7 @@ export default function CreatePlaylist(props) {
 
         {/* PLAYLIST'S INFO */}
         {modalIsOpen ? <div className="createplaylist--popupmask"></div> : null }
-        {modalIsOpen ? <PopUp togglePop={togglePop} albumSongs={albumSongs} /> : null}
+        {modalIsOpen ? <PopUp togglePop={togglePop} addPlaylistSongs={addPlaylistSongs} albumSongs={albumSongs} songActionImg={addSongImg} handleRemoveSong={handleRemoveSong} /> : null}
             <div className="createplaylist--info">
                 <div className="createplaylist--song--cover">
                         <img src={previewCover} alt="playlist"/>
@@ -99,22 +109,23 @@ export default function CreatePlaylist(props) {
 
             <div className="createplaylist--songs">
             {
-                    albumSongs && albumSongs.map((item, index)=>{
+                    playlistSongList && playlistSongList.map((item, index)=>{
                     return(
                         <PlaylistSong
                         key={index}
                         {...item}
+                        song={item}
                         index={index}
                         handleRemoveSong={handleRemoveSong}
-                        />
-                
-                
+                        songActionImg={removeSongImg}
+                        songAction={"remove"}
+                        /> 
+
                 ) })}
             </div>
 
             </div>
 
-            
             <NavBar />
 
     </section>
