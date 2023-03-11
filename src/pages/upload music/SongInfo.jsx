@@ -9,13 +9,20 @@ export default function SongInfo(props) {
         //props.i--;
     }
 
+    const handleTitle = (e) => {
+        const newToUploadSongs = Array.isArray(props.toUploadSongs) ? [...props.toUploadSongs] : [];
+        newToUploadSongs[props.i] = {...newToUploadSongs[props.i], title: e.target.value}
+        props.setToUploadSongs(newToUploadSongs);
+    }
+
     return (
         <div className="uploadmusic--song--info">
             <div className="upload--music--songfile--name">
                 {props.songFile[props.i] && (
                     <>
                         <label>{props.songFile[props.i].name}</label>
-                        <input type="text" name="songName" placeholder="Song Title" onChange={props.handleTitle}></input>
+                        {console.log("song number: " + props.i)}
+                        <input type="text" name="songName" placeholder="Song Title" onChange={handleTitle}></input>
                         <button onClick={handleRemoveSong}>Remove</button>
                     </>
                 )}
