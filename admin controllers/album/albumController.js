@@ -306,7 +306,7 @@ const deleteAlbum = async (req, res) => {
 const getArtistAlbum = async (req, res) => {
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ error: error.message });
+    return res.status(404).json({ error: "Album is not available" });
   }
 
   const albums = await Album.find({ artist: id }).sort({ createdAt: -1 });
