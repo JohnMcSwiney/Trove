@@ -12,7 +12,7 @@ const ArtistNavbar = () => {
 
   const [colorbg, setColorBg] = React.useState("home-color");
   const { artist } = useArtistAuthContext();
-  const navigate = useNavigate();
+
   const action = (index) => {
     setState(index);
   };
@@ -26,7 +26,6 @@ const ArtistNavbar = () => {
   const { logout } = useLogout();
   const logoutArtist = () => {
     logout();
-    navigate("/");
   };
   return (
     <div>
