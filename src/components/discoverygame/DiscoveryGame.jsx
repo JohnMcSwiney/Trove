@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useSwipeable } from 'react-swipeable';
-import style from './DiscoveryGame.module.css'
 import { FaPlay } from 'react-icons/fa';
 import { FaPause } from 'react-icons/fa';
 
@@ -62,7 +61,7 @@ const DiscoveryGame = () => {
 
   //reference
   const audioPlayer = useRef(); //reference to the audio player
-  const progressBar = useRef(); //reference to the progress bar
+  const DGprogressBar = useRef(); //reference to the progress bar
   const animationRef = useRef(); //reference to the animation
   const musicSlides = useRef();
   const volumeRef = useRef();
@@ -71,7 +70,7 @@ const DiscoveryGame = () => {
   useEffect(() => {
     const seconds = Math.floor(audioPlayer.current.duration);
     setDuration(seconds);
-    progressBar.current.max = seconds;
+    DGprogressBar.current.max = seconds;
     setIndex(musicSlides.current);
     changeVolumeLevel(10);
 
@@ -138,17 +137,17 @@ const DiscoveryGame = () => {
     }
   }
   const whilePlaying = () => {
-    progressBar.current.value = audioPlayer.current.currentTime;
+    DGprogressBar.current.value = audioPlayer.current.currentTime;
     changePlayerCurrentTime();
     animationRef.current = requestAnimationFrame(whilePlaying); //potential memory leak
   }
   const changeRange = () => {
-    audioPlayer.current.currentTime = progressBar.current.value;
+    audioPlayer.current.currentTime = DGprogressBar.current.value;
     changePlayerCurrentTime();
   }
   const changePlayerCurrentTime = () => {
-    progressBar.current.style.setProperty('--seek-before-width', `${progressBar.current.value / duration * 100}%`);
-    setCurrentTime(progressBar.current.value);
+    DGprogressBar.current.style.setProperty('--seek-before-width', `${DGprogressBar.current.value / duration * 100}%`);
+    setCurrentTime(DGprogressBar.current.value);
   }
   const changeVolumeLevel = (input) => {
     setIsMuted(true);
@@ -183,14 +182,14 @@ const DiscoveryGame = () => {
   {/* slider */ }
   const settings = {
     speed: 500,
-    slidesToShow: 1,
+    slidesToShow:1,
     slidesToScroll: 1,
     swipe: false,
     swipeToSlide: false,
     infinite: false,
     className: "test",
     centerMode: true,
-    centerPadding: '70px',
+    // centerPadding: '1vmin',
     focusOnSelect: true
   };
   const slides = DGdata;
@@ -321,7 +320,7 @@ const DiscoveryGame = () => {
             <input type="range"
               // className={style.DGprogressBar}
               className='DGprogressBar'
-              defaultValue="0" ref={progressBar} onChange={() => {
+              defaultValue="0" ref={DGprogressBar} onChange={() => {
                 changeRange();
                 animationRef.current = requestAnimationFrame(whilePlaying);
               }} />

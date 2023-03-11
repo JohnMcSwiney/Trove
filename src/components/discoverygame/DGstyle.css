@@ -1,331 +1,936 @@
 @import "~slick-carousel/slick/slick.css";
 @import "~slick-carousel/slick/slick-theme.css";
 
-.Discovery-Container{
-    display: flex;
-    flex-direction: column;
-    margin: auto;
-    justify-content: center;
+
+@media screen and (min-width:300px) and (max-width:599px){
+    .Discovery-Container{
+        display: flex;
+        flex-direction: column;
+        margin: auto;
+        justify-content: center;
+        color: white;
+        margin-top: 0;
+        margin-bottom: 0;
+        padding-top: 8vmin;
+        padding-bottom: 10vmin;
+        position: static;
+    }
+    .test {
+        display: flex;
+        align-items: center;
+        background-color: #8750f400; 
+    }
+    .test2{
+        display: flex;
+        height:auto;
+        align-content: center;
+        background-color: rgba(127, 255, 212, 0);
+        border: rgba(255, 255, 255, 0) 6px solid;
+    }
+    .slick-slide > div{
+        margin: 0, 15px;
+    }
+    .slick-list{
+        margin: 0 -5px;
+    }
+    .center .slick-center .test2 {
+        transform: scale(1.2);
+    }
     
-    color: white;
-    margin-top: 0;
-    margin-bottom: 0;
-    padding-top: 10%;
-    padding-bottom: 10%;
-    position: static;
-
-
-
-}
-.test {
-    display: flex;
-    align-items: center;
-    background-color: #8750f400;
+    /* Smallest, change later <3 */
+    .Discovery-Top-Container{
+       display: block;
+        order: 1;
+        width: 100%;
+        overflow: hidden;
+        position: relative;
+    }
+    .Discovery-Top-Container > Slider{
+        align-content:space-between;
+    }
+    .Discovery-AblumArt-Container{
+        display: inline-flex;
+        align-content:space-between;
+        width: fit-content;
+        height: 200px;
+        overflow: scroll;
+        position: relative;
+    }
     
-}
-.test2{
-    display: flex;
-    width: 200px;
-    height:auto;
-    align-content: center;
-    background-color: rgba(127, 255, 212, 0);
-    border: rgba(255, 255, 255, 0) 6px solid;
-}
-.slick-slide > div{
-    margin: 0, 15px;
-}
-.slick-list{
-    margin: 0 -15px;
-}
-.center .slick-center .test2 {
-    transform: scale(1.2);
-}
-
-
-
-
-/* Smallest, change later <3 */
-.Discovery-Top-Container{
-   display: block;
-    order: 1;
-    width: 100%;
-    overflow: hidden;
-    position: relative;
+    .Discovery-Img-Container{
+        /* position: absolute; */
+        overflow: hidden;
+        border: rgba(0, 0, 0, 0.491) 1vmin solid;
+        width: 70vmin;
+        height: 70vmin;
+        margin: auto;
+        border-radius: 4vmin;
+        position: relative;
+        object-fit: cover;
+        display: flex;
+        align-items: center;
+        background-color: #0034c40c; 
+    }
     
+    .Discovery-Img-Container > .DGimg {
+        margin: auto;
+        transform: scale(1.015);
+    }
     
-}
-.Discovery-Top-Container > Slider{
-    align-content:space-between;
-}
-.Discovery-AblumArt-Container{
-    display: inline-flex;
-    align-content:space-between;
-    width: fit-content;
-    height: 200px;
-    overflow: scroll;
-    position: relative;
-}
-
-.Discovery-Img-Container{
-    /* position: absolute; */
-    overflow: hidden;
-    border: white 1  px solid;
-    width: 200px;
-    height: 200px;
-    margin: auto;
-    border-radius: 15px;
-    position: relative;
-    object-fit: cover;
-    display: flex;
-    align-items: center;
-
+    .Discovery-PrevImg-Container{
+        overflow: hidden;
+        border: rgba(255, 255, 255, 0.082) 1vmin solid;
+        width: 30px;
+        height: 180px;
+        margin: auto;
+        border-radius: 0px 20px 20px 0px;
+        position: relative;
+        object-fit: cover;
+        display: flex;
     
-}
-
-.Discovery-Img-Container > .DGimg {
-    margin: auto;
-    overflow: hidden;
-}
-
-.Discovery-PrevImg-Container{
-    overflow: hidden;
-    border: white 2px solid;
-    width: 30px;
-    height: 180px;
-    margin: auto;
-    border-radius: 0px 20px 20px 0px;
-    position: relative;
-    object-fit: cover;
-    display: flex;
-
-}
-
-.Discovery-Text-Container{
-    order: 2;
-    text-align: center;
-    margin: auto;
-    margin-top: 10px;
-    height: 80px;
-    /* background-color: cornflowerblue; */
-    width: 100%;
-
-}
-
-.DGsongtxt{
-    color: white;
-    font-weight: 500;
-  }
-.DGalbtxt{
-    color: #878694;
-    font-weight: 300;
+    }
     
-  }
-.DGarrowcont{
-    display: inline-flex;
-    color: #47419b;
-    margin: 2.5px;
-    font-size: x-large;
-    width: fit-content;
-    background-blend-mode:multiply;
-}
-.DGarrowcont > .DGarrow{
-    padding: 0%;
-    /* background-color: aquamarine; */
-    margin: 0%;
-    display: flex;
-
-}
-
-.Discovery-Player-Container{
-    width: 80%;
-    margin: auto;
-    /* background-color: brown; */
-    justify-content: center;
-    justify-items: center;
-    display: flex;
-    flex-direction: column;
-    order: 3;
-    position: relative;
-}
-.Discovery-Player-Container > div > .DGprogressBarContainer{
-    position: absolute;
-    width: 300px;
+    .Discovery-Text-Container{
+        order: 2;
+        text-align: center;
+        margin: auto;
+        margin-top: 10px;
+        height: 18vmin;
+        /* background-color: cornflowerblue; */
+        width: 100%;
     
-}
-.Discovery-Player-Container > div > .DGpsbutsCont {
-    margin: auto;
-    justify-content: center;
-    justify-items: center;
-    display: flex;
-    font-size: 40px;
-    margin: 5px;
-    margin-top: 30px;
-    padding-top: 30px;
-    width: 20%;
-    margin: auto;
-}
-.Discovery-Swipe-Container{
-    display: flex;
-    flex-direction: row;
-    width: 90%;
-    height: 85px;
-    background-color:rgb(19, 13, 103);
-    margin: auto;
-    padding: 8px;
-    order:4;
-    align-items: center;
-    position: relative;
-    justify-content: space-between;
-    border-radius: 50px;
-    margin-top: 20px;
-
-}
-.Discovery-Like, .Discovery-Disike{
-    width: 70px;
-    height: 70px;
-    font-size: xx-large;
-}
-.Discovery-Like{
-    background-image: linear-gradient(to right,#0034c4, #8650F4);
-    border-radius: 50px;
-    border: #8650F4 2px solid;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color:rgb(225, 225, 225);
+    }
     
-}
-.Discovery-Disike{
-    background-color:#0034c4;
-    border-radius: 50px;
-    border: white 2px solid;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.Discovery-TestingItem-Container{
-    background-color: rgb(0, 0, 0);
-    position: fixed;
-    top: 0;
-    margin-top: 25%;
-    gap: 0;
-    opacity: 0.1;
-    display: flex;
-    flex-direction: column;
-}
-.Discovery-TestingItem-Container > div{
-    width: fit-content;
-    height: fit-content;
-    padding: 0;
-    margin: 1px;
-    font-size:x-small;
-}
-
-.DGprogressBar{
-    appearance: none;
-    border-radius: 10px;
-    width: 100%;
-    outline:none;
-    position: relative;
-    --seek-before-width: 0;
-    background-color: #12164b85;
-    /* transform: translate(0px, -40%); */
-}
-/*safari*/
-.DGprogressBar::-webkit-slider-runnable-track{
-    background-color: rgba(255, 255, 255, 0.232);
-    border-radius: 15px;
-    position: relative;
-    width: 100%;
-    height: 10px;
-    outline:none; 
-}
-/*chrome & safari*/
-.DGprogressBar::before{
-    content: '';
-    height: 10px;
-    width: var(--seek-before-width);
-    background-image: linear-gradient(to right,#0034c4, #8650F4);
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
-    border-top-right-radius: 2px;
-    border-bottom-right-radius: 2px;
-    /* border-radius: 10px; */
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 2;
-    cursor: pointer;
-    /* margin-top: 3px; */
-    transform:scaleY(1.1);
-    padding-left: 2px;
-    box-shadow: -1px 0px 5px #8750f46f;
-    margin-left: -1px;
-    margin-right: -1px;
-}
-.DGprogressBar::-webkit-slider-thumb{
-    -webkit-appearance: none;
-    height:20px;
-    width: 20px;
-    border-radius: 50%;
-    border: none;
-    background-color: #8650F4;
-    cursor: pointer;
-    position: relative;
-    margin-top: -5px;
-    margin-right: 1px;
-    z-index: 3;
-    box-sizing: border-box;
-    box-shadow: -1px 0px 15px rgba(95, 8, 153, 0.692);
-    display: flex;
-    align-items: flex-end;
-
+    .DGsongtxt{
+        color: white;
+        font-weight: 500;
+        font-size: 6vmin;
+      }
+    .DGalbtxt{
+        color: #878694;
+        font-weight: 300;
+        font-size: 5vmin;
+        
+      }
+    .DGarrowcont{
+        display: inline-flex;
+        color: #47419b;
+        margin: 2.5px;
+        font-size: x-large;
+        width: fit-content;
+        background-blend-mode:multiply;
+    }
+    .DGarrowcont > .DGarrow{
+        padding: 0%;
+        /* background-color: aquamarine; */
+        margin: 0%;
+        display: flex;
     
-}
-.DGprogressBar:active::-webkit-slider-thumb{
-    transform: scale(1.6);
-    transition: ease-in-out .05s;
-    border: 1px solid whitesmoke;
-    border-radius: 50%;
-    box-shadow: rgba(255, 255, 255, 0.671); 
-    background-color: #8650F4;
-}
-/* firefox */
-.DGprogressBar::-moz-range-track{
-    background: rgba(19, 13, 103, 0.74);
-    border-radius: 10px;
-    position: relative;
-    width: 100%;
-    height: 5px;
-    outline:none;
-    z-index: 1;
-}
-.DGprogressBar::-moz-focus-outer{
-    border:0;
-}
-.DGprogressBar::-moz-range-progress{
-    background-image: linear-gradient(to right,#0034c4, #8650F4);
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
-    height: 5px;
-}
-.DGprogressBar::-moz-range-thumb{
-    height:7px;
-    width: 7px;
-    border-radius: 50%;
-    border: transparent;
-    background-color: #8650F4;
-    cursor: pointer;
-    position: relative;
-    box-sizing: border-box;
-    box-shadow: -1px 0px 5px #8750f43b;
-}
-.DGprogressBar:active::-moz-range-thumb{
-    transform: scale(1.6);
-    transition: ease-in-out .05s;
-    border: 1px solid whitesmoke;
-    border-radius: 50%;
-    box-shadow: rgba(255, 255, 255, 0.671); 
+    }
+    
+    .Discovery-Player-Container{
+        width: 80vmin;
+        margin: auto;
+        /* background-color: brown; */
+        justify-content: center;
+        justify-items: center;
+        display: flex;
+        flex-direction: column;
+        order: 3;
+        position: relative;
+    }
+    .Discovery-Player-Container > div > .DGprogressBarContainer{
+        /* position: absolute; */
+        width: 70vmin;
+        margin: auto;
+        
+    }
+    .Discovery-Player-Container > div > .DGpsbutsCont {
+        margin: auto;
+        justify-content: center;
+        justify-items: center;
+        display: flex;
+        font-size: 8vmin;
+        margin: 5vmin;
+        margin-top: 1vmin;
+        width: 20vmin;
+        margin: auto;
+    }
+    .Discovery-Swipe-Container{
+        display: flex;
+        flex-direction: row;
+        width: 80vmin;
+        height: 17vmin;
+        background-color:rgb(19, 13, 103);
+        margin: auto;
+        padding: 1.5vmin;
+        order:4;
+        align-items: center;
+        position: relative;
+        justify-content: space-between;
+        border-radius: 50px;
+        margin-top: 2vmin;
+    
+    }
+    .Discovery-Like, .Discovery-Disike{
+        width: 14vmin;
+        height: 14vmin;
+        font-size: 7vmin;
+    }
+    .Discovery-Like{
+        background-image: linear-gradient(to right,#0034c4, #8650F4);
+        border-radius: 50px;
+        border: #8650F4 2px solid;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color:rgb(225, 225, 225);
+        
+    }
+    .Discovery-Disike{
+        background-color:#0034c4;
+        border-radius: 50px;
+        border: rgba(255, 255, 255, 0.183) 2px solid;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .Discovery-TestingItem-Container{
+        background-color: rgb(0, 0, 0);
+        position: fixed;
+        top: 0;
+        margin-top: 25%;
+        gap: 0;
+        opacity: 0.1;
+        display: flex;
+        flex-direction: column;
+    }
+    .Discovery-TestingItem-Container > div{
+        width: fit-content;
+        height: fit-content;
+        padding: 0;
+        margin: 1px;
+        font-size:x-small;
+    }
+    
+    .DGprogressBar{
+        appearance: none;
+        border-radius: 10px;
+        width: 100%;
+        outline:none;
+        position: relative;
+        --seek-before-width: 0;
+        background-color: #12164b85;
+        /* transform: translate(0px, -40%); */
+    }
+    /*safari*/
+    .DGprogressBar::-webkit-slider-runnable-track{
+        background-color: rgba(255, 255, 255, 0.232);
+        border-radius: 15px;
+        position: relative;
+        width: 100%;
+        height: 10px;
+        outline:none; 
+    }
+    /*chrome & safari*/
+    .DGprogressBar::before{
+        content: '';
+        height: 10px;
+        width: var(--seek-before-width);
+        background-image: linear-gradient(to right,#0034c4, #8650F4);
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+        border-top-right-radius: 2px;
+        border-bottom-right-radius: 2px;
+        /* border-radius: 10px; */
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 2;
+        cursor: pointer;
+        /* margin-top: 3px; */
+        transform:scaleY(1.1);
+        padding-left: 2px;
+        box-shadow: -1px 0px 5px #8750f46f;
+        margin-left: -1px;
+        margin-right: -1px;
+    }
+    .DGprogressBar::-webkit-slider-thumb{
+        -webkit-appearance: none;
+        height:20px;
+        width: 20px;
+        border-radius: 50%;
+        border: none;
+        background-color: #8650F4;
+        cursor: pointer;
+        position: relative;
+        margin-top: -5px;
+        margin-right: 1px;
+        z-index: 3;
+        box-sizing: border-box;
+        box-shadow: -1px 0px 15px rgba(95, 8, 153, 0.692);
+        display: flex;
+        align-items: flex-end;
+    
+        
+    }
+    .DGprogressBar:active::-webkit-slider-thumb{
+        transform: scale(1.6);
+        transition: ease-in-out .05s;
+        border: 1px solid whitesmoke;
+        border-radius: 50%;
+        box-shadow: rgba(255, 255, 255, 0.671); 
+        background-color: #8650F4;
+    }
+    /* firefox */
+    .DGprogressBar::-moz-range-track{
+        background: rgba(19, 13, 103, 0.74);
+        border-radius: 10px;
+        position: relative;
+        width: 100%;
+        height: 5px;
+        outline:none;
+        z-index: 1;
+    }
+    .DGprogressBar::-moz-focus-outer{
+        border:0;
+    }
+    .DGprogressBar::-moz-range-progress{
+        background-image: linear-gradient(to right,#0034c4, #8650F4);
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+        height: 5px;
+    }
+    .DGprogressBar::-moz-range-thumb{
+        height:7px;
+        width: 7px;
+        border-radius: 50%;
+        border: transparent;
+        background-color: #8650F4;
+        cursor: pointer;
+        position: relative;
+        box-sizing: border-box;
+        box-shadow: -1px 0px 5px #8750f43b;
+    }
+    .DGprogressBar:active::-moz-range-thumb{
+        transform: scale(1.6);
+        transition: ease-in-out .05s;
+        border: 1px solid whitesmoke;
+        border-radius: 50%;
+        box-shadow: rgba(255, 255, 255, 0.671); 
+    }
 }
 
+@media screen and (min-width:600px) and (max-width:999px){
+    .volumeContainter{
+        display: none;
+    }
+    .Discovery-Container{
+        display: flex;
+        flex-direction: column;
+        margin: auto;
+        justify-content: center;
+        color: white;
+        margin-top: 2vmin;
+        margin-bottom: 0;
+        padding-top: 4vmin;
+        padding-bottom: 10vmin;
+        position: static;
+        background: #8750f434;
+        width: 70vmin;
 
+
+        border-radius: 16px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(2.5px);
+        -webkit-backdrop-filter: blur(9.5px);
+        border: 1px solid rgba(255, 255, 255, 0.09);
+
+
+    }
+    .test {
+        display: flex;
+        align-items: center;
+        background-color: #8750f400; 
+        width: 70vmin;
+    }
+    .test2{
+        /* display: block; */
+        height:auto;
+        align-content: center;
+        background-color: rgba(127, 255, 212, 0);
+        border: rgba(255, 255, 255, 0) 6px solid;        
+    }
+
+    .slick-list{
+        /* padding: 0 -4vmin; */
+        /* padding:  0 -60vmin; */
+    }
+    .center .slick-center .test2 {
+        transform: scale(1.2);
+    }
+    
+    /* Smallest, change later <3 */
+    .Discovery-Top-Container{
+       display: block;
+        order: 1;
+        width: 100%;
+        overflow: hidden;
+        position: relative;
+        background-color: #0034c400;
+    }
+    .Discovery-Top-Container > Slider{
+        align-content:space-between;
+    }
+
+    .Discovery-Img-Container{
+        /* position: absolute; */
+        overflow: hidden;
+        border: rgba(0, 0, 0, 0.295) 1vmin solid;
+        width: 40vmin;
+        height: 40vmin;
+        margin: auto;
+        border-radius: 3vmin;
+        position: relative;
+        object-fit: cover;
+        display: flex;
+        align-items: center;
+        background-color: #0034c449; 
+        /* margin: 0 -10vmin ; */
+    }
+    
+    .Discovery-Img-Container > .DGimg {
+        margin: auto;
+        transform: scale(1.015);
+    }
+    .Discovery-Text-Container{
+        order: 2;
+        text-align: center;
+        margin: auto;
+        height: 10vmin;
+        /* background-color: cornflowerblue; */
+        width: 100%;
+        margin-top: 2vmin;
+    
+    }
+    
+    .DGsongtxt{
+        color: white;
+        font-weight: 500;
+        font-size: 3vmin;
+    }
+    .DGalbtxt{
+        color: #878694;
+        font-weight: 300;
+        font-size: 2vmin;    
+    }
+
+    .DGarrowcont{
+        display: inline-flex;
+        color: #47419b;
+        margin: 2.5px;
+        font-size: x-large;
+        width: fit-content;
+        background-blend-mode:multiply;
+    }
+    
+    .Discovery-Player-Container{
+
+        margin: auto;
+        /* background-color: brown; */
+        justify-content: center;
+        justify-items: center;
+        display: flex;
+        flex-direction: column;
+        order: 3;
+        position: relative;
+    }
+    .Discovery-Player-Container > div > .DGprogressBarContainer{
+        /* position: absolute; */
+        width: 60vmin;
+        margin: auto;
+        
+    }
+    .Discovery-Player-Container > div > .DGpsbutsCont {
+        margin: auto;
+        justify-content: center;
+        justify-items: center;
+        display: flex;
+        font-size: 7vmin;
+        margin: 5vmin;
+        margin-top: 3vmin;
+        width: 20vmin;
+        margin: auto;
+    }
+    .Discovery-Swipe-Container{
+        display: flex;
+        flex-direction: row;
+        width: 60vmin;
+        height: 15vmin;
+        background-color:rgb(19, 13, 103);
+        margin: auto;
+        padding: 1.5vmin;
+        order:4;
+        align-items: center;
+        position: relative;
+        justify-content: space-between;
+        border-radius: 50vmin;
+        margin-top: 2vmin;
+    
+    }
+    .Discovery-Like, .Discovery-Disike{
+        width: 12vmin;
+        height: 12vmin;
+        font-size: 6vmin;
+    }
+    .Discovery-Like{
+        background-image: linear-gradient(to right,#0034c4, #8650F4);
+        border-radius: 50vmin;
+        border: #8650F4 2px solid;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color:rgb(225, 225, 225);
+        
+    }
+    .Discovery-Disike{
+        background-color:#0034c4;
+        border-radius: 50vmin;
+        border: rgba(255, 255, 255, 0.183) 2px solid;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .Discovery-TestingItem-Container{
+        background-color: rgb(0, 0, 0);
+        position: fixed;
+        top: 0;
+        margin-top: 25%;
+        gap: 0;
+        opacity: 0.1;
+        display: flex;
+        flex-direction: column;
+    }
+    .Discovery-TestingItem-Container > div{
+        width: fit-content;
+        height: fit-content;
+        padding: 0;
+        margin: 1px;
+        font-size:x-small;
+    }
+    
+    .DGprogressBar{
+        appearance: none;
+        border-radius: 10px;
+        width: 100%;
+        outline:none;
+        position: relative;
+        --seek-before-width: 0;
+        background-color: #12164b85;
+        margin-bottom: 3vmin;
+        /* transform: translate(0px, -40%); */
+    }
+    /*safari*/
+    .DGprogressBar::-webkit-slider-runnable-track{
+        background-color: rgba(255, 255, 255, 0.232);
+        border-radius: 15px;
+        position: relative;
+        width: 100%;
+        height: 10px;
+        outline:none; 
+    }
+    /*chrome & safari*/
+    .DGprogressBar::before{
+        content: '';
+        height: 10px;
+        width: var(--seek-before-width);
+        background-image: linear-gradient(to right,#0034c4, #8650F4);
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+        border-top-right-radius: 2px;
+        border-bottom-right-radius: 2px;
+        /* border-radius: 10px; */
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 2;
+        cursor: pointer;
+        /* margin-top: 3px; */
+        transform:scaleY(1.1);
+        padding-left: 2px;
+        box-shadow: -1px 0px 5px #8750f46f;
+        margin-left: -1px;
+        margin-right: -1px;
+    }
+    .DGprogressBar::-webkit-slider-thumb{
+        -webkit-appearance: none;
+        height:20px;
+        width: 20px;
+        border-radius: 50%;
+        border: none;
+        background-color: #8650F4;
+        cursor: pointer;
+        position: relative;
+        margin-top: -5px;
+        margin-right: 1px;
+        z-index: 3;
+        box-sizing: border-box;
+        box-shadow: -1px 0px 15px rgba(95, 8, 153, 0.692);
+        display: flex;
+        align-items: flex-end;
+    
+        
+    }
+    .DGprogressBar:active::-webkit-slider-thumb{
+        transform: scale(1.6);
+        transition: ease-in-out .05s;
+        border: 1px solid whitesmoke;
+        border-radius: 50%;
+        box-shadow: rgba(255, 255, 255, 0.671); 
+        background-color: #8650F4;
+    }
+    /* firefox */
+    .DGprogressBar::-moz-range-track{
+        background: rgba(19, 13, 103, 0.74);
+        border-radius: 10px;
+        position: relative;
+        width: 100%;
+        height: 5px;
+        outline:none;
+        z-index: 1;
+    }
+    .DGprogressBar::-moz-focus-outer{
+        border:0;
+    }
+    .DGprogressBar::-moz-range-progress{
+        background-image: linear-gradient(to right,#0034c4, #8650F4);
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+        height: 5px;
+    }
+    .DGprogressBar::-moz-range-thumb{
+        height:7px;
+        width: 7px;
+        border-radius: 50%;
+        border: transparent;
+        background-color: #8650F4;
+        cursor: pointer;
+        position: relative;
+        box-sizing: border-box;
+        box-shadow: -1px 0px 5px #8750f43b;
+    }
+    .DGprogressBar:active::-moz-range-thumb{
+        transform: scale(1.6);
+        transition: ease-in-out .05s;
+        border: 1px solid whitesmoke;
+        border-radius: 50%;
+        box-shadow: rgba(255, 255, 255, 0.671); 
+    }
+}
+
+@media screen and (min-width:1000px){
+    .volumeContainter{
+        display: none;
+    }
+    .Discovery-Container{
+        display: flex;
+        flex-direction: column;
+        margin: auto;
+        justify-content: center;
+        color: white;
+        margin-top: 2vmin;
+        margin-bottom: 0;
+        padding-top: 4vmin;
+        padding-bottom: 10vmin;
+        position: static;
+        background: #8750f434;
+        width: 50vmin;
+
+
+        border-radius: 16px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(2.5px);
+        -webkit-backdrop-filter: blur(9.5px);
+        border: 1px solid rgba(255, 255, 255, 0.09);
+
+
+    }
+    .test {
+        display: flex;
+        align-items: center;
+        background-color: #8750f400; 
+        width: 50vmin;
+    }
+    .test2{
+        /* display: block; */
+        height:auto;
+        align-content: center;
+        background-color: rgba(127, 255, 212, 0);
+        border: rgba(255, 255, 255, 0) 6px solid;        
+    }
+
+    .slick-list{
+        /* padding: 0 -4vmin; */
+        /* padding:  0 -60vmin; */
+    }
+    .center .slick-center .test2 {
+        transform: scale(1.2);
+    }
+    
+    /* Smallest, change later <3 */
+    .Discovery-Top-Container{
+       display: block;
+        order: 1;
+        width: 100%;
+        overflow: hidden;
+        position: relative;
+        background-color: #0034c400;
+    }
+    .Discovery-Top-Container > Slider{
+        align-content:space-between;
+    }
+
+    .Discovery-Img-Container{
+        /* position: absolute; */
+        overflow: hidden;
+        border: rgba(0, 0, 0, 0.295) 1vmin solid;
+        width: 40vmin;
+        height: 40vmin;
+        margin: auto;
+        border-radius: 3vmin;
+        position: relative;
+        object-fit: cover;
+        display: flex;
+        align-items: center;
+        background-color: #0034c449; 
+        /* margin: 0 -10vmin ; */
+    }
+    
+    .Discovery-Img-Container > .DGimg {
+        margin: auto;
+        transform: scale(1.015);
+    }
+    .Discovery-Text-Container{
+        order: 2;
+        text-align: center;
+        margin: auto;
+        height: 10vmin;
+        /* background-color: cornflowerblue; */
+        width: 100%;
+        margin-top: 2vmin;
+    
+    }
+    
+    .DGsongtxt{
+        color: white;
+        font-weight: 500;
+        font-size: 3vmin;
+    }
+    .DGalbtxt{
+        color: #878694;
+        font-weight: 300;
+        font-size: 2vmin;    
+    }
+
+    .DGarrowcont{
+        display: inline-flex;
+        color: #47419b;
+        margin: 2.5px;
+        font-size: x-large;
+        width: fit-content;
+        background-blend-mode:multiply;
+    }
+    
+    .Discovery-Player-Container{
+
+        margin: auto;
+        /* background-color: brown; */
+        justify-content: center;
+        justify-items: center;
+        display: flex;
+        flex-direction: column;
+        order: 3;
+        position: relative;
+    }
+    .Discovery-Player-Container > div > .DGprogressBarContainer{
+        /* position: absolute; */
+        width: 40vmin;
+        margin: auto;
+        
+    }
+    .Discovery-Player-Container > div > .DGpsbutsCont {
+        margin: auto;
+        justify-content: center;
+        justify-items: center;
+        display: flex;
+        font-size: 7vmin;
+        margin: 5vmin;
+        margin-top: 3vmin;
+        width: 20vmin;
+        margin: auto;
+    }
+    .Discovery-Swipe-Container{
+        display: flex;
+        flex-direction: row;
+        width: 45vmin;
+        height: 15vmin;
+        background-color:rgb(19, 13, 103);
+        margin: auto;
+        padding: 1.5vmin;
+        order:4;
+        align-items: center;
+        position: relative;
+        justify-content: space-between;
+        border-radius: 50vmin;
+        margin-top: 2vmin;
+    
+    }
+    .Discovery-Like, .Discovery-Disike{
+        width: 12vmin;
+        height: 12vmin;
+        font-size: 6vmin;
+    }
+    .Discovery-Like{
+        background-image: linear-gradient(to right,#0034c4, #8650F4);
+        border-radius: 50vmin;
+        border: #8650F4 2px solid;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color:rgb(225, 225, 225);
+        
+    }
+    .Discovery-Disike{
+        background-color:#0034c4;
+        border-radius: 50vmin;
+        border: rgba(255, 255, 255, 0.183) 2px solid;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .Discovery-TestingItem-Container{
+        background-color: rgb(0, 0, 0);
+        position: fixed;
+        top: 0;
+        margin-top: 25%;
+        gap: 0;
+        opacity: 0.1;
+        display: flex;
+        flex-direction: column;
+    }
+    .Discovery-TestingItem-Container > div{
+        width: fit-content;
+        height: fit-content;
+        padding: 0;
+        margin: 1px;
+        font-size:x-small;
+    }
+    
+    .DGprogressBar{
+        appearance: none;
+        border-radius: 10px;
+        width: 100%;
+        outline:none;
+        position: relative;
+        --seek-before-width: 0;
+        background-color: #12164b85;
+        margin-bottom: 3vmin;
+        /* transform: translate(0px, -40%); */
+    }
+    /*safari*/
+    .DGprogressBar::-webkit-slider-runnable-track{
+        background-color: rgba(255, 255, 255, 0.232);
+        border-radius: 15px;
+        position: relative;
+        width: 100%;
+        height: 10px;
+        outline:none; 
+    }
+    /*chrome & safari*/
+    .DGprogressBar::before{
+        content: '';
+        height: 10px;
+        width: var(--seek-before-width);
+        background-image: linear-gradient(to right,#0034c4, #8650F4);
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+        border-top-right-radius: 2px;
+        border-bottom-right-radius: 2px;
+        /* border-radius: 10px; */
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 2;
+        cursor: pointer;
+        /* margin-top: 3px; */
+        transform:scaleY(1.1);
+        padding-left: 2px;
+        box-shadow: -1px 0px 5px #8750f46f;
+        margin-left: -1px;
+        margin-right: -1px;
+    }
+    .DGprogressBar::-webkit-slider-thumb{
+        -webkit-appearance: none;
+        height:20px;
+        width: 20px;
+        border-radius: 50%;
+        border: none;
+        background-color: #8650F4;
+        cursor: pointer;
+        position: relative;
+        margin-top: -5px;
+        margin-right: 1px;
+        z-index: 3;
+        box-sizing: border-box;
+        box-shadow: -1px 0px 15px rgba(95, 8, 153, 0.692);
+        display: flex;
+        align-items: flex-end;
+    
+        
+    }
+    .DGprogressBar:active::-webkit-slider-thumb{
+        transform: scale(1.6);
+        transition: ease-in-out .05s;
+        border: 1px solid whitesmoke;
+        border-radius: 50%;
+        box-shadow: rgba(255, 255, 255, 0.671); 
+        background-color: #8650F4;
+    }
+    /* firefox */
+    .DGprogressBar::-moz-range-track{
+        background: rgba(19, 13, 103, 0.74);
+        border-radius: 10px;
+        position: relative;
+        width: 100%;
+        height: 5px;
+        outline:none;
+        z-index: 1;
+    }
+    .DGprogressBar::-moz-focus-outer{
+        border:0;
+    }
+    .DGprogressBar::-moz-range-progress{
+        background-image: linear-gradient(to right,#0034c4, #8650F4);
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+        height: 5px;
+    }
+    .DGprogressBar::-moz-range-thumb{
+        height:7px;
+        width: 7px;
+        border-radius: 50%;
+        border: transparent;
+        background-color: #8650F4;
+        cursor: pointer;
+        position: relative;
+        box-sizing: border-box;
+        box-shadow: -1px 0px 5px #8750f43b;
+    }
+    .DGprogressBar:active::-moz-range-thumb{
+        transform: scale(1.6);
+        transition: ease-in-out .05s;
+        border: 1px solid whitesmoke;
+        border-radius: 50%;
+        box-shadow: rgba(255, 255, 255, 0.671); 
+    }
+}

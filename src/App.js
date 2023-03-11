@@ -30,13 +30,8 @@ function App() {
   // const userId = JSON.parse(localStorage.getItem("user")).id;
   const user = localStorage.getItem("user");
 
-  const [useFullscreenPlayer, setFullscreenPlayer] = useState(false);
-
   const isLoginId = user ? JSON.parse(user).id : "";
-  const toggleFull = () => {
-    const oldVal = useFullscreenPlayer;
-    setFullscreenPlayer(!oldVal);
-  };
+  
   return (
     <BrowserRouter>
       <div className=" text-gray-500 font-body">
@@ -74,12 +69,8 @@ function App() {
             <Route path="/createplaylist" element={<CreatePlaylist />}></Route>
           </Routes>
         </div>
-        <button className="fullscreen-btn-test" onClick={toggleFull}>
-          {" "}
-          fullscreen
-        </button>
-        {useFullscreenPlayer === false ? <MusicBar /> : <MusicBarFullscreen />}
-        {/* <MusicBarFullscreen/> */}
+        
+        {/* <MusicBar /> */}
       </div>
     </BrowserRouter>
   );
