@@ -36,12 +36,13 @@ const getAPlaylist = async (req, res) => {
 
 //get all your playlists this is not working
 const getYourPlaylists = async (req, res) => {
-  const userID = req.params;
+  const userID = req.body.id;
   console.log(userID);
   try {
     const playlists = await Playlist.find({ playlistCreator: userID }).sort({
       createdAt: -1,
     });
+    console.log(playlists);
     res.status(200).json({ playlists });
   } catch (error) {
     res

@@ -11,7 +11,7 @@ const {
 
 router.get("/", getAllPlaylist);
 
-router.get("/mylist/:id", getYourPlaylists);
+router.get("/mylist", getYourPlaylists);
 
 router.get("/:id", getAPlaylist);
 
