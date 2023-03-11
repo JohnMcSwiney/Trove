@@ -514,7 +514,7 @@ const deleteSong = async (req, res) => {
 const getArtistSong = async (req, res) => {
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ error });
+    return res.status(404).json({ error: "This artist is not available" });
   }
 
   const songs = await Song.find({ artist: id }).sort({ createdAt: -1 });
