@@ -21,10 +21,10 @@ export const useUploadSong = () => {
   ) => {
     const storageRef = storage.ref();
 
-    const uploadSongToFirebase = async (songFile) => {
+    const uploadSongToFirebase = async (title, songFile) => {
       setIsUploading(true);
 
-      const songRef = storageRef.child(`songs/${songFile.name}`);
+      const songRef = storageRef.child(`songs/${title}-${songFile.name}`);
 
       const songUploadTask = songRef.put(songFile, {
         contentType: "audio/mp3",
@@ -178,7 +178,7 @@ export const useUploadSong = () => {
 
       for (const file of songFile) {
 
-        songUrl = await uploadSongToFirebase(file);
+        songUrl = await uploadSongToFirebase(titlefile);
 
         console.log("for loop song url: " + songUrl);
 

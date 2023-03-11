@@ -15,6 +15,7 @@ export default function SongInfo(props) {
                 {props.songFile[props.i] && (
                     <>
                         <label>{props.songFile[props.i].name}</label>
+                        <input type="text" name="songName" placeholder="Song Title" onChange={props.handleTitle}></input>
                         <button onClick={handleRemoveSong}>Remove</button>
                     </>
                 )}
@@ -25,7 +26,18 @@ export default function SongInfo(props) {
                 {console.log("file: " + props.songFile[props.i])}
                 {console.log("file name: " + props.songFile[props.i].name)} */}
 
-                <input type="text" placeholder="Song Title" onChange={props.handleTitle}></input>
+                {/* <input type="text" name="title" value={props.title} placeholder="Song Title" onChange={props.handleTitle}></input> */}
+
+                {/* {props.title[0].forEach(element => {
+                    
+                })} */}
+
+                {console.log("Props song: " + props.song)}
+                {console.log("Props title: " + props.title)}
+                {/* {console.log("Props title[0]: " + props.title[0])} */}
+
+
+                {/* <input type="text" name={`songName` + props.i} value={props.title[`songName` + props.i]} placeholder="Song Title" onChange={props.handleTitle}></input> */}
 
             </div>
         </div>

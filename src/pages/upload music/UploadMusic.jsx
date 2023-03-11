@@ -76,17 +76,7 @@ export default function UploadMusic(props) {
   const handleTitle = (e) => {
     // const { value, name } = e.target.value;
     // setTitle({ ...title});
-
-    setTitle(e.target.value);
-
-    // const newTitles = [...title];
-    // newTitles[i] = e.target.value;
-    // setTitle(newTitles);
-
-    // console.log("Upload Music title: " + title);
-    // console.log("newTitles: " + newTitles);
-
-
+      setTitle(e.target.value);
   };
 
   const handleAlbumName = (e) => {
@@ -98,7 +88,7 @@ export default function UploadMusic(props) {
   };
 
   const handleSongFileChange = (e) => {
-    setSongFile(e.target.files[0]);
+    //setSongFile(e.target.files[0]);
 
     console.log("relerwerwsdfdsfds: " + releaseType);
 
