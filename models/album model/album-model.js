@@ -18,6 +18,12 @@ const albumSchema = new mongoose.Schema({
         required: true
     },
 
+    albumGenre: {
+        type: String,
+        required: [true, `Please provide album's genre`],
+        enum: ['Pop', 'Rock', 'Hiphop', 'Country']
+    },
+
     featuredArtists: [
         {
             type: mongoose.Schema.Types.ObjectId,
