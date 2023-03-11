@@ -66,6 +66,9 @@ export default function CreatePlaylist(props) {
                         </label>
                 </div>
                 <div className="createplaylist--stats--info">
+                <div className="createplaylist--createbtn">
+                    <input type="submit" value="Create" className="createplaylist--gradient--btn createplaylist--submit--btn" /> 
+                </div>
                         <input type="text" id="playlisttitle" placeholder="Playlist Name"/>
                        <div className="createplaylist--release--info">
                         {/* <h5>2014</h5> */}
@@ -79,9 +82,6 @@ export default function CreatePlaylist(props) {
                 </div>
               
             </div>
-            <div className="createplaylist--createbtn">
-                    <input type="submit" value="Create" className="createplaylist--gradient--btn createplaylist--submit--btn" /> 
-                </div>
 
             <div className="createplaylist--addsongs">
                 <div className="createplaylist--searchbar" >
