@@ -18,9 +18,8 @@ const getDiscoveryGame = async (req, res) => {
 
     try {
 
-
         const user = await User.findOne({
-            userOwner: req.user._id
+            _id: req.user._id
         });
 
         // const recommendedSongs = await songMetadata.getRecommendations(user);
