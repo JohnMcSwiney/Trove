@@ -46,13 +46,11 @@ const createSong = async (req, res) => {
 
         const featuredArtists = await Promise.all(
           req.body.featuredArtists.map(async (name) => {
+            
             const featuredArtist = await Artist.findOne({ artistName: name });
 
-            // console.log("artist name: " + featuredArtist.artistName);
-            // console.log("artist email: " + featuredArtist.email);
-
             if (!featuredArtist) {
-              throw new Error("featured artist(s) not found");
+              throw new Error("This artist is not on our platform.");
             }
 
             return featuredArtist._id;
