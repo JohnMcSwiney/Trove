@@ -11,7 +11,7 @@ export default function SongInfo(props) {
 
     const handleTitle = (e) => {
         const newToUploadSongs = Array.isArray(props.toUploadSongs) ? [...props.toUploadSongs] : [];
-        newToUploadSongs[props.i] = {...newToUploadSongs[props.i], title: e.target.value}
+        newToUploadSongs[props.i] = { ...newToUploadSongs[props.i], title: e.target.value }
         props.setToUploadSongs(newToUploadSongs);
     }
 
@@ -23,6 +23,18 @@ export default function SongInfo(props) {
                         <label>{props.songFile[props.i].name}</label>
                         {console.log("song number: " + props.i)}
                         <input type="text" name="songName" placeholder="Song Title" onChange={handleTitle}></input>
+                        <td className="uploadmusic--columnt">
+                            <label>
+                                Featured Artists:
+                                <br />
+                                <textarea
+                                    value={props.featuredArtists}
+                                    name="artistName"
+                                    placeholder="Artist Name"
+                                    onChange={props.handleFeaturedArtists}
+                                />
+                            </label>
+                        </td>
                         <button onClick={handleRemoveSong}>Remove</button>
                     </>
                 )}

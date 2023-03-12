@@ -71,8 +71,7 @@ export default function MusicDetails(props) {
                 <label>
                   Featured Artists:
                   <br />
-                  <input
-                    type="text"
+                  <textarea
                     value={props.featuredArtists}
                     name="artistName"
                     placeholder="Artist Name"

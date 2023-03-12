@@ -70,7 +70,7 @@ export default function UploadMusic(props) {
   const [releaseType, setReleaseType] = useState("");
   const [releaseYear, setReleaseYear] = useState("");
   const [artist, setArtist] = useState("");
-  const [featuredArtists, setFeaturedArtists] = useState(null);
+  const [featuredArtists, setFeaturedArtists] = useState([]);
 
   // Handle State Changes
   const handleTitle = (e) => {
@@ -137,7 +137,11 @@ export default function UploadMusic(props) {
   }, []);
 
   const handleFeaturedArtists = (e) => {
-    setFeaturedArtists(e.target.value);
+    const inputtedArtists = e.target.value;
+    const artistArray = inputtedArtists.split("/[\s,]+/").filter((artist) => artist.length > 0);
+
+    // const artistArray = inputtedArtists.split(",").map((artist) => artist.trim());
+    setFeaturedArtists(artistArray);
   };
 
   // When music is submitted
