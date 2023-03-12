@@ -1,6 +1,8 @@
 const Song = require("../../models/song model/song-model");
 const Artist = require("../../models/artist model/artist-model");
 const Album = require("../../models/album model/album-model");
+const User = require("../../models/user model/user-model");
+const MyTrove = require("../../models/myTrove model/myTrove-model");
 
 const mongoose = require("mongoose");
 
@@ -524,6 +526,43 @@ const getArtistSong = async (req, res) => {
   res.status(200).json(songs);
 };
 
+const likedSong = async (req, res) => {
+
+  const {id} = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+
+    return res.status(404).json({ error: "song not available" });
+  }
+
+  try {
+    
+    const song = await Song.findOne({_id: id});
+
+    if (!song) {
+      console.log("song not found");
+    }
+
+    const myTrove = await MyTrove.findOne({myTroveOwner: req.body.user});
+
+    if (!myTrove) {
+
+      console.log("user not found");
+    }
+
+    if (!song.isLoved.includes(myTrove)) {
+
+      song.isLoved.push(myTrove);
+
+      myTrove.likedSongs.push(song._id);
+    }
+
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({ message: err.message });
+  }
+}
+
 module.exports = {
   getAllSongs,
   getSong,
@@ -531,4 +570,5 @@ module.exports = {
   createSong,
   deleteSong,
   updateSong,
+  likedSong
 };

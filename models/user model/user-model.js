@@ -33,13 +33,6 @@ const userSchema = new mongoose.Schema(
       type: String,
     },
 
-    favouriteSongs: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Song",
-      },
-    ],
-
     displayName: {
       type: String,
       default: "My Account",
@@ -52,13 +45,8 @@ const userSchema = new mongoose.Schema(
     isAdmin: {
       type: Boolean,
       default: false,
-    },
-    playlists: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Playlist",
-      },
-    ],
+    }
+    
   },
   { timestamps: true }
 );

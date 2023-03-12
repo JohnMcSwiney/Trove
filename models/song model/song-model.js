@@ -83,7 +83,7 @@ const songSchema = new mongoose.Schema(
         isLoved: [
             {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: 'User'
+                ref: 'MyTrove'
             }
         ]
     }, { timestamps: true }
