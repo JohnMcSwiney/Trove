@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, { useState, useEffect} from 'react';
 import './UserAccStyle.css';
 import tempImg from './temp-imgs/derek.png';
 import CardPlaylist from '../../components/cards/card_playlist/CardPlaylist';
@@ -8,8 +8,8 @@ import GenreCard from '../../components/cards/card_genre/CardGenre';
 import {Likeid, Dislikeid} from '../../components/discoverygame/DiscoveryGame';
 
 
-import DislikeData from '../../data/dislikeTemp.json';
-import LikeData from '../../data/likeTemp.json';
+import {DislikeData} from '../../data/dislikeTemp';
+import {LikeData} from '../../data/likeTemp';
 
 
 
@@ -19,10 +19,21 @@ const MyTrove = () => {
   const [likeArray, setlikeArray] = useState();
   const [dislikeArray, setdislikeArray] = useState();
 
-  const [likedSongArray, setlikedSongArray] = useState([Likeid]);
-  const [dislikedSongArray, setdislikedSongArray] = useState([Dislikeid]);
-  const Likes = LikeData;
-  const Dislikes = DislikeData;
+
+
+
+  const [likes, setLikes] = useState([]);
+
+  useEffect(() => {
+    setLikes(LikeData());
+  }, []);
+
+
+  const [dislikes, setDislikes] = useState([]);
+
+  useEffect(() => {
+    setDislikes(DislikeData());
+  }, []);
   
 
 
@@ -144,10 +155,29 @@ const MyTrove = () => {
           <br/>
 
           <div className="TPlikedSongs"> liked Song  
-          
-            
-          
-          
+              
+              <div>
+                  <h1>Liked Songs</h1>
+                  <ul>
+                    {likes.map((item) => (
+                      <li key={item.id}>
+                        {item.songName} - {item.author}
+                      </li>
+                    ))}
+                  </ul>
+              </div>
+
+              <div>
+                  <h1>Disliked Songs</h1>
+                  <ul>
+                    {dislikes.map((item) => (
+                      <li key={item.id}>
+                        {item.songName} - {item.author}
+                      </li>
+                    ))}
+                  </ul>
+              </div>
+
           </div>
           <br/>
           
