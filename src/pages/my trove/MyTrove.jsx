@@ -147,16 +147,11 @@ const MyTrove = () => {
         </div>
         <div className='account-splitter'></div>
         <div className='account-showcase'>
-          <h1>Discovery Game Likes and Dislikes</h1>
-          <br/>
-          <div className="TPlike">Likes: {likeArray}</div>
-          <br/>
-          <div className="TPdislike">Dislikes: {dislikeArray} </div>
-          <br/>
+         
 
-          <div className="TPlikedSongs"> liked Song  
+          
               
-              <div>
+              <div className="TPlikedSongs">
                   <h1>Liked Songs</h1>
                   <ul>
                     {likes.map((item) => (
@@ -167,7 +162,7 @@ const MyTrove = () => {
                   </ul>
               </div>
 
-              <div>
+              <div className="TPDislikedSongs">
                   <h1>Disliked Songs</h1>
                   <ul>
                     {dislikes.map((item) => (
@@ -178,10 +173,9 @@ const MyTrove = () => {
                   </ul>
               </div>
 
-          </div>
+          
           <br/>
           
-          <div className="TPdislikedSongs"> Disliked song </div>
 
               
         </div>
