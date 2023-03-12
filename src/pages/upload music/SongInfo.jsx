@@ -9,11 +9,11 @@ export default function SongInfo(props) {
         //props.i--;
     }
 
-    const handleTitle = (e) => {
-        const newToUploadSongs = Array.isArray(props.toUploadSongs) ? [...props.toUploadSongs] : [];
-        newToUploadSongs[props.i] = { ...newToUploadSongs[props.i], title: e.target.value }
-        props.setToUploadSongs(newToUploadSongs);
-    }
+    // const handleTitle = (e) => {
+    //     const newToUploadSongs = Array.isArray(props.toUploadSongs) ? [...props.toUploadSongs] : [];
+    //     newToUploadSongs[props.i] = { ...newToUploadSongs[props.i], title: e.target.value }
+    //     props.setToUploadSongs(newToUploadSongs);
+    // }
 
     return (
         <div className="uploadmusic--song--info">
@@ -22,36 +22,18 @@ export default function SongInfo(props) {
                     <>
                         <label>{props.songFile[props.i].name}</label>
                         {console.log("song number: " + props.i)}
-                        <input type="text" name="songName" placeholder="Song Title" onChange={handleTitle}></input>
-                        <td className="uploadmusic--columnt">
-                            <label>
-                                Featured Artists:
-                                <br />
-                                <textarea
-                                    value={props.featuredArtists}
-                                    name="artistName"
-                                    placeholder="Artist Name"
-                                    onChange={props.handleFeaturedArtists}
-                                />
-                            </label>
-                        </td>
                         <button onClick={handleRemoveSong}>Remove</button>
                     </>
                 )}
             </div>
             <div>
+                <input type="text" value={props.song} placeholder="Song Title" onChange={props.handleTitle}></input>
+                {/* <br />
+                <textarea value={props.featuredArtists} name="artistName" placeholder="Featured Artists" onChange={props.handleFeaturedArtists}/> */}
                 {/* <h3>{props.title}</h3> */}
-                {/* {console.log("index: " + [props.i])}
+                {console.log("index: " + [props.i])}
                 {console.log("file: " + props.songFile[props.i])}
-                {console.log("file name: " + props.songFile[props.i].name)} */}
-
-                {/* <input type="text" name="title" value={props.title} placeholder="Song Title" onChange={props.handleTitle}></input> */}
-
-                {/* {props.title[0].forEach(element => {
-                    
-                })} */}
-
-                {console.log("Props song: " + props.song)}
+                {console.log("file name: " + props.songFile[props.i].name)}
                 {console.log("Props title: " + props.title)}
                 {/* {console.log("Props title[0]: " + props.title[0])} */}
 

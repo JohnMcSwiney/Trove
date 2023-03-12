@@ -62,7 +62,7 @@ export default function UploadMusic(props) {
     //  menu = <SideBar />
   }
 
-  const [title, setTitle] = useState();
+  const [title, setTitle] = useState("");
   const [album, setAlbum] = useState(null);
   const [genre, setGenre] = useState("");
   const [songFile, setSongFile] = useState([]);
@@ -77,12 +77,25 @@ export default function UploadMusic(props) {
     // const { value, name } = e.target.value;
     // setTitle({ ...title});
 
-    // if (releaseType === "single") {
-       setTitle(e.target.value);
-    // }
-    // else {
-      
-    // }
+    if (releaseType === "single") {
+      setTitle(e.target.value);
+    }
+    else {
+      console.log("event target: " + e.target.value);
+
+      setTitle({title: e.target.value});
+
+      // let titleArray = [e.target.value,];
+
+      // if (title.onChange) {
+      //   titleArray.push(e.target.value);
+      // }
+
+      // // for (const songTitle in e.target.value) {
+      // //   titleArray.push(songTitle);
+      // // }
+      // console.log("titleArray: " + titleArray);
+    }
   };
 
   const handleAlbumName = (e) => {
