@@ -68,7 +68,7 @@ export default function AlbumPage() {
             {/* SONGS */}
             <div className="album--songs">
             {
-                    albumsongs && albumsongs.map((item, index)=>{
+                    artist.songList && artist.songList.map((item, index)=>{
                     return(
                         <AlbumSong
                         key={index}
