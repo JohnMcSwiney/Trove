@@ -8,16 +8,22 @@ import GenreCard from '../../components/cards/card_genre/CardGenre';
 import {Likeid, Dislikeid} from '../../components/discoverygame/DiscoveryGame';
 
 
+import DislikeData from '../../data/dislikeTemp.json';
+import LikeData from '../../data/likeTemp.json';
+
+
 
 
 const MyTrove = () => {
-
+  const [index, setIndex] = React.useState(0);
   const [likeArray, setlikeArray] = useState();
   const [dislikeArray, setdislikeArray] = useState();
 
   const [likedSongArray, setlikedSongArray] = useState([Likeid]);
   const [dislikedSongArray, setdislikedSongArray] = useState([Dislikeid]);
-
+  const Likes = LikeData;
+  const Dislikes = DislikeData;
+  
 
 
   const tempUser1 = {
@@ -137,10 +143,15 @@ const MyTrove = () => {
           <div className="TPdislike">Dislikes: {dislikeArray} </div>
           <br/>
 
-          <div className="TPlikedSongs"> liked Song IDs {likedSongArray}</div>
+          <div className="TPlikedSongs"> liked Song  
+          
+            
+          
+          
+          </div>
           <br/>
           
-          <div className="TPdislikedSongs"> Disliked song IDS {dislikedSongArray}</div>
+          <div className="TPdislikedSongs"> Disliked song </div>
 
               
         </div>
@@ -148,7 +159,7 @@ const MyTrove = () => {
         <div className='account-showcase'>
           <h1></h1>
         </div>
-
+              
 
       </div>
 
