@@ -6,7 +6,9 @@ const mongoose = require("mongoose");
 
 const createSong = async (req, res) => {
   console.log("createSong", req.body);
+
   const email = req.body.artist;
+
   try {
     // artist id check
     const artist = await Artist.findOne({ email: email });
@@ -19,9 +21,11 @@ const createSong = async (req, res) => {
     }
 
     if (req.body.releaseType === "single") {
+
       console.log(req.body.releaseType);
 
-      if (req.body.featuredArtist == null || !req.body.featuredArtists) {
+      if (req.body.featuredArtists == null || !req.body.featuredArtists) {
+
         console.log(req.body.featuredArtist);
 
         const song = new Song({
@@ -34,10 +38,18 @@ const createSong = async (req, res) => {
         await song.save();
         await artist.save();
         res.status(201).json(song);
-      } else {
+      } 
+
+      else {
+
+        console.log("featured artists: " + req.body.featuredArtists);
+
         const featuredArtists = await Promise.all(
           req.body.featuredArtists.map(async (name) => {
             const featuredArtist = await Artist.findOne({ artistName: name });
+
+            // console.log("artist name: " + featuredArtist.artistName);
+            // console.log("artist email: " + featuredArtist.email);
 
             if (!featuredArtist) {
               throw new Error("featured artist(s) not found");
@@ -46,6 +58,25 @@ const createSong = async (req, res) => {
             return featuredArtist._id;
           })
         );
+
+        const song = new Song({
+          ...req.body,
+          artist: artist._id,
+          releaseType: "single",
+          featuredArtists: featuredArtists,
+        });
+
+        artist.songList.push(song._id);
+
+        for (const featuredArtistId of featuredArtists) {
+          const featuredArtist = await Artist.findById(featuredArtistId);
+          featuredArtist.songList.push(song._id);
+          await featuredArtist.save();
+        }
+
+        await song.save();
+        await artist.save();
+        res.status(201).json(song);
       }
     }
     if (req.body.releaseType === "album") {
