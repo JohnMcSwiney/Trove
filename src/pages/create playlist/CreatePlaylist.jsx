@@ -57,6 +57,7 @@ export default function CreatePlaylist(props) {
         {/* PLAYLIST'S INFO */}
         {modalIsOpen ? <div className="createplaylist--popupmask"></div> : null }
         {modalIsOpen ? <PopUp togglePop={togglePop} addPlaylistSongs={addPlaylistSongs} albumSongs={albumSongs} songActionImg={addSongImg} handleRemoveSong={handleRemoveSong} /> : null}
+            <div className="createplaylist--body">
             <div className="createplaylist--info">
                 <div className="createplaylist--song--cover">
                         <img src={previewCover} alt="playlist"/>
@@ -72,7 +73,7 @@ export default function CreatePlaylist(props) {
                         <input type="text" id="playlisttitle" placeholder="Playlist Name"/>
                        <div className="createplaylist--release--info">
                         {/* <h5>2014</h5> */}
-                        <input type="textarea" id="playlistdesc" placeholder="Add Description (Optional)" name="playlist description"/>
+                        {/* <input type="textarea" id="playlistdesc" placeholder="Add Description (Optional)" name="playlist description"/> */}
                         {/* <h6>PLAYLIST</h6> */}
                         </div>
                         {/* <h4>Creator Username</h4> */}
@@ -110,6 +111,7 @@ export default function CreatePlaylist(props) {
                 ) })}
             </div>
 
+            </div>
             </div>
 
     </section>
