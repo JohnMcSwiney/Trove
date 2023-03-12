@@ -37,6 +37,7 @@ const createAlbum = async (req, res) => {
     }
 
     if (!req.body.featuredArtists || featuredArtists == null) {
+      
       console.log("inside album method");
       const album = new Album({
         ...req.body,

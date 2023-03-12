@@ -30,7 +30,7 @@ const epSchema = new mongoose.Schema({
     totalTracks: {
         type: Number,
         default: 0,
-        length: 5
+        //length: 5
         //required: [true, `Please provide number of tracks`],
     },
 
@@ -55,7 +55,7 @@ const epSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Song',
             default: null,
-            length: 5
+            //length: 5
         }
     ]
 })
