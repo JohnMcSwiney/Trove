@@ -526,17 +526,14 @@ const getArtistSong = async (req, res) => {
 };
 
 const likedSong = async (req, res) => {
-
-  const {id} = req.params;
+  const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
-
     return res.status(404).json({ error: "song not available" });
   }
 
   try {
-    
-    const song = await Song.findOne({_id: id});
+    const song = await Song.findOne({ _id: id });
 
     if (!song) {
       console.log("song not found");
@@ -544,28 +541,32 @@ const likedSong = async (req, res) => {
       throw new Error("song not found");
     }
 
-    const user = await User.findOne({displayName: req.body.displayName});
+    const user = await User.findOne({ _id: req.body.userID });
 
     if (!user) {
-
       console.log("user not found");
 
       throw new Error("user not found");
-
     }
 
-    if (!song.isLoved.includes(user)) {
-
-      song.isLoved.push(user);
-
-      user.likedSongs.push(song._id);
+    if (song.isLoved.includes(user._id)) {
+      return res
+        .status(400)
+        .json({ message: "Song has already been liked by the user" });
     }
 
+    song.isLoved.push(user._id);
+    user.likedSongs.push(song._id);
+
+    await song.save();
+    await user.save();
+
+    res.status(200).json({ message: "Song liked successfully" });
   } catch (err) {
     console.log(err);
     res.status(400).json({ message: err.message });
   }
-}
+};
 
 module.exports = {
   getAllSongs,
@@ -574,5 +575,5 @@ module.exports = {
   createSong,
   deleteSong,
   updateSong,
-  likedSong
+  likedSong,
 };
