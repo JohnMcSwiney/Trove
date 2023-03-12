@@ -78,7 +78,7 @@ export default function UploadMusic(props) {
     // setTitle({ ...title});
 
     // if (releaseType === "single") {
-    //   setTitle(e.target.value);
+       setTitle(e.target.value);
     // }
     // else {
       

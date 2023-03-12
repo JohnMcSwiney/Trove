@@ -21,7 +21,7 @@ export const useUploadSong = () => {
   ) => {
     const storageRef = storage.ref();
 
-    const uploadSongToFirebase = async (title, songFile) => {
+    const uploadSongToFirebase = async (songFile) => {
       setIsUploading(true);
 
       const songRef = storageRef.child(`songs/${songFile.name}`);
