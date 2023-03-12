@@ -8,6 +8,7 @@ const {
   deleteSong,
   updateSong,
   likedSong,
+  dislikeSong
 } = require("../../admin controllers/song/songController");
 router.get("/", getAllSongs);
 
@@ -22,5 +23,8 @@ router.patch("/:id", updateSong);
 router.delete("/:id", deleteSong);
 
 router.post("/liked/:id", likedSong);
+
+router.post("/removelike/:id", dislikeSong);
+
 
 module.exports = router;

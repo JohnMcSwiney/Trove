@@ -568,6 +568,46 @@ const likedSong = async (req, res) => {
   }
 };
 
+const dislikeSong = async (req, res) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: "song not available" });
+  }
+
+  try {
+    const song = await Song.findOne({ _id: id });
+
+    if (!song) {
+      console.log("song not found");
+
+      throw new Error("song not found");
+    }
+
+    const user = await User.findOne({ _id: req.body.userID });
+
+    if (!user) {
+      console.log("user not found");
+
+      throw new Error("user not found");
+    }
+
+    if (song.isLoved.includes(user._id)) {
+      song.isLoved.pop(user._id);
+      user.likedSongs.pop(song._id);
+    }
+
+    await song.save();
+
+    await user.save();
+
+    res.status(200).json({ message: "removed like successfully" });
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({ message: err.message });
+  }
+};
+
 module.exports = {
   getAllSongs,
   getSong,
@@ -576,4 +616,5 @@ module.exports = {
   deleteSong,
   updateSong,
   likedSong,
+  dislikeSong
 };
