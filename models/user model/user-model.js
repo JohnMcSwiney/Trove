@@ -45,8 +45,29 @@ const userSchema = new mongoose.Schema(
     isAdmin: {
       type: Boolean,
       default: false,
-    }
-    
+    },
+
+    playlists: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Playlist"
+      },
+    ],
+
+    recentTracks: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Song"
+      }
+    ],
+
+    likedSongs: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Song"
+      }
+    ],
+
   },
   { timestamps: true }
 );

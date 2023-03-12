@@ -67,9 +67,9 @@ const discoveryGameSchema = new mongoose.Schema({
         default: false
     },
 
-    myTrove: {
+    user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'MyTrove'
+        ref: 'User'
     },
     similarity: {
 

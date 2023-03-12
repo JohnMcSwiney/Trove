@@ -2,7 +2,6 @@ const Song = require("../../models/song model/song-model");
 const Artist = require("../../models/artist model/artist-model");
 const Album = require("../../models/album model/album-model");
 const User = require("../../models/user model/user-model");
-const MyTrove = require("../../models/myTrove model/myTrove-model");
 
 const mongoose = require("mongoose");
 
@@ -541,20 +540,25 @@ const likedSong = async (req, res) => {
 
     if (!song) {
       console.log("song not found");
+
+      throw new Error("song not found");
     }
 
-    const myTrove = await MyTrove.findOne({myTroveOwner: req.body.user});
+    const user = await User.findOne({displayName: req.body.displayName});
 
-    if (!myTrove) {
+    if (!user) {
 
       console.log("user not found");
+
+      throw new Error("user not found");
+
     }
 
-    if (!song.isLoved.includes(myTrove)) {
+    if (!song.isLoved.includes(user)) {
 
-      song.isLoved.push(myTrove);
+      song.isLoved.push(user);
 
-      myTrove.likedSongs.push(song._id);
+      user.likedSongs.push(song._id);
     }
 
   } catch (err) {
