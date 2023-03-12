@@ -67,6 +67,8 @@ export default function AddSongs(props) {
                                     songFile={props.songFile}
                                     title={props.title}
                                     handleTitle={props.handleTitle}
+                                    handleFeaturedArtists={props.handleFeaturedArtists}
+                                    featuredArtists={props.featuredArtists}
                                     handleSongFileChange={props.handleSongFileChange}
                                     setSongFile={props.setSongFile}
                                     setToUploadSongs={props.setToUploadSongs}

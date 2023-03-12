@@ -138,9 +138,9 @@ export default function UploadMusic(props) {
 
   const handleFeaturedArtists = (e) => {
     const inputtedArtists = e.target.value;
-    const artistArray = inputtedArtists.split("/[\s,]+/").filter((artist) => artist.length > 0);
 
-    // const artistArray = inputtedArtists.split(",").map((artist) => artist.trim());
+    const artistArray = inputtedArtists.split("/[\s,]+/").filter((artist) => artist.length > 0);
+    
     setFeaturedArtists(artistArray);
   };
 
