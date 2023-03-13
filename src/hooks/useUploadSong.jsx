@@ -7,6 +7,7 @@ export const useUploadSong = () => {
   const [isUploading, setIsUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const storage = firebase.storage();
+  let [imageCounter, setImageCounter] = useState(0);
 
   const uploadMusic = async (
     title,
@@ -18,13 +19,10 @@ export const useUploadSong = () => {
     imageFile,
     releaseType,
     releaseYear,
-    featuredArtists
+    featuredArtists,
   ) => {
 
     const storageRef = storage.ref();
-
-    let imgIncrement = 0;
-    console.log("global increment var: " + imgIncrement);
 
     const uploadSongToFirebase = async (songFile) => {
       setIsUploading(true);
@@ -74,13 +72,15 @@ export const useUploadSong = () => {
       });
     };
 
-    const uploadImageToFirebase = async (imgIncrement) => {
+    const uploadImageToFirebase = async () => {
 
-      // console.log("increment before img: " + imgIncrement);
+      console.log("before image: " + imageCounter);
 
-      const imageRef = storageRef.child(`images/${imgIncrement.toString()}`);
+      const imageRef = storageRef.child(`images/${imageCounter}`);
 
-      // console.log("increment after img: " + imgIncrement);
+      if (imageRef.name.match(imageCounter)) {
+        setImageCounter(imageCounter++);
+      }
 
       const imageUploadTask = imageRef.put(imageFile);
 
@@ -114,6 +114,11 @@ export const useUploadSong = () => {
           async () => {
             const imgUrl = await imageRef.getDownloadURL();
             resolve(imgUrl);
+
+            setImageCounter(imageCounter++);
+
+            console.log("after image: " + imageCounter);
+
             console.log("finished handling song and img");
           }
         );
@@ -258,8 +263,7 @@ export const useUploadSong = () => {
 
           else {
 
-            imgUrl = await uploadImageToFirebase(imgIncrement);
-            imgIncrement++;
+            imgUrl = await uploadImageToFirebase();
 
             data = await createAlbumObject(imgUrl);
 
@@ -277,40 +281,39 @@ export const useUploadSong = () => {
         break;
       case "ep":
 
-      try {
-        //const imgUrl = await uploadImageToFirebase();
+        try {
+          //const imgUrl = await uploadImageToFirebase();
 
-        let imgUrl = "";
+          let imgUrl = "";
 
-        let data = "";
+          let data = "";
 
-        if (!imageFile || imageFile == null) {
+          if (!imageFile || imageFile == null) {
 
-          console.log("no image selected");
+            console.log("no image selected");
 
-          imgUrl = process.env.DEFAULT_COVER;
+            imgUrl = process.env.DEFAULT_COVER;
 
-          data = await createEPObject(imgUrl);
+            data = await createEPObject(imgUrl);
+          }
+
+          else {
+
+            imgUrl = await uploadImageToFirebase();
+
+            data = await createEPObject(imgUrl);
+
+          }
+          console.log("End Response Data: " + data);
+
+          setIsUploading(false);
+          setUploadProgress(0);
+        } catch (err) {
+          console.log(err);
+
+          setIsUploading(false);
+          setUploadProgress(0);
         }
-
-        else {
-
-          imgUrl = await uploadImageToFirebase(imgIncrement);
-          ++imgIncrement;
-
-          data = await createEPObject(imgUrl);
-
-        }
-        console.log("End Response Data: " + data);
-
-        setIsUploading(false);
-        setUploadProgress(0);
-      } catch (err) {
-        console.log(err);
-
-        setIsUploading(false);
-        setUploadProgress(0);
-      }
         break;
       case "single":
         try {
@@ -332,8 +335,7 @@ export const useUploadSong = () => {
 
           else {
 
-            imgUrl = await uploadImageToFirebase(imgIncrement);
-            imgIncrement++;
+            imgUrl = await uploadImageToFirebase();
 
             data = await createSongObject(title, songUrl, imgUrl);
 
