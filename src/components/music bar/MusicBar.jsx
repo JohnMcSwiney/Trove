@@ -32,34 +32,15 @@ import queue from "../../data/albumsongs.json";
 
 import Trv_Chest from "../../assets/Trv_icons/Tvr_lib_icon.ico";
 import { MusicContext } from "../../contexts/MusicContext";
-import { useAuthContext } from "../../hooks/user-hooks/useAuthContext";
 
-const json = `
-{
-    "artist": "Ice Cube",
-    "artistID": "test_ARTIST_Id_123",
-    "title": "It Was A Good Day",
-    "content_type": "audio/mp3",
-    "song_url": "https://storage.googleapis.com/trv_test/TroveMusic/rap/ice_cube/the_predator/it_was_a_good_day/07_it_was_a_good_day.mp3",
-    "img_url": "https://storage.googleapis.com/trv_test/TroveMusic/rap/ice_cube/the_predator/cover/cover.jpg",
-    "duration": 280,
-    "hot-spot_start": 23,
-    "genre": "rap",
-    "genres": ["rap", "feel_good"],
-    "explicit": true
-}
-`;
-const obj = JSON.parse(json);
-
-const MusicBar = () => {
+const MusicBar = ({ newSong }) => {
+  console.log(newSong);
   // const isFullscreen = props.fcOptionIn;
   const [isFullscreen, setFullscreen] = useState(false);
-  const songName =
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+
   //context
   const { currentSong } = React.useContext(MusicContext);
-  const { user } = useAuthContext();
-  const isLoggedIn = user ? true : false;
+
   //state
   const [isPlaying, setIsPlaying] = useState(false);
   const [duration, setDuration] = useState(0);
@@ -170,10 +151,6 @@ const MusicBar = () => {
     console.log(`show queue`);
   };
 
-  //https://storage.cloud.google.com/trv_test_music/TroveMusic/country/wavepool_abortion/wavepool_abortion/blood_everywhere/wavepool%20abortion%20-%20wavepool%20abortion%20-%2010%20blood%20everywhere.mp3
-  const songURL =
-    "https://storage.googleapis.com/trv_test/TroveMusic/rap/ice_cube/the_predator/it_was_a_good_day/07_it_was_a_good_day.mp3";
-
   const toggleLiked = () => {
     setIsLiked(!isLiked);
   };
@@ -188,7 +165,7 @@ const MusicBar = () => {
 
   const navigate = useNavigate();
   const redirectArtist = () => {
-    navigate(`./Artist/${obj.artistID}`);
+    navigate(`./artist/${newSong.artistID}`);
   };
 
   return (
@@ -197,7 +174,7 @@ const MusicBar = () => {
         <>
           <audio
             ref={audioPlayer}
-            src={obj.song_url}
+            src={newSong?.songUrl}
             preload="metadata"
             onChange={() => {
               changeRange();
@@ -234,13 +211,13 @@ const MusicBar = () => {
                 {/*  */}
 
                 <div className="fullscreen-song-img ">
-                  <img src={obj.img_url} className="fullscreen-img"></img>
+                  <img src={newSong?.img_url} className="fullscreen-img"></img>
 
                   <button className="exitBtn" onClick={toggleFC}>
                     x
                   </button>
 
-                  {obj.explicit ? (
+                  {/* {obj.explicit ? (
                     <div className="explicit-containter">
                       <MdExplicit
                         data-tooltip-id="my-tooltip"
@@ -259,7 +236,7 @@ const MusicBar = () => {
                     </div>
                   ) : (
                     <p />
-                  )}
+                  )} */}
                   {/* explicit-containter */}
                 </div>
 
@@ -275,10 +252,10 @@ const MusicBar = () => {
                   </div>
                   <div className="fullscreen-song-info-txt-container">
                     <div className="fc-song-txt">
-                      <a>{obj.title}</a>
+                      <a>{newSong?.title}</a>
                     </div>
                     <div className="fc-artist-txt">
-                      <a>{obj.artist}</a>
+                      <a>{newSong?.artist}</a>
                     </div>
                   </div>
                   <div className="like-btn">
@@ -371,8 +348,8 @@ const MusicBar = () => {
                 </div>
 
                 <div className="song-img ">
-                  <img src={obj.img_url} onClick={toggleFC}></img>
-                  {obj.explicit ? (
+                  {/* <img src={obj.img_url} onClick={toggleFC}></img> */}
+                  {/* {obj.explicit ? (
                     <div className="explicit-containter">
                       <MdExplicit
                         data-tooltip-id="my-tooltip"
@@ -391,18 +368,16 @@ const MusicBar = () => {
                     </div>
                   ) : (
                     <p />
-                  )}
+                  )} */}
                   {/* explicit-containter */}
                 </div>
 
                 <div className="song-txt-container-container ">
                   <div className="song-info-txt-container" onClick={toggleFC}>
-                    <div className="song-txt">
-                      <a>{obj.title}</a>
-                    </div>
+                    <div className="song-txt">{/* <a>{obj.title}</a> */}</div>
                     <div className="artist-txt">
                       <a onClick={redirectArtist} id="artistTextLink">
-                        {obj.artist}
+                        {newSong?.artist}
                       </a>
                     </div>
                   </div>
@@ -440,54 +415,6 @@ const MusicBar = () => {
                   step="5"
                 ></input>
               </div>
-              {/* Song Image 
-          <div className='hidden'>
-            <img src="http://localhost:3000/cover.jpg"></img>
-          </div> */}
-
-              {/* Song/Artist Name 
-          <div className='hidden'>
-            <div><p>{obj.title}</p></div>
-            <div className='hidden'>{obj.explicit ? <MdExplicit /> : <p />}</div>
-            <div><p>{obj.artist}</p></div>
-          </div> */}
-
-              {/* Media Controls 
-          <div className=' hidden grid grid-flow-col'>
-            <button><CgArrowLongLeftR /></button>
-            <button onClick={togglePlayPause}>
-              {isPlaying ? <BsPause /> : <BsPlay />}
-            </button>
-            <button><CgArrowLongRightR /></button>
-          </div> */}
-
-              {/* Media Time 
-          <div className='hidden'>
-            <div> {calculateTime(currentTime)} </div>
-            <div>{(duration && !isNaN(duration)) && calculateTime(duration)}</div>
-          </div> */}
-
-              {/* Like Btn 
-          <button className='hidden' onClick={toggleLiked}>{isLiked ? <FaHeart /> : <FaRegHeart />}</button>
-          */}
-              {/* Extra Buttons 
-          <div className='hidden phone_md:hidden' >
-
-            <button ><FaShareSquare /></button>
-            <button ><MdOutlineQueueMusic /></button>
-          </div>
-          */}
-              {/* Mute Btn
-          <div className='hidden'>
-            <button onClick={toggleMute}>
-              {isMuted ? <BiVolumeFull /> : <BiVolumeMute />}
-            </button>
-          </div>
-          */}
-              {/* Vol*/}
-              {/* <div className='hidden'>
-            <input type="range" ref={volumeRef} defaultValue="50" onChange={changeVolumeLevel}></input>
-          </div> */}
             </div>
           </div>
         </>

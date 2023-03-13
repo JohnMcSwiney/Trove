@@ -7,11 +7,13 @@ export const MusicContext = createContext();
 
 export const MusicProvider = ({ children }) => {
   const [currentSong, setCurrentSong] = useState(null);
+  const [currentSongData, setCurrentSongData] = useState(null);
   const [playlists, setPlaylists] = useState([]);
 
   // function to update the currently playing song
   const updateCurrentSong = (song) => {
     setCurrentSong(song);
+    setCurrentSongData(song);
   };
 
   const updatePlaylists = (newPlaylists) => {
@@ -20,6 +22,7 @@ export const MusicProvider = ({ children }) => {
 
   const contextValue = {
     currentSong,
+    currentSongData,
     updateCurrentSong,
     playlists,
     updatePlaylists,

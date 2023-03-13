@@ -3,7 +3,7 @@ import Song from "../../components/song detail/Song";
 const Search = () => {
   const [songs, setSongs] = React.useState(null);
   const [albums, setAlbums] = React.useState(null);
-
+  const [songData, setSongData] = React.useState(null);
   const songAPI = React.useEffect(() => {
     const fetchSongs = async () => {
       const response = await fetch("/api/songs/");
@@ -30,7 +30,10 @@ const Search = () => {
   return (
     <div className="search-page container">
       <div className="songs">
-        {songs && songs.map((data) => <Song key={data._id} song={data} />)}
+        {songs &&
+          songs.map((data) => (
+            <Song key={data._id} song={data} setSongData={setSongData} />
+          ))}
       </div>
 
       <div>
