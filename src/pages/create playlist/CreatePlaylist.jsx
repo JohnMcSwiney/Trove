@@ -48,67 +48,6 @@ export default function CreatePlaylist(props) {
 
   return (
     <section>
-<<<<<<< Updated upstream
-        {/* PLAYLIST'S INFO */}
-        {modalIsOpen ? <div className="createplaylist--popupmask"></div> : null }
-        {modalIsOpen ? <PopUp togglePop={togglePop} addPlaylistSongs={addPlaylistSongs} albumSongs={albumSongs} songActionImg={addSongImg} handleRemoveSong={handleRemoveSong} /> : null}
-            <div className="createplaylist--body">
-            <div className="createplaylist--info">
-                <div className="createplaylist--song--cover">
-                        <img src={previewCover} alt="playlist"/>
-                        <label className="createplaylist--custom-file-upload">
-                        <input type="file" name="cover" value="" accept="image/*" className="createplaylist--gradient--btn createplaylist--image--btn createplaylist--hide--file" onChange={handleImageFileChange}/> 
-                            Choose Image <img src="../../assets/upload_icon.png" id="upload--icon" alt="upload_icon"/>
-                        </label>
-                </div>
-                <div className="createplaylist--stats--info">
-                <div className="createplaylist--createbtn">
-                    <input type="submit" value="Create" className="createplaylist--gradient--btn createplaylist--submit--btn" /> 
-                </div>
-                        <input type="text" id="playlisttitle" placeholder="Playlist Name"/>
-                       <div className="createplaylist--release--info">
-                        {/* <h5>2014</h5> */}
-                        {/* <input type="textarea" id="playlistdesc" placeholder="Add Description (Optional)" name="playlist description"/> */}
-                        {/* <h6>PLAYLIST</h6> */}
-                        </div>
-                        {/* <h4>Creator Username</h4> */}
-
-                        
-                        
-                </div>
-              
-            </div>
-
-            <div className="createplaylist--addsongs">
-                <div className="createplaylist--searchbar" >
-                {/* <input type="text" id="searchbar" placeholder="Search Songs"/> */}
-                <input type="button" value="Add Songs" className="createplaylist--gradient--btn createplaylist--addsongsbtn"   onClick={togglePop}/> 
-                <div className="createplaylist--addedsongs">
-
-            </div>
-
-            </div>
-
-            <div className="createplaylist--songs">
-            {
-                    playlistSongList && playlistSongList.map((item, index)=>{
-                    return(
-                        <PlaylistSong
-                        key={index}
-                        {...item}
-                        song={item}
-                        index={index}
-                        handleRemoveSong={handleRemoveSong}
-                        songActionImg={removeSongImg}
-                        songAction={"remove"}
-                        /> 
-
-                ) })}
-            </div>
-
-            </div>
-            </div>
-=======
       {/* PLAYLIST'S INFO */}
       {modalIsOpen ? <div className="createplaylist--popupmask"></div> : null}
       {modalIsOpen ? (
@@ -174,7 +113,6 @@ export default function CreatePlaylist(props) {
           />
           <div className="createplaylist--addedsongs"></div>
         </div>
->>>>>>> Stashed changes
 
         <div className="createplaylist--songs">
           {playlistSongList &&

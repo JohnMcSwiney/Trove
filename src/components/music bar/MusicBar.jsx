@@ -1,33 +1,38 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Navigate, useNavigate, Link } from 'react-router-dom';
+import React, { useState, useRef, useEffect } from "react";
+import { Navigate, useNavigate, Link } from "react-router-dom";
 import styles from "./AudioPlayer.module.css";
-import { CgArrowLongRightR } from "react-icons/cg"
-import { CgArrowLongLeftR } from "react-icons/cg"
-import { BsPlayCircle } from "react-icons/bs"
-import { BsPauseCircle } from "react-icons/bs"
-import { MdExplicit, MdOutlineQueueMusic } from "react-icons/md"
-import { BiVolumeFull, BiVolumeLow, BiVolume, BiVolumeMute } from "react-icons/bi";
+import { CgArrowLongRightR } from "react-icons/cg";
+import { CgArrowLongLeftR } from "react-icons/cg";
+import { BsPlayCircle } from "react-icons/bs";
+import { BsPauseCircle } from "react-icons/bs";
+import { MdExplicit, MdOutlineQueueMusic } from "react-icons/md";
+import {
+  BiVolumeFull,
+  BiVolumeLow,
+  BiVolume,
+  BiVolumeMute,
+} from "react-icons/bi";
 import { FaHeart, FaShareSquare, FaRegHeart } from "react-icons/fa";
-import NoSong from './NoSong.png';
+import NoSong from "./NoSong.png";
 
-import 'react-tooltip/dist/react-tooltip.css'
-import { AiOutlineShareAlt } from 'react-icons/ai'
-import HeartIcon from '../../assets/Trv_icons/Trv_likeIcon_outline.svg';
+import "react-tooltip/dist/react-tooltip.css";
+import { AiOutlineShareAlt } from "react-icons/ai";
+import HeartIcon from "../../assets/Trv_icons/Trv_likeIcon_outline.svg";
 import { RiFolderMusicFill, RiFolderMusicLine } from "react-icons/ri";
 import { BsSkipStart, BsSkipEnd, BsPlay, BsPause } from "react-icons/bs";
 
-import { Tooltip } from 'react-tooltip' //react tool tip used in explicit tag
+import { Tooltip } from "react-tooltip"; //react tool tip used in explicit tag
 
-
-
-import CardSong from '../cards/card_song/CardSong';
-import './fullscreenMusicBar.css';
-import './musicbar.css';
+import CardSong from "../cards/card_song/CardSong";
+import "./fullscreenMusicBar.css";
+import "./musicbar.css";
 
 // Hardcoded data
-import queue from "../../data/albumsongs.json"
+import queue from "../../data/albumsongs.json";
 
-import Trv_Chest from '../../assets/Trv_icons/Tvr_lib_icon.ico'
+import Trv_Chest from "../../assets/Trv_icons/Tvr_lib_icon.ico";
+import { MusicContext } from "../../contexts/MusicContext";
+import { useAuthContext } from "../../hooks/user-hooks/useAuthContext";
 
 const json = `
 {
@@ -46,12 +51,15 @@ const json = `
 `;
 const obj = JSON.parse(json);
 
-
 const MusicBar = () => {
   // const isFullscreen = props.fcOptionIn;
   const [isFullscreen, setFullscreen] = useState(false);
-  const songName = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
-
+  const songName =
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+  //context
+  const { currentSong } = React.useContext(MusicContext);
+  const { user } = useAuthContext();
+  const isLoggedIn = user ? true : false;
   //state
   const [isPlaying, setIsPlaying] = useState(false);
   const [duration, setDuration] = useState(0);
@@ -75,8 +83,7 @@ const MusicBar = () => {
     setDuration(seconds); // 45.26
     progressBar.current.max = seconds;
     FCprogressBar.current.max = seconds;
-
-  }, [audioPlayer?.current?.loadedmetadata, audioPlayer?.current?.readyState])
+  }, [audioPlayer?.current?.loadedmetadata, audioPlayer?.current?.readyState]);
 
   const calculateTime = (secs) => {
     const minutes = Math.floor(secs / 60);
@@ -85,7 +92,7 @@ const MusicBar = () => {
     const returnedSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
 
     return `${returnedMinutes} : ${returnedSeconds}`;
-  }
+  };
 
   const togglePlayPause = () => {
     const prevValue = isPlaying;
@@ -98,8 +105,7 @@ const MusicBar = () => {
       audioPlayer.current.pause();
       cancelAnimationFrame(animationRef.current);
     }
-
-  }
+  };
 
   const toggleMute = () => {
     const prevValue = isMuted;
@@ -111,9 +117,8 @@ const MusicBar = () => {
       // console.log(`previous vol: ` + prevVolume);
       audioPlayer.current.volume = prevVolume;
       setVolumeLevel(audioPlayer.current.volume);
-      volumeRef.current.value = (prevVolume * 100);
+      volumeRef.current.value = prevVolume * 100;
       // console.log(`current vol:` + (volumeLevel * 1000));
-
     } else {
       console.log(`isMuted ` + isMuted);
       console.log(`muting!`);
@@ -122,276 +127,332 @@ const MusicBar = () => {
       setVolumeLevel(0);
       volumeRef.current.value = 0;
       // console.log(`current vol:` + volumeLevel);
-
-
-
     }
-  }
+  };
 
   const whilePlaying = () => {
     progressBar.current.value = audioPlayer.current.currentTime;
     FCprogressBar.current.value = audioPlayer.current.currentTime;
     changePlayerCurrentTime();
     animationRef.current = requestAnimationFrame(whilePlaying); //potential memory leak
-  }
+  };
 
   const changeRange = () => {
     audioPlayer.current.currentTime = progressBar.current.value;
     audioPlayer.current.currentTime = FCprogressBar.current.value;
 
     changePlayerCurrentTime();
-  }
+  };
 
   const changePlayerCurrentTime = () => {
-      FCprogressBar.current.style.setProperty('--seek-before-width', `${FCprogressBar.current.value / duration * 100}%`);
+    FCprogressBar.current.style.setProperty(
+      "--seek-before-width",
+      `${(FCprogressBar.current.value / duration) * 100}%`
+    );
 
-      progressBar.current.style.setProperty('--seek-before-width', `${progressBar.current.value / duration * 100}%`);
+    progressBar.current.style.setProperty(
+      "--seek-before-width",
+      `${(progressBar.current.value / duration) * 100}%`
+    );
     setCurrentTime(progressBar.current.value);
-  }
+  };
 
   const changeVolumeLevel = () => {
     setIsMuted(true);
     // console.log(audioPlayer.current.volume);
     // console.log(volumeRef.current.value);
-    audioPlayer.current.volume = (volumeRef.current.value / 100);
-  }
+    audioPlayer.current.volume = volumeRef.current.value / 100;
+  };
   const shareSong = () => {
     console.log(`share btn`);
-  }
+  };
   const showQueue = () => {
     console.log(`show queue`);
-  }
+  };
 
   //https://storage.cloud.google.com/trv_test_music/TroveMusic/country/wavepool_abortion/wavepool_abortion/blood_everywhere/wavepool%20abortion%20-%20wavepool%20abortion%20-%2010%20blood%20everywhere.mp3
-  const songURL = "https://storage.googleapis.com/trv_test/TroveMusic/rap/ice_cube/the_predator/it_was_a_good_day/07_it_was_a_good_day.mp3";
+  const songURL =
+    "https://storage.googleapis.com/trv_test/TroveMusic/rap/ice_cube/the_predator/it_was_a_good_day/07_it_was_a_good_day.mp3";
 
   const toggleLiked = () => {
     setIsLiked(!isLiked);
-  }
+  };
   const toggleFC = (event) => {
     // if the user clickson the artist name it's ignored
-    if(event.target.id == "artistTextLink"){
-        // ignored and the Navigate function takes over
-    }else{
+    if (event.target.id == "artistTextLink") {
+      // ignored and the Navigate function takes over
+    } else {
       setFullscreen(!isFullscreen);
     }
-  }
+  };
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const redirectArtist = () => {
-    navigate(`./Artist/${obj.artistID}`)
-  }
-
+    navigate(`./Artist/${obj.artistID}`);
+  };
 
   return (
     <>
-    <audio
+      {
+        <>
+          <audio
             ref={audioPlayer}
             src={obj.song_url}
-            preload='metadata'
+            preload="metadata"
             onChange={() => {
               changeRange();
               animationRef.current = requestAnimationFrame(whilePlaying);
             }}
           ></audio>
 
-       {/* Full Screen */}
-       <div className={isFullscreen === true ? "fullscreenMusicBar" : "hidden"}>
-        <div className='fullsc-musicbar-wrap bg-trv-sm-Play-bg'>
-          
-          {/* Attempting to change on scroll */}
-          <div id='fcplayerbox' className='fullscreen-player-info-container '>
-            {/* Progress Bar */}
-            <div
-              className='fullscreen-progressbarContainer'
-              onMouseDown={toggleMute}
-              onMouseUp={toggleMute}
-            >
-
-            <input className='fullscreen-progressBar' type="range" ref={FCprogressBar} defaultValue="0 " 
-            onMouseDown={togglePlayPause} onMouseUp={togglePlayPause} 
-            onChange={changeRange} /> 
-            </div>
-            {/*  */}
-
-
-            <div className='fullscreen-song-img '>
-              <img src={obj.img_url} className="fullscreen-img"></img>
-
-              <button className='exitBtn' onClick={toggleFC}>x</button>
-
-              {obj.explicit ? (
-                <div className='explicit-containter'>
-                  <MdExplicit
-                    data-tooltip-id='my-tooltip'
-                    data-tooltip-content={
-                      'Explicit: This song includes prophane language'
-                    }
-                    className='explicitActions'
-                    data-tooltip-variant='light'
-                  />
-                  <Tooltip
-                    className='tooltip-style'
-                    place='bottom'
-                    id='my-tooltip'
-                    delayShow={100}
-                  />
-                </div>
-              ) : (
-                <p />
-              )}
-              {/* explicit-containter */}
-            </div>
-
-            <div className='fullscreen-song-txt-container-container '>
-              <div className='like-btn '>
-                <button onClick={toggleLiked}>
-                  {isLiked ? <FaHeart className='text-white' /> : <FaRegHeart />}
-                </button>
-              </div>
-              <div className='fullscreen-song-info-txt-container'>
-                <div className='fc-song-txt'>
-                  <a>{obj.title}</a>
-                </div>
-                <div className='fc-artist-txt'>
-                  <a>{obj.artist}</a>
-                </div>
-              </div>
-              <div className='like-btn'>
-                <button onClick={toggleLiked}>
-                  <AiOutlineShareAlt />
-                </button>
-              </div>
-            </div>
-
-            <div className='fullscreen-control-container'>
-              <button className='fullscreen-mediabtn1'>
-                <BsSkipStart />
-              </button>
-              <button className='fullscreen-playbtnstyle' onClick={togglePlayPause}>
-                {isPlaying ? <BsPause /> : <BsPlay className='FullscreenBsPlayStyleLg' />}
-              </button>
-              <button className='fullscreen-mediabtn1'>
-                <BsSkipEnd />
-              </button>
-            </div>
-
-
-          </div>
-          {/* Queue */}
-          <div className="brihgleggmoie">
-            <h6 className='queueHeader'>Song Queue:</h6>
-            {
-              queue && queue.map((item, index) => {
-                return (
-                  <CardSong
-                    key={index}
-                    {...item}
-                  />
-                )
-              })}
-          </div>
-          <div className='volumeContainter'>
-            <button onClick={toggleMute}>
-              {isMuted ? <BiVolumeFull /> : <BiVolumeMute />}
-            </button>
-            <input
-              type='range'
-              ref={volumeRef}
-              defaultValue='50'
-              onChange={changeVolumeLevel}
-              min='0'
-              max='100'
-              step='5'
-            ></input>
-          </div>
-        </div>
-      </div>
-
-      {/* Regular Player */}
-      <div className={isFullscreen === false ? 'player-container musicbar' : "hidden"}>
-           
-        <div className='musicbar-wrap bg-trv-sm-Play-bg' >
-          {/* This style is in the fullscreen css file - idk there was a bug <3 */}
-        <button className='fcBtn' onClick={toggleFC}></button>  
-          {/* Progress Bar */}
-          <div className='progressbarContainer' onMouseDown={toggleMute} onMouseUp={toggleMute} >
-            
-            <input className='progressBar' type="range" ref={progressBar} defaultValue="0 " 
-            onMouseDown={togglePlayPause} onMouseUp={togglePlayPause} 
-            onChange={changeRange} />
-
-          </div> 
-               
-          <div className='player-info-container ' >
-
-            {/*  */}
-            <div className='like-btn '>
-              <button onClick={toggleLiked}>{isLiked ? <FaHeart className='text-white' /> : <FaRegHeart />}</button>
-            </div>
-
-            <div className='song-img '>
-              <img src={obj.img_url} onClick={toggleFC}></img>
-              {obj.explicit ? 
-
-                <div className="explicit-containter">
-                  <MdExplicit 
-                      data-tooltip-id="my-tooltip" data-tooltip-content={"Explicit: This song includes prophane language"} 
-                      className='explicitActions' data-tooltip-variant='light'/>
-                  <Tooltip className='tooltip-style' 
-                          place='bottom'  id="my-tooltip"
-                          delayShow={100}
-                          />     
-                </div> : <p />}{/* explicit-containter */}
-            </div>
-            
-            <div className='song-txt-container-container '>
-              <div className='song-info-txt-container' onClick={toggleFC}>
-                <div className='song-txt'><a>{obj.title}</a></div>
-                <div className='artist-txt'
+          {/* Full Screen */}
+          <div
+            className={isFullscreen === true ? "fullscreenMusicBar" : "hidden"}
+          >
+            <div className="fullsc-musicbar-wrap bg-trv-sm-Play-bg">
+              {/* Attempting to change on scroll */}
+              <div
+                id="fcplayerbox"
+                className="fullscreen-player-info-container "
+              >
+                {/* Progress Bar */}
+                <div
+                  className="fullscreen-progressbarContainer"
+                  onMouseDown={toggleMute}
+                  onMouseUp={toggleMute}
                 >
-                  <a
-                  onClick={redirectArtist} id="artistTextLink"
-                  >{obj.artist}</a></div>
+                  <input
+                    className="fullscreen-progressBar"
+                    type="range"
+                    ref={FCprogressBar}
+                    defaultValue="0 "
+                    onMouseDown={togglePlayPause}
+                    onMouseUp={togglePlayPause}
+                    onChange={changeRange}
+                  />
+                </div>
+                {/*  */}
+
+                <div className="fullscreen-song-img ">
+                  <img src={obj.img_url} className="fullscreen-img"></img>
+
+                  <button className="exitBtn" onClick={toggleFC}>
+                    x
+                  </button>
+
+                  {obj.explicit ? (
+                    <div className="explicit-containter">
+                      <MdExplicit
+                        data-tooltip-id="my-tooltip"
+                        data-tooltip-content={
+                          "Explicit: This song includes prophane language"
+                        }
+                        className="explicitActions"
+                        data-tooltip-variant="light"
+                      />
+                      <Tooltip
+                        className="tooltip-style"
+                        place="bottom"
+                        id="my-tooltip"
+                        delayShow={100}
+                      />
+                    </div>
+                  ) : (
+                    <p />
+                  )}
+                  {/* explicit-containter */}
+                </div>
+
+                <div className="fullscreen-song-txt-container-container ">
+                  <div className="like-btn ">
+                    <button onClick={toggleLiked}>
+                      {isLiked ? (
+                        <FaHeart className="text-white" />
+                      ) : (
+                        <FaRegHeart />
+                      )}
+                    </button>
+                  </div>
+                  <div className="fullscreen-song-info-txt-container">
+                    <div className="fc-song-txt">
+                      <a>{obj.title}</a>
+                    </div>
+                    <div className="fc-artist-txt">
+                      <a>{obj.artist}</a>
+                    </div>
+                  </div>
+                  <div className="like-btn">
+                    <button onClick={toggleLiked}>
+                      <AiOutlineShareAlt />
+                    </button>
+                  </div>
+                </div>
+
+                <div className="fullscreen-control-container">
+                  <button className="fullscreen-mediabtn1">
+                    <BsSkipStart />
+                  </button>
+                  <button
+                    className="fullscreen-playbtnstyle"
+                    onClick={togglePlayPause}
+                  >
+                    {isPlaying ? (
+                      <BsPause />
+                    ) : (
+                      <BsPlay className="FullscreenBsPlayStyleLg" />
+                    )}
+                  </button>
+                  <button className="fullscreen-mediabtn1">
+                    <BsSkipEnd />
+                  </button>
+                </div>
               </div>
-                  
-            </div>
-            
-            <div className='control-container'>
-              <button><BsSkipStart /></button>
-              <button className='playbtnstyle' onClick={togglePlayPause}>
-                {isPlaying ? <BsPause /> : <BsPlay className='BsPlayStyleLg'/>}
-              </button>
-              <button><BsSkipEnd /></button>
-              
-            </div>
-            <div className='fillerDivPlayer' >
+              {/* Queue */}
+              <div className="brihgleggmoie">
+                <h6 className="queueHeader">Song Queue:</h6>
+                {queue &&
+                  queue.map((item, index) => {
+                    return <CardSong key={index} {...item} />;
+                  })}
+              </div>
+              <div className="volumeContainter">
+                <button onClick={toggleMute}>
+                  {isMuted ? <BiVolumeFull /> : <BiVolumeMute />}
+                </button>
+                <input
+                  type="range"
+                  ref={volumeRef}
+                  defaultValue="50"
+                  onChange={changeVolumeLevel}
+                  min="0"
+                  max="100"
+                  step="5"
+                ></input>
+              </div>
             </div>
           </div>
 
-          
-
-          <div className='volumeContainter'>
-                <button onClick={toggleMute}>
-                {isMuted ? <BiVolumeFull /> : <BiVolumeMute />}
-                </button>
-                <input type="range" ref={volumeRef} defaultValue="50" onChange={changeVolumeLevel} min="0" max="100" step="5" ></input>
+          {/* Regular Player */}
+          <div
+            className={
+              isFullscreen === false ? "player-container musicbar" : "hidden"
+            }
+          >
+            <div className="musicbar-wrap bg-trv-sm-Play-bg">
+              {/* This style is in the fullscreen css file - idk there was a bug <3 */}
+              <button className="fcBtn" onClick={toggleFC}></button>
+              {/* Progress Bar */}
+              <div
+                className="progressbarContainer"
+                onMouseDown={toggleMute}
+                onMouseUp={toggleMute}
+              >
+                <input
+                  className="progressBar"
+                  type="range"
+                  ref={progressBar}
+                  defaultValue="0 "
+                  onMouseDown={togglePlayPause}
+                  onMouseUp={togglePlayPause}
+                  onChange={changeRange}
+                />
               </div>
-          {/* Song Image 
+
+              <div className="player-info-container ">
+                {/*  */}
+                <div className="like-btn ">
+                  <button onClick={toggleLiked}>
+                    {isLiked ? (
+                      <FaHeart className="text-white" />
+                    ) : (
+                      <FaRegHeart />
+                    )}
+                  </button>
+                </div>
+
+                <div className="song-img ">
+                  <img src={obj.img_url} onClick={toggleFC}></img>
+                  {obj.explicit ? (
+                    <div className="explicit-containter">
+                      <MdExplicit
+                        data-tooltip-id="my-tooltip"
+                        data-tooltip-content={
+                          "Explicit: This song includes prophane language"
+                        }
+                        className="explicitActions"
+                        data-tooltip-variant="light"
+                      />
+                      <Tooltip
+                        className="tooltip-style"
+                        place="bottom"
+                        id="my-tooltip"
+                        delayShow={100}
+                      />
+                    </div>
+                  ) : (
+                    <p />
+                  )}
+                  {/* explicit-containter */}
+                </div>
+
+                <div className="song-txt-container-container ">
+                  <div className="song-info-txt-container" onClick={toggleFC}>
+                    <div className="song-txt">
+                      <a>{obj.title}</a>
+                    </div>
+                    <div className="artist-txt">
+                      <a onClick={redirectArtist} id="artistTextLink">
+                        {obj.artist}
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="control-container">
+                  <button>
+                    <BsSkipStart />
+                  </button>
+                  <button className="playbtnstyle" onClick={togglePlayPause}>
+                    {isPlaying ? (
+                      <BsPause />
+                    ) : (
+                      <BsPlay className="BsPlayStyleLg" />
+                    )}
+                  </button>
+                  <button>
+                    <BsSkipEnd />
+                  </button>
+                </div>
+                <div className="fillerDivPlayer"></div>
+              </div>
+
+              <div className="volumeContainter">
+                <button onClick={toggleMute}>
+                  {isMuted ? <BiVolumeFull /> : <BiVolumeMute />}
+                </button>
+                <input
+                  type="range"
+                  ref={volumeRef}
+                  defaultValue="50"
+                  onChange={changeVolumeLevel}
+                  min="0"
+                  max="100"
+                  step="5"
+                ></input>
+              </div>
+              {/* Song Image 
           <div className='hidden'>
             <img src="http://localhost:3000/cover.jpg"></img>
           </div> */}
 
-          {/* Song/Artist Name 
+              {/* Song/Artist Name 
           <div className='hidden'>
             <div><p>{obj.title}</p></div>
             <div className='hidden'>{obj.explicit ? <MdExplicit /> : <p />}</div>
             <div><p>{obj.artist}</p></div>
           </div> */}
 
-
-
-          {/* Media Controls 
+              {/* Media Controls 
           <div className=' hidden grid grid-flow-col'>
             <button><CgArrowLongLeftR /></button>
             <button onClick={togglePlayPause}>
@@ -400,41 +461,39 @@ const MusicBar = () => {
             <button><CgArrowLongRightR /></button>
           </div> */}
 
-          {/* Media Time 
+              {/* Media Time 
           <div className='hidden'>
             <div> {calculateTime(currentTime)} </div>
             <div>{(duration && !isNaN(duration)) && calculateTime(duration)}</div>
           </div> */}
 
-          {/* Like Btn 
+              {/* Like Btn 
           <button className='hidden' onClick={toggleLiked}>{isLiked ? <FaHeart /> : <FaRegHeart />}</button>
           */}
-          {/* Extra Buttons 
+              {/* Extra Buttons 
           <div className='hidden phone_md:hidden' >
 
             <button ><FaShareSquare /></button>
             <button ><MdOutlineQueueMusic /></button>
           </div>
           */}
-          {/* Mute Btn
+              {/* Mute Btn
           <div className='hidden'>
             <button onClick={toggleMute}>
               {isMuted ? <BiVolumeFull /> : <BiVolumeMute />}
             </button>
           </div>
           */}
-          {/* Vol*/} 
-          {/* <div className='hidden'>
+              {/* Vol*/}
+              {/* <div className='hidden'>
             <input type="range" ref={volumeRef} defaultValue="50" onChange={changeVolumeLevel}></input>
           </div> */}
-          
-
-
-        </div>
-      </div>
+            </div>
+          </div>
+        </>
+      }
     </>
+  );
+};
 
-  )
-}
-
-export default MusicBar
+export default MusicBar;

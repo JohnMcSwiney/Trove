@@ -31,7 +31,7 @@ function App() {
   const user = localStorage.getItem("user");
 
   const isLoginId = user ? JSON.parse(user).id : "";
-  
+
   return (
     <BrowserRouter>
       <div className=" text-gray-500 font-body">
@@ -69,8 +69,8 @@ function App() {
             <Route path="/createplaylist" element={<CreatePlaylist />}></Route>
           </Routes>
         </div>
-        
-        {/* <MusicBar /> */}
+
+        <MusicBar />
       </div>
     </BrowserRouter>
   );
