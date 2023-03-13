@@ -11,6 +11,7 @@ export const useUploadSong = () => {
   const uploadMusic = async (
     title,
     artist,
+    ep,
     album,
     genre,
     songFile,
@@ -19,7 +20,11 @@ export const useUploadSong = () => {
     releaseYear,
     featuredArtists
   ) => {
+
     const storageRef = storage.ref();
+
+    let imgIncrement = 0;
+    console.log("global increment var: " + imgIncrement);
 
     const uploadSongToFirebase = async (songFile) => {
       setIsUploading(true);
@@ -69,8 +74,13 @@ export const useUploadSong = () => {
       });
     };
 
-    const uploadImageToFirebase = async () => {
-      const imageRef = storageRef.child(`images/${imageFile.name}`);
+    const uploadImageToFirebase = async (imgIncrement) => {
+
+      // console.log("increment before img: " + imgIncrement);
+
+      const imageRef = storageRef.child(`images/${imgIncrement.toString()}`);
+
+      // console.log("increment after img: " + imgIncrement);
 
       const imageUploadTask = imageRef.put(imageFile);
 
@@ -109,6 +119,7 @@ export const useUploadSong = () => {
         );
       });
     };
+
 
     const createSongObject = async (title, songUrl, imgUrl) => {
       // const endpoint = "http://localhost:6280/api/songs/"
@@ -185,29 +196,74 @@ export const useUploadSong = () => {
       console.log("songs created!");
     };
 
+    const createEPObject = async (imgUrl) => {
+      let songUrl = "";
+
+      console.log("before fetch");
+      const res = await fetch("api/eps/", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify({
+          epName: ep,
+          epArt: imgUrl,
+          artist,
+          featuredArtists,
+          releaseType,
+          releaseYear,
+          songList: [],
+        }),
+      });
+
+      console.log("after fetch: " + res);
+
+      const data = await res.json();
+      console.log("EP Data: " + data);
+
+      if (!data.ok) {
+        setError(data.error);
+      }
+
+      for (const file of songFile) {
+        songUrl = await uploadSongToFirebase(file);
+
+        console.log("for loop song url: " + songUrl);
+
+        await createSongObject(title, songUrl, imgUrl);
+      }
+
+      console.log("songs created!");
+    };
+
+
     switch (releaseType) {
       case "album":
         try {
-          const imgUrl = await uploadImageToFirebase();
 
-          // let imgUrl = "";
+          let imgUrl = "";
 
-          // if (!imageFile || imageFile == null) {
+          let data = "";
 
-          //   console.log("no image selected");
+          if (!imageFile || imageFile == null) {
 
-          //   imgUrl = process.env.DEFAULT_COVER;
+            console.log("no image selected");
 
-          //   await createAlbumObject(imgUrl);
-          // }
+            imgUrl = process.env.DEFAULT_COVER;
 
-          // else {
+            data = await createAlbumObject(imgUrl);
+          }
 
-          //   imgUrl = await uploadImageToFirebase();
-          // }
+          else {
 
-          const data = await createAlbumObject(imgUrl);
+            imgUrl = await uploadImageToFirebase(imgIncrement);
+            imgIncrement++;
 
+            data = await createAlbumObject(imgUrl);
+
+          }
           console.log("End Response Data: " + data);
 
           setIsUploading(false);
@@ -220,31 +276,68 @@ export const useUploadSong = () => {
         }
         break;
       case "ep":
+
+      try {
+        //const imgUrl = await uploadImageToFirebase();
+
+        let imgUrl = "";
+
+        let data = "";
+
+        if (!imageFile || imageFile == null) {
+
+          console.log("no image selected");
+
+          imgUrl = process.env.DEFAULT_COVER;
+
+          data = await createEPObject(imgUrl);
+        }
+
+        else {
+
+          imgUrl = await uploadImageToFirebase(imgIncrement);
+          ++imgIncrement;
+
+          data = await createEPObject(imgUrl);
+
+        }
+        console.log("End Response Data: " + data);
+
+        setIsUploading(false);
+        setUploadProgress(0);
+      } catch (err) {
+        console.log(err);
+
+        setIsUploading(false);
+        setUploadProgress(0);
+      }
         break;
       case "single":
         try {
+
+          let imgUrl = "";
+
+          let data = "";
+
           const songUrl = await uploadSongToFirebase(songFile);
 
-          const imgUrl = await uploadImageToFirebase();
+          if (!imageFile || imageFile == null) {
 
-          // let imgUrl = "";
+            console.log("no image selected");
 
-          // if (!imageFile || imageFile == null) {
+            imgUrl = process.env.DEFAULT_COVER;
 
-          //   console.log("no image selected");
+            data = await createSongObject(title, songUrl, imgUrl);
+          }
 
-          //   imgUrl = process.env.DEFAULT_COVER;
+          else {
 
-          //   await createSongObject(title, songUrl, imgUrl);
-          // }
+            imgUrl = await uploadImageToFirebase(imgIncrement);
+            imgIncrement++;
 
-          // else {
+            data = await createSongObject(title, songUrl, imgUrl);
 
-          //   imgUrl = await uploadImageToFirebase();
-          // }
-
-          const data = await createSongObject(title, songUrl, imgUrl);
-
+          }
           console.log("End Response Data: " + data);
 
           setIsUploading(false);

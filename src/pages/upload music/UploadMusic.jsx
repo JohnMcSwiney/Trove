@@ -167,6 +167,7 @@ export default function UploadMusic(props) {
       await uploadMusic(
         title,
         artist,
+        ep,
         album,
         genre,
         songFile,
