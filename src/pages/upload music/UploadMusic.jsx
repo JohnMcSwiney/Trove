@@ -64,6 +64,7 @@ export default function UploadMusic(props) {
 
   const [title, setTitle] = useState("");
   const [album, setAlbum] = useState(null);
+  const [ep, setEP] = useState(null);
   const [genre, setGenre] = useState("");
   const [songFile, setSongFile] = useState([]);
   const [imageFile, setImageFile] = useState();
@@ -73,48 +74,32 @@ export default function UploadMusic(props) {
   const [featuredArtists, setFeaturedArtists] = useState([]);
 
   // Handle State Changes
-  const handleTitle = (e) => {
+  const handleTitle = (titleArray) => {
 
     // const { value, name } = e.target.value;
 
-    console.log("event target: " + e.target.value);
+    console.log("array: " + titleArray);
 
-    // for (const songTitle in e.target.value) {
-    //   console.log("inside for loop: " + songTitle);
-    //   titleArray.push(songTitle.toString());
-    //   console.log("titleArray: " + titleArray);
+    //let titleArray = [];
 
+    setTitle(titleArray);
+
+
+    //check to see if the input has switched to the next song.
+    //push current title into the titleArray
+
+    // for (let i = 0; i < titleArray.length; i++) {
+    //   setTitle(titleArray[i]);
     // }
-
-    // if (releaseType === "single") {
-    //   setTitle(e.target.value);
-    // }
-    // else {
-    //   console.log("event target: " + e.target.value);
-
-    //   const value = e.target.value;
-
-    //   setTitle({
-    //     ...title,
-    //     [e.target.value]: value
-    //   })
-
-    //   setTitle({title: e.target.value});
-
-    //   let titleArray = [e.target.value,];
-
-    //   if (title.onChange) {
-    //     titleArray.push(e.target.value);
-    //   }
-
-    //   for (const songTitle in e.target.value) {
-    //     titleArray.push(songTitle);
-    //   }
-    //   console.log("titleArray: " + titleArray);
-    // }
+    // setTitle(e.target.value);
   }
+
   const handleAlbumName = (e) => {
     setAlbum(e.target.value);
+  }
+
+  const handleEPName = (e) => {
+    setEP(e.target.value);
   }
 
   const handleGenre = (e) => {
@@ -261,6 +246,7 @@ export default function UploadMusic(props) {
                     handleSubmit={handleSubmit}
                     handleTitle={handleTitle}
                     handleAlbumName={handleAlbumName}
+                    handleEPName={handleEPName}
                     handleGenre={handleGenre}
                     handleSongFileChange={handleSongFileChange}
                     handleImageFileChange={handleImageFileChange}
@@ -271,6 +257,7 @@ export default function UploadMusic(props) {
                     getArtistAPI={getArtistAPI}
                     pageName={pageName}
                     album={album}
+                    ep={ep}
                     genre={genre}
                     title={title}
                     artist={artist}
@@ -299,6 +286,7 @@ export default function UploadMusic(props) {
                     songFile={songFile}
                     title={title}
                     album={album}
+                    ep={ep}
                     releaseType={releaseType}
                   />
                 );

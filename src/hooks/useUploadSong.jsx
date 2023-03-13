@@ -135,9 +135,9 @@ export const useUploadSong = () => {
 
       const data = await res.json();
 
-      console.log("Create Song Object: " + res.title);
+      console.log("Create Song Object: " + res);
 
-      console.log("Song title: ");
+      console.log("Song title: " + data.title);
 
       if (!res.ok) {
         setError(data.error);
