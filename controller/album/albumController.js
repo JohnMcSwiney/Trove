@@ -36,8 +36,8 @@ const createAlbum = async (req, res) => {
       throw new Error("Artist not found");
     }
 
-    if (!req.body.featuredArtists || featuredArtists == null) {
-      
+    if (!req.body.featuredArtists || req.body.featuredArtists == null) {
+
       console.log("inside album method");
       const album = new Album({
         ...req.body,
