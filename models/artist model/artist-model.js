@@ -50,6 +50,14 @@ const artistSchema = mongoose.Schema({
     type: String,
   },
 
+  epList: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "EP",
+      default: null,
+    },
+  ],
+
   songList: [
     {
       type: mongoose.Schema.Types.ObjectId,
