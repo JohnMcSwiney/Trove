@@ -13,7 +13,6 @@ const createSong = async (req, res) => {
     // artist id check
     const artist = await Artist.findOne({ email: email });
 
-
     const artistId = artist._id;
 
     if (!artist) {
@@ -21,11 +20,9 @@ const createSong = async (req, res) => {
     }
 
     if (req.body.releaseType === "single") {
-
       console.log(req.body.releaseType);
 
       if (req.body.featuredArtists == null || !req.body.featuredArtists) {
-
         console.log(req.body.featuredArtist);
 
         const song = new Song({
@@ -38,15 +35,11 @@ const createSong = async (req, res) => {
         await song.save();
         await artist.save();
         res.status(201).json(song);
-      } 
-
-      else {
-
+      } else {
         console.log("featured artists: " + req.body.featuredArtists);
 
         const featuredArtists = await Promise.all(
           req.body.featuredArtists.map(async (name) => {
-            
             const featuredArtist = await Artist.findOne({ artistName: name });
 
             if (!featuredArtist) {
