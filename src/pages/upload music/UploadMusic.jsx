@@ -74,24 +74,9 @@ export default function UploadMusic(props) {
   const [featuredArtists, setFeaturedArtists] = useState([]);
 
   // Handle State Changes
-  const handleTitle = (titleArray) => {
+  const handleTitle = (e) => {
 
-    // const { value, name } = e.target.value;
-
-    console.log("array: " + titleArray);
-
-    //let titleArray = [];
-
-    setTitle(titleArray);
-
-
-    //check to see if the input has switched to the next song.
-    //push current title into the titleArray
-
-    // for (let i = 0; i < titleArray.length; i++) {
-    //   setTitle(titleArray[i]);
-    // }
-    // setTitle(e.target.value);
+    setTitle(e.target.value);
   }
 
   const handleAlbumName = (e) => {
@@ -111,10 +96,27 @@ export default function UploadMusic(props) {
 
     console.log("relerwerwsdfdsfds: " + releaseType);
 
-    if (releaseType === "single") {
-      setSongFile(e.target.files[0]);
-    } else {
-      setSongFile(Array.from(e.target.files));
+    const MAX_SONGS = 5;
+
+    switch (releaseType) {
+      case "album":
+        setSongFile(Array.from(e.target.files));
+        break;
+
+      case "ep":
+
+        if (Array.from(e.target.files).length > MAX_SONGS) {
+          alert("Cannot upload more than 5 songs for EP!");
+          e.preventDefault();
+        }
+        else {
+          setSongFile(Array.from(e.target.files));
+        }
+        break;
+      case "single":
+        setSongFile(e.target.files[0]);
+      default:
+        break;
     }
   };
 

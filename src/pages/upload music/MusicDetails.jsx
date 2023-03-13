@@ -109,6 +109,7 @@ export default function MusicDetails(props) {
                       onChange={props.handleEPName}
                     />
                   </label>
+                  <h4>Max song limit for EP is 5 songs.</h4>
                 </td>
               </tr>
             )}
@@ -205,7 +206,6 @@ export default function MusicDetails(props) {
       </div>
       {releaseType == "single" ? (
         <>
-
           <div className="uploadmusic--song--info">
             <div className="upload--music--songfile--name">
               {props.songFile[props.i] && (

@@ -21,15 +21,11 @@ export default function AddSongs(props) {
             <div className="uploadmusic--addsongs--form">
                 <h2>ADD SONGS</h2>
                 <div className="uploadmusic--upload--songfile"><label className="uploadmusic--custom-song-upload">
-                    {releaseType === "album" &&(
-                        <input type="file" name="songFile" value="" accept="audio/*" className="uploadmusic--hide--file" multiple onChange={props.handleSongFileChange} />
-                    )}
-                    {releaseType === "ep" && (
-                        <input type="file" name="songFile" value="" accept="audio/*" className="uploadmusic--hide--file" max={5} multiple onChange={props.handleSongFileChange} />
-                    )}
-                    {releaseType === "single" && (
+                    {releaseType === "single" ? (
                         <input type="file" name="songFile" value="" accept="audio/*" className="uploadmusic--hide--file" onChange={props.handleSongFileChange} />
-                    )}
+                    ) :
+                    <input type="file" name="songFile" value="" accept="audio/*" className="uploadmusic--hide--file" multiple onChange={props.handleSongFileChange} />
+                    }
                     Upload Song
                     {/* <img src="../../assets/upload_icon.png" id="upload--icon" alt="upload_icon" /> */}
                 </label>

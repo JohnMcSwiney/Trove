@@ -3,24 +3,11 @@ import React, { useState } from "react"
 // Component for displaying individual song info
 export default function SongInfo(props) {
 
-     const [titles, setTitles] = useState([]);
-
     const handleRemoveSong = () => {
         props.setSongFile(props.songFile.filter((_, i) => i !== props.i));
         props.setToUploadSongs(props.toUploadSongs.filter((_, i) => i !== props.i));
     }
 
-    const handleTitles = (e) => {
-        const {value} = e.target;
-
-        const titleArray = [...titles];
-
-        titleArray[props.i] = value;
-
-        //setTitles(titleArray);
-        
-        props.handleTitle(titleArray);
-    }
 
     return (
         <div className="uploadmusic--song--info">
@@ -34,9 +21,9 @@ export default function SongInfo(props) {
                 )}
             </div>
             <div>
-                <input type="text" value={titles[props.i]} placeholder="Song Title" onChange={handleTitles}></input>
+                <input type="text" name="songName" placeholder="Song Title" onChange={props.handleTitle}></input>
+                <textarea value={props.featuredArtists} name="artistName" placeholder="Featured Artists" onChange={props.handleFeaturedArtists} />
                 {/* <br />
-                <textarea value={props.featuredArtists} name="artistName" placeholder="Featured Artists" onChange={props.handleFeaturedArtists}/> */}
                 {/* <h3>{props.title}</h3> */}
                 {/* {console.log("index: " + [props.i])}
                 {console.log("file: " + props.songFile[props.i])}
