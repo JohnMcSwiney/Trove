@@ -27,7 +27,13 @@ export const MusicProvider = ({ children }) => {
     playlists,
     updatePlaylists,
   };
+  // try{
+  //   console.log(currentSong.title);
+  // } catch {
 
+  // }
+  
+  
   return (
     <MusicContext.Provider value={contextValue}>
       {children}

@@ -1,10 +1,11 @@
-import React from "react";
+import  React, {createContext, useContext } from 'react';
 import Song from "../../components/song detail/Song";
+import { MusicContext } from '../../contexts/MusicContext'
 const Search = () => {
   const [songs, setSongs] = React.useState(null);
   const [albums, setAlbums] = React.useState(null);
   const [songData, setSongData] = React.useState(null);
-  const songAPI = React.useEffect(() => {
+ const songAPI = React.useEffect(() => {
     const fetchSongs = async () => {
       const response = await fetch("/api/songs/");
       const json = await response.json();
@@ -24,15 +25,21 @@ const Search = () => {
       if (response.ok) {
         setAlbums(json);
       }
+
     };
     fetchAlbums();
   }, []);
+
+
   return (
     <div className="search-page container">
-      <div className="songs">
+      <div className="songs" >
         {songs &&
           songs.map((data) => (
-            <Song key={data._id} song={data} setSongData={setSongData} />
+            <div >
+                <Song key={data._id} song={data} setSongData={setSongData} />
+            </div> 
+            
           ))}
       </div>
 

@@ -1,4 +1,6 @@
 import React from "react";
+import {createContext, useContext} from "react";
+
 import { NavLink } from "react-router-dom";
 import { MusicContext } from "../../contexts/MusicContext";
 import "./song.css";
@@ -6,27 +8,28 @@ import "./song.css";
 const Song = ({ song }) => {
   const { currentSong, updateCurrentSong, currentSongData } =
     React.useContext(MusicContext);
-  const audioRef = React.useRef(null);
+  // const [currentSongforPlayer, setCurrentSongforPlayer] = React.useState(null);
+  
 
   const handlePlaySong = () => {
     if (currentSong && currentSong._id === song._id) {
       updateCurrentSong(null);
+
     } else {
       updateCurrentSong(song);
-      currentSongData(song); // added songData to pass song's data
+      // currentSongData(song); // added songData to pass song's data
+
     }
   };
 
   React.useEffect(() => {
-    if (currentSong && currentSong._id === song._id) {
-      audioRef.current.play();
+    if (currentSong && currentSong._id === song._id) {  
     } else {
-      audioRef.current.pause();
-      audioRef.current.currentTime = 0;
     }
   }, [currentSong, song]);
 
   // Pass the callback to update the current song URL to the onClick handler
+  
   return (
     <div
       key={song._id}
@@ -41,7 +44,6 @@ const Song = ({ song }) => {
         {song.artist.artistName}
       </NavLink>
       <p>{song.genre}</p>
-      <audio src={song.songUrl} ref={audioRef}></audio>
     </div>
   );
 };
