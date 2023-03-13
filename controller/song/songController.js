@@ -228,7 +228,7 @@ const updateSong = async (req, res) => {
   }
 
   switch (req.body.releaseType) {
-    case "Album" || "EP":
+    case "album" || "ep":
       try {
         const artist = await Artist.findOne({ artistName: req.body.artist });
 
@@ -320,7 +320,7 @@ const updateSong = async (req, res) => {
       }
       break;
 
-    case "Single":
+    case "single":
       try {
         const artist = await Artist.findOne({ artistName: req.body.artist });
 
