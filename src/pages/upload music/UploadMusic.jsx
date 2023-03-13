@@ -74,37 +74,52 @@ export default function UploadMusic(props) {
 
   // Handle State Changes
   const handleTitle = (e) => {
+
     // const { value, name } = e.target.value;
-    // setTitle({ ...title});
 
-    if (releaseType === "single") {
-      setTitle(e.target.value);
-    }
-    else {
-      console.log("event target: " + e.target.value);
+    console.log("event target: " + e.target.value);
 
-      setTitle({title: e.target.value});
+    // for (const songTitle in e.target.value) {
+    //   console.log("inside for loop: " + songTitle);
+    //   titleArray.push(songTitle.toString());
+    //   console.log("titleArray: " + titleArray);
 
-      // let titleArray = [e.target.value,];
+    // }
 
-      // if (title.onChange) {
-      //   titleArray.push(e.target.value);
-      // }
+    // if (releaseType === "single") {
+    //   setTitle(e.target.value);
+    // }
+    // else {
+    //   console.log("event target: " + e.target.value);
 
-      // // for (const songTitle in e.target.value) {
-      // //   titleArray.push(songTitle);
-      // // }
-      // console.log("titleArray: " + titleArray);
-    }
-  };
+    //   const value = e.target.value;
 
+    //   setTitle({
+    //     ...title,
+    //     [e.target.value]: value
+    //   })
+
+    //   setTitle({title: e.target.value});
+
+    //   let titleArray = [e.target.value,];
+
+    //   if (title.onChange) {
+    //     titleArray.push(e.target.value);
+    //   }
+
+    //   for (const songTitle in e.target.value) {
+    //     titleArray.push(songTitle);
+    //   }
+    //   console.log("titleArray: " + titleArray);
+    // }
+  }
   const handleAlbumName = (e) => {
     setAlbum(e.target.value);
-  };
+  }
 
   const handleGenre = (e) => {
     setGenre(e.target.value);
-  };
+  }
 
   const handleSongFileChange = (e) => {
     //setSongFile(e.target.files[0]);
@@ -153,7 +168,7 @@ export default function UploadMusic(props) {
     const inputtedArtists = e.target.value;
 
     const artistArray = inputtedArtists.split("/[\s,]+/").filter((artist) => artist.length > 0);
-    
+
     setFeaturedArtists(artistArray);
   };
 

@@ -180,13 +180,9 @@ export const useUploadSong = () => {
 
         songUrl = await uploadSongToFirebase(file);
 
-        const songTitle = res.body.title;
-
         console.log("for loop song url: " + songUrl);
-
-        console.log("the song title: " + songTitle);
     
-        await createSongObject(songTitle, songUrl, imgUrl);
+        await createSongObject(title, songUrl, imgUrl);
 
       }
 
