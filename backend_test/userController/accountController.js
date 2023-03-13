@@ -1,11 +1,16 @@
 const User = require("../models/user model/user-model");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
+const Cookie = require("js-cookie");
+const crypto = require("crypto");
+const maskEmailsPhones = require("mask-email-phone");
 require("dotenv").config();
 
 const handleErrors = (err) => {
   console.log(err.message, err.code);
 };
+
+// hashing email
 
 const createToken = (_id) => {
   return jwt.sign({ _id: _id }, process.env.SECRET, { expiresIn: "1d" });
@@ -19,7 +24,7 @@ const loginUser = async (req, res) => {
     const verify = await User.findOne({ email: email });
 
     if (verify == null) {
-      return res.status(400).json({ err: "Email or password is not correct" });
+      return res.status(400).json({ err: "You haven't signed up" });
     }
     if (!verify.isVerified) {
       return res
@@ -30,15 +35,33 @@ const loginUser = async (req, res) => {
     const user = await User.login(email, password);
     //create a token
     const token = createToken(user._id);
-
-    res.status(200).json({
+    
+    const listener = {
       email,
       token,
       id: user._id,
       displayName: user.displayName,
       useImg: user.imageURL,
       dob: user.dob,
+    };
+    // Mask the email before sending it in the response
+    listener.email = maskEmailsPhones(listener.email);
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+      expires: new Date(Date.now() + 86400 * 1000), // Set the cookie to expire in 1 day
     });
+
+
+    res.cookie("user", listener, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+      expires: new Date(Date.now() + 86400 * 1000), // Set the cookie to expire in 1 day
+    });
+
+    res.status(200).json(listener);
   } catch (err) {
     res.status(400).json({ err: err.message });
   }
@@ -47,7 +70,7 @@ const loginUser = async (req, res) => {
 //sign up user
 
 const signupUser = async (req, res) => {
-  const { email, password, isAdmin, displayedName } = req.body;
+  const { email, password } = req.body;
 
   try {
     const user = await User.signup(email, password);
@@ -55,6 +78,34 @@ const signupUser = async (req, res) => {
     //create a token
     const token = createToken(user._id);
 
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+      expires: new Date(Date.now() + 86400 * 1000), // Set the cookie to expire in 1 day
+    });
+
+    const listener = {
+      email,
+      token,
+      id: user._id,
+      displayName: user.displayName,
+      useImg: user.imageURL,
+      dob: user.dob,
+    };
+
+    res.cookie("user", listener, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+      expires: new Date(Date.now() + 86400 * 1000), // Set the cookie to expire in 1 day
+    });
+
+    listener.email = maskEmailsPhones(listener.email);
+    //provide its provider
+    user.provider = "TroveMusic";
+    console.log(user.provider);
+    user.save();
     //send email
     const transporter = nodemailer.createTransport({
       service: "gmail",
@@ -85,12 +136,6 @@ const signupUser = async (req, res) => {
       }
     });
 
-    // res.status(200).json({
-    //   email,
-    //   id: user._id,
-    //   token,
-    //   message: "You have successfully sign up !",
-    // });
     res.status(200).json({
       email,
       token,
@@ -104,6 +149,11 @@ const signupUser = async (req, res) => {
   }
 };
 
+const logoutUser = (req, res) => {
+  res.clearCookie("token");
+  res.clearCookie("user");
+  res.status(200).json({ message: "Logged out successfully" });
+};
 const verifyUser = async (req, res) => {
   const id = req.params.id;
 
@@ -120,5 +170,6 @@ const verifyUser = async (req, res) => {
 module.exports = {
   loginUser,
   signupUser,
+  logoutUser,
   verifyUser,
 };

@@ -1,76 +1,92 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 
 const songSchema = new mongoose.Schema(
-    {
-        title: {
-            type: String,
-            required: [true, `Please provide song's name`],
-            maxlength: 75,
-        },
+  {
+    title: {
+      type: String,
+      required: [true, `Please provide song's name`],
+      maxlength: 75,
+    },
 
-        artist: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Artist',
-            required: true
-        },
+    artist: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Artist",
+      required: true,
+    },
 
-        genre: {
-            type: String,
-        },
+    genre: {
+      type: String,
+    },
 
-        featuredArtists: [
-            {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'Artist',
-                default: null
-            }
-        ],
+    featuredArtists: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Artist",
+        default: null,
+      },
+    ],
 
-        album: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Album',
-            default: null,
-        },
+    album: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Album",
+      default: null,
+    },
 
-        highlightStart: {
-            type: Number
-        },
+    // highlightStart: {
+    //     type: Number
+    // },
 
-        highlightStop: {
-            type: Number
-        },
+    // highlightStop: {
+    //     type: Number
+    // },
 
-        songUrl: {
-            type: String,
-            required: [true, `Please provide song`]
-        },
+    duration: {
+      type: Number,
+      //required: true,
+      minlength: 2,
+      maxlength: 4,
+    },
 
-        imgUrl: {
-            type: String,
-        },
+    beat: {
+      type: Number,
+      //required: true
+    },
 
-        releaseYear: {
-            type: Number
+    tempo: {
+      type: Number,
+      //required: true
+    },
 
-        },
-        //double check releaseType with album model, may conflict.
-        releaseType: {
-            type: String,
-            enum: ['Album', 'EP', 'Single']
-        },
+    songUrl: {
+      type: String,
+      required: [true, `Please provide song`],
+    },
 
-        isPublished: {
-            type: Boolean
-        },
+    imgUrl: {
+      type: String,
+    },
 
-        isLoved: [
-            {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'User'
-            }
-        ]
-    }, { timestamps: true }
+    releaseYear: {
+      type: Number,
+    },
+    //double check releaseType with album model, may conflict.
+    releaseType: {
+      type: String,
+      enum: ["album", "ep", "single"],
+    },
 
+    isPublished: {
+      type: Boolean,
+    },
+
+    isLoved: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
+  },
+  { timestamps: true }
 );
 
-module.exports = mongoose.model('Song', songSchema);
+module.exports = mongoose.model("Song", songSchema);

@@ -2,26 +2,36 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const passport = require("passport");
-const cookieSession = require("cookie-session");
-const cors = require("cors");
+
 //For admin
 const userRouter = require("./admin routes/user-route/user-route");
 const albumRouter = require("./admin routes/album-route/album-route");
 const artistRouter = require("./admin routes/artist-route/artist-route");
 const collectionRouter = require("./admin routes/collection-route/collection-route");
-const myTroveRouter = require("./admin routes/myTrove-route/myTrove-route");
 
 // const tastepRouter = require("./admin routes/tastep-route/tastep-route");
 const playlistRouter = require("./admin routes/playlist-route/playlist-route");
 const songRouter = require("./admin routes/song-route/song-route");
-
 //For User
 const userlogin = require("./user routes/user-login-route/user");
-// const passportSetup = require('./passport')
-const googleAuthRoute = require("./user routes/auth/auth");
-
+const session = require("express-session");
 
 const app = express();
+const cors = require("cors");
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    methods: ["GET", "PUT", "PATCH", "POST", "DELETE"],
+  })
+);
+
+app.use(
+  session({
+    secret: process.env.secret,
+    resave: true,
+    saveUninitialized: false,
+  })
+);
 mongoose.set("strictQuery", true);
 mongoose
   .connect(process.env.DB_URL, { useNewUrlParser: true })
@@ -31,32 +41,22 @@ mongoose
   .catch((error) => {
     console.error("Database connect failed, error: ", error);
   });
-
-  // CORS
-app.use(cors());
-
 //middle ware
 app.use(express.json());
 app.use((req, res, next) => {
-  // res.header('Access-Control-Allow-Origin', '*');
   console.log(req.path, req.method);
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
   next();
 });
 
-//loggin with google
+//facebook login
 
-app.use(
-  cookieSession({
-    name: "session",
-    keys: ["TroveMusic"],
-    maxAge: 24 * 60 * 60 * 100,
-  })
-);
-
-app.use(passport.initialize());
-app.use(passport.session());
-
-// app.use('/auth', googleAuthRoute)
+const facebookLogin = require("./user routes/facebook-route/facebook-auth");
+app.use("/auth/facebook", facebookLogin);
 
 //FOR USER
 app.use("/api/user", userlogin);
@@ -73,9 +73,6 @@ app.use("/api/artists", artistRouter);
 
 //collection
 app.use("/api/collections", collectionRouter);
-
-//taste profile
-app.use("/api/mytrove", myTroveRouter);
 
 // //playlist
 app.use("/api/playlists", playlistRouter);
