@@ -78,8 +78,22 @@ export const useUploadSong = () => {
 
       const imageRef = storageRef.child(`images/${imageCounter}`);
 
-      if (imageRef.name.match(imageCounter)) {
-        setImageCounter(imageCounter++);
+      for (const image of imageRef) {
+        if (image.name.match(imageCounter)) {
+          setImageCounter(imageCounter++);
+        }
+      }
+
+      // if (imageRef.name.match(imageCounter)) {
+      //   setImageCounter(imageCounter++);
+      // }
+
+      const imageExists = await imageRef.getMetadata()
+        .then(metadata => true)
+        .catch(err => false);
+
+      if (imageExists) {
+        setImageCounter(prevCounter => prevCounter + 1);
       }
 
       const imageUploadTask = imageRef.put(imageFile);
@@ -115,7 +129,8 @@ export const useUploadSong = () => {
             const imgUrl = await imageRef.getDownloadURL();
             resolve(imgUrl);
 
-            setImageCounter(imageCounter++);
+            //setImageCounter(imageCounter++);
+            setImageCounter(prevCounter => prevCounter + 1);
 
             console.log("after image: " + imageCounter);
 
@@ -124,7 +139,6 @@ export const useUploadSong = () => {
         );
       });
     };
-
 
     const createSongObject = async (title, songUrl, imgUrl) => {
       // const endpoint = "http://localhost:6280/api/songs/"
