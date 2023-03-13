@@ -29,10 +29,7 @@ import MyTrove from '../../pages/my trove/MyTrove';
 // import styles from '../audioplayer/AudioPlayer.module.css'
 
 
-// temporary so im not getting an error while im testing
-const likedIds = [];
-// same with this one
-const dislikedIds = [];
+
 
 const DiscoveryGame = () => {
   //state
@@ -42,6 +39,8 @@ const DiscoveryGame = () => {
   const [index, setIndex] = React.useState(0);
   const [accept, setAccept] = React.useState(0);
   const [deny, setDeny] = React.useState(0);
+
+
 
 
   const [volumeLevel, setVolumeLevel] = useState(0);
@@ -65,8 +64,19 @@ const DiscoveryGame = () => {
   const animationRef = useRef(); //reference to the animation
   const musicSlides = useRef();
   const volumeRef = useRef();
+  
+ /* 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const likes = { title, body, author };
 
+    fetch('http://localhost:8000/blogs/', {
+      method: 'POST',
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(blog)
+    })}
 
+  */
   useEffect(() => {
     const seconds = Math.floor(audioPlayer.current.duration);
     setDuration(seconds);
@@ -163,7 +173,8 @@ const DiscoveryGame = () => {
       if (state === slides.length - 1) return;
       setIndex((prevIndex) => (prevIndex + 1) % slides.length);
       setAccept(accept + 1);
-      dislikedIds.push(slides[state].id);
+      dislikedIds.push(slides[state].id, slides[state].songName, slides[state].author);
+      
       gotoNext();
       setState(state + 1);
 
@@ -173,7 +184,7 @@ const DiscoveryGame = () => {
       if (state === slides.length - 1) return;
       setIndex((prevIndex) => (prevIndex + 1) % slides.length);
       setDeny(deny + 1);
-      likedIds.push(slides[state].id);
+      likedIds.push(slides[state].id, slides[state].songName, slides[state].author );
       gotoNext();
       setState(state + 1);
     
@@ -276,7 +287,7 @@ const DiscoveryGame = () => {
           if (state === slides.length - 1) return;
           setIndex((prevIndex) => (prevIndex + 1) % slides.length);
           setDeny(deny + 1);
-          dislikedIds.push(slides[state].id);
+          dislikedIds.push(slides[state].id, slides[state].songName, slides[state].author);
           gotoNext();
           setState(state + 1);
           
@@ -290,7 +301,7 @@ const DiscoveryGame = () => {
           setIndex((prevIndex) => (prevIndex + 1) % slides.length);
           setAccept(accept + 1);
           console.log(slides[state].id);
-          likedIds.push(slides[state].id);
+          likedIds.push(slides[state].id, slides[state].songName, slides[state].author);
           gotoNext();
           setState(state + 1);
           
@@ -361,7 +372,4 @@ const DiscoveryGame = () => {
 
 }
 
-//the test it to just see if it actually shows up on the MyTrove page which it does im just trying to figure out how to actually send the likedIDS and dislikedIDS instead 
-export const Likeid = likedIds;
-export const Dislikeid = dislikedIds;
 export default DiscoveryGame;

@@ -1,3 +1,5 @@
+import {Likeid,} from '../components/discoverygame/DiscoveryGame';
+
 export function LikeData() {
 
     return [
