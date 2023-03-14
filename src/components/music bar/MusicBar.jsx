@@ -42,7 +42,7 @@ import queue from '../../data/albumsongs.json'
 import Trv_Chest from '../../assets/Trv_icons/Tvr_lib_icon.ico'
 
 const MusicBar = () => {
-  const [newSong, setNewSong] = useState(null);
+  const [newSong, setNewSong] = useState();
   // const isFullscreen = props.fcOptionIn;
   const [isFullscreen, setFullscreen] = useState(false)
   //context
@@ -83,28 +83,28 @@ const MusicBar = () => {
 
   //   }
   // };
-  const updateSong = () =>{
-    console.log("updateSong Method");
-    try{
-
-    } catch{
-      
-    }
+  // const updateSong = () =>{
+  //   console.log("updateSong Method");
+  //   try{
+  //     // setNewSong(currentSong);
+  //   } catch{
+  //     console.log("error thrown");
+  //   }
     
-  }
+  // }
 
-  try{
-    console.log("contextFile ID: " + currentSong._id);
+  // try{
+  //   console.log("contextFile ID: " + currentSong._id);
 
-    if (!newSong || newSong === null){
-      console.log("newSong is Null");
-      updateSong();
-    }else{
-      // console.log(newSong._id + " his ass not null c???!?!??!??!!!?!");
-    }
-  } catch{
-    console.log("newSongID: error ");
-  }
+  //   if (!newSong || newSong === null){
+  //     console.log("newSong is Null");
+  //     updateSong();
+  //   }else{
+  //     // console.log(newSong._id + " his ass not null c???!?!??!??!!!?!");
+  //   }
+  // } catch{
+  //   console.log("newSongID: error ");
+  // }
  
   
    
@@ -183,8 +183,8 @@ const MusicBar = () => {
 
   const changeRange = () => {
     audioPlayer.current.currentTime = progressBar.current.value
-    audioPlayer.current.currentTime = FCprogressBar.current.value
 
+    audioPlayer.current.currentTime = FCprogressBar.current.value
     changePlayerCurrentTime()
   }
 
@@ -228,7 +228,7 @@ const MusicBar = () => {
 
   const navigate = useNavigate()
   const redirectArtist = () => {
-    navigate(`./artist/${newSong.artistID}`)
+    navigate(`./artist/${currentSong.artist._id}`)
   }
 
   return (
@@ -237,10 +237,15 @@ const MusicBar = () => {
         <>
           <audio
             ref={audioPlayer}
-            src={newSong?.songUrl}
+            src={currentSong?.songUrl}
             preload='metadata'
             onChange={() => {
               changeRange()
+              animationRef.current = requestAnimationFrame(whilePlaying)
+            }}
+            onLoadedMetadata={() => {
+                setIsPlaying(true);
+              
               animationRef.current = requestAnimationFrame(whilePlaying)
             }}
           ></audio>
@@ -274,7 +279,7 @@ const MusicBar = () => {
                 {/*  */}
 
                 <div className='fullscreen-song-img '>
-                  <img src={newSong?.img_url} className='fullscreen-img'></img>
+                  <img src={currentSong?.imgUrl} className='fullscreen-img'></img>
 
                   <button className='exitBtn' onClick={toggleFC}>
                     x
@@ -315,10 +320,10 @@ const MusicBar = () => {
                   </div>
                   <div className='fullscreen-song-info-txt-container'>
                     <div className='fc-song-txt'>
-                      <a>{newSong?.title}</a>
+                      <a>{currentSong?.title}</a>
                     </div>
                     <div className='fc-artist-txt'>
-                      <a>{newSong?.artist}</a>
+                      <a>{currentSong?.artist.artistName}</a>
                     </div>
                   </div>
                   <div className='like-btn'>
@@ -411,7 +416,7 @@ const MusicBar = () => {
                 </div>
 
                 <div className='song-img '>
-                  {/* <img src={obj.img_url} onClick={toggleFC}></img> */}
+                  <img src={currentSong?.imgUrl} onClick={toggleFC}></img>
                   {/* {obj.explicit ? (
                     <div className="explicit-containter">
                       <MdExplicit
@@ -437,10 +442,10 @@ const MusicBar = () => {
 
                 <div className='song-txt-container-container '>
                   <div className='song-info-txt-container' onClick={toggleFC}>
-                    <div className='song-txt'>{/* <a>{obj.title}</a> */}</div>
+                    <div className='song-txt'><a>{currentSong?.title}</a></div>
                     <div className='artist-txt'>
                       <a onClick={redirectArtist} id='artistTextLink'>
-                        {newSong?.artist}
+                        {currentSong?.artist.artistName}
                       </a>
                     </div>
                   </div>
