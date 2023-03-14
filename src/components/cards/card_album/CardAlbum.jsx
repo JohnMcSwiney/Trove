@@ -8,7 +8,7 @@ function CardAlbum({ album }) {
   console.log("album", album);
   const navigate = useNavigate();
   const redirectAlbum = () => {
-    navigate("./AlbumPage/");
+    navigate("./albumpage/");
   };
   return (
     <ul className="bg1test" key={album?._id}>
