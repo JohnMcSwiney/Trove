@@ -95,6 +95,7 @@ const updateUserAccountTab = async (req, res) => {
     user.dob = dob;
 
     console.log(user.dob);
+    console.log(user.displayName);
     if (!displayName || displayName === null) {
       user.displayName = "My account";
     }
@@ -121,7 +122,6 @@ const updateUserPassword = async (req, res) => {
 
   const { password, newPassword } = req.body;
 
-
   try {
     const user = await User.findById(id);
 
@@ -147,8 +147,8 @@ const updateUserPassword = async (req, res) => {
         pass: process.env.GOOGLE_PASSWORD,
       },
       tls: {
-        rejectUnauthorized: false
-      }
+        rejectUnauthorized: false,
+      },
     });
 
     const mailOptions = {
@@ -183,7 +183,6 @@ const updateUserEmail = async (req, res) => {
 
   const { newEmail, password } = req.body;
 
-  
   try {
     const user = await User.findById(id);
 
@@ -205,8 +204,8 @@ const updateUserEmail = async (req, res) => {
         pass: process.env.GOOGLE_PASSWORD,
       },
       tls: {
-        rejectUnauthorized: false
-      }
+        rejectUnauthorized: false,
+      },
     });
 
     const mailOptions = {
@@ -219,7 +218,6 @@ const updateUserEmail = async (req, res) => {
           `,
     };
 
-
     transporter.sendMail(mailOptions, function (err, info) {
       if (err) {
         console.log(err);
@@ -227,7 +225,7 @@ const updateUserEmail = async (req, res) => {
         console.log("Email sent: " + info.response);
       }
     });
-  
+
     res.status(200).json({ message: "Email changed successfully" });
 
     // const transporter = nodemailer.createTransport({
