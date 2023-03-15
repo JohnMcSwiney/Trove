@@ -12,6 +12,9 @@ const playlistSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User"
     },
+    playlistCoverUrl: {
+      type: String,
+    },
     isPublished: {
       type: Boolean,
       default: false
