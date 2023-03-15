@@ -5,8 +5,45 @@ import './PlaylistPage.css';
 import albumsongs from "../data/albumsongs.json"
 import PlaylistSong from "./PlaylistSong";
 
+//fetching
+import { useParams } from "react-router-dom";
+
 // User's Top Genres
 export default function PlaylistPage(props) {
+    let { id } = useParams();
+
+    const [playlist, setPlaylist] = React.useState(null);
+    React.useEffect(() => {
+        const fetchPlaylist = async () => {
+          const playlistResponse = await fetch(`/api/playlists/${id}`, {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+          });
+          const playlistJson = await playlistResponse.json();
+          if (playlistResponse.ok) {
+            setPlaylist(playlistJson);
+          }
+        };
+        fetchPlaylist();
+      }, [id]);
+
+      const [playlistCreator, setPlaylistCreator] = React.useState(null);
+      React.useEffect(() => {
+        const findPlaylistCreator = async () => {
+          const response = await fetch(`/api/users/${playlist.playlistCreator}` );
+          const json = await response.json();
+    
+          if (!response.ok) {
+            console.log(json.error);
+          }
+    
+          if (response.ok) {
+            setPlaylistCreator(json);
+          }
+        };
+        findPlaylistCreator();
+      }, []);
+
 
     return (
         <section>
@@ -18,12 +55,12 @@ export default function PlaylistPage(props) {
                         <img src="../assets/reccover.jpg" alt="playlist"/>
                 </div>
                 <div className="playlist--stats--info">
-                        <h3>Playlist Name</h3>
+                        <h3>{playlist && playlist.playlistName}</h3>
                        <div className="playlist--release--info">
-                        <h5>2014</h5>
+                        {/* <h5>2014</h5> */}
                         <h6>PLAYLIST</h6>
                         </div>
-                        <h4>Creator Username</h4>
+                        <h4>{playlistCreator && playlistCreator.displayName}</h4>
                 </div>
             </div>
 

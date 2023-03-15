@@ -15,7 +15,7 @@ export default function AlbumPage() {
 
     const [album, setAlbum] = React.useState(null);
     React.useEffect(() => {
-        const fetchAlbums = async () => {
+        const fetchAlbum = async () => {
           const albumResponse = await fetch(`/api/albums/${id}`, {
             method: "GET",
             headers: { "Content-Type": "application/json" },
@@ -25,7 +25,7 @@ export default function AlbumPage() {
             setAlbum(albumJson);
           }
         };
-        fetchAlbums();
+        fetchAlbum();
       }, [id]);
 
       const [artist, setArtist] = React.useState(null);
