@@ -23,6 +23,8 @@ import $ from 'jquery';
 
 import MyTrove from '../../pages/my trove/MyTrove';
 
+import {LikeData} from '../../data/likeTemp';
+
 // import "~slick-carousel/slick/slick.css"; 
 // import "~slick-carousel/slick/slick-theme.css";
 
@@ -49,6 +51,8 @@ const DiscoveryGame = () => {
   const [duration, setDuration] = useState(0);
 
   const [currentTime, setCurrentTime] = useState(0);
+  
+  const [likedsongs, setLikedsongs] = useState([]);
 
   const [isMuted, setIsMuted] = useState(true);
   //isMuted is totally screwed... but it works. So i'm just gonna leave it as it is <3 sorry if it's confusing (I don't actually know what's happening lol)
@@ -65,18 +69,20 @@ const DiscoveryGame = () => {
   const musicSlides = useRef();
   const volumeRef = useRef();
   
- /* 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const likes = { title, body, author };
+ 
+  //for likes
+const addlikedSongs = () => {
+  const alikedsong =  [
+    
+      { id: slides[state].id, songName: slides[state].songName, author: slides[state].author }
+  ];
+  setLikedsongs(alikedsong);
+  console.log(alikedsong);
+}
 
-    fetch('http://localhost:8000/blogs/', {
-      method: 'POST',
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(blog)
-    })}
+const likeData = LikeData(likedsongs);
 
-  */
+  
   useEffect(() => {
     const seconds = Math.floor(audioPlayer.current.duration);
     setDuration(seconds);
@@ -187,6 +193,7 @@ const DiscoveryGame = () => {
       likedIds.push(slides[state].id, slides[state].songName, slides[state].author );
       gotoNext();
       setState(state + 1);
+      addlikedSongs();
     
     },
   });
@@ -212,6 +219,9 @@ const DiscoveryGame = () => {
   const gotoNext = () => {
     musicSlides.current.slickNext();
   }
+
+
+
   return (
     <div className='Discovery-Container'>
       <div
@@ -304,7 +314,7 @@ const DiscoveryGame = () => {
           likedIds.push(slides[state].id, slides[state].songName, slides[state].author);
           gotoNext();
           setState(state + 1);
-          
+          addlikedSongs();
         }} className='Discovery-Like'><BsCheckLg /></button>
         
       </div>
@@ -359,6 +369,8 @@ const DiscoveryGame = () => {
         
         <div>
               <button onClick={() => {console.log("Liked ids:" + likedIds + " | " + "Disliked ids:" + dislikedIds)}} > View Likes & Dislikes</button>
+
+              
               
         </div>
 
