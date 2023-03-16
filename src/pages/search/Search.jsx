@@ -50,6 +50,7 @@ const Search = () => {
             className="form-control"
             onChange={(e) => setSearch(e.target.value)}
             value={search}
+            placeholder="Search for artists, albums and songs"
           />
           <br></br>
         </form>
