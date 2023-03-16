@@ -14,6 +14,7 @@ export const MusicProvider = ({ children }) => {
   const updateCurrentSong = (song) => {
     setCurrentSong(song);
     setCurrentSongData(song);
+    console.log(song)
   };
 
   const updatePlaylists = (newPlaylists) => {

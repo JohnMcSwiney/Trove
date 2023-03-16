@@ -12,21 +12,33 @@ const Song = ({ song }) => {
 
   const handlePlaySong = () => {
     if (currentSong && currentSong._id === song._id) {
-      updateCurrentSong(song);
-      console.log(song);
+      return;
     } else {
       updateCurrentSong(song);
-      // currentSongData(song); // added songData to pass song's data
+      fetchSongView()
     }
   };
 
   // Pass the callback to update the current song URL to the onClick handler
 
+    const fetchSongView = async()=> {
+      const response = await fetch(`/api/songs/update-view/${song._id}`, {
+        method: "PATCH",
+        // body: `${song._id}`
+      });
+      const json = await response.json()
+    }
+  
+  
   return (
     <div
       key={song._id}
       className="song-info-div container"
-      onClick={() => handlePlaySong(song.songUrl)}
+      onClick={() => {
+        handlePlaySong()
+        // song.songUrl
+        
+      }}
     >
       <div className="song-img-div">
         <img src={song.imgUrl} alt={song.title} />

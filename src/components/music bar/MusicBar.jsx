@@ -216,7 +216,11 @@ const MusicBar = () => {
 
   const navigate = useNavigate();
   const redirectArtist = () => {
-    navigate(`./artist/${currentSong.artist._id}`);
+
+    
+      navigate(`./artist/${currentSong.artist._id}`);
+    
+   
   };
 
   return (
