@@ -30,38 +30,14 @@ router.get("/:search", async (req, res) => {
     })
       .populate("artist")
       .exec();
-    if (search.length > 4) {
-      const artistUpdates = artists.map(async (artist) => {
-        await Artist.updateOne(
-          { _id: artist._id },
-          { $inc: { searchCount: 1 } }
-        );
-      });
+    
 
-      const albumUpdates = albums.map(async (album) => {
-        await Album.updateOne({ _id: album._id }, { $inc: { searchCount: 1 } });
-      });
-
-      const songUpdates = songs.map(async (song) => {
-        await Song.updateOne({ _id: song._id }, { $inc: { searchCount: 1 } });
-      });
-      await Promise.all([...artistUpdates, ...albumUpdates, ...songUpdates]);
-    }
-
-    // const topArtists = await Artist.find({})
-    //   .sort({ searchCount: -1 })
-    //   .limit(ARTIST_LIMIT)
-    //   .exec();
-
-    // const topSongs = await Song.find({})
-    //   .sort({ searchCount: -1 })
-    //   .limit(LIMIT)
-    //   .exec();
-    // , topArtists, topSongs
+    
 
     res.status(201).json({ artists, songs, albums });
   } catch {
     res.status(201).json();
   }
 });
+
 module.exports = router;

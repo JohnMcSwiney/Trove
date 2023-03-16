@@ -21,6 +21,9 @@ const getAlbum = async (req, res) => {
     return res.status(400).json({ err: "No such Album" });
   }
 
+  await Album.findOneAndUpdate({ _id: album._id }, { $inc: { searchCount: 1 } })
+  
+
   res.status(200).json(album);
 };
 

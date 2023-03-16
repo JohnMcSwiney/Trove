@@ -4,6 +4,7 @@ const Album = require("../../models/album model/album-model");
 const User = require("../../models/user model/user-model");
 
 const mongoose = require("mongoose");
+const { json } = require("express");
 
 const createSong = async (req, res) => {
   console.log("createSong", req.body);
@@ -211,12 +212,29 @@ const getSong = async (request, response) => {
   } else {
     console.log(song);
 
-    console.log("getOneSong method working");
-
+   
     response.status(200).json(song);
   }
 };
 
+const songViewed = async (req,res)=> {
+  const {id} = req.params;
+  console.log(id)
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ err: "No such song" });
+  }
+
+  
+  try {
+    const song = await Song.findById(id)
+   await Song.findOneAndUpdate({_id:song._id}, { $inc: { searchCount: 1 } })
+
+    res.status(201).json({message: "View +1"})
+  }catch{
+    res.status(200).json()
+  }
+}
 //WIP
 const updateSong = async (req, res) => {
   const { id } = req.params;
@@ -617,4 +635,5 @@ module.exports = {
   updateSong,
   likedSong,
   dislikeSong,
+  songViewed
 };

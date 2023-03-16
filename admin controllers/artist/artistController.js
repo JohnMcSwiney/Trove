@@ -30,6 +30,7 @@ const getAnArtist = async (req, res) => {
   if (!artist) {
     return res.status(404).json({ error: error.message });
   }
+  await Artist.findOneAndUpdate( { _id: artist._id },{ $inc: { searchCount: 1 } })
   res.status(200).json(artist);
 };
 
