@@ -12,7 +12,8 @@ const Song = ({ song }) => {
 
   const handlePlaySong = () => {
     if (currentSong && currentSong._id === song._id) {
-      updateCurrentSong(null);
+      updateCurrentSong(song);
+      console.log(song);
     } else {
       updateCurrentSong(song);
       // currentSongData(song); // added songData to pass song's data
@@ -31,7 +32,7 @@ const Song = ({ song }) => {
         <img src={song.imgUrl} alt={song.title} />
       </div>
       <span>{song.title}</span>
-      <NavLink to={`/artist/${song.artist._id}`} artist={song.artist._id}>
+      <NavLink to={`/artist/${song.artist._id}`}>
         {song.artist.artistName}
       </NavLink>
       <p>{song.genre}</p>

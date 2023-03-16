@@ -8,35 +8,13 @@ const Search = () => {
 
   const [search, setSearch] = React.useState("");
   const [searchResult, setSearchResult] = React.useState({});
-  const songAPI = React.useEffect(() => {
-    const fetchSongs = async () => {
-      const response = await fetch("/api/songs/");
-      const json = await response.json();
-
-      if (response.ok) {
-        setSongs(json);
-      }
-    };
-
-    fetchSongs();
-  }, []);
-
-  const albumAPI = React.useEffect(() => {
-    const fetchAlbums = async () => {
-      const response = await fetch("/api/albums");
-      const json = await response.json();
-      if (response.ok) {
-        setAlbums(json);
-      }
-    };
-    fetchAlbums();
-  }, []);
 
   const searchAPI = React.useEffect(() => {
     const fetchSearch = async () => {
       const response = await fetch(`/api/search/${search}`);
       const json = await response.json();
       setSearchResult(json);
+      console.log(json);
     };
     fetchSearch();
   }, [search]);
