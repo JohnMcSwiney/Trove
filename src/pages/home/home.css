@@ -2,7 +2,6 @@
     text-decoration: none;
 }
 
-
 .pad-t-5{
     padding-top: 5px;
 }
@@ -20,9 +19,24 @@
     }
 }
 @media screen and (min-width:800px) {
+    h4{
+        background-color: beige;
+        width: 100%;
+    }
+    .homeHeaderText{
+        font-size: 2vw;
+    }
     .test123456{
       background-color: crimson;
       margin-left: 2%;
+      padding-left: 5%;
+      padding-right: 5%;
+      margin: auto;
+      width: 90%;
+    }
+    .art-card-cont{
+        background-color: burlywood;
+        height: 200px;
     }
   }
 

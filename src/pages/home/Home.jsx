@@ -14,11 +14,11 @@ const Home = () => {
   }
 
   return (
-    <div className='container mar-t test123456'>
-      <main className='home-main row-span-1 md:col-span-2 relative home-height'>
+    // <div className=' '>
+      <main className='test123456'>
         <div>
-          <h3 className=''>Find Musical Treasures</h3>
-          <div
+          <h4 className='homeHeaderText'>Find Musical Treasures</h4>
+          <div 
             href={'/discoverygame'}
             className='my-3'
             onClick={redirectDiscovery}
@@ -27,17 +27,17 @@ const Home = () => {
           </div>
         </div>
 
-        <h4 className='mainHeadertxt'>Artists you love:</h4>
+        <h4 className=' homeHeaderText '>Artists you love:</h4>
         <div className='art-card-cont'>
           <CardArtist />
         </div>
 
-        <h4>Suggested Albums:</h4>
+        <h4 className='homeHeaderText'>Suggested Albums:</h4>
         <div className='grid grid-flow-col overflow-scroll '>
           <CardAlbum />
         </div>
       </main>
-    </div>
+    // </div> 
   )
 }
 
