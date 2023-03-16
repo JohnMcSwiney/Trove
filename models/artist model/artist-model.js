@@ -61,6 +61,11 @@ const artistSchema = mongoose.Schema({
   publishDate: {
     type: Date,
   },
+
+  searchCount: {
+    type: Number,
+    default: 0,
+  },
 });
 
 module.exports = mongoose.model("Artist", artistSchema);

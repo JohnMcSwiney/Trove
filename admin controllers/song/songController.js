@@ -201,10 +201,10 @@ const getSong = async (request, response) => {
     return res.status(404).json({ err: "No such song" });
   }
 
-  const song = await Song.findById(id).populate(
-    "featuredArtists",
-    "artistName"
-  );
+  const song = await Song.findById(id)
+    .populate("artist")
+    .populate("featuredArtists")
+    .populate("album");
 
   if (!song) {
     return response.status(404).json({ error: "Song not found" });
@@ -616,5 +616,5 @@ module.exports = {
   deleteSong,
   updateSong,
   likedSong,
-  dislikeSong
+  dislikeSong,
 };

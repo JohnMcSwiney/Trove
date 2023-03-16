@@ -62,8 +62,8 @@ app.use("/auth/facebook", facebookLogin);
 app.use("/api/user", userlogin);
 
 //For searching bar
-const searchRoute = require('./admin routes/search-route/search-route')
-app.use("/api/search/", searchRoute)
+const searchRoute = require("./admin routes/search-route/search-route");
+app.use("/api/search/", searchRoute);
 
 //FOR globals
 //user
