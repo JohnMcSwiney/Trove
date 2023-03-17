@@ -539,7 +539,7 @@ body {
   .createplaylist--info {
     /* display: flex; */
     position: fixed;
-    width: 100%;
+    width: 40%;
     /* margin-top: 2vh; */
 
     
@@ -579,7 +579,7 @@ body {
 
   #searchbar {
     width: 90%;
-    margin-left: 5vw;
+    margin-left: 3vw;
     height: 10vmin;
     padding-left: 5vw;
     border-radius: 5vmin;
@@ -606,6 +606,7 @@ body {
   .createplaylist--stats--info  {
     /* margin-top: 10vmin; */
     margin-left: 5vmin;
+    width: 40%;
   }
 
 
@@ -820,7 +821,7 @@ body {
  padding-right: 5vmin;
  padding-bottom: 5vmin;
  padding-top: 1vmin;
- float: right;
+ /* float: right; */
 }
 
 .createplaylist--createbtn {
@@ -834,7 +835,7 @@ body {
   align-items: center;
   appearance: none;
   background-image: linear-gradient(to left, #8650f4, #6f49e8, #5642dc, #393bd0, #0034c4);
-  border-radius: 8vmin;
+  border-radius: 3vmin;
   border-style: none;
   box-shadow: rgba(0, 0, 0, .2) 0 3px 5px -1px,rgba(0, 0, 0, .14) 0 6px 10px 0,rgba(0, 0, 0, .12) 0 1px 18px 0;
   box-sizing: border-box;
@@ -843,7 +844,7 @@ body {
   display: inline-flex;
   fill: currentcolor;
   /* font-family: "Google Sans",Roboto,Arial,sans-serif; */
-  font-size: 4vmin;
+  font-size: 3vmin;
   font-weight: bold;
   height: 5vmin;
   justify-content: center;
@@ -875,10 +876,10 @@ body {
 .createplaylist--modal {
   position: absolute;
   z-index: 300;
-  height: 75vh;
-  margin-top: 3vh;
-  width: 85%;
-  margin-left: 8vw;
+  height: 50vh;
+  margin-top: 5vh;
+  width: 50vw;
+  margin-left: 15vw;
   border-radius: 1vmin;
   background-color: #12164B;
   /* margin: auto; */
@@ -892,7 +893,7 @@ body {
 }
 
 .createplaylist--popupmask {
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.6);
   position: fixed;
   top: 0;
   right: 0;

@@ -27,7 +27,7 @@ export default function CreatePlaylist(props) {
     console.log(song.idno);
 
     if (songAction === "remove") {
-      const newList = playlistSongList.filter((item) => item.idno != song.idno);
+      const newList = playlistSongList.filter((item) => item.idno !== song.idno);
 
       setPlaylistSongList(newList);
     } else if (songAction === "add") {
@@ -35,7 +35,7 @@ export default function CreatePlaylist(props) {
     }
   }
 
-  const [modalIsOpen, setIsOpen] = React.useState(true);
+  const [modalIsOpen, setIsOpen] = React.useState(false);
 
   function togglePop() {
     setIsOpen((prevModalIsOpen) => !prevModalIsOpen);
@@ -60,6 +60,13 @@ export default function CreatePlaylist(props) {
         />
       ) : null}
       <div className="createplaylist--info">
+      <div className="createplaylist--createbtn">
+            <input
+              type="submit"
+              value="Create"
+              className="createplaylist--gradient--btn createplaylist--submit--btn"
+            />
+          </div>
         <div className="createplaylist--song--cover">
           <img src={previewCover} alt="playlist" />
           <label className="createplaylist--custom-file-upload">
@@ -80,22 +87,9 @@ export default function CreatePlaylist(props) {
           </label>
         </div>
         <div className="createplaylist--stats--info">
-          <div className="createplaylist--createbtn">
-            <input
-              type="submit"
-              value="Create"
-              className="createplaylist--gradient--btn createplaylist--submit--btn"
-            />
-          </div>
           <input type="text" id="playlisttitle" placeholder="Playlist Name" />
           <div className="createplaylist--release--info">
             {/* <h5>2014</h5> */}
-            <input
-              type="textarea"
-              id="playlistdesc"
-              placeholder="Add Description (Optional)"
-              name="playlist description"
-            />
             {/* <h6>PLAYLIST</h6> */}
           </div>
           {/* <h4>Creator Username</h4> */}
