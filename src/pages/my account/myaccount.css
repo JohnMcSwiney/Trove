@@ -196,4 +196,34 @@
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
   }
+  .userImg-border{
+    background: linear-gradient(to top, #8650F4, #0034C4);
+    border-radius: 500px !important;
+    margin: 5px;
+    padding: 1px;
+    box-sizing: border-box;
+    display: flex;
+    filter: none;
+    height:110px !important;
+    width: 110px !important;
+    overflow: hidden;
+    align-items: center;
+    justify-content: center;
+
+  }
+  .userimg_displayName{
+    display: flex;
+    align-items: center;
+    margin: auto;
+    gap: 10px;
+  }
+  .inputContainer{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .emailImpCont > .form-control{
+    background-color: transparent;
+    color: rgb(198, 198, 198);
+  }
 }
