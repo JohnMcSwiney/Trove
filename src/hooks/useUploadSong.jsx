@@ -7,7 +7,6 @@ export const useUploadSong = () => {
   const [isUploading, setIsUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const storage = firebase.storage();
-  let [imageCounter, setImageCounter] = useState(0);
 
   const uploadMusic = async (
     title,
@@ -74,27 +73,13 @@ export const useUploadSong = () => {
 
     const uploadImageToFirebase = async () => {
 
-      // console.log("before image: " + imageCounter);
+      let imageCounter = 0;
 
-      const imageRef = storageRef.child(`images/${imageFile.name}`);
+      while (await checkImageExists(imageCounter)) {
+        imageCounter++;
+      }
 
-      // for (const image of imageRef) {
-      //   if (image.name.match(imageCounter)) {
-      //     setImageCounter(imageCounter++);
-      //   }
-      // }
-
-      // if (imageRef.name.match(imageCounter)) {
-      //   setImageCounter(imageCounter++);
-      // }
-
-      // const imageExists = await imageRef.getMetadata()
-      //   .then(metadata => true)
-      //   .catch(err => false);
-
-      // if (imageExists) {
-      //   setImageCounter(prevCounter => prevCounter + 1);
-      // }
+      const imageRef = storageRef.child(`images/${imageCounter}`);
 
       const imageUploadTask = imageRef.put(imageFile);
 
@@ -129,16 +114,29 @@ export const useUploadSong = () => {
             const imgUrl = await imageRef.getDownloadURL();
             resolve(imgUrl);
 
-            //setImageCounter(imageCounter++);
-            //setImageCounter(prevCounter => prevCounter + 1);
-
-            //console.log("after image: " + imageCounter);
-
             console.log("finished handling song and img");
           }
         );
       });
     };
+
+    const checkImageExists = async (imageCounter) => {
+
+      const imageRef = storageRef.child(`images/${imageCounter}`);
+
+      const metadata = await imageRef.getMetadata()
+      .catch(err => {
+
+        if (err.code === "storage/object-not-found") {
+          return false;
+        }
+        else {
+          console.log(err);
+          return true;
+        }
+      });
+      return metadata !== false
+    }
 
     const createSongObject = async (title, songUrl, imgUrl) => {
       // const endpoint = "http://localhost:6280/api/songs/"

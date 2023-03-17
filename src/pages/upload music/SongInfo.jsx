@@ -15,13 +15,14 @@ export default function SongInfo(props) {
                 {props.songFile[props.i] && (
                     <>
                         <label>{props.songFile[props.i].name}</label>
+                        <input type="text" name="songName" value={props.i.title} placeholder="Song Title" onChange={props.handleTitle}/>
                         {console.log("song number: " + props.i)}
                         <button onClick={handleRemoveSong}>Remove</button>
                     </>
                 )}
             </div>
             <div>
-                <input type="text" name="songName" placeholder="Song Title" onChange={props.handleTitle}></input>
+                {/* <input type="text" name="songName" placeholder="Song Title" onChange={props.handleTitle}/> */}
                 <textarea value={props.featuredArtists} name="artistName" placeholder="Featured Artists" onChange={props.handleFeaturedArtists} />
                 {/* <br />
                 {/* <h3>{props.title}</h3> */}
