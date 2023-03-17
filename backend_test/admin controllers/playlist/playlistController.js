@@ -62,8 +62,14 @@ const createPlaylist = async (req, res) => {
       throw new Error("Please sign in to play this");
     }
 
-    for(i = 0; i <= req.body.songList.length; i++) {
-          const song = await Song.findOne({ _id: req.body.songList});
+
+    let songList=[];
+    let song;
+
+    for(i = 0; i < req.body.songList.length; i++) {
+        song = await Song.findOne({ _id: req.body.songList[i]});
+        songList = [...songList, song._id];
+        console.log(songList)
 
     if (!song) {
       throw new Error("Please sign in to play this SONG");
@@ -71,10 +77,10 @@ const createPlaylist = async (req, res) => {
   
   }
 
-
     const playlist = new Playlist({
       ...req.body,
       playlistCreator: user._id,
+      songList: songList
 
     });
 
@@ -97,6 +103,7 @@ const createPlaylist = async (req, res) => {
 const updatePlaylist = async (req, res) => {
   const { id } = req.params;
 
+  console.log(req.body);
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ err: "No such playlist" });
   }
@@ -111,38 +118,54 @@ const updatePlaylist = async (req, res) => {
       throw new Error("User not found");
     }
 
-    const songs = await Song.find({}).sort({ createdAt: -1 });
+    let songList=[];
+    let song;
 
-    if (!songs) {
-      throw new Error("Songs not found");
+    for(i = 0; i < req.body.songList.length; i++) {
+        song = await Song.findOne({ _id: req.body.songList[0]});
+        songList = [...songList, song._id];
+        console.log(songList)
+
+    if (!song) {
+      throw new Error("Please sign in to play this SONG");
     }
+  
+  }
 
-    let songList = songs.map((song) => song._id);
+    // const songs = await Song.find({}).sort({ createdAt: -1 });
 
-    await Playlist.findOneAndUpdate(
+    // if (!songs) {
+    //   throw new Error("Songs not found");
+    // }
+
+    // let songList = songs.map((song) => song._id);
+
+    const playlistUpdate = await Playlist.findOneAndUpdate(
       { _id: id },
       {
         $set: {
           ...req.body,
           playlistCreator: user._id,
-          songList: songList._id,
+          songList: songList
         },
       },
       { new: true }
     );
 
+    await playlistUpdate.save();
     //figure out how to remove songs...
 
-    if (!playlist) {
+    if (!playlistUpdate) {
       return res.status(404).json({ message: "No such playlist" });
     }
 
-    res.status(200).json(playlist);
+    res.status(200).json(playlistUpdate);
   } catch (err) {
     console.log(err);
     res.status(400).json({ message: err.message });
   }
 };
+
 //Delete a pl
 const deletePlaylist = async (req, res) => {
   const { id } = req.params;
