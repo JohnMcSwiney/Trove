@@ -74,15 +74,15 @@ export const useUploadSong = () => {
 
     const uploadImageToFirebase = async () => {
 
-      console.log("before image: " + imageCounter);
+      // console.log("before image: " + imageCounter);
 
-      const imageRef = storageRef.child(`images/${imageCounter}`);
+      const imageRef = storageRef.child(`images/${imageFile.name}`);
 
-      for (const image of imageRef) {
-        if (image.name.match(imageCounter)) {
-          setImageCounter(imageCounter++);
-        }
-      }
+      // for (const image of imageRef) {
+      //   if (image.name.match(imageCounter)) {
+      //     setImageCounter(imageCounter++);
+      //   }
+      // }
 
       // if (imageRef.name.match(imageCounter)) {
       //   setImageCounter(imageCounter++);
@@ -130,9 +130,9 @@ export const useUploadSong = () => {
             resolve(imgUrl);
 
             //setImageCounter(imageCounter++);
-            setImageCounter(prevCounter => prevCounter + 1);
+            //setImageCounter(prevCounter => prevCounter + 1);
 
-            console.log("after image: " + imageCounter);
+            //console.log("after image: " + imageCounter);
 
             console.log("finished handling song and img");
           }
