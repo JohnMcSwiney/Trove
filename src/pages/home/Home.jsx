@@ -15,7 +15,7 @@ const Home = () => {
 
   return (
     // <div className=' '>
-      <main className='test123456'>
+      <main className='test123456 container '>
         <div>
           <h4 className='homeHeaderText'>Find Musical Treasures</h4>
           <div 

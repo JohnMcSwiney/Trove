@@ -20,22 +20,22 @@
 }
 @media screen and (min-width:800px) {
     h4{
-        background-color: beige;
+        /* background-color: beige; */
         width: 100%;
     }
     .homeHeaderText{
-        font-size: 2vw;
+        font-size: 1.5vw;
+        padding-top:1.5vw;
     }
     .test123456{
-      background-color: crimson;
-      margin-left: 2%;
-      padding-left: 5%;
-      padding-right: 5%;
+      /* background-color: crimson; */
+      padding-left: 5px;
+      margin-left: 12%;
       margin: auto;
       width: 90%;
     }
     .art-card-cont{
-        background-color: burlywood;
+        /* background-color: burlywood; */
         height: 200px;
     }
   }
@@ -54,6 +54,10 @@
     margin-bottom: 5px;
 }
 
+.test123456{
+    background-color: rgba(220, 20, 60, 0);
+    margin-top: 15px;
+  }
 
 .txt-white{
     color: white;
