@@ -174,7 +174,7 @@ export default function UploadMusic(props) {
         imageFile,
         releaseType,
         releaseYear,
-        featuredArtists,
+        featuredArtists
       );
     } catch (error) {
       console.log(error);
