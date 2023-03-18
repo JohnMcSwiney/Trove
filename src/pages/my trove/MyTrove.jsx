@@ -9,12 +9,13 @@ import {Likeid, Dislikeid} from '../../components/discoverygame/DiscoveryGame';
 
 
 import {DislikeData} from '../../data/dislikeTemp';
-import {LikeData} from '../../data/likeTemp';
+import LikeData from '../../data/likeTemp';
 
 
 
 
 const MyTrove = () => {
+ /*
   const [index, setIndex] = React.useState(0);
   const [likeArray, setlikeArray] = useState();
   const [dislikeArray, setdislikeArray] = useState();
@@ -35,7 +36,7 @@ const MyTrove = () => {
     setDislikes(DislikeData());
   }, []);
   
-
+*/
 
   const tempUser1 = {
     userId: "U0001",
@@ -149,7 +150,7 @@ const MyTrove = () => {
         <div className='account-showcase'>
          
 
-          
+          {/*
               
               <div className="TPlikedSongs">
                   <h1>Liked Songs</h1>
@@ -175,7 +176,7 @@ const MyTrove = () => {
 
           
           <br/>
-          
+                    */}
 
               
         </div>
