@@ -22,6 +22,7 @@ export default function AlbumPage() {
       const albumJson = await albumResponse.json();
       if (albumResponse.ok) {
         setAlbum(albumJson);
+        console.log(albumJson);
       }
     };
     fetchAlbum();
@@ -68,11 +69,11 @@ export default function AlbumPage() {
 
       {/* SONGS */}
       <div className="album--songs">
-        {album?.songList &&
+        {album &&
           album.songList.map((item, index) => {
-            return <AlbumSong key={index} {...item} />;
+            return <AlbumSong key={index} idName={item} {...item} />;
           })}
-      </div>
+      </div> 
 
       {/* <NavBar /> */}
     </section>
