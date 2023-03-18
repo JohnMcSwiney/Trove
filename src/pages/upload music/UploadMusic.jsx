@@ -76,6 +76,13 @@ export default function UploadMusic(props) {
   // Handle State Changes
   const handleTitle = (e) => {
     setTitle(e.target.value);
+
+    if (releaseType === "single") {
+      setTitle(e.target.value);
+
+    } else {
+      
+    }
   };
 
   const handleAlbumName = (e) => {
