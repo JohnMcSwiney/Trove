@@ -60,7 +60,7 @@ export default function PlaylistPage(props) {
                         {/* <h5>2014</h5> */}
                         <h6>PLAYLIST</h6>
                         </div>
-                        <h4>{playlistCreator && playlistCreator.displayName}</h4>
+                        <h4>{playlist && playlist.playlistCreator.displayName}</h4>
                 </div>
             </div>
 

@@ -23,7 +23,7 @@ import $ from 'jquery';
 
 import MyTrove from '../../pages/my trove/MyTrove';
 
-import {LikeData} from '../../data/likeTemp';
+import LikeData from '../../data/likeTemp';
 
 // import "~slick-carousel/slick/slick.css"; 
 // import "~slick-carousel/slick/slick-theme.css";
@@ -70,17 +70,36 @@ const DiscoveryGame = () => {
   const volumeRef = useRef();
   
  
-  //for likes
-const addlikedSongs = () => {
-  const alikedsong =  [
-    
-      { id: slides[state].id, songName: slides[state].songName, author: slides[state].author }
-  ];
-  setLikedsongs(alikedsong);
-  console.log(alikedsong);
-}
+  //for likes   ([{ id: slides[state].id, songName: slides[state].songName, author: slides[state].author }])
 
-const likeData = LikeData(likedsongs);
+
+
+useEffect(() => {
+
+  const alikedsong = JSON.parse(localStorage.getItem("likedSongs"));
+
+  if (alikedsong){
+    setLikedsongs(alikedsong);
+  } else {
+    setLikedsongs(LikeData);
+
+  }
+
+}, []);
+
+const handleAddLikedSongs = () => {
+  
+  const newLike = { id: slides[state].id, songName: slides[state].songName, author: slides[state].author };
+
+  const updateLikes = [...likedsongs, newLike];
+
+  setLikedsongs(updateLikes);
+
+  localStorage.setItem("likedSongs", JSON.stringify(updateLikes));
+
+
+};
+
 
   
   useEffect(() => {
@@ -193,7 +212,7 @@ const likeData = LikeData(likedsongs);
       likedIds.push(slides[state].id, slides[state].songName, slides[state].author );
       gotoNext();
       setState(state + 1);
-      addlikedSongs();
+      handleAddLikedSongs();
     
     },
   });
@@ -314,7 +333,7 @@ const likeData = LikeData(likedsongs);
           likedIds.push(slides[state].id, slides[state].songName, slides[state].author);
           gotoNext();
           setState(state + 1);
-          addlikedSongs();
+          handleAddLikedSongs();
         }} className='Discovery-Like'><BsCheckLg /></button>
         
       </div>
@@ -370,7 +389,13 @@ const likeData = LikeData(likedsongs);
         <div>
               <button onClick={() => {console.log("Liked ids:" + likedIds + " | " + "Disliked ids:" + dislikedIds)}} > View Likes & Dislikes</button>
 
-              
+              {/* will remove soon just for testing purposes */}
+
+              <ul>
+                {likedsongs.map((item) => (
+                  <li key={item.id}>{item.songName}</li>
+                ))}
+              </ul>
               
         </div>
 

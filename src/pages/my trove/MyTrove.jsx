@@ -10,8 +10,6 @@ import {
   Dislikeid,
 } from "../../components/discoverygame/DiscoveryGame";
 
-import { DislikeData } from "../../data/dislikeTemp";
-import { LikeData } from "../../data/likeTemp";
 import { useAuthContext } from "../../hooks/user-hooks/useAuthContext";
 import { NavLink } from "react-router-dom";
 const MyTrove = () => {
@@ -22,15 +20,6 @@ const MyTrove = () => {
   const [likes, setLikes] = useState([]);
   const { user } = useAuthContext();
   const userID = JSON.parse(localStorage.getItem("user")).id;
-  useEffect(() => {
-    setLikes(LikeData());
-  }, []);
-
-  const [dislikes, setDislikes] = useState([]);
-
-  useEffect(() => {
-    setDislikes(DislikeData());
-  }, []);
 
   const [playlists, setPlaylists] = useState([]);
 
