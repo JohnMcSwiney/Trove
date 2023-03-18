@@ -2,7 +2,6 @@ import React from "react";
 
 // Album's Song Component
 export default function AlbumSong(props) {
-
   const [song, setSong] = React.useState(null);
 
   React.useEffect(() => {
@@ -40,9 +39,7 @@ export default function AlbumSong(props) {
       <div className="album--song--info">
         <h5>{song && song.title}</h5>
         <h6>{song && song.artist.artistName}</h6>
-        <h5>
-          {/* <span>{song && song.duration}</span> */}
-        </h5>
+        <h5>{/* <span>{song && song.duration}</span> */}</h5>
       </div>
       <div className="album--song--options">
         <img

@@ -63,7 +63,7 @@ export default function AlbumPage() {
             <h5>{album && album.releaseYear}</h5>
             <h6>{album && album.releaseType}</h6>
           </div>
-          <h4>{album && album.albumArtist}</h4>
+          <h4>{album && album.albumArtist?.artistName}</h4>
         </div>
       </div>
 
@@ -73,7 +73,7 @@ export default function AlbumPage() {
           album.songList.map((item, index) => {
             return <AlbumSong key={index} idName={item} {...item} />;
           })}
-      </div> 
+      </div>
 
       {/* <NavBar /> */}
     </section>
