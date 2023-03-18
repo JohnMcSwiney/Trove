@@ -1,6 +1,7 @@
 import React, { createContext, useContext } from "react";
 import Song from "../../components/song detail/Song";
 import { MusicContext } from "../../contexts/MusicContext";
+import { Navigate, NavLink } from "react-router-dom";
 const Search = () => {
   const [songs, setSongs] = React.useState(null);
   const [albums, setAlbums] = React.useState(null);
@@ -55,7 +56,9 @@ const Search = () => {
           <h2>Albums</h2>
           {searchResult.albums.map((album) => (
             <div key={album._id}>
-              <p>{album.albumName}</p>
+              <NavLink to={`/albumpage/${album._id}`}>
+                {album.albumName}
+              </NavLink>
             </div>
           ))}
         </div>
@@ -72,9 +75,9 @@ const Search = () => {
             <div>
               <h2>Also Appear In</h2>
               <div>
-                <a href={`/albumpage/${song?.album?._id}`}>
+                <NavLink to={`/albumpage/${song?.album?._id}`}>
                   {song.album?.albumName}
-                </a>
+                </NavLink>
               </div>
             </div>
           ))}
