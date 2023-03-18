@@ -52,7 +52,7 @@ export default function PlaylistPage(props) {
             {/* ALBUM COVER / INFO */}
             <div className="playlist--info">
                 <div className="playlist--song--cover">
-                        <img src="../assets/reccover.jpg" alt="playlist"/>
+                        <img src={playlist && playlist.playlistCoverUrl} alt="playlist"/>
                 </div>
                 <div className="playlist--stats--info">
                         <h3>{playlist && playlist.playlistName}</h3>
