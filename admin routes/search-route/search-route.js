@@ -26,13 +26,14 @@ router.get("/:search", async (req, res) => {
       .exec();
 
     const songs = await Song.find({
-      title: { $regex: new RegExp(search, "i") },
+      $or: [
+        { title: { $regex: new RegExp(search, "i") } },
+        { artist: { $in: artists.map((artist) => artist._id) } },
+      ],
     })
       .populate("artist")
+      .populate("album")
       .exec();
-    
-
-    
 
     res.status(201).json({ artists, songs, albums });
   } catch {

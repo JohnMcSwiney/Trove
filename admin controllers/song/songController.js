@@ -212,29 +212,30 @@ const getSong = async (request, response) => {
   } else {
     console.log(song);
 
-   
     response.status(200).json(song);
   }
 };
 
-const songViewed = async (req,res)=> {
-  const {id} = req.params;
-  console.log(id)
+const songViewed = async (req, res) => {
+  const { id } = req.params;
+  console.log(id);
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ err: "No such song" });
   }
 
-  
   try {
-    const song = await Song.findById(id)
-   await Song.findOneAndUpdate({_id:song._id}, { $inc: { searchCount: 1 } })
+    const song = await Song.findById(id);
+    await Song.findOneAndUpdate(
+      { _id: song._id },
+      { $inc: { searchCount: 1 } }
+    );
 
-    res.status(201).json({message: "View +1"})
-  }catch{
-    res.status(200).json()
+    res.status(201).json({ message: "View +1" });
+  } catch {
+    res.status(200).json();
   }
-}
+};
 //WIP
 const updateSong = async (req, res) => {
   const { id } = req.params;
@@ -558,8 +559,9 @@ const likedSong = async (req, res) => {
 
       throw new Error("song not found");
     }
-
-    const user = await User.findOne({ _id: req.body.userID });
+    const { userID } = req.body;
+    console.log(userID);
+    const user = await User.findOne({ _id: userID });
 
     if (!user) {
       console.log("user not found");
@@ -601,8 +603,10 @@ const dislikeSong = async (req, res) => {
 
       throw new Error("song not found");
     }
+    const { userID } = req.body;
+    console.log(userID);
 
-    const user = await User.findOne({ _id: req.body.userID });
+    const user = await User.findOne({ _id: userID });
 
     if (!user) {
       console.log("user not found");
@@ -635,5 +639,5 @@ module.exports = {
   updateSong,
   likedSong,
   dislikeSong,
-  songViewed
+  songViewed,
 };
