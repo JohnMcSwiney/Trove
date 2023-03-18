@@ -5,6 +5,10 @@ import albumsongs from "../../data/albumsongs.json";
 import PlaylistSong from "./PlaylistSong";
 import PopUp from "./Popup";
 
+import firebase from "./firebaseConfig";
+
+import { useCreatePlaylist } from "../../hooks/user-hooks/useCreatePlaylist";
+
 // To create a playlist
 export default function CreatePlaylist(props) {
   const user = localStorage.getItem("user");
@@ -17,10 +21,16 @@ export default function CreatePlaylist(props) {
   const [albumSongs, setAlbumSongs] = React.useState(albumsongs);
   const [playlistSongList, setPlaylistSongList] = React.useState(albumsongs);
 
+  const [playlistName, setPlaylistName] = React.useState("");
   const [imageFile, setImageFile] = React.useState();
   const handleImageFileChange = (e) => {
     setImageFile(e.target.files[0]);
     setPreviewCover(URL.createObjectURL(e.target.files[0]));
+  };
+
+  const handlePlaylistName = (e) => {
+    setPlaylistName(e.target.value);
+    
   };
 
   function handleRemoveSong(song, songAction) {
@@ -46,6 +56,24 @@ export default function CreatePlaylist(props) {
     setAlbumSongs((prevAlbumSongs) => [...prevAlbumSongs, newSong]);
   }
 
+  const { uploadPlaylist, error } = useCreatePlaylist();
+  const handleSubmit = async (e) => {
+    console.log("CLICKED SUBMIT")
+    // e.preventDefault();
+
+    try {
+      await uploadPlaylist(
+        playlistName,
+        id,
+        imageFile,
+      );
+    } catch (error) {
+      console.log(error);
+    }
+
+    console.log("CLICKED SUBMIT 2");
+  };
+
   return (
     <section>
       {/* PLAYLIST'S INFO */}
@@ -60,13 +88,6 @@ export default function CreatePlaylist(props) {
         />
       ) : null}
       <div className="createplaylist--info">
-      <div className="createplaylist--createbtn">
-            <input
-              type="submit"
-              value="Create"
-              className="createplaylist--gradient--btn createplaylist--submit--btn"
-            />
-          </div>
         <div className="createplaylist--song--cover">
           <img src={previewCover} alt="playlist" />
           <label className="createplaylist--custom-file-upload">
@@ -87,7 +108,7 @@ export default function CreatePlaylist(props) {
           </label>
         </div>
         <div className="createplaylist--stats--info">
-          <input type="text" id="playlisttitle" placeholder="Playlist Name" />
+          <input type="text" id="playlisttitle" placeholder="Playlist Name" onChange={handlePlaylistName}/>
           <div className="createplaylist--release--info">
             {/* <h5>2014</h5> */}
             {/* <h6>PLAYLIST</h6> */}
@@ -99,6 +120,14 @@ export default function CreatePlaylist(props) {
       <div className="createplaylist--addsongs">
         <div className="createplaylist--searchbar">
           {/* <input type="text" id="searchbar" placeholder="Search Songs"/> */}
+          <div className="createplaylist--createbtn">
+            <input
+              type="submit"
+              value="Create"
+              className="createplaylist--gradient--btn createplaylist--submit--btn"
+              onClick={handleSubmit}
+            />
+          </div>
           <input
             type="button"
             value="Add Songs"
