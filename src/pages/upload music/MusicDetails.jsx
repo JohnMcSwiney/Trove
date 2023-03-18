@@ -6,7 +6,7 @@ import SongInfo from "./SongInfo";
 export default function MusicDetails(props) {
   // const [isMultiple, setIsMultiple] = useState(false);
 
-  const {releaseType} = props
+  const { releaseType } = props
 
   const handleRemoveSong = () => {
     props.setSongFile(props.songFile.filter((_, i) => i !== props.i));
@@ -109,7 +109,6 @@ export default function MusicDetails(props) {
                       onChange={props.handleEPName}
                     />
                   </label>
-                  <h4>Max song limit for EP is 5 songs.</h4>
                 </td>
               </tr>
             )}
@@ -121,11 +120,14 @@ export default function MusicDetails(props) {
                     <br />
                     <input
                       type="text"
-                      value={props.song}
+                      // value={props.song}
+                      value={props.title}
                       name="songName"
                       placeholder="Song Name"
                       onChange={props.handleTitle}
                     />
+                    {console.log("Song Name: " + props.title)}
+
                   </label>
                 </td>
               </tr>
