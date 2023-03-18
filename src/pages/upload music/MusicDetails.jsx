@@ -6,8 +6,6 @@ import SongInfo from "./SongInfo";
 export default function MusicDetails(props) {
   // const [isMultiple, setIsMultiple] = useState(false);
 
-  const { releaseType } = props
-
   const handleRemoveSong = () => {
     props.handleSongFileChange(props.songFile.filter((_, i) => i !== props.i));
     props.handleSongFileChange(props.toUploadSongs.filter((_, i) => i !== props.i));
@@ -78,7 +76,7 @@ export default function MusicDetails(props) {
                 </label>
               </td>
             </tr>
-            {releaseType === "album" && (
+            {props.releaseType === "album" && (
               <tr>
                 <td className="uploadmusic--columnt">
                   <label>
@@ -95,7 +93,7 @@ export default function MusicDetails(props) {
                 </td>
               </tr>
             )}
-            {releaseType === "ep" && (
+            {props.releaseType === "ep" && (
               <tr>
                 <td className="uploadmusic--columnt">
                   <label>
@@ -112,7 +110,7 @@ export default function MusicDetails(props) {
                 </td>
               </tr>
             )}
-            {releaseType === "single" && (
+            {props.releaseType === "single" && (
               <tr>
                 <td className="uploadmusic--columnt">
                   <label>
@@ -206,7 +204,7 @@ export default function MusicDetails(props) {
           </tbody>
         </table>
       </div>
-      {releaseType == "single" ? (
+      {props.releaseType == "single" ? (
         <>
           <div className="uploadmusic--song--info">
             <div className="upload--music--songfile--name">
