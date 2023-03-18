@@ -880,7 +880,7 @@ body {
 .createplaylist--modal {
   position: absolute;
   z-index: 300;
-  height: 50vh;
+  height: 65vh;
   margin-top: 5vh;
   width: 50vw;
   margin-left: 15vw;
@@ -907,28 +907,31 @@ body {
 }
 
 .createplaylist--add {
-  max-height: 60vh;
+  max-height: 40vh;
   padding-bottom: 0;
+  margin-left: 0vw;
+
+ 
 
 }
 
 .createplaylist--add > .createplaylist--song{
-  margin-left: 2vw;
+  width: 100%;
   background-color: #080c3d;
   width: 95%;
-
 
 }
 
 .createplaylist--add > .createplaylist--song > .createplaylist--song--options{
   margin-left: 55vw; 
-  margin-top: -12vmin;
+  margin-top: -14vmin;
 }
 
 .createplaylist--add > .createplaylist--song > .createplaylist--delsong > img{
-  width: 8vw;
-  margin-right: -2vmin;
-  margin-top: -4vmin;
+  width: 3vw;
+  margin-left: 3vmin;
+  margin-top: -2vmin;
+  padding-bottom: 0;
 }
 
 }
