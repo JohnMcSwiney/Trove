@@ -27,11 +27,6 @@ import {
 import CreatePlaylist from "./pages/create playlist/CreatePlaylist";
 
 function App() {
-  // const userId = JSON.parse(localStorage.getItem("user")).id;
-  const user = localStorage.getItem("user");
-
-  const isLoginId = user ? JSON.parse(user).id : "";
-
   return (
     <BrowserRouter>
       <div className=" text-gray-500 font-body">
@@ -43,13 +38,8 @@ function App() {
             <Route path="/" element={<Home />}></Route>
             <Route path="/search" element={<Search />}></Route>
             <Route path="/mytrove" element={<MyTrove />}></Route>
-            {/* <Route path="/uploadmusic" element={<UploadMusic />}></Route> */}
 
-            <Route
-              // path={`/myaccount/${isLoginId}`}
-              path="/myaccount"
-              element={<MyAccount />}
-            ></Route>
+            <Route path="/myaccount" element={<MyAccount />}></Route>
             <Route path="/login" element={<Login />}></Route>
             <Route path="/signup" element={<Signup />}></Route>
             <Route path="/artist/">
@@ -58,11 +48,11 @@ function App() {
 
             <Route path="/discoverygame" element={<DiscoveryGame />}></Route>
 
-            {/* <Route path='/upload' element= {<UploadMusic/>}></Route> */}
-
-            <Route path="/albumpage/" element={<AlbumPage />}>
+            <Route path="/albumpage/">
               <Route path=":id" element={<AlbumPage />}></Route>
             </Route>
+            {/* <Route path="/albumpage" element={<AlbumPage />}></Route> */}
+
             <Route path="/followers" element={<FollowersPage />}></Route>
             <Route path="/following" element={<FollowingPage />}></Route>
             <Route path="/playlist" element={<PlaylistPage />}>

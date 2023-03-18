@@ -39,7 +39,12 @@ const Search = () => {
           {searchResult.artists.map((artist) => (
             <div key={artist._id}>
               <p>{artist.artistName}</p>
-              {/* display other artist information as needed */}
+              <h3>Songs</h3>
+              {searchResult.songs
+                .filter((song) => song.artist._id === artist._id)
+                .map((song) => (
+                  <Song key={song._id} song={song} setSongData={setSongData} />
+                ))}
             </div>
           ))}
         </div>
@@ -51,7 +56,6 @@ const Search = () => {
           {searchResult.albums.map((album) => (
             <div key={album._id}>
               <p>{album.albumName}</p>
-              {/* display other album information as needed */}
             </div>
           ))}
         </div>
@@ -63,32 +67,21 @@ const Search = () => {
           {searchResult.songs.map((song) => (
             <Song key={song._id} song={song} setSongData={setSongData} />
           ))}
+
+          {searchResult.songs.map((song) => (
+            <div>
+              <h2>Also Appear In</h2>
+              <div>
+                <a href={`/albumpage/${song?.album?._id}`}>
+                  {song.album?.albumName}
+                </a>
+              </div>
+            </div>
+          ))}
         </div>
       )}
     </div>
   );
-  // <div className="search-page container">
-  //
-  //   <div className="songs">
-  //     {songs &&
-  //       songs.map((data) => (
-  //         <div>
-  //
-  //         </div>
-  //       ))}
-  //   </div>
-
-  //   <div>
-  //     <h1>Album</h1>
-  //     {albums &&
-  //       albums.map((data) => (
-  //         <div>
-  //           {data.albumName}
-  //           {data.artist.artistName}
-  //         </div>
-  //       ))}
-  //   </div>
-  // </div>
 };
 
 export default Search;

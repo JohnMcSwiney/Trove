@@ -40,6 +40,9 @@ import { BsSkipStart, BsSkipEnd, BsPlay, BsPause } from "react-icons/bs";
 import queue from "../../data/albumsongs.json";
 
 import Trv_Chest from "../../assets/Trv_icons/Tvr_lib_icon.ico";
+//
+import { useLikeSong } from "../../hooks/user-hooks/useLikeSong";
+import { useUnlikeSong } from "../../hooks/user-hooks/useUnlikeSong";
 
 const MusicBar = () => {
   const [newSong, setNewSong] = useState();
@@ -202,9 +205,17 @@ const MusicBar = () => {
     console.log(`show queue`);
   };
 
+  const { like, likeError, likeIsLoading } = useLikeSong();
+  const { unlike, unlikeError, unlikeIsLoading } = useUnlikeSong();
   const toggleLiked = () => {
     setIsLiked(!isLiked);
+    if (!isLiked) {
+      like();
+    } else {
+      unlike();
+    }
   };
+
   const toggleFC = (event) => {
     // if the user clickson the artist name it's ignored
     if (event.target.id == "artistTextLink") {
@@ -216,11 +227,16 @@ const MusicBar = () => {
 
   const navigate = useNavigate();
   const redirectArtist = () => {
+    navigate(`/artist/${currentSong.artist._id}`);
+  };
 
-    
-      navigate(`./artist/${currentSong.artist._id}`);
-    
-   
+  // Like and dislike function
+
+  const fetchUnlike = async () => {
+    const response = await fetch(`/api/songs/removelike/${currentSong._id}`, {
+      method: "POST",
+    });
+    const json = response.json();
   };
 
   return (
@@ -307,9 +323,14 @@ const MusicBar = () => {
                   <div className="like-btn ">
                     <button onClick={toggleLiked}>
                       {isLiked ? (
-                        <FaHeart className="text-white" />
+                        <div>
+                          <FaHeart className="text-white" />
+                        </div>
                       ) : (
-                        <FaRegHeart />
+                        <div>
+                          <FaRegHeart />
+                          {/* {fetchUnlike()} */}
+                        </div>
                       )}
                     </button>
                   </div>
