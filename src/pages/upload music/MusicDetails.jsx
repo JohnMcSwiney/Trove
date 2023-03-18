@@ -9,8 +9,8 @@ export default function MusicDetails(props) {
   const { releaseType } = props
 
   const handleRemoveSong = () => {
-    props.setSongFile(props.songFile.filter((_, i) => i !== props.i));
-    props.setToUploadSongs(props.toUploadSongs.filter((_, i) => i !== props.i));
+    props.handleSongFileChange(props.songFile.filter((_, i) => i !== props.i));
+    props.handleSongFileChange(props.toUploadSongs.filter((_, i) => i !== props.i));
   }
 
 
@@ -210,10 +210,9 @@ export default function MusicDetails(props) {
         <>
           <div className="uploadmusic--song--info">
             <div className="upload--music--songfile--name">
-              {props.songFile[props.i] && (
+              {props.songFile && (
                 <>
-                  <label>{props.songFile[props.i].name}</label>
-                  {console.log("song number: " + props.i)}
+                  <label>{props.songFile.name}</label>
                   <button onClick={handleRemoveSong}>Remove</button>
                 </>
               )}

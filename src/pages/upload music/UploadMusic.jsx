@@ -197,6 +197,8 @@ export default function UploadMusic(props) {
     }
   }, [songFile]);
 
+  console.log("toUploadSongs value: " + toUploadSongs);
+
   // To change page name from music details to add songs
   const [pageName, setPageName] = React.useState("MusicDetails");
   function handleFormNavigation(pageName) {
