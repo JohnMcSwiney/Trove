@@ -1,0 +1,132 @@
+.searchCont{
+    background-color: rgba(255, 255, 255, 0);
+    padding-right: 4vw;
+    padding-left: 4vw;
+    margin: auto;
+    width: 90%;
+    margin-top: 2vw;
+}
+.searchInpCont{
+    flex-direction: row;
+    display: flex;
+    color: white;
+    align-items: center;
+    justify-items: center;
+
+}
+.searchIcon{
+    fill: white;
+    font-size: 28px;
+    margin: 4px;
+    margin-right: 10px;
+}
+.searchBox{
+    background-color: #080c3dd0;
+    width: 60vw;
+    padding: 0.5vw;
+    border-radius: 5px;
+    border: solid rgba(255, 255, 255, 0.192) 2px;
+    height: 40px;
+}
+.artSearchContainer{
+    display: flex;
+    gap: 2vw;
+    flex-direction: column;
+}
+.searchArtistCard{
+    width: 90%;
+    background-color: #12164b32;
+    box-shadow: inset 0px -25px #12164b32;
+    backdrop-filter: blur(4px);
+    padding: 5px;
+    padding-left: 5px;
+    border-radius: 10px;
+    border: solid 1.5px rgba(255, 255, 255, 0.113);
+
+}
+.searchArtistCard > p{
+    font-size: 2.5vw;
+}
+.artSearchHeader{
+    font-size: 4vw;
+}
+
+.artSearchSongHeader{
+    font-size: 2vw;
+    margin-left: 2vw;
+}
+.artImgNameContSearch{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+}
+
+.textSearchCont{
+    padding:2px;
+    padding-left: 6px;
+    padding-right: 6px;
+    background-color: #12164B;
+    color: white;
+    border-radius: 5px;
+    
+    /* 
+    justify-self: center; */
+    margin-left: 5px;
+    margin-right: auto; 
+    box-shadow: rgba(0, 0, 0, 0.382) 0px 1px 2px;
+    /* align-content: center; */
+
+    display: flex;
+    text-align: center;
+    align-items: center;
+   
+    margin-top: auto;
+    margin-bottom: auto;
+
+}
+.searchArtist-avatar {
+    width: 50px !important;
+    height: 50px !important;
+    display: flex;
+    object-fit:fill;
+    border-radius: 50%;    
+  }
+.searchArtistImg-border{
+    background: linear-gradient(to top, #8650F4, #0034C4);
+    border-radius: 50% !important;
+    margin: 5px;
+    padding: 1vw;
+    box-sizing: border-box;
+    display: flex;
+    filter: none;
+    height: 60px !important;
+    width: 60px !important;
+    overflow: hidden;
+    align-items: center;
+    justify-content: center;
+    
+  }
+  .artistNameCont{
+    padding:2px;
+    padding-left: 6px;
+    padding-right: 6px;
+    background-color: #12164bc1;
+    color: rgb(255, 255, 255);
+    border-radius: 5px;
+    
+    /* 
+    justify-self: center; */
+    margin-left: 5px;
+    margin-right: auto; 
+    box-shadow: rgba(0, 0, 0, 0.382) 0px 1px 2px;
+    /* align-content: center; */
+
+    display: flex;
+    text-align: center;
+    align-items: center;
+   
+    margin-top: auto;
+    margin-bottom: auto;
+    cursor: default;
+}

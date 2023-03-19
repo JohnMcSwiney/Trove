@@ -1,7 +1,9 @@
 import React, { createContext, useContext } from "react";
 import Song from "../../components/song detail/Song";
+import SearchSongCard2 from "../../components/cards/search_items/searchSongCard/searchSongCard2";
 import { MusicContext } from "../../contexts/MusicContext";
 import { Navigate, NavLink } from "react-router-dom";
+import { GoSearch } from "react-icons/go";
 
 import LoadingSearch from "../../components/loadingitems/loadingSearch/LoadingSearch";
 import "./SearchPage.css";
@@ -22,7 +24,7 @@ const Search = () => {
     const fetchSearch = async () => {
       
       if (search == ""){
-        console.log(" this shit empty");
+        
         setDone(true);
         return;
       } else {
@@ -50,38 +52,50 @@ const Search = () => {
 
 
   return (
-    <div>
+    <div className="searchCont">
 
-      <div>
-        <br></br>
+      <div className="searchInpCont">
+      <GoSearch className="searchIcon"/> 
         <form className="search-form">
-          <input
-            type={"text"}
-            className="form-control"
+        
+        <input
+            type="text"
+            className="searchBox"
             onChange={((e) => setSearch(e.target.value))}
             
             // onKeyDown={setDone(false)}
             value={search}
-            placeholder="Search for artists, albums and songs"
-          />
-          <br></br>
-        </form>
+            placeholder={" Search for artists, albums and songs"}>  
+          </input>
+        </form>       
       </div>
       <div>
         {
           !done ? <LoadingSearch /> :
             <div> 
               {searchResult.artists && search.length > 0 && (
-                <div>
-                  <h2>Artists</h2>
+                <div className="artSearchContainer">
+                  <h2 className="artSearchHeader">Artists</h2>
                   {searchResult.artists.map((artist) => (
-                    <div key={artist._id}>
-                      <p>{artist.artistName}</p>
-                      <h3>Songs</h3>
+                    <div key={artist._id} 
+                    className="searchArtistCard">
+                      <div className="artImgNameContSearch">
+                        <div className='searchArtistImg-border'>
+                          <img
+                            src={artist.url}
+                            className='searchArtist-avatar'
+                            alt='avatar'
+                          />
+                        </div>
+                        <div className="artistNameCont">
+                          {artist.artistName}
+                        </div>
+                      </div>
+                      <h3 className="artSearchSongHeader">Songs</h3>
                       {searchResult.songs
                         .filter((song) => song.artist._id === artist._id)
                         .map((song) => (
-                          <Song key={song._id} song={song} setSongData={setSongData} />
+                          <SearchSongCard2 key={song._id} song={song} setSongData={setSongData} />
                         ))}
                     </div>
                   ))}

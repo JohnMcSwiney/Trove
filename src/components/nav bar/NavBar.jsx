@@ -86,28 +86,30 @@ const NavBar = (props) => {
           </div>
         </Link>
 
-        <div className="divider-white"></div>
 
-        <Link to={"/mytrove"} className="trove-links">
-          <div
-            className={active === 2 ? "active" : ""}
-            onClick={() => setActive(2)}
-          >
-            <h1 hidden>My Trove / Library</h1>
-            <div className="trove-nav-icon">
-              <div className="nav-icon">
-                <GiOpenTreasureChest size={20} />
-              </div>
-              <div className="nav-text text-small">
-                <p className="text-small">My Trove</p>
-              </div>
-              <div className="selection-indicator"></div>
-            </div>
-          </div>
-        </Link>
 
         {user && (
           <>
+            <div className="divider-white"></div>
+
+            <Link to={"/mytrove"} className="trove-links">
+              <div
+                className={active === 2 ? "active" : ""}
+                onClick={() => setActive(2)}
+              >
+                <h1 hidden>My Trove / Library</h1>
+                <div className="trove-nav-icon">
+                  <div className="nav-icon">
+                    <GiOpenTreasureChest size={20} />
+                  </div>
+                  <div className="nav-text text-small">
+                    <p className="text-small">My Trove</p>
+                  </div>
+                  <div className="selection-indicator"></div>
+                </div>
+              </div>
+            </Link>
+
             <div className="divider-white"></div>
             {/* <Link to={`/myaccount/${isLoginID}`} className="trove-links"> */}
             <Link to="/myaccount" className="trove-links">
@@ -156,7 +158,7 @@ const NavBar = (props) => {
           </Link>
         </div>
          */}
-         
+
         {user && displayLogout && <div id="divider-white"></div>}
         {user && displayLogout && (
           <div onClick={logoutHandler}>
