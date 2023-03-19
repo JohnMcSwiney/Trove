@@ -34,21 +34,17 @@ const getAPlaylist = async (req, res) => {
   }
 };
 
-//get all your playlists this is not working
 const getYourPlaylists = async (req, res) => {
-  const userID = req.body.id;
-  console.log(userID);
-  try {
-    const playlists = await Playlist.find({ playlistCreator: userID }).sort({
-      createdAt: -1,
-    });
-    console.log(playlists);
-    res.status(200).json({ playlists });
-  } catch (error) {
-    res
-      .status(400)
-      .json({ error: "Please try again. Thank you for your understanding " });
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: "This playlist doesn't not exist" });
   }
+  const playlists = await Playlist.find({ playlistCreator: id }).sort({
+    createdAt: -1,
+  });
+
+  res.status(200).json(playlists);
 };
 
 //create a new playlist
@@ -62,29 +58,26 @@ const createPlaylist = async (req, res) => {
       throw new Error("Please sign in to play this");
     }
 
-
-    let songList=[];
+    let songList = [];
     let song;
 
-    for(i = 0; i < req.body.songList.length; i++) {
-        song = await Song.findOne({ _id: req.body.songList[i]});
-        songList = [...songList, song._id];
-        console.log(songList)
+    for (i = 0; i < req.body.songList.length; i++) {
+      song = await Song.findOne({ _id: req.body.songList[i] });
+      songList = [...songList, song._id];
+      console.log(songList);
 
-    if (!song) {
-      throw new Error("Please sign in to play this SONG");
+      if (!song) {
+        throw new Error("Please sign in to play this SONG");
+      }
     }
-  
-  }
 
     const playlist = new Playlist({
       ...req.body,
       playlistCreator: user._id,
-      songList: songList
-
+      songList: songList,
     });
 
-    // playlist.songList = songList; 
+    // playlist.songList = songList;
     user.playlists.push(playlist._id);
 
     await playlist.save();
@@ -118,19 +111,18 @@ const updatePlaylist = async (req, res) => {
       throw new Error("User not found");
     }
 
-    let songList=[];
+    let songList = [];
     let song;
 
-    for(i = 0; i < req.body.songList.length; i++) {
-        song = await Song.findOne({ _id: req.body.songList[0]});
-        songList = [...songList, song._id];
-        console.log(songList)
+    for (i = 0; i < req.body.songList.length; i++) {
+      song = await Song.findOne({ _id: req.body.songList[0] });
+      songList = [...songList, song._id];
+      console.log(songList);
 
-    if (!song) {
-      throw new Error("Please sign in to play this SONG");
+      if (!song) {
+        throw new Error("Please sign in to play this SONG");
+      }
     }
-  
-  }
 
     // const songs = await Song.find({}).sort({ createdAt: -1 });
 
@@ -146,7 +138,7 @@ const updatePlaylist = async (req, res) => {
         $set: {
           ...req.body,
           playlistCreator: user._id,
-          songList: songList
+          songList: songList,
         },
       },
       { new: true }
