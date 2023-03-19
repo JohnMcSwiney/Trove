@@ -4,7 +4,9 @@ const { getAllArtist,
     getAnArtist,
     createArtist,
     updateArtist,
-    deleteArtist } = require('../../admin controllers/artist/artistController')
+    deleteArtist,
+    likedArtist,
+    dislikeArtist } = require('../../admin controllers/artist/artistController')
 
 //get all
 router.get('/', getAllArtist);
@@ -19,5 +21,9 @@ router.post('/', createArtist);
 router.patch('/:id', updateArtist);
 //detele an artist
 router.delete('/:id', deleteArtist);
+
+router.post("/follow/:id", likedArtist);
+
+router.post("/removeFollow/:id", dislikeArtist);
 
 module.exports = router;

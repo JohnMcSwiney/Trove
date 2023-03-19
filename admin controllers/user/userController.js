@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
 
 const { request } = require("express");
+const { populate } = require("../../models/playlist model/playlist-model");
 //get all users
 const getAllUser = async (req, res) => {
   const users = await User.find({}).sort({ createdAt: -1 });
@@ -15,7 +16,10 @@ const getAUser = async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ err: "No such user" });
   }
-  const user = await User.findById(id);
+  const user = await User.findById(id).populate({
+    path: "likedSongs",
+    populate: { path: "artist", selecte: "artistName" },
+  });
 
   if (!user) {
     return res.status(404).json({ err: "No such user" });

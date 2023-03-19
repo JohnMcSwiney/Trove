@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const Song = require("../../models/song model/song-model");
 const Artist = require("../../models/artist model/artist-model");
 const Album = require("../../models/album model/album-model");
+const User = require("../../models/user model/user-model");
 
 //mongoose.connection().artists.getIndexes()
 
@@ -86,7 +87,100 @@ const deleteArtist = async (req, res) => {
   }
 
   res.status(200).json(artist);
-};
+}
+
+const likedArtist = async (req, res) => {
+
+  const {id} = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: "song not available" });
+  }
+
+  try {
+    const artist = await Artist.findOne({_id: id});
+
+    if (!artist) {
+      console.log("artist not found");
+
+      throw new Error("artist not found");
+    }
+
+    const {userID} = req.body;
+    console.log(userID);
+
+    const user = await User.findOne({_id: userID});
+
+    if (!user) {
+      console.log("user not found");
+
+      throw new Error("user not found");
+    }
+
+    if (artist.followers.includes(user._id)) {
+      return res
+        .status(400)
+        .json({ message: "Artist has already been liked by the user" });
+    }
+
+    artist.followers.push(user._id);
+    artist.artistFollowers++;
+    user.likedArtists.push(artist._id);
+
+    await artist.save();
+    await user.save();
+
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({ message: err.message });
+  }
+}
+
+const dislikeArtist = async (req, res) => {
+
+  const {id} = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: "artist not available" });
+  }
+
+  try {
+    const artist = await Artist.findOne({_id: id});
+
+    if (!artist) {
+      console.log("artist not found");
+
+      throw new Error("artist not found");
+    }
+
+    const {userID} = req.body;
+    console.log(userID);
+
+    const user = await User.findOne({_id: userID});
+
+    if (!user) {
+      console.log("user not found");
+
+      throw new Error("user not found");
+    }
+
+    if (artist.followers.includes(user._id)) {
+      artist.followers.pop(user._id);
+      artist.followers--;
+      user.likedArtists.pop(artist._id);
+    }
+
+    await artist.save();
+
+    await user.save();
+
+    res.status(200).json({ message: "removed like successfully" });
+
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({ message: err.message });
+  }
+}
 
 module.exports = {
   getAllArtist,
@@ -94,4 +188,6 @@ module.exports = {
   createArtist,
   updateArtist,
   deleteArtist,
+  likedArtist,
+  dislikeArtist
 };

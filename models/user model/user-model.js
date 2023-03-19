@@ -50,21 +50,35 @@ const userSchema = new mongoose.Schema(
     playlists: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Playlist"
+        ref: "Playlist",
+        default: null
+
       },
     ],
 
     recentTracks: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Song"
+        ref: "Song",
+        default: null
+
       }
     ],
 
     likedSongs: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Song"
+        ref: "Song",
+        default: null
+      }
+    ],
+
+    likedArtists: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Artist",
+        default: null
+
       }
     ],
 
