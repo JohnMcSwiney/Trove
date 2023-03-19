@@ -18,13 +18,15 @@ const getAPlaylist = async (req, res) => {
     return res.status(404).json({ err: "No such playlist" });
   }
 
-  const playlist = await Playlist.findById(id).populate(
-    "playlistCreator",
-    "displayName"
-  );
-
-  console.log(playlist);
-
+  const playlist = await Playlist.findById(id)
+    .populate("playlistCreator")
+    .populate({
+      path: "songList",
+      populate: {
+        path: "artist",
+        select: "artistName",
+      },
+    });
   if (!playlist) {
     return res.status(404).json({ err: "No such playlist" });
   } else {
