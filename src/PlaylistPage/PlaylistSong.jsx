@@ -18,14 +18,14 @@ export default function PlaylistSong({ song }) {
   return (
     <div className="playlist--song" onClick={handleBS}>
       <div className="playlist--tiny--cover">
-        <img src={song.imgUrl} alt="playlistcover" />
+        <img src={song?.imgUrl} alt="playlistcover" />
         <img src="../assets/playmask.png" id="playmask" alt="albumcover" />
       </div>
       <div className="playlist--song--info">
-        <h5>{song.title}</h5>
-        <h6>{song.artist}</h6>
+        <h5>{song?.title}</h5>
+        <h6>{song?.artist.artistName}</h6>
         <h5>
-          <span>{song.duration}</span>
+          <span>{song?.duration}</span>
         </h5>
       </div>
       <div className="playlist--song--options">
