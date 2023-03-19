@@ -139,9 +139,9 @@ const Artist = () => {
 
         {songs &&
           songs.length > 0 &&
-          songs.map((data) => (
-            <div className="CardCont" key={data._id}>
-              <Song song={data} />
+          songs.map((song) => (
+            <div className="CardCont">
+              <Song song={song} key={song._id} />
             </div>
           ))}
       </div>
