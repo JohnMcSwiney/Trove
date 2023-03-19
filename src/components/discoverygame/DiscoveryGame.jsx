@@ -6,7 +6,8 @@ import { FaPause } from 'react-icons/fa';
 import { BiArrowToLeft } from 'react-icons/bi';
 import { BiVolumeFull, BiVolumeLow, BiVolume, BiVolumeMute } from "react-icons/bi";
 import { BsXLg, BsCheckLg } from 'react-icons/bs';
-import {MdOutlineArrowBackIos,MdOutlineArrowForwardIos} from 'react-icons/md'
+import { MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from 'react-icons/md'
+import Song from "../../components/song detail/Song";
 import tempImg from './NoSong.png';
 import tempImg2 from '../../assets/testImgs/roast_turkey_dinner.jpg';
 import tempImg3 from '../../assets/testImgs/chicken.jpg';
@@ -51,7 +52,9 @@ const DiscoveryGame = () => {
   const [duration, setDuration] = useState(0);
 
   const [currentTime, setCurrentTime] = useState(0);
-  
+
+  const [songs, setSongs] = useState([]);
+
   const [likedsongs, setLikedsongs] = useState([]);
 
   const [isMuted, setIsMuted] = useState(true);
@@ -68,43 +71,84 @@ const DiscoveryGame = () => {
   const animationRef = useRef(); //reference to the animation
   const musicSlides = useRef();
   const volumeRef = useRef();
-  
- 
+
+
+
+  const fetchSongs = async () => {
+    const songResponse = await fetch("/api/songs/", {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
+    const songJson = await songResponse.json();
+    if (songResponse.ok) {
+      setSongs(songJson);
+
+      for (let i = 0; i < songs.length; i++) {
+        console.log("song title: " + songs[i].title);
+        
+      }
+
+      // songs.map((song) => {
+
+      //   console.log("song title: " + song.title);
+      // })
+    }
+  };
+  //fetchSongs();
+
+
   //for likes   ([{ id: slides[state].id, songName: slides[state].songName, author: slides[state].author }])
 
 
 
-useEffect(() => {
+  useEffect(() => {
 
-  const alikedsong = JSON.parse(localStorage.getItem("likedSongs"));
+    const alikedsong = JSON.parse(localStorage.getItem("likedSongs"));
 
-  if (alikedsong){
-    setLikedsongs(alikedsong);
-  } else {
-    setLikedsongs(LikeData);
-  }
+    if (alikedsong) {
+      setLikedsongs(alikedsong);
+    } else {
+      setLikedsongs(LikeData);
+    }
 
-}, []);
+  }, []);
 
-const handleAddLikedSongs = () => {
-  
-  const newLike = { id: slides[state].id, songName: slides[state].songName, author: slides[state].author };
+  const handleAddLikedSongs = () => {
 
-  const updateLikes = [...likedsongs, newLike];
+    const newLike = { _id: songs[state]._id};
 
-  setLikedsongs(updateLikes);
+    const updateLikes = [...likedsongs, newLike];
 
-  localStorage.setItem("likedSongs", JSON.stringify(updateLikes));
+    setLikedsongs(updateLikes);
 
-  fetch("/add-song", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ likedsongs }),
-  })
-};
+    localStorage.setItem("likedSongs", JSON.stringify(updateLikes));
+
+    fetch(`/api/songs/liked/${newLike}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ likedsongs }),
+    })
+  };
 
 
-  
+  // const handleAddLikedSongs = () => {
+
+  //   try {
+
+  //     songs.map((song) => {
+
+  //     });
+
+  //   } catch (err) {
+  //     console.log("song ")
+  //   }
+
+
+  // };
+
+
+
+
   useEffect(() => {
     const seconds = Math.floor(audioPlayer.current.duration);
     setDuration(seconds);
@@ -198,31 +242,31 @@ const handleAddLikedSongs = () => {
     trackMouse: true,
     // Dislike
     onSwipedLeft: () => {
-      if (state === slides.length - 1) return;
-      setIndex((prevIndex) => (prevIndex + 1) % slides.length);
+      if (state === songs.length - 1) return;
+      setIndex((prevIndex) => (prevIndex + 1) % songs.length);
       setAccept(accept + 1);
-      dislikedIds.push(slides[state].id, slides[state].songName, slides[state].author);
-      
+      dislikedIds.push(songs[state]._id, songs[state].title, songs[state].artist);
+
       gotoNext();
       setState(state + 1);
 
     },
     // Like
     onSwipedRight: () => {
-      if (state === slides.length - 1) return;
-      setIndex((prevIndex) => (prevIndex + 1) % slides.length);
+      if (state === songs.length - 1) return;
+      setIndex((prevIndex) => (prevIndex + 1) % songs.length);
       setDeny(deny + 1);
-      likedIds.push(slides[state].id, slides[state].songName, slides[state].author );
+      likedIds.push(songs[state]._id, songs[state].title, songs[state].artist);
       gotoNext();
       setState(state + 1);
       handleAddLikedSongs();
-    
+
     },
   });
   {/* slider */ }
   const settings = {
     speed: 500,
-    slidesToShow:1,
+    slidesToShow: 1,
     slidesToScroll: 1,
     swipe: false,
     swipeToSlide: false,
@@ -252,7 +296,7 @@ const handleAddLikedSongs = () => {
         {/* Back button - plays song just swipped  */}
         <button className='hidden' onClick={() => {
           if (state === 0) return;
-          setIndex((prevIndex) => (prevIndex + slides.length - 1) % slides.length);
+          setIndex((prevIndex) => (prevIndex + songs.length - 1) % songs.length);
         }}><BiArrowToLeft />
         </button>
 
@@ -269,17 +313,17 @@ const handleAddLikedSongs = () => {
 
           <Slider ref={musicSlides}{...settings} id='carousel'>
 
-            <div className='test2'  >
-              <div className='Discovery-Img-Container' >
-                <img src={slides[0].url} alt={slides[0].alt} className="DGimg" onClick={() => printIndex(0)} />
-              </div>
-            </div>
 
-            <div className='test2'  >
-              <div className='Discovery-Img-Container' >
-                <img src={slides[1].url} alt={slides[1].alt} className="DGimg" onClick={() => printIndex(1)} />
-              </div>
-            </div>
+            {/* {
+              songs.map((song, i = 0) => {
+                return <div className='test2'  >
+                  <div className='Discovery-Img-Container' >
+                    <img src={song.imgUrl} className="DGimg" onClick={() => printIndex(i++)} />
+                  </div>
+                </div>
+              })
+            } */}
+            
 
             <div className='test2'  >
               <div className='Discovery-Img-Container' >
@@ -305,9 +349,9 @@ const handleAddLikedSongs = () => {
 
       <div className='Discovery-Text-Container'>
         {/* Song title */}
-        <h2 className="DGsongtxt"> {slides[state].songName} </h2>
+        <h2 className="DGsongtxt"> {songs[state].title} </h2>
         {/* Song Artist */}
-        <h2 className="DGalbtxt"> {slides[state].author} </h2>
+        <h2 className="DGalbtxt"> {songs[state].artist} </h2>
       </div>
 
       {/* Swipe Box */}
@@ -316,38 +360,38 @@ const handleAddLikedSongs = () => {
         {/* dislike */}
         <button onClick={() => {
 
-          if (state === slides.length - 1) return;
-          setIndex((prevIndex) => (prevIndex + 1) % slides.length);
+          if (state === songs.length - 1) return;
+          setIndex((prevIndex) => (prevIndex + 1) % songs.length);
           setDeny(deny + 1);
-          dislikedIds.push(slides[state].id, slides[state].songName, slides[state].author);
+          dislikedIds.push(songs[state]._id, songs[state].title, songs[state].artist);
           gotoNext();
           setState(state + 1);
-          
+
         }} className='Discovery-Disike'><BsXLg /></button>
-        <div className='DGarrowcont'><MdOutlineArrowBackIos className='DGarrow'/><MdOutlineArrowBackIos/><MdOutlineArrowBackIos/></div>
-        <div className='DGarrowcont'> <MdOutlineArrowForwardIos/><MdOutlineArrowForwardIos/><MdOutlineArrowForwardIos/>  </div>
+        <div className='DGarrowcont'><MdOutlineArrowBackIos className='DGarrow' /><MdOutlineArrowBackIos /><MdOutlineArrowBackIos /></div>
+        <div className='DGarrowcont'> <MdOutlineArrowForwardIos /><MdOutlineArrowForwardIos /><MdOutlineArrowForwardIos />  </div>
         {/* like */}
         <button onClick={() => {
 
-          if (state === slides.length - 1) return;
-          setIndex((prevIndex) => (prevIndex + 1) % slides.length);
+          if (state === songs.length - 1) return;
+          setIndex((prevIndex) => (prevIndex + 1) % songs.length);
           setAccept(accept + 1);
-          console.log(slides[state].id);
-          likedIds.push(slides[state].id, slides[state].songName, slides[state].author);
+          console.log(songs[state].id);
+          likedIds.push(songs[state]._id, songs[state].title, songs[state].artist);
           gotoNext();
           setState(state + 1);
           handleAddLikedSongs();
         }} className='Discovery-Like'><BsCheckLg /></button>
-        
+
       </div>
-      
+
 
       {/*Audio Player*/}
       <div className='Discovery-Player-Container'>
 
         {/* <div className={style.DGaudioPlayer}>  JACK */}
         <div className=''>
-          <audio ref={audioPlayer} src={slides[state].audio}
+          <audio ref={audioPlayer} src={songs[state].songUrl}
             autoPlay
             // 
             preload="metadata"
@@ -382,24 +426,24 @@ const handleAddLikedSongs = () => {
       <div className='Discovery-TestingItem-Container'>
         {/* Like */}
         <div>{accept} [ Likes ]
-  
+
         </div>
         {/* Dislike */}
         <div>{deny} [ Dislikes ]
 
         </div>
-        
+
         <div>
-              <button onClick={() => {console.log("Liked ids:" + likedIds + " | " + "Disliked ids:" + dislikedIds)}} > View Likes & Dislikes</button>
+          <button onClick={() => { console.log("Liked ids:" + likedIds + " | " + "Disliked ids:" + dislikedIds) }} > View Likes & Dislikes</button>
 
-              {/* will remove soon just for testing purposes */}
+          {/* will remove soon just for testing purposes */}
 
-              <ul>
-                {likedsongs.map((item) => (
-                  <li key={item.id}>{item.songName}</li>
-                ))}
-              </ul>
-              
+          <ul>
+            {likedsongs.map((item) => (
+              <li key={item.id}>{item.songName}</li>
+            ))}
+          </ul>
+
         </div>
 
       </div>
@@ -408,7 +452,7 @@ const handleAddLikedSongs = () => {
     </div>
 
   );
-    
+
 
 }
 
