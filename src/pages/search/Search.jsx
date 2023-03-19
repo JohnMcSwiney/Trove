@@ -8,7 +8,6 @@ import { GoSearch } from "react-icons/go";
 import LoadingSearch from "../../components/loadingitems/loadingSearch/LoadingSearch";
 import "./SearchPage.css";
 
-
 const Search = () => {
   const [songs, setSongs] = React.useState(null);
   const [albums, setAlbums] = React.useState(null);
@@ -18,30 +17,25 @@ const Search = () => {
   const [searchResult, setSearchResult] = React.useState({});
 
   const [done, setDone] = React.useState(true);
-  
+
   const searchAPI = React.useEffect(() => {
     // const fetchSearch = () => {
     const fetchSearch = async () => {
-      
-      if (search == ""){
-        
+      if (search == "") {
         setDone(true);
         return;
       } else {
-        setDone(false)
+        setDone(false);
         setTimeout(() => {
           fetch(`/api/search/${search}`)
-          
-          .then((response) => response.json())
-          .then((json) => {
-            setSearchResult(json);
-            setDone(true);
-          });
-        }, 500)
+            .then((response) => response.json())
+            .then((json) => {
+              setSearchResult(json);
+              setDone(true);
+            });
+        }, 500);
       }
-      
-      
-      
+
       // const response = await fetch(`/api/search/${search}`);
       // const json = await response.json();
       // setSearchResult(json);
@@ -50,79 +44,79 @@ const Search = () => {
     fetchSearch();
   }, [search]);
 
-
   return (
     <div className="searchCont">
-
       <div className="searchInpCont">
-      <GoSearch className="searchIcon"/> 
+        <GoSearch className="searchIcon" />
         <form className="search-form">
-        
-        <input
+          <input
             type="text"
             className="searchBox"
-            onChange={((e) => setSearch(e.target.value))}
-            
+            onChange={(e) => setSearch(e.target.value)}
             // onKeyDown={setDone(false)}
             value={search}
-            placeholder={" Search for artists, albums and songs"}>  
-          </input>
-        </form>       
+            placeholder={" Search for artists, albums and songs"}
+          ></input>
+        </form>
       </div>
       <div>
-        {
-          !done ? <LoadingSearch /> :
-            <div> 
-              {searchResult.artists && search.length > 0 && (
-                <div className="artSearchContainer">
-                  <h2 className="artSearchHeader">Artists</h2>
-                  {searchResult.artists.map((artist) => (
-                    <div key={artist._id} 
-                    className="searchArtistCard">
-                      <div className="artImgNameContSearch">
-                        <div className='searchArtistImg-border'>
-                          <img
-                            src={artist.url}
-                            className='searchArtist-avatar'
-                            alt='avatar'
-                          />
-                        </div>
-                        <div className="artistNameCont">
-                          {artist.artistName}
-                        </div>
+        {!done ? (
+          <LoadingSearch />
+        ) : (
+          <div>
+            {searchResult.artists && search.length > 0 && (
+              <div className="artSearchContainer">
+                <h2 className="artSearchHeader">Artists</h2>
+                {searchResult.artists.map((artist) => (
+                  <div key={artist._id} className="searchArtistCard">
+                    <div className="artImgNameContSearch">
+                      <div className="searchArtistImg-border">
+                        <img
+                          src={artist.url}
+                          className="searchArtist-avatar"
+                          alt="avatar"
+                        />
                       </div>
-                      <h3 className="artSearchSongHeader">Songs</h3>
-                      {searchResult.songs
-                        .filter((song) => song.artist._id === artist._id)
-                        .map((song) => (
-                          <SearchSongCard2 key={song._id} song={song} setSongData={setSongData} />
-                        ))}
+                      <div className="artistNameCont">{artist.artistName}</div>
                     </div>
-                  ))}
-                </div>
-              )}
+                    <h3 className="artSearchSongHeader">Songs</h3>
+                    {searchResult.songs
+                      .filter((song) => song.artist._id === artist._id)
+                      .map((song) => (
+                        <SearchSongCard2
+                          key={song._id}
+                          song={song}
+                          setSongData={setSongData}
+                        />
+                      ))}
+                  </div>
+                ))}
+              </div>
+            )}
 
-              {searchResult.albums && search.length > 0 && (
-                <div>
-                  <h2>Albums</h2>
-                  {searchResult.albums.map((album) => (
-                    <div key={album._id}>
-                      <NavLink to={`/albumpage/${album._id}`}>
-                        {album.albumName}
-                      </NavLink>
-                    </div>
-                  ))}
-                </div>
-              )}
+            {searchResult.albums && search.length > 0 && (
+              <div>
+                <h2>Albums</h2>
+                {searchResult.albums.map((album) => (
+                  <div key={album._id}>
+                    <NavLink to={`/albumpage/${album._id}`}>
+                      {album.albumName}
+                    </NavLink>
+                  </div>
+                ))}
+              </div>
+            )}
 
-              {searchResult.songs && search.length > 0 && (
-                <div>
-                  <h2>Songs</h2>
-                  {searchResult.songs.map((song) => (
-                    <Song key={song._id} song={song} setSongData={setSongData} />
-                  ))}
+            {searchResult.songs && search.length > 0 && (
+              <div>
+                <h2>Songs</h2>
+                {searchResult.songs.map((song) => (
+                  <Song key={song._id} song={song} setSongData={setSongData} />
+                ))}
 
-                  {searchResult.songs.map((song) => (
+                {searchResult.songs
+                  .filter((song) => song.album)
+                  .map((song) => (
                     <div>
                       <h2>Also Appear In</h2>
                       <div>
@@ -132,10 +126,10 @@ const Search = () => {
                       </div>
                     </div>
                   ))}
-                </div>
-              )}
-            </div>
-        }
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
