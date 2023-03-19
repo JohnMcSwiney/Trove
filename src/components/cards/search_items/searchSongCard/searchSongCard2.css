@@ -84,5 +84,6 @@
     margin-top: auto;
     margin-bottom: auto;
     cursor: default;
+    text-transform: capitalize;
 
 }
