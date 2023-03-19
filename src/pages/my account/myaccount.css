@@ -1,16 +1,87 @@
-@media screen and (min-width: 800px) {
+.hideOverflow{
+  overflow: hidden;
+}
+.account-header, .privacy-header, .support-header{
+  padding: 1vw 2vw 0vw 2vw;
+  display: flex;
+ align-items: center;
+ text-align: center;
+
+}
+@media screen and (max-width: 350px) {
+.user-avatar {
+  width: 50px !important;
+  height: 50px !important;
+  display: flex;
+  object-fit:fill;
+  border-radius: 50%;    
+}
+.userImg-border{
+  background: linear-gradient(to top, #8650F4, #0034C4);
+  border-radius: 50% !important;
+  margin: 5px;
+  padding: 1vw;
+  box-sizing: border-box;
+  display: flex;
+  filter: none;
+  height: 60px !important;
+  width: 60px !important;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  
+}
+.userimg_displayName{
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+  gap: 10px;
+  /* height: 30vw; */
+  max-height: 150px !important;
+}
+}
+.user-avatar {
+  width: 90px;
+  height: 90px;
+  display: flex;
+  object-fit:fill;
+  border-radius: 50%;    
+}
+.userImg-border{
+  background: linear-gradient(to top, #8650F4, #0034C4);
+  border-radius: 50% !important;
+  margin: 5px;
+  padding: 1vw;
+  box-sizing: border-box;
+  display: flex;
+  filter: none;
+  height: 100px ;
+  width: 100px;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+
+}
+.userimg_displayName{
+  display: flex;
+  align-items: center;
+  margin: auto;
+  gap: 10px;
+  height: 30vw;
+}
+
+
+@media screen and (min-width: 801px) {
   .my-account {
     border: solid 2px rgba(255, 255, 255, 0.182);
     display: grid;
     grid-template-columns: max(15%) max(85%);
     color: rgb(255, 255, 255);
     min-height: 100%;
-    
-    border-radius: 15px;
   }
   .bg-fglass-1{
     background-color: #2d34360b;
-    border-radius: 16px;
+
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
@@ -49,7 +120,7 @@
   .userimg_displayName{
     display: flex;
     align-items: center;
-     
+    max-height: 150px !important;
   }
   .dispNameInp{
     margin-left: 15px;
@@ -136,35 +207,43 @@
     position: relative;
     padding: 50px;
   }
+  .updateMailPassCont{
+    display: flex;
+    background-color: rgba(255, 255, 0, 0.242);
+    flex-direction: row;
+    gap: 5vw;
+  }
+  .updateMailPassinput{
+    width: 20vw;
+  }
 }
 
 @media screen and (max-width: 800px) {
   .my-account-header {
-    color: white;
+    color: rgb(255, 255, 255);
   }
   .my-account {
     border: solid 2px;
   }
-  .user-avatar {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-  }
   .tabs {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 3vw;
   }
 
   .tab {
     position: relative;
-
     cursor: poiter;
+    border-bottom: 1px solid transparent;
+    color: rgba(255, 255, 255, 0.511);
   }
 
   .active-tab {
-    background-color: rgb(159, 176, 190);
-    border: 1px solid;
+    background-color: rgba(159, 176, 190, 0);
+    /* border: 1px solid; */
+    color: white;
+    border-bottom: 1px solid;
   }
 
   .contents {
@@ -183,10 +262,10 @@
   }
   .bg-fglass-1{
     background: rgba(255, 255, 255, 0.13);
-    border-radius: 16px;
+    border-bottom: 1px solid;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
+    /* backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px); */
   }
 
   .bg-fglass-2{
@@ -194,18 +273,25 @@
     border-radius: 16px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px); 
+  }
+  .user-avatar {
+    width: 90px;
+    height: 90px;
+    display: flex;
+    object-fit:fill;
+    border-radius: 50%;    
   }
   .userImg-border{
     background: linear-gradient(to top, #8650F4, #0034C4);
-    border-radius: 500px !important;
+    border-radius: 50% !important;
     margin: 5px;
-    padding: 1px;
+    padding: 1vw;
     box-sizing: border-box;
     display: flex;
     filter: none;
-    height:110px !important;
-    width: 110px !important;
+    height: 100px ;
+    width: 100px;
     overflow: hidden;
     align-items: center;
     justify-content: center;
@@ -216,6 +302,7 @@
     align-items: center;
     margin: auto;
     gap: 10px;
+    height: 30vw;
   }
   .inputContainer{
     display: flex;
@@ -225,5 +312,14 @@
   .emailImpCont > .form-control{
     background-color: transparent;
     color: rgb(198, 198, 198);
+  }
+  .updateMailPassCont{
+    display: flex;
+    background-color: rgba(255, 255, 0, 0.242);
+    flex-direction: column;
+    gap: 5vw;
+  }
+  .updateMailPassinput{
+    width: 70vw;
   }
 }
