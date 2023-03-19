@@ -1,22 +1,41 @@
 import React from "react";
 
-import "./CreatePlaylist.css";
+import "./UpdatePlaylist.css";
 import albumsongs from "../../data/albumsongs.json";
 import PlaylistSong from "./PlaylistSong";
 import PopUp from "./Popup";
 
 import firebase from "./firebaseConfig";
 
-import { useCreatePlaylist } from "../../hooks/user-hooks/useCreatePlaylist";
-
+import { useUpdatePlaylist } from "../../hooks/user-hooks/useUpdatePlaylist";
+import { useParams } from "react-router-dom";
 // To create a playlist
-export default function CreatePlaylist(props) {
+export default function UpdatePlaylist(props) {
   //search
   const [songs, setSongs] = React.useState(null);
   const [songData, setSongData] = React.useState(null);
   const [search, setSearch] = React.useState("");
   const [searchResult, setSearchResult] = React.useState({});
   const [done, setDone] = React.useState(true);
+
+  // get playlist
+  let { id } = useParams();
+  const [playlist, setPlaylist] = React.useState(null);
+
+  
+  React.useEffect(() => {
+    const fetchPlaylist = async () => {
+      const playlistResponse = await fetch(`/api/playlists/${id}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+      const playlistJson = await playlistResponse.json();
+      if (playlistResponse.ok) {
+        setPlaylist(playlistJson);
+      }
+    };
+    fetchPlaylist();
+  }, [id]);
 
   const searchAPI = React.useEffect(() => {
     const fetchSearch = async () => {
@@ -44,7 +63,7 @@ export default function CreatePlaylist(props) {
 
   // user id
   const user = localStorage.getItem("user");
-  const id = JSON.parse(user).id;
+  const creatorid = JSON.parse(user).id;
 
   //playlist val states
   const default_album = "../assets/default_playlistcover.png";
@@ -57,11 +76,13 @@ export default function CreatePlaylist(props) {
 
   const [playlistName, setPlaylistName] = React.useState("");
   const [imageFile, setImageFile] = React.useState();
-
+  const [imageWasChanged, setImageWasChanged] = React.useState(false);
+  
   //handle changes
   const handleImageFileChange = (e) => {
     setImageFile(e.target.files[0]);
     setPreviewCover(URL.createObjectURL(e.target.files[0]));
+    setImageWasChanged(true);
   };
 
   const handlePlaylistName = (e) => {
@@ -97,7 +118,7 @@ export default function CreatePlaylist(props) {
   }
 
   // submit playlist
-  const { uploadPlaylist, error } = useCreatePlaylist();
+  const { uploadPlaylist, error } = useUpdatePlaylist();
   const handleSubmit = async (e) => {
     console.log("CLICKED SUBMIT")
     // e.preventDefault();
@@ -105,7 +126,7 @@ export default function CreatePlaylist(props) {
     try {
       await uploadPlaylist(
         playlistName,
-        id,
+        creatorid,
         imageFile,
         songList
       );
@@ -116,10 +137,12 @@ export default function CreatePlaylist(props) {
     console.log("CLICKED SUBMIT 2");
   };
 
+  
+
   return (
     <section>
       {/* PLAYLIST'S INFO */}
-      {modalIsOpen ? <div className="createplaylist--popupmask"></div> : null}
+      {modalIsOpen ? <div className="updateplaylist--popupmask"></div> : null}
       {modalIsOpen ? (
         <PopUp
           togglePop={togglePop}
@@ -134,16 +157,16 @@ export default function CreatePlaylist(props) {
           songAction={"add"}
         />
       ) : null}
-      <div className="createplaylist--info">
-        <div className="createplaylist--song--cover">
-          <img src={previewCover} alt="playlist" />
-          <label className="createplaylist--custom-file-upload">
+      <div className="updateplaylist--info">
+        <div className="updateplaylist--song--cover">
+          <img src={imageWasChanged ? previewCover : playlist?.playlistCoverUrl} alt="playlist" />
+          <label className="updateplaylist--custom-file-upload">
             <input
               type="file"
               name="cover"
               value=""
               accept="image/*"
-              className="createplaylist--gradient--btn createplaylist--image--btn createplaylist--hide--file"
+              className="updateplaylist--gradient--btn updateplaylist--image--btn updateplaylist--hide--file"
               onChange={handleImageFileChange}
             />
             Choose Image{" "}
@@ -154,9 +177,9 @@ export default function CreatePlaylist(props) {
             />
           </label>
         </div>
-        <div className="createplaylist--stats--info">
-          <input type="text" id="playlisttitle" placeholder="Playlist Name" onChange={handlePlaylistName}/>
-          <div className="createplaylist--release--info">
+        <div className="updateplaylist--stats--info">
+          <input type="text" id="playlisttitle" placeholder="Playlist Name" value={playlist && playlist.playlistName} onChange={handlePlaylistName}/>
+          <div className="updateplaylist--release--info">
             {/* <h5>2014</h5> */}
             {/* <h6>PLAYLIST</h6> */}
           </div>
@@ -164,29 +187,29 @@ export default function CreatePlaylist(props) {
         </div>
       </div>
 
-      <div className="createplaylist--addsongs">
-        <div className="createplaylist--searchbar">
+      <div className="updateplaylist--addsongs">
+        <div className="updateplaylist--searchbar">
           {/* <input type="text" id="searchbar" placeholder="Search Songs"/> */}
-          <div className="createplaylist--createbtn">
+          <div className="updateplaylist--createbtn">
             <input
               type="submit"
-              value="Create"
-              className="createplaylist--gradient--btn createplaylist--submit--btn"
+              value="Update"
+              className="updateplaylist--gradient--btn updateplaylist--submit--btn"
               onClick={handleSubmit}
             />
           </div>
           <input
             type="button"
             value="Add Songs"
-            className="createplaylist--gradient--btn createplaylist--addsongsbtn"
+            className="updateplaylist--gradient--btn updateplaylist--addsongsbtn"
             onClick={togglePop}
           />
-          <div className="createplaylist--addedsongs"></div>
+          <div className="updateplaylist--addedsongs"></div>
         </div>
 
-        <div className="createplaylist--songs">
-          {playlistSongList &&
-            playlistSongList.map((item, index) => {
+        <div className="updateplaylist--songs">
+          { playlist.songList &&
+            playlist.songList.map((item, index) => {
               return (
                 <PlaylistSong
                   key={index}

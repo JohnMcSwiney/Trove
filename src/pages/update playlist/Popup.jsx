@@ -21,16 +21,16 @@ export default function PopUp(props) {
       // }
      
        return (
-        <div className="createplaylist--modal">
-          <div className="createplaylist--modal_content">
-          <div className="createplaylist--delsong">
+        <div className="updateplaylist--modal">
+          <div className="updateplaylist--modal_content">
+          <div className="updateplaylist--delsong">
                     <img src="../assets/xsongsymbol.png" alt="deletesongicon" onClick={handleClick} />
           </div>
-          {/* <span className="createplaylist--close" onClick={handleClick}>&times;    </span> */}
+          {/* <span className="updateplaylist--close" onClick={handleClick}>&times;    </span> */}
           <input type="text" id="searchbar" value={props.search} name="songSearch" placeholder="Search Songs" onChange={((e) => props.setSearch(e.target.value))}/>
           {/* <p>I'm A Pop Up!!!</p> */}
 
-          <div className="createplaylist--songs createplaylist--add">
+          <div className="updateplaylist--songs updateplaylist--add">
             {
                !props.done ? <LoadingSearch /> :
                     <div>
@@ -46,22 +46,6 @@ export default function PopUp(props) {
                       </div>
                     )}
                     </div>
-
-
-                    // props.albumSongs && props.albumSongs.map((item, index)=>{
-                    // if(item.title.includes(props.search) && props.search != "") {
-                    //   return(
-                    //     <PlaylistSong
-                    //     key={index}
-                    //     {...item}
-                    //     index={index}
-                    //     song={item}
-                    //     handleRemoveSong={props.handleRemoveSong}
-                    //     addPlaylistSongs={props.addPlaylistSongs}
-                    //     songActionImg={props.songActionImg}
-                    //     songAction={"add"}
-                    //     />
-                    //     ) }})
                         }
             </div>
           </div>

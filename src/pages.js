@@ -14,5 +14,6 @@ export { default as FollowersPage } from "./FollowersPage/FollowersPage.jsx";
 export { default as FollowingPage } from "./FollowingPage/FollowingPage.jsx";
 export { default as PlaylistPage } from "./PlaylistPage/PlaylistPage.jsx";
 export { default as CreatePlaylistPage } from "./pages/create playlist/CreatePlaylist.jsx";
+export { default as UpdatePlaylistPage } from "./pages/update playlist/UpdatePlaylist.jsx";
 
 export { default as Album } from './pages/album/Album.jsx';
