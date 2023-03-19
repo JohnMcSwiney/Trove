@@ -12,8 +12,11 @@ export default function PlaylistSong({ song }) {
     }
   }
 
+  const handleBS = () => {
+    console.log(song);
+  };
   return (
-    <div className="playlist--song">
+    <div className="playlist--song" onClick={handleBS}>
       <div className="playlist--tiny--cover">
         <img src={song.imgUrl} alt="playlistcover" />
         <img src="../assets/playmask.png" id="playmask" alt="albumcover" />
