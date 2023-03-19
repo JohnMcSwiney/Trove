@@ -2,7 +2,7 @@ import React, { createContext, useContext } from "react";
 import Song from "../../components/song detail/Song";
 import SearchSongCard2 from "../../components/cards/search_items/searchSongCard/searchSongCard2";
 import { MusicContext } from "../../contexts/MusicContext";
-import { Navigate, NavLink } from "react-router-dom";
+import { Navigate, NavLink, useNavigate } from "react-router-dom";
 import { GoSearch } from "react-icons/go";
 
 import LoadingSearch from "../../components/loadingitems/loadingSearch/LoadingSearch";
@@ -77,7 +77,11 @@ const Search = () => {
                           alt="avatar"
                         />
                       </div>
-                      <div className="artistNameCont">{artist.artistName}</div>
+                      <div className="artistNameCont">
+                        <NavLink to={`/artist/${artist._id}`}>
+                          {artist.artistName}
+                        </NavLink>
+                      </div>
                     </div>
                     <h3 className="artSearchSongHeader">Songs</h3>
                     {searchResult.songs

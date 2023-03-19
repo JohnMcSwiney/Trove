@@ -1,15 +1,13 @@
 import React, { useState } from "react";
 import "./Artist.css";
-import tempImg from "./temp-imgs/artistPicPlaceholder.png";
+
 import CardPlaylist from "../../components/cards/card_playlist/CardPlaylist";
 import CardAlbum from "../../components/cards/card_album/CardAlbum";
-
 import FeaturedArtist from "../../components/featured_artist/FeaturedArtist";
 import GenreCard from "../../components/cards/card_genre/CardGenre";
-
 import DiscoveryGame from "../../components/discoverygame/DiscoveryGame";
-
 import Popup from "reactjs-popup";
+import Song from "../../components/song detail/Song";
 import { useParams } from "react-router-dom";
 
 const Artist = () => {
@@ -38,8 +36,8 @@ const Artist = () => {
     findArtist();
   }, [id]);
 
-  const [songs, setSongs] = React.useState(null);
-  const [albums, setAlbum] = React.useState(null);
+  const [songs, setSongs] = React.useState([]);
+  const [albums, setAlbum] = React.useState([]);
 
   React.useEffect(() => {
     const fetchSongs = async () => {
@@ -82,7 +80,7 @@ const Artist = () => {
             </div>
             <div className="follower_cont">
               <div>
-                <h2>{artist?.followers}</h2>
+                <h2>{artist?.followers.length}</h2>
                 <h1>Followers</h1>
               </div>
               <button>Follow</button>
@@ -137,10 +135,15 @@ const Artist = () => {
 
       <div className="account-splitter"></div>
       <div className="artist-showcase">
-        <h1>Created Playlists:</h1>
-        <div className="CardCont">
-          <CardPlaylist />
-        </div>
+        <h1>{artist?.artistName}'s Songs</h1>
+
+        {songs &&
+          songs.length > 0 &&
+          songs.map((data) => (
+            <div className="CardCont" key={data._id}>
+              <Song song={data} />
+            </div>
+          ))}
       </div>
       <div className="account-splitter"></div>
 
