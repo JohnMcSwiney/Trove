@@ -37,11 +37,19 @@ const artistSchema = mongoose.Schema({
   artistFollowers: {
     type: Number,
   },
+  
+  followers: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      default: null
+    }
+  ],
   albumList: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Artist",
-      default: null,
+      default: null
     },
   ],
   albumArtURL: {
@@ -52,7 +60,7 @@ const artistSchema = mongoose.Schema({
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Song",
-      default: null,
+      default: null
     },
   ],
   isPublished: {
