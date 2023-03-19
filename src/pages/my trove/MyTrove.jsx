@@ -5,10 +5,7 @@ import CardPlaylist from "../../components/cards/card_playlist/CardPlaylist";
 import FeaturedArtist from "../../components/featured_artist/FeaturedArtist";
 import GenreCard from "../../components/cards/card_genre/CardGenre";
 
-import {
-  Likeid,
-  Dislikeid,
-} from "../../components/discoverygame/DiscoveryGame";
+import {Likeid, Dislikeid} from "../../components/discoverygame/DiscoveryGame";
 
 import { useAuthContext } from "../../hooks/user-hooks/useAuthContext";
 import { NavLink } from "react-router-dom";
