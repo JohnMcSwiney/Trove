@@ -82,7 +82,6 @@ useEffect(() => {
     setLikedsongs(alikedsong);
   } else {
     setLikedsongs(LikeData);
-
   }
 
 }, []);
@@ -97,7 +96,11 @@ const handleAddLikedSongs = () => {
 
   localStorage.setItem("likedSongs", JSON.stringify(updateLikes));
 
-
+  fetch("/add-song", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ likedsongs }),
+  })
 };
 
 
