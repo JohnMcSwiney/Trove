@@ -773,7 +773,7 @@ body {
 .createplaylist--song--options {
   display: flex;
   margin-left: 50vmin;
-  margin-top: -8vmin;
+  margin-top: -4.5vmin;
 
 }
 
@@ -915,16 +915,16 @@ body {
 
 }
 
-.createplaylist--add > .createplaylist--song{
-  width: 100%;
-  background-color: #080c3d;
-  width: 95%;
+.createplaylist--add  .createplaylist--song{
+  /* width: 100%; */
+  background-color: #0b0b35;
+  width: 85%;
 
 }
 
-.createplaylist--add > .createplaylist--song > .createplaylist--song--options{
-  margin-left: 55vw; 
-  margin-top: -14vmin;
+.createplaylist--add .createplaylist--song .createplaylist--song--options{
+  margin-left:30vw; 
+  /* margin-top: -14vmin; */
 }
 
 .createplaylist--add > .createplaylist--song > .createplaylist--delsong > img{

@@ -5,7 +5,10 @@ import CardPlaylist from "../../components/cards/card_playlist/CardPlaylist";
 import FeaturedArtist from "../../components/featured_artist/FeaturedArtist";
 import GenreCard from "../../components/cards/card_genre/CardGenre";
 
-import {Likeid, Dislikeid} from "../../components/discoverygame/DiscoveryGame";
+import {
+  Likeid,
+  Dislikeid,
+} from "../../components/discoverygame/DiscoveryGame";
 
 import { useAuthContext } from "../../hooks/user-hooks/useAuthContext";
 import { NavLink } from "react-router-dom";
@@ -27,11 +30,21 @@ const MyTrove = () => {
       const data = await response.json();
 
       setPlaylists(data);
-      console.log(data);
     };
     fetchPlaylists();
   }, []);
-  console.log(playlists);
+
+  const [userInfo, setUserInfo] = useState([]);
+  React.useEffect(() => {
+    const fetchUserInfo = async () => {
+      const response = await fetch(`/api/users/${userID}`);
+      const data = await response.json();
+
+      setUserInfo(data);
+    };
+    fetchUserInfo();
+  }, []);
+
   return (
     <div className="container">
       <div className="myTrvcontainer ">
@@ -104,13 +117,15 @@ const MyTrove = () => {
         <div className="account-showcase">
           <div className="TPlikedSongs">
             <h1>Liked Songs</h1>
-            <ul>
-              {likes.map((item) => (
-                <li key={item.id}>
-                  {item.songName} - {item.author}
-                </li>
+
+            {userInfo.likedSongs &&
+              userInfo?.likedSongs.map((song) => (
+                <div key={song._id}>
+                  <p>
+                    {song.title} - {song.artist?.artistName}
+                  </p>
+                </div>
               ))}
-            </ul>
           </div>
 
           {/* <div className="TPDislikedSongs">

@@ -15,19 +15,20 @@ export default function PlaylistSong(props) {
 
     }
     
+    console.log(props.song);
     return (
         <div className="createplaylist--song">
                 <div className="createplaylist--delsong">
                     <img src={props.songActionImg} alt="deletesongicon" onClick={ () =>  props.handleRemoveSong(props.song, props.songAction)} />
                 </div>
                 <div className="createplaylist--tiny--cover">
-                        <img src={props.cover} alt="playlistcover"/>
+                        <img src={props.song.imgUrl} alt="playlistcover"/>
                         <img src='../assets/playmask.png' id="playmask" alt="albumcover"/>
                 </div>                
                 <div className="createplaylist--song--info">
-                        <h5>{props.title}</h5>
-                        <h6>{props.artist}</h6>
-                        <h5><span>{props.duration}</span></h5>
+                        <h5>{props.song.title}</h5>
+                        <h6>{props.song.artist?.artistName}</h6>
+                        {/* <h5><span>{props.duration}</span></h5> */}
                        
                 </div>
                 <div className="createplaylist--song--options">
