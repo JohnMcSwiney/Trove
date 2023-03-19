@@ -11,18 +11,54 @@ import { useCreatePlaylist } from "../../hooks/user-hooks/useCreatePlaylist";
 
 // To create a playlist
 export default function CreatePlaylist(props) {
+  //search
+  const [songs, setSongs] = React.useState(null);
+  const [songData, setSongData] = React.useState(null);
+  const [search, setSearch] = React.useState("");
+  const [searchResult, setSearchResult] = React.useState({});
+  const [done, setDone] = React.useState(true);
+
+  const searchAPI = React.useEffect(() => {
+    const fetchSearch = async () => {
+      
+      if (search == ""){
+        console.log(" this shit empty");
+        setDone(true);
+        return;
+      } else {
+        setDone(false)
+        setTimeout(() => {
+          fetch(`/api/search/${search}`)
+          
+          .then((response) => response.json())
+          .then((json) => {
+            setSearchResult(json);
+            setDone(true);
+          });
+        }, 500)
+      }
+      
+    };
+    fetchSearch();
+  }, [search]);
+
+  // user id
   const user = localStorage.getItem("user");
   const id = JSON.parse(user).id;
 
+  //playlist val states
   const default_album = "../assets/default_playlistcover.png";
   const addSongImg = "../assets/addsongsymbol.png";
   const removeSongImg = "../assets/xsongsymbol.png";
   const [previewCover, setPreviewCover] = React.useState(default_album);
   const [albumSongs, setAlbumSongs] = React.useState(albumsongs);
-  const [playlistSongList, setPlaylistSongList] = React.useState(albumsongs);
+  const [playlistSongList, setPlaylistSongList] = React.useState([]);
+  const [songList, setSongList] = React.useState([]);
 
   const [playlistName, setPlaylistName] = React.useState("");
   const [imageFile, setImageFile] = React.useState();
+
+  //handle changes
   const handleImageFileChange = (e) => {
     setImageFile(e.target.files[0]);
     setPreviewCover(URL.createObjectURL(e.target.files[0]));
@@ -33,18 +69,26 @@ export default function CreatePlaylist(props) {
     
   };
 
+  // remove song from playlist creation
   function handleRemoveSong(song, songAction) {
-    console.log(song.idno);
+    console.log(song._id);
 
     if (songAction === "remove") {
-      const newList = playlistSongList.filter((item) => item.idno !== song.idno);
+      const newList = playlistSongList.filter((item) => item._id !== song._id);
+      const newSongList = songList.filter((item) => item !== song._id);
 
       setPlaylistSongList(newList);
+      setSongList(newSongList);
+
+      console.log("DEL SONG" + songList)
     } else if (songAction === "add") {
       setPlaylistSongList((prevPlaylistSongs) => [...prevPlaylistSongs, song]);
+      setSongList((prevSongList) => [...prevSongList, song._id]);
+      console.log("ADD SONG " + songList)
     }
   }
 
+  // modal popup state
   const [modalIsOpen, setIsOpen] = React.useState(false);
 
   function togglePop() {
@@ -52,10 +96,12 @@ export default function CreatePlaylist(props) {
     console.log("OPENED!");
   }
 
+  // add song to playlist
   function addPlaylistSongs(newSong) {
     setAlbumSongs((prevAlbumSongs) => [...prevAlbumSongs, newSong]);
   }
 
+  // submit playlist
   const { uploadPlaylist, error } = useCreatePlaylist();
   const handleSubmit = async (e) => {
     console.log("CLICKED SUBMIT")
@@ -66,6 +112,7 @@ export default function CreatePlaylist(props) {
         playlistName,
         id,
         imageFile,
+        songList
       );
     } catch (error) {
       console.log(error);
@@ -85,6 +132,12 @@ export default function CreatePlaylist(props) {
           albumSongs={albumSongs}
           songActionImg={addSongImg}
           handleRemoveSong={handleRemoveSong}
+          search={search}
+          setSearch={setSearch}
+          done={done}
+          setSongData={setSongData}
+          searchResult={searchResult}
+          songAction={"add"}
         />
       ) : null}
       <div className="createplaylist--info">
@@ -149,6 +202,8 @@ export default function CreatePlaylist(props) {
                   handleRemoveSong={handleRemoveSong}
                   songActionImg={removeSongImg}
                   songAction={"remove"}
+
+                  
                 />
               );
             })}

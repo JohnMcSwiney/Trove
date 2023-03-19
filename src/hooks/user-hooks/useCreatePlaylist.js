@@ -10,7 +10,8 @@ export const useCreatePlaylist = () => {
   const uploadPlaylist = async (
     playlistName,
     id, 
-    imageFile
+    imageFile, 
+    songList
   ) => {
 
     const storageRef = storage.ref();
@@ -92,7 +93,8 @@ export const useCreatePlaylist = () => {
         body: JSON.stringify({
           playlistName,
           id, 
-          playlistCoverUrl: playlistCoverUrl
+          playlistCoverUrl: playlistCoverUrl,
+          songList
         }),
       });
 

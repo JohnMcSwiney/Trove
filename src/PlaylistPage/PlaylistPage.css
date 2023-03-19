@@ -208,7 +208,8 @@ body {
   .playlist--song--options {
     display: flex;
     margin-left: 105vmin;
-    margin-top: -8vmin;
+    margin-top: -5vmin;
+    padding-right: 3vmin;
   }
 
   #playlist--song--heart, #playlist--song--share, #playlist--song--more {
@@ -397,7 +398,7 @@ body {
 
   .playlist--song--options {
     display: flex;
-    margin-left: 65vmin;
+    margin-left: 55vmin;
     margin-top: -10vmin;
   }
 

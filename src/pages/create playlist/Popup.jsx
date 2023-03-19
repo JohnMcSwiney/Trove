@@ -1,19 +1,24 @@
 import React from "react";
 import PlaylistSong from "./PlaylistSong";
+import { Navigate, NavLink } from "react-router-dom";
+
+
+//for searching songs
+import LoadingSearch from "../../components/loadingitems/loadingSearch/LoadingSearch";
 
 export default function PopUp(props) { 
       function handleClick() {
         props.togglePop();
        };
 
-      const [songSearched, setSongSearched] = React.useState({
-        title: ""
-      });
+      // const [songSearched, setSongSearched] = React.useState({
+      //   title: ""
+      // });
 
-      function handleChange(event) {
-        const {name, value} = event.target
-        setSongSearched( prevSongSearched => ({...prevSongSearched, title: value}))
-      }
+      // function handleChange(event) {
+      //   const {name, value} = event.target
+      //   setSongSearched( prevSongSearched => ({...prevSongSearched, title: value}))
+      // }
      
        return (
         <div className="createplaylist--modal">
@@ -22,26 +27,43 @@ export default function PopUp(props) {
                     <img src="../assets/xsongsymbol.png" alt="deletesongicon" onClick={handleClick} />
           </div>
           {/* <span className="createplaylist--close" onClick={handleClick}>&times;    </span> */}
-          <input type="text" id="searchbar" value={songSearched.title} name="songSearch" placeholder="Search Songs" onChange={handleChange}/>
+          <input type="text" id="searchbar" value={props.search} name="songSearch" placeholder="Search Songs" onChange={((e) => props.setSearch(e.target.value))}/>
           {/* <p>I'm A Pop Up!!!</p> */}
 
           <div className="createplaylist--songs createplaylist--add">
             {
-              
-                    props.albumSongs && props.albumSongs.map((item, index)=>{
-                    if(item.title.includes(songSearched.title) && songSearched.title != "") {
-                      return(
-                        <PlaylistSong
-                        key={index}
-                        {...item}
-                        index={index}
-                        song={item}
-                        handleRemoveSong={props.handleRemoveSong}
-                        addPlaylistSongs={props.addPlaylistSongs}
-                        songActionImg={props.songActionImg}
-                        songAction={"add"}
-                        />
-                        ) }})}
+               !props.done ? <LoadingSearch /> :
+                    <div>
+                      {props.searchResult.songs && props.search.length > 0 && (
+                      <div>
+                        {props.searchResult.songs.map((song, index) => (
+                          <PlaylistSong key={song._id} song={song} setSongData={props.setSongData}
+                          handleRemoveSong={props.handleRemoveSong}
+                          addPlaylistSongs={props.addPlaylistSongs}
+                          songActionImg={props.songActionImg}
+                          songAction={"add"}
+                          />
+                        ))}
+                      </div>
+                    )}
+                    </div>
+
+
+                    // props.albumSongs && props.albumSongs.map((item, index)=>{
+                    // if(item.title.includes(props.search) && props.search != "") {
+                    //   return(
+                    //     <PlaylistSong
+                    //     key={index}
+                    //     {...item}
+                    //     index={index}
+                    //     song={item}
+                    //     handleRemoveSong={props.handleRemoveSong}
+                    //     addPlaylistSongs={props.addPlaylistSongs}
+                    //     songActionImg={props.songActionImg}
+                    //     songAction={"add"}
+                    //     />
+                    //     ) }})
+                        }
             </div>
           </div>
         </div>
