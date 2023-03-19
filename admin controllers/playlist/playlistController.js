@@ -66,15 +66,17 @@ const createPlaylist = async (req, res) => {
     let songList=[];
     let song;
 
-    for(i = 0; i < req.body.songList.length; i++) {
-        song = await Song.findOne({ _id: req.body.songList[i]});
-        songList = [...songList, song._id];
-        console.log(songList)
+    if(req.body.songList) {
+        for(i = 0; i < req.body.songList.length; i++) {
+            song = await Song.findOne({ _id: req.body.songList[i]});
+            songList = [...songList, song._id];
+            console.log(songList)
 
-    if (!song) {
-      throw new Error("Please sign in to play this SONG");
-    }
-  
+        if (!song) {
+          throw new Error("Please sign in to play this SONG");
+        }
+      
+      }
   }
 
     const playlist = new Playlist({

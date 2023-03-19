@@ -38,5 +38,8 @@
   "bugs": {
     "url": "https://github.com/Dan1Nguyen01/trove_api/issues"
   },
-  "homepage": "https://github.com/Dan1Nguyen01/trove_api#readme"
+  "homepage": "https://github.com/Dan1Nguyen01/trove_api#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.21"
+  }
 }
