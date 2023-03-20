@@ -436,7 +436,7 @@ const DiscoveryGame = () => {
         <div>
           <button onClick={() => { console.log("Liked ids:" + likedIds + " | " + "Disliked ids:" + dislikedIds) }} > View Likes & Dislikes</button>
 
-          {/* will remove soon just for testing purposes */}
+          {/* will remove soon just for testing purposes 
 
           <ul>
             {likedsongs.map((item) => (
@@ -444,6 +444,7 @@ const DiscoveryGame = () => {
             ))}
           </ul>
 
+          */}
         </div>
 
       </div>
