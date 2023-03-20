@@ -219,21 +219,24 @@ const MyAccount = () => {
                       onChange={e => setPassword(e.target.value)}
                       value={password}
                     />
-
                     <label htmlFor='newpassword'>New password</label>
-                    {showPassword ? (
-                      <BiShow onClick={toggleHidden} />
-                    ) : (
-                      <AiOutlineEyeInvisible onClick={toggleHidden} />
-                    )}
-                    <input
-                      type={showPassword ? 'text' : 'password'}
-                      id='newpassword'
-                      className='form-control'
-                      placeholder='New password'
-                      onChange={e => setNewPassword(e.target.value)}
-                      value={newPassword}
-                    />
+                    <div className='newPasswordCont'>
+                      
+                      {showPassword ? (
+                        <BiShow onClick={toggleHidden} className="eyeIcon"/>
+                      ) : (
+                        <AiOutlineEyeInvisible onClick={toggleHidden} className="eyeIcon"/>
+                      )}
+                      <input
+                        type={showPassword ? 'text' : 'password'}
+                        id='newpassword'
+                        className='form-control'
+                        placeholder='New password'
+                        onChange={e => setNewPassword(e.target.value)}
+                        value={newPassword}
+                      />
+                    </div>
+                      
 
                     <button className='btn btn-primary mt-3'>
                       Change Password

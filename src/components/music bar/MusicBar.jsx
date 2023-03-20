@@ -11,8 +11,6 @@ import { Tooltip } from "react-tooltip"; //react tool tip used in explicit tag
 import CardSong from "../cards/card_song/CardSong";
 import Song from "../../components/song detail/Song";
 
-import { MusicContext } from "../../contexts/MusicContext";
-
 import styles from "./AudioPlayer.module.css";
 import "./fullscreenMusicBar.css";
 import "./musicbar.css";
@@ -43,6 +41,8 @@ import Trv_Chest from "../../assets/Trv_icons/Tvr_lib_icon.ico";
 //
 import { useLikeSong } from "../../hooks/user-hooks/useLikeSong";
 import { useUnlikeSong } from "../../hooks/user-hooks/useUnlikeSong";
+
+import { MusicContext } from "../../contexts/MusicContext";
 
 const MusicBar = () => {
   const [newSong, setNewSong] = useState();
