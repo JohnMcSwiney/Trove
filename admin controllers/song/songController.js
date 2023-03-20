@@ -537,7 +537,9 @@ const getArtistSong = async (req, res) => {
     return res.status(404).json({ error: "This artist is not available" });
   }
 
-  const songs = await Song.find({ artist: id }).sort({ createdAt: -1 });
+  const songs = await Song.find({ artist: id })
+    .sort({ createdAt: -1 })
+    .populate("artist");
   if (!songs) {
     return res.status(404).json({ error: "You don't have any song" });
   }
