@@ -109,8 +109,8 @@ const followArtist = async (req, res) => {
     }
 
     // const {userID} = req.body;
-    const cookie = req.cookie;
-    console.log(req.cookie);
+    const cookie = req.cookies;
+    console.log(req.cookies);
     const cookieData = JSON.parse(cookie.substr(2));
     const userID = cookieData.id;
     console.log("userID is her ", userID);
