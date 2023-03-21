@@ -16,7 +16,7 @@ import {
 } from "../../components/discoverygame/DiscoveryGame";
 
 import { useAuthContext } from "../../hooks/user-hooks/useAuthContext";
-import { Navigate, useNavigate, Link, NavLink } from 'react-router-dom';
+import { Navigate, useNavigate, Link, NavLink } from "react-router-dom";
 const MyTrove = () => {
   const [index, setIndex] = React.useState(0);
   const [likeArray, setlikeArray] = useState();
@@ -24,13 +24,12 @@ const MyTrove = () => {
 
   const [likes, setLikes] = useState([]);
   const { user } = useAuthContext();
-  const userID = JSON.parse(localStorage.getItem("user")).id;
 
   const [playlists, setPlaylists] = useState([]);
 
   React.useEffect(() => {
     const fetchPlaylists = async () => {
-      const response = await fetch(`/api/playlists/mylist/${userID}`);
+      const response = await fetch(`/api/playlists/mylist/${user.id}`);
       // const response = await fetch(`/api/playlists`);
       const data = await response.json();
 
@@ -39,25 +38,22 @@ const MyTrove = () => {
     fetchPlaylists();
   }, []);
 
-
-  
-const navigate = useNavigate()
+  const navigate = useNavigate();
   const redirectCreatePlaylist = () => {
-    navigate('../CreatePlaylist')
-  }
+    navigate("../CreatePlaylist");
+  };
 
-
-  const [userInfo, setUserInfo] = useState([]);
+  const [userInfo, setUserInfo] = useState({});
   React.useEffect(() => {
     const fetchUserInfo = async () => {
-      const response = await fetch(`/api/users/${userID}`);
+      const response = await fetch(`/api/users/${user.id}`);
       const data = await response.json();
 
       setUserInfo(data);
     };
     fetchUserInfo();
   }, []);
-
+  console.log(userInfo.likedArtists);
   return (
     <div className="container">
       <div className="myTrvcontainer ">
@@ -82,7 +78,17 @@ const navigate = useNavigate()
         <div className="mytrove-splitter"></div>
 
         <div className="account-showcase-lg">
-          <h1>{user?.displayedName}'s Favourite Artist: </h1>
+          {userInfo?.likedArtists?.length > 0 && (
+            <div>
+              <h2>{user?.displayName}'s Favourite Artist: </h2>
+              {userInfo.likedArtists &&
+                userInfo.likedArtists.map((artistData) => (
+                  <div key={artistData._id}>
+                    <p>{artistData.artistName}</p>
+                  </div>
+                ))}
+            </div>
+          )}
 
           <div className="CardCont">
             {/* <FeaturedArtist
@@ -103,28 +109,26 @@ const navigate = useNavigate()
             /> */}
           </div>
         </div>
-        
+
         <div className="account-showcase">
           <div className="showcase-title-cont">
             <h1>Playlists:</h1>
             <div className="mytrove-splitter"></div>
           </div>
           <div className="showcase-items-cont">
-          <button className="newPlaylistBtn" onClick={redirectCreatePlaylist}>
+            <button className="newPlaylistBtn" onClick={redirectCreatePlaylist}>
               <div className="newPlaylistBtnText">Create New Playlist</div>
               <div className="newPlaylistPlusBtn">+</div>
             </button>
-          {playlists &&
-            playlists.length > 0 &&
-            playlists.map((playlist) => (
-              <div className="CardCont">
-                <div className="responsiveCardTest">
-                  <CardPlaylist key={playlist._id} playlist={playlist} />
+            {playlists?.length > 0 &&
+              playlists.map((playlist) => (
+                <div className="CardCont">
+                  <div className="responsiveCardTest">
+                    <CardPlaylist key={playlist._id} playlist={playlist} />
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
           </div>
-            
         </div>
         <div className="mytrove-splitter"></div>
         <div className="account-showcase">
@@ -139,18 +143,20 @@ const navigate = useNavigate()
         </div>
         <div className="mytrove-splitter"></div>
         <div className="account-showcase">
-          <div className="TPlikedSongs">
-            <h1>Liked Songs</h1>
+          {userInfo?.likedSongs?.length > 0 && (
+            <div className="TPlikedSongs">
+              <h1>Liked Songs</h1>
 
-            {userInfo.likedSongs &&
-              userInfo?.likedSongs.map((song) => (
-                <div key={song._id}>
-                  <p>
-                    {song.title} - {song.artist?.artistName}
-                  </p>
-                </div>
-              ))}
-          </div>
+              {userInfo.likedSongs &&
+                userInfo?.likedSongs.map((song) => (
+                  <div key={song._id}>
+                    <p>
+                      {song.title} - {song.artist?.artistName}
+                    </p>
+                  </div>
+                ))}
+            </div>
+          )}
 
           {/* <div className="TPDislikedSongs">
             <h1>Disliked Songs</h1>

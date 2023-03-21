@@ -22,10 +22,8 @@ const NavBar = (props) => {
   /* Starts line 109 */
 
   const [isArtist, setIsArtist] = useState(true);
-  let user = localStorage.getItem("user");
 
-  const isLoginID = user ? JSON.parse(user).id : "";
-
+  const { user } = useAuthContext();
   //responsive
   const [displayLogout, setDisplayLogout] = useState(window.innerWidth > 800);
   useEffect(() => {
@@ -85,8 +83,6 @@ const NavBar = (props) => {
             </div>
           </div>
         </Link>
-
-
 
         {user && (
           <>

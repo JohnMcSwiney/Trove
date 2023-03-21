@@ -1,12 +1,13 @@
 import { useState, useContext } from "react";
 import { MusicContext } from "../../contexts/MusicContext";
+import { useAuthContext } from "./useAuthContext";
 export const useLikeSong = () => {
   const [likeError, setLikeError] = useState(null);
   const [likeIsLoading, setLikeIsLoading] = useState(false);
 
   const { currentSong } = useContext(MusicContext);
-  const user = localStorage.getItem("user");
-  const userID = user ? JSON.parse(user).id : null;
+  const { user } = useAuthContext();
+  const userID = user._id;
   const like = async () => {
     setLikeIsLoading(true);
     setLikeError(null);
