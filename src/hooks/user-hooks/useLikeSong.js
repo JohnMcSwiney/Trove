@@ -7,14 +7,14 @@ export const useLikeSong = () => {
 
   const { currentSong } = useContext(MusicContext);
   const { user } = useAuthContext();
-  const userID = user._id;
+
   const like = async () => {
     setLikeIsLoading(true);
     setLikeError(null);
     const response = await fetch(`/api/songs/liked/${currentSong._id}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ userID }),
+      body: JSON.stringify(`${user.id}`),
     });
     const json = await response.json();
 

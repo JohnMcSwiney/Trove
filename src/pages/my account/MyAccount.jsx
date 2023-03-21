@@ -20,11 +20,11 @@ const MyAccount = () => {
   const { user } = useAuthContext();
 
   const [imgPath, setImagePath] = React.useState("./img/user-demo.png");
-  const [email, setEmail] = React.useState(user.email);
-  const [displayName, setDisPlayName] = React.useState(user.displayName);
+  const [email, setEmail] = React.useState(`${user?.email}`);
+  const [displayName, setDisPlayName] = React.useState(`${user?.displayName}`);
   const [password, setPassword] = React.useState("");
   const [newPassword, setNewPassword] = React.useState("");
-  const [dob, setDOB] = React.useState(user.dob);
+  const [dob, setDOB] = React.useState(`${user?.dob}`);
   const [newEmail, setNewEmail] = React.useState("");
   const [cPassword, setCPassword] = React.useState("");
 

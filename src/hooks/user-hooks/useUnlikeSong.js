@@ -7,14 +7,14 @@ export const useUnlikeSong = () => {
 
   const { currentSong } = useContext(MusicContext);
   const { user } = useAuthContext();
-  const userID = user.id;
+
   const unlike = async () => {
     setunLikeIsLoading(true);
     setUnlikeError(null);
     const response = await fetch(`/api/songs/removelike/${currentSong._id}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ userID }),
+      body: JSON.stringify(`${user.id}`),
     });
     const json = await response.json();
 
