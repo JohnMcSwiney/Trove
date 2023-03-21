@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from "react";
+
 import "./UserAccStyle.css";
+
 import tempImg from "./temp-imgs/derek.png";
+
 import CardPlaylist from "../../components/cards/card_playlist/CardPlaylist";
+
 import FeaturedArtist from "../../components/featured_artist/FeaturedArtist";
+
 import GenreCard from "../../components/cards/card_genre/CardGenre";
 
 import {
@@ -11,7 +16,7 @@ import {
 } from "../../components/discoverygame/DiscoveryGame";
 
 import { useAuthContext } from "../../hooks/user-hooks/useAuthContext";
-import { NavLink } from "react-router-dom";
+import { Navigate, useNavigate, Link, NavLink } from 'react-router-dom';
 const MyTrove = () => {
   const [index, setIndex] = React.useState(0);
   const [likeArray, setlikeArray] = useState();
@@ -33,6 +38,14 @@ const MyTrove = () => {
     };
     fetchPlaylists();
   }, []);
+
+
+  
+const navigate = useNavigate()
+  const redirectCreatePlaylist = () => {
+    navigate('../CreatePlaylist')
+  }
+
 
   const [userInfo, setUserInfo] = useState([]);
   React.useEffect(() => {
@@ -66,7 +79,7 @@ const MyTrove = () => {
           </div>
         </div>
 
-        <div className="account-splitter"></div>
+        <div className="mytrove-splitter"></div>
 
         <div className="account-showcase-lg">
           <h1>{user?.displayedName}'s Favourite Artist: </h1>
@@ -90,19 +103,30 @@ const MyTrove = () => {
             /> */}
           </div>
         </div>
-        <div className="account-splitter"></div>
+        
         <div className="account-showcase">
-          <h1>Created Playlists:</h1>
-
+          <div className="showcase-title-cont">
+            <h1>Playlists:</h1>
+            <div className="mytrove-splitter"></div>
+          </div>
+          <div className="showcase-items-cont">
+          <button className="newPlaylistBtn" onClick={redirectCreatePlaylist}>
+              <div className="newPlaylistBtnText">Create New Playlist</div>
+              <div className="newPlaylistPlusBtn">+</div>
+            </button>
           {playlists &&
             playlists.length > 0 &&
             playlists.map((playlist) => (
               <div className="CardCont">
-                <CardPlaylist key={playlist._id} playlist={playlist} />
+                <div className="responsiveCardTest">
+                  <CardPlaylist key={playlist._id} playlist={playlist} />
+                </div>
               </div>
             ))}
+          </div>
+            
         </div>
-        <div className="account-splitter"></div>
+        <div className="mytrove-splitter"></div>
         <div className="account-showcase">
           <h1>Top Genre(s):</h1>
           <div className="CardCont">
@@ -113,7 +137,7 @@ const MyTrove = () => {
             <GenreCard color={"#ff3b0f"} name={"Rock"} percent={"25%"} />
           </div>
         </div>
-        <div className="account-splitter"></div>
+        <div className="mytrove-splitter"></div>
         <div className="account-showcase">
           <div className="TPlikedSongs">
             <h1>Liked Songs</h1>
@@ -141,7 +165,7 @@ const MyTrove = () => {
 
           <br />
         </div>
-        <div className="account-splitter"></div>
+        <div className="mytrove-splitter"></div>
         <div className="account-showcase">
           <h1></h1>
         </div>

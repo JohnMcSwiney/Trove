@@ -10,15 +10,16 @@
     
     
 }
-.account-splitter{
-    width: 80%;
+.mytrove-splitter{
+    width: 90%;
     height: 1px;
     background-color: rgba(128, 128, 128, 0.34);
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
     border-radius: 0.8px;
     padding: 0;
-
+    margin-right: auto;
+    margin-left: 1%;
 }
 .txt-container{
     text-overflow: ellipsis;
@@ -41,6 +42,17 @@
 .txt-container{
     font-size: large;
 }
+}
+@media screen and (min-width: 800px){
+    .CardCont{
+        transition: 0.3s;
+        display: flex;
+        margin-top: 30px;
+        margin-bottom: 10px;
+        overflow: scroll;
+        padding-left: 5px;
+        padding-right: 5px; 
+    }
 }
 .txt-container{
     margin-left: 3px ;
@@ -144,6 +156,7 @@
     /* background-color: #412e67; */
     width: inherit;
     position: relative;
+    flex-direction: column;
 }
 .account-showcase-lg{
     display: flex;
@@ -164,13 +177,17 @@
     color: rgba(255, 255, 255, 0.8);
     margin-left: 10px;
 }
-.account-showcase > h1{
-    position: absolute;
+.showcase-title-cont > h1{
+    /* position: absolute; */
     top: 0;
     left: 0;
-    font-size: large;
+    font-size: xx-large;
     color: rgba(255, 255, 255, 0.8);
     margin-left: 10px;
+    
+}
+.account-showcase > .account-splitter{
+    margin-left: 10vw;
 }
 .CardCont{
     display: flex;
@@ -181,4 +198,51 @@
     padding-right: 5px;
 
     
+}
+.showcase-items-cont{
+    display: flex;
+    flex-direction: row;
+    overflow:scroll;
+    gap: 5px;
+    align-items: center;
+}
+.showcase-title-cont{
+    width: 100%;
+
+}
+.newPlaylistBtn {
+    display: flex;
+    flex-direction: column;
+    background-color: #08265e23;
+    padding: 2px;
+    color: white;
+    opacity: 0.5;
+    border-radius: 15px;
+    border: solid 2px rgba(255, 255, 255, 0.089);
+    max-width: 80px;
+    
+}
+.newPlaylistBtn > .newPlaylistBtnText{
+    opacity: 0.99 !important;
+}
+.newPlaylistPlusBtn{
+    background-color: #8650F4;
+    margin: auto;
+    border-radius: 50%;
+    color: white;
+    font-size: 25px;
+
+    width: 30px;
+    height: 30px;
+    /* text-align: center; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 1px;
+    margin-bottom: 2px;
+    
+}
+
+.newPlaylistBtn:hover{
+    opacity: 0.9;
 }

@@ -113,7 +113,7 @@ const MyAccount = () => {
             <div className='personalInfoCont'>
               <h3>Your personal information</h3>
               <form onSubmit={handleUpdateAccount}>
-                <div className='inner-form'>
+                <div className='inner-form'>\mytrove
                   <div className='inputContainer'>
                     <div className='userimg_displayName'>
                       <div>
