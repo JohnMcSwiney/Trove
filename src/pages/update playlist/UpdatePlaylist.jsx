@@ -81,6 +81,8 @@ export default function UpdatePlaylist(props) {
   React.useEffect(() => {
     setPreviewCover(playlist?.playlistCoverUrl)
     setPlaylistSongList(playlist?.songList)
+    setSongList(playlistSongList?.map((song) => song._id));
+    // setSongList(playlist?.songList._id)
     setPlaylistName(playlist?.playlistName)
   }, [playlist]);
 
@@ -96,7 +98,7 @@ export default function UpdatePlaylist(props) {
     
   };
 
-  // remove song from playlist creation
+  // remove song from playlist songlist
   function handleRemoveSong(song, songAction) {
     console.log(song._id);
 
@@ -123,9 +125,7 @@ export default function UpdatePlaylist(props) {
     console.log("OPENED!");
   }
 
-  function runn() {
-    console.log("this will work!");
-  }
+
 
   // submit playlist
   const { updatePlaylist, error } = useUpdatePlaylist();
