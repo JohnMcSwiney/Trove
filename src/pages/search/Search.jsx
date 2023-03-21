@@ -35,11 +35,6 @@ const Search = () => {
             });
         }, 500);
       }
-
-      // const response = await fetch(`/api/search/${search}`);
-      // const json = await response.json();
-      // setSearchResult(json);
-      // console.log(json);
     };
     fetchSearch();
   }, [search]);
@@ -64,7 +59,17 @@ const Search = () => {
           <LoadingSearch />
         ) : (
           <div>
-            {searchResult.artists && search.length > 0 && (
+            {search.length > 0 &&
+              (searchResult.songs?.length ||
+                0 + searchResult.artists?.length ||
+                0 + searchResult.albums?.length ||
+                0) === 0 && (
+                <div className="search-not-found">
+                  <h3>No result found for "{search}"</h3>
+                </div>
+              )}
+
+            {searchResult.artists?.length > 0 && search.length > 0 && (
               <div className="artSearchContainer">
                 <h2 className="artSearchHeader">Artists</h2>
                 {searchResult.artists.map((artist) => (
@@ -98,7 +103,7 @@ const Search = () => {
               </div>
             )}
 
-            {searchResult.albums && search.length > 0 && (
+            {searchResult.albums?.length > 0 && search.length > 0 && (
               <div>
                 <h2>Albums</h2>
                 {searchResult.albums.map((album) => (
@@ -111,7 +116,7 @@ const Search = () => {
               </div>
             )}
 
-            {searchResult.songs && search.length > 0 && (
+            {searchResult.songs?.length > 0 && search.length > 0 && (
               <div>
                 <h2>Songs</h2>
                 {searchResult.songs.map((song) => (

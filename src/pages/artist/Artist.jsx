@@ -9,6 +9,7 @@ import DiscoveryGame from "../../components/discoverygame/DiscoveryGame";
 import Popup from "reactjs-popup";
 import Song from "../../components/song detail/Song";
 import { useParams } from "react-router-dom";
+import { useFollowArtist } from "../../hooks/user-hooks/useFollowArtist";
 
 const Artist = () => {
   const [likeArray, setlikeArray] = useState();
@@ -67,6 +68,15 @@ const Artist = () => {
     fetchAlbums();
   }, [id]);
 
+  const { follow, followError, isFollowLoading } = useFollowArtist();
+  const [isFollowed, setIsFollowed] = useState(false);
+  const followHandler = () => {
+    setIsFollowed(!isFollowed);
+    if (!isFollowed) {
+      follow(id);
+    }
+  };
+
   return (
     <div className="myTrvcontainer ">
       <div className="pfp_name_follower_bio_cont">
@@ -83,7 +93,7 @@ const Artist = () => {
                 <h2>{artist?.followers.length}</h2>
                 <h1>Followers</h1>
               </div>
-              <button>Follow</button>
+              <button onClick={followHandler}>Follow</button>
             </div>
           </div>
         </div>
