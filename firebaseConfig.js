@@ -1,6 +1,10 @@
 import firebase from "firebase/compat/app";
 import "firebase/compat/storage";
 
+const {firebase} = require("firebase/compat/app");
+
+
+
 const firebaseConfig = {
     apiKey: "AIzaSyAMBOXMTHSEKxID-wKEex3nmNoRqmm_wD4",
     authDomain: "helical-analyst-376421.firebaseapp.com",
@@ -13,5 +17,3 @@ const firebaseConfig = {
 
   // Initialize Firebase
   export default firebase.initializeApp(firebaseConfig);
-
-  const storage = firebase.storage();

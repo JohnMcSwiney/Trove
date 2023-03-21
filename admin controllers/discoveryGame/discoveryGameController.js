@@ -1,6 +1,5 @@
 const express = require('express');
 const { default: mongoose } = require('mongoose');
-const { client } = require('taste-dive-api');
 const AudioContext = require("web-audio-api").AudioContext;
 const MusicTempo = require("music-tempo");
 const fs = require("fs");
@@ -9,6 +8,8 @@ const Song = require('../../models/song model/song-model');
 const Artist = require('../../models/artist model/artist-model');
 const Album = require('../../models/album model/album-model');
 const User = require('../../models/user model/user-model');
+const firebase = require("../../firebaseConfig");
+
 
 
 
@@ -17,73 +18,266 @@ const getDiscoveryGame = async (req, res) => {
 
     //what should happen is when the game is loaded it'll just load a random song from the list.
 
-    try {
+    const { userId, songId, swipeDirection } = req.body;
 
-        const user = await User.findOne({
-            _id: req.user._id
-        });
+    const troveUser = await User.findById(userId);
 
-        // const recommendedSongs = await songMetadata.getRecommendations(user);
+    if (!troveUser) {
 
-        // let song;
+        return res.status(404).send('User profile not found');
+    }
 
-        // for (let i = 0; i < recommendedSongs.length; i++) {
+    const song = await Song.findById(songId);
 
-        //     const recommendedSong = recommendedSongs[i];
-        //     const metadata = await songMetadata.getSongMetaData(recommendedSong.id);
+    if (!song) {
 
-        //     if (!metadata) {
-        //         continue;
-        //     }
+        return res.status(404).send('Song not found');
+    }
 
-        //     const similarity = calculateSongSimilarity(metadata, user);
 
-        //     if (similarity >= 0.5) {
-        //         const existingSwipe = user.swipes.find(swipe => swipe.song === recommendedSong.id);
+    const songRef = firebase.storage().child(`songs/${songFile.name}`);
 
-        //         if (!existingSwipe) {
-        //             song = { ...recommendedSong, metadata };
-        //             break;
-        //         }
-        //     }
+    songRef.getDownloadUrl()
+        .then((url) => {
+            const xhr = new XMLHttpRequest();
 
-        // }
-
-        // const likedSongs = user.swipes.filter(
-        //     swipe => swipe.direction === 'right'
-        //     .map(swipe => swipe.song)
-        //     )
-
-        //     const userPreferences = {
-        //         tempo: user.pr
-        //     }
-
-        const song = await DiscoveryGame.findOne({
-            genre: {$in: user.likedSongs},
-            tempo: {$gte: user.minTempo, $lte: user.maxTempo},
-            //isLoved: true,
-            isPublished: true,
-            _id: {$nin: user.swipes.map(swipe => swipe.song)}
-
+            xhr.responseType = 'arraybuffer';
+            xhr.onload = (e) => {
+                const data = xhr.response;
+                const context = new AudioContext();
+                context.decodeAudioData(data, calcTempo);
+            }
+            xhr.open('GET', url);
+            xhr.send();
         })
-        .populate('user', ['genres']);
+        .catch(err => {
+            console.log("fetching song err: " + err);
+            throw new Error("could nto fetch song");
+        })
 
-        if (!song || song == null) {
-            console.log("song not found");
 
-            return res.status(200).json({});
+    const calcTempo = (buffer) => {
+
+        let audioData = [];
+
+        if (buffer.numberOfChannels == 2) {
+
+            const data1 = buffer.getChannelData(0);
+            const data2 = buffer.getChannelData(1);
+
+            for (let i = 0; i < data1.length; i++) {
+                audioData[i] = (data1[i] + data2[i]) / 2;
+            }
+
+        }
+        else {
+            audioData = buffer.getChannelData(0);
         }
 
-        res.status(200).json(song);
-    } catch (err) {
-        console.log(err);
-        res.status(500).send('Server error');
+        const songData = new MusicTempo(audioData);
+
+        console.log("tempo: " + songData.tempo);
+        console.log("beats: " + songData.beats);
     }
+
+
+    if (swipeDirection === 'left') {
+
+        const nextSong = await getNextSong(troveUser);
+        res.send(nextSong);
+
+        async function getNextSong(troveUser) {
+
+            troveUser = await User.findById(troveUser).populate({
+                path: 'user.likedSongs',
+                options: { sort: { createdAt: -1 } },
+                limit: 1
+            });
+        }
+    }
+
+    else {
+        troveUser.likedSongs.push(songId);
+    }
+
+    const lastlikedSong = troveUser.likedSongs[0];
+
+    const similarSongs = await Song.find({
+        $and: [
+            { _id: { $ne: lastlikedSong._id } },
+            { genre: lastlikedSong.genre },
+            { 'similarity.beat': { $gte: lastlikedSong.similarity.beat - 0.1, $lte: lastlikedSong.similarity.beat + 0.1 } },
+            { 'similarity.tempo': { $gte: lastlikedSong.similarity.tempo - 5, $lte: lastlikedSong.similarity.tempo + 5 } }
+        ]
+    }).limit(10);
+
+    const nextSong = similarSongs[Math.floor(Math.random() * similarSongs.length)];
+    return nextSong;
+
+    // try {
+
+    //     const user = await User.findOne({
+    //         _id: req.user._id
+    //     });
+
+    //     // const recommendedSongs = await songMetadata.getRecommendations(user);
+
+    //     // let song;
+
+    //     // for (let i = 0; i < recommendedSongs.length; i++) {
+
+    //     //     const recommendedSong = recommendedSongs[i];
+    //     //     const metadata = await songMetadata.getSongMetaData(recommendedSong.id);
+
+    //     //     if (!metadata) {
+    //     //         continue;
+    //     //     }
+
+    //     //     const similarity = calculateSongSimilarity(metadata, user);
+
+    //     //     if (similarity >= 0.5) {
+    //     //         const existingSwipe = user.swipes.find(swipe => swipe.song === recommendedSong.id);
+
+    //     //         if (!existingSwipe) {
+    //     //             song = { ...recommendedSong, metadata };
+    //     //             break;
+    //     //         }
+    //     //     }
+
+    //     // }
+
+    //     // const likedSongs = user.swipes.filter(
+    //     //     swipe => swipe.direction === 'right'
+    //     //     .map(swipe => swipe.song)
+    //     //     )
+
+    //     //     const userPreferences = {
+    //     //         tempo: user.pr
+    //     //     }
+
+    //     const song = await DiscoveryGame.findOne({
+    //         genre: { $in: user.likedSongs },
+    //         tempo: { $gte: user.minTempo, $lte: user.maxTempo },
+    //         //isLoved: true,
+    //         isPublished: true,
+    //         _id: { $nin: user.swipes.map(swipe => swipe.song) }
+
+    //     })
+    //         .populate('user', ['genres']);
+
+    //     if (!song || song == null) {
+    //         console.log("song not found");
+
+    //         return res.status(200).json({});
+    //     }
+
+    //     res.status(200).json(song);
+    // } catch (err) {
+    //     console.log(err);
+    //     res.status(500).send('Server error');
+    // }
 }
 
 
 //WIP
-const uploadToDiscoveryGame = async (req, res) => {
+const loadDiscoveryGame = async (req, res) => {
+
+    const { userId, songId, swipeDirection } = req.body;
+
+    const troveUser = await User.findById(userId);
+
+    if (!troveUser) {
+
+        return res.status(404).send('User profile not found');
+    }
+
+    const song = await Song.findById(songId);
+
+    if (!song) {
+
+        return res.status(404).send('Song not found');
+    }
+
+    const storageRef = firebase.storage();
+
+    const songRef = storageRef.child(`songs/${songFile.name}`);
+
+    songRef.getDownloadUrl()
+        .then((url) => {
+            const xhr = new XMLHttpRequest();
+
+            xhr.responseType = 'arraybuffer';
+            xhr.onload = (e) => {
+                const data = xhr.response;
+                const context = new AudioContext();
+                context.decodeAudioData(data, calcTempo);
+            }
+            xhr.open('GET', url);
+            xhr.send();
+        })
+        .catch(err => {
+            console.log("fetching song err: " + err);
+            throw new Error("could nto fetch song");
+        })
+
+
+    const calcTempo = (buffer) => {
+
+        let audioData = [];
+
+        if (buffer.numberOfChannels == 2) {
+
+            const data1 = buffer.getChannelData(0);
+            const data2 = buffer.getChannelData(1);
+
+            for (let i = 0; i < data1.length; i++) {
+                audioData[i] = (data1[i] + data2[i]) / 2;
+            }
+
+        }
+        else {
+            audioData = buffer.getChannelData(0);
+        }
+
+        const songData = new MusicTempo(audioData);
+
+        console.log("tempo: " + songData.tempo);
+        console.log("beats: " + songData.beats);
+    }
+
+
+    if (swipeDirection === 'left') {
+
+        const nextSong = await getNextSong(troveUser);
+        res.send(nextSong);
+
+        async function getNextSong(troveUser) {
+
+            troveUser = await User.findById(troveUser).populate({
+                path: 'user.likedSongs',
+                options: { sort: { createdAt: -1 } },
+                limit: 1
+            });
+        }
+    }
+
+    else {
+        troveUser.likedSongs.push(songId);
+    }
+
+    const lastlikedSong = troveUser.likedSongs[0];
+
+    const similarSongs = await Song.find({
+        $and: [
+            { _id: { $ne: lastlikedSong._id } },
+            { genre: lastlikedSong.genre },
+            { 'similarity.beat': { $gte: lastlikedSong.similarity.beat - 0.1, $lte: lastlikedSong.similarity.beat + 0.1 } },
+            { 'similarity.tempo': { $gte: lastlikedSong.similarity.tempo - 5, $lte: lastlikedSong.similarity.tempo + 5 } }
+        ]
+    }).limit(10);
+
+    const nextSong = similarSongs[Math.floor(Math.random() * similarSongs.length)];
+    return nextSong;
 
     // const { songId, direction } = req.body;
 
@@ -139,115 +333,34 @@ const uploadToDiscoveryGame = async (req, res) => {
     //     console.log(err);
     //     res.status(500).send('server error');
     // }
-//TESTING DIFFERENT IMPLEMENTATIONS
 
-const {userId, songId, swipeDirection} = req.body;
+    // const audioContext = new AudioContext();
 
-const troveUser = await User.findById(userId);
+    // const response = await fetch(song);
+    // const songData = await response.arrayBuffer();
+    // const songBuffer = await audioContext.decodeAudioData(songData);
 
-if (!troveUser) {
+    // const beatDetector = new BeatDetector(audioContext);
+    // const source = audioContext.createBufferSource();
+    // source.buffer = songBuffer;
+    // source.connect(beatDetector);
+    // beatDetector.connect(audioContext.destination);
 
-    return res.status(404).send('User profile not found');
-}
-
-const song = await Song.findById(songId);
-
-if (!song) {
-
-    return res.status(404).send('Song not found');
-}
-
-// const audioContext = new AudioContext();
-
-// const response = await fetch(song);
-// const songData = await response.arrayBuffer();
-// const songBuffer = await audioContext.decodeAudioData(songData);
-
-// const beatDetector = new BeatDetector(audioContext);
-// const source = audioContext.createBufferSource();
-// source.buffer = songBuffer;
-// source.connect(beatDetector);
-// beatDetector.connect(audioContext.destination);
-
-// const tempo = await beatDetector.getTempo();
-// const beat = await beatDetector.getBeat();
-
-const calcTempo = (buffer) => {
-
-    let audioData = [];
-
-    if (buffer.numberOfChannels == 2) {
-
-        const data1 = buffer.getChannelData(0);
-        const data2 = buffer.getChannelData(1);
-
-        for (let i = 0; i < data1.length; i++) {
-            audioData[i] = (data1[i] + data2[i]) / 2;  
-        }
-
-    }
-    else {
-        audioData = buffer.getChannelData(0);
-    }
-
-    const songData = new MusicTempo(audioData);
-
-    console.log("tempo: " + songData.tempo);
-    console.log("beats: " + songData.beats);
-}
-
-const temp = fs.readFileSync("songname.mp3");
-
-var context = new AudioContext();
-context.decodeAudioData(data, calcTempo);
+    // const tempo = await beatDetector.getTempo();
+    // const beat = await beatDetector.getBeat();
 
 
+    // const nextSong = await getNextSong(troveUser);
+    // res.send(nextSong);
 
+    // async function getNextSong(troveUser) {
 
-if (swipeDirection === 'left') {
-    
-    const nextSong = await getNextSong(troveUser);
-    res.send(nextSong);
-
-    async function getNextSong(troveUser) {
-
-        const troveUser = await User.findById(troveUser).populate({
-            path: 'user.likedSongs',
-            options: {sort: {createdAt: -1}},
-            limit: 1
-        });
-    }
-}
-
-else {
-    troveUser.likedSongs.push(songId);
-}
-
-// const nextSong = await getNextSong(troveUser);
-// res.send(nextSong);
-
-// async function getNextSong(troveUser) {
-
-//     const troveUser = await User.findById(troveUser).populate({
-//         path: 'user.likedSongs',
-//         options: {sort: {createdAt: -1}},
-//         limit: 1
-//     });
-// }
-
-const lastlikedSong = troveUser.likedSongs[0];
-
-const similarSongs = await Song.find({
-    $and: [
-        {_id: {$ne: lastlikedSong._id}},
-        {genre: lastlikedSong.genre},
-        {'similarity.beat' : {$gte: lastlikedSong.similarity.beat - 0.1, $lte: lastlikedSong.similarity.beat + 0.1}},
-        {'similarity.tempo' : {$gte: lastlikedSong.similarity.tempo - 5, $lte: lastlikedSong.similarity.tempo + 5}}
-    ]
-}).limit(10);
-
-const nextSong = similarSongs[Math.floor(Math.random() * similarSongs.length)];
-return nextSong;
+    //     const troveUser = await User.findById(troveUser).populate({
+    //         path: 'user.likedSongs',
+    //         options: {sort: {createdAt: -1}},
+    //         limit: 1
+    //     });
+    // }
 }
 
 //update an artist
@@ -288,8 +401,7 @@ const deleteFromDiscoveryGame = async (req, res) => {
 
 module.exports = {
     getDiscoveryGame,
-    getOneDiscoveryGame,
-    uploadToDiscoveryGame,
+    loadDiscoveryGame,
     updateDiscoveryGame,
     deleteFromDiscoveryGame
 }

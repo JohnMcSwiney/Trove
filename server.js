@@ -12,6 +12,8 @@ const collectionRouter = require("./admin routes/collection-route/collection-rou
 // const tastepRouter = require("./admin routes/tastep-route/tastep-route");
 const playlistRouter = require("./admin routes/playlist-route/playlist-route");
 const songRouter = require("./admin routes/song-route/song-route");
+const discoveryGameRouter = require("./admin routes/discoveryGame-route/discoveryGame-route");
+
 //For User
 const userlogin = require("./user routes/user-login-route/user");
 const session = require("express-session");
@@ -85,6 +87,8 @@ app.use("/api/playlists", playlistRouter);
 
 //song
 app.use("/api/songs", songRouter);
+
+app.use("/api/DG", discoveryGameRouter);
 
 app.listen(process.env.PORT, "0.0.0.0", () => {
   console.log(`Listening to port ` + process.env.PORT);
