@@ -4,7 +4,7 @@ const Song = require("../../models/song model/song-model");
 const Artist = require("../../models/artist model/artist-model");
 const Album = require("../../models/album model/album-model");
 const User = require("../../models/user model/user-model");
-
+const cookieParser = require("cookie-parser");
 //mongoose.connection().artists.getIndexes()
 
 //get all artists
@@ -20,7 +20,6 @@ const getAllArtist = async (req, res) => {
 //get an artist
 const getAnArtist = async (req, res) => {
   const { id } = req.params;
-
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ message: "No such artist" });
   }
@@ -108,12 +107,11 @@ const followArtist = async (req, res) => {
       throw new Error("artist not found");
     }
 
-    // const {userID} = req.body;
-    const cookie = req.cookies;
-    console.log(req.cookies);
-    const cookieData = JSON.parse(cookie.substr(2));
-    const userID = cookieData.id;
-    console.log("userID is her ", userID);
+    const { userID } = req.body;
+    // const userCookie = req.cookies;
+    // console.log(req.userCookie);
+    // const cookieData = cookieParser.JSONCookie(userCookie);
+    // const userID = cookieData.id;
 
     const user = await User.findOne({ _id: userID });
 
@@ -130,7 +128,6 @@ const followArtist = async (req, res) => {
     }
 
     artist.followers.push(user._id);
-    artist.artistFollowers++;
     user.likedArtists.push(artist._id);
 
     await artist.save();
