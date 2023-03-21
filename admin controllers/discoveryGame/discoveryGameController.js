@@ -1,12 +1,13 @@
 const express = require('express');
 const { default: mongoose } = require('mongoose');
 const { client } = require('taste-dive-api');
-const songMetadata = require('song-metadata');
+const AudioContext = require("web-audio-api").AudioContext;
+const MusicTempo = require("music-tempo");
+const fs = require("fs");
 const DiscoveryGame = require('../../models/discoveryGame model/discoveryGame-model');
 const Song = require('../../models/song model/song-model');
 const Artist = require('../../models/artist model/artist-model');
 const Album = require('../../models/album model/album-model');
-const User = require('../../models/user model/user-model');
 const User = require('../../models/user model/user-model');
 
 
@@ -142,7 +143,7 @@ const uploadToDiscoveryGame = async (req, res) => {
 
 const {userId, songId, swipeDirection} = req.body;
 
-const troveUser = await user.findById(userId);
+const troveUser = await User.findById(userId);
 
 if (!troveUser) {
 
@@ -156,20 +157,52 @@ if (!song) {
     return res.status(404).send('Song not found');
 }
 
-const audioContext = new AudioContext();
+// const audioContext = new AudioContext();
 
-const response = await fetch(song);
-const songData = await response.arrayBuffer();
-const songBuffer = await audioContext.decodeAudioData(songData);
+// const response = await fetch(song);
+// const songData = await response.arrayBuffer();
+// const songBuffer = await audioContext.decodeAudioData(songData);
 
-const beatDetector = new BeatDetector(audioContext);
-const source = audioContext.createBufferSource();
-source.buffer = songBuffer;
-source.connect(beatDetector);
-beatDetector.connect(audioContext.destination);
+// const beatDetector = new BeatDetector(audioContext);
+// const source = audioContext.createBufferSource();
+// source.buffer = songBuffer;
+// source.connect(beatDetector);
+// beatDetector.connect(audioContext.destination);
 
-const tempo = await beatDetector.getTempo();
-const beat = await beatDetector.getBeat();
+// const tempo = await beatDetector.getTempo();
+// const beat = await beatDetector.getBeat();
+
+const calcTempo = (buffer) => {
+
+    let audioData = [];
+
+    if (buffer.numberOfChannels == 2) {
+
+        const data1 = buffer.getChannelData(0);
+        const data2 = buffer.getChannelData(1);
+
+        for (let i = 0; i < data1.length; i++) {
+            audioData[i] = (data1[i] + data2[i]) / 2;  
+        }
+
+    }
+    else {
+        audioData = buffer.getChannelData(0);
+    }
+
+    const songData = new MusicTempo(audioData);
+
+    console.log("tempo: " + songData.tempo);
+    console.log("beats: " + songData.beats);
+}
+
+const temp = fs.readFileSync("songname.mp3");
+
+var context = new AudioContext();
+context.decodeAudioData(data, calcTempo);
+
+
+
 
 if (swipeDirection === 'left') {
     
@@ -215,9 +248,6 @@ const similarSongs = await Song.find({
 
 const nextSong = similarSongs[Math.floor(Math.random() * similarSongs.length)];
 return nextSong;
-
-
-
 }
 
 //update an artist
