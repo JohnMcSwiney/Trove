@@ -1,8 +1,5 @@
-import firebase from "firebase/compat/app";
-import "firebase/compat/storage";
 
-const {firebase} = require("firebase/compat/app");
-
+const {initializeApp} = require("firebase/compat/app");
 
 
 const firebaseConfig = {
@@ -16,4 +13,4 @@ const firebaseConfig = {
   };
 
   // Initialize Firebase
-  export default firebase.initializeApp(firebaseConfig);
+  module.exports = initializeApp(firebaseConfig);

@@ -9,6 +9,11 @@ const Artist = require('../../models/artist model/artist-model');
 const Album = require('../../models/album model/album-model');
 const User = require('../../models/user model/user-model');
 const firebase = require("../../firebaseConfig");
+const { storage } = require("firebase/compat/storage");
+
+const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+
+
 
 
 
@@ -20,9 +25,9 @@ const getDiscoveryGame = async (req, res) => {
 
     const { userId, songId, swipeDirection } = req.body;
 
-    const troveUser = await User.findById(userId);
+    const user = await User.findById(userId);
 
-    if (!troveUser) {
+    if (!user) {
 
         return res.status(404).send('User profile not found');
     }
@@ -35,7 +40,7 @@ const getDiscoveryGame = async (req, res) => {
     }
 
 
-    const songRef = firebase.storage().child(`songs/${songFile.name}`);
+    const songRef = firebase.storage().ref(`songs/${songFile.name}`);
 
     songRef.getDownloadUrl()
         .then((url) => {
@@ -83,12 +88,12 @@ const getDiscoveryGame = async (req, res) => {
 
     if (swipeDirection === 'left') {
 
-        const nextSong = await getNextSong(troveUser);
+        const nextSong = await getNextSong(user);
         res.send(nextSong);
 
-        async function getNextSong(troveUser) {
+        async function getNextSong(user) {
 
-            troveUser = await User.findById(troveUser).populate({
+            user = await User.findById(user).populate({
                 path: 'user.likedSongs',
                 options: { sort: { createdAt: -1 } },
                 limit: 1
@@ -97,10 +102,10 @@ const getDiscoveryGame = async (req, res) => {
     }
 
     else {
-        troveUser.likedSongs.push(songId);
+        user.likedSongs.push(songId);
     }
 
-    const lastlikedSong = troveUser.likedSongs[0];
+    const lastlikedSong = user.likedSongs[0];
 
     const similarSongs = await Song.find({
         $and: [
@@ -182,46 +187,57 @@ const getDiscoveryGame = async (req, res) => {
 //WIP
 const loadDiscoveryGame = async (req, res) => {
 
-    const { userId, songId, swipeDirection } = req.body;
+    const { songID, swipeDirection } = req.body;
 
-    const troveUser = await User.findById(userId);
+    console.log("song id: " + songID);
 
-    if (!troveUser) {
+    const user = await User.findOne({ email: req.body.email });
+
+    if (!user) {
 
         return res.status(404).send('User profile not found');
     }
 
-    const song = await Song.findById(songId);
+    const song = await Song.findOne({ _id: songID });
 
     if (!song) {
 
         return res.status(404).send('Song not found');
     }
 
-    const storageRef = firebase.storage();
+    // const songRef = firebase.storage().ref(`songs/${song.name}`);
 
-    const songRef = storageRef.child(`songs/${songFile.name}`);
+    const songURL = song.songUrl;
 
-    songRef.getDownloadUrl()
-        .then((url) => {
+    const readSong = async (songURL) => {
+
+        try {
+
             const xhr = new XMLHttpRequest();
 
             xhr.responseType = 'arraybuffer';
             xhr.onload = (e) => {
                 const data = xhr.response;
                 const context = new AudioContext();
-                context.decodeAudioData(data, calcTempo);
+
+                context.decodeAudioData(data, calcTempo(data));
             }
-            xhr.open('GET', url);
+            xhr.open('GET', songURL);
             xhr.send();
-        })
-        .catch(err => {
+
+        } catch (err) {
+
             console.log("fetching song err: " + err);
-            throw new Error("could nto fetch song");
-        })
+            throw new Error("could not fetch song");
+        }
+    }
+
+    readSong(songURL);
 
 
     const calcTempo = (buffer) => {
+
+        console.log("inside calctempo");
 
         let audioData = [];
 
@@ -248,12 +264,12 @@ const loadDiscoveryGame = async (req, res) => {
 
     if (swipeDirection === 'left') {
 
-        const nextSong = await getNextSong(troveUser);
+        const nextSong = await getNextSong(user);
         res.send(nextSong);
 
-        async function getNextSong(troveUser) {
+        async function getNextSong(user) {
 
-            troveUser = await User.findById(troveUser).populate({
+            user = await User.findById(user).populate({
                 path: 'user.likedSongs',
                 options: { sort: { createdAt: -1 } },
                 limit: 1
@@ -262,22 +278,23 @@ const loadDiscoveryGame = async (req, res) => {
     }
 
     else {
-        troveUser.likedSongs.push(songId);
+        user.likedSongs.push(songID);
+        console.log("liked successfully");
     }
 
-    const lastlikedSong = troveUser.likedSongs[0];
+    // const lastlikedSong = user.likedSongs[0];
 
-    const similarSongs = await Song.find({
-        $and: [
-            { _id: { $ne: lastlikedSong._id } },
-            { genre: lastlikedSong.genre },
-            { 'similarity.beat': { $gte: lastlikedSong.similarity.beat - 0.1, $lte: lastlikedSong.similarity.beat + 0.1 } },
-            { 'similarity.tempo': { $gte: lastlikedSong.similarity.tempo - 5, $lte: lastlikedSong.similarity.tempo + 5 } }
-        ]
-    }).limit(10);
+    // const similarSongs = await Song.find({
+    //     $and: [
+    //         { _id: { $ne: lastlikedSong._id } },
+    //         { genre: lastlikedSong.genre },
+    //         { 'similarity.beat': { $gte: lastlikedSong.songData.beat - 0.1, $lte: lastlikedSong.similarity.beat + 0.1 } },
+    //         { 'similarity.tempo': { $gte: lastlikedSong.similarity.tempo - 5, $lte: lastlikedSong.similarity.tempo + 5 } }
+    //     ]
+    // }).limit(10);
 
-    const nextSong = similarSongs[Math.floor(Math.random() * similarSongs.length)];
-    return nextSong;
+    // const nextSong = similarSongs[Math.floor(Math.random() * similarSongs.length)];
+    // return nextSong;
 
     // const { songId, direction } = req.body;
 
@@ -350,12 +367,12 @@ const loadDiscoveryGame = async (req, res) => {
     // const beat = await beatDetector.getBeat();
 
 
-    // const nextSong = await getNextSong(troveUser);
+    // const nextSong = await getNextSong(user);
     // res.send(nextSong);
 
-    // async function getNextSong(troveUser) {
+    // async function getNextSong(user) {
 
-    //     const troveUser = await User.findById(troveUser).populate({
+    //     const user = await User.findById(user).populate({
     //         path: 'user.likedSongs',
     //         options: {sort: {createdAt: -1}},
     //         limit: 1
