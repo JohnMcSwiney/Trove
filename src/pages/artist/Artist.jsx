@@ -10,6 +10,7 @@ import Popup from "reactjs-popup";
 import Song from "../../components/song detail/Song";
 import { useParams } from "react-router-dom";
 import { useFollowArtist } from "../../hooks/user-hooks/useFollowArtist";
+import { Navigate, useNavigate, Link } from "react-router-dom";
 
 const Artist = () => {
   const [likeArray, setlikeArray] = useState();
@@ -77,6 +78,11 @@ const Artist = () => {
     }
   };
 
+  const navigate = useNavigate();
+  function redirectFollowers() {
+    navigate(`/followers/${artist._id}`);
+  };
+
   return (
     <div className="myTrvcontainer ">
       <div className="pfp_name_follower_bio_cont">
@@ -88,7 +94,7 @@ const Artist = () => {
             <div className="txt-container">
               <h1>{artist?.artistName}</h1>
             </div>
-            <div className="follower_cont">
+            <div onClick={redirectFollowers} className="follower_cont">
               <div>
                 <h2>{artist?.followers.length}</h2>
                 <h1>Followers</h1>

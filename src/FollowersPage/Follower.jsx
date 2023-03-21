@@ -26,7 +26,7 @@ export default function Follower(props) {
                 </div>   
 
                 <div className="follower--info">
-                    <h5>{props.username}</h5>
+                    <h5>{props.follower}</h5>
                     <h6>{props.acctype}</h6>
                 </div> 
 

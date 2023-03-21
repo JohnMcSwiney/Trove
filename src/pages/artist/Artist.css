@@ -108,6 +108,11 @@
 
     
 }
+
+.follower_cont:hover {
+    text-decoration: underline;
+}
+
 .follower_cont > div{
     display: flex;
     align-content: center;

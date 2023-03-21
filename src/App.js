@@ -54,7 +54,9 @@ function App() {
             </Route>
             {/* <Route path="/albumpage" element={<AlbumPage />}></Route> */}
 
-            <Route path="/followers" element={<FollowersPage />}></Route>
+            <Route path="/followers" >
+              <Route path=":id" element={<FollowersPage />}></Route>
+            </Route>
             <Route path="/following" element={<FollowingPage />}></Route>
             <Route path="/playlist/">
               <Route path=":id" element={<PlaylistPage />}></Route>
