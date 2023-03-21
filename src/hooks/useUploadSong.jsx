@@ -138,7 +138,7 @@ export const useUploadSong = () => {
       return metadata !== false
     }
 
-    const createSongObject = async (title, songUrl, imgUrl) => {
+    const createSongObject = async (songUrl, imgUrl) => {
       // const endpoint = "http://localhost:6280/api/songs/"
       const res = await fetch("api/songs/", {
         method: "POST",
@@ -207,7 +207,7 @@ export const useUploadSong = () => {
 
         console.log("for loop song url: " + songUrl);
 
-        await createSongObject(title, songUrl, imgUrl);
+        await createSongObject(songUrl, imgUrl);
       }
 
       console.log("songs created!");
@@ -249,7 +249,7 @@ export const useUploadSong = () => {
 
         console.log("for loop song url: " + songUrl);
 
-        await createSongObject(title, songUrl, imgUrl);
+        await createSongObject(songUrl, imgUrl);
       }
 
       console.log("songs created!");
