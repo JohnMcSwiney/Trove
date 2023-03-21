@@ -43,6 +43,8 @@ const loginUser = async (req, res) => {
       displayName: user.displayName,
       useImg: user.imageURL,
       dob: user.dob,
+      likedSongs: user.likedSongs,
+      likedArtists: user.likedArtists,
     };
     // Mask the email before sending it in the response
     listener.email = maskEmailsPhones(listener.email);
@@ -91,6 +93,8 @@ const signupUser = async (req, res) => {
       displayName: user.displayName,
       useImg: user.imageURL,
       dob: user.dob,
+      likedSongs: user.likedSongs,
+      likedArtists: user.likedArtists,
     };
 
     res.cookie("user", listener, {
