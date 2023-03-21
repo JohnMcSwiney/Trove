@@ -38,10 +38,6 @@ const NavBar = (props) => {
 
   const logoutHandler = async () => {
     await logout();
-
-    setTimeout(() => {
-      navigate("/");
-    }, "1000");
   };
   return (
     <>
