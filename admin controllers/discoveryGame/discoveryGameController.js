@@ -205,8 +205,6 @@ const loadDiscoveryGame = async (req, res) => {
         return res.status(404).send('Song not found');
     }
 
-    // const songRef = firebase.storage().ref(`songs/${song.name}`);
-
     const songURL = song.songUrl;
 
     const readSong = async (songURL) => {
