@@ -231,32 +231,6 @@ const updateUserEmail = async (req, res) => {
     });
 
     res.status(200).json({ message: "Email changed successfully" });
-
-    // const transporter = nodemailer.createTransport({
-    //   service: "gmail",
-    //   auth: {
-    //     user: process.env.GOOGLE_USER,
-    //     pass: process.env.GOOGLE_PASSWORD,
-    //   },
-    // });
-
-    // const mailOptions = {
-    //   from: process.env.AUTH_EMAIL_ACCOUNT,
-    //   to: email,
-    //   subject: "Change Email Successfully With TroveMusic",
-    //   html: `
-    //         <p>Hi ${email},</p>
-    //         <p>Your action of changing Email is successfully, let us know if you need help</p>
-    //       `,
-    // };
-
-    // transporter.sendMail(mailOptions, function (error, info) {
-    //   if (error) {
-    //     console.log(err);
-    //   } else {
-    //     console.log("Email sent: " + info.response);
-    //   }
-    // });
   } catch (err) {
     res.status(500).json({ error: "Please try again" });
   }

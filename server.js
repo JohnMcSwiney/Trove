@@ -15,8 +15,10 @@ const songRouter = require("./admin routes/song-route/song-route");
 //For User
 const userlogin = require("./user routes/user-login-route/user");
 const session = require("express-session");
-
+const cookieParser = require("cookie-parser");
 const app = express();
+
+app.use(cookieParser());
 const cors = require("cors");
 app.use(
   cors({

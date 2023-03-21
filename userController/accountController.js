@@ -26,16 +26,16 @@ const loginUser = async (req, res) => {
     if (verify == null) {
       return res.status(400).json({ err: "You haven't signed up" });
     }
-    if (!verify.isVerified) {
-      return res
-        .status(400)
-        .json({ err: "Please check your email to verify the email" });
-    }
+    // if (!verify.isVerified) {
+    //   return res
+    //     .status(400)
+    //     .json({ err: "Please check your email to verify the email" });
+    // }
 
     const user = await User.login(email, password);
     //create a token
     const token = createToken(user._id);
-    
+
     const listener = {
       email,
       token,
@@ -52,7 +52,6 @@ const loginUser = async (req, res) => {
       sameSite: "strict",
       expires: new Date(Date.now() + 86400 * 1000), // Set the cookie to expire in 1 day
     });
-
 
     res.cookie("user", listener, {
       httpOnly: true,
@@ -123,11 +122,12 @@ const signupUser = async (req, res) => {
             <p>Hi ${email},</p>
             <p>Thank you for signing up for My Awesome App!</p>
             <p>We're thrilled to have you join our community.</p>
-            <p>Please click the following link to verify your email address:</p>
-            <a href="${process.env.APP_URL_BACKEND}/api/user/verify-email/${user._id}">Verify Here</a>
+            
           `,
     };
 
+    // <p>Please click the following link to verify your email address:</p>
+    //  <a href="${process.env.APP_URL_BACKEND}/api/user/verify-email/${user._id}">Verify Here</a>
     transporter.sendMail(mailOptions, function (error, info) {
       if (error) {
         handleErrors(error);

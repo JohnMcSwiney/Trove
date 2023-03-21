@@ -31,7 +31,10 @@ const getAnArtist = async (req, res) => {
   if (!artist) {
     return res.status(404).json({ error: error.message });
   }
-  await Artist.findOneAndUpdate( { _id: artist._id },{ $inc: { searchCount: 1 } })
+  await Artist.findOneAndUpdate(
+    { _id: artist._id },
+    { $inc: { searchCount: 1 } }
+  );
   res.status(200).json(artist);
 };
 
@@ -87,18 +90,17 @@ const deleteArtist = async (req, res) => {
   }
 
   res.status(200).json(artist);
-}
+};
 
-const likedArtist = async (req, res) => {
-
-  const {id} = req.params;
+const followArtist = async (req, res) => {
+  const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "song not available" });
   }
 
   try {
-    const artist = await Artist.findOne({_id: id});
+    const artist = await Artist.findOne({ _id: id });
 
     if (!artist) {
       console.log("artist not found");
@@ -106,10 +108,14 @@ const likedArtist = async (req, res) => {
       throw new Error("artist not found");
     }
 
-    const {userID} = req.body;
-    console.log(userID);
+    // const {userID} = req.body;
+    const cookie = req.cookie;
+    console.log(req.cookie);
+    const cookieData = JSON.parse(cookie.substr(2));
+    const userID = cookieData.id;
+    console.log("userID is her ", userID);
 
-    const user = await User.findOne({_id: userID});
+    const user = await User.findOne({ _id: userID });
 
     if (!user) {
       console.log("user not found");
@@ -129,23 +135,21 @@ const likedArtist = async (req, res) => {
 
     await artist.save();
     await user.save();
-
   } catch (err) {
     console.log(err);
     res.status(400).json({ message: err.message });
   }
-}
+};
 
-const dislikeArtist = async (req, res) => {
-
-  const {id} = req.params;
+const unfollowArtist = async (req, res) => {
+  const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "artist not available" });
   }
 
   try {
-    const artist = await Artist.findOne({_id: id});
+    const artist = await Artist.findOne({ _id: id });
 
     if (!artist) {
       console.log("artist not found");
@@ -153,10 +157,10 @@ const dislikeArtist = async (req, res) => {
       throw new Error("artist not found");
     }
 
-    const {userID} = req.body;
+    const { userID } = req.body;
     console.log(userID);
 
-    const user = await User.findOne({_id: userID});
+    const user = await User.findOne({ _id: userID });
 
     if (!user) {
       console.log("user not found");
@@ -175,12 +179,11 @@ const dislikeArtist = async (req, res) => {
     await user.save();
 
     res.status(200).json({ message: "removed like successfully" });
-
   } catch (err) {
     console.log(err);
     res.status(400).json({ message: err.message });
   }
-}
+};
 
 module.exports = {
   getAllArtist,
@@ -188,6 +191,6 @@ module.exports = {
   createArtist,
   updateArtist,
   deleteArtist,
-  likedArtist,
-  dislikeArtist
+  followArtist,
+  unfollowArtist,
 };

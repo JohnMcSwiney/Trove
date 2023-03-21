@@ -36,8 +36,8 @@ router.get("/:search", async (req, res) => {
       .exec();
 
     res.status(201).json({ artists, songs, albums });
-  } catch {
-    res.status(201).json();
+  } catch (error) {
+    res.status(404).json({ error: `No results found for "${search}"` });
   }
 });
 
