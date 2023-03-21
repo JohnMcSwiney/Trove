@@ -2,7 +2,7 @@ import React from "react"
 
 import './FollowersPage.css';
 // import NavBar from './nav bar/NavBar';
-import followers from "../data/followers.json"
+// import followers from "../data/followers.json"
 import Follower from "./Follower";
 import { useParams } from "react-router-dom";
 // import AlbumSong from "./AlbumSong";
@@ -13,21 +13,23 @@ export default function FollowersPage(props) {
     let { id } = useParams();
     const [artist, setArtist] = React.useState(null);
 
+
     React.useEffect(() => {
         const findArtist = async () => {
           const response = await fetch(`/api/artists/${id}`);
-          const json = await response.json();
+          const artistJson = await response.json();
     
           if (!response.ok) {
-            console.log(json.error);
+            console.log(artistJson.error);
           }
     
           if (response.ok) {
-            setArtist(json);
+            setArtist(artistJson);
           }
         };
         findArtist();
       }, [id]);
+
 
     return (
         <section>
@@ -56,12 +58,13 @@ export default function FollowersPage(props) {
                     //     />
                     // ) })
 
-                    artist?.followers && artist?.followers.map((item, index)=>{
+                    artist && artist.followers.map((item, index)=>{
                         return(
                             <Follower
                             key={index}
                             follower={item}
                             {...item}
+                            
     
                             />
                             ) })
