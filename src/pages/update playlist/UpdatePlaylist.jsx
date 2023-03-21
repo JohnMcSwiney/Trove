@@ -77,12 +77,18 @@ export default function UpdatePlaylist(props) {
   const [playlistName, setPlaylistName] = React.useState("");
   const [imageFile, setImageFile] = React.useState();
   const [imageWasChanged, setImageWasChanged] = React.useState(false);
-  
+
+  React.useEffect(() => {
+    setPreviewCover(playlist?.playlistCoverUrl)
+    setPlaylistSongList(playlist?.songList)
+    setPlaylistName(playlist?.playlistName)
+  }, [playlist]);
+
   //handle changes
   const handleImageFileChange = (e) => {
     setImageFile(e.target.files[0]);
     setPreviewCover(URL.createObjectURL(e.target.files[0]));
-    setImageWasChanged(true);
+    // setImageWasChanged(true);
   };
 
   const handlePlaylistName = (e) => {
@@ -117,14 +123,19 @@ export default function UpdatePlaylist(props) {
     console.log("OPENED!");
   }
 
+  function runn() {
+    console.log("this will work!");
+  }
+
   // submit playlist
-  const { uploadPlaylist, error } = useUpdatePlaylist();
+  const { updatePlaylist, error } = useUpdatePlaylist();
   const handleSubmit = async (e) => {
     console.log("CLICKED SUBMIT")
     // e.preventDefault();
 
     try {
-      await uploadPlaylist(
+      await updatePlaylist(
+        id,
         playlistName,
         creatorid,
         imageFile,
@@ -159,7 +170,7 @@ export default function UpdatePlaylist(props) {
       ) : null}
       <div className="updateplaylist--info">
         <div className="updateplaylist--song--cover">
-          <img src={imageWasChanged ? previewCover : playlist?.playlistCoverUrl} alt="playlist" />
+          <img src={previewCover} alt="playlist" />
           <label className="updateplaylist--custom-file-upload">
             <input
               type="file"
@@ -169,7 +180,7 @@ export default function UpdatePlaylist(props) {
               className="updateplaylist--gradient--btn updateplaylist--image--btn updateplaylist--hide--file"
               onChange={handleImageFileChange}
             />
-            Choose Image{" "}
+            Update Image{" "}
             <img
               src="../../assets/upload_icon.png"
               id="upload--icon"
@@ -178,7 +189,7 @@ export default function UpdatePlaylist(props) {
           </label>
         </div>
         <div className="updateplaylist--stats--info">
-          <input type="text" id="playlisttitle" placeholder="Playlist Name" value={playlist && playlist.playlistName} onChange={handlePlaylistName}/>
+          <input type="text" id="playlisttitle" placeholder="Playlist Name" value={playlistName} onChange={handlePlaylistName}/>
           <div className="updateplaylist--release--info">
             {/* <h5>2014</h5> */}
             {/* <h6>PLAYLIST</h6> */}
@@ -208,8 +219,8 @@ export default function UpdatePlaylist(props) {
         </div>
 
         <div className="updateplaylist--songs">
-          { playlist.songList &&
-            playlist.songList.map((item, index) => {
+          { playlistSongList &&
+            playlistSongList.map((item, index) => {
               return (
                 <PlaylistSong
                   key={index}

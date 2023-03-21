@@ -5,9 +5,10 @@ export const useUpdatePlaylist = () => {
   const [error, setError] = useState(null);
   const storage = firebase.storage();
   const [uploadProgress, setUploadProgress] = useState(0);
-  let playlistCoverUrl ="nonee";
+  let playlistCoverUrl ="";
 
-  const uploadPlaylist = async (
+  const updatePlaylist = async (
+    id,
     playlistName,
     creatorid, 
     imageFile, 
@@ -83,35 +84,64 @@ export const useUpdatePlaylist = () => {
     }
 
     const updatePlaylistObject = async (playlistCoverUrl) => {
-      const res = await fetch(`/api/playlists/${creatorid}`, {
-        method: "PATCH",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-        },
-        body: JSON.stringify({
-          playlistName,
-          id: creatorid, 
-          playlistCoverUrl: playlistCoverUrl,
-          songList
-        }),
-      });
+      if(playlistCoverUrl) {
+        const res = await fetch(`/api/playlists/${id}`, {
+          method: "PATCH",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+          body: JSON.stringify({
+            playlistName,
+            // id: creatorid, 
+            playlistCoverUrl: playlistCoverUrl,
+            songList
+          }),
+        });
 
-      const data = await res.json();
+        const data = await res.json();
 
-      console.log("Update Playlist Object: " + res);
+        console.log("Update Playlist Object: " + res);
+  
+        console.log("Playlist title: " + data.playlistName);
+  
+        if (!res.ok) {
+          setError(data.error);
+        }
+      } else {
+        const res = await fetch(`/api/playlists/${id}`, {
+          method: "PATCH",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+          body: JSON.stringify({
+            playlistName,
+            // id: creatorid, 
+            songList
+          }),
+        });
 
-      console.log("Playlist title: " + data.playlistName);
+        const data = await res.json();
 
-      if (!res.ok) {
-        setError(data.error);
+        console.log("Update Playlist Object: " + res);
+  
+        console.log("Playlist title: " + data.playlistName);
+  
+        if (!res.ok) {
+          setError(data.error);
+        }
       }
+
     };
 
-    playlistCoverUrl = await uploadImageToFirebase();
+    if(imageFile) {
+      playlistCoverUrl = await uploadImageToFirebase();
+    }
     await updatePlaylistObject(playlistCoverUrl);
   };
 
-  return { uploadPlaylist, error };
+  return { updatePlaylist, error };
 };
