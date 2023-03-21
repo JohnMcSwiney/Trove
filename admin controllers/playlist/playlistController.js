@@ -120,7 +120,7 @@ const updatePlaylist = async (req, res) => {
     let song;
 
     for (i = 0; i < req.body.songList.length; i++) {
-      song = await Song.findOne({ _id: req.body.songList[0] });
+      song = await Song.findOne({ _id: req.body.songList[i] });
       songList = [...songList, song._id];
       console.log(songList);
 
@@ -142,7 +142,8 @@ const updatePlaylist = async (req, res) => {
       {
         $set: {
           ...req.body,
-          playlistCreator: user._id,
+          // playlistCreator: user._id,
+          playlistName: req.body.playlistName,
           songList: songList,
         },
       },
