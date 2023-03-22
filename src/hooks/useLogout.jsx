@@ -6,11 +6,15 @@ export const useLogout = () => {
   const logout = () => {
     sessionStorage.removeItem("artistToken");
     localStorage.removeItem("artistID");
-    fetch("/api/artist/logout").then(() => {
-      // dispatch logout action
-      dispatch({ type: "LOGOUT" });
-      navigate("/");
-    });
+    fetch("/api/artist/logout")
+      .then(() => {
+        // dispatch logout action
+        dispatch({ type: "LOGOUT" });
+        navigate("/");
+      })
+      .then(() => {
+        window.location.reload(false);
+      });
   };
 
   return { logout };
