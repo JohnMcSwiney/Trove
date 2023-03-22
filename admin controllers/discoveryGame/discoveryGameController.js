@@ -9,6 +9,7 @@ const Artist = require("../../models/artist model/artist-model");
 const Album = require("../../models/album model/album-model");
 const User = require("../../models/user model/user-model");
 const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+const url = require("url");
 // const { storage } = require("firebase/compat/storage");
 
 // const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
@@ -198,7 +199,37 @@ const loadDiscoveryGame = async (req, res) => {
 
   console.log("song url: " + songURL);
 
-  const calcTempo = (buffer) => {
+  const readSong = async (songURL) => {
+
+    try {
+
+      const res = await fetch(songURL);
+
+      const data = await res.arrayBuffer();
+
+      return new Promise((resolve, reject) => {
+
+        console.log("data: " + data);
+
+        (err) => {
+          console.log("promise err: " + err);
+          reject(err);
+        },
+        async () => {
+          resolve(data);
+        }
+      })
+      // .then(data => {
+      //   return data;
+      // })
+    } catch (err) {
+      console.log("fetching song err");
+      console.log(err);
+    }
+  }
+
+  const calcTempo = async (buffer) => {
+
     console.log("inside calctempo");
 
     let audioData = [];
@@ -223,48 +254,20 @@ const loadDiscoveryGame = async (req, res) => {
     console.log("beats: " + songData.beats);
   }
 
-  const readSong = async (songURL) => {
-    try {
-      const xhr = new XMLHttpRequest();
-
-      xhr.open("GET", songURL);
-      xhr.responseType = "blob";
-      xhr.send();
-      
-      xhr.onload = (e) => {
-
-        console.log("event: " + e);
-
-        const data = xhr.response;
-
-        console.log("data: " + data);
-
-        // const context = new AudioContext();
-
-        // context.decodeAudioData(data, calcTempo(data));
-      };
-
-      console.log("XHR: " + xhr.response)
-
-      // const data = xhr.response;
-      // const context = new AudioContext();
-
-      // context.decodeAudioData(data, calcTempo(data));
-
-    } catch (err) {
-      console.log("fetching song err");
-      console.log(err);
-    }
-  };
 
   const musicData = await readSong(songURL);
 
   console.log("music data: " + musicData);
 
+  const context = new AudioContext();
 
-  // const context = new AudioContext();
+  const buffer = await context.decodeAudioData(await readSong(songURL));
 
-  // context.decodeAudioData(musicData, calcTempo);
+  console.log("buffer outside of calctemp: " + buffer);
+
+  await calcTempo();
+
+
 
   if (swipeDirection === "left") {
     const nextSong = await getNextSong(user);
