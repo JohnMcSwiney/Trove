@@ -8,7 +8,6 @@ import { Navigate } from "react-router-dom";
 import { useUpdateAccount } from "../../hooks/user-hooks/useUpdateAccount";
 import { useUpdateEmail } from "../../hooks/user-hooks/useUpdateEmail";
 import { useUpdatePassword } from "../../hooks/user-hooks/useUpdatePassword";
-import { useAuthContext } from "../../hooks/user-hooks/useAuthContext";
 const MyAccount = () => {
   const [state, setState] = React.useState(1);
 
@@ -16,15 +15,32 @@ const MyAccount = () => {
     setState(index);
   };
 
+  // const userID = JSON.parse(localStorage.getItem("user"));
+  // React.useEffect(() => {
+  //   fetchUserInfo();
+  // }, []);
+
+  // const [userInfo, setUserInfo] = React.useState({});
+  // const fetchUserInfo = async () => {
+  //   try {
+  //     const response = await fetch(`/api/users/${userID}`);
+  //     const data = await response.json();
+  //     setUserInfo(data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
   //states for forms
-  const { user } = useAuthContext();
+  const user = localStorage.getItem("user");
+  const userInfo = JSON.parse(user);
 
   const [imgPath, setImagePath] = React.useState("./img/user-demo.png");
-  const [email, setEmail] = React.useState(`${user?.email}`);
-  const [displayName, setDisPlayName] = React.useState(`${user?.displayName}`);
+  const [email, setEmail] = React.useState(userInfo.email);
+  const [displayName, setDisPlayName] = React.useState(userInfo.displayName);
   const [password, setPassword] = React.useState("");
   const [newPassword, setNewPassword] = React.useState("");
-  const [dob, setDOB] = React.useState(`${user?.dob}`);
+  const [dob, setDOB] = React.useState(userInfo.dob);
   const [newEmail, setNewEmail] = React.useState("");
   const [cPassword, setCPassword] = React.useState("");
 

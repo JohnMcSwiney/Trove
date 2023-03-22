@@ -24,12 +24,13 @@ const MyTrove = () => {
 
   const [likes, setLikes] = useState([]);
   const { user } = useAuthContext();
+  const userID = JSON.parse(localStorage.getItem("user")).id;
 
   const [playlists, setPlaylists] = useState([]);
 
   React.useEffect(() => {
     const fetchPlaylists = async () => {
-      const response = await fetch(`/api/playlists/mylist/${user.id}`);
+      const response = await fetch(`/api/playlists/mylist/${userID}`);
       // const response = await fetch(`/api/playlists`);
       const data = await response.json();
 
@@ -43,17 +44,17 @@ const MyTrove = () => {
     navigate("../CreatePlaylist");
   };
 
-  const [userInfo, setUserInfo] = useState({});
+  const [userInfo, setUserInfo] = useState([]);
   React.useEffect(() => {
     const fetchUserInfo = async () => {
-      const response = await fetch(`/api/users/${user.id}`);
+      const response = await fetch(`/api/users/${userID}`);
       const data = await response.json();
 
       setUserInfo(data);
     };
     fetchUserInfo();
   }, []);
-  console.log(userInfo.likedArtists);
+
   return (
     <div className="container">
       <div className="myTrvcontainer ">
@@ -78,17 +79,7 @@ const MyTrove = () => {
         <div className="mytrove-splitter"></div>
 
         <div className="account-showcase-lg">
-          {userInfo?.likedArtists?.length > 0 && (
-            <div>
-              <h2>{user?.displayName}'s Favourite Artist: </h2>
-              {userInfo.likedArtists &&
-                userInfo.likedArtists.map((artistData) => (
-                  <div key={artistData._id}>
-                    <p>{artistData.artistName}</p>
-                  </div>
-                ))}
-            </div>
-          )}
+          <h1>{userInfo?.displayedName}'s Favourite Artist: </h1>
 
           <div className="CardCont">
             {/* <FeaturedArtist
@@ -120,7 +111,8 @@ const MyTrove = () => {
               <div className="newPlaylistBtnText">Create New Playlist</div>
               <div className="newPlaylistPlusBtn">+</div>
             </button>
-            {playlists?.length > 0 &&
+            {playlists &&
+              playlists.length > 0 &&
               playlists.map((playlist) => (
                 <div className="CardCont">
                   <div className="responsiveCardTest">
@@ -143,20 +135,18 @@ const MyTrove = () => {
         </div>
         <div className="mytrove-splitter"></div>
         <div className="account-showcase">
-          {userInfo?.likedSongs?.length > 0 && (
-            <div className="TPlikedSongs">
-              <h1>Liked Songs</h1>
+          <div className="TPlikedSongs">
+            <h1>Liked Songs</h1>
 
-              {userInfo.likedSongs &&
-                userInfo?.likedSongs.map((song) => (
-                  <div key={song._id}>
-                    <p>
-                      {song.title} - {song.artist?.artistName}
-                    </p>
-                  </div>
-                ))}
-            </div>
-          )}
+            {userInfo.likedSongs &&
+              userInfo?.likedSongs.map((song) => (
+                <div key={song._id}>
+                  <p>
+                    {song.title} - {song.artist?.artistName}
+                  </p>
+                </div>
+              ))}
+          </div>
 
           {/* <div className="TPDislikedSongs">
             <h1>Disliked Songs</h1>

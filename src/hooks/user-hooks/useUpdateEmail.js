@@ -1,15 +1,16 @@
 import { useState } from "react";
-import { useAuthContext } from "./useAuthContext";
 
 export const useUpdateEmail = () => {
   const [emailError, setEmailError] = useState(null);
   const [emailIsLoading, setEmailIsLoading] = useState(false);
-  const { user } = useAuthContext();
+
   const updateEmail = async (newEmail, password) => {
     setEmailIsLoading(true);
     setEmailError(false);
 
-    const response = await fetch(`/api/users/ue/${user.id}`, {
+    const userId = JSON.parse(localStorage.getItem("user")).id;
+
+    const response = await fetch(`/api/users/ue/${userId}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ newEmail, password }),
@@ -22,6 +23,9 @@ export const useUpdateEmail = () => {
     }
 
     setEmailIsLoading(false);
+    const user = JSON.parse(localStorage.getItem("user"));
+    user.email = newEmail;
+    localStorage.setItem("user", JSON.stringify(user));
   };
   return { updateEmail, emailError, emailIsLoading };
 };

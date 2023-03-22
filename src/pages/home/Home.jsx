@@ -13,11 +13,11 @@ const Home = () => {
   const redirectDiscovery = () => {
     navigate("/discoverygame");
   };
-  const { user } = useAuthContext();
+  const userID = JSON.parse(localStorage.getItem("user")).id;
   const [userInfo, setUserInfo] = React.useState({});
   React.useEffect(() => {
     const fetchUserInfo = async () => {
-      const response = await fetch(`/api/users/${user?.id}`);
+      const response = await fetch(`/api/users/${userID}`);
       const data = await response.json();
 
       setUserInfo(data);

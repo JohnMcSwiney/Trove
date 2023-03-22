@@ -4,12 +4,14 @@ import { useAuthContext } from "./useAuthContext";
 export const useUpdateAccount = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const { user } = useAuthContext();
+
   const updateAccount = async (displayName, dob) => {
     setIsLoading(true);
     setError(null);
 
-    const response = await fetch(`/api/users/ua/${user.id}`, {
+    const userId = JSON.parse(localStorage.getItem("user")).id;
+
+    const response = await fetch(`/api/users/ua/${userId}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ displayName, dob }),
