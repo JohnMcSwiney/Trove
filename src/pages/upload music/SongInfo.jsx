@@ -20,9 +20,9 @@ export default function SongInfo(props) {
       <div>
         <input
           type="text"
-          name="songName"
+          name={props.songFile[props.i].name}
           placeholder="Song Title"
-          onChange={props.handleTitle[props.i]}
+          onChange={props.handleTitle}
         ></input>
         <textarea
           value={props.featuredArtists}
