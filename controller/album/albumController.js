@@ -253,16 +253,6 @@ const deleteAlbum = async (req, res) => {
       throw new Error("Artist not found");
     }
 
-    // const songs = await Promise.all(album.songList.map(async () => {
-
-    //     const song = await Song.findOne({ _id: album.songs });
-
-    //     if (!song) {
-    //         throw new Error(" songs not found");
-    //     }
-
-    //     return song._id;
-    // }));
 
     const featuredArtists = await Promise.all(
       album.featuredArtists.map(async () => {
@@ -310,7 +300,7 @@ const deleteAlbum = async (req, res) => {
 const getMyAlbum = async (req, res) => {
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ err: err.message });
+    return res.status(404).json({ error: "Server error occurred" });
   }
 
   const albums = await Album.find({ artist: id }).sort({ createdAt: -1 });
