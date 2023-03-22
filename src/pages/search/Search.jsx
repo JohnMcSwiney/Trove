@@ -123,18 +123,21 @@ const Search = () => {
                   <Song key={song._id} song={song} setSongData={setSongData} />
                 ))}
 
+                <div>
+                <h2>Also Appears In:</h2>
                 {searchResult.songs
+                
                   .filter((song) => song.album)
                   .map((song) => (
-                    <div>
-                      <h2>Also Appear In</h2>
+                    
                       <div>
                         <NavLink to={`/albumpage/${song?.album?._id}`}>
                           {song.album?.albumName}
                         </NavLink>
                       </div>
-                    </div>
+                    
                   ))}
+                  </div>
               </div>
             )}
           </div>

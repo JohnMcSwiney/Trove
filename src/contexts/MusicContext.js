@@ -10,23 +10,37 @@ export const MusicProvider = ({ children }) => {
   const [currentSongData, setCurrentSongData] = useState(null);
   const [playlists, setPlaylists] = useState([]);
 
+  const [play_list, setPlay_list] = useState([]);
+
   // function to update the currently playing song
   const updateCurrentSong = (song) => {
     setCurrentSong(song);
     setCurrentSongData(song);
-    console.log(song)
+    // console.log(song)
   };
-
+  const updateQueue = (queue) => {
+  
+  }
+  const addToQueue = (song) => {
+  
+  }
   const updatePlaylists = (newPlaylists) => {
     setPlaylists(newPlaylists);
+    // console.log(newPlaylists)
+  };
+  const updatePlay_list = (newPlaylists) => {
+    setPlay_list(newPlaylists);
+    // console.log(newPlaylists)
   };
 
   const contextValue = {
     currentSong,
     currentSongData,
     updateCurrentSong,
-    playlists,
-    updatePlaylists,
+    play_list,
+    updatePlay_list,
+    updateQueue,
+    addToQueue,
   };
   // try{
   //   console.log(currentSong.title);

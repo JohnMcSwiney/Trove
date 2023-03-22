@@ -4,8 +4,10 @@ import "./PlaylistPage.css";
 // import NavBar from './nav bar/NavBar';
 import albumsongs from "../data/albumsongs.json";
 import PlaylistSong from "./PlaylistSong";
-
+import SearchSongCard2 from "../components/cards/search_items/searchSongCard/searchSongCard2";
+import { MusicContext } from "../contexts/MusicContext";
 import { Navigate, useNavigate, Link } from "react-router-dom";
+
 
 //fetching
 import { useParams } from "react-router-dom";
@@ -15,6 +17,14 @@ export default function PlaylistPage(props) {
   let { id } = useParams();
 
   const userId = JSON.parse(localStorage.getItem("user")).id;
+
+  const {  
+    play_list,
+    updatePlay_list,
+    updateQueue,
+    addToQueue, } =
+    React.useContext(MusicContext);
+
 
   const [playlist, setPlaylist] = React.useState(null);
   React.useEffect(() => {
@@ -47,7 +57,10 @@ export default function PlaylistPage(props) {
     };
     findPlaylistCreator();
   }, []);
-
+  const handlePlayPlaylist = () => {
+    // console.log(playlist.songList);
+    updatePlay_list(playlist.songList);
+  }
   const navigate = useNavigate();
   function redirectEditPlaylist() {
     navigate(`/editplaylist/${playlist._id}`);
@@ -62,6 +75,7 @@ export default function PlaylistPage(props) {
       <div className="playlist--info">
         <div className="playlist--song--cover">
           <img src={playlist && playlist.playlistCoverUrl} alt="playlist" />
+          <button className="playlist--editbtn" onClick={handlePlayPlaylist}> Play </button>
         </div>
         <div className="playlist--stats--info">
           <h3>{playlist && playlist.playlistName}</h3>
@@ -72,13 +86,14 @@ export default function PlaylistPage(props) {
           <h4>{playlist && playlist.playlistCreator.displayName}</h4>
           { userId === playlist?.playlistCreator._id && <button className="playlist--editbtn"onClick={redirectEditPlaylist}>Edit</button>  }
         </div>
+        
       </div>
 
       {/* SONGS */}
       <div className="playlist--songs">
         {playlist &&
           playlist.songList.map((song) => {
-            return <PlaylistSong key={song._id} song={song} />;
+            return <SearchSongCard2 key={song._id} song={song} />;
           })}
       </div>
 

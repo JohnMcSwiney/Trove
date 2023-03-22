@@ -55,7 +55,7 @@
     flex-direction: row;
     align-items: center;
     border: #a37df072 2px solid;
-    /* padding-left: 5px; */
+    padding-left: 5px;
     border-radius: 5px;
     
 }

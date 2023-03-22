@@ -9,6 +9,7 @@ import { Navigate, useNavigate, Link } from 'react-router-dom'
 import { Tooltip } from 'react-tooltip' //react tool tip used in explicit tag
 
 import CardSong from '../cards/card_song/CardSong'
+import SearchSongCard2 from '../cards/search_items/searchSongCard/searchSongCard2'
 import Song from '../../components/song detail/Song'
 
 import styles from './AudioPlayer.module.css'
@@ -17,8 +18,7 @@ import './musicbar.css'
 
 import { CgArrowLongRightR } from 'react-icons/cg'
 import { CgArrowLongLeftR } from 'react-icons/cg'
-import { BsPlayCircle } from 'react-icons/bs'
-import { BsPauseCircle } from 'react-icons/bs'
+import { BsPlayCircle, BsPauseCircle, BsSlashLg} from 'react-icons/bs'
 import { MdExplicit, MdOutlineQueueMusic, MdQueueMusic } from 'react-icons/md'
 import {
   BiVolumeFull,
@@ -27,8 +27,8 @@ import {
   BiVolumeMute,
   BiAddToQueue
 } from 'react-icons/bi'
-import { TbRepeatOff, TbRepeatOnce, TbRepeat } from 'react-icons/tb'
-import { FaHeart, FaShareSquare, FaRegHeart } from 'react-icons/fa'
+import { TbRepeatOff, TbRepeatOnce, TbRepeat,TbArrowsShuffle } from 'react-icons/tb'
+import { FaHeart, FaShareSquare, FaRegHeart, FaSlash } from 'react-icons/fa'
 import NoSong from './NoSong.png'
 import 'react-tooltip/dist/react-tooltip.css'
 import { AiOutlineShareAlt } from 'react-icons/ai'
@@ -37,7 +37,7 @@ import { RiFolderMusicFill, RiFolderMusicLine } from 'react-icons/ri'
 import { BsSkipStart, BsSkipEnd, BsPlay, BsPause } from 'react-icons/bs'
 
 // Hardcoded data
-import queue from '../../data/albumsongs.json'
+// import queue from '../../data/albumsongs.json'
 
 import Trv_Chest from '../../assets/Trv_icons/Tvr_lib_icon.ico'
 //
@@ -51,10 +51,13 @@ const MusicBar = () => {
   // const isFullscreen = props.fcOptionIn;
   const [isFullscreen, setFullscreen] = useState(false)
   //context
-  const { currentSong, currentSongData, playlists } =
+  const { currentSong, currentSongData, playlists, play_list } =
     React.useContext(MusicContext)
   //state
-  const [isPlaying, setIsPlaying] = useState(false)
+  //testing play/pause
+  // const [isPlaying, setIsPlaying] = useState(false)
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [isLoaded, setIsLoaded] = useState(false);
   const [duration, setDuration] = useState(0)
   const [currentTime, setCurrentTime] = useState(0)
   const [volumeLevel, setVolumeLevel] = useState(0)
@@ -64,9 +67,14 @@ const MusicBar = () => {
   const [isLiked, setIsLiked] = useState(false)
   const [isExplicit, setExplicit] = useState(true)
   const [loopState, setLoopState] = useState(0)
-  const [isLooping, setLooping] = useState(true)
+  const [isLooping, setLooping] = useState(false)
+  const [isShuffle, setShuffle] = useState(false)
+  
+  const [hasPlay_List, setHasPlay_List] = useState(false);
+  const [queueType, setQueueType] = useState(0);
+  const [play_ListPosition, setPlay_ListPosition] = useState(false);
+  const [queue, setQueue] = useState([]);
 
-  const [placeInQueue, setPlaceInQueue] = useState(0)
   //refrences
   const audioPlayer = useRef() //reference audio component
   const progressBar = useRef() //reference progress bar
@@ -74,7 +82,30 @@ const MusicBar = () => {
   const animationRef = useRef()
   const volumeRef = useRef()
 
+  if (play_list.length === 0 ){
+    //no play list
+  } else {
+    const newLength = play_list.length;
+  }
   useEffect(() => {
+    if(isLoaded === false){
+      audioPlayer.current.pause();
+      setLoopState(0);
+    }
+    //Maybe use another context file to update the music context file. 
+    //current song or something? Idk writing this down for future testing
+    if(hasPlay_List === false) {
+      if(queue.length === 0){
+        console.log('no playlist');
+        setQueue(play_list);
+        console.log(play_list);
+        console.log(queue);
+      } else {
+        setHasPlay_List(true);
+      }
+    } else {
+      
+    }
     const seconds = Math.floor(audioPlayer.current.duration)
     setDuration(seconds) // 45.26
     progressBar.current.max = seconds
@@ -201,9 +232,9 @@ const MusicBar = () => {
   const shareSong = () => {
     console.log(`share btn`)
   }
-  const showQueue = () => {
-    console.log(`show queue`)
-  }
+  // const showQueue = () => {
+  //   console.log(`show queue`)
+  // }
 
   const { like, likeError, likeIsLoading } = useLikeSong()
   const { unlike, unlikeError, unlikeIsLoading } = useUnlikeSong()
@@ -270,6 +301,8 @@ const MusicBar = () => {
               animationRef.current = requestAnimationFrame(whilePlaying)
             }}
             onLoadedMetadata={() => {
+              setLoopState(0)
+              setIsLoaded(true)
               toBeginningOfSong()
               changeRange()
               animationRef.current = requestAnimationFrame(whilePlaying)
@@ -278,7 +311,9 @@ const MusicBar = () => {
             isPlaying={
               (animationRef.current = requestAnimationFrame(whilePlaying))
             }
-          ></audio>
+          >
+
+          </audio>
 
           {/* Full Screen */}
           <div
@@ -394,10 +429,16 @@ const MusicBar = () => {
               {/* Queue */}
               <div className='brihgleggmoie'>
                 <h6 className='queueHeader'>Song Queue:</h6>
-                {queue &&
-                  queue.map((item, index) => {
-                    return <CardSong key={index} {...item} />
-                  })}
+                
+
+              {play_list &&
+          play_list.map((song) => {
+            return <SearchSongCard2 key={song._id} song={song} />;
+          })}
+                  {/* {queue &&
+                  queue.map((song) => {
+                    return <CardSong key={song._id} song={song} />
+                  })} */}
               </div>
               {/* <div className='volumeContainter'>
                 <button onClick={toggleMute}>
