@@ -20,25 +20,28 @@
 }
 .otherItemBtnContainer{
     order: 4;
-    background-color: violet;
+    /* background-color: violet; */
+    color: white;
     display: inline-flex;
 }
 .hiddenBtn{
     display: none; 
 }
 .loopBtn{
-    font-size: x-large;
+    font-size: large;
+    margin-right: 15px;
+
 }
 .looplvl1{
-    fill:white;
+    color:white;
     opacity: 0.6;
 }
 .looplvl2{
-    fill:#8650F4;
+    color:#8650F4;
     opacity: 0.9;
 }
 .looplvl3{
-    fill:#5725d5;
+    color:#5725d5;
     opacity: 0.9;
 
 }
@@ -75,15 +78,18 @@
     gap: 5px;
     position: absolute;
     right: 0;
+    margin-top: 22px;
     align-self: center;
-    background-color: aqua;
-    margin-left: 30px;
+    /* background-color: aqua; */
+    margin-right: 180px;
+    font-size: large;
+    z-index: 3;
     /* 
     margin-top: 300px; */
 }
 
 .volumeContainter>input {
-    width: 80px;
+    width: 60px;
     height: 5px;
 
 }
@@ -501,6 +507,7 @@
         margin: auto;
         background: #0034c400;
         z-index: -1;
+        flex-grow: 1;
         order: 4;
     }
 }

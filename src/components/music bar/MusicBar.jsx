@@ -613,6 +613,9 @@ const MusicBar = () => {
                     <BsSkipEnd />
                   </button>
                 </div>
+                <div className='fillerDivPlayer'>
+
+                </div>
                 {/* Loop and Queue */}
                 <div className='otherItemBtnContainer'>
                   {/* import {TbRepeatOff, TbRepeatOnce, TbRepeat} from 'react-icons/tb' */}
