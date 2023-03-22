@@ -137,7 +137,7 @@ const updateUserPassword = async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
-      return res.status(401).json({ err: "Password is not correct" });
+      return res.status(401).json({ error: "Password is not correct" });
     }
 
     const salt = await bcrypt.genSalt(10);
@@ -147,8 +147,6 @@ const updateUserPassword = async (req, res) => {
 
     user.password = hash;
     await user.save();
-    res.status(200).json({ message: "Password changed successfully" });
-
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -177,6 +175,7 @@ const updateUserPassword = async (req, res) => {
         console.log("Email sent: " + info.response);
       }
     });
+    res.status(200).json({ message: "Password changed successfully" });
   } catch (err) {
     res.status(500).json({ error: "Please try again" });
   }
