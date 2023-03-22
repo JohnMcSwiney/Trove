@@ -4,10 +4,10 @@ import React from "react";
 import { BiShow } from "react-icons/bi";
 import { AiOutlineEyeInvisible } from "react-icons/ai";
 import { Navigate } from "react-router-dom";
-// import { useUpdateAccount } from "../../hooks/user-hooks/useUpdateAccount";
-// import { useUpdateEmail } from "../../hooks/user-hooks/useUpdateEmail";
-// import { useUpdatePassword } from "../../hooks/user-hooks/useUpdatePassword";
 import { useArtistAuthContext } from "../../hooks/useArtistAuthContext";
+import { useUpdateInfo } from "../../hooks/useUpdateInfo";
+import { useUpdateGmail } from "../../hooks/useUpdateGmail";
+import { useUpdatePassword } from "../../hooks/useUpdatePassword";
 const AccountSetting = () => {
   const [state, setState] = React.useState(1);
 
@@ -18,18 +18,31 @@ const AccountSetting = () => {
   //states for forms
   const artist = JSON.parse(localStorage.getItem("artist"));
   const [imgPath, setImagePath] = React.useState("./img/user-demo.png");
+
+  //general Info
   const [email, setEmail] = React.useState(artist?.email);
   const [artistName, setArtistName] = React.useState(artist?.artistName);
+  const [dob, setDOB] = React.useState();
+
+  //password update
   const [password, setPassword] = React.useState("");
   const [newPassword, setNewPassword] = React.useState("");
-  const [dob, setDOB] = React.useState();
+  const [confirmNewPassword, setConfirmNewPassword] = React.useState("");
+
+  //email update
   const [newEmail, setNewEmail] = React.useState("");
+  const [currentEmail, setCurrentEmail] = React.useState("");
   const [cPassword, setCPassword] = React.useState("");
 
   //toggle
   const [showPassword, setShowPassword] = React.useState(false);
   const toggleHidden = () => {
     setShowPassword(!showPassword);
+  };
+
+  const [showCPassword, setShowCPassword] = React.useState(false);
+  const toggleHiddenC = () => {
+    setShowCPassword(!showCPassword);
   };
 
   //toggle
@@ -44,41 +57,40 @@ const AccountSetting = () => {
     setShowPasswordTab(!showPasswordTab);
   };
 
-  // const { updateAccount, error, isLoading } = useUpdateAccount();
+  const { updateInfo, updateError, isLoadingUpdate } = useUpdateInfo();
+  const handleUpdateAccount = async (e) => {
+    e.preventDefault();
+    try {
+      await updateInfo(artistName, dob);
+    } catch (error) {
+      console.log(updateError);
+      return;
+    }
+  };
 
-  // const handleUpdateAccount = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     await updateAccount(displayName, dob);
-  //   } catch (error) {
-  //     console.log(error.data?.message || "Please try again");
-  //     return;
-  //   }
-  // };
+  const { updateEmail, updateGmailError, isLoadingUpdateEmail } =
+    useUpdateGmail();
+  const handleUpdateEmail = async (e) => {
+    e.preventDefault();
+    try {
+      await updateEmail(currentEmail, newEmail, cPassword);
+    } catch (error) {
+      console.log(updateGmailError);
+      return;
+    }
+  };
 
-  // const { updateEmail, emailError, emailIsLoading } = useUpdateEmail();
-  // const handleUpdateEmail = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     await updateEmail(newEmail, cPassword);
-  //   } catch (error) {
-  //     console.log(error.data?.message || "Please try again");
-  //     return;
-  //   }
-  // };
-
-  // const { updatePassword, passwordError, passwordIsLoading } =
-  //   useUpdatePassword();
-
-  // const handleUpdatePassword = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     await updatePassword(password, newPassword);
-  //   } catch (error) {
-  //     console.log(error);
-  //     return;
-  //   }
-  // };
+  const { updatePassword, updatePasswordError, isLoadingUpdatePassword } =
+    useUpdatePassword();
+  const handleUpdatePassword = async (e) => {
+    e.preventDefault();
+    try {
+      await updatePassword(password, newPassword, confirmNewPassword);
+    } catch (error) {
+      console.log(updatePasswordError);
+      return;
+    }
+  };
   return (
     <div className="container">
       <h1 className="my-account-header">Settings</h1>
@@ -109,8 +121,7 @@ const AccountSetting = () => {
         <div className="contents">
           <div className={`${state === 1 ? "active-content" : "content"}`}>
             <h3>Detail about your personal information</h3>
-            {/* <form onSubmit={handleUpdateAccount}> */}
-            <form>
+            <form onSubmit={handleUpdateAccount}>
               <div className="inner-form">
                 <div className="user-img-div">
                   <img
@@ -130,7 +141,7 @@ const AccountSetting = () => {
                     disabled
                   />
 
-                  <label htmlFor="name">Display name:</label>
+                  <label htmlFor="name">Artist name:</label>
                   <input
                     type="text"
                     id="name"
@@ -159,17 +170,26 @@ const AccountSetting = () => {
           <div className={`${state === 2 ? "active-content" : "content"}`}>
             <h3>Change your personal account information</h3>
 
-            {/* <form onSubmit={handleUpdateEmail}> */}
-            <form>
+            <form onSubmit={handleUpdateEmail}>
               <h5 onClick={toggleShowEmail}>Email</h5>
               {showEmailTab && (
                 <div>
+                  <label htmlFor="currentEmail">Current email</label>
+                  <input
+                    type="email"
+                    id="currentEmail"
+                    className="form-control"
+                    placeholder="abcd@gmail.com"
+                    onChange={(e) => setCurrentEmail(e.target.value)}
+                    value={currentEmail}
+                  />
+
                   <label htmlFor="newemail">New email</label>
                   <input
                     type="email"
                     id="newemail"
                     className="form-control"
-                    placeholder="Change your email here"
+                    placeholder="abcd@gmail.com"
                     onChange={(e) => setNewEmail(e.target.value)}
                     value={newEmail}
                   />
@@ -179,7 +199,7 @@ const AccountSetting = () => {
                     type={"password"}
                     id="Cpassword"
                     className="form-control"
-                    placeholder="Current password"
+                    placeholder="Confirm password"
                     onChange={(e) => setCPassword(e.target.value)}
                     value={cPassword}
                   />
@@ -191,8 +211,7 @@ const AccountSetting = () => {
               )}
             </form>
 
-            {/* <form onSubmit={handleUpdatePassword}> */}
-            <form>
+            <form onSubmit={handleUpdatePassword}>
               <h5 onClick={toggleShowPasswordTab}>Password</h5>
               {showPasswordTab && (
                 <div>
@@ -219,6 +238,21 @@ const AccountSetting = () => {
                     placeholder="New password"
                     onChange={(e) => setNewPassword(e.target.value)}
                     value={newPassword}
+                  />
+
+                  <label htmlFor="Cnewpassword">Confirm new password</label>
+                  {showCPassword ? (
+                    <BiShow onClick={toggleHiddenC} />
+                  ) : (
+                    <AiOutlineEyeInvisible onClick={toggleHiddenC} />
+                  )}
+                  <input
+                    type={showCPassword ? "text" : "password"}
+                    id="Cnewpassword"
+                    className="form-control"
+                    placeholder="Confirm new password"
+                    onChange={(e) => setConfirmNewPassword(e.target.value)}
+                    value={confirmNewPassword}
                   />
 
                   <button className="btn btn-primary mt-3">

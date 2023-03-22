@@ -13,6 +13,7 @@ import { async, reject } from "q";
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 import { useUploadSong } from "../../hooks/useUploadSong";
+import { useArtistAuthContext } from "../../hooks/useArtistAuthContext";
 //  ARTISTS MUSIC SUBMISSION PAGE
 export default function UploadMusic(props) {
   const storage = firebase.storage();
@@ -140,7 +141,10 @@ export default function UploadMusic(props) {
     setReleaseYear(e.target.value);
   };
 
-  const artistID = JSON.parse(localStorage.getItem("artist")).id;
+  const { artistLoggedIn } = useArtistAuthContext();
+  const artistID = localStorage.getItem("artist")
+    ? JSON.parse(localStorage.getItem("artist")).id
+    : null;
   const getArtistAPI = React.useEffect(() => {
     const fetchArtist = async () => {
       const response = await fetch(`/api/artists/${artistID}`, {
@@ -154,8 +158,8 @@ export default function UploadMusic(props) {
         // console.log("Artist: " + artist);
         // console.log("Artist name: " + artist.artistName);
       }
+      fetchArtist();
     };
-    fetchArtist();
   }, []);
 
   const handleFeaturedArtists = (e) => {
