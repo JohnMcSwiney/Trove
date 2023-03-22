@@ -1,6 +1,9 @@
 const express = require("express");
 const { default: mongoose } = require("mongoose");
 const AudioContext = require("web-audio-api").AudioContext;
+const AudioBuffer = require("web-audio-api").AudioBuffer;
+// const AudioContext = require("web-audio-engine").StreamAudioContext;
+// const wae = require("web-audio-engine");
 const MusicTempo = require("music-tempo");
 const fs = require("fs");
 const DiscoveryGame = require("../../models/discoveryGame model/discoveryGame-model");
@@ -8,9 +11,9 @@ const Song = require("../../models/song model/song-model");
 const Artist = require("../../models/artist model/artist-model");
 const Album = require("../../models/album model/album-model");
 const User = require("../../models/user model/user-model");
-const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
-const url = require("url");
+const {getAllSongs} = require("../../admin controllers/song/songController");
 // const { storage } = require("firebase/compat/storage");
+
 
 // const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
@@ -18,272 +21,140 @@ const url = require("url");
 const getDiscoveryGame = async (req, res) => {
   //what should happen is when the game is loaded it'll just load a random song from the list.
 
-  const { userId, songId, swipeDirection } = req.body;
+  try {
 
-  const user = await User.findById(userId);
+    // const user = await User.findOne({ email: req.body.email });
 
-  if (!user) {
-    return res.status(404).send("User profile not found");
-  }
+    // if (!user) {
+    //   return res.status(404).send("User profile not found");
+    // }
+  
+    // console.log(user);
 
-  const song = await Song.findById(songId);
+    const songs = await Song.find()
 
-  if (!song) {
-    return res.status(404).send("Song not found");
-  }
+    .populate("artist")
+    .populate("featuredArtists")
 
-  const songRef = firebase.storage().ref(`songs/${songFile.name}`);
+    .populate("album")
 
-  songRef
-    .getDownloadUrl()
-    .then((url) => {
-      const xhr = new XMLHttpRequest();
+    .sort({ createdAt: -1 });
 
-      xhr.responseType = "arraybuffer";
-      xhr.onload = (e) => {
-        const data = xhr.response;
-        const context = new AudioContext();
-        context.decodeAudioData(data, calcTempo);
-      };
-      xhr.open("GET", url);
-      xhr.send();
-    })
-    .catch((err) => {
-      console.log("fetching song err: " + err);
-      throw new Error("could nto fetch song");
-    });
-
-  const calcTempo = (buffer) => {
-    let audioData = [];
-
-    if (buffer.numberOfChannels == 2) {
-      const data1 = buffer.getChannelData(0);
-      const data2 = buffer.getChannelData(1);
-
-      for (let i = 0; i < data1.length; i++) {
-        audioData[i] = (data1[i] + data2[i]) / 2;
-      }
-    } else {
-      audioData = buffer.getChannelData(0);
+    if (!songs) {
+      return res.status(404).send("songs not found");
     }
 
-    const songData = new MusicTempo(audioData);
+    const oneSong = songs[Math.floor(Math.random() * songs.length)];
 
-    console.log("tempo: " + songData.tempo);
-    console.log("beats: " + songData.beats);
-  };
+    console.log("oneSong: " + oneSong);
 
-  if (swipeDirection === "left") {
-    const nextSong = await getNextSong(user);
-    res.send(nextSong);
+  console.log("getAllSongs method working");
 
-    async function getNextSong(user) {
-      user = await User.findById(user).populate({
-        path: "user.likedSongs",
-        options: { sort: { createdAt: -1 } },
-        limit: 1,
-      });
-    }
-  } else {
-    user.likedSongs.push(songId);
+  //res.status(200).json(songs);
+  res.status(200).json(oneSong);
+
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ msg: "fetching songs failed" });
   }
-
-  const lastlikedSong = user.likedSongs[0];
-
-  const similarSongs = await Song.find({
-    $and: [
-      { _id: { $ne: lastlikedSong._id } },
-      { genre: lastlikedSong.genre },
-      {
-        "similarity.beat": {
-          $gte: lastlikedSong.similarity.beat - 0.1,
-          $lte: lastlikedSong.similarity.beat + 0.1,
-        },
-      },
-      {
-        "similarity.tempo": {
-          $gte: lastlikedSong.similarity.tempo - 5,
-          $lte: lastlikedSong.similarity.tempo + 5,
-        },
-      },
-    ],
-  }).limit(10);
-
-  const nextSong =
-    similarSongs[Math.floor(Math.random() * similarSongs.length)];
-  return nextSong;
-
-  // try {
-
-  //     const user = await User.findOne({
-  //         _id: req.user._id
-  //     });
-
-  //     // const recommendedSongs = await songMetadata.getRecommendations(user);
-
-  //     // let song;
-
-  //     // for (let i = 0; i < recommendedSongs.length; i++) {
-
-  //     //     const recommendedSong = recommendedSongs[i];
-  //     //     const metadata = await songMetadata.getSongMetaData(recommendedSong.id);
-
-  //     //     if (!metadata) {
-  //     //         continue;
-  //     //     }
-
-  //     //     const similarity = calculateSongSimilarity(metadata, user);
-
-  //     //     if (similarity >= 0.5) {
-  //     //         const existingSwipe = user.swipes.find(swipe => swipe.song === recommendedSong.id);
-
-  //     //         if (!existingSwipe) {
-  //     //             song = { ...recommendedSong, metadata };
-  //     //             break;
-  //     //         }
-  //     //     }
-
-  //     // }
-
-  //     // const likedSongs = user.swipes.filter(
-  //     //     swipe => swipe.direction === 'right'
-  //     //     .map(swipe => swipe.song)
-  //     //     )
-
-  //     //     const userPreferences = {
-  //     //         tempo: user.pr
-  //     //     }
-
-  //     const song = await DiscoveryGame.findOne({
-  //         genre: { $in: user.likedSongs },
-  //         tempo: { $gte: user.minTempo, $lte: user.maxTempo },
-  //         //isLoved: true,
-  //         isPublished: true,
-  //         _id: { $nin: user.swipes.map(swipe => swipe.song) }
-
-  //     })
-  //         .populate('user', ['genres']);
-
-  //     if (!song || song == null) {
-  //         console.log("song not found");
-
-  //         return res.status(200).json({});
-  //     }
-
-  //     res.status(200).json(song);
-  // } catch (err) {
-  //     console.log(err);
-  //     res.status(500).send('Server error');
-  // }
-};
+ 
+}
 
 //WIP
 const loadDiscoveryGame = async (req, res) => {
-  const { songID, swipeDirection } = req.body;
 
-  console.log("song id: " + songID);
+  console.log("swipe direction: " + req.body.swipeDirection);
 
-  const user = await User.findOne({ email: req.body.email });
 
-  if (!user) {
-    return res.status(404).send("User profile not found");
-  }
+  try {
 
-  const song = await Song.findOne({ _id: songID });
+    const calcTempo = async (buffer) => {
 
-  if (!song) {
-    return res.status(404).send("Song not found");
-  }
-
-  const songURL = song.songUrl;
-
-  console.log("song url: " + songURL);
-
-  const readSong = async (songURL) => {
-
-    try {
-
-      const res = await fetch(songURL);
-
-      const data = await res.arrayBuffer();
-
-      return new Promise((resolve, reject) => {
-
-        console.log("data: " + data);
-
-        (err) => {
-          console.log("promise err: " + err);
-          reject(err);
-        },
-        async () => {
-          resolve(data);
+      console.log("inside calctempo");
+  
+      let audioData = [];
+  
+      console.log("buffer: " + buffer);
+  
+      if (buffer.numberOfChannels == 2) {
+  
+        let data1 = buffer.getChannelData(0);
+        let data2 = buffer.getChannelData(1);
+  
+        for (let i = 0; i < data1.length; i++) {
+          audioData[i] = (data1[i] + data2[i]) / 2;
         }
-      })
-      // .then(data => {
-      //   return data;
-      // })
-    } catch (err) {
-      console.log("fetching song err");
-      console.log(err);
-    }
-  }
-
-  const calcTempo = async (buffer) => {
-
-    console.log("inside calctempo");
-
-    let audioData = [];
-
-    console.log("buffer: " + buffer);
-
-    if (buffer.numberOfChannels == 2) {
-
-      let data1 = buffer.getChannelData(0);
-      let data2 = buffer.getChannelData(1);
-
-      for (let i = 0; i < data1.length; i++) {
-        audioData[i] = (data1[i] + data2[i]) / 2;
+      } else {
+        audioData = buffer.getChannelData(0);
       }
-    } else {
-      audioData = buffer.getChannelData(0);
+  
+      const songData = new MusicTempo(audioData);
+
+      return songData;
+  
+      // console.log("tempo: " + songData.tempo);
+      // console.log("beats: " + songData.beats);
+  
     }
 
-    const songData = new MusicTempo(audioData);
 
-    console.log("tempo: " + songData.tempo);
-    console.log("beats: " + songData.beats);
-  }
+    const user = await User.findOne({ email: req.body.email });
 
+    if (!user) {
+      return res.status(404).send("User profile not found");
+    }
+  
+    console.log(user);
+  
+    const song = await Song.findOne({ _id: req.body.songID });
+  
+    if (!song) {
+      return res.status(404).send("Song not found");
+    }
 
-  const musicData = await readSong(songURL);
+    const songURL = song.songUrl;
 
-  console.log("music data: " + musicData);
+    await fetch(songURL)
+      .then(res => res.arrayBuffer())
+      .then(buffer => {
 
-  const context = new AudioContext();
+        const context = new AudioContext();
 
-  const buffer = await context.decodeAudioData(await readSong(songURL));
+        const musicData = context.decodeAudioData(buffer, calcTempo);
 
-  console.log("buffer outside of calctemp: " + buffer);
-
-  await calcTempo();
-
-
-
-  if (swipeDirection === "left") {
-    const nextSong = await getNextSong(user);
-    res.send(nextSong);
-
-    async function getNextSong(user) {
-      user = await User.findById(user).populate({
-        path: "user.likedSongs",
-        options: { sort: { createdAt: -1 } },
-        limit: 1,
+        return musicData;
       });
+
+    if (!req.body.swipeDirection || req.body.swipeDirection == null) {
+
+      console.log("swipeDirection not found");
     }
-  } else {
-    user.likedSongs.push(songID);
-    console.log("liked successfully");
+    else {
+
+      if (req.body.swipeDirection  === "left") {
+        console.log("they swiped left");
+        // const nextSong = await getNextSong(user);
+        // res.send(nextSong);
+
+        // async function getNextSong(user) {
+        //   user = await User.findById(user).populate({
+        //     path: "user.likedSongs",
+        //     options: { sort: { createdAt: -1 } },
+        //     limit: 1,
+        //   });
+        // }
+      } else {
+        console.log("before push");
+        user.likedSongs.push(song._id);
+        console.log("liked successfully");
+      }
+    }
+
+  } catch (err) {
+    console.log("fetching song err");
+    console.log(err);
   }
+
 
   // const lastlikedSong = user.likedSongs[0];
 
