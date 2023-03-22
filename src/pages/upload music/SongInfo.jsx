@@ -22,8 +22,7 @@ export default function SongInfo(props) {
           type="text"
           name="songName"
           placeholder="Song Title"
-          onChange={props.handleTitle}
-          onSelect
+          onChange={props.handleTitle[props.i]}
         ></input>
         <textarea
           value={props.featuredArtists}
