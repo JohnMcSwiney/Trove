@@ -23,8 +23,6 @@ export const useUploadSong = () => {
 
     const storageRef = storage.ref();
 
-    console.log("UPLOAD SONG EP VALUE: " + ep);
-
     const uploadSongToFirebase = async (songFile) => {
       setIsUploading(true);
 
@@ -63,12 +61,10 @@ export const useUploadSong = () => {
           },
           async () => {
             const songUrl = await songRef.getDownloadURL();
-            console.log("single song url: " + songUrl);
             resolve(songUrl);
           }
         );
       }).then((songUrl) => {
-        console.log("return songurl: " + songUrl);
         return songUrl;
       });
     };
@@ -140,8 +136,10 @@ export const useUploadSong = () => {
       return metadata !== false
     }
 
-    const createSongObject = async (songUrl, imgUrl) => {
-      // const endpoint = "http://localhost:6280/api/songs/"
+    const createSongObject = async (title, songUrl, imgUrl) => {
+
+      console.log("AUUUUGGHGHHHHHHH");
+
       const res = await fetch("api/songs/", {
         method: "POST",
         headers: {
@@ -150,8 +148,9 @@ export const useUploadSong = () => {
           "Access-Control-Allow-Origin": "*",
         },
         body: JSON.stringify({
-          title,
+          title: title,
           artist,
+          ep,
           album,
           genre,
           songUrl: songUrl,
@@ -161,6 +160,9 @@ export const useUploadSong = () => {
           featuredArtists,
         }),
       });
+
+      console.log("WALTUH");
+
 
       const data = await res.json();
 
@@ -174,6 +176,9 @@ export const useUploadSong = () => {
     };
 
     const createAlbumObject = async (imgUrl) => {
+
+      console.log("SHOULD NOT GO IN HERE");
+
       let songUrl = "";
 
       console.log("before fetch");
@@ -209,7 +214,7 @@ export const useUploadSong = () => {
 
         console.log("for loop song url: " + songUrl);
 
-        await createSongObject(songUrl, imgUrl);
+        await createSongObject(title, songUrl, imgUrl);
       }
 
       console.log("songs created!");
@@ -252,7 +257,10 @@ export const useUploadSong = () => {
 
         console.log("for loop song url: " + songUrl);
 
-        await createSongObject(songUrl, imgUrl);
+        await createSongObject(title, songUrl, imgUrl);
+
+        console.log("SHOULD SHOW THIS AFTER CREATESONGOBJECT");
+
       }
 
       console.log("songs created!");
@@ -370,6 +378,6 @@ export const useUploadSong = () => {
       default:
         break;
     }
-  };
+  }
   return { uploadMusic, isUploading, error };
 };
