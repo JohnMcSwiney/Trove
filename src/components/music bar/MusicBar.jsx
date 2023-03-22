@@ -18,7 +18,7 @@ import './musicbar.css'
 
 import { CgArrowLongRightR } from 'react-icons/cg'
 import { CgArrowLongLeftR } from 'react-icons/cg'
-import { BsPlayCircle, BsPauseCircle, BsSlashLg} from 'react-icons/bs'
+import { BsPlayCircle, BsPauseCircle, BsSlashLg } from 'react-icons/bs'
 import { MdExplicit, MdOutlineQueueMusic, MdQueueMusic } from 'react-icons/md'
 import {
   BiVolumeFull,
@@ -27,7 +27,12 @@ import {
   BiVolumeMute,
   BiAddToQueue
 } from 'react-icons/bi'
-import { TbRepeatOff, TbRepeatOnce, TbRepeat,TbArrowsShuffle } from 'react-icons/tb'
+import {
+  TbRepeatOff,
+  TbRepeatOnce,
+  TbRepeat,
+  TbArrowsShuffle
+} from 'react-icons/tb'
 import { FaHeart, FaShareSquare, FaRegHeart, FaSlash } from 'react-icons/fa'
 import NoSong from './NoSong.png'
 import 'react-tooltip/dist/react-tooltip.css'
@@ -51,13 +56,13 @@ const MusicBar = () => {
   // const isFullscreen = props.fcOptionIn;
   const [isFullscreen, setFullscreen] = useState(false)
   //context
-  const { currentSong, currentSongData, playlists, play_list } =
+  const { currentSong, updateCurrentSong, currentSongData, playlists, play_list } =
     React.useContext(MusicContext)
   //state
   //testing play/pause
   // const [isPlaying, setIsPlaying] = useState(false)
-  const [isPlaying, setIsPlaying] = useState(true);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true)
+  const [isLoaded, setIsLoaded] = useState(false)
   const [duration, setDuration] = useState(0)
   const [currentTime, setCurrentTime] = useState(0)
   const [volumeLevel, setVolumeLevel] = useState(0)
@@ -69,11 +74,11 @@ const MusicBar = () => {
   const [loopState, setLoopState] = useState(0)
   const [isLooping, setLooping] = useState(false)
   const [isShuffle, setShuffle] = useState(false)
-  
-  const [hasPlay_List, setHasPlay_List] = useState(false);
-  const [queueType, setQueueType] = useState(0);
-  const [play_ListPosition, setPlay_ListPosition] = useState(false);
-  const [queue, setQueue] = useState([]);
+
+  const [hasPlay_List, setHasPlay_List] = useState(false)
+  const [queueType, setQueueType] = useState(0)
+  const [play_ListPosition, setPlay_ListPosition] = useState(0)
+  const [queue, setQueue] = useState([])
 
   //refrences
   const audioPlayer = useRef() //reference audio component
@@ -82,29 +87,28 @@ const MusicBar = () => {
   const animationRef = useRef()
   const volumeRef = useRef()
 
-  if (play_list.length === 0 ){
+  if (play_list.length === 0) {
     //no play list
   } else {
-    const newLength = play_list.length;
+    const newLength = play_list.length
   }
   useEffect(() => {
-    if(isLoaded === false){
-      audioPlayer.current.pause();
-      setLoopState(0);
+    if (isLoaded === false) {
+      audioPlayer.current.pause()
+      setLoopState(0)
     }
-    //Maybe use another context file to update the music context file. 
+    //Maybe use another context file to update the music context file.
     //current song or something? Idk writing this down for future testing
-    if(hasPlay_List === false) {
-      if(queue.length === 0){
-        console.log('no playlist');
-        setQueue(play_list);
-        console.log(play_list);
-        console.log(queue);
+    if (hasPlay_List === false) {
+      if (queue.length === 0) {
+        console.log('no playlist')
+        setQueue(play_list)
+        console.log(play_list)
+        console.log(queue)
       } else {
-        setHasPlay_List(true);
+        setHasPlay_List(true)
       }
     } else {
-      
     }
     const seconds = Math.floor(audioPlayer.current.duration)
     setDuration(seconds) // 45.26
@@ -251,6 +255,18 @@ const MusicBar = () => {
 
     if (currentTimeInSong < 5) {
       console.log(`rewind to prev`)
+      const lengthOfPlay_list = play_list.length
+      if (play_ListPosition === 0) {
+        toBeginningOfSong()
+        console.log('at start of playlist')
+      } else {
+        try {
+          setPlay_ListPosition(play_ListPosition - 1)
+          updateCurrentSong(play_list[play_ListPosition]);
+        } catch {
+          console.error('Cannot decrement futher')
+        }
+      }
     } else {
       console.log(`rewind to 0`)
       if (isPlaying === true) {
@@ -260,7 +276,17 @@ const MusicBar = () => {
     }
   }
   const handleForward = () => {
-    console.log('forward')
+    const lengthOfPlay_list = play_list.length
+    if (lengthOfPlay_list === play_ListPosition) {
+      console.log('at end of playlist')
+    } else {
+      try {
+        setPlay_ListPosition(play_ListPosition + 1)
+        updateCurrentSong(play_list[play_ListPosition]);
+      } catch {
+        console.error('Cannot increment futher')
+      }
+    }
   }
 
   const toggleFC = event => {
@@ -311,9 +337,7 @@ const MusicBar = () => {
             isPlaying={
               (animationRef.current = requestAnimationFrame(whilePlaying))
             }
-          >
-
-          </audio>
+          ></audio>
 
           {/* Full Screen */}
           <div
@@ -429,13 +453,12 @@ const MusicBar = () => {
               {/* Queue */}
               <div className='brihgleggmoie'>
                 <h6 className='queueHeader'>Song Queue:</h6>
-                
 
-              {play_list &&
-          play_list.map((song) => {
-            return <SearchSongCard2 key={song._id} song={song} />;
-          })}
-                  {/* {queue &&
+                {play_list &&
+                  play_list.map(song => {
+                    return <SearchSongCard2 key={song._id} song={song} />
+                  })}
+                {/* {queue &&
                   queue.map((song) => {
                     return <CardSong key={song._id} song={song} />
                   })} */}
