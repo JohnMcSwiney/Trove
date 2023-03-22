@@ -79,7 +79,7 @@ const loginArtist = async (req, res) => {
     if (!artist) {
       return res
         .status(400)
-        .json({ error: "Email or password is not correct" });
+        .json({ error: "You have not sign up with this email" });
     }
     await Artist.login(email, password);
     const token = createToken(artist._id);
@@ -105,6 +105,9 @@ const loginArtist = async (req, res) => {
       id: artist._id,
       artistName: artist.artistName,
       email: artist.email,
+      albumList: artist.albumList,
+      epList: artist.epList,
+      songList: artist.songList,
     });
   } catch (error) {
     res.status(400).json({ error: error.message });
