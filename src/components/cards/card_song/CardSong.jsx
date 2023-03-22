@@ -28,6 +28,9 @@ export default function CardSong(props) {
                                 <div><h5><span>{props.duration}</span></h5></div>
 
                         </div>
+                        <div>
+                                
+                        </div>
                         <div className="song-card-options">
                                 <button onClick={toggleLiked}>
                                         {isLiked ? <FaHeart className='text-white' /> : <FaRegHeart />}
