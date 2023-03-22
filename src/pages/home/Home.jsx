@@ -18,16 +18,17 @@ const Home = () => {
       }
     };
     fetchMySongs();
-  }, []);
+  }, [id]);
 
   React.useEffect(() => {
     const fetchMyAlbums = async () => {
-      const albumResponse = await fetch(`/api/albums/artist-album/${id}`, {
+      const albumResponse = await fetch(`/api/albums/artist-albums/${id}`, {
         method: "GET",
         headers: { "Content-Type": "application/json" },
       });
     };
-  }, []);
+    fetchMyAlbums();
+  }, [id]);
 
   const { artist } = useArtistAuthContext();
   return (
