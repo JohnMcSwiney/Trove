@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useArtistAuthContext } from "./useArtistAuthContext";
-
+import { useNavigate } from "react-router-dom";
 export const useLogin = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(false);
-  const { dispatch } = useArtistAuthContext();
 
+  const { dispatch } = useArtistAuthContext();
+  const navigate = useNavigate();
   const login = async (email, password) => {
     setError(null);
     setIsLoading(true);
@@ -23,14 +23,11 @@ export const useLogin = () => {
     }
 
     if (response.ok) {
+      localStorage.setItem("artist", JSON.stringify(json.id));
       dispatch({ type: "LOGIN", payload: json });
-      setIsLoading(false);
-      setLoggedIn(true);
-      sessionStorage.setItem("artistToken", json.token);
-      localStorage.setItem("artistID", json.id);
-    } else {
-      setIsLoading(false);
     }
+    setIsLoading(false);
+    navigate("/");
   };
-  return { login, isLoading, error, loggedIn };
+  return { login, isLoading, error };
 };

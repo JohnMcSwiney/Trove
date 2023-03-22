@@ -7,6 +7,7 @@ import { Navigate } from "react-router-dom";
 // import { useUpdateAccount } from "../../hooks/user-hooks/useUpdateAccount";
 // import { useUpdateEmail } from "../../hooks/user-hooks/useUpdateEmail";
 // import { useUpdatePassword } from "../../hooks/user-hooks/useUpdatePassword";
+import { useArtistAuthContext } from "../../hooks/useArtistAuthContext";
 const AccountSetting = () => {
   const [state, setState] = React.useState(1);
 
@@ -15,10 +16,10 @@ const AccountSetting = () => {
   };
 
   //states for forms
-
+  const { artist } = useArtistAuthContext();
   const [imgPath, setImagePath] = React.useState("./img/user-demo.png");
-  const [email, setEmail] = React.useState();
-  const [displayName, setDisPlayName] = React.useState();
+  const [email, setEmail] = React.useState(artist?.email);
+  const [artistName, setArtistName] = React.useState(artist?.artistName);
   const [password, setPassword] = React.useState("");
   const [newPassword, setNewPassword] = React.useState("");
   const [dob, setDOB] = React.useState();
@@ -134,9 +135,9 @@ const AccountSetting = () => {
                     type="text"
                     id="name"
                     className="form-control"
-                    defaultValue={displayName}
-                    onChange={(e) => setDisPlayName(e.target.value)}
-                    value={displayName}
+                    defaultValue={artistName}
+                    onChange={(e) => setArtistName(e.target.value)}
+                    value={artistName}
                   />
                   <label htmlFor="dob">Date of birth:</label>
                   <input

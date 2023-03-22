@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSignup } from "../../hooks/useSignup";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 const Signup = () => {
   const [email, setEmail] = useState("");
   const [confirmEmail, setConfirmEmail] = useState("");
@@ -24,6 +24,14 @@ const Signup = () => {
       console.log(error.message);
     }
   };
+
+  const navigate = useNavigate();
+  const redirectSignup = useEffect(() => {
+    const artistID = localStorage.getItem("artistID");
+    if (artistID) {
+      navigate("/");
+    }
+  }, [navigate]);
   return (
     <div className="form-group container">
       <h1>Trove Music</h1>

@@ -21,15 +21,10 @@ export const ArtistAuthContextProvider = ({ children }) => {
   });
 
   useEffect(() => {
-    fetch("/api/session") // Make a GET request to the server to get the current session
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.artist) {
-          const artist = JSON.parse(localStorage.getItem("artist"));
-          dispatch({ type: "LOGIN", payload: data.artist }); // If there's an artist in the session, set it as the current authenticated user
-        }
-      })
-      .catch((error) => console.log(error));
+    const artist = JSON.parse(localStorage.getItem("artist"));
+    if (artist) {
+      dispatch({ type: "LOGIN", payload: artist });
+    }
   }, []);
 
   return (
