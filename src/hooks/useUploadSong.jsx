@@ -18,10 +18,12 @@ export const useUploadSong = () => {
     imageFile,
     releaseType,
     releaseYear,
-    featuredArtists,
+    featuredArtists
   ) => {
 
     const storageRef = storage.ref();
+
+    console.log("UPLOAD SONG EP VALUE: " + ep);
 
     const uploadSongToFirebase = async (songFile) => {
       setIsUploading(true);
@@ -238,6 +240,7 @@ export const useUploadSong = () => {
       console.log("after fetch: " + res);
 
       const data = await res.json();
+
       console.log("EP Data: " + data);
 
       if (!data.ok) {

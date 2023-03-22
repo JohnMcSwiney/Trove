@@ -74,6 +74,7 @@ export default function MusicDetails(props) {
                     onChange={props.handleFeaturedArtists}
                   />
                 </label>
+                {console.log("first FT: " + props.featuredArtists)}
               </td>
             </tr>
             {props.releaseType === "album" && (
@@ -107,6 +108,7 @@ export default function MusicDetails(props) {
                       onChange={props.handleEPName}
                     />
                   </label>
+                  {console.log("EP Name: " + props.ep)}
                 </td>
               </tr>
             )}

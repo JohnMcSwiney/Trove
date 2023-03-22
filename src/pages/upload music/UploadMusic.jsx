@@ -110,10 +110,18 @@ export default function UploadMusic(props) {
         break;
 
       case "ep":
+
         if (Array.from(e.target.files).length > MAX_SONGS) {
           alert("Cannot upload more than 5 songs for EP!");
           e.preventDefault();
-        } else {
+        }
+
+        else if (Array.from(e.target.files).length == 1) {
+          alert("Must upload more than one song!");
+          e.preventDefault();
+        }
+        
+        else {
           setSongFile(Array.from(e.target.files));
         }
         break;

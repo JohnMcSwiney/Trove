@@ -13,7 +13,6 @@ export default function SongInfo(props) {
         {props.songFile[props.i] && (
           <>
             <label>{props.songFile[props.i].name}</label>
-            {console.log("song number: " + props.i)}
             <button onClick={handleRemoveSong}>Remove</button>
           </>
         )}
@@ -31,6 +30,8 @@ export default function SongInfo(props) {
           placeholder="Featured Artists"
           onChange={props.handleFeaturedArtists}
         />
+        {console.log("first FT: " + props.featuredArtists)}
+
         {/* <br />
                 {/* <h3>{props.title}</h3> */}
         {/* {console.log("index: " + [props.i])}
