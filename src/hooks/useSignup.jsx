@@ -39,6 +39,7 @@ export const useSignup = () => {
 
     if (response.ok) {
       localStorage.setItem("artist", JSON.stringify(json));
+
       //update auth context
       dispatch({ type: "LOGIN", payload: json });
       //update loading state
