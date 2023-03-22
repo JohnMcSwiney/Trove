@@ -27,6 +27,7 @@ import {
   BiVolumeMute,
   BiAddToQueue
 } from 'react-icons/bi'
+import {TbRepeatOff, TbRepeatOnce, TbRepeat} from 'react-icons/tb'
 import { FaHeart, FaShareSquare, FaRegHeart } from 'react-icons/fa'
 import NoSong from './NoSong.png'
 import 'react-tooltip/dist/react-tooltip.css'
@@ -63,7 +64,7 @@ const MusicBar = () => {
   const [isLiked, setIsLiked] = useState(false)
   const [isExplicit, setExplicit] = useState(true)
   const [loopState, setLoopState] = useState(0)
-  const [isLooping, setLooping] = useState(false)
+  const [isLooping, setLooping] = useState(true)
   //refrences
   const audioPlayer = useRef() //reference audio component
   const progressBar = useRef() //reference progress bar
@@ -71,38 +72,6 @@ const MusicBar = () => {
   const animationRef = useRef()
   const volumeRef = useRef()
 
-  // const handlePlaySong = () => {
-  //   if (currentSong && currentSong._id === song._id) {
-  //     updateCurrentSong(null);
-
-  //   } else {
-  //     updateCurrentSong(song);
-  //     currentSongData(song); // added songData to pass song's data
-
-  //   }
-  // };
-  // const updateSong = () =>{
-  //   console.log("updateSong Method");
-  //   try{
-  //     // setNewSong(currentSong);
-  //   } catch{
-  //     console.log("error thrown");
-  //   }
-
-  // }
-
-  // try{
-  //   console.log("contextFile ID: " + currentSong._id);
-
-  //   if (!newSong || newSong === null){
-  //     console.log("newSong is Null");
-  //     updateSong();
-  //   }else{
-  //     // console.log(newSong._id + " his ass not null c???!?!??!??!!!?!");
-  //   }
-  // } catch{
-  //   console.log("newSongID: error ");
-  // }
 
   useEffect(() => {
     const seconds = Math.floor(audioPlayer.current.duration)
@@ -119,7 +88,6 @@ const MusicBar = () => {
     // }
   }, [audioPlayer?.current?.loadedmetadata, audioPlayer?.current?.readyState])
 
-  //
 
   // Music Player Functions
   const calculateTime = secs => {
@@ -166,7 +134,19 @@ const MusicBar = () => {
       // console.log(`current vol:` + volumeLevel);
     }
   }
-
+  const toBeginningOfSong = () => {
+    progressBar.current.value = 0;
+    FCprogressBar.current.value = 0;
+    audioPlayer.current.currentTime = 0;
+    audioPlayer.current.currentTime = 0;
+    changePlayerCurrentTime()
+    setTimeout(() => {
+      document.getElementById('playPauseBtn').click();
+    }, 500)
+      
+    
+    
+  }
   const whilePlaying = () => {
     progressBar.current.value = audioPlayer.current.currentTime
     FCprogressBar.current.value = audioPlayer.current.currentTime
@@ -193,7 +173,7 @@ const MusicBar = () => {
     )
     setCurrentTime(progressBar.current.value)
   }
-  
+
   const changeVolumeLevel = () => {
     setIsMuted(true)
     // console.log(audioPlayer.current.volume);
@@ -201,12 +181,23 @@ const MusicBar = () => {
     audioPlayer.current.volume = volumeRef.current.value / 100
   }
   const changeLoopLevel = () => {
+    
     const currentLoopLvl = loopState;
-
-    if (currentLoopLvl === 0) {
-      console.log("not looping");
+    const newLooplvl = currentLoopLvl + 1;
+    switch (newLooplvl) {
+      case 1:
+        // Loop album
+        setLoopState(newLooplvl);
+        break;
+      case 2:
+        // Loop song
+        setLooping(true);
+        setLoopState(newLooplvl);
+        break;
+      default:
+        console.log(`default`);
+        setLoopState(1)
     }
-
   }
   const shareSong = () => {
     console.log(`share btn`)
@@ -224,6 +215,23 @@ const MusicBar = () => {
     } else {
       unlike()
     }
+  }
+  const handleRewind = () => {
+    const currentTimeInSong = audioPlayer.current.currentTime;
+    
+    if (currentTimeInSong < 5) {
+        console.log(`rewind to prev`)
+    } else {
+        console.log(`rewind to 0`)
+        if (isPlaying === true) {
+          document.getElementById('playPauseBtn').click();
+        }
+        toBeginningOfSong();
+    }
+    
+  }
+  const handleForward = () => {
+    console.log('forward')
   }
 
   const toggleFC = event => {
@@ -254,20 +262,22 @@ const MusicBar = () => {
       {
         <>
           <audio
-            loop ={isLooping}
+            loop={isLooping}
             ref={audioPlayer}
             src={currentSong?.songUrl}
             preload='metadata'
             autoPlay='true'
             onChange={() => {
-              changeRange()
+              // changeRange()
               animationRef.current = requestAnimationFrame(whilePlaying)
             }}
             onLoadedMetadata={() => {
-              setIsPlaying(true)
+              toBeginningOfSong()
               changeRange()
+              setIsPlaying(true)
               animationRef.current = requestAnimationFrame(whilePlaying)
             }}
+            isPlaying={animationRef.current = requestAnimationFrame(whilePlaying)}
           ></audio>
 
           {/* Full Screen */}
@@ -380,7 +390,6 @@ const MusicBar = () => {
                     <BsSkipEnd />
                   </button>
                 </div> */}
-
               </div>
               {/* Queue */}
               <div className='brihgleggmoie'>
@@ -410,34 +419,32 @@ const MusicBar = () => {
           {/* Regular Player */}
           <div
             className={
-              isFullscreen === false ? 'player-container musicbar' : 'player-container musicbar'
+              isFullscreen === false
+                ? 'player-container musicbar'
+                : 'player-container musicbar'
             }
           >
             <div className='musicbar-wrap bg-trv-sm-Play-bg'>
               {/* This style is in the fullscreen css file - idk there was a bug <3 */}
-              
-              <div className='volumeContainter'>
-                  <button onClick={toggleMute}>
-                    {isMuted ? <BiVolumeFull /> : <BiVolumeMute />}
-                  </button>
-                  <input
-                    type='range'
-                    ref={volumeRef}
-                    defaultValue='50'
-                    onChange={changeVolumeLevel}
-                    min='0'
-                    max='100'
-                    step='5'
-                  ></input>
-                  <button className='fcBtn' onClick={toggleFC}>Queue<MdQueueMusic className='queueMusicIcon' /></button>
-              </div>
-              
 
-              
+              <div className='volumeContainter-ver2'>
+                <input
+                  type='range'
+                  ref={volumeRef}
+                  defaultValue='50'
+                  onChange={changeVolumeLevel}
+                  min='0'
+                  max='100'
+                  step='5'
+                ></input>
+                <button onClick={toggleMute}>
+                  {isMuted ? <BiVolumeFull /> : <BiVolumeMute />}
+                </button>
+              </div>
+
               {/* Progress Bar */}
               {/* time visible on fullscreen*/}
               <div className='progress-time-container'>
-
                 <div className='player-time-time-container-1'>
                   {calculateTime(currentTime)}
                 </div>
@@ -468,11 +475,11 @@ const MusicBar = () => {
                 </div>
 
                 <div className='player-time-time-container-2'>
-                  {(duration && !isNaN(duration)) && calculateTime(duration)}
+                  {duration && !isNaN(duration) && calculateTime(duration)}
                 </div>
               </div>
 
-              <div className='player-info-container '>
+              <div className='player-info-container-ver2 '>
                 {/*  */}
                 <div className='like-btn '>
                   <button onClick={toggleLiked}>
@@ -523,27 +530,42 @@ const MusicBar = () => {
                 </div>
 
                 <div className='control-container'>
-                  <button>
+                  <button onClick={handleRewind}>
                     <BsSkipStart />
                   </button>
-                  <button className='playbtnstyle' onClick={togglePlayPause}>
+                  <button className='playbtnstyle' id='playPauseBtn' onClick={togglePlayPause}>
                     {isPlaying ? (
                       <BsPause />
                     ) : (
                       <BsPlay className='BsPlayStyleLg' />
                     )}
                   </button>
-                  <button>
+                  <button onClick={handleForward}>
                     <BsSkipEnd />
                   </button>
                 </div>
-
-                
-
+                {/* Loop and Queue */}
+                <div className='otherItemBtnContainer'>
+                {/* import {TbRepeatOff, TbRepeatOnce, TbRepeat} from 'react-icons/tb' */}
+                  <button className={loopState === 0 ? "loopBtn loopLvl1" : "hiddenBtn"} onClick={changeLoopLevel}>
+                      <TbRepeatOff/>
+                  </button>
+                  <button className={loopState === 1 ? "loopBtn loopLvl2" : "hiddenBtn"} onClick={changeLoopLevel}>
+                      <TbRepeat/>
+                  </button>
+                  <button className={loopState === 2 ? "loopBtn loopLvl2" : "hiddenBtn"} 
+                  onClick={() => setLoopState(0)}
+                  onMouseDown={() => setLooping(false)}
+                  // onMouseUp={() => console.log(isLooping)}
+                  >
+                      <TbRepeatOnce/>
+                  </button>
+                  <button className='fcBtn' onClick={toggleFC}>
+                    Queue
+                    <MdQueueMusic className='queueMusicIcon' />
+                  </button>
+                </div>
               </div>
-
-
-
             </div>
           </div>
         </>
