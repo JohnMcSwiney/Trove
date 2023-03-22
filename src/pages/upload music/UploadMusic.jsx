@@ -140,7 +140,7 @@ export default function UploadMusic(props) {
     setReleaseYear(e.target.value);
   };
 
-  const artistID = JSON.parse(localStorage.getItem("artistID")).id;
+  const artistID = JSON.parse(localStorage.getItem("artist")).id;
   const getArtistAPI = React.useEffect(() => {
     const fetchArtist = async () => {
       const response = await fetch(`/api/artists/${artistID}`, {
