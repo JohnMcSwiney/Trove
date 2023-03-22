@@ -16,7 +16,6 @@ import { AudioPlayer } from '../audioplayerOLD/AudioPlayer';
 
 import './DGstyle.css';
 
-
 import DGdata from '../../data/hardcodedTestData/hardcodeDGsongs';
 
 import Slider from "react-slick";
@@ -53,9 +52,9 @@ const DiscoveryGame = () => {
 
   const [currentTime, setCurrentTime] = useState(0);
 
-  const [songs, setSongs] = useState([]);
+  // const [slides, setSongs] = useState([]);
 
-  const [likedsongs, setLikedsongs] = useState([]);
+  const [likedslides, setLikedslides] = useState([]);
 
   const [isMuted, setIsMuted] = useState(true);
   //isMuted is totally screwed... but it works. So i'm just gonna leave it as it is <3 sorry if it's confusing (I don't actually know what's happening lol)
@@ -74,26 +73,26 @@ const DiscoveryGame = () => {
 
 
 
-  const fetchSongs = async () => {
-    const songResponse = await fetch("/api/songs/", {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    });
-    const songJson = await songResponse.json();
-    if (songResponse.ok) {
-      setSongs(songJson);
+  // const fetchSongs = async () => {
+  //   const songResponse = await fetch("/api/slides/", {
+  //     method: "GET",
+  //     headers: { "Content-Type": "application/json" },
+  //   });
+  //   const songJson = await songResponse.json();
+  //   if (songResponse.ok) {
+  //     setSongs(songJson);
 
-      for (let i = 0; i < songs.length; i++) {
-        console.log("song title: " + songs[i].title);
+  //     for (let i = 0; i < slides.length; i++) {
+  //       console.log("song title: " + slides[i].title);
         
-      }
+  //     }
 
-      // songs.map((song) => {
+  //     // slides.map((song) => {
 
-      //   console.log("song title: " + song.title);
-      // })
-    }
-  };
+  //     //   console.log("song title: " + song.title);
+  //     // })
+  //   }
+  // };
   //fetchSongs();
 
 
@@ -106,27 +105,27 @@ const DiscoveryGame = () => {
     const alikedsong = JSON.parse(localStorage.getItem("likedSongs"));
 
     if (alikedsong) {
-      setLikedsongs(alikedsong);
+      setLikedslides(alikedsong);
     } else {
-      setLikedsongs(LikeData);
+      setLikedslides(LikeData);
     }
 
   }, []);
 
   const handleAddLikedSongs = () => {
 
-    const newLike = { _id: songs[state]._id};
+    const newLike = { _id: slides[state]._id};
 
-    const updateLikes = [...likedsongs, newLike];
+    const updateLikes = [...likedslides, newLike];
 
-    setLikedsongs(updateLikes);
+    setLikedslides(updateLikes);
 
     localStorage.setItem("likedSongs", JSON.stringify(updateLikes));
 
-    fetch(`/api/songs/liked/${newLike}`, {
+    fetch(`/api/slides/liked/${newLike}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ likedsongs }),
+      body: JSON.stringify({ likedslides }),
     })
   };
 
@@ -135,7 +134,7 @@ const DiscoveryGame = () => {
 
   //   try {
 
-  //     songs.map((song) => {
+  //     slides.map((song) => {
 
   //     });
 
@@ -242,10 +241,10 @@ const DiscoveryGame = () => {
     trackMouse: true,
     // Dislike
     onSwipedLeft: () => {
-      if (state === songs.length - 1) return;
-      setIndex((prevIndex) => (prevIndex + 1) % songs.length);
+      if (state === slides.length - 1) return;
+      setIndex((prevIndex) => (prevIndex + 1) % slides.length);
       setAccept(accept + 1);
-      dislikedIds.push(songs[state]._id, songs[state].title, songs[state].artist);
+      dislikedIds.push(slides[state]._id, slides[state].title, slides[state].artist);
 
       gotoNext();
       setState(state + 1);
@@ -253,10 +252,10 @@ const DiscoveryGame = () => {
     },
     // Like
     onSwipedRight: () => {
-      if (state === songs.length - 1) return;
-      setIndex((prevIndex) => (prevIndex + 1) % songs.length);
+      if (state === slides.length - 1) return;
+      setIndex((prevIndex) => (prevIndex + 1) % slides.length);
       setDeny(deny + 1);
-      likedIds.push(songs[state]._id, songs[state].title, songs[state].artist);
+      likedIds.push(slides[state]._id, slides[state].title, slides[state].artist);
       gotoNext();
       setState(state + 1);
       handleAddLikedSongs();
@@ -296,7 +295,7 @@ const DiscoveryGame = () => {
         {/* Back button - plays song just swipped  */}
         <button className='hidden' onClick={() => {
           if (state === 0) return;
-          setIndex((prevIndex) => (prevIndex + songs.length - 1) % songs.length);
+          setIndex((prevIndex) => (prevIndex + slides.length - 1) % slides.length);
         }}><BiArrowToLeft />
         </button>
 
@@ -315,7 +314,7 @@ const DiscoveryGame = () => {
 
 
             {/* {
-              songs.map((song, i = 0) => {
+              slides.map((song, i = 0) => {
                 return <div className='test2'  >
                   <div className='Discovery-Img-Container' >
                     <img src={song.imgUrl} className="DGimg" onClick={() => printIndex(i++)} />
@@ -323,7 +322,17 @@ const DiscoveryGame = () => {
                 </div>
               })
             } */}
-            
+            <div className='test2'  >
+              <div className='Discovery-Img-Container' >
+                <img src={slides[0].url} alt={slides[0].alt} className="DGimg" onClick={() => printIndex(0)} />
+              </div>
+            </div>
+
+            <div className='test2'  >
+              <div className='Discovery-Img-Container' >
+                <img src={slides[1].url} alt={slides[1].alt} className="DGimg" onClick={() => printIndex(1)} />
+              </div>
+            </div>
 
             <div className='test2'  >
               <div className='Discovery-Img-Container' >
@@ -349,9 +358,9 @@ const DiscoveryGame = () => {
 
       <div className='Discovery-Text-Container'>
         {/* Song title */}
-        <h2 className="DGsongtxt"> {songs[state].title} </h2>
+        <h2 className="DGsongtxt"> {slides[state].title} </h2>
         {/* Song Artist */}
-        <h2 className="DGalbtxt"> {songs[state].artist} </h2>
+        <h2 className="DGalbtxt"> {slides[state].artist} </h2>
       </div>
 
       {/* Swipe Box */}
@@ -360,10 +369,10 @@ const DiscoveryGame = () => {
         {/* dislike */}
         <button onClick={() => {
 
-          if (state === songs.length - 1) return;
-          setIndex((prevIndex) => (prevIndex + 1) % songs.length);
+          if (state === slides.length - 1) return;
+          setIndex((prevIndex) => (prevIndex + 1) % slides.length);
           setDeny(deny + 1);
-          dislikedIds.push(songs[state]._id, songs[state].title, songs[state].artist);
+          dislikedIds.push(slides[state]._id, slides[state].title, slides[state].artist);
           gotoNext();
           setState(state + 1);
 
@@ -373,11 +382,11 @@ const DiscoveryGame = () => {
         {/* like */}
         <button onClick={() => {
 
-          if (state === songs.length - 1) return;
-          setIndex((prevIndex) => (prevIndex + 1) % songs.length);
+          if (state === slides.length - 1) return;
+          setIndex((prevIndex) => (prevIndex + 1) % slides.length);
           setAccept(accept + 1);
-          console.log(songs[state].id);
-          likedIds.push(songs[state]._id, songs[state].title, songs[state].artist);
+          console.log(slides[state].id);
+          likedIds.push(slides[state]._id, slides[state].title, slides[state].artist);
           gotoNext();
           setState(state + 1);
           handleAddLikedSongs();
@@ -391,7 +400,7 @@ const DiscoveryGame = () => {
 
         {/* <div className={style.DGaudioPlayer}>  JACK */}
         <div className=''>
-          <audio ref={audioPlayer} src={songs[state].songUrl}
+          <audio ref={audioPlayer} src={slides[state].songUrl}
             autoPlay
             // 
             preload="metadata"
@@ -439,7 +448,7 @@ const DiscoveryGame = () => {
           {/* will remove soon just for testing purposes 
 
           <ul>
-            {likedsongs.map((item) => (
+            {likedslides.map((item) => (
               <li key={item.id}>{item.songName}</li>
             ))}
           </ul>

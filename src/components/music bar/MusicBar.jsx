@@ -62,7 +62,8 @@ const MusicBar = () => {
   const [prevVolume, updatePrevVol] = useState(0.5)
   const [isLiked, setIsLiked] = useState(false)
   const [isExplicit, setExplicit] = useState(true)
-
+  const [loopState, setLoopState] = useState(0)
+  const [isLooping, setLooping] = useState(false)
   //refrences
   const audioPlayer = useRef() //reference audio component
   const progressBar = useRef() //reference progress bar
@@ -192,12 +193,20 @@ const MusicBar = () => {
     )
     setCurrentTime(progressBar.current.value)
   }
-
+  
   const changeVolumeLevel = () => {
     setIsMuted(true)
     // console.log(audioPlayer.current.volume);
     // console.log(volumeRef.current.value);
     audioPlayer.current.volume = volumeRef.current.value / 100
+  }
+  const changeLoopLevel = () => {
+    const currentLoopLvl = loopState;
+
+    if (currentLoopLvl === 0) {
+      console.log("not looping");
+    }
+
   }
   const shareSong = () => {
     console.log(`share btn`)
@@ -245,6 +254,7 @@ const MusicBar = () => {
       {
         <>
           <audio
+            loop ={isLooping}
             ref={audioPlayer}
             src={currentSong?.songUrl}
             preload='metadata'
@@ -255,7 +265,7 @@ const MusicBar = () => {
             }}
             onLoadedMetadata={() => {
               setIsPlaying(true)
-
+              changeRange()
               animationRef.current = requestAnimationFrame(whilePlaying)
             }}
           ></audio>
