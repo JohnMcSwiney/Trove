@@ -16,7 +16,7 @@ const AccountSetting = () => {
   };
 
   //states for forms
-  const { artist } = useArtistAuthContext();
+  const artist = JSON.parse(localStorage.getItem("artist"));
   const [imgPath, setImagePath] = React.useState("./img/user-demo.png");
   const [email, setEmail] = React.useState(artist?.email);
   const [artistName, setArtistName] = React.useState(artist?.artistName);
