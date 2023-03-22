@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, useEffect } from "react";
 
 import TasteProfile from "../../components/taste Profile/TasteProfile";
 import CardArtist from "../../components/cards/card_artist/CardArtist";
@@ -13,9 +13,13 @@ const Home = () => {
   const redirectDiscovery = () => {
     navigate("/discoverygame");
   };
-  const userID = JSON.stringify(localStorage.getItem("user")).id;
-  const [userInfo, setUserInfo] = React.useState({});
-  React.useEffect(() => {
+  const userID = JSON.parse(localStorage.getItem("user")).id;
+
+  // const favoriteArtists = JSON.parse(localStorage.getItem("user")).likedArtists;
+  // console.log(favoriteArtists);
+
+  const [userInfo, setUserInfo] = useState([]);
+  useEffect(() => {
     const fetchUserInfo = async () => {
       const response = await fetch(`/api/users/${userID}`);
       const data = await response.json();
@@ -38,10 +42,10 @@ const Home = () => {
         </div>
       </div>
 
-      {userInfo && userInfo?.likedArtists?.length > 0 && (
+      {userInfo?.likedArtists?.length > 0 && (
         <div>
           <h4 className=" homeHeaderText ">Artists you love:</h4>
-          {userInfo?.likedArtists &&
+          {userInfo?.likedArtists?.length > 0 &&
             userInfo?.likedArtists.map((artist) => {
               return (
                 <div className="art-card-cont" key={artist._id}>
