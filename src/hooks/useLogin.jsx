@@ -23,7 +23,7 @@ export const useLogin = () => {
     }
 
     if (response.ok) {
-      localStorage.setItem("artist", JSON.stringify(json.id));
+      localStorage.setItem("artist", JSON.stringify(json));
       dispatch({ type: "LOGIN", payload: json });
     }
     setIsLoading(false);

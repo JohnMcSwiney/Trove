@@ -5,9 +5,10 @@ const Home = () => {
   const [artistSongs, setArtistSongs] = React.useState(null);
   const [artistAlbums, setArtistAlbum] = React.useState(null);
   const artistID = localStorage.getItem("artistID");
+  const id = artistID ? JSON.parse(artistID).id : null;
   React.useEffect(() => {
     const fetchMySongs = async () => {
-      const response = await fetch(`/api/songs/artist-songs/${artistID}`, {
+      const response = await fetch(`/api/songs/artist-songs/${id}`, {
         method: "GET",
         headers: { "Content-Type": "application/json" },
       });
