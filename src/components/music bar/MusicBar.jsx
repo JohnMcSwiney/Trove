@@ -27,7 +27,7 @@ import {
   BiVolumeMute,
   BiAddToQueue
 } from 'react-icons/bi'
-import {TbRepeatOff, TbRepeatOnce, TbRepeat} from 'react-icons/tb'
+import { TbRepeatOff, TbRepeatOnce, TbRepeat } from 'react-icons/tb'
 import { FaHeart, FaShareSquare, FaRegHeart } from 'react-icons/fa'
 import NoSong from './NoSong.png'
 import 'react-tooltip/dist/react-tooltip.css'
@@ -65,13 +65,14 @@ const MusicBar = () => {
   const [isExplicit, setExplicit] = useState(true)
   const [loopState, setLoopState] = useState(0)
   const [isLooping, setLooping] = useState(true)
+
+  const [placeInQueue, setPlaceInQueue] = useState(0)
   //refrences
   const audioPlayer = useRef() //reference audio component
   const progressBar = useRef() //reference progress bar
   const FCprogressBar = useRef() //reference progress bar
   const animationRef = useRef()
   const volumeRef = useRef()
-
 
   useEffect(() => {
     const seconds = Math.floor(audioPlayer.current.duration)
@@ -87,7 +88,6 @@ const MusicBar = () => {
     //   }
     // }
   }, [audioPlayer?.current?.loadedmetadata, audioPlayer?.current?.readyState])
-
 
   // Music Player Functions
   const calculateTime = secs => {
@@ -135,23 +135,23 @@ const MusicBar = () => {
     }
   }
   const toBeginningOfSong = () => {
-    progressBar.current.value = 0;
-    FCprogressBar.current.value = 0;
-    audioPlayer.current.currentTime = 0;
-    audioPlayer.current.currentTime = 0;
+    progressBar.current.value = 0
+    FCprogressBar.current.value = 0
+    audioPlayer.current.currentTime = 0
+    audioPlayer.current.currentTime = 0
     changePlayerCurrentTime()
     setTimeout(() => {
-      document.getElementById('playPauseBtn').click();
+      document.getElementById('playPauseBtn').click()
     }, 500)
-      
-    
-    
   }
   const whilePlaying = () => {
-    progressBar.current.value = audioPlayer.current.currentTime
-    FCprogressBar.current.value = audioPlayer.current.currentTime
-    changePlayerCurrentTime()
-    animationRef.current = requestAnimationFrame(whilePlaying) //potential memory leak
+    if (isPlaying === false) {
+    } else {
+      progressBar.current.value = audioPlayer.current.currentTime
+      FCprogressBar.current.value = audioPlayer.current.currentTime
+      changePlayerCurrentTime()
+      animationRef.current = requestAnimationFrame(whilePlaying) //potential memory leak
+    }
   }
 
   const changeRange = () => {
@@ -181,21 +181,20 @@ const MusicBar = () => {
     audioPlayer.current.volume = volumeRef.current.value / 100
   }
   const changeLoopLevel = () => {
-    
-    const currentLoopLvl = loopState;
-    const newLooplvl = currentLoopLvl + 1;
+    const currentLoopLvl = loopState
+    const newLooplvl = currentLoopLvl + 1
     switch (newLooplvl) {
       case 1:
         // Loop album
-        setLoopState(newLooplvl);
-        break;
+        setLoopState(newLooplvl)
+        break
       case 2:
         // Loop song
-        setLooping(true);
-        setLoopState(newLooplvl);
-        break;
+        setLooping(true)
+        setLoopState(newLooplvl)
+        break
       default:
-        console.log(`default`);
+        console.log(`default`)
         setLoopState(1)
     }
   }
@@ -217,18 +216,17 @@ const MusicBar = () => {
     }
   }
   const handleRewind = () => {
-    const currentTimeInSong = audioPlayer.current.currentTime;
-    
+    const currentTimeInSong = audioPlayer.current.currentTime
+
     if (currentTimeInSong < 5) {
-        console.log(`rewind to prev`)
+      console.log(`rewind to prev`)
     } else {
-        console.log(`rewind to 0`)
-        if (isPlaying === true) {
-          document.getElementById('playPauseBtn').click();
-        }
-        toBeginningOfSong();
+      console.log(`rewind to 0`)
+      if (isPlaying === true) {
+        document.getElementById('playPauseBtn').click()
+      }
+      toBeginningOfSong()
     }
-    
   }
   const handleForward = () => {
     console.log('forward')
@@ -268,16 +266,18 @@ const MusicBar = () => {
             preload='metadata'
             autoPlay='true'
             onChange={() => {
-              // changeRange()
+              changeRange()
               animationRef.current = requestAnimationFrame(whilePlaying)
             }}
             onLoadedMetadata={() => {
               toBeginningOfSong()
               changeRange()
-              setIsPlaying(true)
               animationRef.current = requestAnimationFrame(whilePlaying)
+              toBeginningOfSong()
             }}
-            isPlaying={animationRef.current = requestAnimationFrame(whilePlaying)}
+            isPlaying={
+              (animationRef.current = requestAnimationFrame(whilePlaying))
+            }
           ></audio>
 
           {/* Full Screen */}
@@ -533,7 +533,11 @@ const MusicBar = () => {
                   <button onClick={handleRewind}>
                     <BsSkipStart />
                   </button>
-                  <button className='playbtnstyle' id='playPauseBtn' onClick={togglePlayPause}>
+                  <button
+                    className='playbtnstyle'
+                    id='playPauseBtn'
+                    onClick={togglePlayPause}
+                  >
                     {isPlaying ? (
                       <BsPause />
                     ) : (
@@ -546,19 +550,32 @@ const MusicBar = () => {
                 </div>
                 {/* Loop and Queue */}
                 <div className='otherItemBtnContainer'>
-                {/* import {TbRepeatOff, TbRepeatOnce, TbRepeat} from 'react-icons/tb' */}
-                  <button className={loopState === 0 ? "loopBtn loopLvl1" : "hiddenBtn"} onClick={changeLoopLevel}>
-                      <TbRepeatOff/>
-                  </button>
-                  <button className={loopState === 1 ? "loopBtn loopLvl2" : "hiddenBtn"} onClick={changeLoopLevel}>
-                      <TbRepeat/>
-                  </button>
-                  <button className={loopState === 2 ? "loopBtn loopLvl2" : "hiddenBtn"} 
-                  onClick={() => setLoopState(0)}
-                  onMouseDown={() => setLooping(false)}
-                  // onMouseUp={() => console.log(isLooping)}
+                  {/* import {TbRepeatOff, TbRepeatOnce, TbRepeat} from 'react-icons/tb' */}
+                  <button
+                    className={
+                      loopState === 0 ? 'loopBtn loopLvl1' : 'hiddenBtn'
+                    }
+                    onClick={changeLoopLevel}
                   >
-                      <TbRepeatOnce/>
+                    <TbRepeatOff />
+                  </button>
+                  <button
+                    className={
+                      loopState === 1 ? 'loopBtn loopLvl2' : 'hiddenBtn'
+                    }
+                    onClick={changeLoopLevel}
+                  >
+                    <TbRepeat />
+                  </button>
+                  <button
+                    className={
+                      loopState === 2 ? 'loopBtn loopLvl2' : 'hiddenBtn'
+                    }
+                    onClick={() => setLoopState(0)}
+                    onMouseDown={() => setLooping(false)}
+                    // onMouseUp={() => console.log(isLooping)}
+                  >
+                    <TbRepeatOnce />
                   </button>
                   <button className='fcBtn' onClick={toggleFC}>
                     Queue
