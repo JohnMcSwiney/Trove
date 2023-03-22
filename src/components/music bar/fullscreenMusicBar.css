@@ -128,15 +128,6 @@
     
 }
 /* This is for the small player it only worked if styled here <3 */
-.fcBtn{
-    position: fixed;
-    color: rgba(255, 255, 255, 0.215);
-    margin-left: 35vmin;
-    margin-top: 2vmin;
-    width: 43vmin;
-    height: 18vmin;
-    /* background-color: #a37df0; */
-}
 
 /*safari*/
 .fullscreen-progressBar::-webkit-slider-runnable-track{

@@ -1,4 +1,4 @@
-.progress-time-container{
+.progress-time-container {
     display: flex;
     position: absolute;
     align-items: center;
@@ -6,18 +6,61 @@
     bottom: 0;
     width: 98%;
     background-color: rgba(255, 255, 255, 0.305);
-    
+
 }
-.progress-time-time-container-1{
+
+.progress-time-time-container-1 {
     background-color: #e39800;
     order: 1 !important;
 }
-.progress-time-time-container-2{
+
+.progress-time-time-container-2 {
     background-color: cornflowerblue;
     order: 3 !important;
 }
+
+.fcBtn {
+    color: rgb(255, 255, 255);
+    margin-left: 35vmin;
+    margin-top: 2vmin;
+    font-size: large;
+    /* background-color: #a37df0; */
+    position: absolute;
+    right: 0;
+    margin-right: 30px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border: #a37df072 2px solid;
+    padding-left: 5px;
+    border-radius: 5px;
+}
+
+.fcBtn>.queueMusicIcon {
+    margin: 3px;
+    font-size: x-large;
+
+}
+
+.volumeContainter {
+    justify-self: flex-end;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    /* background-color: aqua;
+    margin-top: 300px; */
+}
+
+.volumeContainter>input {
+    width: 80px;
+    height: 5px;
+
+}
+
 @media screen and (min-width:800px) {
-    .musicbar{
+    .musicbar {
         width: 90%;
         margin: auto;
         position: relative;
@@ -25,34 +68,35 @@
         padding: 2px;
     }
 
-    .musicbar-wrap{
-      width: inherit;
-      margin: auto;
-      bottom: 1%;
-      position: fixed;
-      height: 90px;
-      border-radius: 12px;
-      display: flex;
-      flex-direction: column;
-      padding-left: 10px;
-      padding-right: 10px;
-      padding-top: 10px;
+    .musicbar-wrap {
+        width: inherit;
+        margin: auto;
+        bottom: 1%;
+        position: fixed;
+        height: 90px;
+        border-radius: 12px;
+        display: flex;
+        flex-direction: column;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 10px;
     }
 
 
 
-    .musicbar-items{
+    .musicbar-items {
         display: flex;
         flex-direction: row;
     }
-    
-    .song-buttons{
+
+    .song-buttons {
         display: flex;
         flex-direction: row;
-        margin-left:auto;
+        margin-left: auto;
         align-items: center
     }
-    .progress-time-container{
+
+    .progress-time-container {
         display: flex;
         position: absolute;
         align-items: center;
@@ -60,38 +104,42 @@
         bottom: 0;
         width: 98%;
         background-color: rgba(255, 255, 255, 0.305);
-        
+
     }
-    .progress-time-time-container-1{
-        background-color: #e39800 !important ;
+
+    .progress-time-time-container-1 {
+        background-color: #e39800 !important;
         order: 1;
         width: 100px;
     }
-    .progress-time-time-container-2{
+
+    .progress-time-time-container-2 {
         background-color: cornflowerblue !important;
         order: 3;
         width: 100px;
     }
-    .progressbarContainer{
+
+    .progressbarContainer {
         padding: 0;
-        margin:0;
+        margin: 0;
         display: block;
         /* display:  none; */
         position: relative;
-        order: 2 !important ;
+        order: 2 !important;
         flex-grow: 2;
 
     }
-    .tooltip-style{
+
+    .tooltip-style {
         opacity: 1 !important;
         width: 140px;
         display: flex;
         font-size: 10px;
         padding: 2px;
     }
-      
-    
-    .like-btn{
+
+
+    .like-btn {
         display: flex;
         box-sizing: border-box;
         width: 20px;
@@ -102,14 +150,15 @@
         align-items: center;
         display: flex;
         justify-content: center;
-        order:2;
+        order: 2;
     }
-    .like-btn :hover{
+
+    .like-btn :hover {
         color: white;
         box-shadow: white;
     }
-    
-    .player-info-container{
+
+    .player-info-container {
         height: 60px;
         align-items: center;
         justify-items: center;
@@ -119,7 +168,8 @@
         padding-right: 4px;
         order: 1;
     }
-    .song-txt-container-container{
+
+    .song-txt-container-container {
         max-height: 90%;
         min-width: 28%;
         max-width: 50px;
@@ -128,31 +178,35 @@
         justify-content: space-between;
         position: relative;
         order: 3;
-    
+
     }
-    .song-info-txt-container{
-        
+
+    .song-info-txt-container {
+
         display: flex;
         flex-grow: 3;
         flex-direction: column;
         justify-items: center;
         text-align: left;
         overflow: hidden;
-        padding-left: 1px; 
+        padding-left: 1px;
         margin: 2px;
     }
-    .explicit-containter{
+
+    .explicit-containter {
         display: flex;
         align-self: center;
     }
-    .song-txt{
-        color:whitesmoke;
+
+    .song-txt {
+        color: whitesmoke;
         text-overflow: ellipsis;
         font-size: small;
         overflow: hidden;
-    
+
     }
-    .artist-txt{
+
+    .artist-txt {
         color: rgb(145, 144, 144);
         text-overflow: ellipsis;
         font-size: x-small;
@@ -160,7 +214,8 @@
         padding-left: 2px;
         width: fit-content;
     }
-    .song-img{
+
+    .song-img {
         width: 60px;
         height: 60px;
         margin: 1px;
@@ -168,48 +223,53 @@
         align-items: center;
         position: relative;
         order: 1;
-    
+
     }
-    .song-img > img{
+
+    .song-img>img {
         border-radius: 4px;
     }
-    
-    .control-container{  
-        
+
+    .control-container {
+
         display: flex;
-        justify-content:center;
+        justify-content: center;
         align-items: center;
         width: fit-content;
         width: fit-content;
         padding: 0;
         position: absolute;
-        
+
         gap: 5px;
-        top: 45%;  /* position the top  edge of the element at the middle of the parent */
-        left: 50.25%; /* position the left edge of the element at the middle of the parent */
-    
+        top: 45%;
+        /* position the top  edge of the element at the middle of the parent */
+        left: 50.25%;
+        /* position the left edge of the element at the middle of the parent */
+
         transform: translate(-50%, -50%);
-        
-    
+
+
     }
-    .control-container > button{
+
+    .control-container>button {
         padding: 0;
         margin: auto;
         width: fit-content;
         color: white;
-    
+
         align-items: center;
         display: flex;
         justify-content: center;
-        font-size:xx-large;
+        font-size: xx-large;
     }
-    .control-container > .playbtnstyle{
+
+    .control-container>.playbtnstyle {
         height: 50px;
         width: 50px;
-        background-image: linear-gradient(to top,#5725d5, #8650F4);
-        object-fit:fill;
+        background-image: linear-gradient(to top, #5725d5, #8650F4);
+        object-fit: fill;
         border-radius: 50%;
-        font-size:  70px;
+        font-size: 70px;
         transform: none;
         border: 1.5px solid rgba(255, 255, 255, 0.753);
 
@@ -219,97 +279,114 @@
         animation: gradient 20s ease infinite;
         /* https://codepen.io/P1N2O/pen/pyBNzX */
     }
+
     @keyframes gradient {
         0% {
             background-position: 0% 50%;
         }
+
         50% {
             background-position: 100% 50%;
         }
+
         100% {
             background-position: 0% 50%;
         }
     }
-    .control-container > .playbtnstyle >.BsPlayStyleLg {
-       margin-left: 5px;
+
+    .control-container>.playbtnstyle>.BsPlayStyleLg {
+        margin-left: 5px;
     }
-    
-    .bg1{
+
+    .bg1 {
         background-color: rgba(128, 255, 0, 0.757);
         position: relative;
     }
-    .bg2{
+
+    .bg2 {
         background-color: rgba(255, 127, 80, 0.778);
         position: relative;
     }
-    .bg3{
+
+    .bg3 {
         background-color: rgba(220, 20, 60, 0.741);
     }
-    .bg4{
+
+    .bg4 {
         background-color: rgba(139, 0, 139, 0.712);
     }
-    
-    .explicit-containter{
+
+    .explicit-containter {
         position: absolute;
         top: 0%;
         padding: 0px;
         opacity: 50%;
         margin: 2px;
     }
+
     .tooltip {
-        position:relative; /* making the .tooltip span a container for the tooltip text */
+        position: relative;
+        /* making the .tooltip span a container for the tooltip text */
         /* little indicater to indicate it's hoverable */
-      }
-      .tooltip:before {
-        content: attr(data-text); /* here's the magic */
-        position:absolute;
-        
+    }
+
+    .tooltip:before {
+        content: attr(data-text);
+        /* here's the magic */
+        position: absolute;
+
         /* vertically center */
-        top:50%;
-        transform:translateY(-50%);
-        
+        top: 50%;
+        transform: translateY(-50%);
+
         /* move to right */
-        left:100%;
-        margin-left:15px; /* and add a small left margin */
-        
+        left: 100%;
+        margin-left: 15px;
+        /* and add a small left margin */
+
         /* basic styles */
-        width:200px;
-        padding:10px;
-        border-radius:10px;
-        background:#000;
+        width: 200px;
+        padding: 10px;
+        border-radius: 10px;
+        background: #000;
         color: #fff;
-        text-align:center;
-      
-        display:none; /* hide by default */
-      }
-      .tooltip:hover:before {
-        display:block;
-      }
-    .progressBar{
+        text-align: center;
+
+        display: none;
+        /* hide by default */
+    }
+
+    .tooltip:hover:before {
+        display: block;
+    }
+
+    .progressBar {
         display: none;
         appearance: none;
         border-radius: 10px;
         width: 70%;
-        outline:none;
+        outline: none;
         position: fixed;
         /* transform: translate(0px, -40%); */
         margin-left: 10%;
     }
+
     /*safari*/
-    .progressBar::-webkit-slider-runnable-track{
+    .progressBar::-webkit-slider-runnable-track {
         background-color: rgba(255, 255, 255, 0.527);
         border-radius: 10px;
         position: relative;
         width: 100%;
         height: 5px;
-        outline:none; 
+        outline: none;
     }
+
     /*chrome & safari*/
-    .progressBar::before{
+    .progressBar::before {
         content: '';
         height: 5px;
         width: var(--seek-before-width);
-        background-image: linear-gradient(to right,#0034c4, #8650F4);
+        background-image: linear-gradient(to right, #0034c4, #8650F4);
         border-top-left-radius: 10px;
         border-bottom-left-radius: 10px;
         border-top-right-radius: 2px;
@@ -322,9 +399,10 @@
         cursor: pointer;
         margin-top: 3px;
     }
-    .progressBar::-webkit-slider-thumb{
+
+    .progressBar::-webkit-slider-thumb {
         -webkit-appearance: none;
-        height:10px;
+        height: 10px;
         width: 10px;
         border-radius: 50%;
         border: none;
@@ -335,37 +413,42 @@
         z-index: 3;
         box-sizing: border-box;
         box-shadow: -1px 0px 5px rgba(3, 3, 59, 0.363);
-        
+
     }
-    .progressBar:active::-webkit-slider-thumb{
+
+    .progressBar:active::-webkit-slider-thumb {
         transform: scale(1.6);
         transition: ease-in-out .05s;
         border: 1px solid whitesmoke;
         border-radius: 50%;
-        box-shadow: rgba(255, 255, 255, 0.671); 
+        box-shadow: rgba(255, 255, 255, 0.671);
         background-color: #8650F4;
     }
+
     /* firefox */
-    .progressBar::-moz-range-track{
+    .progressBar::-moz-range-track {
         background: rgba(19, 13, 103, 0.74);
         border-radius: 10px;
         position: relative;
         width: 100%;
         height: 5px;
-        outline:none;
+        outline: none;
         z-index: 1;
     }
-    .progressBar::-moz-focus-outer{
-        border:0;
+
+    .progressBar::-moz-focus-outer {
+        border: 0;
     }
-    .progressBar::-moz-range-progress{
-        background-image: linear-gradient(to right,#0034c4, #8650F4);
+
+    .progressBar::-moz-range-progress {
+        background-image: linear-gradient(to right, #0034c4, #8650F4);
         border-top-left-radius: 10px;
         border-bottom-left-radius: 10px;
         height: 5px;
     }
-    .progressBar::-moz-range-thumb{
-        height:7px;
+
+    .progressBar::-moz-range-thumb {
+        height: 7px;
         width: 7px;
         border-radius: 50%;
         border: transparent;
@@ -375,44 +458,27 @@
         box-sizing: border-box;
         box-shadow: -1px 0px 5px #8750f43b;
     }
-    .progressBar:active::-moz-range-thumb{
+
+    .progressBar:active::-moz-range-thumb {
         transform: scale(1.6);
         transition: ease-in-out .05s;
         border: 1px solid whitesmoke;
         border-radius: 50%;
-        box-shadow: rgba(255, 255, 255, 0.671); 
+        box-shadow: rgba(255, 255, 255, 0.671);
     }
-    .volumeContainter{
-         order: 6;
-         justify-self: flex-end;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-         position: absolute;
-         gap: 5px;
-        
-         top: 50%;  /* position the top  edge of the element at the middle of the parent */
-         left: 90%; /* position the left edge of the element at the middle of the parent */
-     
-         transform: translate(-50%, -50%);/* This is a shorthand of
-                                        translateX(-50%) and translateY(-50%) */
-}
-    .volumeContainter > input{
-        width: 80px;
-        height: 5px;
-        
-    }
-    .fillerDivPlayer{
+
+    
+
+    .fillerDivPlayer {
         margin: auto;
         background: #0034c400;
         z-index: -1;
-        order:4;
+        order: 4;
     }
 }
 
 @media screen and (max-width:799px) {
-    .musicbar{
+    .musicbar {
         margin-top: 10vh;
         width: 96%;
         margin: auto;
@@ -420,53 +486,56 @@
         border-radius: 0px 0px 8px 8px;
         /* overflow: hidden;  */
     }
-    
-    .musicbar-wrap{
-      width: inherit;
-      margin: auto;
-      bottom: 80px;
-      position: fixed;
-      height: 80px;
-      border-radius: 0px 0px 12px 12px;
-        
+
+    .musicbar-wrap {
+        width: inherit;
+        margin: auto;
+        bottom: 80px;
+        position: fixed;
+        height: 80px;
+        border-radius: 0px 0px 12px 12px;
+
     }
-    
-    .musicbar-items{
+
+    .musicbar-items {
         display: flex;
         flex-direction: row;
-        
+
     }
-    
-    .song-buttons{
+
+    .song-buttons {
         display: flex;
         flex-direction: row;
-        margin-left:auto;
+        margin-left: auto;
         align-items: center
     }
-    
-    .progressbarContainer{
+
+    .progressbarContainer {
         padding: 0;
-        margin:0;
+        margin: 0;
         display: block;
         position: relative;
-        
+
     }
-    .tooltip-style{
+
+    .tooltip-style {
         opacity: 1 !important;
         width: 140px;
         display: flex;
         font-size: 10px;
         padding: 2px;
-       
-    
+
+
     }
-    .player-container{
+
+    .player-container {
         display: flex;
-        flex-direction: column; 
+        flex-direction: column;
         position: relative;
-        
+
     }
-    .like-btn{
+
+    .like-btn {
         display: flex;
         box-sizing: border-box;
         width: 20px;
@@ -478,12 +547,13 @@
         display: flex;
         justify-content: center;
     }
-    .like-btn :hover{
+
+    .like-btn :hover {
         color: white;
         box-shadow: white;
     }
-    
-    .player-info-container{
+
+    .player-info-container {
         height: 80px;
         align-items: center;
         justify-items: center;
@@ -492,7 +562,8 @@
         flex-direction: row;
         padding-right: 4px;
     }
-    .song-txt-container-container{
+
+    .song-txt-container-container {
         max-height: 90%;
         min-width: 45%;
         max-width: 50px;
@@ -500,53 +571,59 @@
         display: flex;
         justify-content: space-between;
         position: relative;
-    
+
     }
-    .song-info-txt-container{
-        
+
+    .song-info-txt-container {
+
         display: flex;
         flex-grow: 3;
         flex-direction: column;
         justify-items: center;
         text-align: left;
         overflow: hidden;
-        padding-left: 1px; 
+        padding-left: 1px;
         margin: 2px;
     }
-    .explicit-containter{
+
+    .explicit-containter {
         display: flex;
         align-self: center;
     }
-    .song-txt{
-        color:whitesmoke;
+
+    .song-txt {
+        color: whitesmoke;
         text-overflow: ellipsis;
         font-size: small;
         overflow: hidden;
-    
+
     }
-    .artist-txt{
+
+    .artist-txt {
         color: rgb(145, 144, 144);
         text-overflow: ellipsis;
         font-size: x-small;
         overflow: hidden;
         padding-left: 2px;
     }
-    .song-img{
+
+    .song-img {
         width: 60px;
         height: 60px;
         margin: 1px;
         display: flex;
         align-items: center;
         position: relative;
-    
+
     }
-    .song-img > img{
+
+    .song-img>img {
         border-radius: 4px;
     }
-    
-    .control-container{  
+
+    .control-container {
         display: flex;
-        justify-content:center;
+        justify-content: center;
         align-items: center;
         width: fit-content;
         width: fit-content;
@@ -554,9 +631,10 @@
         display: flex;
         justify-content: center;
         padding: 0;
-    
+
     }
-    .control-container > button{
+
+    .control-container>button {
         padding: 0;
         margin: auto;
         width: fit-content;
@@ -568,87 +646,98 @@
         justify-content: center;
         font-size: x-large;
     }
-    
-    .bg1{
+
+    .bg1 {
         background-color: rgba(128, 255, 0, 0.757);
         position: relative;
     }
-    .bg2{
+
+    .bg2 {
         background-color: rgba(255, 127, 80, 0.778);
         position: relative;
     }
-    .bg3{
+
+    .bg3 {
         background-color: rgba(220, 20, 60, 0.741);
     }
-    .bg4{
+
+    .bg4 {
         background-color: rgba(139, 0, 139, 0.712);
     }
-    
-    .explicit-containter{
+
+    .explicit-containter {
         position: absolute;
         top: 0%;
         padding: 0px;
         opacity: 50%;
         margin: 2px;
     }
-    .explicitActions{
-    
-    }
-    .explicitActions:hover{
-        
-    }
+
+    .explicitActions {}
+
+    .explicitActions:hover {}
+
     .tooltip {
-        position:relative; /* making the .tooltip span a container for the tooltip text */
+        position: relative;
+        /* making the .tooltip span a container for the tooltip text */
         /* little indicater to indicate it's hoverable */
-      }
-      .tooltip:before {
-        content: attr(data-text); /* here's the magic */
-        position:absolute;
-        
+    }
+
+    .tooltip:before {
+        content: attr(data-text);
+        /* here's the magic */
+        position: absolute;
+
         /* vertically center */
-        top:50%;
-        transform:translateY(-50%);
-        
+        top: 50%;
+        transform: translateY(-50%);
+
         /* move to right */
-        left:100%;
-        margin-left:15px; /* and add a small left margin */
-        
+        left: 100%;
+        margin-left: 15px;
+        /* and add a small left margin */
+
         /* basic styles */
-        width:200px;
-        padding:10px;
-        border-radius:10px;
-        background:#000;
+        width: 200px;
+        padding: 10px;
+        border-radius: 10px;
+        background: #000;
         color: #fff;
-        text-align:center;
-      
-        display:none; /* hide by default */
-      }
-      .tooltip:hover:before {
-        display:block;
-      }
-    .progressBar{
+        text-align: center;
+
+        display: none;
+        /* hide by default */
+    }
+
+    .tooltip:hover:before {
+        display: block;
+    }
+
+    .progressBar {
         appearance: none;
         border-radius: 10px;
         width: 96%;
-        outline:none;
+        outline: none;
         position: fixed;
         transform: translate(0px, -40%);
     }
+
     /*safari*/
-    .progressBar::-webkit-slider-runnable-track{
+    .progressBar::-webkit-slider-runnable-track {
         background-color: rgba(255, 255, 255, 0.527);
         border-radius: 10px;
         position: relative;
         width: 100%;
         height: 5px;
-        outline:none; 
+        outline: none;
     }
+
     /*chrome & safari*/
-    .progressBar::before{
+    .progressBar::before {
         content: '';
         height: 5px;
         width: var(--seek-before-width);
-        background-image: linear-gradient(to right,#0034c4, #8650F4);
+        background-image: linear-gradient(to right, #0034c4, #8650F4);
         border-top-left-radius: 10px;
         border-bottom-left-radius: 10px;
         border-top-right-radius: 2px;
@@ -661,9 +750,10 @@
         cursor: pointer;
         margin-top: 3px;
     }
-    .progressBar::-webkit-slider-thumb{
+
+    .progressBar::-webkit-slider-thumb {
         -webkit-appearance: none;
-        height:7px;
+        height: 7px;
         width: 7px;
         border-radius: 50%;
         border: none;
@@ -674,37 +764,42 @@
         z-index: 3;
         box-sizing: border-box;
         box-shadow: -1px 0px 5px rgba(3, 3, 59, 0.363);
-        
+
     }
-    .progressBar:active::-webkit-slider-thumb{
+
+    .progressBar:active::-webkit-slider-thumb {
         transform: scale(1.6);
         transition: ease-in-out .05s;
         border: 1px solid whitesmoke;
         border-radius: 50%;
-        box-shadow: rgba(255, 255, 255, 0.671); 
+        box-shadow: rgba(255, 255, 255, 0.671);
         background-color: #8650F4;
     }
+
     /* firefox */
-    .progressBar::-moz-range-track{
+    .progressBar::-moz-range-track {
         background: rgba(19, 13, 103, 0.74);
         border-radius: 10px;
         position: relative;
         width: 100%;
         height: 5px;
-        outline:none;
+        outline: none;
         z-index: 1;
     }
-    .progressBar::-moz-focus-outer{
-        border:0;
+
+    .progressBar::-moz-focus-outer {
+        border: 0;
     }
-    .progressBar::-moz-range-progress{
-        background-image: linear-gradient(to right,#0034c4, #8650F4);
+
+    .progressBar::-moz-range-progress {
+        background-image: linear-gradient(to right, #0034c4, #8650F4);
         border-top-left-radius: 10px;
         border-bottom-left-radius: 10px;
         height: 5px;
     }
-    .progressBar::-moz-range-thumb{
-        height:7px;
+
+    .progressBar::-moz-range-thumb {
+        height: 7px;
         width: 7px;
         border-radius: 50%;
         border: transparent;
@@ -714,21 +809,23 @@
         box-sizing: border-box;
         box-shadow: -1px 0px 5px #8750f43b;
     }
-    .progressBar:active::-moz-range-thumb{
+
+    .progressBar:active::-moz-range-thumb {
         transform: scale(1.6);
         transition: ease-in-out .05s;
         border: 1px solid whitesmoke;
         border-radius: 50%;
-        box-shadow: rgba(255, 255, 255, 0.671); 
+        box-shadow: rgba(255, 255, 255, 0.671);
     }
-    .volumeContainter{
+
+    /* .volumeContainter {
         display: none;
-    }
-    
-    .fillerDivPlayer{
+    } */
+
+    .fillerDivPlayer {
         display: none;
         z-index: -1;
         position: fixed;
     }
-    
+
 }

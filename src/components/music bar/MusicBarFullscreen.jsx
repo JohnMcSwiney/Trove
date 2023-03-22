@@ -173,7 +173,8 @@ const MusicBarFullscreen = () => {
           {/* Attempting to change on scroll */}
           <div id='fcplayerbox' className='fullscreen-player-info-container '>
             {/* Progress Bar */}
-            <div
+            {/* hidden now - this is queue */}
+            {/* <div
               className='fullscreen-progressbarContainer'
               onMouseDown={toggleMute}
               onMouseUp={toggleMute}
@@ -187,11 +188,11 @@ const MusicBarFullscreen = () => {
                 onMouseUp={togglePlayPause}
                 onChange={changeRange}
               />
-            </div>
+            </div> */}
             {/*  */}
 
 
-            <div className='fullscreen-song-img '>
+            {/* <div className='fullscreen-song-img '>
               <img src={obj.img_url} className="fullscreen-img"></img>
               {obj.explicit ? (
                 <div className='explicit-containter'>
@@ -213,10 +214,10 @@ const MusicBarFullscreen = () => {
               ) : (
                 <p />
               )}
-              {/* explicit-containter */}
-            </div>
+              {/* explicit-containter 
+            </div> */}
 
-            <div className='fullscreen-song-txt-container-container '>
+            {/* <div className='fullscreen-song-txt-container-container '>
               <div className='like-btn '>
                 <button onClick={toggleLiked}>
                   {isLiked ? <FaHeart className='text-white' /> : <FaRegHeart />}
@@ -235,9 +236,9 @@ const MusicBarFullscreen = () => {
                   <AiOutlineShareAlt />
                 </button>
               </div>
-            </div>
+            </div> */}
 
-            <div className='fullscreen-control-container'>
+            {/* <div className='fullscreen-control-container'>
               <button className='fullscreen-mediabtn1'>
                 <BsSkipStart />
               </button>
@@ -247,7 +248,7 @@ const MusicBarFullscreen = () => {
               <button className='fullscreen-mediabtn1'>
                 <BsSkipEnd />
               </button>
-            </div>
+            </div> */}
 
 
           </div>

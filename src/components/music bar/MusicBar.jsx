@@ -272,7 +272,7 @@ const MusicBar = () => {
               >
                 {/* Progress Bar */}
 
-                <div
+                {/* <div
                   className='fullscreen-progressbarContainer'
                   onMouseDown={toggleMute}
                   onMouseUp={toggleMute}
@@ -286,9 +286,9 @@ const MusicBar = () => {
                     onMouseUp={togglePlayPause}
                     onChange={changeRange}
                   />
-                </div>
+                </div> */}
                 {/*  */}
-
+                <h2>Currently Playing</h2>
                 <div className='fullscreen-song-img '>
                   <img
                     src={currentSong?.imgUrl}
@@ -323,7 +323,7 @@ const MusicBar = () => {
                 </div>
 
                 <div className='fullscreen-song-txt-container-container '>
-                  <div className='like-btn '>
+                  {/* <div className='like-btn '>
                     <button onClick={toggleLiked}>
                       {isLiked ? (
                         <div>
@@ -332,11 +332,11 @@ const MusicBar = () => {
                       ) : (
                         <div>
                           <FaRegHeart />
-                          {/* {fetchUnlike()} */}
+
                         </div>
                       )}
                     </button>
-                  </div>
+                  </div> */}
                   <div className='fullscreen-song-info-txt-container'>
                     <div className='fc-song-txt'>
                       <a>{currentSong?.title}</a>
@@ -345,13 +345,13 @@ const MusicBar = () => {
                       <a>{currentSong?.artist.artistName}</a>
                     </div>
                   </div>
-                  <div className='like-btn'>
+                  {/* <div className='like-btn'>
                     <button onClick={toggleLiked}>
                       <AiOutlineShareAlt />
                     </button>
-                  </div>
+                  </div> */}
                 </div>
-
+                {/* 
                 <div className='fullscreen-control-container'>
                   <button className='fullscreen-mediabtn1'>
                     <BsSkipStart />
@@ -369,7 +369,8 @@ const MusicBar = () => {
                   <button className='fullscreen-mediabtn1'>
                     <BsSkipEnd />
                   </button>
-                </div>
+                </div> */}
+
               </div>
               {/* Queue */}
               <div className='brihgleggmoie'>
@@ -379,7 +380,7 @@ const MusicBar = () => {
                     return <CardSong key={index} {...item} />
                   })}
               </div>
-              <div className='volumeContainter'>
+              {/* <div className='volumeContainter'>
                 <button onClick={toggleMute}>
                   {isMuted ? <BiVolumeFull /> : <BiVolumeMute />}
                 </button>
@@ -392,7 +393,7 @@ const MusicBar = () => {
                   max='100'
                   step='5'
                 ></input>
-              </div>
+              </div> */}
             </div>
           </div>
 
@@ -404,19 +405,19 @@ const MusicBar = () => {
           >
             <div className='musicbar-wrap bg-trv-sm-Play-bg'>
               {/* This style is in the fullscreen css file - idk there was a bug <3 */}
-              <button className='fcBtn' onClick={toggleFC}></button>
+              <button className='fcBtn' onClick={toggleFC}>Queue<MdQueueMusic className='queueMusicIcon' /></button>
 
               {/* Progress Bar */}
               {/* time visible on fullscreen*/}
               <div className='progress-time-container'>
-                
-                <div className='player-time-time-container-1'> 
-                  {calculateTime(currentTime)} 
+
+                <div className='player-time-time-container-1'>
+                  {calculateTime(currentTime)}
                 </div>
-                
+
                 <div
                   className='progressbarContainer '
-                  onMouseDown={toggleMute }
+                  onMouseDown={toggleMute}
                   onMouseUp={toggleMute}
                 >
                   <input
@@ -440,7 +441,7 @@ const MusicBar = () => {
                 </div>
 
                 <div className='player-time-time-container-2'>
-                {(duration && !isNaN(duration)) && calculateTime(duration)}
+                  {(duration && !isNaN(duration)) && calculateTime(duration)}
                 </div>
               </div>
 
@@ -509,23 +510,24 @@ const MusicBar = () => {
                     <BsSkipEnd />
                   </button>
                 </div>
-                <div className='fillerDivPlayer'></div>
+                <div className='volumeContainter'>
+                  <button onClick={toggleMute}>
+                    {isMuted ? <BiVolumeFull /> : <BiVolumeMute />}
+                  </button>
+                  <input
+                    type='range'
+                    ref={volumeRef}
+                    defaultValue='50'
+                    onChange={changeVolumeLevel}
+                    min='0'
+                    max='100'
+                    step='5'
+                  ></input>
+                </div>
               </div>
 
-              <div className='volumeContainter'>
-                <button onClick={toggleMute}>
-                  {isMuted ? <BiVolumeFull /> : <BiVolumeMute />}
-                </button>
-                <input
-                  type='range'
-                  ref={volumeRef}
-                  defaultValue='50'
-                  onChange={changeVolumeLevel}
-                  min='0'
-                  max='100'
-                  step='5'
-                ></input>
-              </div>
+
+
             </div>
           </div>
         </>
