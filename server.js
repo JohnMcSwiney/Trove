@@ -38,10 +38,6 @@ app.use(
   })
 );
 
-app.get("/api/session", (req, res) => {
-  res.json({ artist: req.session.artist });
-});
-
 const loginArtist = require("./routes/login-route/login-route");
 
 app.use("/api/artist", loginArtist);

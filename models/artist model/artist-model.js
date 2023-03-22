@@ -58,6 +58,10 @@ const artistSchema = mongoose.Schema({
     },
   ],
 
+  // provider: {
+  //   type:String
+  // },
+
   songList: [
     {
       type: mongoose.Schema.Types.ObjectId,

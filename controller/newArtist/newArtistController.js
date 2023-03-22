@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 const validator = require("validator");
 const cookie = require("js-cookie");
 const maskEmailsPhones = require("mask-email-phone");
+const nodemailer = require("nodemailer");
 const createToken = (_id) => {
   return jwt.sign({ _id: _id }, process.env.SECRET, { expiresIn: "1h" });
 };
@@ -40,15 +41,6 @@ const signupArtist = async (req, res) => {
       gender,
     });
 
-    const hashEmail = maskEmailsPhones(artist.email);
-    const artistInfo = {
-      email: hashEmail,
-      password: hash,
-      artistName,
-      dob,
-      gender,
-    };
-    console.log(hashEmail);
     res.cookie("artist", artist, {
       httpOnly: true,
       secure: true,
@@ -57,9 +49,40 @@ const signupArtist = async (req, res) => {
     }); // Set the cookie to expire in 1 day     });
 
     const token = createToken(artist._id);
-    req.session.artist = artist;
+    const hashEmail = (artist.email = maskEmailsPhones(artist.email));
+    // artist.provider = "TroveMusic"
+    // artist.save()
+
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.GOOGLE_USER,
+        pass: process.env.GOOGLE_PASSWORD,
+      },
+    });
+
+    const mailOptions = {
+      from: process.env.AUTH_EMAIL_ACCOUNT,
+      to: email,
+      subject: "Welcome to TroveMusic for Artist!",
+      html: `
+            <p>Hi ${email},</p>
+            <p>Thank you for signing up for My Awesome App!</p>
+            <p>We're thrilled to have you join our community.</p>
+            
+          `,
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        handleErrors(error);
+      } else {
+        console.log("Email sent: " + info.response);
+      }
+    });
+
     res.json({
-      email,
+      email: hashEmail,
       token,
       id: artist._id,
       artistName: artist.artistName,
@@ -85,7 +108,7 @@ const loginArtist = async (req, res) => {
     const token = createToken(artist._id);
     req.session.artist = artist; // Set the session here
 
-    const hashEmail = maskEmailsPhones(email);
+    const hashEmail = maskEmailsPhones(artist.email);
     const artistInfo = {
       email: hashEmail,
       token,
@@ -104,7 +127,7 @@ const loginArtist = async (req, res) => {
       token,
       id: artist._id,
       artistName: artist.artistName,
-      email: artist.email,
+      email: hashEmail,
       albumList: artist.albumList,
       epList: artist.epList,
       songList: artist.songList,
