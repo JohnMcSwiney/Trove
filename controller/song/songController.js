@@ -1,6 +1,7 @@
 const Song = require("../../models/song model/song-model");
 const Artist = require("../../models/artist model/artist-model");
 const Album = require("../../models/album model/album-model");
+const EP = require("../../models/ep model/ep-model");
 
 const mongoose = require("mongoose");
 
@@ -70,16 +71,17 @@ const createSong = async (req, res) => {
         res.status(201).json(song);
       }
     }
-    if (req.body.releaseType === "album") {
+
+    else if (req.body.releaseType === "album") {
       console.log("INSIDE ALBUM SIDE");
 
       const album = await Album.findOne({ albumName: req.body.album });
 
-      const albumId = album._id;
-
       if (!album) {
         throw new Error("Album not found");
       }
+
+      const albumId = album._id;
 
       if (req.body.featuredArtists == null || !req.body.featuredArtists) {
         console.log("before song is made");
@@ -142,6 +144,93 @@ const createSong = async (req, res) => {
           song.releaseYear = album.releaseYear;
 
           await album.save();
+        }
+
+        artist.songList.push(song._id);
+
+        for (const featuredArtistId of featuredArtists) {
+          const featuredArtist = await Artist.findById(featuredArtistId);
+          featuredArtist.songList.push(song._id);
+          await featuredArtist.save();
+        }
+
+        await song.save();
+        await artist.save();
+        res.status(201).json(song);
+      }
+    }
+
+    else if (req.body.releaseType === "ep") {
+
+      const ep = await EP.findOne({ epName: req.body.ep });
+
+      if (!ep) {
+        throw new Error("EP not found");
+      }
+
+      const epId = ep._id;
+
+      if (req.body.featuredArtists == null || !req.body.featuredArtists) {
+        console.log("before song is made");
+
+        const song = new Song({
+          ...req.body,
+          artist: artistId,
+          ep: epId,
+          releaseType: "ep",
+        });
+
+        if (song.ep) {
+          ep.songList.push(song._id);
+
+          ep.totalTracks++;
+
+          song.releaseYear = ep.releaseYear;
+
+          await ep.save();
+        }
+
+        console.log("after song is made");
+
+        artist.songList.push(song._id);
+
+        await song.save();
+
+        console.log("BONGUGSS");
+
+        await artist.save();
+        res.status(201).json(song);
+      } else {
+        const featuredArtists = await Promise.all(
+          req.body.featuredArtists.map(async (name) => {
+            const featuredArtist = await Artist.findOne({ artistName: name });
+
+            if (!featuredArtist) {
+              throw new Error("Featured artist not found");
+            }
+
+            return featuredArtist._id;
+          })
+        );
+
+        console.log(featuredArtists);
+
+        const song = new Song({
+          ...req.body,
+          artist: artist._id,
+          ep: ep._id,
+          releaseType: "ep",
+          featuredArtists: featuredArtists,
+        });
+
+        if (song.ep) {
+          ep.songList.push(song._id);
+
+          ep.totalTracks++;
+
+          song.releaseYear = ep.releaseYear;
+
+          await ep.save();
         }
 
         artist.songList.push(song._id);

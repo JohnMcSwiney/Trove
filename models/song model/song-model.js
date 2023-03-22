@@ -32,6 +32,12 @@ const songSchema = new mongoose.Schema(
       default: null,
     },
 
+    ep: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "EP",
+      default: null,
+    },
+
     highlightStart: {
       type: Number,
     },

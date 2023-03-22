@@ -25,6 +25,7 @@ const getEP = async (req, res) => {
 };
 
 const createEP = async (req, res) => {
+  
   try {
     const artist = await Artist.findOne({ email: req.body.artist });
 
@@ -36,8 +37,16 @@ const createEP = async (req, res) => {
       throw new Error("Artist not found");
     }
 
+    console.log("Request Body FT: " + req.body.featuredArtists);
+
+    console.log("outside of if stmt");
+
     if (!req.body.featuredArtists || req.body.featuredArtists == null) {
+
+      console.log("should be in here");
+
       console.log("inside ep method");
+
       const ep = new EP({
         ...req.body,
         artist: artist._id,
@@ -51,6 +60,7 @@ const createEP = async (req, res) => {
 
       res.status(201).json(ep);
     } else {
+
       const featuredArtists = await Promise.all(
         req.body.featuredArtists.map(async (name) => {
           const featuredArtist = await Artist.findOne({ artistName: name });
@@ -63,7 +73,7 @@ const createEP = async (req, res) => {
         })
       );
 
-      console.log(featuredArtists);
+      console.log("bruhhhhh : " + featuredArtists);
 
       const ep = new EP({
         ...req.body,

@@ -53,7 +53,7 @@ app.use("/api/songs", songRoutes);
 const albumRoutes = require("./routes/album-route/album-route");
 app.use("/api/albums", albumRoutes);
 const epRoutes = require("./routes/ep-route/ep-route");
-app.use("/api/eps/", epRoutes);
+app.use("/api/eps", epRoutes);
 
 app.listen(process.env.PORT, () => {
   console.log(`Listening to port ` + process.env.PORT);
