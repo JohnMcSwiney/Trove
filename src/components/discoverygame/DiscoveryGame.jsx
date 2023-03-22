@@ -122,28 +122,13 @@ const DiscoveryGame = () => {
 
     localStorage.setItem("likedSongs", JSON.stringify(updateLikes));
 
-    fetch(`/api/slides/liked/${newLike}`, {
+    fetch(`/api/songs/liked/${newLike}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ likedslides }),
     })
   };
 
-
-  // const handleAddLikedSongs = () => {
-
-  //   try {
-
-  //     slides.map((song) => {
-
-  //     });
-
-  //   } catch (err) {
-  //     console.log("song ")
-  //   }
-
-
-  // };
 
 
 
