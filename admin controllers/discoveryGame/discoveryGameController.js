@@ -8,7 +8,7 @@ const Song = require("../../models/song model/song-model");
 const Artist = require("../../models/artist model/artist-model");
 const Album = require("../../models/album model/album-model");
 const User = require("../../models/user model/user-model");
-const firebase = require("../../firebaseConfig");
+const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 // const { storage } = require("firebase/compat/storage");
 
 // const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
@@ -196,35 +196,19 @@ const loadDiscoveryGame = async (req, res) => {
 
   const songURL = song.songUrl;
 
-  const readSong = async (songURL) => {
-    try {
-      const xhr = new XMLHttpRequest();
-
-      xhr.responseType = "arraybuffer";
-      xhr.onload = (e) => {
-        const data = xhr.response;
-        const context = new AudioContext();
-
-        context.decodeAudioData(data, calcTempo(data));
-      };
-      xhr.open("GET", songURL);
-      xhr.send();
-    } catch (err) {
-      console.log("fetching song err: " + err);
-      throw new Error("could not fetch song");
-    }
-  };
-
-  readSong(songURL);
+  console.log("song url: " + songURL);
 
   const calcTempo = (buffer) => {
     console.log("inside calctempo");
 
     let audioData = [];
 
+    console.log("buffer: " + buffer);
+
     if (buffer.numberOfChannels == 2) {
-      const data1 = buffer.getChannelData(0);
-      const data2 = buffer.getChannelData(1);
+
+      let data1 = buffer.getChannelData(0);
+      let data2 = buffer.getChannelData(1);
 
       for (let i = 0; i < data1.length; i++) {
         audioData[i] = (data1[i] + data2[i]) / 2;
@@ -237,7 +221,50 @@ const loadDiscoveryGame = async (req, res) => {
 
     console.log("tempo: " + songData.tempo);
     console.log("beats: " + songData.beats);
+  }
+
+  const readSong = async (songURL) => {
+    try {
+      const xhr = new XMLHttpRequest();
+
+      xhr.open("GET", songURL);
+      xhr.responseType = "blob";
+      xhr.send();
+      
+      xhr.onload = (e) => {
+
+        console.log("event: " + e);
+
+        const data = xhr.response;
+
+        console.log("data: " + data);
+
+        // const context = new AudioContext();
+
+        // context.decodeAudioData(data, calcTempo(data));
+      };
+
+      console.log("XHR: " + xhr.response)
+
+      // const data = xhr.response;
+      // const context = new AudioContext();
+
+      // context.decodeAudioData(data, calcTempo(data));
+
+    } catch (err) {
+      console.log("fetching song err");
+      console.log(err);
+    }
   };
+
+  const musicData = await readSong(songURL);
+
+  console.log("music data: " + musicData);
+
+
+  // const context = new AudioContext();
+
+  // context.decodeAudioData(musicData, calcTempo);
 
   if (swipeDirection === "left") {
     const nextSong = await getNextSong(user);
