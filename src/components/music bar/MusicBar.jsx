@@ -415,8 +415,25 @@ const MusicBar = () => {
           >
             <div className='musicbar-wrap bg-trv-sm-Play-bg'>
               {/* This style is in the fullscreen css file - idk there was a bug <3 */}
-              <button className='fcBtn' onClick={toggleFC}>Queue<MdQueueMusic className='queueMusicIcon' /></button>
+              
+              <div className='volumeContainter'>
+                  <button onClick={toggleMute}>
+                    {isMuted ? <BiVolumeFull /> : <BiVolumeMute />}
+                  </button>
+                  <input
+                    type='range'
+                    ref={volumeRef}
+                    defaultValue='50'
+                    onChange={changeVolumeLevel}
+                    min='0'
+                    max='100'
+                    step='5'
+                  ></input>
+                  <button className='fcBtn' onClick={toggleFC}>Queue<MdQueueMusic className='queueMusicIcon' /></button>
+              </div>
+              
 
+              
               {/* Progress Bar */}
               {/* time visible on fullscreen*/}
               <div className='progress-time-container'>
@@ -520,20 +537,9 @@ const MusicBar = () => {
                     <BsSkipEnd />
                   </button>
                 </div>
-                <div className='volumeContainter'>
-                  <button onClick={toggleMute}>
-                    {isMuted ? <BiVolumeFull /> : <BiVolumeMute />}
-                  </button>
-                  <input
-                    type='range'
-                    ref={volumeRef}
-                    defaultValue='50'
-                    onChange={changeVolumeLevel}
-                    min='0'
-                    max='100'
-                    step='5'
-                  ></input>
-                </div>
+
+                
+
               </div>
 
 

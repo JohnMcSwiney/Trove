@@ -300,7 +300,7 @@ const DiscoveryGame = () => {
         </button>
 
         {/* volume */}
-        <div className='volumeContainter'>
+        <div className='DGvolumeContainter'>
           <button onClick={toggleMute}>
             {isMuted ? <BiVolumeFull /> : <BiVolumeMute />}
           </button>

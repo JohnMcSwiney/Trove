@@ -322,7 +322,7 @@
 }
 
 @media screen and (min-width:600px) and (max-width:999px){
-    .volumeContainter{
+    .DGvolumeContainter{
         display: none;
     }
     .Discovery-Container{
@@ -629,7 +629,7 @@
 }
 
 @media screen and (min-width:1000px){
-    .volumeContainter{
+    .DGvolumeContainter{
         display: none;
     }
     .Discovery-Container{
