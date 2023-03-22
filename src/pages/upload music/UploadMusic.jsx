@@ -81,7 +81,7 @@ export default function UploadMusic(props) {
     //   setTitle(e.target.value);
 
     // } else {
-      
+
     // }
   };
 
@@ -110,18 +110,13 @@ export default function UploadMusic(props) {
         break;
 
       case "ep":
-
         if (Array.from(e.target.files).length > MAX_SONGS) {
           alert("Cannot upload more than 5 songs for EP!");
           e.preventDefault();
-        }
-
-        else if (Array.from(e.target.files).length == 1) {
+        } else if (Array.from(e.target.files).length == 1) {
           alert("Must upload more than one song!");
           e.preventDefault();
-        }
-        
-        else {
+        } else {
           setSongFile(Array.from(e.target.files));
         }
         break;
@@ -145,7 +140,7 @@ export default function UploadMusic(props) {
     setReleaseYear(e.target.value);
   };
 
-  const artistID = localStorage.getItem("artistID");
+  const artistID = JSON.parse(localStorage.getItem("artistID")).id;
   const getArtistAPI = React.useEffect(() => {
     const fetchArtist = async () => {
       const response = await fetch(`/api/artists/${artistID}`, {
