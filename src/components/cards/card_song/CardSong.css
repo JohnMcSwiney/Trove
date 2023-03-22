@@ -7,8 +7,10 @@
 .song-card-cont{
     background-color: #12164B;
     height: 80px;
-    width: 95%;
-    margin: auto;
+    /* max-width: 700px; */
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
     display: flex;
     gap: 5px;
     margin-bottom: 5px;
@@ -30,10 +32,15 @@
     border-radius: 5px;
     overflow: hidden;
     display: flex;
+    position: relative;
 }
 .song-card-art-img > img{
     object-position: center;
     object-fit: cover;
+    position: absolute;
+    left: 0;
+    right: 0;
+
 }
 .song-card-info{
     /* background-color: brown; */
@@ -75,6 +82,8 @@
     align-self: right;
     gap: 2.5px;
     align-items: center;
+    float: right;
+
 }
 .moreBtnTransform{
     transform:rotate(90deg);

@@ -1,4 +1,21 @@
-
+.progress-time-container{
+    display: flex;
+    position: absolute;
+    align-items: center;
+    flex-direction: row;
+    bottom: 0;
+    width: 98%;
+    background-color: rgba(255, 255, 255, 0.305);
+    
+}
+.progress-time-time-container-1{
+    background-color: #e39800;
+    order: 1 !important;
+}
+.progress-time-time-container-2{
+    background-color: cornflowerblue;
+    order: 3 !important;
+}
 @media screen and (min-width:800px) {
     .musicbar{
         width: 90%;
@@ -35,13 +52,35 @@
         margin-left:auto;
         align-items: center
     }
-    
+    .progress-time-container{
+        display: flex;
+        position: absolute;
+        align-items: center;
+        flex-direction: row;
+        bottom: 0;
+        width: 98%;
+        background-color: rgba(255, 255, 255, 0.305);
+        
+    }
+    .progress-time-time-container-1{
+        background-color: #e39800 !important ;
+        order: 1;
+        width: 100px;
+    }
+    .progress-time-time-container-2{
+        background-color: cornflowerblue !important;
+        order: 3;
+        width: 100px;
+    }
     .progressbarContainer{
         padding: 0;
         margin:0;
         display: block;
+        /* display:  none; */
         position: relative;
-        order: 2;
+        order: 2 !important ;
+        flex-grow: 2;
+
     }
     .tooltip-style{
         opacity: 1 !important;
@@ -247,6 +286,7 @@
         display:block;
       }
     .progressBar{
+        display: none;
         appearance: none;
         border-radius: 10px;
         width: 70%;
@@ -423,6 +463,7 @@
     .player-container{
         display: flex;
         flex-direction: column; 
+        position: relative;
         
     }
     .like-btn{
