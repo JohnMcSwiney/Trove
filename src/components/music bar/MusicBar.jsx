@@ -334,6 +334,7 @@ const MusicBar = () => {
               animationRef.current = requestAnimationFrame(whilePlaying)
               toBeginningOfSong()
             }}
+            onEnded={() => { handleForward() }}
             isPlaying={
               (animationRef.current = requestAnimationFrame(whilePlaying))
             }
