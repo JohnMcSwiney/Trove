@@ -16,7 +16,9 @@ import { AudioPlayer } from '../audioplayerOLD/AudioPlayer';
 
 import './DGstyle.css';
 
-import DGdata from '../../data/hardcodedTestData/hardcodeDGsongs';
+import { useFetchSongs } from './fetchSongs';
+
+import DGdata from "../../data/hardcodedTestData/hardcodeDGsongs"
 
 import Slider from "react-slick";
 import $ from 'jquery';
@@ -52,8 +54,6 @@ const DiscoveryGame = () => {
 
   const [currentTime, setCurrentTime] = useState(0);
 
-  // const [slides, setSongs] = useState([]);
-
   const [likedslides, setLikedslides] = useState([]);
 
   const [isMuted, setIsMuted] = useState(true);
@@ -71,29 +71,6 @@ const DiscoveryGame = () => {
   const musicSlides = useRef();
   const volumeRef = useRef();
 
-
-
-  // const fetchSongs = async () => {
-  //   const songResponse = await fetch("/api/slides/", {
-  //     method: "GET",
-  //     headers: { "Content-Type": "application/json" },
-  //   });
-  //   const songJson = await songResponse.json();
-  //   if (songResponse.ok) {
-  //     setSongs(songJson);
-
-  //     for (let i = 0; i < slides.length; i++) {
-  //       console.log("song title: " + slides[i].title);
-        
-  //     }
-
-  //     // slides.map((song) => {
-
-  //     //   console.log("song title: " + song.title);
-  //     // })
-  //   }
-  // };
-  //fetchSongs();
 
 
   //for likes   ([{ id: slides[state].id, songName: slides[state].songName, author: slides[state].author }])
@@ -260,7 +237,20 @@ const DiscoveryGame = () => {
     // centerPadding: '1vmin',
     focusOnSelect: true
   };
-  const slides = DGdata;
+
+  const slides = DGdata
+
+  // let slides = [];
+
+  // try {
+  //   slides = useFetchSongs();
+
+  //   console.log("SONGS ARRAY: " + slides.values);
+
+  // } catch (err) {
+  //   console.log("slides err: " + err);
+  // }
+
 
   const printIndex = (index) => {
     setState(index);
@@ -298,7 +288,7 @@ const DiscoveryGame = () => {
           <Slider ref={musicSlides}{...settings} id='carousel'>
 
 
-            {/* {
+            {
               slides.map((song, i = 0) => {
                 return <div className='test2'  >
                   <div className='Discovery-Img-Container' >
@@ -306,8 +296,9 @@ const DiscoveryGame = () => {
                   </div>
                 </div>
               })
-            } */}
-            <div className='test2'  >
+            }
+
+            {/* <div className='test2'  >
               <div className='Discovery-Img-Container' >
                 <img src={slides[0].url} alt={slides[0].alt} className="DGimg" onClick={() => printIndex(0)} />
               </div>
@@ -335,7 +326,7 @@ const DiscoveryGame = () => {
               <div className='Discovery-Img-Container' >
                 <img src={slides[4].url} alt={slides[4].alt} className="DGimg" onClick={() => printIndex(4)} />
               </div>
-            </div>
+            </div> */}
           </Slider>
         </div>
         {/* img updates every second, change later */}
