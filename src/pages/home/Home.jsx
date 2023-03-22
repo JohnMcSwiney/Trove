@@ -13,7 +13,7 @@ const Home = () => {
   const redirectDiscovery = () => {
     navigate("/discoverygame");
   };
-  const userID = JSON.parse(localStorage.getItem("user")).id;
+  const userID = JSON.stringify(localStorage.getItem("user")).id;
   const [userInfo, setUserInfo] = React.useState({});
   React.useEffect(() => {
     const fetchUserInfo = async () => {
