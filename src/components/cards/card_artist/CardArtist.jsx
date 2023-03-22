@@ -11,6 +11,7 @@ function CardArtist({ artist }) {
   const navigate = useNavigate();
   const redirectArtist = () => {
     navigate(`/artist/${artist._id}`);
+    console.log(artist.id);
   };
 
   return (
