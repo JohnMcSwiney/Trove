@@ -4,8 +4,8 @@ import { useArtistAuthContext } from "../../hooks/useArtistAuthContext";
 const Home = () => {
   const [artistSongs, setArtistSongs] = React.useState(null);
   const [artistAlbums, setArtistAlbum] = React.useState(null);
-  const artistID = localStorage.getItem("artistID");
-  const id = artistID ? JSON.stringify(artistID) : "";
+  const artistID = localStorage.getItem("artist");
+  const id = artistID ? JSON.stringify(artistID) : null;
   React.useEffect(() => {
     const fetchMySongs = async () => {
       const response = await fetch(`/api/songs/artist-songs/${id}`, {

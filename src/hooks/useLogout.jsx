@@ -10,6 +10,7 @@ export const useLogout = () => {
       .then(() => {
         // dispatch logout action
         dispatch({ type: "LOGOUT" });
+        localStorage.removeItem("artist");
         navigate("/");
       })
       .then(() => {
