@@ -63,6 +63,7 @@ export default function UploadMusic(props) {
     //  menu = <SideBar />
   }
 
+  const [songs, setSongs] = useState([]); 
   const [title, setTitle] = useState("");
   const [album, setAlbum] = useState(null);
   const [ep, setEP] = useState(null);
@@ -306,6 +307,8 @@ export default function UploadMusic(props) {
                     album={album}
                     ep={ep}
                     releaseType={releaseType}
+                    songs={songs}
+                    setSongs={setSongs}
                   />
                 );
               // case 'ReviewSongs':

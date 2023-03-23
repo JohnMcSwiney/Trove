@@ -60,6 +60,8 @@ export default function AddSongs(props) {
             {/* When a song is added, display the song title input */}
             {props.toUploadSongs &&
               props.toUploadSongs.map((item, index) => {
+                // props.setSongs([...props.songs,  { id: index, title: "", songFile: item } ])
+                // console.log("songs are..." + props.songs)
                 return (
                   <SongInfo
                     key={index}
@@ -73,10 +75,15 @@ export default function AddSongs(props) {
                     featuredArtists={props.featuredArtists}
                     handleSongFileChange={props.handleSongFileChange}
                     setSongFile={props.setSongFile}
+                    toUploadSongs={props.toUploadSongs}
                     setToUploadSongs={props.setToUploadSongs}
+                    songs={props.songs}
+                    setSongs={props.setSongs}
                   />
                 );
-              })}
+              }
+              )
+              }
           </div>
 
           <div className="uploadmusic--navigate--form--btns uploadmusic--navigate--add--songs">
