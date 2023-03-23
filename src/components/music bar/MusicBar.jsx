@@ -3,338 +3,339 @@ import React, {
   useRef,
   useEffect,
   createContext,
-  useContext
-} from 'react'
-import { Navigate, useNavigate, Link } from 'react-router-dom'
-import { Tooltip } from 'react-tooltip' //react tool tip used in explicit tag
+  useContext,
+} from "react";
+import { Navigate, useNavigate, Link } from "react-router-dom";
+import { Tooltip } from "react-tooltip"; //react tool tip used in explicit tag
 
-import CardSong from '../cards/card_song/CardSong'
-import SearchSongCard2 from '../cards/search_items/searchSongCard/searchSongCard2'
-import Song from '../../components/song detail/Song'
+import CardSong from "../cards/card_song/CardSong";
+import SearchSongCard2 from "../cards/search_items/searchSongCard/searchSongCard2";
+import Song from "../../components/song detail/Song";
 
-import styles from './AudioPlayer.module.css'
-import './fullscreenMusicBar.css'
-import './musicbar.css'
+import styles from "./AudioPlayer.module.css";
+import "./fullscreenMusicBar.css";
+import "./musicbar.css";
 
-import { CgArrowLongRightR } from 'react-icons/cg'
-import { CgArrowLongLeftR } from 'react-icons/cg'
-import { BsPlayCircle, BsPauseCircle, BsSlashLg } from 'react-icons/bs'
-import { MdExplicit, MdOutlineQueueMusic, MdQueueMusic } from 'react-icons/md'
+import { CgArrowLongRightR } from "react-icons/cg";
+import { CgArrowLongLeftR } from "react-icons/cg";
+import { BsPlayCircle, BsPauseCircle, BsSlashLg } from "react-icons/bs";
+import { MdExplicit, MdOutlineQueueMusic, MdQueueMusic } from "react-icons/md";
 import {
   BiVolumeFull,
   BiVolumeLow,
   BiVolume,
   BiVolumeMute,
-  BiAddToQueue
-} from 'react-icons/bi'
+  BiAddToQueue,
+} from "react-icons/bi";
 import {
   TbRepeatOff,
   TbRepeatOnce,
   TbRepeat,
-  TbArrowsShuffle
-} from 'react-icons/tb'
-import { FaHeart, FaShareSquare, FaRegHeart, FaSlash } from 'react-icons/fa'
-import NoSong from './NoSong.png'
-import 'react-tooltip/dist/react-tooltip.css'
-import { AiOutlineShareAlt } from 'react-icons/ai'
-import HeartIcon from '../../assets/Trv_icons/Trv_likeIcon_outline.svg'
-import { RiFolderMusicFill, RiFolderMusicLine } from 'react-icons/ri'
-import { BsSkipStart, BsSkipEnd, BsPlay, BsPause } from 'react-icons/bs'
+  TbArrowsShuffle,
+} from "react-icons/tb";
+import { FaHeart, FaShareSquare, FaRegHeart, FaSlash } from "react-icons/fa";
+import NoSong from "./NoSong.png";
+import "react-tooltip/dist/react-tooltip.css";
+import { AiOutlineShareAlt } from "react-icons/ai";
+import HeartIcon from "../../assets/Trv_icons/Trv_likeIcon_outline.svg";
+import { RiFolderMusicFill, RiFolderMusicLine } from "react-icons/ri";
+import { BsSkipStart, BsSkipEnd, BsPlay, BsPause } from "react-icons/bs";
 
 // Hardcoded data
 // import queue from '../../data/albumsongs.json'
 
-import Trv_Chest from '../../assets/Trv_icons/Tvr_lib_icon.ico'
+import Trv_Chest from "../../assets/Trv_icons/Tvr_lib_icon.ico";
 //
-import { useLikeSong } from '../../hooks/user-hooks/useLikeSong'
-import { useUnlikeSong } from '../../hooks/user-hooks/useUnlikeSong'
+import { useLikeSong } from "../../hooks/user-hooks/useLikeSong";
+import { useUnlikeSong } from "../../hooks/user-hooks/useUnlikeSong";
 
-import { MusicContext } from '../../contexts/MusicContext'
+import { MusicContext } from "../../contexts/MusicContext";
 
 const MusicBar = () => {
-  const [newSong, setNewSong] = useState()
+  const [newSong, setNewSong] = useState();
   // const isFullscreen = props.fcOptionIn;
-  const [isFullscreen, setFullscreen] = useState(false)
+  const [isFullscreen, setFullscreen] = useState(false);
   //context
-  const { currentSong, updateCurrentSong, currentSongData, playlists, play_list } =
-    React.useContext(MusicContext)
+  const {
+    currentSong,
+    updateCurrentSong,
+    currentSongData,
+    playlists,
+    play_list,
+  } = React.useContext(MusicContext);
   //state
   //testing play/pause
   // const [isPlaying, setIsPlaying] = useState(false)
-  const [isPlaying, setIsPlaying] = useState(true)
-  const [isLoaded, setIsLoaded] = useState(false)
-  const [duration, setDuration] = useState(0)
-  const [currentTime, setCurrentTime] = useState(0)
-  const [volumeLevel, setVolumeLevel] = useState(0)
-  const [isMuted, setIsMuted] = useState(true)
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [duration, setDuration] = useState(0);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [volumeLevel, setVolumeLevel] = useState(0);
+  const [isMuted, setIsMuted] = useState(true);
   //isMuted is totally screwed... but it works. So i'm just gonna leave it as it is <3 sorry if it's confusing (I don't actually know what's happening lol)
-  const [prevVolume, updatePrevVol] = useState(0.5)
-  const [isLiked, setIsLiked] = useState(false)
-  const [isExplicit, setExplicit] = useState(true)
-  const [loopState, setLoopState] = useState(0)
-  const [isLooping, setLooping] = useState(false)
-  const [isShuffle, setShuffle] = useState(false)
+  const [prevVolume, updatePrevVol] = useState(0.5);
+  const [isLiked, setIsLiked] = useState(false);
+  const [isExplicit, setExplicit] = useState(true);
+  const [loopState, setLoopState] = useState(0);
+  const [isLooping, setLooping] = useState(false);
+  const [isShuffle, setShuffle] = useState(false);
 
-  const [hasPlay_List, setHasPlay_List] = useState(false)
-  const [queueType, setQueueType] = useState(0)
-  const [play_ListPosition, setPlay_ListPosition] = useState(0)
-  const [queue, setQueue] = useState([])
+  const [hasPlay_List, setHasPlay_List] = useState(false);
+  const [queueType, setQueueType] = useState(0);
+  const [play_ListPosition, setPlay_ListPosition] = useState(0);
+  const [queue, setQueue] = useState([]);
 
   //refrences
-  const audioPlayer = useRef() //reference audio component
-  const progressBar = useRef() //reference progress bar
-  const FCprogressBar = useRef() //reference progress bar
-  const animationRef = useRef()
-  const volumeRef = useRef()
+  const audioPlayer = useRef(); //reference audio component
+  const progressBar = useRef(); //reference progress bar
+  const FCprogressBar = useRef(); //reference progress bar
+  const animationRef = useRef();
+  const volumeRef = useRef();
 
   if (play_list.length === 0) {
     //no play list
   } else {
-    const newLength = play_list.length
+    const newLength = play_list.length;
   }
   useEffect(() => {
-    if (isLoaded === false) {
-      audioPlayer.current.pause()
-      setLoopState(0)
-    }
-    //Maybe use another context file to update the music context file.
-    //current song or something? Idk writing this down for future testing
-    if (hasPlay_List === false) {
-      if (queue.length === 0) {
-        console.log('no playlist')
-        setQueue(play_list)
-        console.log(play_list)
-        console.log(queue)
-      } else {
-        setHasPlay_List(true)
+    if (currentSong) {
+      if (isLoaded === false) {
+        audioPlayer?.current?.pause();
+        setLoopState(0);
       }
-    } else {
+      //Maybe use another context file to update the music context file.
+      //current song or something? Idk writing this down for future testing
+      if (hasPlay_List === false) {
+        if (queue.length === 0) {
+          console.log("no playlist");
+          setQueue(play_list);
+          console.log(play_list);
+          console.log(queue);
+        } else {
+          setHasPlay_List(true);
+        }
+      } else {
+      }
+      const seconds = Math.floor(audioPlayer?.current?.duration);
+      setDuration(seconds); // 45.26
+      progressBar.current.max = seconds;
+      FCprogressBar.current.max = seconds;
     }
-    const seconds = Math.floor(audioPlayer.current.duration)
-    setDuration(seconds) // 45.26
-    progressBar.current.max = seconds
-    FCprogressBar.current.max = seconds
-    // const oldid = this.newSong.title
-    // if (oldid != null && oldid === currentSong._id){
-    //   try{
-    //     console.log(newSong.title);
-    //   } catch{
-    //     console.log("new Song not updated");
-    //   }
-    // }
-  }, [audioPlayer?.current?.loadedmetadata, audioPlayer?.current?.readyState])
+  }, [audioPlayer?.current?.loadedmetadata, audioPlayer?.current?.readyState]);
 
   // Music Player Functions
-  const calculateTime = secs => {
-    const minutes = Math.floor(secs / 60)
-    const returnedMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`
-    const seconds = Math.floor(secs % 60)
-    const returnedSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`
+  const calculateTime = (secs) => {
+    const minutes = Math.floor(secs / 60);
+    const returnedMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
+    const seconds = Math.floor(secs % 60);
+    const returnedSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
 
-    return `${returnedMinutes} : ${returnedSeconds}`
-  }
+    return `${returnedMinutes} : ${returnedSeconds}`;
+  };
 
   const togglePlayPause = () => {
-    const prevValue = isPlaying
-    setIsPlaying(!prevValue)
-    changeVolumeLevel()
+    const prevValue = isPlaying;
+    setIsPlaying(!prevValue);
+    changeVolumeLevel();
     if (!prevValue) {
-      audioPlayer.current.play()
-      animationRef.current = requestAnimationFrame(whilePlaying) //fix this
+      audioPlayer.current.play();
+      animationRef.current = requestAnimationFrame(whilePlaying); //fix this
     } else {
-      audioPlayer.current.pause()
-      cancelAnimationFrame(animationRef.current)
+      audioPlayer.current.pause();
+      cancelAnimationFrame(animationRef.current);
     }
-  }
+  };
 
   const toggleMute = () => {
-    const prevValue = isMuted
-    updatePrevVol(audioPlayer.current.volume)
-    setIsMuted(!prevValue)
+    const prevValue = isMuted;
+    updatePrevVol(audioPlayer.current.volume);
+    setIsMuted(!prevValue);
     if (!prevValue) {
-      console.log(`isMuted ` + isMuted)
-      console.log(`unmuting!`)
+      console.log(`isMuted ` + isMuted);
+      console.log(`unmuting!`);
       // console.log(`previous vol: ` + prevVolume);
-      audioPlayer.current.volume = prevVolume
-      setVolumeLevel(audioPlayer.current.volume)
-      volumeRef.current.value = prevVolume * 100
+      audioPlayer.current.volume = prevVolume;
+      setVolumeLevel(audioPlayer.current.volume);
+      volumeRef.current.value = prevVolume * 100;
       // console.log(`current vol:` + (volumeLevel * 1000));
     } else {
-      console.log(`isMuted ` + isMuted)
-      console.log(`muting!`)
+      console.log(`isMuted ` + isMuted);
+      console.log(`muting!`);
       // console.log(`previous vol: ` + volumeLevel);
-      audioPlayer.current.volume = 0
-      setVolumeLevel(0)
-      volumeRef.current.value = 0
+      audioPlayer.current.volume = 0;
+      setVolumeLevel(0);
+      volumeRef.current.value = 0;
       // console.log(`current vol:` + volumeLevel);
     }
-  }
+  };
   const toBeginningOfSong = () => {
-    progressBar.current.value = 0
-    FCprogressBar.current.value = 0
-    audioPlayer.current.currentTime = 0
-    audioPlayer.current.currentTime = 0
-    changePlayerCurrentTime()
+    progressBar.current.value = 0;
+    FCprogressBar.current.value = 0;
+    audioPlayer.current.currentTime = 0;
+    audioPlayer.current.currentTime = 0;
+    changePlayerCurrentTime();
     setTimeout(() => {
-      document.getElementById('playPauseBtn').click()
-    }, 500)
-  }
+      document.getElementById("playPauseBtn").click();
+    }, 500);
+  };
   const whilePlaying = () => {
     if (isPlaying === false) {
     } else {
-      progressBar.current.value = audioPlayer.current.currentTime
-      FCprogressBar.current.value = audioPlayer.current.currentTime
-      changePlayerCurrentTime()
-      animationRef.current = requestAnimationFrame(whilePlaying) //potential memory leak
+      progressBar.current.value = audioPlayer.current.currentTime;
+      FCprogressBar.current.value = audioPlayer.current.currentTime;
+      changePlayerCurrentTime();
+      animationRef.current = requestAnimationFrame(whilePlaying); //potential memory leak
     }
-  }
+  };
 
   const changeRange = () => {
-    audioPlayer.current.currentTime = progressBar.current.value
+    audioPlayer.current.currentTime = progressBar.current.value;
 
-    audioPlayer.current.currentTime = FCprogressBar.current.value
-    changePlayerCurrentTime()
-  }
+    audioPlayer.current.currentTime = FCprogressBar.current.value;
+    changePlayerCurrentTime();
+  };
 
   const changePlayerCurrentTime = () => {
     FCprogressBar.current.style.setProperty(
-      '--seek-before-width',
+      "--seek-before-width",
       `${(FCprogressBar.current.value / duration) * 100}%`
-    )
+    );
 
     progressBar.current.style.setProperty(
-      '--seek-before-width',
+      "--seek-before-width",
       `${(progressBar.current.value / duration) * 100}%`
-    )
-    setCurrentTime(progressBar.current.value)
-  }
+    );
+    setCurrentTime(progressBar.current.value);
+  };
 
   const changeVolumeLevel = () => {
-    setIsMuted(true)
+    setIsMuted(true);
     // console.log(audioPlayer.current.volume);
     // console.log(volumeRef.current.value);
-    audioPlayer.current.volume = volumeRef.current.value / 100
-  }
+    audioPlayer.current.volume = volumeRef.current.value / 100;
+  };
   const changeLoopLevel = () => {
-    const currentLoopLvl = loopState
-    const newLooplvl = currentLoopLvl + 1
+    const currentLoopLvl = loopState;
+    const newLooplvl = currentLoopLvl + 1;
     switch (newLooplvl) {
       case 1:
         // Loop album
-        setLoopState(newLooplvl)
-        break
+        setLoopState(newLooplvl);
+        break;
       case 2:
         // Loop song
-        setLooping(true)
-        setLoopState(newLooplvl)
-        break
+        setLooping(true);
+        setLoopState(newLooplvl);
+        break;
       default:
-        console.log(`default`)
-        setLoopState(1)
+        console.log(`default`);
+        setLoopState(1);
     }
-  }
+  };
   const shareSong = () => {
-    console.log(`share btn`)
-  }
+    console.log(`share btn`);
+  };
   // const showQueue = () => {
   //   console.log(`show queue`)
   // }
 
-  const { like, likeError, likeIsLoading } = useLikeSong()
-  const { unlike, unlikeError, unlikeIsLoading } = useUnlikeSong()
+  const { like, likeError, likeIsLoading } = useLikeSong();
+  const { unlike, unlikeError, unlikeIsLoading } = useUnlikeSong();
   const toggleLiked = () => {
-    setIsLiked(!isLiked)
+    setIsLiked(!isLiked);
     if (!isLiked) {
-      like()
+      like();
     } else {
-      unlike()
+      unlike();
     }
-  }
+  };
   const handleRewind = () => {
-    const currentTimeInSong = audioPlayer.current.currentTime
+    const currentTimeInSong = audioPlayer.current.currentTime;
 
     if (currentTimeInSong < 5) {
-      console.log(`rewind to prev`)
-      const lengthOfPlay_list = play_list.length
+      console.log(`rewind to prev`);
+      const lengthOfPlay_list = play_list.length;
       if (play_ListPosition === 0) {
-        toBeginningOfSong()
-        console.log('at start of playlist')
+        toBeginningOfSong();
+        console.log("at start of playlist");
       } else {
         try {
-          setPlay_ListPosition(play_ListPosition - 1)
+          setPlay_ListPosition(play_ListPosition - 1);
           updateCurrentSong(play_list[play_ListPosition]);
         } catch {
-          console.error('Cannot decrement futher')
+          console.error("Cannot decrement futher");
         }
       }
     } else {
-      console.log(`rewind to 0`)
+      console.log(`rewind to 0`);
       if (isPlaying === true) {
-        document.getElementById('playPauseBtn').click()
+        document.getElementById("playPauseBtn").click();
       }
-      toBeginningOfSong()
+      toBeginningOfSong();
     }
-  }
+  };
   const handleForward = () => {
-    const lengthOfPlay_list = play_list.length
+    const lengthOfPlay_list = play_list.length;
     if (lengthOfPlay_list === play_ListPosition) {
-      console.log('at end of playlist')
+      console.log("at end of playlist");
     } else {
       try {
-        setPlay_ListPosition(play_ListPosition + 1)
+        setPlay_ListPosition(play_ListPosition + 1);
         updateCurrentSong(play_list[play_ListPosition]);
       } catch {
-        console.error('Cannot increment futher')
+        console.error("Cannot increment futher");
       }
     }
-  }
+  };
 
-  const toggleFC = event => {
+  const toggleFC = (event) => {
     // if the user clickson the artist name it's ignored
-    if (event.target.id == 'artistTextLink') {
+    if (event.target.id == "artistTextLink") {
       // ignored and the Navigate function takes over
     } else {
-      setFullscreen(!isFullscreen)
+      setFullscreen(!isFullscreen);
     }
-  }
+  };
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const redirectArtist = () => {
-    navigate(`/artist/${currentSong.artist._id}`)
-  }
+    navigate(`/artist/${currentSong.artist._id}`);
+  };
 
   // Like and dislike function
 
   const fetchUnlike = async () => {
     const response = await fetch(`/api/songs/removelike/${currentSong._id}`, {
-      method: 'POST'
-    })
-    const json = response.json()
-  }
+      method: "POST",
+    });
+    const json = response.json();
+  };
 
   return (
     <>
-      {
+      {currentSong !== null && (
         <>
           <audio
             loop={isLooping}
             ref={audioPlayer}
             src={currentSong?.songUrl}
-            preload='metadata'
-            autoPlay='true'
+            preload="metadata"
+            autoPlay="true"
             onChange={() => {
-              changeRange()
-              animationRef.current = requestAnimationFrame(whilePlaying)
+              changeRange();
+              animationRef.current = requestAnimationFrame(whilePlaying);
             }}
             onLoadedMetadata={() => {
-              setLoopState(0)
-              setIsLoaded(true)
-              toBeginningOfSong()
-              changeRange()
-              animationRef.current = requestAnimationFrame(whilePlaying)
-              toBeginningOfSong()
+              setLoopState(0);
+              setIsLoaded(true);
+              toBeginningOfSong();
+              changeRange();
+              animationRef.current = requestAnimationFrame(whilePlaying);
+              toBeginningOfSong();
             }}
-            onEnded={() => { handleForward() }}
+            onEnded={() => {
+              handleForward();
+            }}
             isPlaying={
               (animationRef.current = requestAnimationFrame(whilePlaying))
             }
@@ -342,13 +343,13 @@ const MusicBar = () => {
 
           {/* Full Screen */}
           <div
-            className={isFullscreen === true ? 'fullscreenMusicBar' : 'hidden'}
+            className={isFullscreen === true ? "fullscreenMusicBar" : "hidden"}
           >
-            <div className='fullsc-musicbar-wrap bg-trv-sm-Play-bg'>
+            <div className="fullsc-musicbar-wrap bg-trv-sm-Play-bg">
               {/* Attempting to change on scroll */}
               <div
-                id='fcplayerbox'
-                className='fullscreen-player-info-container '
+                id="fcplayerbox"
+                className="fullscreen-player-info-container "
               >
                 {/* Progress Bar */}
 
@@ -369,40 +370,18 @@ const MusicBar = () => {
                 </div> */}
                 {/*  */}
                 <h2>Currently Playing</h2>
-                <div className='fullscreen-song-img '>
+                <div className="fullscreen-song-img ">
                   <img
                     src={currentSong?.imgUrl}
-                    className='fullscreen-img'
+                    className="fullscreen-img"
                   ></img>
 
-                  <button className='exitBtn' onClick={toggleFC}>
+                  <button className="exitBtn" onClick={toggleFC}>
                     x
                   </button>
-
-                  {/* {obj.explicit ? (
-                    <div className="explicit-containter">
-                      <MdExplicit
-                        data-tooltip-id="my-tooltip"
-                        data-tooltip-content={
-                          "Explicit: This song includes prophane language"
-                        }
-                        className="explicitActions"
-                        data-tooltip-variant="light"
-                      />
-                      <Tooltip
-                        className="tooltip-style"
-                        place="bottom"
-                        id="my-tooltip"
-                        delayShow={100}
-                      />
-                    </div>
-                  ) : (
-                    <p />
-                  )} */}
-                  {/* explicit-containter */}
                 </div>
 
-                <div className='fullscreen-song-txt-container-container '>
+                <div className="fullscreen-song-txt-container-container ">
                   {/* <div className='like-btn '>
                     <button onClick={toggleLiked}>
                       {isLiked ? (
@@ -417,11 +396,11 @@ const MusicBar = () => {
                       )}
                     </button>
                   </div> */}
-                  <div className='fullscreen-song-info-txt-container'>
-                    <div className='fc-song-txt'>
+                  <div className="fullscreen-song-info-txt-container">
+                    <div className="fc-song-txt">
                       <a>{currentSong?.title}</a>
                     </div>
-                    <div className='fc-artist-txt'>
+                    <div className="fc-artist-txt">
                       <a>{currentSong?.artist.artistName}</a>
                     </div>
                   </div>
@@ -452,12 +431,12 @@ const MusicBar = () => {
                 </div> */}
               </div>
               {/* Queue */}
-              <div className='brihgleggmoie'>
-                <h6 className='queueHeader'>Song Queue:</h6>
+              <div className="brihgleggmoie">
+                <h6 className="queueHeader">Song Queue:</h6>
 
                 {play_list &&
-                  play_list.map(song => {
-                    return <SearchSongCard2 key={song._id} song={song} />
+                  play_list.map((song) => {
+                    return <SearchSongCard2 key={song._id} song={song} />;
                   })}
                 {/* {queue &&
                   queue.map((song) => {
@@ -485,24 +464,23 @@ const MusicBar = () => {
           <div
             className={
               isFullscreen === false
-                ? 'player-container musicbar'
-                : 'player-container musicbar'
+                ? "player-container musicbar"
+                : "player-container musicbar"
             }
           >
-            <div className='musicbar-wrap bg-trv-sm-Play-bg'>
+            <div className="musicbar-wrap bg-trv-sm-Play-bg">
               {/* This style is in the fullscreen css file - idk there was a bug <3 */}
 
-              <div className='volumeContainter-ver2'>
+              <div className="volumeContainter-ver2">
                 <input
-                  type='range'
+                  type="range"
                   ref={volumeRef}
-                  defaultValue='50'
-                  className='volumeBar'
+                  defaultValue="50"
+                  className="volumeBar"
                   onChange={changeVolumeLevel}
-                  min='0'
-                  max='100'
-                  step='5'
-
+                  min="0"
+                  max="100"
+                  step="5"
                 ></input>
                 <button onClick={toggleMute}>
                   {isMuted ? <BiVolumeFull /> : <BiVolumeMute />}
@@ -511,124 +489,96 @@ const MusicBar = () => {
 
               {/* Progress Bar */}
               {/* time visible on fullscreen*/}
-              
 
-              <div className='progress-time-container'>
-              <a className='progress-time-time-container ord1'>
+              <div className="progress-time-container">
+                <a className="progress-time-time-container ord1">
                   {calculateTime(currentTime)}
                 </a>
-              
 
                 <div
-                  className='progressbarContainer-ver2 '
+                  className="progressbarContainer-ver2 "
                   onMouseDown={toggleMute}
                   onMouseUp={toggleMute}
                 >
-                  
                   <input
-                    className='progressBar'
-                    type='range'
+                    className="progressBar"
+                    type="range"
                     ref={progressBar}
-                    defaultValue='0 '
+                    defaultValue="0 "
                     onMouseDown={togglePlayPause}
                     onMouseUp={togglePlayPause}
                     onChange={changeRange}
                   />
                   <input
-                    className='fullscreen-progressBar'
-                    type='range'
+                    className="fullscreen-progressBar"
+                    type="range"
                     ref={FCprogressBar}
-                    defaultValue='0 '
+                    defaultValue="0 "
                     onMouseDown={togglePlayPause}
                     onMouseUp={togglePlayPause}
                     onChange={changeRange}
                   />
-                  
                 </div>
-                <a className='progress-time-time-container ord3'>
+                <a className="progress-time-time-container ord3">
                   {duration && !isNaN(duration) && calculateTime(duration)}
                 </a>
-                
               </div>
 
-              <div className='player-info-container-ver2 '>
+              <div className="player-info-container-ver2 ">
                 {/*  */}
-                <div className='like-btn '>
+                <div className="like-btn ">
                   <button onClick={toggleLiked}>
                     {isLiked ? (
-                      <FaHeart className='text-white' />
+                      <FaHeart className="text-white" />
                     ) : (
                       <FaRegHeart />
                     )}
                   </button>
                 </div>
 
-                <div className='song-img '>
+                <div className="song-img ">
                   <img src={currentSong?.imgUrl} onClick={toggleFC}></img>
-                  {/* {obj.explicit ? (
-                    <div className="explicit-containter">
-                      <MdExplicit
-                        data-tooltip-id="my-tooltip"
-                        data-tooltip-content={
-                          "Explicit: This song includes prophane language"
-                        }
-                        className="explicitActions"
-                        data-tooltip-variant="light"
-                      />
-                      <Tooltip
-                        className="tooltip-style"
-                        place="bottom"
-                        id="my-tooltip"
-                        delayShow={100}
-                      />
-                    </div>
-                  ) : (
-                    <p />
-                  )} */}
-                  {/* explicit-containter */}
                 </div>
 
-                <div className='song-txt-container-container '>
-                  <div className='song-info-txt-container' onClick={toggleFC}>
-                    <div className='song-txt'>
+                <div className="song-txt-container-container ">
+                  <div className="song-info-txt-container" onClick={toggleFC}>
+                    <div className="song-txt">
                       <a>{currentSong?.title}</a>
                     </div>
-                    <div className='artist-txt'>
-                      <a onClick={redirectArtist} id='artistTextLink'>
+                    <div className="artist-txt">
+                      <a onClick={redirectArtist} id="artistTextLink">
                         {currentSong?.artist.artistName}
                       </a>
                     </div>
                   </div>
                 </div>
 
-                <div className='control-container'>
+                <div className="control-container">
                   <button onClick={handleRewind}>
                     <BsSkipStart />
                   </button>
                   <button
-                    className='playbtnstyle'
-                    id='playPauseBtn'
+                    className="playbtnstyle"
+                    id="playPauseBtn"
                     onClick={togglePlayPause}
                   >
                     {isPlaying ? (
                       <BsPause />
                     ) : (
-                      <BsPlay className='BsPlayStyleLg' />
+                      <BsPlay className="BsPlayStyleLg" />
                     )}
                   </button>
                   <button onClick={handleForward}>
                     <BsSkipEnd />
                   </button>
                 </div>
-                <div className='fillerDivPlayer'>
-
-                </div>
+                <div className="fillerDivPlayer"></div>
                 {/* Loop and Queue */}
-                <div className='otherItemBtnContainer'>
+                <div className="otherItemBtnContainer">
                   {/* import {TbRepeatOff, TbRepeatOnce, TbRepeat} from 'react-icons/tb' */}
                   <button
                     className={
-                      loopState === 0 ? 'loopBtn loopLvl1' : 'hiddenBtn'
+                      loopState === 0 ? "loopBtn loopLvl1" : "hiddenBtn"
                     }
                     onClick={changeLoopLevel}
                   >
@@ -636,7 +586,7 @@ const MusicBar = () => {
                   </button>
                   <button
                     className={
-                      loopState === 1 ? 'loopBtn loopLvl2' : 'hiddenBtn'
+                      loopState === 1 ? "loopBtn loopLvl2" : "hiddenBtn"
                     }
                     onClick={changeLoopLevel}
                   >
@@ -644,7 +594,7 @@ const MusicBar = () => {
                   </button>
                   <button
                     className={
-                      loopState === 2 ? 'loopBtn loopLvl2' : 'hiddenBtn'
+                      loopState === 2 ? "loopBtn loopLvl2" : "hiddenBtn"
                     }
                     onClick={() => setLoopState(0)}
                     onMouseDown={() => setLooping(false)}
@@ -652,18 +602,18 @@ const MusicBar = () => {
                   >
                     <TbRepeatOnce />
                   </button>
-                  <button className='fcBtn' onClick={toggleFC}>
+                  <button className="fcBtn" onClick={toggleFC}>
                     Queue
-                    <MdQueueMusic className='queueMusicIcon' />
+                    <MdQueueMusic className="queueMusicIcon" />
                   </button>
                 </div>
               </div>
             </div>
           </div>
         </>
-      }
+      )}
     </>
-  )
-}
+  );
+};
 
-export default MusicBar
+export default MusicBar;

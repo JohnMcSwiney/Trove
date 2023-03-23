@@ -13,15 +13,15 @@ const Home = () => {
   const redirectDiscovery = () => {
     navigate("/discoverygame");
   };
-  const userID = JSON.parse(localStorage.getItem("user")).id;
-
+  const userID = JSON.parse(localStorage.getItem("user"));
+  const id = userID ? userID.id : null;
   // const favoriteArtists = JSON.parse(localStorage.getItem("user")).likedArtists;
   // console.log(favoriteArtists);
 
   const [userInfo, setUserInfo] = useState([]);
   useEffect(() => {
     const fetchUserInfo = async () => {
-      const response = await fetch(`/api/users/${userID}`);
+      const response = await fetch(`/api/users/${id}`);
       const data = await response.json();
 
       setUserInfo(data);
