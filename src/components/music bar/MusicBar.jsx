@@ -497,10 +497,12 @@ const MusicBar = () => {
                   type='range'
                   ref={volumeRef}
                   defaultValue='50'
+                  className='volumeBar'
                   onChange={changeVolumeLevel}
                   min='0'
                   max='100'
                   step='5'
+
                 ></input>
                 <button onClick={toggleMute}>
                   {isMuted ? <BiVolumeFull /> : <BiVolumeMute />}
@@ -509,16 +511,20 @@ const MusicBar = () => {
 
               {/* Progress Bar */}
               {/* time visible on fullscreen*/}
+              
+
               <div className='progress-time-container'>
-                <div className='player-time-time-container-1'>
+              <a className='progress-time-time-container ord1'>
                   {calculateTime(currentTime)}
-                </div>
+                </a>
+              
 
                 <div
-                  className='progressbarContainer '
+                  className='progressbarContainer-ver2 '
                   onMouseDown={toggleMute}
                   onMouseUp={toggleMute}
                 >
+                  
                   <input
                     className='progressBar'
                     type='range'
@@ -537,11 +543,12 @@ const MusicBar = () => {
                     onMouseUp={togglePlayPause}
                     onChange={changeRange}
                   />
+                  
                 </div>
-
-                <div className='player-time-time-container-2'>
+                <a className='progress-time-time-container ord3'>
                   {duration && !isNaN(duration) && calculateTime(duration)}
-                </div>
+                </a>
+                
               </div>
 
               <div className='player-info-container-ver2 '>

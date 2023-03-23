@@ -83,7 +83,8 @@
     /* background-color: aqua; */
     margin-right: 180px;
     font-size: large;
-    z-index: 3;
+    z-index: 7;
+    width: 65px;
     /* 
     margin-top: 300px; */
 }
@@ -135,31 +136,41 @@
         align-items: center;
         flex-direction: row;
         bottom: 0;
-        width: 98%;
-        background-color: rgba(255, 255, 255, 0.305);
+        width: 98.2%;
+        background-color: rgba(255, 255, 255, 0);
 
     }
-
-    .progress-time-time-container-1 {
-        background-color: #e39800 !important;
+    .ord1{
         order: 1;
-        width: 100px;
     }
-
-    .progress-time-time-container-2 {
-        background-color: cornflowerblue !important;
+    .ord3{
         order: 3;
-        width: 100px;
+    }
+    .progress-time-time-container {
+        background-color: #e3970000 !important;
+        font-size: small;
+        color: white;
+        text-decoration: none;
+        pointer-events: none;
+        width: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        align-content: center;
+        margin: auto;
+        padding-bottom: 2px;
     }
 
-    .progressbarContainer {
+
+    .progressbarContainer-ver2 {
         padding: 0;
         margin: 0;
-        display: block;
+        display: inline-block;
         /* display:  none; */
         position: relative;
         order: 2 !important;
         flex-grow: 2;
+       
 
     }
 
@@ -510,6 +521,112 @@
         flex-grow: 1;
         order: 4;
     }
+
+    .volumeBar {
+        width: 80px;
+        appearance: none;
+        border-radius: 10px;
+        outline: none;
+        
+        /* transform: translate(0px, -40%); */
+        
+        background-color: rgba(255, 255, 255, 0.041);
+        color: #fafafa;
+        border: #ffffff24 1.5px solid;
+        margin: 2px;
+    }
+
+    /*safari*/
+    
+
+    /*chrome & safari*/
+    /* .volumeBar::before {
+        content: '';
+        height: 5px;
+        width:;
+        background-image: linear-gradient(to right, #0034c4, #8650F4);
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+        border-top-right-radius: 2px;
+        border-bottom-right-radius: 2px;
+        /* border-radius: 10px; 
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 2;
+        cursor: pointer;
+        margin-top: 3px;
+    } */
+
+    .volumeBar::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        height: 5px;
+        width: 8px;
+        border-radius: 10px;
+        transform: scale(1.8);
+        border: none;
+        background-color: #edeaf4;
+        cursor: pointer;
+        position: relative;
+        margin: 0px -3px 0 0;
+        z-index: 3;
+        box-sizing: border-box;
+        box-shadow: -1px 0px 5px #f8f8f843;
+
+    }
+
+    /* .volumeBar:active::-webkit-slider-thumb {
+        transform: scale(1.6);
+        transition: ease-in-out .05s;
+        border: 1px solid whitesmoke;
+        border-radius: 50%;
+        box-shadow: rgba(255, 255, 255, 0.671);
+        background-color: #8650F4;
+    } */
+
+    /* firefox */
+    /* .volumeBar::-moz-range-track {
+        background: rgba(19, 13, 103, 0.74);
+        border-radius: 10px;
+        position: relative;
+        width: 100%;
+        height: 5px;
+        outline: none;
+        z-index: 1;
+    } */
+
+    /* .volumeBar::-moz-focus-outer {
+        border: 0;
+    } */
+
+    /* .volumeBar::-moz-range-progress {
+        background-image: linear-gradient(to right, #0034c4, #8650F4);
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+        height: 5px;
+    } */
+
+    .volumeBar::-moz-range-thumb {
+        height: 7px;
+        width: 7px;
+        border-radius: 50%;
+        border: transparent;
+        background-color: #8650F4;
+        cursor: pointer;
+        position: relative;
+        box-sizing: border-box;
+        box-shadow: -1px 0px 5px #8750f43b;
+    }
+    /*
+
+    .volumeBar:active::-moz-range-thumb {
+        transform: scale(1.6);
+        transition: ease-in-out .05s;
+        border: 1px solid whitesmoke;
+        border-radius: 50%;
+        box-shadow: rgba(255, 255, 255, 0.671);
+    } */
+
 }
 
 @media screen and (max-width:799px) {
