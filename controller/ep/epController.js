@@ -25,7 +25,6 @@ const getEP = async (req, res) => {
 };
 
 const createEP = async (req, res) => {
-  
   try {
     const artist = await Artist.findOne({ email: req.body.artist });
 
@@ -42,7 +41,6 @@ const createEP = async (req, res) => {
     console.log("outside of if stmt");
 
     if (!req.body.featuredArtists || req.body.featuredArtists == null) {
-
       console.log("should be in here");
 
       console.log("inside ep method");
@@ -60,7 +58,6 @@ const createEP = async (req, res) => {
 
       res.status(201).json(ep);
     } else {
-
       const featuredArtists = await Promise.all(
         req.body.featuredArtists.map(async (name) => {
           const featuredArtist = await Artist.findOne({ artistName: name });
@@ -317,7 +314,7 @@ const deleteEP = async (req, res) => {
 const getMyEP = async (req, res) => {
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ err: err.message });
+    return res.status(404).json({ err: "EP does not exist" });
   }
 
   const eps = await EP.find({ artist: id }).sort({ createdAt: -1 });
