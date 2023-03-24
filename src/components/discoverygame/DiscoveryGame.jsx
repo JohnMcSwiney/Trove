@@ -238,14 +238,18 @@ const DiscoveryGame = () => {
     focusOnSelect: true
   };
 
-  const slides = DGdata
+  const slides = DGdata;
 
-  // let slides = [];
+//   let slides = []
+
+//  slides.push( useFetchSongs());
+
+
 
   // try {
   //   slides = useFetchSongs();
 
-  //   console.log("SONGS ARRAY: " + slides.values);
+//console.log("SONGS ARRAY: " + slides.values);
 
   // } catch (err) {
   //   console.log("slides err: " + err);
