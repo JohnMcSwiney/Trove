@@ -6,16 +6,19 @@ const Login = () => {
   const [password, setPassword] = React.useState("");
   const navigate = useNavigate();
   const { login, error, isLoading } = useLogin();
-
+  const artistID = localStorage.getItem("artist");
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
       await login(email, password);
+      if (localStorage.getItem("artist")) {
+        navigate("/");
+      }
     } catch (error) {
       console.log({ error: error.message });
     }
   };
-  const artistID = localStorage.getItem("artist");
+
   React.useEffect(() => {
     if (artistID) {
       navigate("/");

@@ -58,7 +58,7 @@ const ArtistNavbar = () => {
             >
               Help
             </NavLink>
-            <NavLink
+            {/* <NavLink
               to="/discovery"
               className={`${state === 3 ? "active-tab " : ""} `}
               onClick={() => {
@@ -67,7 +67,7 @@ const ArtistNavbar = () => {
               }}
             >
               Discovery
-            </NavLink>
+            </NavLink> */}
 
             <NavLink
               to="/uploadmusic"
@@ -80,7 +80,7 @@ const ArtistNavbar = () => {
               Upload Music
             </NavLink>
 
-            <NavLink
+            {/* <NavLink
               to="/provider"
               className={`${state === 5 ? "active-tab " : ""} `}
               onClick={() => {
@@ -89,7 +89,7 @@ const ArtistNavbar = () => {
               }}
             >
               Provider
-            </NavLink>
+            </NavLink> */}
 
             <div class="vl">
               {artist ? (
@@ -144,18 +144,6 @@ const ArtistNavbar = () => {
 
         <div
           className={`${
-            state === 2 ? "active-content text-light" : "content"
-          } help`}
-          onClick={() => action(2)}
-        >
-          <div className="about-contain">
-            <h1>2</h1>
-            <p>2</p>
-          </div>
-        </div>
-
-        <div
-          className={`${
             state === 3 ? "active-content text-light" : "content"
           } discovery`}
           onClick={() => action(3)}
@@ -175,18 +163,6 @@ const ArtistNavbar = () => {
           <div className="contact-contain">
             <h1>4</h1>
             <p>4</p>
-          </div>
-        </div>
-
-        <div
-          className={`${
-            state === 5 ? "active-content text-light" : "content"
-          } provider`}
-          onClick={() => action(5)}
-        >
-          <div className="contact-contain">
-            <h1>5</h1>
-            <p>5</p>
           </div>
         </div>
       </div>

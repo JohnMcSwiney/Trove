@@ -4,8 +4,6 @@ import ArtistNavbar from "./components/navbar/ArtistNavbar";
 
 import {
   Home,
-  Provider,
-  Discovery,
   Help,
   UploadMusic,
   Login,
@@ -23,7 +21,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Home />}></Route>
             <Route path="/help" element={<Help />}></Route>
-            <Route path="/discovery" element={<Discovery />}></Route>
+
             <Route path="/uploadmusic" element={<UploadMusic />}></Route>
             <Route path="/signup" element={<Signup />}></Route>
             <Route path="/login" element={<Login />}></Route>
