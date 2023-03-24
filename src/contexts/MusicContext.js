@@ -13,12 +13,16 @@ export const MusicProvider = ({ children }) => {
   const [play_list, setPlay_list] = useState([]);
   const [displayMusicBar, setDisplayMusicBar] = useState(false);
   const [queuePosition, setQueuePosition] = useState(0);
+  const[loopLevel, setLoopLevel] = useState(0);
   // function to update the currently playing song
   const updateCurrentSong = (song) => {
     setCurrentSong(song);
     // setCurrentSongData(song);
     // console.log(song)
   };
+  const updateLoopLevel = (level) => {
+    setLoopLevel(level);
+  }
   const updateQueue = (queue) => {
   
   }
@@ -57,6 +61,8 @@ export const MusicProvider = ({ children }) => {
     updatePlay_list,
     updateQueuePosition,
     addToQueue,
+    loopLevel,
+    updateLoopLevel,
   };
   // try{
   //   console.log(currentSong.title);

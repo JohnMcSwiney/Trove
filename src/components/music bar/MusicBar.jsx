@@ -67,6 +67,8 @@ const MusicBar = () => {
     currentSongData,
     playlists,
     play_list,
+    loopLevel,
+    updateLoopLevel,
   } = React.useContext(MusicContext);
   //state
   //testing play/pause
@@ -229,21 +231,21 @@ const MusicBar = () => {
   };
 
   const changeLoopLevel = () => {
-    const currentLoopLvl = loopState;
+    const currentLoopLvl = loopLevel;
     const newLooplvl = currentLoopLvl + 1;
     switch (newLooplvl) {
       case 1:
         // Loop album
-        setLoopState(newLooplvl);
+        updateLoopLevel(newLooplvl);
         break;
       case 2:
         // Loop song
         setLooping(true);
-        setLoopState(newLooplvl);
+        updateLoopLevel(newLooplvl);
         break;
       default:
         console.log(`default`);
-        setLoopState(1);
+        updateLoopLevel(1);
     }
   };
   const shareSong = () => {
@@ -296,9 +298,14 @@ const MusicBar = () => {
   };
   const handleForward = () => {
     console.log("forward!")
-    if (play_list.length === queuePosition) {
+    
+    if (play_list.length === queuePosition+1) {
       console.log("at end of playlist");
-      
+      if(loopLevel === 1)  {
+        console.log("loop is on - restarting play_list");
+        updateQueuePosition(0);
+
+      }
     } else if(queuePosition === 0) {
       updateQueuePosition(1);
       // updateCurrentSong(play_list[queuePosition]);
@@ -313,41 +320,6 @@ const MusicBar = () => {
     }
     // updateSong();
   };
-  const updateSong = () => {
-    switch (queuePosition){
-      case 0:
-        console.log("position: " + 0);
-        updateCurrentSong(play_list[0]);
-        break;
-      case 1:
-        console.log("position: " + 1);
-        updateCurrentSong(play_list[1]);
-        break;
-      case 2:
-        console.log("position: " + 2);
-        updateCurrentSong(play_list[2]);
-        break;
-      case 3:
-        console.log("position: " + 3);
-        updateCurrentSong(play_list[3]);
-        break;
-      case 4:
-        console.log("position: " + 4);
-        updateCurrentSong(play_list[4]);
-        break;
-      case 5:
-        console.log("position: " + 5);
-        updateCurrentSong(play_list[5]);
-        break;
-      case 6:
-        console.log("position: " + 6);
-        updateCurrentSong(play_list[6]);
-        break;
-      default:
-        
-        break;
-    }
-  }
   const toggleFC = (event) => {
     // if the user clickson the artist name it's ignored
     if (event.target.id == "artistTextLink") {
@@ -363,7 +335,6 @@ const MusicBar = () => {
   };
 
   // Like and dislike function
-
   const fetchUnlike = async () => {
     const response = await fetch(`/api/songs/removelike/${currentSong._id}`, {
       method: "POST",
@@ -491,7 +462,6 @@ const MusicBar = () => {
 
               {/* Progress Bar */}
               {/* time visible on fullscreen*/}
-
               <div className="progress-time-container">
                 <a className="progress-time-time-container ord1">
                   {calculateTime(currentTime)}
@@ -580,7 +550,7 @@ const MusicBar = () => {
                   {/* import {TbRepeatOff, TbRepeatOnce, TbRepeat} from 'react-icons/tb' */}
                   <button
                     className={
-                      loopState === 0 ? "loopBtn loopLvl1" : "hiddenBtn"
+                      loopLevel === 0 ? "loopBtn loopLvl1" : "hiddenBtn"
                     }
                     onClick={changeLoopLevel}
                   >
@@ -588,7 +558,7 @@ const MusicBar = () => {
                   </button>
                   <button
                     className={
-                      loopState === 1 ? "loopBtn loopLvl2" : "hiddenBtn"
+                      loopLevel === 1 ? "loopBtn loopLvl2" : "hiddenBtn"
                     }
                     onClick={changeLoopLevel}
                   >
@@ -596,9 +566,9 @@ const MusicBar = () => {
                   </button>
                   <button
                     className={
-                      loopState === 2 ? "loopBtn loopLvl2" : "hiddenBtn"
+                      loopLevel === 2 ? "loopBtn loopLvl2" : "hiddenBtn"
                     }
-                    onClick={() => setLoopState(0)}
+                    onClick={() => updateLoopLevel(0)}
                     onMouseDown={() => setLooping(false)}
                     // onMouseUp={() => console.log(isLooping)}
                   >
