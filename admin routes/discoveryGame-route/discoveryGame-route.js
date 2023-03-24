@@ -1,16 +1,16 @@
 const express = require("express");
 const router = express.Router();
 const {
-    getDiscoveryGame,
     loadDiscoveryGame,
+    playDiscoveryGame,
     updateDiscoveryGame,
     deleteFromDiscoveryGame
 } = require("../../admin controllers/discoveryGame/discoveryGameController");
 
 //get all
-router.post("/", loadDiscoveryGame);
+router.get("/:id", loadDiscoveryGame);
 
-router.get("/", getDiscoveryGame);
+router.post("/", playDiscoveryGame);
 
 
 module.exports = router;

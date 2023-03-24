@@ -11,103 +11,218 @@ const Song = require("../../models/song model/song-model");
 const Artist = require("../../models/artist model/artist-model");
 const Album = require("../../models/album model/album-model");
 const User = require("../../models/user model/user-model");
-const {getAllSongs} = require("../../admin controllers/song/songController");
+const { getAllSongs } = require("../../admin controllers/song/songController");
 // const { storage } = require("firebase/compat/storage");
 
 
 // const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
-//get discovery game
-const getDiscoveryGame = async (req, res) => {
-  //what should happen is when the game is loaded it'll just load a random song from the list.
+//find beat and tempo of a song.
+
+const calcTempo = async (buffer) => {
 
   try {
 
-    // const user = await User.findOne({ email: req.body.email });
+    console.log("inside calctempo");
 
-    // if (!user) {
-    //   return res.status(404).send("User profile not found");
-    // }
+    let audioData = [];
   
-    // console.log(user);
+    console.log("buffer: " + buffer);
+  
+    if (buffer.numberOfChannels == 2) {
+  
+      let data1 = buffer.getChannelData(0);
+      let data2 = buffer.getChannelData(1);
+  
+      for (let i = 0; i < data1.length; i++) {
+        audioData[i] = (data1[i] + data2[i]) / 2;
+      }
+    } else {
+      audioData = buffer.getChannelData(0);
+    }
+  
+    const songData = new MusicTempo(audioData);
+  
+    return songData;
+  
+    // console.log("tempo: " + songData.tempo);
+    // console.log("beats: " + songData.beats);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ msg: "read song data failed" });
+  }
+}
 
-    const songs = await Song.find()
+const findSongData = async (user) => {
 
-    .populate("artist")
-    .populate("featuredArtists")
+  try {
 
-    .populate("album")
+    console.log("sdfsffdsdsd: " + user.likedSongs)
 
-    .sort({ createdAt: -1 });
+    for (const song in user.likedSongs) {
 
-    if (!songs) {
+      const songURL = song.songUrl;
+
+      let musicData = 0;
+
+      await fetch(songURL)
+        .then(res => res.arrayBuffer())
+        .then(buffer => {
+  
+          const context = new AudioContext();
+  
+          musicData = context.decodeAudioData(buffer, calcTempo);
+  
+          return musicData;
+        });
+
+        let tempoList = [];
+        let beatList = [];
+
+        const songTempo = Math.round(musicData.tempo);
+        const songBeat = Math.round(musicData.beat);
+
+        tempoList.push(songTempo);
+        beatList.push(songBeat);
+
+        let tempoValue = 0;
+        let beatValue = 0;
+
+        for (let i = 0; i < tempoList.length; i++) {
+          tempoValue += tempoList[i];
+        }
+
+        for (let i = 0; i < beatList.length; i++) {
+          beatValue += beatList[i];
+        }
+
+        const averageTempo = Math.round(tempoValue / user.likedSongs.length);
+
+        const averageBeat = Math.round(beatValue / user.likedSongs.length);
+
+        console.log("average tempo of user liked songs: " + averageTempo);
+        
+        console.log("average beat of user liked songs: " + averageBeat);
+
+        return averageTempo, averageBeat;
+    }
+  } catch (err) {
+    console.log(err);
+    throw new Error("tempo and beat validation failed");
+  }
+
+}
+
+//get discovery game
+const loadDiscoveryGame = async (req, res) => {
+  //what should happen is when the game is loaded it'll just load a random song from the list.
+
+  const {id} = req.params
+
+  try {
+
+    const user = await User.findById(id);
+
+    if (!user) {
+      return res.status(404).send("User profile not found");
+    }
+
+    console.log(user);
+
+    if (user.likedSongs.length == 0) {
+
+      const songs = await Song.find()
+
+        .populate("artist")
+        .populate("featuredArtists")
+
+        .populate("album")
+
+        .sort({ createdAt: -1 });
+
+      if (!songs) {
+        return res.status(404).send("songs not found");
+      }
+
+      const oneSong = songs[Math.floor(Math.random() * songs.length)];
+
+      console.log("oneSong: " + oneSong);
+
+      res.status(200).json(oneSong);
+    }
+    else {
+
+      await findSongData(user);
+
+      const allSongs = await Song.find()
+
+      .populate("artist")
+      .populate("featuredArtists")
+
+      .populate("album")
+
+      .sort({ createdAt: -1 });
+
+    if (!allSongs) {
       return res.status(404).send("songs not found");
     }
 
-    const oneSong = songs[Math.floor(Math.random() * songs.length)];
+    let similarSongs = [];
 
-    console.log("oneSong: " + oneSong);
+    for (const song in allSongs) {
 
-  console.log("getAllSongs method working");
+      const songURL = song.songUrl;
 
-  //res.status(200).json(songs);
-  res.status(200).json(oneSong);
+      await fetch(songURL)
+        .then(res => res.arrayBuffer())
+        .then(buffer => {
+  
+          const context = new AudioContext();
+  
+          const musicData = context.decodeAudioData(buffer, calcTempo);
+  
+          return musicData;
+        });
+
+        const songTempo = Math.round(musicData.tempo);
+        const songBeat = Math.round(musicData.beat);
+
+        if (songTempo == averageTempo && songBeat == averageBeat) {
+          similarSongs.push(song);
+        }
+    }
+
+    const showSong = similarSongs[Math.floor(Math.random() * similarSongs.length)];
+
+    console.log("showSong: " + showSong);
+
+    res.status(200).json(showSong);
+    }
 
   } catch (err) {
     console.log(err);
-    res.status(500).json({ msg: "fetching songs failed" });
+    res.status(500).json({ msg: "could not load discovery game" });
   }
- 
+
 }
 
 //WIP
-const loadDiscoveryGame = async (req, res) => {
+const playDiscoveryGame = async (req, res) => {
 
   console.log("swipe direction: " + req.body.swipeDirection);
 
-
   try {
-
-    const calcTempo = async (buffer) => {
-
-      console.log("inside calctempo");
-  
-      let audioData = [];
-  
-      console.log("buffer: " + buffer);
-  
-      if (buffer.numberOfChannels == 2) {
-  
-        let data1 = buffer.getChannelData(0);
-        let data2 = buffer.getChannelData(1);
-  
-        for (let i = 0; i < data1.length; i++) {
-          audioData[i] = (data1[i] + data2[i]) / 2;
-        }
-      } else {
-        audioData = buffer.getChannelData(0);
-      }
-  
-      const songData = new MusicTempo(audioData);
-
-      return songData;
-  
-      // console.log("tempo: " + songData.tempo);
-      // console.log("beats: " + songData.beats);
-  
-    }
-
 
     const user = await User.findOne({ email: req.body.email });
 
     if (!user) {
       return res.status(404).send("User profile not found");
     }
-  
+
     console.log(user);
-  
+
     const song = await Song.findOne({ _id: req.body.songID });
-  
+
     if (!song) {
       return res.status(404).send("Song not found");
     }
@@ -131,7 +246,7 @@ const loadDiscoveryGame = async (req, res) => {
     }
     else {
 
-      if (req.body.swipeDirection  === "left") {
+      if (req.body.swipeDirection === "left") {
         console.log("they swiped left");
         // const nextSong = await getNextSong(user);
         // res.send(nextSong);
@@ -293,8 +408,8 @@ const deleteFromDiscoveryGame = async (req, res) => {
 };
 
 module.exports = {
-  getDiscoveryGame,
   loadDiscoveryGame,
+  playDiscoveryGame,
   updateDiscoveryGame,
   deleteFromDiscoveryGame,
 };
