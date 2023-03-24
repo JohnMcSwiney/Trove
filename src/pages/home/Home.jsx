@@ -1,5 +1,6 @@
 import React from "react";
 import { useArtistAuthContext } from "../../hooks/useArtistAuthContext";
+
 import EditModal from "../../components/edit modal/EditModal";
 const Home = () => {
   const [artistSongs, setArtistSongs] = React.useState(null);
@@ -52,8 +53,8 @@ const Home = () => {
   const { artist } = useArtistAuthContext();
 
   // modal
+  const [show, setShow] = React.useState(false);
 
-  const [openModal, setOpenModal] = React.useState(false);
   return (
     <div>
       <h5>Hello {artist?.artistName} </h5>
@@ -77,19 +78,7 @@ const Home = () => {
                     <th scope="row">{song.title}</th>
                     <th>{song.isVerified}</th>
                     <th>
-                      <button
-                        className="btn btn-info"
-                        onClick={() => setOpenModal(true)}
-                      >
-                        Edit
-                      </button>
-                      {openModal && (
-                        <EditModal
-                          key={song._id}
-                          song={song}
-                          closeModal={setOpenModal}
-                        />
-                      )}
+                      <EditModal song={song} />
                     </th>
                     <th>Publish</th>
                   </tr>

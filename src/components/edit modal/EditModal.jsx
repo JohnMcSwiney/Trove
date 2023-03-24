@@ -1,26 +1,44 @@
 import React from "react";
 import "./editModal.css";
-const EditModal = ({ song, closeModal }) => {
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
+const EditModal = ({ song }) => {
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const [title, setTitle] = React.useState(song.title);
-
+  const [show, setShow] = React.useState(false);
   return (
-    <div className="modal-background">
-      <div className="modal-container">
-        <button className="btn btn-danger" onClick={() => closeModal(false)}>
-          X
-        </button>
-        <div className="modal-title">
-          <h3>Edit Song</h3>
-        </div>
-        <div className="modal-body">
+    <>
+      <Button variant="primary" onClick={handleShow}>
+        Edit Song
+      </Button>
+
+      <Modal
+        show={show}
+        onHide={handleClose}
+        backdrop="static"
+        keyboard={false}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Edit Song</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
           <label htmlFor="songTitle"> Song title: </label>
-          <input type="text" id="songTitle" value={title}></input>
-        </div>
-        <div className="modal-footer">
-          <button className="btn btn-success">Update</button>
-        </div>
-      </div>
-    </div>
+          <input
+            type="text"
+            id="songTitle"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          ></input>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary">Understood</Button>
+        </Modal.Footer>
+      </Modal>
+    </>
   );
 };
 

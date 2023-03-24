@@ -15,9 +15,8 @@ const Login = () => {
       console.log({ error: error.message });
     }
   };
-
+  const artistID = localStorage.getItem("artist");
   React.useEffect(() => {
-    const artistID = localStorage.getItem("artistID");
     if (artistID) {
       navigate("/");
     }
