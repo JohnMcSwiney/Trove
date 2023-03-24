@@ -1,28 +1,29 @@
 .song-info-div {
     background-color: #aa8ce600;
     color: white;
-    max-width: 600px;
+    width: 45vw;
+    height: 5vw;
     display: flex;
     flex-flow: row;
-    padding: 4px;
+    padding: 5px;
+    align-items: center;
   }
-.song-img-div{
-    width:50px;
-    height: 50px;
-    border-radius: 9px;
+.song-img-div-ver2{
+    
+    height: 3.5vw;
+    width: 3.5vw;
+    border-radius: 0.5vw;
     overflow: hidden;
+    display: block;
     position: relative;
+    /* background-color: cyan; */
 }
-.song-img-searchcard2{
-    /* object-position: center;
-    object-fit: contain; */
-    border-radius: 5px;
+.song-img-div-ver2 > img{
     position: absolute;
-    width: 100%;
-    height: auto;
     left: 0;
     top: 0;
-
+    width: 100%;
+    transform: scale(1.1);
 }
 .titlesongcard{
     margin-top: auto;
@@ -36,7 +37,7 @@
     flex-direction: column;
     background-color: rgba(95, 158, 160, 0);
     margin-left: 5px;
-    width: 40vw;
+    width: 30vw;
     border-left: solid 1px rgba(255, 255, 255, 0.437);
     padding-left: 1vw;
     
@@ -69,7 +70,8 @@
     background-color: #12164B;
     color: rgba(255, 255, 255, 0.716);
     border-radius: 5px;
-    
+    width: 50px;
+    justify-content: center;;
     /* 
     justify-self: center; */
     margin-left: 5px;
@@ -86,4 +88,15 @@
     cursor: default;
     text-transform: capitalize;
 
+}
+
+.durationCont{
+    opacity: 0.7;
+    font-size: 1vw;
+    width: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #12164b63;
+    border-radius: 5px;
 }

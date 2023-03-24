@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useRef,} from "react";
 import { createContext, useContext } from "react";
 
 import { NavLink } from "react-router-dom";
@@ -28,20 +28,28 @@ const SearchSongCard2 = ({ song }) => {
     });
     const json = await response.json()
   }
+  const audioRef = useRef();
+  const calculateTime = (secs) => {
+    const minutes = Math.floor(secs / 60);
+    const returnedMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
+    const seconds = Math.floor(secs % 60);
+    const returnedSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
 
-
+    return `${returnedMinutes} : ${returnedSeconds}`;
+  };
   return (
     <div
       key={song._id}
-      className="song-info-div container"
+      className="song-info-div"
       onClick={() => {
         handlePlaySong()
         // song.songUrl
 
       }}
     >
-      <div className="song-img-div">
-        <img src={song.imgUrl} alt={song.title} className="song-img-searchcard2"/>
+      <audio ref={audioRef} src={song.songUrl}></audio>
+      <div className="song-img-div-ver2">
+        <img src={song.imgUrl} alt={song.title}/>
       </div>
       
       <div className="song-text-div">
@@ -54,10 +62,13 @@ const SearchSongCard2 = ({ song }) => {
           </NavLink>
         </div>
       </div>
-
+      <div className="durationCont">
+        {calculateTime(Math.floor(audioRef?.current?.duration))}
+      </div>
       <div className="genreCont">
         {song.genre}
       </div>
+      
     </div>
   );
 };

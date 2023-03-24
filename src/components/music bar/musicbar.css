@@ -4,22 +4,14 @@
     align-items: center;
     flex-direction: row;
     bottom: 0;
-    width: 98%;
-    background-color: rgba(255, 255, 255, 0.305);
-    padding-left: 4%;
-    padding-right: 4%;
+    width: 98.25%;
+    background-color: rgba(255, 255, 255, 0);
+    font-size: medium;
+    margin-top: 1vw;
+    gap: 1vw;
 
 }
 
-.progress-time-time-container-1 {
-    background-color: #e39800;
-    order: 1 !important;
-}
-
-.progress-time-time-container-2 {
-    background-color: cornflowerblue;
-    order: 3 !important;
-}
 .otherItemBtnContainer{
     order: 4;
     /* background-color: violet; */
@@ -32,18 +24,19 @@
 .loopBtn{
     font-size: large;
     margin-right: 15px;
+    opacity: 0.8;
 
 }
 .looplvl1{
-    color:white;
+    color:white !important;
     opacity: 0.6;
 }
 .looplvl2{
-    color:#8650F4;
+    color:#8650F4 !important;
     opacity: 0.9;
 }
 .looplvl3{
-    color:#5725d5;
+    color:#5725d5 !important;
     opacity: 0.9;
 
 }
@@ -83,7 +76,8 @@
     margin-top: 22px;
     align-self: center;
     /* background-color: aqua; */
-    margin-right: 180px;
+    margin-right: 195px;
+    padding-top: 1px;;
     font-size: large;
     z-index: 7;
     width: 65px;
@@ -131,38 +125,42 @@
         margin-left: auto;
         align-items: center
     }
-
-    .progress-time-container {
-        display: flex;
-        position: absolute;
-        align-items: center;
-        flex-direction: row;
-        bottom: 0;
-        width: 98.2%;
-        background-color: rgba(255, 255, 255, 0);
-
-    }
     .ord1{
+
         order: 1;
     }
     .ord3{
+
         order: 3;
     }
-    .progress-time-time-container {
-        background-color: #e3970000 !important;
-        font-size: small;
-        color: white;
+
+    .progress-time-time-container{
+        padding:2px;
+        padding-left: 6px;
+        padding-right: 6px;
+        /* background-color: #12164B; */
+        color: rgba(255, 255, 255, 0.716);
+        border-radius: 5px;
+        width: 45px;
+        justify-content: center;;
+        /* 
+        justify-self: center; */
+        margin-left: 5px;
+        margin-right: auto; 
+        /* box-shadow: rgba(0, 0, 0, 0.382) 0px 1px 2px; */
+        /* align-content: center; */
+        display: flex;
+        text-align: center;
+        align-items: center;
+        margin-top: auto;
+        margin-bottom: auto;
+        cursor: default;
+        text-transform: capitalize;
+        font-size: x-small;
         text-decoration: none;
         pointer-events: none;
-        width: 60px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        align-content: center;
-        margin: auto;
-        padding-bottom: 2px;
     }
-
+    
 
     .progressbarContainer-ver2 {
         padding: 0;

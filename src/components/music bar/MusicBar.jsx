@@ -550,29 +550,29 @@ const MusicBar = () => {
                   {/* import {TbRepeatOff, TbRepeatOnce, TbRepeat} from 'react-icons/tb' */}
                   <button
                     className={
-                      loopLevel === 0 ? "loopBtn loopLvl1" : "hiddenBtn"
+                      loopLevel === 0 ? "loopBtn" : "hiddenBtn"
                     }
                     onClick={changeLoopLevel}
                   >
-                    <TbRepeatOff />
+                    <TbRepeatOff className="loopLvl1"/>
                   </button>
                   <button
                     className={
-                      loopLevel === 1 ? "loopBtn loopLvl2" : "hiddenBtn"
+                      loopLevel === 1 ? "loopBtn" : "hiddenBtn"
                     }
                     onClick={changeLoopLevel}
                   >
-                    <TbRepeat />
+                    <TbRepeat className="loopLvl2"/>
                   </button>
                   <button
                     className={
-                      loopLevel === 2 ? "loopBtn loopLvl2" : "hiddenBtn"
+                      loopLevel === 2 ? "loopBtn" : "hiddenBtn"
                     }
                     onClick={() => updateLoopLevel(0)}
                     onMouseDown={() => setLooping(false)}
                     // onMouseUp={() => console.log(isLooping)}
                   >
-                    <TbRepeatOnce />
+                    <TbRepeatOnce className="loopLvl3"/>
                   </button>
                   <button className="fcBtn" onClick={toggleFC}>
                     Queue
