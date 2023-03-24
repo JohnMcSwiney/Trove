@@ -100,12 +100,12 @@ const updateEmail = async (req, res) => {
 
   const passwordMatch = await bcrypt.compare(cPassword, artist.password);
   if (!passwordMatch) {
-    return res.status(401).json({ error: "Password is not correct" });
+    return res.status(401).json({ message: "Password is not correct" });
   }
 
   const emailMatch = currentEmail === artist.email;
   if (!emailMatch) {
-    return res.status(401).json({ error: "Email is not correct" });
+    return res.status(401).json({ message: "Email is not correct" });
   }
 
   artist.email = newEmail;
