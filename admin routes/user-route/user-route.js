@@ -9,6 +9,7 @@ const {
   updateUserPassword,
   updateUserEmail,
   updateUserAccountTab,
+  resetUserPassword,
 } = require("../../admin controllers/user/userController");
 
 // Getting all
@@ -31,6 +32,9 @@ router.patch("/ue/:id", updateUserEmail);
 
 //update user general info
 router.patch("/ua/:id", updateUserAccountTab);
+
+//forget password
+router.post("/forget-password", resetUserPassword);
 
 // Deleting One
 router.delete("/:id", deleteUser);

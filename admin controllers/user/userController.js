@@ -2,7 +2,7 @@ const User = require("../../models/user model/user-model");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
-
+const jwt = require("jsonwebtoken");
 const { request } = require("express");
 const Playlist = require("../../models/playlist model/playlist-model");
 //get all users
@@ -240,6 +240,72 @@ const updateUserEmail = async (req, res) => {
   }
 };
 
+// forget password
+
+const resetUserPassword = async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    const user = await User.findOne({ email });
+
+    if (user) {
+      const token = jwt.sign(
+        { _id: user._id, timestamp: Date.now() },
+        process.env.SECRET,
+        { expiresIn: "1h" }
+      );
+
+      const resetLink = `${req.protocol}://${req.get(
+        "host"
+      )}/reset-password/${token}`;
+      const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: process.env.GOOGLE_USER,
+          pass: process.env.GOOGLE_PASSWORD,
+        },
+        tls: {
+          rejectUnauthorized: false,
+        },
+      });
+
+      const mailOptions = {
+        from: process.env.GOOGLE_USER,
+        to: email,
+        subject: "Reset your password",
+        html: `
+            <p>Hello ${user.displayName},</p>
+            <p>No need to worry, you can reset your Trove Music password by clicking the link below: </p>
+            <a href="${resetLink}">Reset password</a>
+            <p>If you didn't request a password reset, feel free to delete this email and carry on enjoying your music!</p>
+            <p>Hope you are doing great</p>	
+            <p>The Trove Music Team</p>
+          `,
+      };
+
+      transporter.sendMail(mailOptions, function (err, info) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log("Email sent: " + info.response);
+        }
+      });
+    }
+
+    res.status(201).json({
+      message:
+        "We've sent you an email. Just follow the instructions to reset your password.",
+    });
+  } catch (error) {
+    // res.status(201).json({
+    //   message:
+    //     "We've sent you an email. Just follow the instructions to reset your password.",
+    // });
+
+    res.status(400).json({ error: error.message });
+  }
+};
+
 //Delete a user
 const deleteUser = async (req, res) => {
   const { id } = req.params;
@@ -265,4 +331,5 @@ module.exports = {
   updateUserEmail,
   updateUserAccountTab,
   deleteUser,
+  resetUserPassword,
 };
