@@ -21,6 +21,18 @@ export const useLikeSong = () => {
       setLikeError(json.err);
     }
 
+    if (response.ok) {
+      const user = localStorage.getItem("user");
+      const likedSongs = user ? JSON.parse(user).likedSongs || [] : [];
+      if (!likedSongs.includes(currentSong._id)) {
+        likedSongs.push(currentSong._id);
+        localStorage.setItem(
+          "user",
+          JSON.stringify({ ...JSON.parse(user), likedSongs })
+        );
+      }
+    }
+
     setLikeIsLoading(false);
   };
 

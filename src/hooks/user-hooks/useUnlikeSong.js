@@ -21,6 +21,18 @@ export const useUnlikeSong = () => {
       setUnlikeError(json.err);
     }
 
+    if (response.ok) {
+      const user = localStorage.getItem("user");
+      const likedSongs = user ? JSON.parse(user).likedSongs || [] : [];
+      const songIndex = likedSongs.indexOf(currentSong._id);
+      if (songIndex !== -1) {
+        likedSongs.splice(songIndex, 1);
+        localStorage.setItem(
+          "user",
+          JSON.stringify({ ...JSON.parse(user), likedSongs })
+        );
+      }
+    }
     setunLikeIsLoading(false);
   };
 
