@@ -11,11 +11,12 @@ export const MusicProvider = ({ children }) => {
   const [playlists, setPlaylists] = useState([]);
 
   const [play_list, setPlay_list] = useState([]);
-
+  const [displayMusicBar, setDisplayMusicBar] = useState(false);
+  const [queuePosition, setQueuePosition] = useState(0);
   // function to update the currently playing song
   const updateCurrentSong = (song) => {
     setCurrentSong(song);
-    setCurrentSongData(song);
+    // setCurrentSongData(song);
     // console.log(song)
   };
   const updateQueue = (queue) => {
@@ -32,14 +33,29 @@ export const MusicProvider = ({ children }) => {
     setPlay_list(newPlaylists);
     // console.log(newPlaylists)
   };
+  const updateDisplayMusicBar = (newDisplayMusicBar) => {
+    setDisplayMusicBar(newDisplayMusicBar);
+    // console.log(newDisplayMusicBar)
+  };
+  const updateQueuePosition = (newQueuePosition) => {
+  
+    setQueuePosition(newQueuePosition);
+
+    if(play_list?.length != newQueuePosition){
+      updateCurrentSong(play_list[newQueuePosition]);
+    }
+  };
 
   const contextValue = {
+    displayMusicBar,
+    queuePosition,
     currentSong,
     currentSongData,
     updateCurrentSong,
     play_list,
+    updateDisplayMusicBar,
     updatePlay_list,
-    updateQueue,
+    updateQueuePosition,
     addToQueue,
   };
   // try{

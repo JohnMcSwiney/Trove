@@ -19,6 +19,7 @@ export default function PlaylistPage(props) {
   const userId = JSON.parse(localStorage.getItem("user")).id;
 
   const {  
+    updateCurrentSong,
     play_list,
     updatePlay_list,
     updateQueue,
@@ -60,6 +61,7 @@ export default function PlaylistPage(props) {
   const handlePlayPlaylist = () => {
     // console.log(playlist.songList);
     updatePlay_list(playlist.songList);
+    updateCurrentSong(playlist.songList[0]);
   }
   const navigate = useNavigate();
   function redirectEditPlaylist() {

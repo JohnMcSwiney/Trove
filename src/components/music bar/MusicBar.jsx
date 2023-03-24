@@ -9,7 +9,7 @@ import { Navigate, useNavigate, Link } from "react-router-dom";
 import { Tooltip } from "react-tooltip"; //react tool tip used in explicit tag
 
 import CardSong from "../cards/card_song/CardSong";
-import SearchSongCard2 from "../cards/search_items/searchSongCard/searchSongCard2";
+import Queue_CardSong from "../cards/card_song/queue_CardSong";
 import Song from "../../components/song detail/Song";
 
 import styles from "./AudioPlayer.module.css";
@@ -57,8 +57,13 @@ const MusicBar = () => {
   const [isFullscreen, setFullscreen] = useState(false);
   //context
   const {
+    displayMusicBar,
+    queuePosition,
+    updateQueue,
+    addToQueue,
     currentSong,
     updateCurrentSong,
+    updateQueuePosition,
     currentSongData,
     playlists,
     play_list,
@@ -84,6 +89,7 @@ const MusicBar = () => {
   const [queueType, setQueueType] = useState(0);
   const [play_ListPosition, setPlay_ListPosition] = useState(0);
   const [queue, setQueue] = useState([]);
+  const [list_length, setList_length] = useState(0);
 
   //refrences
   const audioPlayer = useRef(); //reference audio component
@@ -92,17 +98,20 @@ const MusicBar = () => {
   const animationRef = useRef();
   const volumeRef = useRef();
 
-  if (play_list.length === 0) {
-    //no play list
-  } else {
-    const newLength = play_list.length;
-  }
+  // if (play_list.length === 0) {
+  //   //no play list
+  // } else if (play_list.length != list_length)  {
+  //   const newLength = play_list.length;
+  //   setList_length(newLength);
+  // }
   useEffect(() => {
+    
     if (currentSong) {
+      
       if (isLoaded === false) {
         audioPlayer?.current?.pause();
         setLoopState(0);
-      }
+      } 
       //Maybe use another context file to update the music context file.
       //current song or something? Idk writing this down for future testing
       if (hasPlay_List === false) {
@@ -113,9 +122,11 @@ const MusicBar = () => {
           console.log(queue);
         } else {
           setHasPlay_List(true);
-        }
-      } else {
-      }
+      } 
+    } else {
+      
+    }
+    
       const seconds = Math.floor(audioPlayer?.current?.duration);
       setDuration(seconds); // 45.26
       progressBar.current.max = seconds;
@@ -178,6 +189,7 @@ const MusicBar = () => {
       document.getElementById("playPauseBtn").click();
     }, 500);
   };
+
   const whilePlaying = () => {
     if (isPlaying === false) {
     } else {
@@ -186,6 +198,7 @@ const MusicBar = () => {
       changePlayerCurrentTime();
       animationRef.current = requestAnimationFrame(whilePlaying); //potential memory leak
     }
+    
   };
 
   const changeRange = () => {
@@ -214,6 +227,7 @@ const MusicBar = () => {
     // console.log(volumeRef.current.value);
     audioPlayer.current.volume = volumeRef.current.value / 100;
   };
+
   const changeLoopLevel = () => {
     const currentLoopLvl = loopState;
     const newLooplvl = currentLoopLvl + 1;
@@ -241,6 +255,7 @@ const MusicBar = () => {
 
   const { like, likeError, likeIsLoading } = useLikeSong();
   const { unlike, unlikeError, unlikeIsLoading } = useUnlikeSong();
+  
   const toggleLiked = () => {
     setIsLiked(!isLiked);
     if (!isLiked) {
@@ -251,17 +266,19 @@ const MusicBar = () => {
   };
   const handleRewind = () => {
     const currentTimeInSong = audioPlayer.current.currentTime;
-
+    
     if (currentTimeInSong < 5) {
       console.log(`rewind to prev`);
-      const lengthOfPlay_list = play_list.length;
-      if (play_ListPosition === 0) {
+
+      if (queuePosition === 0) {
         toBeginningOfSong();
         console.log("at start of playlist");
+        // updateQueuePosition(0);
       } else {
         try {
-          setPlay_ListPosition(play_ListPosition - 1);
-          updateCurrentSong(play_list[play_ListPosition]);
+          
+          updateQueuePosition(queuePosition - 1);
+          // updateCurrentSong(play_list[queuePosition]);
         } catch {
           console.error("Cannot decrement futher");
         }
@@ -272,22 +289,65 @@ const MusicBar = () => {
         document.getElementById("playPauseBtn").click();
       }
       toBeginningOfSong();
+
     }
+    // updateSong();
+
   };
   const handleForward = () => {
-    const lengthOfPlay_list = play_list.length;
-    if (lengthOfPlay_list === play_ListPosition) {
+    console.log("forward!")
+    if (play_list.length === queuePosition) {
       console.log("at end of playlist");
+      
+    } else if(queuePosition === 0) {
+      updateQueuePosition(1);
+      // updateCurrentSong(play_list[queuePosition]);
     } else {
       try {
-        setPlay_ListPosition(play_ListPosition + 1);
-        updateCurrentSong(play_list[play_ListPosition]);
+        updateQueuePosition(queuePosition + 1);
+        // updateCurrentSong(play_list[queuePosition]);
+        
       } catch {
         console.error("Cannot increment futher");
       }
     }
+    // updateSong();
   };
-
+  const updateSong = () => {
+    switch (queuePosition){
+      case 0:
+        console.log("position: " + 0);
+        updateCurrentSong(play_list[0]);
+        break;
+      case 1:
+        console.log("position: " + 1);
+        updateCurrentSong(play_list[1]);
+        break;
+      case 2:
+        console.log("position: " + 2);
+        updateCurrentSong(play_list[2]);
+        break;
+      case 3:
+        console.log("position: " + 3);
+        updateCurrentSong(play_list[3]);
+        break;
+      case 4:
+        console.log("position: " + 4);
+        updateCurrentSong(play_list[4]);
+        break;
+      case 5:
+        console.log("position: " + 5);
+        updateCurrentSong(play_list[5]);
+        break;
+      case 6:
+        console.log("position: " + 6);
+        updateCurrentSong(play_list[6]);
+        break;
+      default:
+        
+        break;
+    }
+  }
   const toggleFC = (event) => {
     // if the user clickson the artist name it's ignored
     if (event.target.id == "artistTextLink") {
@@ -332,6 +392,7 @@ const MusicBar = () => {
               changeRange();
               animationRef.current = requestAnimationFrame(whilePlaying);
               toBeginningOfSong();
+              
             }}
             onEnded={() => {
               handleForward();
@@ -351,24 +412,7 @@ const MusicBar = () => {
                 id="fcplayerbox"
                 className="fullscreen-player-info-container "
               >
-                {/* Progress Bar */}
-
-                {/* <div
-                  className='fullscreen-progressbarContainer'
-                  onMouseDown={toggleMute}
-                  onMouseUp={toggleMute}
-                >
-                  <input
-                    className='fullscreen-progressBar'
-                    type='range'
-                    ref={FCprogressBar}
-                    defaultValue='0 '
-                    onMouseDown={togglePlayPause}
-                    onMouseUp={togglePlayPause}
-                    onChange={changeRange}
-                  />
-                </div> */}
-                {/*  */}
+              
                 <h2>Currently Playing</h2>
                 <div className="fullscreen-song-img ">
                   <img
@@ -382,20 +426,7 @@ const MusicBar = () => {
                 </div>
 
                 <div className="fullscreen-song-txt-container-container ">
-                  {/* <div className='like-btn '>
-                    <button onClick={toggleLiked}>
-                      {isLiked ? (
-                        <div>
-                          <FaHeart className='text-white' />
-                        </div>
-                      ) : (
-                        <div>
-                          <FaRegHeart />
-
-                        </div>
-                      )}
-                    </button>
-                  </div> */}
+                  
                   <div className="fullscreen-song-info-txt-container">
                     <div className="fc-song-txt">
                       <a>{currentSong?.title}</a>
@@ -404,59 +435,30 @@ const MusicBar = () => {
                       <a>{currentSong?.artist.artistName}</a>
                     </div>
                   </div>
-                  {/* <div className='like-btn'>
-                    <button onClick={toggleLiked}>
-                      <AiOutlineShareAlt />
-                    </button>
-                  </div> */}
+                 
                 </div>
-                {/* 
-                <div className='fullscreen-control-container'>
-                  <button className='fullscreen-mediabtn1'>
-                    <BsSkipStart />
-                  </button>
-                  <button
-                    className='fullscreen-playbtnstyle'
-                    onClick={togglePlayPause}
-                  >
-                    {isPlaying ? (
-                      <BsPause />
-                    ) : (
-                      <BsPlay className='FullscreenBsPlayStyleLg' />
-                    )}
-                  </button>
-                  <button className='fullscreen-mediabtn1'>
-                    <BsSkipEnd />
-                  </button>
-                </div> */}
+
               </div>
               {/* Queue */}
               <div className="brihgleggmoie">
                 <h6 className="queueHeader">Song Queue:</h6>
-
-                {play_list &&
-                  play_list.map((song) => {
-                    return <SearchSongCard2 key={song._id} song={song} />;
-                  })}
-                {/* {queue &&
-                  queue.map((song) => {
-                    return <CardSong key={song._id} song={song} />
-                  })} */}
+                <div className="queueHolder">
+                  {play_list &&
+                    play_list.map((song, index) => {
+                      if(song._id === currentSong._id) {
+                        return (
+                        <div className="bg1">
+                          <Queue_CardSong key={song._id} song={song} index={index}/>
+                        </div>
+                        )
+                      } else { 
+                        return <Queue_CardSong key={song._id} song={song} index={index}/>;
+                      }
+                      
+                      
+                    })}
+                </div> 
               </div>
-              {/* <div className='volumeContainter'>
-                <button onClick={toggleMute}>
-                  {isMuted ? <BiVolumeFull /> : <BiVolumeMute />}
-                </button>
-                <input
-                  type='range'
-                  ref={volumeRef}
-                  defaultValue='50'
-                  onChange={changeVolumeLevel}
-                  min='0'
-                  max='100'
-                  step='5'
-                ></input>
-              </div> */}
             </div>
           </div>
 
