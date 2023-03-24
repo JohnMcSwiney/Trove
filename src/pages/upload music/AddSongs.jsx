@@ -58,8 +58,8 @@ export default function AddSongs(props) {
             {/* /> */}
 
             {/* When a song is added, display the song title input */}
-            {props.toUploadSongs &&
-              props.toUploadSongs.map((item, index) => {
+            {props.songFile &&
+              props.songFile.map((item, index) => {
                 // props.setSongs([...props.songs,  { id: index, title: "", songFile: item } ])
                 // console.log("songs are..." + props.songs)
                 return (
@@ -68,6 +68,7 @@ export default function AddSongs(props) {
                     id={index}
                     {...item}
                     i={index}
+                    songF={item}
                     songFile={props.songFile}
                     title={props.title}
                     handleTitle={props.handleTitle}

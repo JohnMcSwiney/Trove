@@ -8,7 +8,7 @@ export default function SongInfo(props) {
 
   // added song
   React.useEffect(() => {
-    props.setSongs([...props.songs,  { songId: props.i, title: "", songFile: props.item } ])
+    props.setSongs((prevSongs) => [ ...prevSongs, { songId: props.i, title: "", songFile: props.songF } ])
     
   }, []);
 
@@ -28,7 +28,9 @@ export default function SongInfo(props) {
         ...song,
         title: e.target.value
         };
-      } 
+      } else {
+        return song;
+      }
 
   }
   );
@@ -79,7 +81,7 @@ export default function SongInfo(props) {
           onChange={props.handleFeaturedArtists}
         />
         {console.log("first FT: " + props.featuredArtists)}
-        {/* {console.log("songs AREEE" + props.songs[props.i]?.songId)} */}
+        {console.log("songs AREEE" + JSON.stringify(props.songs))}
 
         {/* <br />
                 {/* <h3>{props.title}</h3> */}
