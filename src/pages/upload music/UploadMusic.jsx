@@ -65,8 +65,8 @@ export default function UploadMusic(props) {
 
   const [songs, setSongs] = useState([]);
   const [title, setTitle] = useState("");
-  const [album, setAlbum] = useState([]);
-  const [ep, setEP] = useState([]);
+  const [album, setAlbum] = useState(null);
+  const [ep, setEP] = useState(null);
   const [genre, setGenre] = useState("");
   const [songFile, setSongFile] = useState([]);
   const [imageFile, setImageFile] = useState();
@@ -258,7 +258,6 @@ export default function UploadMusic(props) {
                     handleReleaseYear={handleReleaseYear}
                     handleFeaturedArtists={handleFeaturedArtists}
                     handleFormNavigation={handleFormNavigation}
-                    getArtistAPI={getArtistAPI}
                     pageName={pageName}
                     album={album}
                     ep={ep}
