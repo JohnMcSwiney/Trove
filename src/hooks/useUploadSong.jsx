@@ -258,12 +258,17 @@ export const useUploadSong = () => {
         setError(data.error);
       }
 
+      let songTitleIndex = 0;
+      let songTitle = "";
       for (const file of songFile) {
         songUrl = await uploadSongToFirebase(file);
 
         console.log("for loop song url: " + songUrl);
+        songTitle = songs[songTitleIndex].title;
+        console.log("for loop song title: " + songTitle);
 
-        await createSongObject(title, songUrl, imgUrl);
+        await createSongObject(songTitle, songUrl, imgUrl);
+        songTitleIndex++;
 
         console.log("SHOULD SHOW THIS AFTER CREATESONGOBJECT");
 
