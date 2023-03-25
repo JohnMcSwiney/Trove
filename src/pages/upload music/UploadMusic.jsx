@@ -144,8 +144,9 @@ export default function UploadMusic(props) {
 
   const { artistLoggedIn } = useArtistAuthContext();
   const artistID = localStorage.getItem("artist")
-    ? JSON.parse(localStorage.getItem("artist")).id
+    ? JSON.parse(localStorage.getItem("artist")).id 
     : null;
+    
   const getArtistAPI = React.useEffect(() => {
     const fetchArtist = async () => {
       const response = await fetch(`/api/artists/${artistID}`, {
@@ -158,6 +159,8 @@ export default function UploadMusic(props) {
         console.log("JSON: " + json._id);
         // console.log("Artist: " + artist);
         // console.log("Artist name: " + artist.artistName);
+      } else {
+        console.log("DOESN'T GET ARTISTTT!!!");
       }
       fetchArtist();
     };
@@ -180,6 +183,7 @@ export default function UploadMusic(props) {
 
     try {
       await uploadMusic(
+        songs,
         title,
         artist,
         ep,
@@ -326,7 +330,7 @@ export default function UploadMusic(props) {
         </div>
         {/* </form> */}
       </div>
-
+         
       {/* <footer><MusicBar /></footer> */}
     </section>
   );
