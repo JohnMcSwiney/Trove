@@ -13,10 +13,7 @@ const { getAllSongs } = require("../../admin controllers/song/songController");
 // const { storage } = require("firebase/compat/storage");
 
 
-// const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
-
 //find beat and tempo of a song.
-
 const calcTempo = async (buffer) => {
 
   try {
@@ -57,28 +54,29 @@ const findSongData = async (user) => {
 
     console.log("user liked songs: " + user.likedSongs);
 
+    console.log("user liked songs length: " + user.likedSongs.length);
 
-    for (const id of user.likedSongs) {
+    await user.likedSongs.forEach(async (songId) => {
 
-      console.log("song: " + id);
+      console.log("songID: " + songId);
 
-      if (!mongoose.Types.ObjectId.isValid(id)) {
+      if (!mongoose.Types.ObjectId.isValid(songId)) {
         return res.status(404).json({ err: "No such song" });
       }
 
-      const currentSong = await Song.findOne({ id: id });
+      const currentSong = await Song.findById(songId);
 
       if (!currentSong) {
         throw new Error("currentSong not found");
       }
 
-      console.log("currentSong: " + currentSong);
+      console.log("currentSong: " + currentSong.title);
 
-      const songURL = currentSong.songUrl;
+      const songURL = currentSong.songUrl
 
       console.log("songurl: " + songURL);
 
-      await fetch(songURL)
+      fetch(songURL)
         .then(res => res.arrayBuffer())
         .then(buffer => {
 
@@ -87,7 +85,39 @@ const findSongData = async (user) => {
           return context.decodeAudioData(buffer, calcTempo);
 
         });
-    }
+    });
+
+
+    // for (const id of user.likedSongs) {
+
+    //   console.log("songID: " + id);
+
+    //   if (!mongoose.Types.ObjectId.isValid(id)) {
+    //     return res.status(404).json({ err: "No such song" });
+    //   }
+
+    //   const currentSong = await Song.findById(id);
+
+    //   if (!currentSong) {
+    //     throw new Error("currentSong not found");
+    //   }
+
+    //   console.log("currentSong: " + currentSong.title);
+
+    //   const songURL = currentSong.songUrl;
+
+    //   console.log("songurl: " + songURL);
+
+    //   await fetch(songURL)
+    //     .then(res => res.arrayBuffer())
+    //     .then(buffer => {
+
+    //       const context = new AudioContext();
+
+    //       return context.decodeAudioData(buffer, calcTempo);
+
+    //     });
+    // }
 
     let tempoList = [];
     let beatList = [];
@@ -196,7 +226,7 @@ const loadDiscoveryGame = async (req, res) => {
 
       for (const song of allSongs) {
 
-        console.log("song" + song);
+        console.log("song" + song.title);
 
         const songURL = song.songUrl;
 
