@@ -63,10 +63,10 @@ export default function UploadMusic(props) {
     //  menu = <SideBar />
   }
 
-  const [songs, setSongs] = useState([]); 
+  const [songs, setSongs] = useState([]);
   const [title, setTitle] = useState("");
-  const [album, setAlbum] = useState(null);
-  const [ep, setEP] = useState(null);
+  const [album, setAlbum] = useState([]);
+  const [ep, setEP] = useState([]);
   const [genre, setGenre] = useState("");
   const [songFile, setSongFile] = useState([]);
   const [imageFile, setImageFile] = useState();
@@ -144,27 +144,8 @@ export default function UploadMusic(props) {
 
   const { artistLoggedIn } = useArtistAuthContext();
   const artistID = localStorage.getItem("artist")
-    ? JSON.parse(localStorage.getItem("artist")).id 
+    ? JSON.parse(localStorage.getItem("artist")).id
     : null;
-    
-  const getArtistAPI = React.useEffect(() => {
-    const fetchArtist = async () => {
-      const response = await fetch(`/api/artists/${artistID}`, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      });
-      const json = await response.json();
-      if (response.ok) {
-        setArtist(json.email);
-        console.log("JSON: " + json._id);
-        // console.log("Artist: " + artist);
-        // console.log("Artist name: " + artist.artistName);
-      } else {
-        console.log("DOESN'T GET ARTISTTT!!!");
-      }
-      fetchArtist();
-    };
-  }, []);
 
   const handleFeaturedArtists = (e) => {
     const inputtedArtists = e.target.value;
@@ -185,7 +166,7 @@ export default function UploadMusic(props) {
       await uploadMusic(
         songs,
         title,
-        artist,
+        artistID,
         ep,
         album,
         genre,
@@ -330,7 +311,7 @@ export default function UploadMusic(props) {
         </div>
         {/* </form> */}
       </div>
-         
+
       {/* <footer><MusicBar /></footer> */}
     </section>
   );

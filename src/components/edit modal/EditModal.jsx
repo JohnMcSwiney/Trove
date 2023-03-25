@@ -2,6 +2,7 @@ import React from "react";
 import "./editModal.css";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+
 const EditModal = ({ song }) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -50,15 +51,6 @@ const EditModal = ({ song }) => {
             id="songTitle"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="form-control"
-          ></input>
-
-          <label htmlFor="addFArtist">Search artist: </label>
-          <input
-            type="text"
-            id="addFArtist"
-            value={findArtist}
-            onChange={(e) => setFindArtist(e.target.value)}
             className="form-control"
           ></input>
 
