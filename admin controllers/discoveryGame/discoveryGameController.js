@@ -2,8 +2,6 @@ const express = require("express");
 const { default: mongoose } = require("mongoose");
 const AudioContext = require("web-audio-api").AudioContext;
 const AudioBuffer = require("web-audio-api").AudioBuffer;
-// const AudioContext = require("web-audio-engine").StreamAudioContext;
-// const wae = require("web-audio-engine");
 const MusicTempo = require("music-tempo");
 const fs = require("fs");
 const DiscoveryGame = require("../../models/discoveryGame model/discoveryGame-model");
@@ -57,13 +55,28 @@ const findSongData = async (user) => {
 
   try {
 
-    console.log("sdfsffdsdsd: " + user.likedSongs)
+    console.log("user liked songs: " + user.likedSongs);
 
-    for (const song in user.likedSongs) {
 
-      const songURL = song.songUrl;
+    for (const id of user.likedSongs) {
 
-      let musicData = 0;
+      console.log("song: " + id);
+
+      if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ err: "No such song" });
+      }
+
+      const currentSong = await Song.findOne({ id: id });
+
+      if (!currentSong) {
+        throw new Error("currentSong not found");
+      }
+
+      console.log("currentSong: " + currentSong);
+
+      const songURL = currentSong.songUrl;
+
+      console.log("songurl: " + songURL);
 
       await fetch(songURL)
         .then(res => res.arrayBuffer())
@@ -71,16 +84,18 @@ const findSongData = async (user) => {
   
           const context = new AudioContext();
   
-          musicData = context.decodeAudioData(buffer, calcTempo);
+          context.decodeAudioData(buffer, calcTempo);
+
+          console.log("songdata: " + context);
   
-          return musicData;
+          return songData;
         });
 
         let tempoList = [];
         let beatList = [];
 
         const songTempo = Math.round(musicData.tempo);
-        const songBeat = Math.round(musicData.beat);
+        const songBeat = Math.round(currentSong.musicData.beat);
 
         tempoList.push(songTempo);
         beatList.push(songBeat);
@@ -103,9 +118,10 @@ const findSongData = async (user) => {
         console.log("average tempo of user liked songs: " + averageTempo);
         
         console.log("average beat of user liked songs: " + averageBeat);
-
-        return averageTempo, averageBeat;
     }
+    
+    return averageTempo, averageBeat;
+
   } catch (err) {
     console.log(err);
     throw new Error("tempo and beat validation failed");
@@ -127,7 +143,7 @@ const loadDiscoveryGame = async (req, res) => {
       return res.status(404).send("User profile not found");
     }
 
-    console.log(user);
+    //console.log(user);
 
     if (user.likedSongs.length == 0) {
 
@@ -144,11 +160,23 @@ const loadDiscoveryGame = async (req, res) => {
         return res.status(404).send("songs not found");
       }
 
-      const oneSong = songs[Math.floor(Math.random() * songs.length)];
+      let songLimit = [];
 
-      console.log("oneSong: " + oneSong);
 
-      res.status(200).json(oneSong);
+      for (let i = 0; i < 5; i++) {
+        const randomSong = songs[Math.floor(Math.random() * songs.length)];
+        songLimit[i] = randomSong;
+        console.log("songlimit title: " + songLimit[i].title);
+      }
+
+      console.log("songLimit length: " + songLimit.length)
+
+      if (songLimit.length > 5) {
+        throw new Error("Song limit cannot be greater than 5.");
+      }
+
+      res.status(200).json(songLimit);
+
     }
     else {
 
@@ -192,11 +220,19 @@ const loadDiscoveryGame = async (req, res) => {
         }
     }
 
-    const showSong = similarSongs[Math.floor(Math.random() * similarSongs.length)];
+    for (let i = 0; i < 5; i++) {
+      const randomSong = similarSongs[Math.floor(Math.random() * similarSongs.length)];
+      songLimit[i] = randomSong;
+      console.log("songlimit title: " + songLimit[i].title);
+    }
 
-    console.log("showSong: " + showSong);
+    console.log("songLimit length: " + songLimit.length)
 
-    res.status(200).json(showSong);
+    if (songLimit.length > 5) {
+      throw new Error("Song limit cannot be greater than 5.");
+    }
+
+    res.status(200).json(songLimit);
     }
 
   } catch (err) {
