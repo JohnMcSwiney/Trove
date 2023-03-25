@@ -24,25 +24,25 @@ const calcTempo = async (buffer) => {
     console.log("inside calctempo");
 
     let audioData = [];
-  
+
     console.log("buffer: " + buffer);
-  
+
     if (buffer.numberOfChannels == 2) {
-  
+
       let data1 = buffer.getChannelData(0);
       let data2 = buffer.getChannelData(1);
-  
+
       for (let i = 0; i < data1.length; i++) {
         audioData[i] = (data1[i] + data2[i]) / 2;
       }
     } else {
       audioData = buffer.getChannelData(0);
     }
-  
+
     const songData = new MusicTempo(audioData);
-  
+
     return songData;
-  
+
     // console.log("tempo: " + songData.tempo);
     // console.log("beats: " + songData.beats);
   } catch (err) {
@@ -81,45 +81,42 @@ const findSongData = async (user) => {
       await fetch(songURL)
         .then(res => res.arrayBuffer())
         .then(buffer => {
-  
+
           const context = new AudioContext();
-  
-          context.decodeAudioData(buffer, calcTempo);
 
-          console.log("songdata: " + context);
-  
-          return songData;
+          return context.decodeAudioData(buffer, calcTempo);
+
         });
-
-        let tempoList = [];
-        let beatList = [];
-
-        const songTempo = Math.round(musicData.tempo);
-        const songBeat = Math.round(currentSong.musicData.beat);
-
-        tempoList.push(songTempo);
-        beatList.push(songBeat);
-
-        let tempoValue = 0;
-        let beatValue = 0;
-
-        for (let i = 0; i < tempoList.length; i++) {
-          tempoValue += tempoList[i];
-        }
-
-        for (let i = 0; i < beatList.length; i++) {
-          beatValue += beatList[i];
-        }
-
-        const averageTempo = Math.round(tempoValue / user.likedSongs.length);
-
-        const averageBeat = Math.round(beatValue / user.likedSongs.length);
-
-        console.log("average tempo of user liked songs: " + averageTempo);
-        
-        console.log("average beat of user liked songs: " + averageBeat);
     }
-    
+
+    let tempoList = [];
+    let beatList = [];
+
+    const songTempo = Math.round(calcTempo.tempo).toFixed(2);
+    const songBeat = Math.round(calcTempo.beat).toFixed(2);
+
+    tempoList.push(songTempo);
+    beatList.push(songBeat);
+
+    let tempoValue = 0;
+    let beatValue = 0;
+
+    for (let i = 0; i < tempoList.length; i++) {
+      tempoValue += tempoList[i];
+    }
+
+    for (let i = 0; i < beatList.length; i++) {
+      beatValue += beatList[i];
+    }
+
+    const averageTempo = Math.round(tempoValue / user.likedSongs.length).toPrecision(2);
+
+    const averageBeat = Math.round(beatValue / user.likedSongs.length).toPrecision(2);
+
+    console.log("average tempo of user liked songs: " + averageTempo);
+
+    console.log("average beat of user liked songs: " + averageBeat);
+
     return averageTempo, averageBeat;
 
   } catch (err) {
@@ -133,7 +130,7 @@ const findSongData = async (user) => {
 const loadDiscoveryGame = async (req, res) => {
   //what should happen is when the game is loaded it'll just load a random song from the list.
 
-  const {id} = req.params
+  const { id } = req.params
 
   try {
 
@@ -184,55 +181,57 @@ const loadDiscoveryGame = async (req, res) => {
 
       const allSongs = await Song.find()
 
-      .populate("artist")
-      .populate("featuredArtists")
+        .populate("artist")
+        .populate("featuredArtists")
 
-      .populate("album")
+        .populate("album")
 
-      .sort({ createdAt: -1 });
+        .sort({ createdAt: -1 });
 
-    if (!allSongs) {
-      return res.status(404).send("songs not found");
-    }
+      if (!allSongs) {
+        return res.status(404).send("songs not found");
+      }
 
-    let similarSongs = [];
+      let similarSongs = [];
 
-    for (const song in allSongs) {
+      for (const song of allSongs) {
 
-      const songURL = song.songUrl;
+        console.log("song" + song);
 
-      await fetch(songURL)
-        .then(res => res.arrayBuffer())
-        .then(buffer => {
-  
-          const context = new AudioContext();
-  
-          const musicData = context.decodeAudioData(buffer, calcTempo);
-  
-          return musicData;
-        });
+        const songURL = song.songUrl;
 
-        const songTempo = Math.round(musicData.tempo);
-        const songBeat = Math.round(musicData.beat);
+        console.log("songURL: " + songURL);
 
-        if (songTempo == averageTempo && songBeat == averageBeat) {
+        await fetch(songURL)
+          .then(res => res.arrayBuffer())
+          .then(buffer => {
+
+            const context = new AudioContext();
+
+            return context.decodeAudioData(buffer, calcTempo);
+          });
+
+        const songTempo = Math.round(calcTempo.tempo).toPrecision(2);
+        const songBeat = Math.round(calcTempo.beat).toPrecision(2);
+
+        if (songTempo == findSongData.averageTempo && songBeat == averageBeat) {
           similarSongs.push(song);
         }
-    }
+      }
 
-    for (let i = 0; i < 5; i++) {
-      const randomSong = similarSongs[Math.floor(Math.random() * similarSongs.length)];
-      songLimit[i] = randomSong;
-      console.log("songlimit title: " + songLimit[i].title);
-    }
+      for (let i = 0; i < 5; i++) {
+        const randomSong = similarSongs[Math.floor(Math.random() * similarSongs.length)];
+        songLimit[i] = randomSong;
+        console.log("songlimit title: " + songLimit[i].title);
+      }
 
-    console.log("songLimit length: " + songLimit.length)
+      console.log("songLimit length: " + songLimit.length)
 
-    if (songLimit.length > 5) {
-      throw new Error("Song limit cannot be greater than 5.");
-    }
+      if (songLimit.length > 5) {
+        throw new Error("Song limit cannot be greater than 5.");
+      }
 
-    res.status(200).json(songLimit);
+      res.status(200).json(songLimit);
     }
 
   } catch (err) {
