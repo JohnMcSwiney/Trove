@@ -11,7 +11,7 @@ export const useUploadSong = () => {
   const uploadMusic = async (
     songs,
     title,
-    artist,
+    artistID,
     ep,
     album,
     genre,
@@ -21,7 +21,6 @@ export const useUploadSong = () => {
     releaseYear,
     featuredArtists
   ) => {
-
     const storageRef = storage.ref();
 
     const uploadSongToFirebase = async (songFile) => {
@@ -71,7 +70,6 @@ export const useUploadSong = () => {
     };
 
     const uploadImageToFirebase = async () => {
-
       let imageCounter = 0;
 
       while (await checkImageExists(imageCounter)) {
@@ -120,25 +118,20 @@ export const useUploadSong = () => {
     };
 
     const checkImageExists = async (imageCounter) => {
-
       const imageRef = storageRef.child(`images/${imageCounter}`);
 
-      const metadata = await imageRef.getMetadata()
-      .catch(err => {
-
+      const metadata = await imageRef.getMetadata().catch((err) => {
         if (err.code === "storage/object-not-found") {
           return false;
-        }
-        else {
+        } else {
           console.log(err);
           return true;
         }
       });
-      return metadata !== false
-    }
+      return metadata !== false;
+    };
 
     const createSongObject = async (songTitle, songUrl, imgUrl) => {
-
       console.log("AUUUUGGHGHHHHHHH");
 
       const res = await fetch("api/songs/", {
@@ -150,7 +143,7 @@ export const useUploadSong = () => {
         },
         body: JSON.stringify({
           title: songTitle,
-          artist,
+          artistID,
           ep,
           album,
           genre,
@@ -164,7 +157,6 @@ export const useUploadSong = () => {
 
       console.log("WALTUH");
 
-
       const data = await res.json();
 
       console.log("Create Song Object: " + res);
@@ -177,7 +169,6 @@ export const useUploadSong = () => {
     };
 
     const createAlbumObject = async (imgUrl) => {
-
       console.log("SHOULD NOT GO IN HERE");
 
       let songUrl = "";
@@ -193,7 +184,7 @@ export const useUploadSong = () => {
         body: JSON.stringify({
           albumName: album,
           albumArt: imgUrl,
-          artist,
+          artistID,
           featuredArtists,
           releaseType,
           releaseYear,
@@ -240,7 +231,7 @@ export const useUploadSong = () => {
         body: JSON.stringify({
           epName: ep,
           epArt: imgUrl,
-          artist,
+          artistID,
           featuredArtists,
           releaseType,
           releaseYear,
@@ -271,36 +262,28 @@ export const useUploadSong = () => {
         songTitleIndex++;
 
         console.log("SHOULD SHOW THIS AFTER CREATESONGOBJECT");
-
       }
 
       console.log("songs created!");
     };
 
-
     switch (releaseType) {
       case "album":
         try {
-
           let imgUrl = "";
 
           let data = "";
 
           if (!imageFile || imageFile == null) {
-
             console.log("no image selected");
 
             imgUrl = process.env.DEFAULT_COVER;
 
             data = await createAlbumObject(imgUrl);
-          }
-
-          else {
-
+          } else {
             imgUrl = await uploadImageToFirebase();
 
             data = await createAlbumObject(imgUrl);
-
           }
           console.log("End Response Data: " + data);
 
@@ -314,7 +297,6 @@ export const useUploadSong = () => {
         }
         break;
       case "ep":
-
         try {
           //const imgUrl = await uploadImageToFirebase();
 
@@ -323,20 +305,15 @@ export const useUploadSong = () => {
           let data = "";
 
           if (!imageFile || imageFile == null) {
-
             console.log("no image selected");
 
             imgUrl = process.env.DEFAULT_COVER;
 
             data = await createEPObject(imgUrl);
-          }
-
-          else {
-
+          } else {
             imgUrl = await uploadImageToFirebase();
 
             data = await createEPObject(imgUrl);
-
           }
           console.log("End Response Data: " + data);
 
@@ -351,7 +328,6 @@ export const useUploadSong = () => {
         break;
       case "single":
         try {
-
           let imgUrl = "";
 
           let data = "";
@@ -359,20 +335,15 @@ export const useUploadSong = () => {
           const songUrl = await uploadSongToFirebase(songFile);
 
           if (!imageFile || imageFile == null) {
-
             console.log("no image selected");
 
             imgUrl = process.env.DEFAULT_COVER;
 
             data = await createSongObject(title, songUrl, imgUrl);
-          }
-
-          else {
-
+          } else {
             imgUrl = await uploadImageToFirebase();
 
             data = await createSongObject(title, songUrl, imgUrl);
-
           }
           console.log("End Response Data: " + data);
 
@@ -389,6 +360,6 @@ export const useUploadSong = () => {
       default:
         break;
     }
-  }
+  };
   return { uploadMusic, isUploading, error };
 };
