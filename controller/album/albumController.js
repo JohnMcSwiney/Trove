@@ -25,8 +25,9 @@ const getAlbum = async (req, res) => {
 };
 
 const createAlbum = async (req, res) => {
+  const email = req.body.artistID;
   try {
-    const artist = await Artist.findOne({ email: req.body.artist });
+    const artist = await Artist.findOne({ email: email });
 
     //console.log(artist);
 
@@ -39,7 +40,6 @@ const createAlbum = async (req, res) => {
     console.log("Request Body FT: " + req.body.featuredArtists);
 
     if (!req.body.featuredArtists || req.body.featuredArtists == null) {
-
       console.log("inside album method");
       const album = new Album({
         ...req.body,
@@ -252,7 +252,6 @@ const deleteAlbum = async (req, res) => {
 
       throw new Error("Artist not found");
     }
-
 
     const featuredArtists = await Promise.all(
       album.featuredArtists.map(async () => {

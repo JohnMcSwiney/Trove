@@ -8,11 +8,11 @@ const mongoose = require("mongoose");
 const createSong = async (req, res) => {
   console.log("createSong", req.body);
 
-  const email = req.body.artist;
+  const artistID = req.body.artistID;
 
   try {
     // artist id check
-    const artist = await Artist.findOne({ email: email });
+    const artist = await Artist.findOne({ _id: artistID });
 
     const artistId = artist._id;
 
@@ -70,9 +70,7 @@ const createSong = async (req, res) => {
         await artist.save();
         res.status(201).json(song);
       }
-    }
-
-    else if (req.body.releaseType === "album") {
+    } else if (req.body.releaseType === "album") {
       console.log("INSIDE ALBUM SIDE");
 
       const album = await Album.findOne({ albumName: req.body.album });
@@ -158,10 +156,7 @@ const createSong = async (req, res) => {
         await artist.save();
         res.status(201).json(song);
       }
-    }
-
-    else if (req.body.releaseType === "ep") {
-
+    } else if (req.body.releaseType === "ep") {
       const ep = await EP.findOne({ epName: req.body.ep });
 
       if (!ep) {

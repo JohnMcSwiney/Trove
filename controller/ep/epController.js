@@ -25,8 +25,9 @@ const getEP = async (req, res) => {
 };
 
 const createEP = async (req, res) => {
+  const artistID = req.body.artistID;
   try {
-    const artist = await Artist.findOne({ email: req.body.artist });
+    const artist = await Artist.findOne({ _id: artistID });
 
     //console.log(artist);
 
