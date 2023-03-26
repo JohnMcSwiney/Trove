@@ -248,19 +248,7 @@ const DiscoveryGame = () => {
 
   const slides = DGdata;
 
-  //   let slides = []
-
-  //  slides.push( useFetchSongs());
-
-  // try {
-  //   slides = useFetchSongs();
-
-  //console.log("SONGS ARRAY: " + slides.values);
-
-  // } catch (err) {
-  //   console.log("slides err: " + err);
-  // }
-
+ 
   const printIndex = (index) => {
     setState(index);
     console.log(index);
@@ -319,35 +307,6 @@ const DiscoveryGame = () => {
               );
             })}
 
-            {/* <div className='test2'  >
-              <div className='Discovery-Img-Container' >
-                <img src={slides[0].url} alt={slides[0].alt} className="DGimg" onClick={() => printIndex(0)} />
-              </div>
-            </div>
-
-            <div className='test2'  >
-              <div className='Discovery-Img-Container' >
-                <img src={slides[1].url} alt={slides[1].alt} className="DGimg" onClick={() => printIndex(1)} />
-              </div>
-            </div>
-
-            <div className='test2'  >
-              <div className='Discovery-Img-Container' >
-                <img src={slides[2].url} alt={slides[2].alt} className="DGimg" onClick={() => printIndex(2)} />
-              </div>
-            </div>
-
-            <div className='test2'  >
-              <div className='Discovery-Img-Container' >
-                <img src={slides[3].url} alt={slides[3].alt} className="DGimg" onClick={() => printIndex(3)} />
-              </div>
-            </div>
-
-            <div className='test2' >
-              <div className='Discovery-Img-Container' >
-                <img src={slides[4].url} alt={slides[4].alt} className="DGimg" onClick={() => printIndex(4)} />
-              </div>
-            </div> */}
           </Slider>
         </div>
         {/* img updates every second, change later */}
@@ -476,15 +435,7 @@ const DiscoveryGame = () => {
             View Likes & Dislikes
           </button>
 
-          {/* will remove soon just for testing purposes 
-
-          <ul>
-            {likedslides.map((item) => (
-              <li key={item.id}>{item.songName}</li>
-            ))}
-          </ul>
-
-          */}
+          
         </div>
       </div>
     </div>
