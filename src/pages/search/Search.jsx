@@ -11,6 +11,7 @@ import "./SearchPage.css";
 const Search = () => {
   const [songs, setSongs] = React.useState(null);
   const [albums, setAlbums] = React.useState(null);
+  const [eps, setEPs] = React.useState(null);
   const [songData, setSongData] = React.useState(null);
 
   const [search, setSearch] = React.useState("");
@@ -116,6 +117,17 @@ const Search = () => {
               </div>
             )}
 
+            {searchResult.eps?.length > 0 && search.length > 0 && (
+              <div>
+                <h2>EPs</h2>
+                {searchResult.eps.map((ep) => (
+                  <div key={ep._id}>
+                    <NavLink to={`/albumpage/${ep._id}`}>{ep.epName}</NavLink>
+                  </div>
+                ))}
+              </div>
+            )}
+
             {searchResult.songs?.length > 0 && search.length > 0 && (
               <div>
                 <h2>Songs</h2>
@@ -124,20 +136,18 @@ const Search = () => {
                 ))}
 
                 <div>
-                <h2>Also Appears In:</h2>
-                {searchResult.songs
-                
-                  .filter((song) => song.album)
-                  .map((song) => (
-                    
+                  <h2>Also Appears In:</h2>
+                  {searchResult.songs
+
+                    .filter((song) => song.album)
+                    .map((song) => (
                       <div>
                         <NavLink to={`/albumpage/${song?.album?._id}`}>
                           {song.album?.albumName}
                         </NavLink>
                       </div>
-                    
-                  ))}
-                  </div>
+                    ))}
+                </div>
               </div>
             )}
           </div>
