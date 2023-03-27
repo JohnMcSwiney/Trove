@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const Song = require("../../models/songs/song");
 const Artist = require("../../models/artists/artist");
 const Album = require("../../models/albums/album");
-
+const bcrypt = require("bcrypt");
 const cookieParser = require("cookie-parser");
 //mongoose.connection().artists.getIndexes()
 

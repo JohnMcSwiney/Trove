@@ -119,7 +119,7 @@ const updateUser = async (req, res) => {
     user.password = hash;
     await user.save();
     const message = "Updated User successfully";
-    res.status(200).json({ message, user });
+    res.status(200).json({ message });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
