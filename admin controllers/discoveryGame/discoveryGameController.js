@@ -3,6 +3,7 @@ const { default: mongoose } = require("mongoose");
 const AudioContext = require("web-audio-api").AudioContext;
 const AudioBuffer = require("web-audio-api").AudioBuffer;
 const MusicTempo = require("music-tempo");
+const av = require("av");
 const fs = require("fs");
 const DiscoveryGame = require("../../models/discoveryGame model/discoveryGame-model");
 const Song = require("../../models/song model/song-model");
@@ -14,7 +15,7 @@ const { getAllSongs } = require("../../admin controllers/song/songController");
 
 
 //find beat and tempo of a song.
-const calcTempo = async (buffer) => {
+const calcSongData = async (buffer) => {
 
   try {
 
@@ -40,15 +41,18 @@ const calcTempo = async (buffer) => {
 
     return songData;
 
-    // console.log("tempo: " + songData.tempo);
-    // console.log("beats: " + songData.beats);
   } catch (err) {
     console.log(err);
-    res.status(500).json({ msg: "read song data failed" });
+    throw new Error("calcSongData function failed")
   }
 }
 
-const findSongData = async (user) => {
+const errorCallback = (err) => {
+  console.log(err);
+  throw new Error("decoding audio error");
+}
+
+const compareSongData = async (user) => {
 
   try {
 
@@ -56,7 +60,7 @@ const findSongData = async (user) => {
 
     console.log("user liked songs length: " + user.likedSongs.length);
 
-    await user.likedSongs.forEach(async (songId) => {
+    for (const songId of user.likedSongs) {
 
       console.log("songID: " + songId);
 
@@ -64,90 +68,233 @@ const findSongData = async (user) => {
         return res.status(404).json({ err: "No such song" });
       }
 
-      const currentSong = await Song.findById(songId).exec();
+      const currentSong = await Song.findById(songId);
 
-      if (!currentSong) {
-        throw new Error("currentSong not found");
+      if (!currentSong || currentSong == null) {
+        console.log("SongID is null: " + songId);
+
+        await User.updateOne(
+          { _id: user._id },
+          { $pull: { likedSongs: songId } }
+        );
+        console.log("SongID should be removed");
       }
 
       console.log("currentSong title: " + currentSong.title);
 
-      const songURL = currentSong.songUrl
+      const songURL = currentSong.songUrl;
 
-      console.log("songurl: " + songURL);
+      console.log("songurl in compareSongData: " + songURL);
 
-      fetch(songURL)
-        .then(res => res.arrayBuffer())
-        .then(buffer => {
+      const res = await fetch(songURL);
 
-          const context = new AudioContext();
+      const buffer = await res.arrayBuffer();
 
-          return context.decodeAudioData(buffer, calcTempo);
+      const context = new AudioContext();
 
-        });
-    });
+      const songData = await context.decodeAudioData(buffer, calcSongData, errorCallback);
+
+      console.log("songdata in compareSongData: " + songData);
+
+      let tempoList = [];
+      let beatList = [];
+
+      const songTempo = songData.tempo;
+      const songBeat = songData.beat;
+
+      // const songTempo = Math.round(calcSongData.tempo).toFixed(2);
+      // const songBeat = Math.round(calcSongData.beat).toFixed(2);
+
+      console.log("songTempo: " + songTempo);
+      console.log("songBeat: " + songBeat);
 
 
-    // for (const id of user.likedSongs) {
+      tempoList.push(songTempo);
+      beatList.push(songBeat);
 
-    //   console.log("songID: " + id);
+      let tempoValue = 0;
+      let beatValue = 0;
 
-    //   if (!mongoose.Types.ObjectId.isValid(id)) {
+      for (let i = 0; i < tempoList.length; i++) {
+        tempoValue += tempoList[i];
+        console.log("current tempoValue: " + tempoValue);
+      }
+
+      for (let i = 0; i < beatList.length; i++) {
+        beatValue += beatList[i];
+        console.log("current beatValue: " + beatValue);
+
+      }
+
+      const averageTempo = Math.round(tempoValue / user.likedSongs.length).toPrecision(2);
+
+      const averageBeat = Math.round(beatValue / user.likedSongs.length).toPrecision(2);
+
+      console.log("average tempo of user liked songs: " + averageTempo);
+
+      console.log("average beat of user liked songs: " + averageBeat);
+
+      return averageTempo, averageBeat;
+    }
+
+    // await user.likedSongs.forEach(async (songId) => {
+
+    //   console.log("songID: " + songId);
+
+    //   if (!mongoose.Types.ObjectId.isValid(songId)) {
     //     return res.status(404).json({ err: "No such song" });
     //   }
 
-    //   const currentSong = await Song.findById(id);
+    //   const currentSong = await Song.findById(songId);
 
-    //   if (!currentSong) {
-    //     throw new Error("currentSong not found");
+    //   if (!currentSong || currentSong == null) {
+    //     console.log("SongID is null: " + songId);
+
+    //     await User.updateOne(
+    //       { _id: user._id },
+    //       { $pull: { likedSongs: songId } }
+    //     );
+    //     console.log("SongID should be removed");
     //   }
 
-    //   console.log("currentSong: " + currentSong.title);
+    //   console.log("currentSong title: " + currentSong.title);
 
     //   const songURL = currentSong.songUrl;
 
-    //   console.log("songurl: " + songURL);
+    //   console.log("songurl in compareSongData: " + songURL);
 
-    //   await fetch(songURL)
-    //     .then(res => res.arrayBuffer())
-    //     .then(buffer => {
+    //   //await fetchSong(songURL);
 
-    //       const context = new AudioContext();
+    //   const res = await fetch(songURL);
 
-    //       return context.decodeAudioData(buffer, calcTempo);
+    //   const buffer = await res.arrayBuffer();
 
-    //     });
+    //   const context = new AudioContext();
+
+    //   context.decodeAudioData(buffer, calcSongData, errorCallback);
+
+    //   let tempoList = [];
+    //   let beatList = [];
+
+    //   const songTempo = Math.round(calcSongData.tempo).toFixed(2);
+    //   const songBeat = Math.round(calcSongData.beat).toFixed(2);
+
+    //   console.log("songTempo: " + songTempo);
+    //   console.log("songBeat: " + songBeat);
+
+
+    //   tempoList.push(songTempo);
+    //   beatList.push(songBeat);
+
+    //   let tempoValue = 0;
+    //   let beatValue = 0;
+
+    //   for (let i = 0; i < tempoList.length; i++) {
+    //     tempoValue += tempoList[i];
+    //     console.log("current tempoValue: " + tempoValue);
+    //   }
+
+    //   for (let i = 0; i < beatList.length; i++) {
+    //     beatValue += beatList[i];
+    //     console.log("current beatValue: " + beatValue);
+
+    //   }
+
+    //   const averageTempo = Math.round(tempoValue / user.likedSongs.length).toPrecision(2);
+
+    //   const averageBeat = Math.round(beatValue / user.likedSongs.length).toPrecision(2);
+
+    //   console.log("average tempo of user liked songs: " + averageTempo);
+
+    //   console.log("average beat of user liked songs: " + averageBeat);
+
+    //   return averageTempo, averageBeat;
+
+    //   // await fetch(songURL)
+    //   //   .then(res => res.arrayBuffer())
+    //   //   .then(async (buffer) => {
+
+    //   //     console.log("inside fetch songURL");
+
+    //   //     console.log("buffer: " + buffer);
+
+    //   //     const context = new AudioContext();
+
+    //   //     await calcSongData();
+
+    //   //     console.log("calcSongData value: " + calcSongData.tempo);
+
+    //   //     return context.decodeAudioData(buffer);
+
+    //   // let tempoList = [];
+    //   // let beatList = [];
+
+    //   // const songTempo = Math.round(calcTempo.tempo).toFixed(2);
+    //   // const songBeat = Math.round(calcTempo.beat).toFixed(2);
+
+    //   // console.log("songTempo: " + songTempo);
+    //   // console.log("songBeat: " + songBeat);
+
+
+    //   // tempoList.push(songTempo);
+    //   // beatList.push(songBeat);
+
+    //   // let tempoValue = 0;
+    //   // let beatValue = 0;
+
+    //   // for (let i = 0; i < tempoList.length; i++) {
+    //   //   tempoValue += tempoList[i];
+    //   //   console.log("current tempoValue: " + tempoValue);
+    //   // }
+
+    //   // for (let i = 0; i < beatList.length; i++) {
+    //   //   beatValue += beatList[i];
+    //   //   console.log("current beatValue: " + beatValue);
+
+    //   // }
+
+    //   // const averageTempo = Math.round(tempoValue / user.likedSongs.length).toPrecision(2);
+
+    //   // const averageBeat = Math.round(beatValue / user.likedSongs.length).toPrecision(2);
+
+    //   // console.log("average tempo of user liked songs: " + averageTempo);
+
+    //   // console.log("average beat of user liked songs: " + averageBeat);
+
+    //   // return averageTempo, averageBeat;
+
+    //   //   });
+    // });
+
+    // let tempoList = [];
+    // let beatList = [];
+
+    // const songTempo = Math.round(calcTempo.tempo).toFixed(2);
+    // const songBeat = Math.round(calcTempo.beat).toFixed(2);
+
+    // tempoList.push(songTempo);
+    // beatList.push(songBeat);
+
+    // let tempoValue = 0;
+    // let beatValue = 0;
+
+    // for (let i = 0; i < tempoList.length; i++) {
+    //   tempoValue += tempoList[i];
     // }
 
-    let tempoList = [];
-    let beatList = [];
+    // for (let i = 0; i < beatList.length; i++) {
+    //   beatValue += beatList[i];
+    // }
 
-    const songTempo = Math.round(calcTempo.tempo).toFixed(2);
-    const songBeat = Math.round(calcTempo.beat).toFixed(2);
+    // const averageTempo = Math.round(tempoValue / user.likedSongs.length).toPrecision(2);
 
-    tempoList.push(songTempo);
-    beatList.push(songBeat);
+    // const averageBeat = Math.round(beatValue / user.likedSongs.length).toPrecision(2);
 
-    let tempoValue = 0;
-    let beatValue = 0;
+    // console.log("average tempo of user liked songs: " + averageTempo);
 
-    for (let i = 0; i < tempoList.length; i++) {
-      tempoValue += tempoList[i];
-    }
+    // console.log("average beat of user liked songs: " + averageBeat);
 
-    for (let i = 0; i < beatList.length; i++) {
-      beatValue += beatList[i];
-    }
-
-    const averageTempo = Math.round(tempoValue / user.likedSongs.length).toPrecision(2);
-
-    const averageBeat = Math.round(beatValue / user.likedSongs.length).toPrecision(2);
-
-    console.log("average tempo of user liked songs: " + averageTempo);
-
-    console.log("average beat of user liked songs: " + averageBeat);
-
-    return averageTempo, averageBeat;
+    // return averageTempo, averageBeat;
 
   } catch (err) {
     console.log(err);
@@ -207,61 +354,63 @@ const loadDiscoveryGame = async (req, res) => {
     }
     else {
 
-      await findSongData(user);
+      await compareSongData(user);
 
-      const allSongs = await Song.find()
+      console.log("should be done finding songdata");
 
-        .populate("artist")
-        .populate("featuredArtists")
+      // const allSongs = await Song.find()
 
-        .populate("album")
+      //   .populate("artist")
+      //   .populate("featuredArtists")
 
-        .sort({ createdAt: -1 });
+      //   .populate("album")
 
-      if (!allSongs) {
-        return res.status(404).send("songs not found");
-      }
+      //    .sort({createdAt: -1});
 
-      let similarSongs = [];
+      // if (!allSongs) {
+      //   return res.status(404).send("songs not found");
+      // }
 
-      for (const song of allSongs) {
+      // let similarSongs = [];
 
-        console.log("song" + song.title);
+      // for (const song of allSongs) {
 
-        const songURL = song.songUrl;
+      //   console.log("song in allSongs: " + song.title);
 
-        console.log("songURL: " + songURL);
+      //   const songURL = song.songUrl;
 
-        await fetch(songURL)
-          .then(res => res.arrayBuffer())
-          .then(buffer => {
+      //   console.log("songURL in allSongs: " + songURL);
 
-            const context = new AudioContext();
+      //   await fetch(songURL)
+      //     .then(res => res.arrayBuffer())
+      //     .then(buffer => {
 
-            return context.decodeAudioData(buffer, calcTempo);
-          });
+      //       const context = new AudioContext();
 
-        const songTempo = Math.round(calcTempo.tempo).toPrecision(2);
-        const songBeat = Math.round(calcTempo.beat).toPrecision(2);
+      //       return context.decodeAudioData(buffer, calcSongData);
+      //     });
 
-        if (songTempo == findSongData.averageTempo && songBeat == averageBeat) {
-          similarSongs.push(song);
-        }
-      }
+      //   const songTempo = Math.round(calcSongData.tempo).toPrecision(2);
+      //   const songBeat = Math.round(calcSongData.beat).toPrecision(2);
 
-      for (let i = 0; i < 5; i++) {
-        const randomSong = similarSongs[Math.floor(Math.random() * similarSongs.length)];
-        songLimit[i] = randomSong;
-        console.log("songlimit title: " + songLimit[i].title);
-      }
+      //   if (songTempo == findSongData.averageTempo && songBeat == averageBeat) {
+      //     similarSongs.push(song);
+      //   }
+      // }
 
-      console.log("songLimit length: " + songLimit.length)
+      // for (let i = 0; i < 5; i++) {
+      //   const randomSong = similarSongs[Math.floor(Math.random() * similarSongs.length)];
+      //   songLimit[i] = randomSong;
+      //   console.log("songlimit title: " + songLimit[i].title);
+      // }
 
-      if (songLimit.length > 5) {
-        throw new Error("Song limit cannot be greater than 5.");
-      }
+      // console.log("songLimit length: " + songLimit.length)
 
-      res.status(200).json(songLimit);
+      // if (songLimit.length > 5) {
+      //   throw new Error("Song limit cannot be greater than 5.");
+      // }
+
+      // res.status(200).json(songLimit);
     }
 
   } catch (err) {

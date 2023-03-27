@@ -11,6 +11,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@ffmpeg/core": "^0.11.0",
+    "av": "^0.4.9",
     "bcrypt": "^5.1.0",
     "cookie-parser": "^1.4.6",
     "cookie-session": "^2.0.0",
