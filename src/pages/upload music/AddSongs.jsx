@@ -16,7 +16,7 @@ export default function AddSongs(props) {
   return (
     <div className="uploadmusic--column uploadmusic--song--form">
       <div className="uploadmusic--addsongs--form">
-        <h2>ADD SONGS</h2>
+        {/* <h2>ADD SONGS</h2> */}
         <div className="uploadmusic--upload--songfile">
           <label className="uploadmusic--custom-song-upload">
             {releaseType === "single" ? (
@@ -39,24 +39,10 @@ export default function AddSongs(props) {
                 onChange={props.handleSongFileChange}
               />
             )}
-            Upload Song
+            <label>Upload Songs</label>
             {/* <img src="../../assets/upload_icon.png" id="upload--icon" alt="upload_icon" /> */}
           </label>
           <div className="uploadmusic--add--song">
-            {/* Filepond, don't think we are using atm */}
-            {/* 
-            <FilePond
-                files={props.files}
-                onupdatefiles={props.setFiles}
-                allowMultiple={true}
-                maxFiles={8} */}
-            {/* //server="/" */}
-            {/* name="files"  */}
-            {/* /* sets the file input name, it's filepond by default */}
-            {/* labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>' */}
-            {/* allowFileEncode={true} */}
-            {/* /> */}
-
             {/* When a song is added, display the song title input */}
             {props.songFile &&
               props.songFile.map((item, index) => {

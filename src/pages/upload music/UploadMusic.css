@@ -605,13 +605,22 @@ body {
     /* /* border: 1px solid #ccc; */
     /* display: inline-block; */
     padding: 5vw;
-    padding-left: 10vw;
-    padding-right: 10vw;
+    padding-left: 17vw;
+    padding-right: 17vw;
     cursor: pointer;
     margin-top: 2vmin;
-    margin-left: -5vmin;
-    font-size: 3vmin;
+    /* margin-left: -5vmin; */
+    font-size: 4vmin;
+    margin-bottom: 6vmin;
+
   }
+  
+  .uploadmusic--custom-song-upload > label {
+    margin-left: -20vmin;
+    margin-right: -20vmin;
+
+  }
+
 
   #upload--icon {
     height: 2.5vmin;
@@ -626,11 +635,24 @@ body {
     border-radius: 1vmin;
   }
 
-  .uploadmusic--song--form input {
-    background-color: transparent;
+  .uploadmusic--song--name, input {
+    /* background-color: transparent; */
     padding: 1vmin;
     border-radius: 1vmin;
     color: #d9d9d9;
+    /* margin-bottom: 2vmin; */
+  }
+
+  .uploadmusic--songfile--ftartists > input {
+    /* background-color: transparent; */
+    padding: 1vmin;
+    border-radius: 1vmin;
+    color: #d9d9d9;
+    margin-left: 3vmin;
+  }
+  
+  .uploadmusic--songfile--ftartists {
+    margin-top: 1vmin;
   }
 
   .uploadmusic--columnt {
@@ -667,31 +689,10 @@ body {
     padding-left: 3vmin;
     width: 200px;
   }
-
-  /* .hotspot--stop {
-        margin-left: -110vmin;
-      } */
-
-  /* td:nth-child(1) {
-        width: 35%;
-      }
-
-      td:nth-child(2) {
-      width: 50%;
-      }
-
-      td:nth-child(3) {
-        width: 15%;
-        } */
-
   .uploadmusic--song--form input[type="number"] {
     width: 10vmin;
     padding: 1vmin;
   }
-
-  /* tr {
-        width: 40%;
-      } */
 
   .uploadmusic--song--form fieldset {
     border: none;
@@ -719,7 +720,7 @@ body {
   }
 
   .uploadmusic--navigate--add--songs > .uploadmusic--back--btn {
-    margin-left: 5vmin;
+    margin-left: 20vmin;
   }
 
   .uploadmusic--next--btn > img,
@@ -740,24 +741,89 @@ body {
     border-radius: 25vmin;
   }
 
+  button:hover {
+    transform: scale(1.01);
+    box-shadow: 0 0 11px #0034c4;
+    /* border-radius: 25vmin; */
+  }
+
+  .uploadmusic--song--info:hover {
+    transform: scale(1.01);
+    box-shadow: 0 0 11px #0034c4; 
+  }
+
+  .uploadmusic--custom-song-upload:hover {
+    transform: scale(1.01);
+    box-shadow: 0 0 11px #0034c4;
+    /* border-radius: 25vmin; */
+  }
+
+  
+  .uploadmusic--custom-file-upload:hover {
+    transform: scale(1.01);
+    box-shadow: 0 0 11px #0034c4;
+    /* border-radius: 25vmin; */
+  }
+
+  .uploadmusic--submit--btn:hover {
+    transform: scale(1.01);
+    box-shadow: 0 0 11px #0034c4;
+  }
+
   .uploadmusic--back--btn {
     /* margin-right: 10vmin; */
   }
 
   .uploadmusic--song--info {
+    display: block;
+    /* margin-left: -5vmin; */
+    padding-top: 5vmin;
+    padding-bottom: 5vmin;
+    padding-left: 3vmin;
+    padding-right: 3vmin;
+    background-color: #12164b;
+    margin-bottom: 5vmin;
+    border-radius: 1vmin;
+  }
+
+  .uploadmusic--delsong > img{
+    width: 3vw;
+    margin-right: -5vmin;
+    margin-top: -12vmin;
+  }
+
+  .uploadmusic--delsong:hover > img{
+    transform: scale(1.01); 
+    box-shadow: 0 0 22px #0034C4;
+    border-radius: 5vmin;
+  }
+
+  .uploadmusic--delsong {
+    float: right;
+    height: 2vh;
+    /* padding-bottom: 5vw; */
+  }
+  
+  .uploadmusic--songinfo--inputs {
     display: flex;
-    margin-left: 10vmin;
-    padding-top: 3vmin;
-    padding-bottom: 3vmin;
   }
 
   .uploadmusic--songfile--name {
-    width: 100vw;
+    /* width: 100vw; */
     display: flex;
   }
 
+  .uploadmusic--songfile--name > label {
+    margin-left: 2vmin;
+  }
+
+  .uploadmusic--songfile--name > button {
+    margin-left: 2vmin;
+  }
+
+
   .uploadmusic--upload--songfile {
-    margin-left: 10vmin;
+    /* margin-left: 10vmin; */
   }
 
   .uploadmusic--music--details {

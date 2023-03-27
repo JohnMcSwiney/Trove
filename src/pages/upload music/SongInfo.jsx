@@ -59,27 +59,37 @@ export default function SongInfo(props) {
 
   return (
     <div className="uploadmusic--song--info" key={props.id}>
-      <div className="upload--music--songfile--name">
-        {props.songFile[props.i] && (
+      <div className="uploadmusic--delsong">
+          <img src="../assets/xsongsymbol.png" alt="deletesongicon" onClick={handleRemoveSong} />
+      </div>
+      <div className="uploadmusic--songfile--name">
+       {props.songFile[props.i] && (
           <>
             <label>{props.songFile[props.i].name}</label>
-            <button onClick={handleRemoveSong}>Remove</button>
+            {/* <button onClick={handleRemoveSong}>Remove</button> */}
           </>
         )}
       </div>
-      <div>
+      <div className="uploadmusic--songinfo--inputs">
+      <div className="uploadmusic--song--name">
+      {/* <div> */}
         <input
           type="text"
           name={props.songFile[props.i].name}
           placeholder="Song Title"
           onChange={handleSongTitleChange}
         ></input>
-        <textarea
+        </div>
+        <div className="uploadmusic--songfile--ftartists">
+        <input
+          type="text"
           value={props.featuredArtists}
           name="artistName"
           placeholder="Featured Artists"
           onChange={props.handleFeaturedArtists}
         />
+        </div>
+        {/* </div> */}
         {console.log("first FT: " + props.featuredArtists)}
         {console.log("songs AREEE" + JSON.stringify(props.songs))}
 
