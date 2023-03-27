@@ -2,6 +2,7 @@ import React from "react";
 // import "./editModal.css";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+
 const AlbumModal = ({ album }) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);

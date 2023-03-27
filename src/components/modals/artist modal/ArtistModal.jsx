@@ -2,6 +2,7 @@ import React from "react";
 // import "./editModal.css";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import { useEditArtist } from "../../../hooks/useEditArtist";
 const ArtistModal = ({ artist }) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -13,6 +14,16 @@ const ArtistModal = ({ artist }) => {
   const [gender, setGender] = React.useState(artist?.gender);
 
   const [show, setShow] = React.useState(false);
+
+  const { editArtist, message, editerror, editIsLoading } = useEditArtist();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      editArtist(artist._id, avatar, artistName, dob, email, password, gender);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <form>
       <Button variant="primary" onClick={handleShow}>
@@ -129,11 +140,15 @@ const ArtistModal = ({ artist }) => {
         </Modal.Body>
         <div className="form-group">
           <Modal.Footer>
+            {editerror && <div className="error">{editerror}</div>}
+            {message && <div className="message">{message}</div>}
             <Button variant="secondary" onClick={handleClose}>
               Close
             </Button>
             <Button variant="danger">Delete User</Button>
-            <Button variant="primary">Update User</Button>
+            <Button variant="primary" onClick={handleSubmit}>
+              Update Artist
+            </Button>
           </Modal.Footer>
         </div>
       </Modal>

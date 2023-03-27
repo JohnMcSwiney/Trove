@@ -3,6 +3,7 @@ import React from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 const SongModal = ({ song }) => {
+  const [show, setShow] = React.useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [title, setTitle] = React.useState(song?.title);
@@ -10,10 +11,28 @@ const SongModal = ({ song }) => {
   const [ep, setEP] = React.useState(song?.ep?.epName);
   const [genre, setGenre] = React.useState(song?.genre);
   const [songYear, setSongYear] = React.useState(song?.releaseYear);
-  const [feartureArtist, setFeatureArtist] = React.useState(
+  const [feartureArtists, setFeatureArtists] = React.useState(
     song?.featuredArtists
   );
-  const [show, setShow] = React.useState(false);
+
+  const [searchTerm, setSearchTerm] = React.useState("");
+  const [searchResults, setSearchResults] = React.useState([]);
+
+  const [artistData, setArtistData] = React.useState([]);
+  React.useEffect(() => {
+    const fetchAllArtist = async () => {
+      const response = await fetch("/api/artists/", {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+      const json = await response.json();
+
+      if (response.ok) {
+        setArtistData(json);
+      }
+    };
+    fetchAllArtist();
+  }, []);
   return (
     <form>
       <Button variant="primary" onClick={handleShow}>
@@ -39,12 +58,21 @@ const SongModal = ({ song }) => {
             className="form-control"
           ></input>
 
+          <label htmlFor="search">Add feature artist: </label>
+          <input
+            id="search"
+            type="text"
+            placeholder="Search artists"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="form-control"
+          />
           <label htmlFor="feartureArtist">Feature artist: </label>
           <input
             type="text"
             id="feartureArtist"
-            value={feartureArtist}
-            onChange={(e) => setFeatureArtist(e.target.value)}
+            value={feartureArtists}
+            onChange={(e) => setFeatureArtists(e.target.value)}
             className="form-control"
           ></input>
 

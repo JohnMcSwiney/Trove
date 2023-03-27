@@ -18,7 +18,6 @@ const UserModal = ({ user }) => {
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      console.log("edit");
       await editUser(user._id, avatar, displayName, dob, email, password);
     } catch (error) {
       console.log(error?.message || "Please try again");
@@ -30,7 +29,7 @@ const UserModal = ({ user }) => {
     console.log("deleted");
   };
   return (
-    <form onSubmit={handleUpdate}>
+    <form>
       <Button variant="primary" onClick={handleShow}>
         Edit User Info
       </Button>
