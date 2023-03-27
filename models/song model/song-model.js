@@ -79,6 +79,12 @@ const songSchema = new mongoose.Schema(
       type: Boolean,
     },
 
+    ep: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "EP",
+      default: null,
+    },
+
     isLoved: [
       {
         type: mongoose.Schema.Types.ObjectId,

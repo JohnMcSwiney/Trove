@@ -4,7 +4,7 @@ const User = require("../../models/user model/user-model");
 const Artist = require("../../models/artist model/artist-model");
 const Album = require("../../models/album model/album-model");
 const Song = require("../../models/song model/song-model");
-// const EP = require('../../models/')
+const EP = require("../../models/ep model/ep-model");
 const router = express.Router();
 
 const SONG_LIMIT = 5;
@@ -25,6 +25,11 @@ router.get("/:search", async (req, res) => {
       .populate("artist")
       .exec();
 
+    const eps = await EP.find({
+      epName: { $regex: new RegExp(search, "i") },
+    })
+      .populate("artist")
+      .exec();
     const songs = await Song.find({
       $or: [
         { title: { $regex: new RegExp(search, "i") } },
@@ -35,7 +40,7 @@ router.get("/:search", async (req, res) => {
       .populate("album")
       .exec();
 
-    res.status(201).json({ artists, songs, albums });
+    res.status(201).json({ artists, songs, albums, eps });
   } catch (error) {
     res.status(404).json({ error: `No results found for "${search}"` });
   }
