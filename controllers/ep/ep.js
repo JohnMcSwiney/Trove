@@ -5,7 +5,12 @@ const Album = require("../../models/albums/album");
 const EP = require("../../models/ep/ep");
 
 const getAllEP = async (req, res) => {
-  const eps = await EP.find({}).populate("artist").sort({ createdAt: -1 });
+  const eps = await EP.find({})
+    .populate("songList")
+    .populate("featuredArtists")
+    .populate("artist")
+    .populate("songList")
+    .sort({ createdAt: -1 });
   res.status(200).json(eps);
 };
 
@@ -16,7 +21,11 @@ const getEP = async (req, res) => {
     return res.status(400).json({ err: "No such EP" });
   }
 
-  const ep = await EP.findById(id);
+  const ep = await EP.findById(id)
+    .populate("songList")
+    .populate("featuredArtists")
+    .populate("artist")
+    .populate("songList");
 
   if (!ep) {
     return res.status(400).json({ err: "No such EP" });
