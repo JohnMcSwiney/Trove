@@ -109,7 +109,7 @@ const Search = () => {
                 <h2>Albums</h2>
                 {searchResult.albums.map((album) => (
                   <div key={album._id}>
-                    <NavLink to={`/albumpage/${album._id}`}>
+                    <NavLink to={`/eppage/${album._id}`}>
                       {album.albumName}
                     </NavLink>
                   </div>
