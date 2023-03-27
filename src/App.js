@@ -52,9 +52,13 @@ function App() {
             <Route path="/albumpage/">
               <Route path=":id" element={<AlbumPage />}></Route>
             </Route>
+
+            <Route path="/eppage/">
+              <Route path=":id" element={<AlbumPage />}></Route>
+            </Route>
             {/* <Route path="/albumpage" element={<AlbumPage />}></Route> */}
 
-            <Route path="/followers" >
+            <Route path="/followers">
               <Route path=":id" element={<FollowersPage />}></Route>
             </Route>
             <Route path="/following" element={<FollowingPage />}></Route>
