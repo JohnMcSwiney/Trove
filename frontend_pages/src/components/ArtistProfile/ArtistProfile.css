@@ -44,15 +44,27 @@ body {
         width: 100%;
         margin-left: 18vmin;
         border-bottom: 2.5px solid #12164B;
-        /* background-image: url(../assets/vector.png); */
+        /* background-image: url(../../../public/assets/waves.gif); */
         background-repeat: no-repeat;
         background-size: cover;
         z-index: 200;
         
+        /* object-fit: cover;
+        width: 100%;
+        position: absolute;
+        object-position: top;
+        mix-blend-mode: soft-light;
+        z-index: 100; */
         
         }
         
   
+      .artist--header--items {
+        z-index: 200;
+        mix-blend-mode: normal;
+
+      }
+
     .artist--header .artist--genre {
       background-image: linear-gradient(to left, #8650f4, #6f49e8, #5642dc, #393bd0, #0034c4);
       font-size: 4vmin;

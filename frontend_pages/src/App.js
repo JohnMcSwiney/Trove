@@ -13,7 +13,7 @@ import CreatePlaylist from './components/CreatePlaylist/CreatePlaylist';
 function App() {
   return (
     <div className="App">
-      {/* <ArtistProfile /> */}
+      <ArtistProfile />
       {/* <UserProfile /> */}
       {/* <UploadMusic /> */}
       {/* <UploadSong /> */}
@@ -22,7 +22,7 @@ function App() {
       {/* <PlaylistPage /> */}
       {/* <FollowersPage /> */}
       {/* <FollowingPage /> */}
-      <CreatePlaylist />
+      {/* <CreatePlaylist /> */}
 
  
 

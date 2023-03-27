@@ -92,7 +92,7 @@ export default function ArtistProfile(props) {
         <div className={`artist--header ${
           small ? "artist--small" : "artist--header"
         }`}>
-            <img className="artist--waves "name="waves" src={WavesBG} alt="waves"/>
+            <img className="artist--waves "name="waves" src="../../../assets/waves.gif" alt="waves"/>
 
 
             {width > windowBreakpoint ? 
@@ -103,7 +103,7 @@ export default function ArtistProfile(props) {
               {/* <img name="menu" width="30vmin" src="../assets/menuicon.jpg" alt="menu"/> */}
               </div>}
 
-        
+   
             <div className="artist--circle--border"> 
             <div className="artist--genre--record">
                 <img width="215vmin" src="../assets/artist_icon.png" alt="genre"/>
@@ -129,6 +129,7 @@ export default function ArtistProfile(props) {
             <h5>{followers} FOLLOWERS</h5>
             </div></div>
             </span>
+
 
         </div>
         <div className={`artist--profile--body ${
