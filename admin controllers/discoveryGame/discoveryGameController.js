@@ -64,13 +64,13 @@ const findSongData = async (user) => {
         return res.status(404).json({ err: "No such song" });
       }
 
-      const currentSong = await Song.findById(songId);
+      const currentSong = await Song.findById(songId).exec();
 
       if (!currentSong) {
         throw new Error("currentSong not found");
       }
 
-      console.log("currentSong: " + currentSong.title);
+      console.log("currentSong title: " + currentSong.title);
 
       const songURL = currentSong.songUrl
 
