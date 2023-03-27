@@ -1,0 +1,5 @@
+.dashboard-cards {
+  display: flex;
+  justify-content: space-between; /* or space-evenly */
+  gap: 1rem;
+}
