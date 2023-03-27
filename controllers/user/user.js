@@ -118,7 +118,8 @@ const updateUser = async (req, res) => {
 
     user.password = hash;
     await user.save();
-    res.status(200).json({ message: "Updated User successfully" });
+    const message = "Updated User successfully";
+    res.status(200).json({ message, user });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
