@@ -741,7 +741,7 @@ body {
     border-radius: 25vmin;
   }
 
-  button:hover {
+  .uploadmusic--upload--form > button:hover {
     transform: scale(1.01);
     box-shadow: 0 0 11px #0034c4;
     /* border-radius: 25vmin; */

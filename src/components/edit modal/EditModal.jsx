@@ -31,9 +31,11 @@ const EditModal = ({ song }) => {
 
   return (
     <>
+      <div className="artist--modal">
       <Button variant="primary" onClick={handleShow}>
         Edit Song
       </Button>
+      </div>
 
       <Modal
         show={show}

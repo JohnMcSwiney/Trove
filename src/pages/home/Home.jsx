@@ -2,6 +2,7 @@ import React from "react";
 import { useArtistAuthContext } from "../../hooks/useArtistAuthContext";
 
 import EditModal from "../../components/edit modal/EditModal";
+import "./home.css"
 const Home = () => {
   const [artistSongs, setArtistSongs] = React.useState(null);
   const [artistAlbums, setArtistAlbum] = React.useState(null);
@@ -56,13 +57,13 @@ const Home = () => {
   const [show, setShow] = React.useState(false);
 
   return (
-    <div>
-      <h5>Hello {artist?.artistName} </h5>
+    <div className="artist--home">
+      <h5>Hello, {artist?.artistName} </h5>
 
       {artistSongs?.length > 0 && (
         <>
           <h3>Songs</h3>
-          <table class="table table-dark table-bordered mysong">
+          <table class="table table-light table-bordered mysong">
             <thead>
               <tr>
                 <th scope="col">Song</th>
@@ -80,7 +81,7 @@ const Home = () => {
                     <th>
                       <EditModal song={song} />
                     </th>
-                    <th>Publish</th>
+                    <th>Published</th>
                   </tr>
                 </tbody>
               ))}
@@ -91,7 +92,7 @@ const Home = () => {
       {artistAlbums?.length > 0 && (
         <>
           <h3>Albums</h3>
-          <table class="table table-dark table-bordered mysong">
+          <table class="table table-light table-bordered mysong">
             <thead>
               <tr>
                 <th scope="col">Album</th>

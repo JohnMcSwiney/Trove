@@ -1,22 +1,42 @@
+@import url("https://fonuploadmusic-ts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
 :root {
   --mainColor: #29335c;
   --mainColorLight: #5767aa;
-  --secondaryColor: #db2b39;
+  --secondaryColor: #0034c4;
   --textColor: #eee;
 }
 
 .trovemusic-span {
-  font-weight: 1000;
-  font-family: Georgia, "Times New Roman", Times, serif;
+  font-weight: 900;
+  font-style: italic;
+  /* font-family: Georgia, "Times New Roman", Times, serif; */
 }
+
+.forartists-span {
+  font-weight: 100;
+  font-size:small;
+  /* padding-left: 1vmin; */
+}
+
 .active-tab {
-  opacity: 0.6;
+  /* opacity: 0.6; */
   text-decoration: none;
+  font-weight: bold;
+
 }
 
 .tab {
   text-decoration: none;
   color: rgb(255, 255, 255);
+  
 }
 
 .header-contents {
@@ -26,6 +46,7 @@
 .content {
   display: none;
   position: relative;
+  
 }
 
 .active-content {
@@ -51,7 +72,7 @@
 }
 .home {
   padding-top: 50px;
-  background-color: rgb(36, 44, 44);
+  /* background-color: rgb(36, 44, 44); */
   padding-bottom: 50px;
 }
 
@@ -68,7 +89,7 @@
 }
 
 .uploadmusic {
-  background-color: gold;
+  /* background-color: gold; */
   padding-bottom: 50px;
   padding-top: 50px;
 }
@@ -92,21 +113,24 @@
 }
 
 .uploadmusic-color {
-  background-color: gold;
+  /* background-color: gold; */
 }
 .provider-color {
-  background-color: gold;
+  /* background-color: gold; */
 }
 
 .header-nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 80px;
+  height: 5vw;
   padding: 0 2rem;
   /* background-color: rgb(36, 44, 44); */
   /* background-color: black; */
   color: var(--textColor);
+  /* margin-bottom: 20vmin; */
+  margin-bottom: 5vmin;
+  
 }
 
 nav a {
@@ -122,6 +146,8 @@ nav a:hover {
 .nav-brand {
   text-decoration: none;
   color: white;
+
+  
 }
 
 header .nav-btn {
@@ -134,12 +160,39 @@ header .nav-btn {
   visibility: hidden;
   opacity: 0;
   font-size: 1.8rem;
+
 }
 
 header div,
 nav {
   display: flex;
   align-items: center;
+  z-index: 200;
+}
+
+#dropdown-basic-button {
+    background-image: linear-gradient(
+      to left,
+      #8650f4,
+      #6f49e8,
+      #5642dc,
+      #393bd0,
+      #0034c4
+    );
+    color: white;
+    border: none;
+}
+
+.artist--waves {
+  object-fit: cover;
+  width: 100vw;
+  height: 45%;
+  position: absolute;
+  /* opacity: 10%; */
+  object-position: top;
+  mix-blend-mode: soft-light;
+  margin-left: -7vmin;
+
 }
 
 @media screen and (min-width: 800px) {

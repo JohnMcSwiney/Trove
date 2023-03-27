@@ -2,11 +2,12 @@ import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
 
-import "./navbar.css";
 import { useLogout } from "../../hooks/useLogout";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import { useArtistAuthContext } from "../../hooks/useArtistAuthContext";
+
+import "./navbar.css";
 const ArtistNavbar = () => {
   const [state, setState] = React.useState(1);
 
@@ -30,10 +31,11 @@ const ArtistNavbar = () => {
   return (
     <div>
       <div>
-        <header className={`header-nav ${colorbg}`}>
+        <header className={`header-nav`}>
+        <img className="artist--waves "name="waves" src="../../../assets/waves.gif" alt="waves"/>
           <a className="nav-brand" href="/">
             <h3>
-              <span className="trovemusic-span">TroveMusic.</span> for Artist
+              <span className="trovemusic-span">TroveMusic</span> <span className="forartists-span">ARTIST</span>
             </h3>
           </a>
 
@@ -137,8 +139,8 @@ const ArtistNavbar = () => {
           onClick={() => action(1)}
         >
           <div className="home-contain">
-            <h1>1</h1>
-            <p>1</p>
+            <h1>   </h1>
+            <p>  </p>
           </div>
         </div>
 
@@ -161,12 +163,16 @@ const ArtistNavbar = () => {
           onClick={() => action(4)}
         >
           <div className="contact-contain">
-            <h1>4</h1>
-            <p>4</p>
+            <h1> </h1>
+            <p> </p>
           </div>
         </div>
+        
       </div>
+      
     </div>
+
+    
   );
 };
 
