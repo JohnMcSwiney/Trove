@@ -58,6 +58,7 @@ export default function PlaylistPage (props) {
     }
     findPlaylistCreator()
   }, [])
+  
   const handlePlayPlaylist = () => {
     // console.log(playlist.songList);
     updatePlay_list(playlist.songList)

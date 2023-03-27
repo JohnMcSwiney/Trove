@@ -13,7 +13,9 @@ function CardAlbum({ album }) {
   return (
     <ul className="bg1test" key={album?._id}>
       <li>
-        <div className="bg card-alb-cont" onClick={redirectAlbum}>
+        <div className="bg card-alb-cont" 
+        onClick={redirectAlbum}
+        >
           <div className="card-alb-img-cont">
             <img className="" src={album?.albumArt} alt={album?.albumName} />
           </div>

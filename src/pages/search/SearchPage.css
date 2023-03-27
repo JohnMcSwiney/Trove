@@ -130,3 +130,9 @@
     margin-bottom: auto;
     cursor: default;
 }
+.no-decoration-bruh{
+    text-decoration: none;
+}
+.no-decoration-bruh > div > div > h3{
+    text-decoration: none;
+}

@@ -62,9 +62,9 @@ const SearchSongCard2 = ({ song }) => {
           </NavLink>
         </div>
       </div>
-      <div className="durationCont">
+      {/* <div className="durationCont">
         {calculateTime(Math.floor(audioRef?.current?.duration))}
-      </div>
+      </div> */}
       <div className="genreCont">
         {song.genre}
       </div>

@@ -1,6 +1,8 @@
 import React, { createContext, useContext } from "react";
 import Song from "../../components/song detail/Song";
 import SearchSongCard2 from "../../components/cards/search_items/searchSongCard/searchSongCard2";
+import SearchAlbumCard from "../../components/cards/search_items/searchAlbumCard/searchAlbumCard";
+import CardAlbum from "../../components/cards/card_album/CardAlbum";
 import { MusicContext } from "../../contexts/MusicContext";
 import { Navigate, NavLink, useNavigate } from "react-router-dom";
 import { GoSearch } from "react-icons/go";
@@ -83,7 +85,7 @@ const Search = () => {
                         />
                       </div>
                       <div className="artistNameCont">
-                        <NavLink to={`/artist/${artist._id}`}>
+                        <NavLink to={`/artist/${artist._id}`} className="no-decoration-bruh">
                           {artist.artistName}
                         </NavLink>
                       </div>
@@ -106,13 +108,16 @@ const Search = () => {
             {searchResult.albums?.length > 0 && search.length > 0 && (
               <div>
                 <h2>Albums</h2>
+                <div className="flex gap-4">
                 {searchResult.albums.map((album) => (
-                  <div key={album._id}>
-                    <NavLink to={`/albumpage/${album._id}`}>
-                      {album.albumName}
-                    </NavLink>
-                  </div>
-                ))}
+                  // <NavLink to={`/albumpage/${album?._id}`}>
+                    
+                    <SearchAlbumCard key={album._id} id={album._id} name={album.albumName} artist={album.artist.artistName} cover={album.albumArt}/> 
+                  // </NavLink> 
+                
+              ))}
+                </div>
+                
               </div>
             )}
 
@@ -120,7 +125,7 @@ const Search = () => {
               <div>
                 <h2>Songs</h2>
                 {searchResult.songs.map((song) => (
-                  <Song key={song._id} song={song} setSongData={setSongData} />
+                  <SearchSongCard2 key={song._id} song={song} setSongData={setSongData} />
                 ))}
 
                 <div>
