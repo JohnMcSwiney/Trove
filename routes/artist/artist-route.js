@@ -6,8 +6,6 @@ const {
   createArtist,
   updateArtist,
   deleteArtist,
-  followArtist,
-  unfollowArtist,
 } = require("../../controllers/artist/artist");
 
 //get all
@@ -23,9 +21,5 @@ router.post("/", createArtist);
 router.patch("/:id", updateArtist);
 //detele an artist
 router.delete("/:id", deleteArtist);
-
-router.post("/follow/:id", followArtist);
-
-router.post("/removeFollow/:id", unfollowArtist);
 
 module.exports = router;

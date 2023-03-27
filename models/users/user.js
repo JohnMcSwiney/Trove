@@ -19,6 +19,9 @@ const userSchema = new mongoose.Schema(
     dob: {
       type: Date,
     },
+    gender: {
+      type: String,
+    },
 
     // provider_id: {
     //   type: String,
@@ -51,8 +54,7 @@ const userSchema = new mongoose.Schema(
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Playlist",
-        default: null
-
+        default: null,
       },
     ],
 
@@ -60,28 +62,25 @@ const userSchema = new mongoose.Schema(
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Song",
-        default: null
-
-      }
+        default: null,
+      },
     ],
 
     likedSongs: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Song",
-        default: null
-      }
+        default: null,
+      },
     ],
 
     likedArtists: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Artist",
-        default: null
-
-      }
+        default: null,
+      },
     ],
-
   },
   { timestamps: true }
 );
@@ -141,6 +140,5 @@ userSchema.statics.login = async function (email, password) {
 
   return user;
 };
-
 
 module.exports = mongoose.model("User", userSchema);

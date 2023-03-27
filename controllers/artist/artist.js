@@ -60,18 +60,31 @@ const updateArtist = async (req, res) => {
     return res.status(404).json({ message: "No such artist" });
   }
 
-  const artist = await Artist.findByIdAndUpdate(
-    { _id: id },
-    {
-      ...req.body,
+  const { avatar, artistName, dob, email, password, gender } = req.body;
+
+  try {
+    const artist = await Artist.findById(id);
+    artist.artistName = artistName;
+    artist.dob = dob;
+    artist.artistImg = avatar;
+    artist.email = email;
+    artist.gender = gender;
+
+    const isMatch = await bcrypt.compare(password, artist.password);
+    let salt;
+    let hash;
+    if (!isMatch) {
+      salt = await bcrypt.genSalt(10);
+      hash = await bcrypt.hash(password, salt);
+      artist.password = hash;
     }
-  );
+    artist.password = password;
+    await artist.save();
 
-  if (!artist) {
-    return res.status(404).json({ message: err.message });
+    res.status(200).json({ message: "Updated Artist successfully" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
-
-  res.status(200).json(artist);
 };
 
 //
@@ -91,103 +104,10 @@ const deleteArtist = async (req, res) => {
   res.status(200).json(artist);
 };
 
-const followArtist = async (req, res) => {
-  const { id } = req.params;
-
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ error: "song not available" });
-  }
-
-  try {
-    const artist = await Artist.findOne({ _id: id });
-
-    if (!artist) {
-      console.log("artist not found");
-
-      throw new Error("artist not found");
-    }
-
-    const { userID } = req.body;
-    // const userCookie = req.cookies;
-    // console.log(req.userCookie);
-    // const cookieData = cookieParser.JSONCookie(userCookie);
-    // const userID = cookieData.id;
-
-    const user = await User.findOne({ _id: userID });
-
-    if (!user) {
-      console.log("user not found");
-
-      throw new Error("user not found");
-    }
-
-    if (artist.followers.includes(user._id)) {
-      return res
-        .status(400)
-        .json({ message: "Artist has already been liked by the user" });
-    }
-
-    artist.followers.push(user._id);
-    user.likedArtists.push(artist._id);
-
-    await artist.save();
-    await user.save();
-  } catch (err) {
-    console.log(err);
-    res.status(400).json({ message: err.message });
-  }
-};
-
-const unfollowArtist = async (req, res) => {
-  const { id } = req.params;
-
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ error: "artist not available" });
-  }
-
-  try {
-    const artist = await Artist.findOne({ _id: id });
-
-    if (!artist) {
-      console.log("artist not found");
-
-      throw new Error("artist not found");
-    }
-
-    const { userID } = req.body;
-    console.log(userID);
-
-    const user = await User.findOne({ _id: userID });
-
-    if (!user) {
-      console.log("user not found");
-
-      throw new Error("user not found");
-    }
-
-    if (artist.followers.includes(user._id)) {
-      artist.followers.pop(user._id);
-      artist.followers--;
-      user.likedArtists.pop(artist._id);
-    }
-
-    await artist.save();
-
-    await user.save();
-
-    res.status(200).json({ message: "removed like successfully" });
-  } catch (err) {
-    console.log(err);
-    res.status(400).json({ message: err.message });
-  }
-};
-
 module.exports = {
   getAllArtist,
   getAnArtist,
   createArtist,
   updateArtist,
   deleteArtist,
-  followArtist,
-  unfollowArtist,
 };

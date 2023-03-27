@@ -92,7 +92,6 @@ const createUser = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
-//update a new user ONLY FOR GENERAL, dont know how to use it at all
 
 const updateUser = async (req, res) => {
   const { id } = req.params;
@@ -100,171 +99,28 @@ const updateUser = async (req, res) => {
     return res.status(404).json({ err: "No such user" });
   }
 
-  const user = await User.findOneAndUpdate(
-    { _id: id },
-    {
-      ...req.body,
-    }
-  );
-
-  if (!user) {
-    return res.status(404).json({ err: "No such user" });
-  }
-  res.status(200).json(user);
-};
-
-// UPDATE USER ACCOUNT TAB
-const updateUserAccountTab = async (req, res) => {
-  // const userInfo = localStorage.getItem("user");
-  // const id = JSON.parse(userInfo).id;
-  const { id } = req.params;
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ err: "No such user" });
-  }
-
-  const { displayName, dob } = req.body;
-  // , dob
+  const { displayName, avatar, dob, email, password } = req.body;
 
   try {
     const user = await User.findById(id);
-
     user.displayName = displayName;
     user.dob = dob;
-
-    console.log(user.dob);
-    console.log(user.displayName);
-    if (!displayName || displayName === null) {
-      user.displayName = "My account";
-    }
-    await user.save();
-    res
-      .status(200)
-      .json({ message: `we just update your account, ${displayName} !` });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-};
-// UPDATE USER PASSWORD only
-const updateUserPassword = async (req, res) => {
-  // const userInfo = localStorage.getItem("user");
-  // const id = JSON.parse(userInfo).id;
-
-  const { id } = req.params;
-
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ err: "No such user" });
-  }
-
-  //const { password, newPassword } = req.body;
-
-  const { password, newPassword } = req.body;
-
-  try {
-    const user = await User.findById(id);
+    user.imageURL = avatar;
+    user.email = email;
 
     const isMatch = await bcrypt.compare(password, user.password);
-
+    let salt;
+    let hash;
     if (!isMatch) {
-      return res.status(401).json({ error: "Password is not correct" });
+      salt = await bcrypt.genSalt(10);
+      hash = await bcrypt.hash(password, salt);
     }
-
-    const salt = await bcrypt.genSalt(10);
-    const hash = await bcrypt.hash(newPassword, salt);
-
-    //update user password
 
     user.password = hash;
     await user.save();
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.GOOGLE_USER,
-        pass: process.env.GOOGLE_PASSWORD,
-      },
-      tls: {
-        rejectUnauthorized: false,
-      },
-    });
-
-    const mailOptions = {
-      from: process.env.GOOGLE_USER,
-      to: user.email,
-      subject: "Change Password Successfully With TroveMusic",
-      html: `
-            <p>Hi ${user.email},</p>
-            <p>Your action of changing password is successfully, let us know if you did not attempt to change password</p>
-          `,
-    };
-
-    transporter.sendMail(mailOptions, function (error, info) {
-      if (error) {
-        console.log(err);
-      } else {
-        console.log("Email sent: " + info.response);
-      }
-    });
-    res.status(200).json({ message: "Password changed successfully" });
-  } catch (err) {
-    res.status(500).json({ error: "Please try again" });
-  }
-};
-
-//// UPDATE USER EMAIL only
-const updateUserEmail = async (req, res) => {
-  const { id } = req.params;
-
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ err: "No such user" });
-  }
-
-  const { newEmail, password } = req.body;
-
-  try {
-    const user = await User.findById(id);
-
-    const isMatch = await bcrypt.compare(password, user.password);
-
-    if (!isMatch) {
-      return res.status(401).json({ err: "Password is not correct" });
-    }
-
-    //update user password
-
-    user.email = newEmail;
-    await user.save();
-
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.GOOGLE_USER,
-        pass: process.env.GOOGLE_PASSWORD,
-      },
-      tls: {
-        rejectUnauthorized: false,
-      },
-    });
-
-    const mailOptions = {
-      from: process.env.GOOGLE_USER,
-      to: newEmail,
-      subject: "Change Email Successfully With TroveMusic",
-      html: `
-            <p>Hi ${newEmail},</p>
-            <p>Your action of changing Email is successfully, let us know if you need help</p>
-          `,
-    };
-
-    transporter.sendMail(mailOptions, function (err, info) {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log("Email sent: " + info.response);
-      }
-    });
-
-    res.status(200).json({ message: "Email changed successfully" });
-  } catch (err) {
-    res.status(500).json({ error: "Please try again" });
+    res.status(200).json({ message: "Updated User successfully" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -289,8 +145,5 @@ module.exports = {
   getAUser,
   createUser,
   updateUser,
-  updateUserPassword,
-  updateUserEmail,
-  updateUserAccountTab,
   deleteUser,
 };

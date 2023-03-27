@@ -141,7 +141,7 @@ const updateAlbum = async (req, res) => {
   }
 
   try {
-    const artist = await Artist.findOne({ artistName: req.body.artist });
+    const artist = await Artist.findById(id);
 
     if (!artist) {
       console.log("artist not found");
