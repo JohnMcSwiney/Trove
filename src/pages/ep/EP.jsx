@@ -1,4 +1,5 @@
 import React from "react";
+import EPModal from "../../components/modals/ep modal/EPModal";
 
 const EP = () => {
   const [eps, setEPs] = React.useState([]);
@@ -36,6 +37,7 @@ const EP = () => {
                 <th scope="col">NAME</th>
                 <th scope="col">ARTIST</th>
                 <th scope="col">#TRACKS</th>
+                <th scope="col">EDIT EP</th>
               </tr>
             </thead>
             <tbody>
@@ -48,6 +50,9 @@ const EP = () => {
                   <th>{ep.epName}</th>
                   <th>{ep?.artist?.artistName}</th>
                   <th>{ep?.totalTracks}</th>
+                  <th>
+                    <EPModal ep={ep} />
+                  </th>
                 </tr>
               ))}
             </tbody>

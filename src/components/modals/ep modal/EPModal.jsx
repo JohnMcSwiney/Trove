@@ -2,33 +2,33 @@ import React from "react";
 // import "./editModal.css";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-const AlbumModal = ({ album }) => {
+const EPModal = ({ ep }) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const [albumName, setAlbumName] = React.useState(album?.albumName);
-  const [artist, setArtist] = React.useState(album?.artist?.artistName);
+  const [epName, setEpName] = React.useState(ep?.epName);
+  const [artist, setArtist] = React.useState(ep?.artist?.artistName);
   const [fArtist, setFArtist] = React.useState("");
-  const [albumArt, setAlbumArt] = React.useState(album?.albumArt);
-  const [totalTracks, setTotalTracks] = React.useState(album?.totalTracks);
-  const [releaseYear, setReleaseYear] = React.useState(album?.releaseYear);
-  const [albumData, setAlbumData] = React.useState([]);
+  const [epArt, setEpArt] = React.useState(ep?.epArt);
+  const [totalTracks, setTotalTracks] = React.useState(ep?.totalTracks);
+  const [releaseYear, setReleaseYear] = React.useState(ep?.releaseYear);
+  const [epData, setEpData] = React.useState([]);
   const [show, setShow] = React.useState(false);
 
   React.useEffect(() => {
     async function fetchSongList() {
-      const response = await fetch(`/api/albums/${album._id}`);
+      const response = await fetch(`/api/eps/${ep?._id}`);
       const data = await response.json();
 
-      setAlbumData(data);
+      setEpData(data);
       setFArtist(data?.featuredArtists?.artistName || "");
     }
     fetchSongList();
-  }, [album._id]);
+  }, [ep?._id]);
 
   return (
     <form>
       <Button variant="primary" onClick={handleShow}>
-        Edit Album Info
+        Edit EP Info
       </Button>
 
       <Modal
@@ -38,23 +38,18 @@ const AlbumModal = ({ album }) => {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Edit Album</Modal.Title>
+          <Modal.Title>Edit EP</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <label htmlFor="avatar">Album art: </label>
-          <img
-            id="avatar"
-            src={albumArt}
-            alt={album?.albumName}
-            width={"50px"}
-          />
+          <label htmlFor="avatar">EP art: </label>
+          <img id="avatar" src={epArt} alt={ep?.epName} width={"50px"} />
           <br />
-          <label htmlFor="albumName">AlbumName: </label>
+          <label htmlFor="epName">EP name: </label>
           <input
             type="text"
-            id="albumName"
-            value={albumName}
-            onChange={(e) => setAlbumName(e.target.value)}
+            id="epName"
+            value={epName}
+            onChange={(e) => setEpName(e.target.value)}
             className="form-control"
           ></input>
 
@@ -76,6 +71,7 @@ const AlbumModal = ({ album }) => {
             onChange={(e) => setFArtist(e.target.value)}
             className="form-control"
           ></input>
+
           <label htmlFor="#tracks">Number of Tracks: </label>
           <input
             type="number"
@@ -96,9 +92,9 @@ const AlbumModal = ({ album }) => {
 
           <label htmlFor="songList">Song List: </label>
           <ul>
-            {albumData &&
-              albumData?.songList &&
-              albumData?.songList.map((song) => (
+            {epData &&
+              epData?.songList &&
+              epData?.songList.map((song) => (
                 <div id="songList">
                   <li key={song?._id} className="text-dark">
                     {song.title}
@@ -112,8 +108,8 @@ const AlbumModal = ({ album }) => {
             <Button variant="secondary" onClick={handleClose}>
               Close
             </Button>
-            <Button variant="danger">Delete Album</Button>
-            <Button variant="primary">Update Album</Button>
+            <Button variant="danger">Delete Ep</Button>
+            <Button variant="primary">Update Ep</Button>
           </Modal.Footer>
         </div>
       </Modal>
@@ -121,4 +117,4 @@ const AlbumModal = ({ album }) => {
   );
 };
 
-export default AlbumModal;
+export default EPModal;
