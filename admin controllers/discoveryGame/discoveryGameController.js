@@ -11,40 +11,53 @@ const Artist = require("../../models/artist model/artist-model");
 const Album = require("../../models/album model/album-model");
 const User = require("../../models/user model/user-model");
 const { getAllSongs } = require("../../admin controllers/song/songController");
+const { defaultPasswordMaskOptions } = require("maskdata/lib/helpers/Constants");
 // const { storage } = require("firebase/compat/storage");
 
 
 //find beat and tempo of a song.
 const calcSongData = async (buffer) => {
 
-  try {
+  return new Promise((resolve, reject) => {
 
-    console.log("inside calctempo");
+    try {
+      console.log("inside calctempo");
 
-    let audioData = [];
+      let audioData = [];
 
-    console.log("buffer: " + buffer);
+      console.log("buffer in calcSongData: " + buffer);
 
-    if (buffer.numberOfChannels == 2) {
-
-      let data1 = buffer.getChannelData(0);
-      let data2 = buffer.getChannelData(1);
-
-      for (let i = 0; i < data1.length; i++) {
-        audioData[i] = (data1[i] + data2[i]) / 2;
+      if (!buffer) {
+        console.log("buffer in calcSongData: " + buffer);
+        throw new Error("buffer is undefined");
       }
-    } else {
-      audioData = buffer.getChannelData(0);
+
+      if (buffer.numberOfChannels == 2) {
+
+        let data1 = buffer.getChannelData(0);
+        let data2 = buffer.getChannelData(1);
+
+        for (let i = 0; i < data1.length; i++) {
+          audioData[i] = (data1[i] + data2[i]) / 2;
+        }
+      } else {
+        audioData = buffer.getChannelData(0);
+      }
+
+      const songData = new MusicTempo(audioData);
+
+      console.log("tempo: " + Math.round(songData.tempo));
+      console.log("beat: " + Math.round(songData.beatInterval));
+
+      resolve(songData);
+      return songData;
+
+    } catch (err) {
+      console.log(err);
+      reject(err);
+      throw new Error("calcSongData function failed");
     }
-
-    const songData = new MusicTempo(audioData);
-
-    return songData;
-
-  } catch (err) {
-    console.log(err);
-    throw new Error("calcSongData function failed")
-  }
+  });
 }
 
 const errorCallback = (err) => {
@@ -71,6 +84,7 @@ const compareSongData = async (user) => {
       const currentSong = await Song.findById(songId);
 
       if (!currentSong || currentSong == null) {
+
         console.log("SongID is null: " + songId);
 
         await User.updateOne(
@@ -88,19 +102,41 @@ const compareSongData = async (user) => {
 
       const res = await fetch(songURL);
 
+      if (!res.ok) {
+        throw new Error("Failed to fetch response");
+      }
+
       const buffer = await res.arrayBuffer();
+
+      if (!buffer || buffer == null) {
+        throw new Error("Failed to get buffer");
+      }
+
+      console.log("buffer: " + buffer.toString());
 
       const context = new AudioContext();
 
-      const songData = await context.decodeAudioData(buffer, calcSongData, errorCallback);
+      context.decodeAudioData(buffer, calcSongData);
 
-      console.log("songdata in compareSongData: " + songData);
+      // const decodedBuffer = await context.decodeAudioData(buffer);
+
+      // console.log("decodedBuffer: " + decodedBuffer);
+
+      // const songData = await calcSongData(buffer);
+
+      // console.log("songData: " + songData.toString());
+
+      // const songData = await context.decodeAudioData(buffer, calcSongData, errorCallback);
+
+      // console.log("songData: " + songData);
+
+      // console.log("decodeSongs: " + decodeSongs)
 
       let tempoList = [];
       let beatList = [];
 
-      const songTempo = songData.tempo;
-      const songBeat = songData.beat;
+      const songTempo = tempo;
+      const songBeat = beatInterval;
 
       // const songTempo = Math.round(calcSongData.tempo).toFixed(2);
       // const songBeat = Math.round(calcSongData.beat).toFixed(2);
