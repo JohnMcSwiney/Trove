@@ -1,14 +1,14 @@
 .searchAlbumCard{
     display: flex;
     flex-flow: column;
-    height: 16vw;
+    height: 18vw;
     width: 11vw;
     background-color: rgba(165, 42, 42, 0);
     align-items: center;
     margin-bottom: 1vm;
     padding: 0.5vw;
     gap: 0.5vw;
-    border-radius: 1.5vw;
+    
 }
 .searchAlbumCover{
     width: 10vw;
@@ -35,20 +35,25 @@
     display: flex;
     background-color: rgba(255, 255, 255, 0);
     flex-direction: column;
-    font-size: small;
+  
     color: black;
     width: 10vw;
     text-align: center;;
     color: white;
     text-decoration: none !important;
+    height: 5vw;
+    overflow: hidden;
 }
-
+.searchAlbumInfo > h3{
+    font-size: 1.3vw;
+}
 .searchAlbumInfo > h4{
-    font-size: xx-small;
+    font-size: 1vw;
     opacity: 0.7;
     text-decoration: none;
 }
 .border-w2{
-    border: solid  2px #12164bbf;
+    border: solid  2px #12164bce !important;
+    border-radius: 1.5vw;
 }
 

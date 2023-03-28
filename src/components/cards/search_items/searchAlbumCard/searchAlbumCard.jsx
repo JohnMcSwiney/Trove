@@ -7,7 +7,7 @@ export default function SearchAlbumCard ({ id, name, artist, cover }) {
     navigate(`/albumpage/${id}`)
   }
   return (
-    <div className='bg-fglass '>
+    <div className='bg-fglass border-w2'>
       <div className='searchAlbumCard' onClick={redirectAlbum}>
         <div className='searchAlbumCover'>
           <img src={cover} alt={name} />

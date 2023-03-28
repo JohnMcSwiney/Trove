@@ -45,11 +45,11 @@ const Search = () => {
   return (
     <div className="searchCont">
       <div className="searchInpCont">
-        <GoSearch className="searchIcon" />
+        <GoSearch className="searchIcon " />
         <form className="search-form">
           <input
             type="text"
-            className="searchBox"
+            className="searchBox "
             onChange={(e) => setSearch(e.target.value)}
             // onKeyDown={setDone(false)}
             value={search}
@@ -57,11 +57,11 @@ const Search = () => {
           ></input>
         </form>
       </div>
-      <div>
+      <div className="searchContentBoxContainer">
         {!done ? (
           <LoadingSearch />
         ) : (
-          <div>
+          <div >
             {search.length > 0 &&
               (searchResult.songs?.length ||
                 0 + searchResult.artists?.length ||
@@ -79,11 +79,13 @@ const Search = () => {
                   <div key={artist._id} className="searchArtistCard">
                     <div className="artImgNameContSearch">
                       <div className="searchArtistImg-border">
-                        <img
-                          src={artist.url}
-                          className="searchArtist-avatar"
-                          alt="avatar"
-                        />
+                        <div className="searchArtistImg-container">
+                          <img
+                            src={artist.artistImg}
+                            alt="avatar"
+                          />
+                        </div>
+                        
                       </div>
                       <div className="artistNameCont">
                         <NavLink to={`/artist/${artist._id}`} className="no-decoration-bruh">

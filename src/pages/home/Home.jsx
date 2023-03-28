@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-
+import React from "react";
 import TasteProfile from "../../components/taste Profile/TasteProfile";
 import CardArtist from "../../components/cards/card_artist/CardArtist";
 import CardAlbum from "../../components/cards/card_album/CardAlbum";
@@ -7,6 +7,7 @@ import CardDiscovery from "../../components/cards/card_discoverygame/CardDiscove
 import { Navigate, useNavigate, Link } from "react-router-dom";
 import "./home.css";
 import { useAuthContext } from "../../hooks/user-hooks/useAuthContext";
+import LoadingSearch from "../../components/loadingitems/loadingSearch/LoadingSearch";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -15,22 +16,31 @@ const Home = () => {
   };
   const userID = JSON.parse(localStorage.getItem("user"));
   const id = userID ? userID.id : null;
+  const [done, setDone] = React.useState(true);
   // const favoriteArtists = JSON.parse(localStorage.getItem("user")).likedArtists;
   // console.log(favoriteArtists);
 
   const [userInfo, setUserInfo] = useState([]);
   useEffect(() => {
     const fetchUserInfo = async () => {
-      const response = await fetch(`/api/users/${id}`);
-      const data = await response.json();
+      setDone(false);
+      setTimeout(() => {
+        fetch(`/api/users/${id}`)
+          .then((response) => response.json())
+          .then((json) => {
 
-      setUserInfo(data);
-    };
-    fetchUserInfo();
-  }, []);
+            setUserInfo(json);
+            setDone(true);
+          });
+
+
+      }, 500);
+    }
+  });
   return (
     // <div className=' '>
-    <main className="test123456 container ">
+    <main className="container ">
+
       <div>
         <h4 className="homeHeaderText">Find Musical Treasures</h4>
         <div
@@ -45,14 +55,20 @@ const Home = () => {
       {userInfo?.likedArtists?.length > 0 && (
         <div>
           <h4 className=" homeHeaderText ">Artists you love:</h4>
-          {userInfo?.likedArtists?.length > 0 &&
-            userInfo?.likedArtists.map((artist) => {
-              return (
-                <div className="art-card-cont" key={artist._id}>
-                  <CardArtist artist={artist} />
-                </div>
-              );
-            })}
+          {!done ? (
+            <LoadingSearch />
+          ) : (
+            <div >
+              {userInfo?.likedArtists?.length > 0 &&
+                userInfo?.likedArtists.map((artist) => {
+                  return (
+                    <div className="art-card-cont" key={artist._id}>
+
+                      <CardArtist artist={artist} />
+                    </div>
+                  );
+                })}
+            </div>)}
         </div>
       )}
 

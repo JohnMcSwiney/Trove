@@ -30,7 +30,7 @@ body {
 }
 
 /* DESKTOP */
-@media only screen and (min-width: 769px) {
+/* @media only screen and (min-width: 769px) { */
   .profile--body {
     margin-left: 20vmin;
     
@@ -398,25 +398,18 @@ body {
    .playIconPlayList{
     padding-left: 0.35vw;
    }
-}
+
+   /* Disabling @media tag for testing
+} */
 
 /* MOBILE VIEW (WIP) */
-@media only screen and (max-width: 768px) { 
+/* @media only screen and (max-width: 768px) { 
 
   .profile--body {
     margin-left: 20vmin;
     
   }
 
-  /* HEADER */
-  .playlist--header {
-    text-align: center;
-    padding-top: 6vmin;
-    font-size: 3vmin;
-    display: flex;
-    padding-left: 5vmin;
-
-  }
 
   .playlist--header > h1 {
     margin-left: 30vmin;
@@ -425,18 +418,18 @@ body {
   .playlist--back {
     width:10vmin;
     height: 10vmin;
-    /* padding-right: 5vmin; */
+
   }
 
   .playlist--circle--border {
     width: 11vmin;
     height: 11vmin;
-    /* position: absolute; */
+
     border-color: #0034C4;
     border-radius: 25vmin;
     border-width: 0.75vmin;
     border-style: solid;
-    /* margin-top: 2%; */
+
     margin-left: 25%;
   
   }
@@ -451,7 +444,7 @@ body {
   }  
 
 
-  /* ALBUM INFO */
+
   .playlist--info {
     display: flex;
     position: fixed;
@@ -584,9 +577,9 @@ body {
 
   #playlist--song--heart, #playlist--song--share, #playlist--song--more {
     height: 4.5vmin;
-    /* width: 20vmin; */
+
     padding-right: 3vmin;
   }
 
 
-}
+} */
