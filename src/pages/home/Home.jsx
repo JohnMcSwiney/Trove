@@ -1,14 +1,9 @@
 import React from "react";
 import { useArtistAuthContext } from "../../hooks/useArtistAuthContext";
 
-<<<<<<< Updated upstream
-import EditModal from "../../components/edit modal/EditModal";
-import "./home.css"
-=======
 import SongModel from "../../components/modals/song modal/SongModal";
-import AlbumModel from "../../components/modals/artist modal/ArtistModal";
+import AlbumModel from "../../components/modals/album modal/AlbumModal";
 import EPModel from "../../components/modals/ep modal/EPModal";
->>>>>>> Stashed changes
 const Home = () => {
   const [artistSongs, setArtistSongs] = React.useState(null);
   const [artistAlbums, setArtistAlbum] = React.useState(null);
@@ -40,6 +35,7 @@ const Home = () => {
       }
     };
     fetchMyAlbums();
+    console.log("fetch album");
   }, [id]);
 
   const [artistEPs, setArtistEPs] = React.useState([]);
@@ -51,10 +47,11 @@ const Home = () => {
       });
       const json = await response.json();
       if (response.ok) {
-        setArtistEP(json);
+        setArtistEPs(json);
       }
     };
     fetchMyEP();
+    console.log("fetch ep");
   }, [id]);
 
   const { artist } = useArtistAuthContext();

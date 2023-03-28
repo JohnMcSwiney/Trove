@@ -34,16 +34,10 @@ const SongModal = ({ song }) => {
     fetchAllArtist();
   }, []);
   return (
-<<<<<<< Updated upstream:src/components/edit modal/EditModal.jsx
-    <>
-      <div className="artist--modal">
-=======
     <form>
->>>>>>> Stashed changes:src/components/modals/song modal/SongModal.jsx
       <Button variant="primary" onClick={handleShow}>
         Edit Song
       </Button>
-      </div>
 
       <Modal
         show={show}
