@@ -1,37 +1,45 @@
 import React from "react";
-import "./editModal.css";
+// import "./editModal.css";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-
-const EditModal = ({ song }) => {
+const SongModal = ({ song }) => {
+  const [show, setShow] = React.useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [title, setTitle] = React.useState(song?.title);
-  const [album, setAlbum] = React.useState(song?.album);
-  const [ep, setEP] = React.useState(song?.ep);
+  const [album, setAlbum] = React.useState(song?.album?.albumName);
+  const [ep, setEP] = React.useState(song?.ep?.epName);
   const [genre, setGenre] = React.useState(song?.genre);
-  const [feartureArtist, setFeatureArtist] = React.useState(
+  const [songYear, setSongYear] = React.useState(song?.releaseYear);
+  const [feartureArtists, setFeatureArtists] = React.useState(
     song?.featuredArtists
   );
-  const [show, setShow] = React.useState(false);
 
-  const [findArtist, setFindArtist] = React.useState("");
-  const [artist, setArtist] = React.useState([]);
+  const [searchTerm, setSearchTerm] = React.useState("");
+  const [searchResults, setSearchResults] = React.useState([]);
+
+  const [artistData, setArtistData] = React.useState([]);
   React.useEffect(() => {
-    const fetchArtists = async () => {
-      const response = await fetch("/api/artists/");
+    const fetchAllArtist = async () => {
+      const response = await fetch("/api/artists/", {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
       const json = await response.json();
 
       if (response.ok) {
-        setArtist(json);
+        setArtistData(json);
       }
     };
-    fetchArtists();
+    fetchAllArtist();
   }, []);
-
   return (
+<<<<<<< Updated upstream:src/components/edit modal/EditModal.jsx
     <>
       <div className="artist--modal">
+=======
+    <form>
+>>>>>>> Stashed changes:src/components/modals/song modal/SongModal.jsx
       <Button variant="primary" onClick={handleShow}>
         Edit Song
       </Button>
@@ -56,12 +64,21 @@ const EditModal = ({ song }) => {
             className="form-control"
           ></input>
 
+          <label htmlFor="search">Add feature artist: </label>
+          <input
+            id="search"
+            type="text"
+            placeholder="Search artists"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="form-control"
+          />
           <label htmlFor="feartureArtist">Feature artist: </label>
           <input
             type="text"
             id="feartureArtist"
-            value={feartureArtist}
-            onChange={(e) => setFeatureArtist(e.target.value)}
+            value={feartureArtists}
+            onChange={(e) => setFeatureArtists(e.target.value)}
             className="form-control"
           ></input>
 
@@ -83,8 +100,22 @@ const EditModal = ({ song }) => {
             className="form-control"
           ></input>
 
+          <label htmlFor="songYear"> Year: </label>
+          <input
+            type="text" // check this infuture
+            id="songYear"
+            value={songYear}
+            onChange={(e) => setSongYear(e.target.value)}
+            className="form-control"
+          ></input>
+
           <label htmlFor="songImg"> IMG: </label>
-          <img src={song.imgUrl} alt={song.title} width={"50px"} id="songImg" />
+          <img
+            src={song?.imgUrl}
+            alt={song.title}
+            width={"50px"}
+            id="songImg"
+          />
           <br></br>
           <label htmlFor="songGenre"> Genre: </label>
           <br></br>
@@ -140,15 +171,18 @@ const EditModal = ({ song }) => {
             HIP-HOP
           </label>
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary">Update Song</Button>
-        </Modal.Footer>
+        <div className="form-group">
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+            <Button variant="danger">Delete Song</Button>
+            <Button variant="primary">Update Song</Button>
+          </Modal.Footer>
+        </div>
       </Modal>
-    </>
+    </form>
   );
 };
 
-export default EditModal;
+export default SongModal;

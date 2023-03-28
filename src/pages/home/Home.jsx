@@ -1,8 +1,14 @@
 import React from "react";
 import { useArtistAuthContext } from "../../hooks/useArtistAuthContext";
 
+<<<<<<< Updated upstream
 import EditModal from "../../components/edit modal/EditModal";
 import "./home.css"
+=======
+import SongModel from "../../components/modals/song modal/SongModal";
+import AlbumModel from "../../components/modals/artist modal/ArtistModal";
+import EPModel from "../../components/modals/ep modal/EPModal";
+>>>>>>> Stashed changes
 const Home = () => {
   const [artistSongs, setArtistSongs] = React.useState(null);
   const [artistAlbums, setArtistAlbum] = React.useState(null);
@@ -36,7 +42,7 @@ const Home = () => {
     fetchMyAlbums();
   }, [id]);
 
-  const [artistEP, setArtistEP] = React.useState([]);
+  const [artistEPs, setArtistEPs] = React.useState([]);
   React.useEffect(() => {
     const fetchMyEP = async () => {
       const response = await fetch(`/api/eps/artist-eps/${id}`, {
@@ -79,7 +85,7 @@ const Home = () => {
                     <th scope="row">{song.title}</th>
                     <th>{song.isVerified}</th>
                     <th>
-                      <EditModal song={song} />
+                      <SongModel song={song} />
                     </th>
                     <th>Published</th>
                   </tr>
@@ -107,7 +113,38 @@ const Home = () => {
                   <tr key={album._id}>
                     <th scope="row">{album?.albumName}</th>
                     <th>{album?.isVerified}</th>
-                    <th>Edit</th>
+                    <th>
+                      <AlbumModel />
+                    </th>
+                    <th>Publish</th>
+                  </tr>
+                </tbody>
+              ))}
+          </table>
+        </>
+      )}
+
+      {artistEPs?.length > 0 && (
+        <>
+          <h3>EPs</h3>
+          <table class="table table-dark table-bordered mysong">
+            <thead>
+              <tr>
+                <th scope="col">EP</th>
+                <th scope="col">Status</th>
+                <th scope="col">Edit</th>
+                <th scope="col">Publish</th>
+              </tr>
+            </thead>
+            {artistEPs &&
+              artistEPs.map((ep) => (
+                <tbody>
+                  <tr key={ep._id}>
+                    <th scope="row">{ep?.epName}</th>
+                    <th>{ep?.isVerified}</th>
+                    <th>
+                      <EPModel />
+                    </th>
                     <th>Publish</th>
                   </tr>
                 </tbody>
