@@ -638,13 +638,13 @@
         margin: auto;
         justify-content: center;
         color: white;
-        margin-top: 2vmin;
+        margin-top: 1vw;
         margin-bottom: 0;
-        padding-top: 4vmin;
-        padding-bottom: 10vmin;
-        position: static;
+        padding-top: 3.5vw;
+        /* padding-bottom: 10vmin; */
+        /* position: static; */
         background: #8750f434;
-        width: 50vmin;
+        width: 40vw;
 
 
         border-radius: 16px;
@@ -658,15 +658,21 @@
     .test {
         display: flex;
         align-items: center;
-        background-color: #8750f400; 
-        width: 50vmin;
+        background-color: #8750f400;
+        border: rgba(255, 255, 255, 0) 1vw solid; 
+        width: 40vw;
+        margin-top: 2vw;
+        transform: scale(1.2);
+        transition: 0.2s;
     }
     .test2{
         /* display: block; */
-        height:auto;
+        height:21vw;
+        width: 40vw;
         align-content: center;
         background-color: rgba(127, 255, 212, 0);
-        border: rgba(255, 255, 255, 0) 6px solid;        
+        /* border: rgba(255, 255, 255, 0) 1vw solid;  */
+        /* width: 39.5vw;        */
     }
 
     .slick-list{
@@ -693,20 +699,23 @@
     .Discovery-Img-Container{
         /* position: absolute; */
         overflow: hidden;
-        border: rgba(0, 0, 0, 0.295) 1vmin solid;
-        width: 40vmin;
-        height: 40vmin;
+        border: rgba(0, 0, 0, 0.295) 0.5vw solid;
+        width: 20vw;
+        height: 20vw;
         margin: auto;
         border-radius: 3vmin;
         position: relative;
-        object-fit: cover;
         display: flex;
         align-items: center;
-        background-color: #0034c449; 
+        background-color: #0034c43f; 
+        box-shadow: 0px 0.3vw 0.6vw #0c0c0c41;
         /* margin: 0 -10vmin ; */
     }
     
     .Discovery-Img-Container > .DGimg {
+        position: absolute;
+        left: 0;
+        width: 100%;
         margin: auto;
         transform: scale(1.015);
     }

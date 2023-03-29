@@ -21,26 +21,17 @@ import { AudioPlayer } from '../audioplayerOLD/AudioPlayer'
 
 import './DGstyle.css'
 
-// import DGdata from "../../data/hardcodedTestData/hardcodeDGsongs";
-
 import Slider from 'react-slick'
 
 import MyTrove from '../../pages/my trove/MyTrove'
 
 import LikeData from '../../data/likeTemp'
 import { useAuthContext } from '../../hooks/user-hooks/useAuthContext'
-// import {AuthContext} from "../../hooks/user-hooks/useAuthContext";
-
-// import "~slick-carousel/slick/slick.css";
-// import "~slick-carousel/slick/slick-theme.css";
-
-// import styles from '../audioplayer/AudioPlayer.module.css'
+import { MusicContext } from '../../contexts/MusicContext'
 
 const DiscoveryGame = () => {
   //state
-
   const [state, setState] = React.useState(0)
-
   const [index, setIndex] = React.useState(0)
   const [accept, setAccept] = React.useState(0)
   const [deny, setDeny] = React.useState(0)
@@ -51,46 +42,43 @@ const DiscoveryGame = () => {
   const [duration, setDuration] = useState(0)
   const [foobar, setFoobar] = useState('these')
   const [currentTime, setCurrentTime] = useState(0)
-
   const [likedslides, setLikedslides] = useState([])
-
   const [isMuted, setIsMuted] = useState(true)
   //isMuted is totally screwed... but it works. So i'm just gonna leave it as it is <3 sorry if it's confusing (I don't actually know what's happening lol)
   const [prevVolume, updatePrevVol] = useState(0.5)
   const [isLiked, setIsLiked] = useState(false)
   const [likedIds, setLikedIds] = useState([])
   const [dislikedIds, setDisikedIds] = useState([])
-
   const [currentUserLoaded, setCurrentUserLoaded] = useState(false)
+  const [dgLoops, updateDgLoops] = useState(0);
   //reference
   const audioPlayer = useRef() //reference to the audio player
   const DGprogressBar = useRef() //reference to the progress bar
   const animationRef = useRef() //reference to the animation
   const musicSlides = useRef()
   const DGvolumeRef = useRef()
-  const hardCodeId = '640f32ff50d15ac45201358c'
+  // const hardCodeId = '640f32ff50d15ac45201358c'
 
   //for likes   ([{ id: slides[state].id, songName: slides[state].songName, author: slides[state].author }])
-
-  //fetch all song
   const [songs, setSongs] = useState([])
   const [songsLoaded, updateSongsLoaded] = useState(false)
   const [needLoadsong, setneedLoadsong] = useState(false)
   const user = useAuthContext()
+  const { updateDisplayMusicBar, play_list } = React.useContext(MusicContext)
+
   React.useEffect(() => {
     // function getdgSongs () {
-    console.log('in fetch all songs useEffect')
-
+      
     if (songsLoaded === true) {
       return
     }
-    const fetchAllSong = async () => {
+    console.log("test " + dgLoops)
+    const fetchDGSongs = async () => {
       if (songsLoaded === true) {
+        console.log("return p1");
         return
-      } else {
-      }
-      if (songs.length === 0) {
-        // fetch(`api/DG/${hardCodeId}`)
+      } else if (songs.length === 0 || songs === []) {
+        console.log("test")
         let temp
         setneedLoadsong(true)
         await fetch(`api/DG/${user.id}`)
@@ -101,12 +89,13 @@ const DiscoveryGame = () => {
         setneedLoadsong(false)
         if (!songsLoaded) updateSongs(temp)
       } else {
+        console.log()
+        console.log("return p2");
         return
       }
     }
-
-    fetchAllSong()
-  }, [])
+    fetchDGSongs()
+  }, [dgLoops])
 
   function updateSongs (songsIn) {
     if (songsLoaded !== true) {
@@ -116,64 +105,32 @@ const DiscoveryGame = () => {
       }
     }
   }
-  // React.useEffect(() => {
-  //     if (songs.length !== 0 && songsLoaded === false) {
-  //       updateSongsLoaded(true)
-  //     } else {
-  //       return;
-  //     }
+  
 
-  // }, [songs])
-  //
-  // useEffect(() => {
-  //   const alikedsong = JSON.parse(localStorage.getItem('likedSongs'))
-
-  //   if (alikedsong) {
-  //     setLikedslides(alikedsong)
-  //   } else {
-  //     setLikedslides(LikeData)
-  //   }
-  // }, [])
-  // const fillDGData = songsIn => {
-  //   setDGData(songs)
-  //   console.log('dgData ')
-  //   console.log(dGData)
-  // }
-  const handleAddLikedSongs = () => {
-    const newLike = { _id: songs[state]._id }
-
-    const updateLikes = [...likedslides, newLike]
-
-    setLikedslides(updateLikes)
-
-    localStorage.setItem('likedSongs', JSON.stringify(updateLikes))
-
-    fetch(`/api/songs/liked/${newLike}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ likedslides })
-    })
-  }
-
+  // * Discovery Game Music Player * //
+  // ------------------------------- //
+  // updates max for progress bar
+  // toggle play/pause & toggle mute toggle their respective values
+  // changeRange changes the progressbar while the song is playing
+  // changeCurrentTime changes the before area of the progress bar <- chrome/safari
+  // ------------------------------ //
   useEffect(() => {
-    if(songs.length !== 0){
+    // changeVolumeLevel(50)
+    if (songs.length !== 0) {
       const seconds = Math.floor(audioPlayer.current.duration)
       setDuration(seconds)
       DGprogressBar.current.max = seconds
       setIndex(musicSlides.current)
-      changeVolumeLevel(10)
     } else {
-      console.log("audioplayer handler useEffect");
-      return;
+      // console.log("NO SONGS!");
+      return
     }
-
   }, [audioPlayer?.current?.loadmetadata, audioPlayer?.current?.readyState])
 
   /* maybe replacing useEffect 
     const onLoadedMetaData = () =>
     setTotalAudioTime(audioPlayer.current?.duration); 
     */
-
   const calculateTime = secs => {
     const minutes = Math.floor(secs / 60)
     const returnedMinutes = minutes < 10 ? `0${minutes}` : minutes
@@ -181,12 +138,11 @@ const DiscoveryGame = () => {
     const returnedSeconds = seconds < 10 ? `0${seconds}` : seconds
     return `${returnedMinutes}:${returnedSeconds}`
   }
-
   const togglePlayPause = () => {
     if (songs) {
       const prevValue = isPlaying
       setIsPlaying(!prevValue)
-      changeVolumeLevel()
+      // changeVolumeLevel()
       if (!prevValue) {
         console.log('test- this is the if true')
         audioPlayer.current.play()
@@ -230,11 +186,10 @@ const DiscoveryGame = () => {
     }
   }
   const changeRange = () => {
-    if(songs.length !== 0){
+    if (songs.length !== 0) {
       audioPlayer.current.currentTime = DGprogressBar.current.value
       changePlayerCurrentTime()
     }
-    
   }
   const changePlayerCurrentTime = () => {
     DGprogressBar.current.style.setProperty(
@@ -247,8 +202,36 @@ const DiscoveryGame = () => {
     setIsMuted(true)
     audioPlayer.current.volume = DGvolumeRef.current.value / 100
   }
+
+  // * Discovery Swiping Elements * //
+  //
+  //
+  const gotoNext = () => {
+    musicSlides.current.slickNext()
+  }
+
   const handleSwipe2 = direction => {
     console.log(direction)
+    
+    
+    if(state === 4){
+      console.log("we should really get you some new songs hey?");
+      if(isPlaying === true){
+        togglePlayPause(); 
+      }
+      // Send the liked songs to TasteProfile here
+      // <3 
+      updateSongsLoaded(false);
+      updateSongs([])
+ 
+      updateDgLoops(dgLoops + 1);
+      
+    } else {
+      gotoNext()
+      setState(state + 1)
+
+    }
+
   }
   const swipeableProps = useSwipeable({
     trackMouse: true,
@@ -263,9 +246,6 @@ const DiscoveryGame = () => {
       //   songs[state].title,
       //   songs[state].artist
       // )
-
-      gotoNext()
-      setState(state + 1)
     },
     // Like
     onSwipedRight: () => {
@@ -277,15 +257,38 @@ const DiscoveryGame = () => {
       //   songs[state]._id,
       //   songs[state].title,
       //   songs[state].artist
-      // )
-      gotoNext()
-      setState(state + 1)
+      // 
       // handleAddLikedSongs()
     }
   })
-  {
-    /* slider */
+  
+  // useEffect(() => {
+  //   const alikedsong = JSON.parse(localStorage.getItem('likedSongs'))
+
+  //   if (alikedsong) {
+  //     setLikedslides(alikedsong)
+  //   } else {
+  //     setLikedslides(LikeData)
+  //   }
+  // }, [])
+  const handleAddLikedSongs = () => {
+    const newLike = { _id: songs[state]._id }
+
+    const updateLikes = [...likedslides, newLike]
+
+    setLikedslides(updateLikes)
+
+    localStorage.setItem('likedSongs', JSON.stringify(updateLikes))
+
+    fetch(`/api/songs/liked/${newLike}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ likedslides })
+    })
   }
+
+  // * slider * /
+  
   const settings = {
     speed: 500,
     slidesToShow: 1,
@@ -295,21 +298,17 @@ const DiscoveryGame = () => {
     infinite: false,
     className: 'test',
     centerMode: true,
-    // centerPadding: '1vmin',
+    // centerPadding: '1vw',
     focusOnSelect: true
   }
-  // const slides == dGdata;
+
   const [slides, setSlides] = React.useState([])
-  // if (dGData !== undefined) {
-  //   setSlides(dGData);
-  // }
+
   const printIndex = index => {
     setState(index)
     console.log(index)
   }
-  const gotoNext = () => {
-    musicSlides.current.slickNext()
-  }
+  
 
   {
     return (
@@ -323,7 +322,7 @@ const DiscoveryGame = () => {
                     <img
                       src={song?.imgUrl}
                       className='DGimg'
-                      onClick={() => printIndex(i++)}
+                      // onClick={() => printIndex(i++)}
                     />
                   </div>
                 </div>
@@ -401,28 +400,43 @@ const DiscoveryGame = () => {
           <div className='Discovery-Player-Container'>
             {/* <div className={style.DGaudioPlayer}>  JACK */}
             <div className=''>
-            
               <audio
                 ref={audioPlayer}
                 src={songs[state]?.songUrl}
                 autoPlay
                 preload='metadata'
-                isPlaying={(
-                  animationRef.current = requestAnimationFrame(whilePlaying))
-                
-                  }
+                isPlaying={
+                  (animationRef.current = requestAnimationFrame(whilePlaying))
+                }
                 onLoadedMetadata={() => {
-                    changeRange();
-                                  animationRef.current = requestAnimationFrame(whilePlaying);
+                  if(isPlaying === false){
+                    togglePlayPause();
+                  }
+                  
+                  changeRange()
+                  animationRef.current = requestAnimationFrame(whilePlaying)
                 }}
                 onChange={() => {
-                  changeRange();
-                  animationRef.current = requestAnimationFrame(whilePlaying);
+                  changeRange()
+                  animationRef.current = requestAnimationFrame(whilePlaying)
                 }}
+                onEnded={() => {
+                  if(isPlaying === true){
+                    togglePlayPause(); 
+                  }
+                  console.log("song ended delay beginning (3s)");
+                  setTimeout(()=> {
+                    console.log("song ended delay finished");
+                    
+                    if(state === 4){
+                      console.log("at end");
+                    } 
+                    handleSwipe2('dislike')
+                  }, 3000) 
+                }
+                }
               ></audio>
 
-            
-              
               {/*testing maybe going in audio player to fix not loading the proggress bar on start up onLoadedMetaData={onLoadedMetaData}  */}
 
               {/*current time*/}
@@ -430,7 +444,6 @@ const DiscoveryGame = () => {
               {/* <div className={style.DGcurrentTime}>{calculateTime(currentTime)}</div> */}
               {/*progress bar*/}
               <div className='DGprogressBarContainer'>
-                
                 <input
                   type='range'
                   // className={style.DGprogressBar}
@@ -453,19 +466,19 @@ const DiscoveryGame = () => {
                 </button>
               </div>
               <div className='DGvolumeContainter'>
-    <button onClick={toggleMute}>
-      {isMuted ? <BiVolumeFull /> : <BiVolumeMute />}
-    </button>
-    <input
-      type='range'
-      ref={DGvolumeRef}
-      defaultValue='10'
-      onChange={changeVolumeLevel}
-      min='0'
-      max='100'
-      step='5'
-    ></input>
-  </div>
+                <button onClick={toggleMute}>
+                  {isMuted ? <BiVolumeFull /> : <BiVolumeMute />}
+                </button>
+                <input
+                  type='range'
+                  ref={DGvolumeRef}
+                  defaultValue='10'
+                  onChange={changeVolumeLevel}
+                  min='0'
+                  max='100'
+                  step='5'
+                ></input>
+              </div>
             </div>
           </div>
         </div>
