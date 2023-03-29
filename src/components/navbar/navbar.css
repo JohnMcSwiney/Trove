@@ -186,14 +186,15 @@ nav {
 .artist--waves {
   object-fit: cover;
   width: 100vw;
-  height: 45%;
-  position: absolute;
+  height: 40%;
+  position: fixed;
   /* opacity: 10%; */
   object-position: top;
   mix-blend-mode: soft-light;
-  margin-left: -7vmin;
+  margin-left: -5vmin;
 
 }
+
 
 @media screen and (min-width: 800px) {
   .vl {
@@ -242,4 +243,6 @@ nav {
     flex-direction: column;
     gap: 1.5rem;
   }
+
+  
 }

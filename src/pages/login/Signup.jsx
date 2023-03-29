@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useSignup } from "../../hooks/useSignup";
 import { NavLink, useNavigate } from "react-router-dom";
+import "./signup.css"
+
 const Signup = () => {
   const [email, setEmail] = useState("");
   const [confirmEmail, setConfirmEmail] = useState("");
@@ -33,10 +35,10 @@ const Signup = () => {
     }
   }, [navigate]);
   return (
-    <div className="form-group container">
+    <div className="artist--signup form-group container">
       <h1>Trove Music</h1>
       <h3>Sign up for free to explore your own music treasure </h3>
-      <form onSubmit={handleSubmit}>
+      <form className="artist--signup--form" onSubmit={handleSubmit}>
         <label for="email">What's your email?</label>
         <input
           className="form-control"
@@ -64,7 +66,7 @@ const Signup = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <label for="name">How should we call you?</label>
+        <label for="name">What should we call you?</label>
         <input
           className="form-control"
           id="name"
@@ -143,7 +145,7 @@ const Signup = () => {
         <button className="btn btn-primary">Sign up</button>
       </form>
       {error && <p>{error.err}</p>}
-      <div>
+      <div className="artist--login--link">
         <p>Already have account?</p>
         <NavLink to={"/login"}>Log in here</NavLink>
       </div>

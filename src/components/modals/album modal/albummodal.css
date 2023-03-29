@@ -1,0 +1,11 @@
+form > button {
+    background-image: linear-gradient(
+      to left,
+      #8650f4,
+      #6f49e8,
+      #5642dc,
+      #393bd0,
+      #0034c4
+    );
+    border: none;
+  }

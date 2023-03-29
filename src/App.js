@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ArtistNavbar from "./components/navbar/ArtistNavbar";
+import './App.css'
 
 import {
   Home,
