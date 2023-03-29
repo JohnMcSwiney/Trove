@@ -4,7 +4,7 @@ import { useArtistAuthContext } from "../../hooks/useArtistAuthContext";
 import SongModel from "../../components/modals/song modal/SongModal";
 import AlbumModel from "../../components/modals/album modal/AlbumModal";
 import EPModel from "../../components/modals/ep modal/EPModal";
-
+import { NavLink, useNavigate } from "react-router-dom";
 import './home.css'
 
 const Home = () => {
@@ -64,7 +64,7 @@ const Home = () => {
 
   return (
     <div className="artist--home">
-      <h5>Hello, {artist ? artist?.artistName : "please sign in."} </h5>
+      <h5>Hello, {artist ? artist?.artistName : <NavLink to={"/login"}>please sign in.</NavLink>} </h5>
 
       {artistSongs?.length > 0 && (
         <>

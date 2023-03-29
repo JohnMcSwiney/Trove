@@ -28,11 +28,47 @@ const ArtistNavbar = () => {
   const logoutArtist = () => {
     logout();
   };
+
+   // State for large vs fixed header
+   const [small, setSmall] = React.useState(false);
+ 
+   // Checking window size 
+     const windowBreakpoint = 480;
+ 
+     React.useEffect(() => {
+       if (typeof window !== "undefined") {
+         window.addEventListener("scroll", () =>
+           setSmall(window.pageYOffset > 70)
+         );
+       }
+     }, []); 
+ 
+     const useViewport = () => {
+     const [width, setWidth] = React.useState(window.innerWidth);
+   
+     React.useEffect(() => {
+       const handleWindowResize = () => setWidth(window.innerWidth);
+ 
+       return () => window.removeEventListener("resize", handleWindowResize);
+     }, []);
+   
+     // Return the width so we can use it in our components
+     return { width };
+   }
+  
+   const { width } = useViewport();
+
   return (
     <div>
       <div>
         <header className={`header-nav`}>
-        <img className="artist--waves "name="waves" src="../../../assets/waves.gif" alt="waves"/>
+        <div className={`${
+          small ? "artist--small" : "artist--waves"
+        }`}>   
+          <img className={`${
+          small ? "artist--small" : "artist--waves"
+        }`} name="waves" src="../../../assets/waves.gif" alt="waves"/>
+        </div>
           <a className="nav-brand" href="/">
             <h3>
               <span className="trovemusic-span">TroveMusic</span> <span className="forartists-span">ARTIST</span>

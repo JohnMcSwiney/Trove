@@ -1,6 +1,8 @@
 import React from "react";
 import { useLogin } from "../../hooks/useLogin";
 import { useNavigate } from "react-router-dom";
+import "./login.css"
+ 
 const Login = () => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -25,7 +27,7 @@ const Login = () => {
     }
   }, [navigate]);
   return (
-    <div>
+    <div className="artist--login">
       <h1>Login with TroveMusic</h1>
       <form onSubmit={handleLogin}>
         <label for="email">Email</label>

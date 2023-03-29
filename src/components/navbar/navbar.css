@@ -193,6 +193,18 @@ nav {
   mix-blend-mode: soft-light;
   margin-left: -5vmin;
 
+  
+}
+
+.artist--small {
+  display: none;
+  visibility: hidden;
+
+}
+
+.artist--small > img {
+  display: none;
+  visibility: hidden;
 }
 
 
@@ -244,5 +256,5 @@ nav {
     gap: 1.5rem;
   }
 
-  
+
 }

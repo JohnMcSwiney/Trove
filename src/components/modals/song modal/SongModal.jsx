@@ -1,6 +1,6 @@
 import React from "react";
 // import "./editModal.css";
-// import Select from "react-select";
+import Select from "react-select";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 const SongModal = ({ song }) => {
@@ -60,7 +60,7 @@ const SongModal = ({ song }) => {
           ></input>
 
           <label htmlFor="artist">Artist: </label>
-          {/* <Select */}
+          <Select
             id="searchArtist"
             options={artistData.map((artist) => ({
               value: artist?._id,
@@ -94,10 +94,10 @@ const SongModal = ({ song }) => {
               setArtistID(selectedOption ? selectedOption.value : "");
               console.log(artistID);
             }} // Since only one option is allowed, set the selected value to the 'value' property of the option
-          {/* /> */}
+          />
 
           <label htmlFor="search">Add feature artist: </label>
-          {/* <Select */}
+          <Select
             id="search"
             options={artistData.map((artist) => ({
               value: artist._id,
@@ -128,7 +128,7 @@ const SongModal = ({ song }) => {
             onChange={(selectedOptions) =>
               setFeatureArtists(selectedOptions.map((option) => option.value))
             }
-          {/* /> */}
+          />
 
           <label htmlFor="songAlbum">Album: </label>
           <input
@@ -155,7 +155,7 @@ const SongModal = ({ song }) => {
             value={songYear}
             onChange={(e) => setSongYear(e.target.value)}
             className="form-control"
-          ></input>
+          ></input> 
 
           <label htmlFor="songImg"> IMG: </label>
           <img

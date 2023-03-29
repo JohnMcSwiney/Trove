@@ -34,6 +34,8 @@ const Signup = () => {
       navigate("/");
     }
   }, [navigate]);
+
+  
   return (
     <div className="artist--signup form-group container">
       <h1>Trove Music</h1>
@@ -85,7 +87,7 @@ const Signup = () => {
 
         <div className="gender-div">
           <p>What's your gender?</p>
-          <div className="form-check">
+          <div className="form-check form-check-first">
             <input
               className="form-check-input"
               id="male"
@@ -99,7 +101,7 @@ const Signup = () => {
             </label>
           </div>
 
-          <div className="form-check">
+          <div className="form-check form-check-first">
             <input
               className="form-check-input"
               id="female"
@@ -112,8 +114,8 @@ const Signup = () => {
               Female
             </label>
           </div>
-
-          <div className="form-check">
+        
+          <div className="form-check form-check-second">
             <input
               className="form-check-input"
               id="nonbinary"
@@ -127,7 +129,7 @@ const Signup = () => {
             </label>
           </div>
 
-          <div className="form-check">
+          <div className="form-check form-check-second">
             <input
               className="form-check-input"
               id="other"
@@ -142,7 +144,10 @@ const Signup = () => {
           </div>
         </div>
 
-        <button className="btn btn-primary">Sign up</button>
+        <div classname="signup--btn">
+          <button className="btn btn-primary">Sign up</button>
+        </div>
+
       </form>
       {error && <p>{error.err}</p>}
       <div className="artist--login--link">
