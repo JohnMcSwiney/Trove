@@ -155,19 +155,19 @@ const DiscoveryGame = () => {
     })
   }
 
-  // useEffect(() => {
-  //   if(dGData.length !== 0){
-  //     const seconds = Math.floor(audioPlayer.current.duration)
-  //     setDuration(seconds)
-  //     DGprogressBar.current.max = seconds
-  //     setIndex(musicSlides.current)
-  //     changeVolumeLevel(10)
-  //   } else {
-  //     console.log("audioplayer handler useEffect");
-  //     return;
-  //   }
+  useEffect(() => {
+    if(songs.length !== 0){
+      const seconds = Math.floor(audioPlayer.current.duration)
+      setDuration(seconds)
+      DGprogressBar.current.max = seconds
+      setIndex(musicSlides.current)
+      changeVolumeLevel(10)
+    } else {
+      console.log("audioplayer handler useEffect");
+      return;
+    }
 
-  // }, [audioPlayer?.current?.loadmetadata, audioPlayer?.current?.readyState])
+  }, [audioPlayer?.current?.loadmetadata, audioPlayer?.current?.readyState])
 
   /* maybe replacing useEffect 
     const onLoadedMetaData = () =>
@@ -312,39 +312,6 @@ const DiscoveryGame = () => {
   }
 
   {
-    // currentUserLoaded === true
-    // &&
-    // dGData.length !== 0
-    // ? (
-    // )
-    // : (
-    //     // <div className='bg-fglass1'>
-    //     //  bruh
-    //     //         </div>
-    //             )
-    //           }
-
-    // ild if statement
-    // if(foobar !== "nuts"){
-    //   setFoobar("nuts");
-    // } else {
-    //   return;
-    // }
-
-    console.log(songs)
-
-    // function doSomething() {
-    //   console.info("DOM loaded");
-    // }
-
-    // if (document.readyState === "loading") {
-    //   // Loading hasn't finished yet
-
-    //   document.addEventListener("DOMContentLoaded", doSomething);
-    // } else {
-    //   // `DOMContentLoaded` has already fired
-    //   doSomething();
-    // }
     return (
       <div className='Discovery-Container'>
         <div className='Discovery-Top-Container'>
@@ -440,11 +407,18 @@ const DiscoveryGame = () => {
                 src={songs[state]?.songUrl}
                 autoPlay
                 preload='metadata'
-                isPlaying={() => {
-                  changeRange()
-                  animationRef.current = requestAnimationFrame(whilePlaying)
-                }
+                isPlaying={(
+                  animationRef.current = requestAnimationFrame(whilePlaying))
+                
                   }
+                onLoadedMetadata={() => {
+                    changeRange();
+                                  animationRef.current = requestAnimationFrame(whilePlaying);
+                }}
+                onChange={() => {
+                  changeRange();
+                  animationRef.current = requestAnimationFrame(whilePlaying);
+                }}
               ></audio>
 
             
