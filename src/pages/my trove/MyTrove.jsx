@@ -18,11 +18,6 @@ import {
 import { useAuthContext } from "../../hooks/user-hooks/useAuthContext";
 import { Navigate, useNavigate, Link, NavLink } from "react-router-dom";
 const MyTrove = () => {
-  const [index, setIndex] = React.useState(0);
-  const [likeArray, setlikeArray] = useState();
-  const [dislikeArray, setdislikeArray] = useState();
-
-  const [likes, setLikes] = useState([]);
   const { user } = useAuthContext();
 
   const userID = JSON.parse(localStorage.getItem("user")).id;
@@ -114,9 +109,28 @@ const MyTrove = () => {
           <div className="account-showcase">
             <div className="TPlikedSongs">
               <h1>Liked Songs</h1>
-
+              
               {userInfo?.likedSongs &&
                 userInfo?.likedSongs.map((song) => (
+                  <div key={song._id}>
+                    <p>
+                      {song.title} - {song.artist?.artistName} <button className="RemoveLike">Remove</button>
+                    </p>
+                    
+                  </div>
+                ))}
+            </div>
+                  
+            <br />
+          </div>
+        )}
+        {/*userInfo?.dislikedSongs?.length > 0 && (
+          <div className="account-showcase">
+            <div className="TPdislikedSongs">
+              <h1>Disliked Songs</h1>
+
+              {userInfo?.dislikedSongs &&
+                userInfo?.dislikedSongs.map((song) => (
                   <div key={song._id}>
                     <p>
                       {song.title} - {song.artist?.artistName}
@@ -127,7 +141,7 @@ const MyTrove = () => {
 
             <br />
           </div>
-        )}
+          )*/}
         {/* <div className="mytrove-splitter"></div> */}
         <div className="account-showcase">
           <h1></h1>

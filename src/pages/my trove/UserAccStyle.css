@@ -246,3 +246,20 @@
 .newPlaylistBtn:hover{
     opacity: 0.9;
 }
+
+.TPlikedSongs{
+    border: solid 4px rgba(255, 255, 255, 0.089);
+    border-radius: 15px;
+    float:left;
+    padding: 10px;
+    max-width: 400px;
+
+}
+
+.TPdislikedSongs{
+    border: solid 4px rgba(255, 255, 255, 0.089);
+    border-radius: 15px;
+    float:left;
+    padding: 10px;
+    max-width: 400px; 
+}
