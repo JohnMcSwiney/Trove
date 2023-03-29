@@ -38,7 +38,7 @@ import { useAuthContext } from '../../hooks/user-hooks/useAuthContext'
 
 const DiscoveryGame = () => {
   //state
-
+  
   const [state, setState] = React.useState(0)
 
   const [index, setIndex] = React.useState(0)
@@ -47,9 +47,9 @@ const DiscoveryGame = () => {
   const [dGData, setDGData] = React.useState([])
   const [volumeLevel, setVolumeLevel] = useState(0)
   const [isPlaying, setIsPlaying] = useState(true)
-
+  const [isLoaded, setIsLoaded] = useState(false)
   const [duration, setDuration] = useState(0)
-
+  const [foobar, setFoobar] = useState("these");
   const [currentTime, setCurrentTime] = useState(0)
 
   const [likedslides, setLikedslides] = useState([])
@@ -61,68 +61,75 @@ const DiscoveryGame = () => {
   const [likedIds, setLikedIds] = useState([])
   const [dislikedIds, setDisikedIds] = useState([])
 
-  const [currentUserLoaded, setCurrentUserLoaded] = useState(true)
+  const [currentUserLoaded, setCurrentUserLoaded] = useState(false)
   //reference
   const audioPlayer = useRef() //reference to the audio player
   const DGprogressBar = useRef() //reference to the progress bar
   const animationRef = useRef() //reference to the animation
   const musicSlides = useRef()
   const DGvolumeRef = useRef()
-  const hardCodeId = '640f32ff50d15ac45201358c';
+  const hardCodeId = '640f32ff50d15ac45201358c'
 
   //for likes   ([{ id: slides[state].id, songName: slides[state].songName, author: slides[state].author }])
 
   //fetch all song
   const [songs, setSongs] = useState([])
-  // const [DGdata, setDGdata] = useState
-  // useEffect(() => {
-  //   const user = JSON.parse(localStorage.getItem("user"));
-  //     console.log("Bru " + user.id);
-  //     setCurrentUser(user.id);
-  //   // const user = JSON.parse(localStorage.getItem("user"));
-  //   // console.log(user._id);
-  // console.log("user updated");
-  // }, []);
-  // const {
-  //   id
-  // } = React.useContext(useAuthContext);
+  const [songsLoaded, updateSongsLoaded] = useState(false)
+  const [needLoadsong, setneedLoadsong] = useState(false)
   const user = useAuthContext()
-
   React.useEffect(() => {
-    // const userInfo = JSON.parse(localStorage.getItem('user'))
-    // const userID = userInfo.id
+    // function getdgSongs () { 
+    console.log('in fetch all songs useEffect')
+    
+    if(songsLoaded === true){
+      return;
+    }
     const fetchAllSong = async () => {
-      // let currentUser =
-      // const response = await fetch(`api/DG/${hardCodeId}`, {
-        const response = await fetch(`api/DG/${user?.id}`, {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' }
-      })
-
-      const data = await response.json()
-      if (response.ok) {
-        setSongs(data)
-        // .then(setDGData(data));
-
-        // for (let i = 0; i < songs.length; i++) {
-        //   // console.log("song title: " + songs[i].title);
-        // }
-        // console.log(data);
+      if(songsLoaded === true){
+        return;
+      } else {
+        
+      }
+      if (
+        songs.length === 0
+      ) {
+        // fetch(`api/DG/${hardCodeId}`)
+        let temp
+        setneedLoadsong(true)
+        await fetch(`api/DG/${user.id}`)
+          .then(response => response.json())
+          .then(json => {
+              temp = json
+          })
+        setneedLoadsong(false)
+        if(!songsLoaded)  updateSongs(temp);
+      } else {
+        return;
       }
     }
-
-    fetchAllSong()
-  }, [currentUserLoaded])
-  useEffect(() => {
-    // const user = JSON.parse(localStorage.getItem("user"));
-    // console.log(user._id);
-    console.log('song updated')
-    console.log(songs)
     
-    setDGData(songs)
-    console.log('dgData ')
-    console.log(dGData)
-  }, [songs])
+    fetchAllSong();
+  }
+  , [])
+
+  function updateSongs (songsIn) {  
+    if(songsLoaded !== true){
+      if(songs == 0 ){
+        updateSongsLoaded(true);
+        setSongs(songsIn);
+        
+      
+      }
+    }
+  }
+  // React.useEffect(() => {
+  //     if (songs.length !== 0 && songsLoaded === false) {
+  //       updateSongsLoaded(true)
+  //     } else {
+  //       return;
+  //     }
+    
+  // }, [songs])
   //
   // useEffect(() => {
   //   const alikedsong = JSON.parse(localStorage.getItem('likedSongs'))
@@ -133,9 +140,14 @@ const DiscoveryGame = () => {
   //     setLikedslides(LikeData)
   //   }
   // }, [])
-
+  // const fillDGData = songsIn => {
+  //   setDGData(songs)
+  //   console.log('dgData ')
+  //   console.log(dGData)
+  // }
   const handleAddLikedSongs = () => {
-    const newLike = { _id: dGData[state]._id }
+    
+    const newLike = { _id: songs[state]._id }
 
     const updateLikes = [...likedslides, newLike]
 
@@ -150,14 +162,21 @@ const DiscoveryGame = () => {
     })
   }
 
-  useEffect(() => {
-    const seconds = Math.floor(audioPlayer.current.duration)
-    setDuration(seconds)
-    DGprogressBar.current.max = seconds
-    setIndex(musicSlides.current)
-    changeVolumeLevel(10)
-  }, [audioPlayer?.current?.loadmetadata, audioPlayer?.current?.readyState])
-  /* maybe replaceing useEffect 
+  // useEffect(() => {
+  //   if(dGData.length !== 0){
+  //     const seconds = Math.floor(audioPlayer.current.duration)
+  //     setDuration(seconds)
+  //     DGprogressBar.current.max = seconds
+  //     setIndex(musicSlides.current)
+  //     changeVolumeLevel(10)
+  //   } else {
+  //     console.log("audioplayer handler useEffect");
+  //     return;
+  //   }
+
+  // }, [audioPlayer?.current?.loadmetadata, audioPlayer?.current?.readyState])
+
+  /* maybe replacing useEffect 
     const onLoadedMetaData = () =>
     setTotalAudioTime(audioPlayer.current?.duration); 
     */
@@ -171,17 +190,19 @@ const DiscoveryGame = () => {
   }
 
   const togglePlayPause = () => {
-    const prevValue = isPlaying
-    setIsPlaying(!prevValue)
-    changeVolumeLevel()
-    if (!prevValue) {
-      console.log('test- this is the if true')
-      audioPlayer.current.play()
-      animationRef.current = requestAnimationFrame(whilePlaying) //fix this
-    } else {
-      console.log('test- this is the if false')
-      audioPlayer.current.pause()
-      cancelAnimationFrame(animationRef.current)
+    if (currentUserLoaded && dGData) {
+      const prevValue = isPlaying
+      setIsPlaying(!prevValue)
+      changeVolumeLevel()
+      if (!prevValue) {
+        console.log('test- this is the if true')
+        audioPlayer.current.play()
+        animationRef.current = requestAnimationFrame(whilePlaying) //fix this
+      } else {
+        console.log('test- this is the if false')
+        audioPlayer.current.pause()
+        cancelAnimationFrame(animationRef.current)
+      }
     }
   }
   const toggleMute = () => {
@@ -207,9 +228,13 @@ const DiscoveryGame = () => {
     }
   }
   const whilePlaying = () => {
-    DGprogressBar.current.value = audioPlayer.current?.currentTime
-    changePlayerCurrentTime()
-    animationRef.current = requestAnimationFrame(whilePlaying) //potential memory leak
+    console.log('whilePlaying')
+    if (currentUserLoaded === true && dGData.length !== 0) {
+      console.log('whilePlaying in da if statement')
+      DGprogressBar.current.value = audioPlayer.current?.currentTime
+      changePlayerCurrentTime()
+      animationRef.current = requestAnimationFrame(whilePlaying) //potential memory leak
+    }
   }
   const changeRange = () => {
     audioPlayer.current.currentTime = DGprogressBar.current.value
@@ -233,33 +258,33 @@ const DiscoveryGame = () => {
     trackMouse: true,
     // Dislike
     onSwipedLeft: () => {
-      //handleSwipe2('dislike')
-      if (state === dGData.length - 1) return;
-      setIndex((prevIndex) => (prevIndex + 1) % dGData.length);
-      setAccept(accept + 1);
-      dislikedIds.push(
-        dGData[state]._id,
-        dGData[state].title,
-        dGData[state].artist
-      );
+      handleSwipe2('dislike')
+      // if (state === songs.length - 1) return
+      // setIndex(prevIndex => (prevIndex + 1) % songs.length)
+      // setAccept(accept + 1)
+      // dislikedIds.push(
+      //   songs[state]._id,
+      //   songs[state].title,
+      //   songs[state].artist
+      // )
 
-      gotoNext();
-      setState(state + 1);
+      gotoNext()
+      setState(state + 1)
     },
     // Like
     onSwipedRight: () => {
-      //handleSwipe2('like')
-      if (state === dGData.length - 1) return;
-      setIndex((prevIndex) => (prevIndex + 1) % dGData.length);
-      setDeny(deny + 1);
-      likedIds.push(
-        dGData[state]._id,
-        dGData[state].title,
-        dGData[state].artist
-      );
-      gotoNext();
-      setState(state + 1);
-      handleAddLikedSongs();
+      handleSwipe2('like')
+      // if (state === songs.length - 1) return
+      // setIndex(prevIndex => (prevIndex + 1) % songs.length)
+      // setDeny(deny + 1)
+      // likedIds.push(
+      //   songs[state]._id,
+      //   songs[state].title,
+      //   songs[state].artist
+      // )
+      gotoNext()
+      setState(state + 1)
+      // handleAddLikedSongs()
     }
   })
   {
@@ -290,203 +315,132 @@ const DiscoveryGame = () => {
     musicSlides.current.slickNext()
   }
 
-  return (
-    <div className='Discovery-Container'>
-      <div
-      // className='Discovery-Top-Container'
-      >
-        {/* Back button - plays song just swipped  */}
+  {
+    // currentUserLoaded === true
+    // &&
+    // dGData.length !== 0
+    // ? (
+    // )
+    // : (
+    //     // <div className='bg-fglass1'>
+    //     //  bruh
+    //     //         </div>
+    //             )
+    //           }
 
-        {/* <button
-          className="hidden"
-          onClick={() => {
-            if (state === 0) return;
-            setIndex(
-              (prevIndex) => (prevIndex + slides.length - 1) % slides.length
-            );
-          }}
-        >
-          <BiArrowToLeft />
-        </button> */}
-
-        {/* volume */}
-        <div className='DGvolumeContainter'>
-          <button onClick={toggleMute}>
-            {isMuted ? <BiVolumeFull /> : <BiVolumeMute />}
-          </button>
-          <input
-            type='range'
-            ref={DGvolumeRef}
-            defaultValue='10'
-            onChange={changeVolumeLevel}
-            min='0'
-            max='100'
-            step='5'
-          ></input>
-        </div>
-
+    // ild if statement
+    // if(foobar !== "nuts"){
+    //   setFoobar("nuts");
+    // } else {
+    //   return;
+    // }
+    
+    console.log(songs)
+    
+    // function doSomething() {
+    //   console.info("DOM loaded");
+    // }
+    
+    // if (document.readyState === "loading") {
+    //   // Loading hasn't finished yet
+      
+    //   document.addEventListener("DOMContentLoaded", doSomething);
+    // } else {
+    //   // `DOMContentLoaded` has already fired
+    //   doSomething();
+    // }
+    return (
+      <div className='Discovery-Container'>
         <div className='Discovery-Top-Container'>
-          <Slider ref={musicSlides} {...settings} id='carousel'>   
-            {dGData && dGData?.map((song, i = 0) => {
+          <Slider ref={musicSlides} {...settings} id='carousel'>
+            {songs?.map((song, i = 0) => {
               return (
-                <div className="test2">
-                  <div className="Discovery-Img-Container">
+                <div className='test2'>
+                  <div className='Discovery-Img-Container'>
                     <img
                       src={song?.imgUrl}
-                      className="DGimg"
+                      className='DGimg'
                       onClick={() => printIndex(i++)}
                     />
                   </div>
                 </div>
-              );
+              )
             })}
-         
           </Slider>
-        </div>
-        {/* img updates every second, change later */}
-      </div>
-      <div className='Discovery-Text-Container'>
-        {/* Song title */}
-        <h2 className='DGsongtxt'>
-          {/* {dGData && dGData[state].title}  */}
-          {dGData && (
-            dGData[state]?.title)} 
-        </h2>
-        {/* Song Artist */}
-        <h2 className='DGalbtxt'>
-          {dGData && (
-            dGData[state]?.artist.artistName)} 
-
-        </h2>
-      </div>
-      {/* Swipe Box */}
-      <div className='Discovery-Swipe-Container' {...swipeableProps}>
-        {/* dislike */}
-        <button
-          onClick={() => {
-            handleSwipe2('click dislike')
-            // if (state === slides.length - 1) return;
-            // setIndex((prevIndex) => (prevIndex + 1) % slides.length);
-            // setDeny(deny + 1);
-            // dislikedIds.push(
-            //   slides[state]._id,
-            //   slides[state].title,
-            //   slides[state].artist
-            // );
-            // gotoNext();
-            // setState(state + 1);
-          }}
-          className='Discovery-Disike'
-        >
-          <BsXLg />
-        </button>
-        <div className='DGarrowcont'>
-          <MdOutlineArrowBackIos className='DGarrow' />
-          <MdOutlineArrowBackIos />
-          <MdOutlineArrowBackIos />
-        </div>
-        <div className='DGarrowcont'>
-          {' '}
-          <MdOutlineArrowForwardIos />
-          <MdOutlineArrowForwardIos />
-          <MdOutlineArrowForwardIos />{' '}
-        </div>
-
-        {/* like */}
-        <button
-          onClick={() => {
-            handleSwipe2('click like')
-            // if (state === slides.length - 1) return;
-            // setIndex((prevIndex) => (prevIndex + 1) % slides.length);
-            // setAccept(accept + 1);
-            // console.log(slides[state].id);
-            // likedIds.push(
-            //   slides[state]._id,
-            //   slides[state].title,
-            //   slides[state].artist
-            // );
-            // gotoNext();
-            // setState(state + 1);
-            // handleAddLikedSongs();
-          }}
-          className='Discovery-Like'
-        >
-          <BsCheckLg />
-        </button>
-      </div>
-      {/*Audio Player*/}
-      <div className='Discovery-Player-Container'>
-        {/* <div className={style.DGaudioPlayer}>  JACK */}
-        <div className=''>
-          <audio
-            ref={audioPlayer}
-            src={dGData[state]?.songUrl}
-            autoPlay
-            //
-            preload='metadata'
-            isPlaying={
-              (animationRef.current = requestAnimationFrame(whilePlaying))
-            }
-          ></audio>
-          {/*testing maybe going in audio player to fix not loading the proggress bar on start up onLoadedMetaData={onLoadedMetaData}  */}
-
-          {/*current time*/}
-          {/* removed for testing */}
-          {/* <div className={style.DGcurrentTime}>{calculateTime(currentTime)}</div> */}
-          {/*progress bar*/}
-          <div className='DGprogressBarContainer'>
-            <input
-              type='range'
-              // className={style.DGprogressBar}
-              className='DGprogressBar'
-              defaultValue='0'
-              ref={DGprogressBar}
-              onChange={() => {
-                changeRange()
-                animationRef.current = requestAnimationFrame(whilePlaying)
-              }}
-            />
+          <div className='Discovery-Text-Container'>
+            {/* Song title */}
+            <h2 className='DGsongtxt'>
+              {/* {dGData && dGData[state].title}  */}
+              {songs.length !== 0 && (
+                songs[state]?.title)} 
+              {/* title */}
+            </h2>
+            {/* Song Artist */}
+            <h2 className='DGalbtxt'>
+              {songs.length !== 0 && (
+                songs[state]?.artist.artistName)} 
+              {/* artist */}
+            </h2>
           </div>
-          {/*Duration*/}
-          {/* removed for testing*/}
-          {/* <div className={style.DGduration}>{(duration && !isNaN(duration)) && calculateTime(duration)}</div> */}
-          <div className='DGpsbutsCont'>
+          {/* Swipe Box */}
+          <div className='Discovery-Swipe-Container' {...swipeableProps}>
+            {/* dislike */}
             <button
-              onClick={togglePlayPause}
-              className='DGplayPause'
-              id='playPauseBtn'
+              onClick={() => {
+                handleSwipe2('click dislike')
+                // if (state === slides.length - 1) return;
+                // setIndex((prevIndex) => (prevIndex + 1) % slides.length);
+                // setDeny(deny + 1);
+                // dislikedIds.push(
+                //   slides[state]._id,
+                //   slides[state].title,
+                //   slides[state].artist
+                // );
+                // gotoNext();
+                // setState(state + 1);
+              }}
+              className='Discovery-Disike'
             >
-              {isPlaying ? <FaPause /> : <FaPlay className='DGplay' />}
+              <BsXLg />
+            </button>
+            <div className='DGarrowcont'>
+              <MdOutlineArrowBackIos className='DGarrow' />
+              <MdOutlineArrowBackIos />
+              <MdOutlineArrowBackIos />
+            </div>
+            <div className='DGarrowcont'>
+              {' '}
+              <MdOutlineArrowForwardIos />
+              <MdOutlineArrowForwardIos />
+              <MdOutlineArrowForwardIos />{' '}
+            </div>
+
+            {/* like */}
+            <button
+              onClick={() => {
+                handleSwipe2('click like')
+                // if (state === slides.length - 1) return;
+                // setIndex((prevIndex) => (prevIndex + 1) % slides.length);
+                // setAccept(accept + 1);
+                // console.log(slides[state].id);
+                // likedIds.push(
+                //   slides[state]._id,
+                //   slides[state].title,
+                //   slides[state].artist
+                // );
+                // gotoNext();
+                // setState(state + 1);
+                // handleAddLikedSongs();
+              }}
+              className='Discovery-Like'
+            >
+              <BsCheckLg />
             </button>
           </div>
-        </div>
-      </div>{' '}
-      {/* Audio Player End */}
-      {/* 
-      <div className="Discovery-TestingItem-Container">
-        Like
-        <div>{accept} [ Likes ]</div>
-        Dislike
-        <div>{deny} [ Dislikes ]</div>
-
-        <div>
-          <button
-            onClick={() => {
-              console.log(
-                "Liked ids:" + likedIds + " | " + "Disliked ids:" + dislikedIds
-              );
-            }}
-          >
-            {" "}
-            View Likes & Dislikes
-          </button>
-
           
         </div>
-      </div> 
-      */}
-    </div>
-  )
+      </div>
+    )
+  }
 }
-
 export default DiscoveryGame
