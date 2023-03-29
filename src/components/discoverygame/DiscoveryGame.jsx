@@ -24,10 +24,9 @@ import { AudioPlayer } from "../audioplayerOLD/AudioPlayer";
 
 import "./DGstyle.css";
 
-import DGdata from "../../data/hardcodedTestData/hardcodeDGsongs";
+// import DGdata from "../../data/hardcodedTestData/hardcodeDGsongs";
 
 import Slider from "react-slick";
-import $ from "jquery";
 
 import MyTrove from "../../pages/my trove/MyTrove";
 
@@ -46,7 +45,7 @@ const DiscoveryGame = () => {
   const [index, setIndex] = React.useState(0);
   const [accept, setAccept] = React.useState(0);
   const [deny, setDeny] = React.useState(0);
-
+ const [dGData, setDGData] = React.useState([]);
   const [volumeLevel, setVolumeLevel] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
 
@@ -74,6 +73,7 @@ const DiscoveryGame = () => {
 
   //fetch all song
   const [songs, setSongs] = useState([]);
+
   React.useEffect(() => {
     const fetchAllSong = async () => {
       const response = await fetch("/api/songs/", {
@@ -83,17 +83,18 @@ const DiscoveryGame = () => {
 
       const data = await response.json();
       if (response.ok) {
-        setSongs("data in discovery game ", data);
+        setSongs(data).then(setDGData(data));
 
-        for (let i = 0; i < songs.length; i++) {
-          console.log("song title: " + songs[i].title);
-        }
-        console.log(data);
+        // for (let i = 0; i < songs.length; i++) {
+        //   // console.log("song title: " + songs[i].title);
+        // }
+        // console.log(data);
+        
       }
     };
 
     fetchAllSong();
-  });
+  },[]);
 
   //
   useEffect(() => {
@@ -245,8 +246,11 @@ const DiscoveryGame = () => {
     // centerPadding: '1vmin',
     focusOnSelect: true,
   };
-
-  const slides = DGdata;
+  // const slides == dGdata;
+  const [slides, setSlides] = React.useState([]);
+  
+  
+  
 
  
   const printIndex = (index) => {
@@ -263,6 +267,7 @@ const DiscoveryGame = () => {
       // className='Discovery-Top-Container'
       >
         {/* Back button - plays song just swipped  */}
+
         <button
           className="hidden"
           onClick={() => {
@@ -292,8 +297,8 @@ const DiscoveryGame = () => {
         </div>
 
         <div className="Discovery-Top-Container">
-          <Slider ref={musicSlides} {...settings} id="carousel">
-            {slides.map((song, i = 0) => {
+          {/* <Slider ref={musicSlides} {...settings} id="carousel">
+            {slides?.map((song, i = 0) => {
               return (
                 <div className="test2">
                   <div className="Discovery-Img-Container">
@@ -307,15 +312,21 @@ const DiscoveryGame = () => {
               );
             })}
 
-          </Slider>
+          </Slider> */}
         </div>
         {/* img updates every second, change later */}
       </div>
       <div className="Discovery-Text-Container">
         {/* Song title */}
-        <h2 className="DGsongtxt"> {slides[state].title} </h2>
+        <h2 className="DGsongtxt">
+           {/* {slides[state].title}  */}
+           title
+        </h2>
         {/* Song Artist */}
-        <h2 className="DGalbtxt"> {slides[state].artist} </h2>
+        <h2 className="DGalbtxt"> 
+          {/* {slides[state].artist}  */}
+          artist
+        </h2>
       </div>
       {/* Swipe Box */}
       <div className="Discovery-Swipe-Container" {...swipeableProps}>
@@ -348,6 +359,7 @@ const DiscoveryGame = () => {
           <MdOutlineArrowForwardIos />
           <MdOutlineArrowForwardIos />{" "}
         </div>
+
         {/* like */}
         <button
           onClick={() => {
@@ -369,13 +381,14 @@ const DiscoveryGame = () => {
           <BsCheckLg />
         </button>
       </div>
+
       {/*Audio Player*/}
       <div className="Discovery-Player-Container">
         {/* <div className={style.DGaudioPlayer}>  JACK */}
         <div className="">
           <audio
             ref={audioPlayer}
-            src={slides[state].songUrl}
+            // src={slides[state].songUrl}
             autoPlay
             //
             preload="metadata"

@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import { Navigate, useNavigate, Link } from "react-router-dom";
 import { Tooltip } from "react-tooltip"; //react tool tip used in explicit tag
-
+import clearQueueBtn from "./clearQueueBtn";
 import CardSong from "../cards/card_song/CardSong";
 import Queue_CardSong from "../cards/card_song/queue_CardSong";
 import Song from "../../components/song detail/Song";
@@ -50,6 +50,7 @@ import { useLikeSong } from "../../hooks/user-hooks/useLikeSong";
 import { useUnlikeSong } from "../../hooks/user-hooks/useUnlikeSong";
 
 import { MusicContext } from "../../contexts/MusicContext";
+import ClearQueueBtn from "./clearQueueBtn";
 
 const MusicBar = () => {
   const [newSong, setNewSong] = useState();
@@ -58,15 +59,23 @@ const MusicBar = () => {
   //context
   const {
     displayMusicBar,
-    queuePosition,
-    updateQueue,
-    addToQueue,
+    updateDisplayMusicBar,
+
     currentSong,
     updateCurrentSong,
-    updateQueuePosition,
-    currentSongData,
-    playlists,
+
     play_list,
+    play_listPosition,
+    updatePlay_list,
+    clearPlay_list,
+    updatePlay_listPosition,
+
+    queue,
+    queuePosition,
+    advanceQueue,
+    addToQueue,
+    updateQueuePosition,
+    
     loopLevel,
     updateLoopLevel,
   } = React.useContext(MusicContext);
@@ -89,23 +98,17 @@ const MusicBar = () => {
 
   const [hasPlay_List, setHasPlay_List] = useState(false);
   const [queueType, setQueueType] = useState(0);
-  const [play_ListPosition, setPlay_ListPosition] = useState(0);
-  const [queue, setQueue] = useState([]);
+  // const [play_ListPosition, setPlay_ListPosition] = useState(0);
+  const [musicBarPlay_list, setMusicBarPlay_list] = useState([]);
   const [list_length, setList_length] = useState(0);
 
   //refrences
   const audioPlayer = useRef(); //reference audio component
   const progressBar = useRef(); //reference progress bar
-  const FCprogressBar = useRef(); //reference progress bar
-  const animationRef = useRef();
-  const volumeRef = useRef();
+  const FCprogressBar = useRef(); //reference FCprogress bar two running always to be swapped between
+  const animationRef = useRef();  //reference progress bar 'before'
+  const volumeRef = useRef(); //reference volume bar
 
-  // if (play_list.length === 0) {
-  //   //no play list
-  // } else if (play_list.length != list_length)  {
-  //   const newLength = play_list.length;
-  //   setList_length(newLength);
-  // }
   useEffect(() => {
     
     if (currentSong) {
@@ -117,11 +120,11 @@ const MusicBar = () => {
       //Maybe use another context file to update the music context file.
       //current song or something? Idk writing this down for future testing
       if (hasPlay_List === false) {
-        if (queue.length === 0) {
+        if (musicBarPlay_list.length === 0) {
           console.log("no playlist");
-          setQueue(play_list);
+          updatePlay_list(play_list);
           console.log(play_list);
-          console.log(queue);
+          // console.log(queue);
         } else {
           setHasPlay_List(true);
       } 
@@ -193,12 +196,17 @@ const MusicBar = () => {
   };
 
   const whilePlaying = () => {
-    if (isPlaying === false) {
-    } else {
+    if(displayMusicBar === false){
+      return;
+    }
+    if (isPlaying === true) {
       progressBar.current.value = audioPlayer.current.currentTime;
       FCprogressBar.current.value = audioPlayer.current.currentTime;
       changePlayerCurrentTime();
       animationRef.current = requestAnimationFrame(whilePlaying); //potential memory leak
+    } else {
+
+      
     }
     
   };
@@ -272,14 +280,14 @@ const MusicBar = () => {
     if (currentTimeInSong < 5) {
       console.log(`rewind to prev`);
 
-      if (queuePosition === 0) {
+      if (play_listPosition === 0) {
         toBeginningOfSong();
         console.log("at start of playlist");
         // updateQueuePosition(0);
       } else {
         try {
           
-          updateQueuePosition(queuePosition - 1);
+          updatePlay_listPosition(play_listPosition - 1);
           // updateCurrentSong(play_list[queuePosition]);
         } catch {
           console.error("Cannot decrement futher");
@@ -299,25 +307,26 @@ const MusicBar = () => {
   const handleForward = () => {
     console.log("forward!")
     
-    if (play_list.length === queuePosition+1) {
+    if (play_list.length === play_listPosition + 1) {
       console.log("at end of playlist");
       if(loopLevel === 1)  {
         console.log("loop is on - restarting play_list");
-        updateQueuePosition(0);
+        updatePlay_listPosition(0);
 
       }
-    } else if(queuePosition === 0) {
-      updateQueuePosition(1);
+    } else if(play_listPosition === 0) {
+      updatePlay_listPosition(1);
       // updateCurrentSong(play_list[queuePosition]);
     } else {
       try {
-        updateQueuePosition(queuePosition + 1);
+        updatePlay_listPosition(play_listPosition + 1);
         // updateCurrentSong(play_list[queuePosition]);
         
       } catch {
         console.error("Cannot increment futher");
       }
     }
+    console.log(play_listPosition)
     // updateSong();
   };
   const toggleFC = (event) => {
@@ -341,10 +350,13 @@ const MusicBar = () => {
     });
     const json = response.json();
   };
+  
 
   return (
     <>
-      {currentSong !== null && (
+      {
+      currentSong !== null && 
+      displayMusicBar === true && (
         <>
           <audio
             loop={isLooping}
@@ -357,6 +369,7 @@ const MusicBar = () => {
               animationRef.current = requestAnimationFrame(whilePlaying);
             }}
             onLoadedMetadata={() => {
+              updateDisplayMusicBar(true);
               setLoopState(0);
               setIsLoaded(true);
               toBeginningOfSong();
@@ -410,13 +423,15 @@ const MusicBar = () => {
                 </div>
 
               </div>
-              {/* Queue */}
+              {/* Queue & Play_list */}
               <div className="brihgleggmoie">
+                <ClearQueueBtn/>
                 <h6 className="queueHeader">Song Queue:</h6>
                 <div className="queueHolder">
                   {play_list &&
                     play_list.map((song, index) => {
-                      if(song._id === currentSong._id) {
+                      // console.log("play_listPos: " + play_ListPosition + " index " + index )
+                      if(index === play_listPosition) {
                         return (
                         <div className="bg1">
                           <Queue_CardSong key={song._id} song={song} index={index}/>

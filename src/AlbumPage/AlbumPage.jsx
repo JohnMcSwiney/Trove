@@ -24,7 +24,8 @@ export default function AlbumPage () {
     play_list,
     updatePlay_list,
     updateQueue,
-    addToQueue
+    addToQueue,
+    updateQueuePosition
   } = React.useContext(MusicContext)
 
   const [album, setAlbum] = React.useState(null)
@@ -32,6 +33,8 @@ export default function AlbumPage () {
   const [artist, setArtist] = React.useState(null)
   const [artistName, setArtistName] = React.useState(null)
   const [albumSongList, setAlbumSongList] = React.useState([])
+  const [test, setTest] = React.useState(false);
+  const [test2, setTest2] = React.useState(false);
   React.useEffect(() => {
     const fetchAlbum = async () => {
       const albumResponse = await fetch(`/api/albums/${id}`, {
@@ -65,67 +68,56 @@ export default function AlbumPage () {
       }
     }
     fetchArtist()
-    
   }, [album])
 
-  
- React.useEffect(() =>{
-  
-    
-    // fetchAlbumSong();
-  
-    const fetchAlbumSongs = async () =>{
-      // if(album && albumSongList?.length <= album?.songList.length){
-      if(album && artist && albumSongList?.length != album?.songList.length){
-        console.log(albumSongList);
-        if (albumSongList?.length <= album?.songList.length ) {
-          let songListin = album.songList;
-          for(const id of songListin){
+  const fetchAlbumSongs = async () => {
+    // if(album && albumSongList?.length <= album?.songList.length){
+    if (test === true) {
+      console.log(albumSongList)
+      if (albumSongList?.length <= album?.songList.length) {
+        let songListin = album.songList
+        for (const id of songListin) {
           const contents = await fetch(`/api/songs/${id}`)
-          .then(response => response.json())
-          .then(json => {
-            if(albumSongList?.length <= album?.songList.length){
-              albumSongList.push(json)
-            }
-            else {
-            }
-          })
-        }   
-          
-    
-          //    console.log("this list equal");
-          // }
-        // } else {
-        //   setDone(true)
-        //   return
+            .then(response => response.json())
+            .then(json => {
+              if (albumSongList?.length <= album?.songList.length - 1) {
+                albumSongList.push(json)
+              }
+            })
         }
       }
     }
-  },[])
-  // console.log('useEffect');
-
-  
-  
-
-  
-  
-    
-      
-      // console.log(albumSongList);
-    // });
-
-    // if (albumSongList.length === 0) {
-    //   album?.songList.map((song, index) => {
-    //     if(index <= album.songList.length) {
-    //       fetchAlbumSong(song)
-    //     }
-    //   })
+  }
+  React.useEffect(() => {
+    if (albumSongList.length === album?.songList.length - 1){
+      console.log("List filled");
+      setTest2(true);
+    }
+    if(test2 === true){
+      console.log("Test2 these nuts");
+    }
+    // if (albumSongList && test === true) {
+    //   updatePlay_list(albumSongList)
+    //   // updateCurrentSong(albumSongList[0]);
+    //   updateQueuePosition(0)
     // }
-  
+
+
+  }, [test,test2])
   const handlePlayAlbum = () => {
-    // console.log(artist);
-    // updatePlay_list(album.songList)
-    // updateCurrentSong(album.songList[0])
+    
+      setTest(true)
+      fetchAlbumSongs()
+    
+      setTimeout(() => {
+        updatePlay_list(albumSongList)
+        setTimeout(() => {
+        updateCurrentSong(albumSongList[0]);
+        updateQueuePosition(0)
+        }, 400)
+      }, 400)
+
+    
   }
   // const navigate = useNavigate()
   // function redirectEditPlaylist () {
@@ -172,7 +164,7 @@ export default function AlbumPage () {
               {albumSongList?.length === album?.songList.length &&
                 albumSongList?.map((song, index) => {
                   //fetchAlbumSong(song);
-                  console.log(song.title);
+                  // console.log(song.title);
                   return (
                     <li className='playlist--song--container'>
                       <h1>{index + 1}</h1>
@@ -180,7 +172,7 @@ export default function AlbumPage () {
 
                       {/* <p className="hiddens">  {song._id}</p> */}
                       {/* 
-            <p> {song.title}</p> */}
+                      <p> {song.title}</p> */}
                     </li>
                   )
                 })}

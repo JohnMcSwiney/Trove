@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 
 //create the context
 export const MusicContext = createContext();
@@ -6,69 +6,114 @@ export const MusicContext = createContext();
 // create a provider component to wrap the application
 
 export const MusicProvider = ({ children }) => {
+  const [displayMusicBar, setDisplayMusicBar] = useState(false);
+  
   const [currentSong, setCurrentSong] = useState(null);
-  const [currentSongData, setCurrentSongData] = useState(null);
-  const [playlists, setPlaylists] = useState([]);
 
   const [play_list, setPlay_list] = useState([]);
-  const [displayMusicBar, setDisplayMusicBar] = useState(false);
+  const [play_listPosition, setPlay_listPosition] = useState(0);
+
+  const [queue, setQueue] = useState([]);
   const [queuePosition, setQueuePosition] = useState(0);
+  
+  
   const[loopLevel, setLoopLevel] = useState(0);
+  
+  const updateDisplayMusicBar = (newDisplayMusicBar) => {
+    setDisplayMusicBar(newDisplayMusicBar);
+  };
+
   // function to update the currently playing song
   const updateCurrentSong = (song) => {
+    if(displayMusicBar === false){
+      updateDisplayMusicBar(true);
+    }
     setCurrentSong(song);
-    // setCurrentSongData(song);
-    // console.log(song)
   };
-  const updateLoopLevel = (level) => {
-    setLoopLevel(level);
-  }
-  const updateQueue = (queue) => {
-  
-  }
-  const addToQueue = (song) => {
-  
-  }
-  const updatePlaylists = (newPlaylists) => {
-    setPlaylists(newPlaylists);
-    // console.log(newPlaylists)
-  };
+
+  //Play_list methods
   const updatePlay_list = (newPlaylists) => {
     setPlay_list(newPlaylists);
     // console.log(newPlaylists)
   };
-  const updateDisplayMusicBar = (newDisplayMusicBar) => {
-    setDisplayMusicBar(newDisplayMusicBar);
-    // console.log(newDisplayMusicBar)
+  const updatePlay_listPosition = (newPlay_listPosition) => {
+  
+    setPlay_listPosition(newPlay_listPosition);
+
+    if(play_list?.length !== newPlay_listPosition){
+      updateCurrentSong(play_list[newPlay_listPosition]);
+    }
   };
+
+  const clearPlay_list = () => {
+    if(play_list?.length!== 0){
+    console.log("queue clearing");
+    updatePlay_list([]);
+    }
+  };
+
+  //queue methods
+  const advanceQueue = () => {
+    queue.shift();
+  }
+  const addToQueue = (song) => {
+    queue.push(song);
+    console.log(queue);
+  }
+  
   const updateQueuePosition = (newQueuePosition) => {
   
     setQueuePosition(newQueuePosition);
 
-    if(play_list?.length != newQueuePosition){
+    if(play_list?.length !== newQueuePosition){
       updateCurrentSong(play_list[newQueuePosition]);
     }
   };
 
+  const clearQueue = () => {
+    if(queue?.length!== 0){
+    
+    setQueue([]);
+    console.log(queue);
+    }
+  };
+  
+
+  const updateLoopLevel = (level) => {
+    setLoopLevel(level);
+  }
+
+  useEffect (()=> {
+    console.log("queue" + queue);
+  },[queue])
+  // play_list is the full list of songs
+  // queue is a list that removes a song on listen and can be added to anytime
+  // when a song is added to the queue it will pause the play_list position
+  // somewhat convoluted, but it should work
   const contextValue = {
     displayMusicBar,
-    queuePosition,
-    currentSong,
-    currentSongData,
-    updateCurrentSong,
-    play_list,
     updateDisplayMusicBar,
+
+    currentSong,
+    updateCurrentSong,
+
+    play_list,
+    play_listPosition,
     updatePlay_list,
-    updateQueuePosition,
+    clearPlay_list,
+    updatePlay_listPosition,
+
+    queue,
+    queuePosition,
+    advanceQueue,
     addToQueue,
+    clearQueue,
+    updateQueuePosition,
+    
     loopLevel,
     updateLoopLevel,
   };
-  // try{
-  //   console.log(currentSong.title);
-  // } catch {
 
-  // }
   
   
   return (
@@ -78,46 +123,3 @@ export const MusicProvider = ({ children }) => {
   );
 };
 
-// import React, { useContext } from "react";
-// import { MusicContext } from "./MusicContext";
-
-// const CurrentlyPlaying = () => {
-//   // Access the context value for the current song
-//   const { currentSong } = useContext(MusicContext);
-
-//   return (
-//     <div>
-//       {currentSong ? (
-//         <div>
-//           <h2>Currently playing:</h2>
-//           <p>{currentSong.title}</p>
-//         </div>
-//       ) : (
-//         <p>No song currently playing</p>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default CurrentlyPlaying;
-
-// import React, { useContext } from "react";
-// import { MusicContext } from "./MusicContext";
-
-// const Playlists = () => {
-//   // Access the context value for the user's playlists
-//   const { playlists } = useContext(MusicContext);
-
-//   return (
-//     <div>
-//       <h2>My Playlists:</h2>
-//       <ul>
-//         {playlists.map((playlist) => (
-//           <li key={playlist.id}>{playlist.name}</li>
-//         ))}
-//       </ul>
-//     </div>
-//   );
-// };
-
-// export default Playlists;

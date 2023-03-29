@@ -5,6 +5,9 @@ import { NavLink } from "react-router-dom";
 import { MusicContext } from "../../../../contexts/MusicContext";
 import "./searchSongCard2.css";
 
+
+//for testing atm
+import AddToQueueBtn from '../../../QueueBtns/addToQueueBtn';
 const SearchSongCard2 = ({ song }) => {
   const { currentSong, updateCurrentSong, currentSongData } =
     React.useContext(MusicContext);
@@ -41,19 +44,22 @@ const SearchSongCard2 = ({ song }) => {
     <div
       key={song._id}
       className="song-info-div"
-      onClick={() => {
+      
+    >
+      <audio ref={audioRef} src={song.songUrl}></audio>
+      <div className="song-img-div-ver2" onClick={() => {
         handlePlaySong()
         // song.songUrl
 
-      }}
-    >
-      <audio ref={audioRef} src={song.songUrl}></audio>
-      <div className="song-img-div-ver2">
+      }}>
         <img src={song.imgUrl} alt={song.title}/>
       </div>
       
       <div className="song-text-div">
-        <div className="titlesongcard">
+        <div className="titlesongcard" onClick={() => {
+        handlePlaySong()
+        // song.songUrl
+      }}>
           {song.title}
         </div>
         <div className="artistsongcard">
@@ -68,7 +74,7 @@ const SearchSongCard2 = ({ song }) => {
       <div className="genreCont">
         {song.genre}
       </div>
-      
+      <AddToQueueBtn song={song}/>
     </div>
   );
 };
