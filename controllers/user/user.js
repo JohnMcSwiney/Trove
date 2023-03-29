@@ -100,7 +100,7 @@ const updateUser = async (req, res) => {
   }
 
   const { displayName, avatar, dob, email, password } = req.body;
-
+  console.log(password)
   try {
     const user = await User.findById(id);
     user.displayName = displayName;
@@ -109,6 +109,7 @@ const updateUser = async (req, res) => {
     user.email = email;
 
     const isMatch = await bcrypt.compare(password, user.password);
+    console.log(user.password, "is match" , isMatch)
     let salt;
     let hash;
     if (!isMatch) {
@@ -118,8 +119,8 @@ const updateUser = async (req, res) => {
 
     user.password = hash;
     await user.save();
-    const message = "Updated User successfully";
-    res.status(200).json({ message });
+    const success = "Updated User successfully";
+    res.status(200).json({ success });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
