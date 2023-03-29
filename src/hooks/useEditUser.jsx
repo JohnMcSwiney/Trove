@@ -20,7 +20,7 @@ export const useEditUser = () => {
     }
 
     if (response.ok) {
-      setMessage(json.message);
+      setMessage(json.success);
     }
     setEditIsLoading(false);
   };
