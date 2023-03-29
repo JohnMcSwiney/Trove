@@ -9,8 +9,7 @@ const playlistSchema = new mongoose.Schema(
       default: "My Trove List"
     },
     playlistCreator: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User"
+      default: "Trove Music"
     },
     playlistCoverUrl: {
       type: String,
