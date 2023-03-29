@@ -24,7 +24,7 @@ const AlbumModal = ({ album }) => {
       setFArtist(data?.featuredArtists?.artistName || "");
     }
     fetchSongList();
-  }, [album._id]);
+  }, [album?._id]);
 
   return (
     <form>
