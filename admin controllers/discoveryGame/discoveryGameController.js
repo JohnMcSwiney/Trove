@@ -22,6 +22,8 @@ const calcSongData = async (buffer) => {
 
     console.log("should be in calcsongdata");
 
+    console.log("buffer in calcsongdata" + buffer);
+
     let audioData = [];
 
     if (buffer.numberOfChannels == 2) {
@@ -44,10 +46,10 @@ const calcSongData = async (buffer) => {
     console.log("tempo resolve: " + tempo);
     console.log("beat resolve: " + beat);
 
-    resolve(tempo, beat);
+    resolve(songData);
   })
     .then((result) => {
-      console.log("result: " + result.beat);
+      console.log("result: " + result);
       return result;
     })
     .catch((err) => {
@@ -127,11 +129,11 @@ const compareSongData = async (user) => {
 
       const context = new AudioContext();
 
-      let songData = null;
+      //const songData = await calcSongData(buffer)
 
-      songData = await context.decodeAudioData(buffer, calcSongData);
+      const songData = await context.decodeAudioData(buffer, calcSongData);
 
-      console.log("songData in outer function: " + songData.tempo);
+      console.log("songData in outer function: " + songData);
 
 
       // const decodedBuffer = await context.decodeAudioData(buffer);
@@ -351,11 +353,74 @@ const compareSongData = async (user) => {
 
 }
 
+const loadSongs = async (user) => {
+
+  const songData = await compareSongData(user);
+
+  console.log("should be done finding songdata");
+
+  // const allSongs = await Song.find()
+
+  //   .populate("artist")
+  //   .populate("featuredArtists")
+
+  //   .populate("album")
+
+  //    .sort({createdAt: -1});
+
+  // if (!allSongs) {
+  //   return res.status(404).send("songs not found");
+  // }
+
+  // let similarSongs = [];
+
+  // for (const song of allSongs) {
+
+  //   console.log("song in allSongs: " + song.title);
+
+  //   const songURL = song.songUrl;
+
+  //   console.log("songURL in allSongs: " + songURL);
+
+  //   await fetch(songURL)
+  //     .then(res => res.arrayBuffer())
+  //     .then(buffer => {
+
+  //       const context = new AudioContext();
+
+  //       return context.decodeAudioData(buffer, calcSongData);
+  //     });
+
+  //   const songTempo = Math.round(calcSongData.tempo).toPrecision(2);
+  //   const songBeat = Math.round(calcSongData.beat).toPrecision(2);
+
+  //   if (songTempo == findSongData.averageTempo && songBeat == averageBeat) {
+  //     similarSongs.push(song);
+  //   }
+  // }
+
+  // for (let i = 0; i < 5; i++) {
+  //   const randomSong = similarSongs[Math.floor(Math.random() * similarSongs.length)];
+  //   songLimit[i] = randomSong;
+  //   console.log("songlimit title: " + songLimit[i].title);
+  // }
+
+  // console.log("songLimit length: " + songLimit.length)
+
+  // if (songLimit.length > 5) {
+  //   throw new Error("Song limit cannot be greater than 5.");
+  // }
+
+  // return songLimit;
+
+  // res.status(200).json(songLimit);
+}
+
 //get discovery game
 const loadDiscoveryGame = async (req, res) => {
   //what should happen is when the game is loaded it'll just load a random song from the list.
 
-  const { id } = req.params
+  const { id } = req.params;
 
   try {
 
@@ -402,63 +467,9 @@ const loadDiscoveryGame = async (req, res) => {
     }
     else {
 
-      await compareSongData(user);
+      const songLimit = await loadSongs(user);
 
-      console.log("should be done finding songdata");
-
-      // const allSongs = await Song.find()
-
-      //   .populate("artist")
-      //   .populate("featuredArtists")
-
-      //   .populate("album")
-
-      //    .sort({createdAt: -1});
-
-      // if (!allSongs) {
-      //   return res.status(404).send("songs not found");
-      // }
-
-      // let similarSongs = [];
-
-      // for (const song of allSongs) {
-
-      //   console.log("song in allSongs: " + song.title);
-
-      //   const songURL = song.songUrl;
-
-      //   console.log("songURL in allSongs: " + songURL);
-
-      //   await fetch(songURL)
-      //     .then(res => res.arrayBuffer())
-      //     .then(buffer => {
-
-      //       const context = new AudioContext();
-
-      //       return context.decodeAudioData(buffer, calcSongData);
-      //     });
-
-      //   const songTempo = Math.round(calcSongData.tempo).toPrecision(2);
-      //   const songBeat = Math.round(calcSongData.beat).toPrecision(2);
-
-      //   if (songTempo == findSongData.averageTempo && songBeat == averageBeat) {
-      //     similarSongs.push(song);
-      //   }
-      // }
-
-      // for (let i = 0; i < 5; i++) {
-      //   const randomSong = similarSongs[Math.floor(Math.random() * similarSongs.length)];
-      //   songLimit[i] = randomSong;
-      //   console.log("songlimit title: " + songLimit[i].title);
-      // }
-
-      // console.log("songLimit length: " + songLimit.length)
-
-      // if (songLimit.length > 5) {
-      //   throw new Error("Song limit cannot be greater than 5.");
-      // }
-
-      // res.status(200).json(songLimit);
+      res.status(200).json(songLimit);
     }
 
   } catch (err) {
@@ -471,63 +482,72 @@ const loadDiscoveryGame = async (req, res) => {
 //WIP
 const playDiscoveryGame = async (req, res) => {
 
-  console.log("swipe direction: " + req.body.swipeDirection);
+  const { id } = req.params;
+
+  console.log("swipe direction: " + req.body);
 
   try {
 
-    const user = await User.findOne({ email: req.body.email });
+    // const user = await User.findOne({ email: req.body.email });
+
+    const user = await User.findById(id);
 
     if (!user) {
       return res.status(404).send("User profile not found");
     }
 
-    console.log(user);
+    console.log("swipe direction test: " + req.body.songs);
 
-    const song = await Song.findOne({ _id: req.body.songID });
+    const songArray = await Promise.all(
+      req.body.songs.map(async (currentSong, i = 0) => {
+        const song = await Song.findById(currentSong._id);
 
-    if (!song) {
-      return res.status(404).send("Song not found");
-    }
+        if (!song) {
+          throw new Error("Featured artist not found");
+        }
 
-    const songURL = song.songUrl;
+        console.log("song: " + song);
 
-    await fetch(songURL)
-      .then(res => res.arrayBuffer())
-      .then(buffer => {
+        if (!req.body.songs[i].swipeDirection || req.body.songs[i].swipeDirection == null) {
 
-        const context = new AudioContext();
+          console.log("swipeDirection not found");
+        }
+        else {
 
-        const musicData = context.decodeAudioData(buffer, calcTempo);
+          console.log("swipeDirection[i]: " + req.body.songs[i].swipeDirection);
 
-        return musicData;
-      });
+          if (req.body.songs[i].swipeDirection === "left") {
+            console.log("they swiped left");
+            i++;
 
-    if (!req.body.swipeDirection || req.body.swipeDirection == null) {
+          } else {
+            //user.likedSongs.push(song._id);
+            await User.updateOne(
+              { _id: user._id },
+              { $push: { likedSongs: song._id } }
+            );
+            console.log("liked successfully");
+            i++;
+          }
+        }
+      })
+    );
+    console.log("done");
+    res.status(200).json({ msg: "successfully ran DG" });
 
-      console.log("swipeDirection not found");
-    }
-    else {
 
-      if (req.body.swipeDirection === "left") {
-        console.log("they swiped left");
+    // const songURL = song.songUrl;
 
-        await compareSongData(user);
-        // const nextSong = await getNextSong(user);
-        // res.send(nextSong);
+    // await fetch(songURL)
+    //   .then(res => res.arrayBuffer())
+    //   .then(buffer => {
 
-        // async function getNextSong(user) {
-        //   user = await User.findById(user).populate({
-        //     path: "user.likedSongs",
-        //     options: { sort: { createdAt: -1 } },
-        //     limit: 1,
-        //   });
-        // }
-      } else {
-        console.log("before push");
-        user.likedSongs.push(song._id);
-        console.log("liked successfully");
-      }
-    }
+    //     const context = new AudioContext();
+
+    //     const musicData = context.decodeAudioData(buffer, calcTempo);
+
+    //     return musicData;
+    //   });
 
   } catch (err) {
     console.log("fetching song err");

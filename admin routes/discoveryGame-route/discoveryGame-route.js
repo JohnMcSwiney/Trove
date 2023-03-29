@@ -10,7 +10,7 @@ const {
 //get all
 router.get("/:id", loadDiscoveryGame);
 
-router.post("/", playDiscoveryGame);
+router.post("/:id", playDiscoveryGame);
 
 
 module.exports = router;
