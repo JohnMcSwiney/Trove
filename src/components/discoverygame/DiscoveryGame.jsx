@@ -38,7 +38,7 @@ import { useAuthContext } from '../../hooks/user-hooks/useAuthContext'
 
 const DiscoveryGame = () => {
   //state
-  
+
   const [state, setState] = React.useState(0)
 
   const [index, setIndex] = React.useState(0)
@@ -49,7 +49,7 @@ const DiscoveryGame = () => {
   const [isPlaying, setIsPlaying] = useState(true)
   const [isLoaded, setIsLoaded] = useState(false)
   const [duration, setDuration] = useState(0)
-  const [foobar, setFoobar] = useState("these");
+  const [foobar, setFoobar] = useState('these')
   const [currentTime, setCurrentTime] = useState(0)
 
   const [likedslides, setLikedslides] = useState([])
@@ -78,47 +78,41 @@ const DiscoveryGame = () => {
   const [needLoadsong, setneedLoadsong] = useState(false)
   const user = useAuthContext()
   React.useEffect(() => {
-    // function getdgSongs () { 
+    // function getdgSongs () {
     console.log('in fetch all songs useEffect')
-    
-    if(songsLoaded === true){
-      return;
+
+    if (songsLoaded === true) {
+      return
     }
     const fetchAllSong = async () => {
-      if(songsLoaded === true){
-        return;
+      if (songsLoaded === true) {
+        return
       } else {
-        
       }
-      if (
-        songs.length === 0
-      ) {
+      if (songs.length === 0) {
         // fetch(`api/DG/${hardCodeId}`)
         let temp
         setneedLoadsong(true)
         await fetch(`api/DG/${user.id}`)
           .then(response => response.json())
           .then(json => {
-              temp = json
+            temp = json
           })
         setneedLoadsong(false)
-        if(!songsLoaded)  updateSongs(temp);
+        if (!songsLoaded) updateSongs(temp)
       } else {
-        return;
+        return
       }
     }
-    
-    fetchAllSong();
-  }
-  , [])
 
-  function updateSongs (songsIn) {  
-    if(songsLoaded !== true){
-      if(songs == 0 ){
-        updateSongsLoaded(true);
-        setSongs(songsIn);
-        
-      
+    fetchAllSong()
+  }, [])
+
+  function updateSongs (songsIn) {
+    if (songsLoaded !== true) {
+      if (songs == 0) {
+        updateSongsLoaded(true)
+        setSongs(songsIn)
       }
     }
   }
@@ -128,7 +122,7 @@ const DiscoveryGame = () => {
   //     } else {
   //       return;
   //     }
-    
+
   // }, [songs])
   //
   // useEffect(() => {
@@ -146,7 +140,6 @@ const DiscoveryGame = () => {
   //   console.log(dGData)
   // }
   const handleAddLikedSongs = () => {
-    
     const newLike = { _id: songs[state]._id }
 
     const updateLikes = [...likedslides, newLike]
@@ -190,7 +183,7 @@ const DiscoveryGame = () => {
   }
 
   const togglePlayPause = () => {
-    if (currentUserLoaded && dGData) {
+    if (songs) {
       const prevValue = isPlaying
       setIsPlaying(!prevValue)
       changeVolumeLevel()
@@ -228,17 +221,20 @@ const DiscoveryGame = () => {
     }
   }
   const whilePlaying = () => {
-    console.log('whilePlaying')
-    if (currentUserLoaded === true && dGData.length !== 0) {
-      console.log('whilePlaying in da if statement')
+    // console.log('whilePlaying')
+    if (songs.length !== 0) {
+      // console.log('whilePlaying in da if statement')
       DGprogressBar.current.value = audioPlayer.current?.currentTime
       changePlayerCurrentTime()
       animationRef.current = requestAnimationFrame(whilePlaying) //potential memory leak
     }
   }
   const changeRange = () => {
-    audioPlayer.current.currentTime = DGprogressBar.current.value
-    changePlayerCurrentTime()
+    if(songs.length !== 0){
+      audioPlayer.current.currentTime = DGprogressBar.current.value
+      changePlayerCurrentTime()
+    }
+    
   }
   const changePlayerCurrentTime = () => {
     DGprogressBar.current.style.setProperty(
@@ -334,16 +330,16 @@ const DiscoveryGame = () => {
     // } else {
     //   return;
     // }
-    
+
     console.log(songs)
-    
+
     // function doSomething() {
     //   console.info("DOM loaded");
     // }
-    
+
     // if (document.readyState === "loading") {
     //   // Loading hasn't finished yet
-      
+
     //   document.addEventListener("DOMContentLoaded", doSomething);
     // } else {
     //   // `DOMContentLoaded` has already fired
@@ -371,14 +367,12 @@ const DiscoveryGame = () => {
             {/* Song title */}
             <h2 className='DGsongtxt'>
               {/* {dGData && dGData[state].title}  */}
-              {songs.length !== 0 && (
-                songs[state]?.title)} 
+              {songs.length !== 0 && songs[state]?.title}
               {/* title */}
             </h2>
             {/* Song Artist */}
             <h2 className='DGalbtxt'>
-              {songs.length !== 0 && (
-                songs[state]?.artist.artistName)} 
+              {songs.length !== 0 && songs[state]?.artist.artistName}
               {/* artist */}
             </h2>
           </div>
@@ -437,7 +431,69 @@ const DiscoveryGame = () => {
               <BsCheckLg />
             </button>
           </div>
-          
+          <div className='Discovery-Player-Container'>
+            {/* <div className={style.DGaudioPlayer}>  JACK */}
+            <div className=''>
+            
+              <audio
+                ref={audioPlayer}
+                src={songs[state]?.songUrl}
+                autoPlay
+                preload='metadata'
+                isPlaying={() => {
+                  changeRange()
+                  animationRef.current = requestAnimationFrame(whilePlaying)
+                }
+                  }
+              ></audio>
+
+            
+              
+              {/*testing maybe going in audio player to fix not loading the proggress bar on start up onLoadedMetaData={onLoadedMetaData}  */}
+
+              {/*current time*/}
+              {/* removed for testing */}
+              {/* <div className={style.DGcurrentTime}>{calculateTime(currentTime)}</div> */}
+              {/*progress bar*/}
+              <div className='DGprogressBarContainer'>
+                
+                <input
+                  type='range'
+                  // className={style.DGprogressBar}
+                  className='DGprogressBar'
+                  defaultValue='0'
+                  ref={DGprogressBar}
+                  onChange={() => {
+                    changeRange()
+                    animationRef.current = requestAnimationFrame(whilePlaying)
+                  }}
+                />
+              </div>
+              <div className='DGpsbutsCont'>
+                <button
+                  onClick={togglePlayPause}
+                  className='DGplayPause'
+                  id='playPauseBtn'
+                >
+                  {isPlaying ? <FaPause /> : <FaPlay className='DGplay' />}
+                </button>
+              </div>
+              <div className='DGvolumeContainter'>
+    <button onClick={toggleMute}>
+      {isMuted ? <BiVolumeFull /> : <BiVolumeMute />}
+    </button>
+    <input
+      type='range'
+      ref={DGvolumeRef}
+      defaultValue='10'
+      onChange={changeVolumeLevel}
+      min='0'
+      max='100'
+      step='5'
+    ></input>
+  </div>
+            </div>
+          </div>
         </div>
       </div>
     )
