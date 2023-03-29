@@ -7,7 +7,7 @@ export const useUploadSong = () => {
   const [isUploading, setIsUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const storage = firebase.storage();
-
+const [message, setMessage] =useState("")
   const uploadMusic = async (
     songs,
     title,
@@ -166,6 +166,9 @@ export const useUploadSong = () => {
       if (!res.ok) {
         setError(data.error);
       }
+      if(res.ok){
+        setMessage(data.success)
+      }
     };
 
     const createAlbumObject = async (imgUrl) => {
@@ -197,10 +200,11 @@ export const useUploadSong = () => {
       const data = await res.json();
       console.log("Album Data: " + data);
 
-      if (!data.ok) {
+      if (!res.ok) {
         setError(data.error);
       }
 
+      setMessage(data.success)
       let songTitleIndex = 0;
       let songTitle = "";
       for (const file of songFile) {
@@ -245,10 +249,10 @@ export const useUploadSong = () => {
 
       console.log("EP Data: " + data);
 
-      if (!data.ok) {
+      if (!res.ok) {
         setError(data.error);
       }
-
+      setMessage(data.success)
       let songTitleIndex = 0;
       let songTitle = "";
       for (const file of songFile) {
@@ -361,5 +365,5 @@ export const useUploadSong = () => {
         break;
     }
   };
-  return { uploadMusic, isUploading, error };
+  return { uploadMusic, isUploading, error, message };
 };

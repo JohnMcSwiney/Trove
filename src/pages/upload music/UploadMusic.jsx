@@ -158,7 +158,7 @@ export default function UploadMusic(props) {
   };
 
   // When music is submitted
-  const { uploadMusic, isUploading, error } = useUploadSong();
+  const { uploadMusic, isUploading, error, message } = useUploadSong();
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -310,8 +310,12 @@ export default function UploadMusic(props) {
         </div>
         {/* </form> */}
       </div>
-
-      {/* <footer><MusicBar /></footer> */}
+          {error && (
+            <p>{error}</p>
+          )}
+           {message && (
+            <p>{message}</p>
+          )}
     </section>
   );
 }

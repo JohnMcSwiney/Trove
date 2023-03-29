@@ -3,7 +3,7 @@ import { useState } from "react";
 export const useUpdatePassword = () => {
   const [updatePasswordError, setUpdatePasswordError] = useState(null);
   const [isLoadingUpdatePassword, setIsLoadingUpdatePassword] = useState(false);
-
+const [passwordMessage, setMessage] = useState('')
   const artistID = JSON.parse(localStorage.getItem("artist")).id;
   const updatePassword = async (password, newPassword, confirmNewPassword) => {
     setUpdatePasswordError(null);
@@ -20,7 +20,10 @@ export const useUpdatePassword = () => {
       setUpdatePasswordError(json.error);
     }
 
+    if(response.ok){
+      setMessage(json.success)
+    }
     setIsLoadingUpdatePassword(false);
   };
-  return { updatePassword, updatePasswordError, isLoadingUpdatePassword };
+  return { updatePassword, updatePasswordError, isLoadingUpdatePassword, passwordMessage };
 };

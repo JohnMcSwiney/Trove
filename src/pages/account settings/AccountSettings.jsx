@@ -57,7 +57,8 @@ const AccountSetting = () => {
     setShowPasswordTab(!showPasswordTab);
   };
 
-  const { updateInfo, updateError, isLoadingUpdate } = useUpdateInfo();
+  const { updateInfo, updateError, isLoadingUpdate, infoMessage } =
+    useUpdateInfo();
   const handleUpdateAccount = async (e) => {
     e.preventDefault();
     try {
@@ -68,7 +69,7 @@ const AccountSetting = () => {
     }
   };
 
-  const { updateEmail, updateGmailError, isLoadingUpdateEmail } =
+  const { updateEmail, updateGmailError, isLoadingUpdateEmail, emailMessage } =
     useUpdateGmail();
   const handleUpdateEmail = async (e) => {
     e.preventDefault();
@@ -80,8 +81,12 @@ const AccountSetting = () => {
     }
   };
 
-  const { updatePassword, updatePasswordError, isLoadingUpdatePassword } =
-    useUpdatePassword();
+  const {
+    updatePassword,
+    updatePasswordError,
+    isLoadingUpdatePassword,
+    passwordMessage,
+  } = useUpdatePassword();
   const handleUpdatePassword = async (e) => {
     e.preventDefault();
     try {
@@ -165,6 +170,9 @@ const AccountSetting = () => {
                 </div>
               </div>
             </form>
+            {updateError && <p>{updateError}</p>}
+
+            {infoMessage && <p>{infoMessage}</p>}
           </div>
 
           <div className={`${state === 2 ? "active-content" : "content"}`}>
@@ -174,37 +182,42 @@ const AccountSetting = () => {
               <h5 onClick={toggleShowEmail}>Email</h5>
               {showEmailTab && (
                 <div>
-                  <label htmlFor="currentEmail">Current email</label>
-                  <input
-                    type="email"
-                    id="currentEmail"
-                    className="form-control"
-                    placeholder="abcd@gmail.com"
-                    onChange={(e) => setCurrentEmail(e.target.value)}
-                    value={currentEmail}
-                  />
+                  <form onSubmit={handleUpdateEmail}>
+                    <label htmlFor="currentEmail">Current email</label>
+                    <input
+                      type="email"
+                      id="currentEmail"
+                      className="form-control"
+                      placeholder="abcd@gmail.com"
+                      onChange={(e) => setCurrentEmail(e.target.value)}
+                      value={currentEmail}
+                    />
 
-                  <label htmlFor="newemail">New email</label>
-                  <input
-                    type="email"
-                    id="newemail"
-                    className="form-control"
-                    placeholder="abcd@gmail.com"
-                    onChange={(e) => setNewEmail(e.target.value)}
-                    value={newEmail}
-                  />
+                    <label htmlFor="newemail">New email</label>
+                    <input
+                      type="email"
+                      id="newemail"
+                      className="form-control"
+                      placeholder="abcd@gmail.com"
+                      onChange={(e) => setNewEmail(e.target.value)}
+                      value={newEmail}
+                    />
 
-                  <label htmlFor="Cpassword">Confirm password</label>
-                  <input
-                    type={"password"}
-                    id="Cpassword"
-                    className="form-control"
-                    placeholder="Confirm password"
-                    onChange={(e) => setCPassword(e.target.value)}
-                    value={cPassword}
-                  />
+                    <label htmlFor="Cpassword">Confirm password</label>
+                    <input
+                      type={"password"}
+                      id="Cpassword"
+                      className="form-control"
+                      placeholder="Confirm password"
+                      onChange={(e) => setCPassword(e.target.value)}
+                      value={cPassword}
+                    />
+                  </form>
 
-                  <button className="btn btn-primary mt-3 mb-3">
+                  {updateGmailError && <p>{updateGmailError}</p>}
+
+                  {emailMessage && <p>{emailMessage}</p>}
+                  <button type="submit" className="btn btn-primary mt-3 mb-3">
                     Update Email
                   </button>
                 </div>
@@ -215,47 +228,51 @@ const AccountSetting = () => {
               <h5 onClick={toggleShowPasswordTab}>Password</h5>
               {showPasswordTab && (
                 <div>
-                  <label htmlFor="password">Current password</label>
-                  <input
-                    type={"password"}
-                    id="password"
-                    className="form-control"
-                    placeholder="Current password"
-                    onChange={(e) => setPassword(e.target.value)}
-                    value={password}
-                  />
+                  <form onSubmit={handleUpdatePassword}>
+                    <label htmlFor="password">Current password</label>
+                    <input
+                      type={"password"}
+                      id="password"
+                      className="form-control"
+                      placeholder="Current password"
+                      onChange={(e) => setPassword(e.target.value)}
+                      value={password}
+                    />
 
-                  <label htmlFor="newpassword">New password</label>
-                  {showPassword ? (
-                    <BiShow onClick={toggleHidden} />
-                  ) : (
-                    <AiOutlineEyeInvisible onClick={toggleHidden} />
-                  )}
-                  <input
-                    type={showPassword ? "text" : "password"}
-                    id="newpassword"
-                    className="form-control"
-                    placeholder="New password"
-                    onChange={(e) => setNewPassword(e.target.value)}
-                    value={newPassword}
-                  />
+                    <label htmlFor="newpassword">New password</label>
+                    {showPassword ? (
+                      <BiShow onClick={toggleHidden} />
+                    ) : (
+                      <AiOutlineEyeInvisible onClick={toggleHidden} />
+                    )}
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      id="newpassword"
+                      className="form-control"
+                      placeholder="New password"
+                      onChange={(e) => setNewPassword(e.target.value)}
+                      value={newPassword}
+                    />
 
-                  <label htmlFor="Cnewpassword">Confirm new password</label>
-                  {showCPassword ? (
-                    <BiShow onClick={toggleHiddenC} />
-                  ) : (
-                    <AiOutlineEyeInvisible onClick={toggleHiddenC} />
-                  )}
-                  <input
-                    type={showCPassword ? "text" : "password"}
-                    id="Cnewpassword"
-                    className="form-control"
-                    placeholder="Confirm new password"
-                    onChange={(e) => setConfirmNewPassword(e.target.value)}
-                    value={confirmNewPassword}
-                  />
+                    <label htmlFor="Cnewpassword">Confirm new password</label>
+                    {showCPassword ? (
+                      <BiShow onClick={toggleHiddenC} />
+                    ) : (
+                      <AiOutlineEyeInvisible onClick={toggleHiddenC} />
+                    )}
+                    <input
+                      type={showCPassword ? "text" : "password"}
+                      id="Cnewpassword"
+                      className="form-control"
+                      placeholder="Confirm new password"
+                      onChange={(e) => setConfirmNewPassword(e.target.value)}
+                      value={confirmNewPassword}
+                    />
+                  </form>
+                  {updatePasswordError && <p>{updatePasswordError}</p>}
 
-                  <button className="btn btn-primary mt-3">
+                  {passwordMessage && <p>{passwordMessage}</p>}
+                  <button type="submit" className="btn btn-primary mt-3">
                     Change Password
                   </button>
                 </div>

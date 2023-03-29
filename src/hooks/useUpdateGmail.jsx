@@ -3,7 +3,7 @@ import { useState } from "react";
 export const useUpdateGmail = () => {
   const [updateGmailError, setUpdateGmailError] = useState(null);
   const [isLoadingUpdateEmail, setIsLoadingUpdateEmail] = useState(false);
-
+  const [emailMessage, setMessage] = useState("")
   const artistID = JSON.parse(localStorage.getItem("artist")).id;
   const updateEmail = async (currentEmail, newEmail, cPassword) => {
     setUpdateGmailError(null);
@@ -20,11 +20,16 @@ export const useUpdateGmail = () => {
       setUpdateGmailError(json.error);
     }
 
-    // const artist = JSON.parse(localStorage.getItem("artist"));
+    if(response.ok){
+      const artist = JSON.parse(localStorage.getItem("artist"));
 
-    // artist.email = newEmail;
-    // localStorage.setItem("artist", JSON.stringify(artist));
+    artist.email = newEmail;
+    localStorage.setItem("artist", JSON.stringify(artist));
+    setMessage(json.success)
+
+    }
+    
     setIsLoadingUpdateEmail(false);
   };
-  return { updateEmail, updateGmailError, isLoadingUpdateEmail };
+  return { updateEmail, updateGmailError, isLoadingUpdateEmail, emailMessage };
 };
