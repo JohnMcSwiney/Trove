@@ -51,6 +51,19 @@ const MyTrove = () => {
     fetchUserInfo();
   }, []);
   console.log(userInfo.likedSongs);
+  
+  {/*  }
+
+  //Work in progress
+
+    const RemoveLike = async () => {
+      fetch(`/api/users/${userID.likedSongs}` + song._id ,
+        method: 'DELETE')
+      
+    }
+
+    {*/}
+  
   return (
     <div className="container">
       <div className="myTrvcontainer ">
@@ -114,7 +127,13 @@ const MyTrove = () => {
                 userInfo?.likedSongs.map((song) => (
                   <div key={song._id}>
                     <p>
-                      {song.title} - {song.artist?.artistName} <button className="RemoveLike">Remove</button>
+                      {song.title} - {song.artist?.artistName} 
+                      <button className="RemoveLike" >Remove</button>
+
+                      {/*   
+                      add when remove like works
+                       onClick{RemoveLike} 
+                       */}
                     </p>
                     
                   </div>

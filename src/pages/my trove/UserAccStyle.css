@@ -263,3 +263,9 @@
     padding: 10px;
     max-width: 400px; 
 }
+
+.RemoveLike{
+    color: red;
+    float: right;
+
+}
