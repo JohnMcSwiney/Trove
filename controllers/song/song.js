@@ -241,7 +241,7 @@ const updateSong = async (req, res) => {
 
   const {
     title,
-    artistName,
+    artistID,
     feartureArtists,
     album,
     ep,
@@ -264,20 +264,20 @@ const updateSong = async (req, res) => {
 
     const artist = await Artist.findOne({ _id: song.artist });
 
-    if (artist.artistName != artistName) {
-      const primeArtist = await Artist.findOne({
-        artistName: artistName,
-        $where: { email: song.featuredArtists.email },
-      });
+    if (artist._id != artistID) {
+      const newArtist = await Artist.findById(artistID);
+      // const primeArtist = await Artist.findOne({
+      //   artistName: artistName,
+      //   $where: { email: song.featuredArtists.email },
+      // });
       if (!primeArtist) {
         res.status(400).json({
           error:
             "You must have them as a feature artist first before making to be the primary artist",
         });
       }
-
       song.featuredArtists.push(song.artist._id);
-      song.artist = primeArtist;
+      song.artist.id = artistID;
     }
 
     if (!album && !ep) {
