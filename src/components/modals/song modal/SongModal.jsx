@@ -34,6 +34,38 @@ const SongModal = ({ song }) => {
     fetchAllArtist();
   }, []);
 
+  const [albumData, setAlbumData] = React.useState([]);
+  React.useEffect(() => {
+    const fetchAllAlbum = async () => {
+      const response = await fetch("/api/albums/", {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+      const json = await response.json();
+
+      if (response.ok) {
+        setAlbumData(json);
+      }
+    };
+    fetchAllAlbum();
+  }, []);
+
+  const [epData, setEPData] = React.useState([]);
+  React.useEffect(() => {
+    const fetchAllEP = async () => {
+      const response = await fetch("/api/eps/", {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+      const json = await response.json();
+
+      if (response.ok) {
+        setEPData(json);
+      }
+    };
+    fetchAllEP();
+  }, []);
+
   return (
     <form>
       <Button variant="primary" onClick={handleShow}>
@@ -138,7 +170,35 @@ const SongModal = ({ song }) => {
             onChange={(e) => setAlbum(e.target.value)}
             className="form-control"
           ></input>
-
+          {/* <label htmlFor="songAlbum">Album: </label> */}
+          {/* <Select
+            id="songAlbum"
+            options={
+              albumData?.length > 0 &&
+              albumData.map((album) => ({
+                value: album._id,
+                label: (
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <img
+                      src={album?.albumArt}
+                      alt={album?.artist?.artistName}
+                      width="30"
+                      height="30"
+                      style={{ marginRight: "10px" }}
+                    />
+                    {album.albumName}
+                  </div>
+                ),
+              }))
+            }
+            isMulti
+            className="basic-multi-select"
+            classNamePrefix="select"
+            placeholder="Select an artist"
+            onChange={(selectedOptions) =>
+              setAlbum(selectedOptions.map((option) => option.value))
+            }
+          /> */}
           <label htmlFor="songAlbum">EP: </label>
           <input
             type="text"
