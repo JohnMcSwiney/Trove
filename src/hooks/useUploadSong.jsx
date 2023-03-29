@@ -7,6 +7,7 @@ export const useUploadSong = () => {
   const [isUploading, setIsUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const storage = firebase.storage();
+  const currentYear = new Date().getFullYear();
 const [message, setMessage] =useState("")
   const uploadMusic = async (
     songs,
@@ -21,6 +22,7 @@ const [message, setMessage] =useState("")
     releaseYear,
     featuredArtists
   ) => {
+
     const storageRef = storage.ref();
 
     const uploadSongToFirebase = async (songFile) => {
@@ -278,6 +280,28 @@ const [message, setMessage] =useState("")
 
           let data = "";
 
+          if (!songFile || songFile == null || songFile == undefined || songFile == "") {
+            
+            setError("No song uploaded!, cannot continue")
+            throw new Error("No song uploaded!, cannot continue");
+            
+          }
+
+          if (!genre || genre == null || genre == undefined || genre == "") {
+            
+            setError("No genre selected!, cannot continue")
+            throw new Error("No genre uploaded!, cannot continue");
+            
+          }
+
+          if (!releaseYear || releaseYear == null || releaseYear == undefined || releaseYear == ""
+          || releaseYear > currentYear || releaseYear< 1900 ) {
+            
+            setError("Please enter a valid year")
+            throw new Error("Please enter a valid year");
+            
+          }
+
           if (!imageFile || imageFile == null) {
             console.log("no image selected");
 
@@ -308,6 +332,28 @@ const [message, setMessage] =useState("")
 
           let data = "";
 
+          if (!songFile || songFile == null || songFile == undefined || songFile == "") {
+          
+            setError("No song uploaded!, cannot continue")
+            throw new Error("No song uploaded!, cannot continue");
+            
+          }
+
+          if (!genre || genre == null || genre == undefined || genre == "") {
+            
+            setError("No genre selected!, cannot continue")
+            throw new Error("No genre uploaded!, cannot continue");
+            
+          }
+
+          if (!releaseYear || releaseYear == null || releaseYear == undefined || releaseYear == ""
+          || releaseYear > currentYear || releaseYear< 1900 ) {
+            
+            setError("Please enter a valid year")
+            throw new Error("Please enter a valid year");
+            
+          }
+
           if (!imageFile || imageFile == null) {
             console.log("no image selected");
 
@@ -336,6 +382,30 @@ const [message, setMessage] =useState("")
 
           let data = "";
 
+          console.log("checking songfile in single: " + songFile);
+
+          if (!songFile || songFile == null || songFile == undefined || songFile == "") {
+       
+            setError("No song uploaded!, cannot continue")
+            throw new Error("No song uploaded!, cannot continue");
+            
+          }
+
+          if (!genre || genre == null || genre == undefined || genre == "") {
+            
+            setError("No genre selected!, cannot continue")
+            throw new Error("No genre uploaded!, cannot continue");
+            
+          }
+
+          if (!releaseYear || releaseYear == null || releaseYear == undefined || releaseYear == ""
+          || releaseYear > currentYear || releaseYear< 1900 ) {
+            
+            setError("Please enter a valid year")
+            throw new Error("Please enter a valid year");
+            
+          }
+
           const songUrl = await uploadSongToFirebase(songFile);
 
           if (!imageFile || imageFile == null) {
@@ -361,7 +431,10 @@ const [message, setMessage] =useState("")
         }
         //setIsUploading(false);
         break;
-      default:
+      default:{
+        setError("Please choose a release type")
+        throw new Error("Please choose a release type")
+      }
         break;
     }
   };

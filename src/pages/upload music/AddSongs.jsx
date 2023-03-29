@@ -37,6 +37,7 @@ export default function AddSongs(props) {
                 className="uploadmusic--hide--file"
                 multiple
                 onChange={props.handleSongFileChange}
+                required
               />
             )}
             <label>Upload Songs</label>

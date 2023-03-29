@@ -9,6 +9,7 @@ const [passwordMessage, setMessage] = useState('')
     setUpdatePasswordError(null);
     setIsLoadingUpdatePassword(true);
 
+    
     const response = await fetch(`/api/artists/updatepassword/${artistID}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },

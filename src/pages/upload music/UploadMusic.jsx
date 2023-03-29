@@ -100,6 +100,7 @@ export default function UploadMusic(props) {
   };
 
   const handleSongFileChange = (e) => {
+
     //setSongFile(e.target.files[0]);
 
     console.log("relerwerwsdfdsfds: " + releaseType);

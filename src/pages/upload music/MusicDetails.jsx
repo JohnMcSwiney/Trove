@@ -142,8 +142,8 @@ export default function MusicDetails(props) {
                   value={props.releaseYear}
                   placeholder="YYYY"
                   min="1900"
-                  max="2024"
                   onChange={props.handleReleaseYear}
+                  required
                 />
               </label>
             </td>
@@ -152,7 +152,7 @@ export default function MusicDetails(props) {
                 <label>Genre:</label>
               </td>
             </tr>
-            <fieldset>
+            <fieldset required>
               <tr>
                 <td className="uploadmusic--genre--radio">
                   <input
@@ -161,6 +161,7 @@ export default function MusicDetails(props) {
                     value="pop"
                     checked={props.genre === "pop"}
                     onChange={props.handleGenre}
+                    required
                   />
                   POP
                 </td>
@@ -171,6 +172,7 @@ export default function MusicDetails(props) {
                     value="rock"
                     checked={props.genre === "rock"}
                     onChange={props.handleGenre}
+                    required
                   />
                   ROCK
                 </td>
@@ -183,6 +185,7 @@ export default function MusicDetails(props) {
                     value="country"
                     checked={props.genre === "country"}
                     onChange={props.handleGenre}
+                    required
                   />
                   COUNTRY
                 </td>
@@ -193,6 +196,7 @@ export default function MusicDetails(props) {
                     value="hiphop"
                     checked={props.genre === "hiphop"}
                     onChange={props.handleGenre}
+                    required
                   />
                   HIP-HOP
                 </td>
@@ -228,6 +232,7 @@ export default function MusicDetails(props) {
                 accept="audio/*"
                 className="uploadmusic--hide--file"
                 onChange={props.handleSongFileChange}
+                required
               />
               Upload Song
             </label>
