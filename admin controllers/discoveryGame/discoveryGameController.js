@@ -38,12 +38,17 @@ const calcSongData = async (buffer) => {
 
     const songData = new MusicTempo(audioData);
 
-    console.log("songData resolve: " + songData);
-    resolve(songData);
+    const tempo = Math.round(songData.tempo);
+    const beat = Math.round(songData.beatInterval);
+
+    console.log("tempo resolve: " + tempo);
+    console.log("beat resolve: " + beat);
+
+    resolve(tempo, beat);
   })
-    .then((songData) => {
-      console.log("songData in return: " + songData);
-      return songData;
+    .then((result) => {
+      console.log("result: " + result.beat);
+      return result;
     })
     .catch((err) => {
       console.log(err);
@@ -126,7 +131,7 @@ const compareSongData = async (user) => {
 
       songData = await context.decodeAudioData(buffer, calcSongData);
 
-      console.log("songData in outer function: " + songData);
+      console.log("songData in outer function: " + songData.tempo);
 
 
       // const decodedBuffer = await context.decodeAudioData(buffer);
@@ -505,6 +510,8 @@ const playDiscoveryGame = async (req, res) => {
 
       if (req.body.swipeDirection === "left") {
         console.log("they swiped left");
+
+        await compareSongData(user);
         // const nextSong = await getNextSong(user);
         // res.send(nextSong);
 
