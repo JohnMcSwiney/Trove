@@ -1,5 +1,6 @@
 import React from "react";
 // import "./editModal.css";
+import Select from "react-select";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 const SongModal = ({ song }) => {
@@ -8,15 +9,14 @@ const SongModal = ({ song }) => {
   const handleShow = () => setShow(true);
   const [title, setTitle] = React.useState(song?.title);
   const [album, setAlbum] = React.useState(song?.album?.albumName);
+  const [artistName, setArtistName] = React.useState(song?.artist?.artistName);
+  const [artistID, setArtistID] = React.useState(song?.artist?._id);
   const [ep, setEP] = React.useState(song?.ep?.epName);
   const [genre, setGenre] = React.useState(song?.genre);
   const [songYear, setSongYear] = React.useState(song?.releaseYear);
-  const [feartureArtists, setFeatureArtists] = React.useState(
-    song?.featuredArtists
+  const [featureArtists, setFeatureArtists] = React.useState(
+    song?.featuredArtists || []
   );
-
-  const [searchTerm, setSearchTerm] = React.useState("");
-  const [searchResults, setSearchResults] = React.useState([]);
 
   const [artistData, setArtistData] = React.useState([]);
   React.useEffect(() => {
@@ -33,6 +33,7 @@ const SongModal = ({ song }) => {
     };
     fetchAllArtist();
   }, []);
+
   return (
     <form>
       <Button variant="primary" onClick={handleShow}>
@@ -58,23 +59,76 @@ const SongModal = ({ song }) => {
             className="form-control"
           ></input>
 
-          <label htmlFor="search">Add feature artist: </label>
-          <input
-            id="search"
-            type="text"
-            placeholder="Search artists"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="form-control"
+          <label htmlFor="artist">Artist: </label>
+          <Select
+            id="searchArtist"
+            options={artistData.map((artist) => ({
+              value: artist?._id,
+              label: (
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <img
+                    src={artist.artistImg}
+                    alt={artist.artistName}
+                    width="30"
+                    height="30"
+                    style={{ marginRight: "10px" }}
+                  />
+                  {artist.artistName}
+                </div>
+              ),
+            }))}
+            className="basic-single-select" // Rename the class to indicate single select
+            classNamePrefix="select"
+            placeholder="Select an artist"
+            defaultValue={
+              artistName
+                ? {
+                    value: artistData.find(
+                      (artist) => artist.artistName === artistName
+                    )?._id,
+                    label: artistName,
+                  }
+                : null
+            }
+            onChange={(selectedOption) => {
+              setArtistID(selectedOption ? selectedOption.value : "");
+              console.log(artistID);
+            }} // Since only one option is allowed, set the selected value to the 'value' property of the option
           />
-          <label htmlFor="feartureArtist">Feature artist: </label>
-          <input
-            type="text"
-            id="feartureArtist"
-            value={feartureArtists}
-            onChange={(e) => setFeatureArtists(e.target.value)}
-            className="form-control"
-          ></input>
+
+          <label htmlFor="search">Add feature artist: </label>
+          <Select
+            id="search"
+            options={artistData.map((artist) => ({
+              value: artist._id,
+              label: (
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <img
+                    src={artist.artistImg}
+                    alt={artist.artistName}
+                    width="30"
+                    height="30"
+                    style={{ marginRight: "10px" }}
+                  />
+                  {artist.artistName}
+                </div>
+              ),
+            }))}
+            isMulti
+            className="basic-multi-select"
+            classNamePrefix="select"
+            placeholder="Select an artist"
+            defaultValue={
+              featureArtists &&
+              featureArtists.map((artist) => ({
+                value: artist._id,
+                label: artist.artistName,
+              }))
+            }
+            onChange={(selectedOptions) =>
+              setFeatureArtists(selectedOptions.map((option) => option.value))
+            }
+          />
 
           <label htmlFor="songAlbum">Album: </label>
           <input
