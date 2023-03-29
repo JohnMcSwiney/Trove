@@ -77,7 +77,7 @@ const songSchema = new mongoose.Schema(
     },
     //double check releaseType with album model, may conflict.
     releaseType: {
-      type: String,
+      type: [String],
       enum: ["album", "ep", "single"],
     },
 
