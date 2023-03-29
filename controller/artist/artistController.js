@@ -132,23 +132,22 @@ const updatePassword = async (req, res) => {
   const success = "Updated password successfully";
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ message: "No such artist" });
+    return res.status(404).json({ error: "No such artist" });
   }
   try {
     const artist = await Artist.findById(id);
-    console.log(artist.artistName);
 
     const passwordMatch = await bcrypt.compare(password, artist.password);
-    console.log(passwordMatch);
+    
     if (!passwordMatch) {
-      return res.status(400).json({ message: "Wrong password" });
+      return res.status(400).json({ error: "Wrong password" });
     }
 
     const matchConfirm = newPassword === confirmNewPassword;
     if (!matchConfirm) {
       return res
-        .status(400)
-        .json({ message: "Confirm password doesn't match" });
+        .status(500)
+        .json({ error: "Confirm password doesn't match" });
     }
 
     const salt = await bcrypt.genSalt(10);
@@ -195,13 +194,13 @@ const deleteArtist = async (req, res) => {
   const { id } = req.params;
   
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ message: "No such artist" });
+    return res.status(404).json({ error: "No such artist" });
   }
 
   const artist = await Artist.findOneAndDelete({ _id: id });
 
   if (!artist) {
-    return res.status(404).json({ message: "Artist's not found" });
+    return res.status(404).json({ error: "Artist's not found" });
   }
 
   res.status(200).json(artist);

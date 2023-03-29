@@ -10,6 +10,7 @@ const createSong = async (req, res) => {
 
   const artistID = req.body.artistID;
   let success = "";
+  
   try {
     // artist id check
     const artist = await Artist.findOne({ _id: artistID });
@@ -20,6 +21,9 @@ const createSong = async (req, res) => {
       throw new Error("Artist not found");
     }
 
+    if(!req.body.releaseType){
+      res.status(400).json({error:"Please enter a avalid year"})
+    }
     if (req.body.releaseType === "single") {
       console.log(req.body.releaseType);
       success = "Created a single song successfully";
@@ -27,6 +31,11 @@ const createSong = async (req, res) => {
       if (req.body.featuredArtists == null || !req.body.featuredArtists) {
         console.log(req.body.featuredArtist);
 
+        console.log("songFile" + req.body.songFile);
+
+        if (!req.body.songFile){
+          return res.status(500).json({error: "You do not have the song"})
+        }
         const song = new Song({
           ...req.body,
           artist: artistId,
@@ -46,7 +55,8 @@ const createSong = async (req, res) => {
             const featuredArtist = await Artist.findOne({ artistName: name });
 
             if (!featuredArtist) {
-              throw new Error("This artist is not on our platform.");
+              res.status(404).json({error: "This artist is not on our platform."})
+              
             }
 
             return featuredArtist._id;
@@ -73,18 +83,18 @@ const createSong = async (req, res) => {
         res.status(201).json({song, success});
       }
     } else if (req.body.releaseType === "album") {
-      console.log("INSIDE ALBUM SIDE");
+   
       success = "Created an album successfully";
       const album = await Album.findOne({ albumName: req.body.album });
 
       if (!album) {
-        throw new Error("Album not found");
+        res.status(404).json({error: "Album does not exist"})
       }
 
       const albumId = album._id;
 
       if (req.body.featuredArtists == null || !req.body.featuredArtists) {
-        console.log("before song is made");
+    
 
         const song = new Song({
           ...req.body,
@@ -118,9 +128,7 @@ const createSong = async (req, res) => {
           req.body.featuredArtists.map(async (name) => {
             const featuredArtist = await Artist.findOne({ artistName: name });
 
-            if (!featuredArtist) {
-              throw new Error("Featured artist not found");
-            }
+            res.status(404).json({error: "This artist is not on our platform."})
 
             return featuredArtist._id;
           })
@@ -162,7 +170,7 @@ const createSong = async (req, res) => {
       const ep = await EP.findOne({ epName: req.body.ep });
       success = "Created an EP successfully"
       if (!ep) {
-        throw new Error("EP not found");
+        res.status(404).json({error: "EP does not exist."})
       }
 
       const epId = ep._id;
@@ -203,14 +211,14 @@ const createSong = async (req, res) => {
             const featuredArtist = await Artist.findOne({ artistName: name });
 
             if (!featuredArtist) {
-              throw new Error("Featured artist not found");
+              res.status(404).json({error: "This artist is not on our platform."})
             }
 
             return featuredArtist._id;
           })
         );
 
-        console.log(featuredArtists);
+        
 
         const song = new Song({
           ...req.body,
