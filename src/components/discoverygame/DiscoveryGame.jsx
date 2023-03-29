@@ -67,7 +67,7 @@ const DiscoveryGame = () => {
   const DGprogressBar = useRef(); //reference to the progress bar
   const animationRef = useRef(); //reference to the animation
   const musicSlides = useRef();
-  const volumeRef = useRef();
+  const DGvolumeRef = useRef();
 
   //for likes   ([{ id: slides[state].id, songName: slides[state].songName, author: slides[state].author }])
 
@@ -83,7 +83,8 @@ const DiscoveryGame = () => {
 
       const data = await response.json();
       if (response.ok) {
-        setSongs(data).then(setDGData(data));
+        setSongs(data)
+        // .then(setDGData(data));
 
         // for (let i = 0; i < songs.length; i++) {
         //   // console.log("song title: " + songs[i].title);
@@ -92,10 +93,13 @@ const DiscoveryGame = () => {
         
       }
     };
-
+    console.log(songs);
     fetchAllSong();
   },[]);
-
+  useEffect(() => {
+  console.log("song updated");
+  
+  }, [songs]);
   //
   useEffect(() => {
     const alikedsong = JSON.parse(localStorage.getItem("likedSongs"));
@@ -167,7 +171,7 @@ const DiscoveryGame = () => {
       // console.log(`previous vol: ` + prevVolume);
       audioPlayer.current.volume = prevVolume;
       setVolumeLevel(audioPlayer.current.volume);
-      volumeRef.current.value = prevVolume * 100;
+      DGvolumeRef.current.value = prevVolume * 100;
       // console.log(`current vol:` + (volumeLevel * 1000));
     } else {
       console.log(`isMuted ` + isMuted);
@@ -175,7 +179,7 @@ const DiscoveryGame = () => {
       // console.log(`previous vol: ` + volumeLevel);
       audioPlayer.current.volume = 0;
       setVolumeLevel(0);
-      volumeRef.current.value = 0;
+      DGvolumeRef.current.value = 0;
       // console.log(`current vol:` + volumeLevel);
     }
   };
@@ -197,38 +201,42 @@ const DiscoveryGame = () => {
   };
   const changeVolumeLevel = (input) => {
     setIsMuted(true);
-    audioPlayer.current.volume = volumeRef.current.value / 100;
+    audioPlayer.current.volume = DGvolumeRef.current.value / 100;
   };
-
+  const handleSwipe2 = (direction) => {
+    console.log(direction);
+  }
   const swipeableProps = useSwipeable({
     trackMouse: true,
     // Dislike
     onSwipedLeft: () => {
-      if (state === slides.length - 1) return;
-      setIndex((prevIndex) => (prevIndex + 1) % slides.length);
-      setAccept(accept + 1);
-      dislikedIds.push(
-        slides[state]._id,
-        slides[state].title,
-        slides[state].artist
-      );
+      handleSwipe2('dislike');
+      // if (state === slides.length - 1) return;
+      // setIndex((prevIndex) => (prevIndex + 1) % slides.length);
+      // setAccept(accept + 1);
+      // dislikedIds.push(
+      //   slides[state]._id,
+      //   slides[state].title,
+      //   slides[state].artist
+      // );
 
-      gotoNext();
-      setState(state + 1);
+      // gotoNext();
+      // setState(state + 1);
     },
     // Like
     onSwipedRight: () => {
-      if (state === slides.length - 1) return;
-      setIndex((prevIndex) => (prevIndex + 1) % slides.length);
-      setDeny(deny + 1);
-      likedIds.push(
-        slides[state]._id,
-        slides[state].title,
-        slides[state].artist
-      );
-      gotoNext();
-      setState(state + 1);
-      handleAddLikedSongs();
+      handleSwipe2('like');
+      // if (state === slides.length - 1) return;
+      // setIndex((prevIndex) => (prevIndex + 1) % slides.length);
+      // setDeny(deny + 1);
+      // likedIds.push(
+      //   slides[state]._id,
+      //   slides[state].title,
+      //   slides[state].artist
+      // );
+      // gotoNext();
+      // setState(state + 1);
+      // handleAddLikedSongs();
     },
   });
   {
@@ -249,10 +257,6 @@ const DiscoveryGame = () => {
   // const slides == dGdata;
   const [slides, setSlides] = React.useState([]);
   
-  
-  
-
- 
   const printIndex = (index) => {
     setState(index);
     console.log(index);
@@ -268,7 +272,7 @@ const DiscoveryGame = () => {
       >
         {/* Back button - plays song just swipped  */}
 
-        <button
+        {/* <button
           className="hidden"
           onClick={() => {
             if (state === 0) return;
@@ -278,7 +282,7 @@ const DiscoveryGame = () => {
           }}
         >
           <BiArrowToLeft />
-        </button>
+        </button> */}
 
         {/* volume */}
         <div className="DGvolumeContainter">
@@ -287,7 +291,7 @@ const DiscoveryGame = () => {
           </button>
           <input
             type="range"
-            ref={volumeRef}
+            ref={DGvolumeRef}
             defaultValue="10"
             onChange={changeVolumeLevel}
             min="0"
@@ -297,7 +301,9 @@ const DiscoveryGame = () => {
         </div>
 
         <div className="Discovery-Top-Container">
-          {/* <Slider ref={musicSlides} {...settings} id="carousel">
+        <Slider ref={musicSlides} {...settings} id="carousel">
+          
+          {/* 
             {slides?.map((song, i = 0) => {
               return (
                 <div className="test2">
@@ -311,8 +317,9 @@ const DiscoveryGame = () => {
                 </div>
               );
             })}
+          */}
+          </Slider> 
 
-          </Slider> */}
         </div>
         {/* img updates every second, change later */}
       </div>
@@ -333,16 +340,17 @@ const DiscoveryGame = () => {
         {/* dislike */}
         <button
           onClick={() => {
-            if (state === slides.length - 1) return;
-            setIndex((prevIndex) => (prevIndex + 1) % slides.length);
-            setDeny(deny + 1);
-            dislikedIds.push(
-              slides[state]._id,
-              slides[state].title,
-              slides[state].artist
-            );
-            gotoNext();
-            setState(state + 1);
+            handleSwipe2('click dislike');
+            // if (state === slides.length - 1) return;
+            // setIndex((prevIndex) => (prevIndex + 1) % slides.length);
+            // setDeny(deny + 1);
+            // dislikedIds.push(
+            //   slides[state]._id,
+            //   slides[state].title,
+            //   slides[state].artist
+            // );
+            // gotoNext();
+            // setState(state + 1);
           }}
           className="Discovery-Disike"
         >
@@ -363,18 +371,19 @@ const DiscoveryGame = () => {
         {/* like */}
         <button
           onClick={() => {
-            if (state === slides.length - 1) return;
-            setIndex((prevIndex) => (prevIndex + 1) % slides.length);
-            setAccept(accept + 1);
-            console.log(slides[state].id);
-            likedIds.push(
-              slides[state]._id,
-              slides[state].title,
-              slides[state].artist
-            );
-            gotoNext();
-            setState(state + 1);
-            handleAddLikedSongs();
+            handleSwipe2('click like');
+            // if (state === slides.length - 1) return;
+            // setIndex((prevIndex) => (prevIndex + 1) % slides.length);
+            // setAccept(accept + 1);
+            // console.log(slides[state].id);
+            // likedIds.push(
+            //   slides[state]._id,
+            //   slides[state].title,
+            //   slides[state].artist
+            // );
+            // gotoNext();
+            // setState(state + 1);
+            // handleAddLikedSongs();
           }}
           className="Discovery-Like"
         >
@@ -430,10 +439,11 @@ const DiscoveryGame = () => {
         </div>
       </div>{" "}
       {/* Audio Player End */}
+      {/* 
       <div className="Discovery-TestingItem-Container">
-        {/* Like */}
+        Like
         <div>{accept} [ Likes ]</div>
-        {/* Dislike */}
+        Dislike
         <div>{deny} [ Dislikes ]</div>
 
         <div>
@@ -450,7 +460,8 @@ const DiscoveryGame = () => {
 
           
         </div>
-      </div>
+      </div> 
+      */}
     </div>
   );
 };
