@@ -452,6 +452,10 @@ const loadDiscoveryGame = async (req, res) => {
 
       for (let i = 0; i < 5; i++) {
         const randomSong = songs[Math.floor(Math.random() * songs.length)];
+
+        if (songLimit[i] == randomSong) {
+          songLimit[i + 1];
+        }
         songLimit[i] = randomSong;
         console.log("songlimit title: " + songLimit[i].title);
       }
