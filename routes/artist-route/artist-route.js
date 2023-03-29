@@ -3,8 +3,6 @@ const router = express.Router();
 const {
   getAllArtist,
   getAnArtist,
-  createArtist,
-  updateArtist,
   deleteArtist,
   updateGeneralInfo,
   updateEmail,
@@ -21,11 +19,8 @@ router.patch("/updateinfo/:id", updateGeneralInfo);
 router.patch("/updatepassword/:id", updatePassword);
 router.patch("/updateemail/:id", updateEmail);
 
-//create an artist
-router.post("/", createArtist);
 
-//update an artist
-router.patch("/:id", updateArtist);
+
 //detele an artist
 router.delete("/:id", deleteArtist);
 

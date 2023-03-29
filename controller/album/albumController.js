@@ -26,6 +26,7 @@ const getAlbum = async (req, res) => {
 
 const createAlbum = async (req, res) => {
   const artistID = req.body.artistID;
+  const success = "Created album successfully"
   try {
     const artist = await Artist.findOne({ _id: artistID });
 
@@ -52,7 +53,7 @@ const createAlbum = async (req, res) => {
       await album.save();
       await artist.save();
 
-      res.status(201).json(album);
+      res.status(201).json({album, success});
     } else {
       const featuredArtists = await Promise.all(
         req.body.featuredArtists.map(async (name) => {
@@ -86,18 +87,18 @@ const createAlbum = async (req, res) => {
       await album.save();
       await artist.save();
 
-      res.status(201).json(album);
+      res.status(201).json({album, success});
     }
-  } catch (err) {
+  } catch (error) {
     console.log(err);
-    res.status(400).json({ message: err.message });
+    res.status(400).json({ error: error.message });
   }
 };
 
 //WIP
 const updateAlbum = async (req, res) => {
   const { id } = req.params;
-
+  const success = "Updated album successfully"
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ err: "No such album" });
   }
@@ -233,7 +234,7 @@ const updateAlbum = async (req, res) => {
 //WIP
 const deleteAlbum = async (req, res) => {
   const { id } = req.params;
-
+  const success = "Deleted album successfully"
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ err: "No such album" });
   }
@@ -289,7 +290,7 @@ const deleteAlbum = async (req, res) => {
       return res.status(404).json({ message: "No such album" });
     }
 
-    res.status(200).json(album);
+    res.status(200).json({album, success});
   } catch (err) {
     console.log(err);
     res.status(400).json({ message: err.message });
@@ -298,15 +299,19 @@ const deleteAlbum = async (req, res) => {
 
 const getMyAlbum = async (req, res) => {
   const { id } = req.params;
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ error: "Server error occurred" });
+  try{
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(404).json({ error: "Server error occurred" });
+    }
+  
+    const albums = await Album.find({ artist: id }).sort({ createdAt: -1 });
+    if (!albums) {
+      return res.status(404).json({ error: "You don't have any song" });
+    }
+    res.status(200).json(albums);
+  }catch(error){
+    res.status(404).json({error:error.message})
   }
-
-  const albums = await Album.find({ artist: id }).sort({ createdAt: -1 });
-  if (!albums) {
-    return res.status(404).json({ error: "You don't have any song" });
-  }
-  res.status(200).json(albums);
 };
 
 module.exports = {

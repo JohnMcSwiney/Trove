@@ -21,59 +21,30 @@ const getAllArtist = async (req, res) => {
 const getAnArtist = async (req, res) => {
   const { id } = req.params;
 
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ message: "No such artist" });
-  }
-
-  const artist = await Artist.findById(id)
-    .populate("songList")
-    .populate("albumList");
-  if (!artist) {
-    return res.status(404).json({ message: "artist not found" });
-  }
-  res.status(200).json(artist);
-};
-
-//create an artist
-const createArtist = async (req, res) => {
-  try {
-    const artist = new Artist(req.body);
-    artist.songList = [];
-    artist.albumList = [];
-
-    await artist.save();
-
-    res.status(201).json(artist);
-  } catch (err) {
-    res.status(400).json({ msg: err.message });
-  }
-};
-
-//update an artist
-const updateArtist = async (req, res) => {
-  const { id } = req.params;
-
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ message: "No such artist" });
-  }
-
-  const artist = await Artist.findByIdAndUpdate(
-    { _id: id },
-    {
-      ...req.body,
+  try{
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(404).json({ message: "No such artist" });
     }
-  );
-
-  if (!artist) {
-    return res.status(404).json({ message: err.message });
+  
+    const artist = await Artist.findById(id)
+      .populate("songList")
+      .populate("albumList");
+    if (!artist) {
+      return res.status(404).json({ message: "artist not found" });
+    }
+    res.status(200).json(artist);
+  }catch(error){
+    res.status(404).json({error:error.message})
   }
-
-  res.status(200).json(artist);
 };
+
+
 
 const updateGeneralInfo = async (req, res) => {
   const { id } = req.params;
   const { artistName, dob } = req.body;
+  const success = "Updated successfully"
+ try{
   console.log(req.body);
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ message: "No such artist" });
@@ -84,63 +55,72 @@ const updateGeneralInfo = async (req, res) => {
   updateArtist.dob = dob;
 
   await updateArtist.save();
-  res.status(200).json("Update info successfully");
+  res.status(200).json({success});
+ }catch(error){
+res.status(500).json({error:error.message})
+ }
 };
 
 const updateEmail = async (req, res) => {
   const { id } = req.params;
   const { currentEmail, newEmail, cPassword } = req.body;
+  const success = "Updated email successfully"
 
-  console.log(req.body);
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ message: "No such artist" });
-  }
+  try{
 
-  const artist = await Artist.findOne({ _id: id });
-
-  const passwordMatch = await bcrypt.compare(cPassword, artist.password);
-  if (!passwordMatch) {
-    return res.status(401).json({ message: "Password is not correct" });
-  }
-
-  const emailMatch = currentEmail === artist.email;
-  if (!emailMatch) {
-    return res.status(401).json({ message: "Email is not correct" });
-  }
-
-  artist.email = newEmail;
-  await artist.save();
-
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: process.env.GOOGLE_USER,
-      pass: process.env.GOOGLE_PASSWORD,
-    },
-    tls: {
-      rejectUnauthorized: false,
-    },
-  });
-
-  const mailOptions = {
-    from: process.env.GOOGLE_USER,
-    to: artist.email,
-    subject: "Change email Successfully With TroveMusic Artist",
-    html: `
-            <p>Hi ${artist.email},</p>
-            <p>Your action of changing email is successfully, let us know if you did not attempt to change email</p>
-          `,
-  };
-
-  transporter.sendMail(mailOptions, function (error, info) {
-    if (error) {
-      console.log(error);
-    } else {
-      console.log("Email sent: " + info.response);
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(404).json({ error: "No such artist" });
     }
-  });
-
-  res.status(200).json({ message: "Email changed successfully" });
+  
+    const artist = await Artist.findOne({ _id: id });
+  
+    const passwordMatch = await bcrypt.compare(cPassword, artist.password);
+    if (!passwordMatch) {
+      return res.status(401).json({ error: "Password is not correct" });
+    }
+  
+    const emailMatch = currentEmail === artist.email;
+    if (!emailMatch) {
+      return res.status(401).json({ error: "Email is not correct" });
+    }
+  
+    artist.email = newEmail;
+    await artist.save();
+  
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.GOOGLE_USER,
+        pass: process.env.GOOGLE_PASSWORD,
+      },
+      tls: {
+        rejectUnauthorized: false,
+      },
+    });
+  
+    const mailOptions = {
+      from: process.env.GOOGLE_USER,
+      to: artist.email,
+      subject: "Change email Successfully With TroveMusic Artist",
+      html: `
+              <p>Hi ${artist.email},</p>
+              <p>Your action of changing email is successfully, let us know if you did not attempt to change email</p>
+            `,
+    };
+  
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Email sent: " + info.response);
+      }
+    });
+  
+    res.status(200).json({success});
+  }catch(error){
+    res.status(500).json({error: error.message})
+  }
+  
 };
 
 //update password
@@ -148,6 +128,9 @@ const updateEmail = async (req, res) => {
 const updatePassword = async (req, res) => {
   const { id } = req.params;
   const { password, newPassword, confirmNewPassword } = req.body;
+
+  const success = "Updated password successfully";
+
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ message: "No such artist" });
   }
@@ -201,16 +184,16 @@ const updatePassword = async (req, res) => {
         console.log("Email sent: " + info.response);
       }
     });
-    res.status(200).json({ message: "Password changed successfully" });
+    res.status(200).json( {success});
   } catch (error) {
-    res.status(500).json({ error: "Please try again" });
+    res.status(500).json({ error: error.message });
   }
 };
 
 //
 const deleteArtist = async (req, res) => {
   const { id } = req.params;
-
+  
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ message: "No such artist" });
   }
@@ -227,8 +210,6 @@ const deleteArtist = async (req, res) => {
 module.exports = {
   getAllArtist,
   getAnArtist,
-  createArtist,
-  updateArtist,
   deleteArtist,
   updateGeneralInfo,
   updateEmail,

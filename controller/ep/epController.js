@@ -11,21 +11,27 @@ const getAllEP = async (req, res) => {
 const getEP = async (req, res) => {
   const { id } = req.params;
 
+ try{
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(400).json({ err: "No such EP" });
+    return res.status(404).json({ error: "No such EP" });
   }
 
   const ep = await EP.findById(id);
 
   if (!ep) {
-    return res.status(400).json({ err: "No such EP" });
+    return res.status(404).json({ error: "No such EP" });
   }
 
   res.status(200).json(ep);
+ }catch(error){
+  res.status(404).json({error:error.message})
+ }
 };
 
 const createEP = async (req, res) => {
   const artistID = req.body.artistID;
+
+  const success = "Created EP successfully"
   try {
     const artist = await Artist.findOne({ _id: artistID });
 
@@ -91,11 +97,11 @@ const createEP = async (req, res) => {
       await ep.save();
       await artist.save();
 
-      res.status(201).json(ep);
+      res.status(201).json({ep, success});
     }
-  } catch (err) {
-    console.log(err);
-    res.status(400).json({ message: err.message });
+  } catch (error) {
+    
+    res.status(400).json({ error: error.message });
   }
 };
 

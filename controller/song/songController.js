@@ -9,7 +9,7 @@ const createSong = async (req, res) => {
   console.log("createSong", req.body);
 
   const artistID = req.body.artistID;
-
+  let success = "";
   try {
     // artist id check
     const artist = await Artist.findOne({ _id: artistID });
@@ -22,6 +22,7 @@ const createSong = async (req, res) => {
 
     if (req.body.releaseType === "single") {
       console.log(req.body.releaseType);
+      success = "Created a single song successfully";
 
       if (req.body.featuredArtists == null || !req.body.featuredArtists) {
         console.log(req.body.featuredArtist);
@@ -35,7 +36,8 @@ const createSong = async (req, res) => {
 
         await song.save();
         await artist.save();
-        res.status(201).json(song);
+       
+        res.status(201).json({song, success});
       } else {
         console.log("featured artists: " + req.body.featuredArtists);
 
@@ -68,11 +70,11 @@ const createSong = async (req, res) => {
 
         await song.save();
         await artist.save();
-        res.status(201).json(song);
+        res.status(201).json({song, success});
       }
     } else if (req.body.releaseType === "album") {
       console.log("INSIDE ALBUM SIDE");
-
+      success = "Created an album successfully";
       const album = await Album.findOne({ albumName: req.body.album });
 
       if (!album) {
@@ -110,7 +112,7 @@ const createSong = async (req, res) => {
         console.log("BONGUGSS");
 
         await artist.save();
-        res.status(201).json(song);
+        res.status(201).json({song, success});
       } else {
         const featuredArtists = await Promise.all(
           req.body.featuredArtists.map(async (name) => {
@@ -154,11 +156,11 @@ const createSong = async (req, res) => {
 
         await song.save();
         await artist.save();
-        res.status(201).json(song);
+        res.status(201).json({song, success});
       }
     } else if (req.body.releaseType === "ep") {
       const ep = await EP.findOne({ epName: req.body.ep });
-
+      success = "Created an EP successfully"
       if (!ep) {
         throw new Error("EP not found");
       }
@@ -194,7 +196,7 @@ const createSong = async (req, res) => {
         console.log("BONGUGSS");
 
         await artist.save();
-        res.status(201).json(song);
+        res.status(201).json({song, success});
       } else {
         const featuredArtists = await Promise.all(
           req.body.featuredArtists.map(async (name) => {
@@ -238,7 +240,7 @@ const createSong = async (req, res) => {
 
         await song.save();
         await artist.save();
-        res.status(201).json(song);
+        res.status(201).json({song, success});
       }
     }
   } catch (error) {
