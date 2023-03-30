@@ -75,6 +75,9 @@ const AccountSetting = () => {
     e.preventDefault();
     try {
       await updateEmail(currentEmail, newEmail, cPassword);
+      setCurrentEmail("");
+      setNewEmail("");
+      setCPassword("");
     } catch (error) {
       console.log(updateGmailError);
       return;
@@ -91,6 +94,9 @@ const AccountSetting = () => {
     e.preventDefault();
     try {
       await updatePassword(password, newPassword, confirmNewPassword);
+      setPassword("");
+      setNewPassword("");
+      setConfirmNewPassword("");
     } catch (error) {
       console.log(updatePasswordError);
       return;

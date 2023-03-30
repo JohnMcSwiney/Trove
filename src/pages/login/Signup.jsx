@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSignup } from "../../hooks/useSignup";
 import { NavLink, useNavigate } from "react-router-dom";
-import "./signup.css"
+import "./signup.css";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
@@ -35,7 +35,6 @@ const Signup = () => {
     }
   }, [navigate]);
 
-  
   return (
     <div className="artist--signup form-group container">
       <h1>Trove Music</h1>
@@ -114,7 +113,7 @@ const Signup = () => {
               Female
             </label>
           </div>
-        
+
           <div className="form-check form-check-second">
             <input
               className="form-check-input"
@@ -147,9 +146,12 @@ const Signup = () => {
         <div classname="signup--btn">
           <button className="btn btn-primary">Sign up</button>
         </div>
-
       </form>
-      {error && <p>{error.err}</p>}
+      {error && (
+        <div>
+          <p>{error}</p>
+        </div>
+      )}
       <div className="artist--login--link">
         <p>Already have account?</p>
         <NavLink to={"/login"}>Log in here</NavLink>

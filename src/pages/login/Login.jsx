@@ -1,8 +1,8 @@
 import React from "react";
 import { useLogin } from "../../hooks/useLogin";
 import { useNavigate } from "react-router-dom";
-import "./login.css"
- 
+import "./login.css";
+
 const Login = () => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -49,7 +49,11 @@ const Login = () => {
         />
         <button className="btn btn-success">Login</button>
       </form>
-      {error && <p>{error.error}</p>}
+      {error && (
+        <div>
+          <p>{error}</p>
+        </div>
+      )}
     </div>
   );
 };
