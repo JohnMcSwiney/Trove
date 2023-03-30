@@ -64,20 +64,26 @@ const DiscoveryGame = () => {
   const [songsLoaded, updateSongsLoaded] = useState(false)
   const [needLoadsong, setneedLoadsong] = useState(false)
   const user = useAuthContext()
-  const { updateDisplayMusicBar, play_list } = React.useContext(MusicContext)
+  const { displayMusicBar, updateDisplayMusicBar, play_list } = React.useContext(MusicContext)
 
+  // hides musicBar when discovery game is active
+  // user needs to play more music to get it back
+  if (displayMusicBar === true){
+    updateDisplayMusicBar(false);
+  }
   React.useEffect(() => {
     // function getdgSongs () {
       
     if (songsLoaded === true) {
-      return
+      return;
+      setState(0);
     }
     console.log("test " + dgLoops)
     const fetchDGSongs = async () => {
       if (songsLoaded === true) {
         console.log("return p1");
         return
-      } else if (songs.length === 0 || songs === []) {
+      } else if (songs.length === 0 || songs === [] || songsLoaded === false) {
         console.log("test")
         let temp
         setneedLoadsong(true)
@@ -89,20 +95,21 @@ const DiscoveryGame = () => {
         setneedLoadsong(false)
         if (!songsLoaded) updateSongs(temp)
       } else {
-        console.log()
+        console.log(songs.length)
         console.log("return p2");
         return
       }
     }
     fetchDGSongs()
+    
   }, [dgLoops])
 
   function updateSongs (songsIn) {
     if (songsLoaded !== true) {
-      if (songs == 0) {
+      // if (songs === 0) {
         updateSongsLoaded(true)
         setSongs(songsIn)
-      }
+      // }
     }
   }
   
@@ -209,6 +216,9 @@ const DiscoveryGame = () => {
   const gotoNext = () => {
     musicSlides.current.slickNext()
   }
+  const resetSlideIndex = () => {
+    musicSlides.current.slickGoTo(0);
+  }
 
   const handleSwipe2 = direction => {
     console.log(direction)
@@ -225,7 +235,8 @@ const DiscoveryGame = () => {
       updateSongs([])
  
       updateDgLoops(dgLoops + 1);
-      
+      resetSlideIndex();
+      setState(0);
     } else {
       gotoNext()
       setState(state + 1)
@@ -236,8 +247,9 @@ const DiscoveryGame = () => {
   const swipeableProps = useSwipeable({
     trackMouse: true,
     // Dislike
+    // or like idfk whats happening
     onSwipedLeft: () => {
-      handleSwipe2('dislike')
+      handleSwipe2('like')
       // if (state === songs.length - 1) return
       // setIndex(prevIndex => (prevIndex + 1) % songs.length)
       // setAccept(accept + 1)
@@ -247,9 +259,11 @@ const DiscoveryGame = () => {
       //   songs[state].artist
       // )
     },
+    
     // Like
+    // or dislike idfk whats happening
     onSwipedRight: () => {
-      handleSwipe2('like')
+      handleSwipe2('dislike')
       // if (state === songs.length - 1) return
       // setIndex(prevIndex => (prevIndex + 1) % songs.length)
       // setDeny(deny + 1)
@@ -295,7 +309,7 @@ const DiscoveryGame = () => {
     slidesToScroll: 1,
     swipe: false,
     swipeToSlide: false,
-    infinite: false,
+    infinite: true,
     className: 'test',
     centerMode: true,
     // centerPadding: '1vw',
@@ -436,9 +450,7 @@ const DiscoveryGame = () => {
                 }
                 }
               ></audio>
-
               {/*testing maybe going in audio player to fix not loading the proggress bar on start up onLoadedMetaData={onLoadedMetaData}  */}
-
               {/*current time*/}
               {/* removed for testing */}
               {/* <div className={style.DGcurrentTime}>{calculateTime(currentTime)}</div> */}
