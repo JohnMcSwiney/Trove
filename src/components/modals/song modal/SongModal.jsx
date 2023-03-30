@@ -66,6 +66,26 @@ const SongModal = ({ song }) => {
     fetchAllEP();
   }, []);
 
+  const handleArtistChange = (selectedOption) => {
+    if (selectedOption !== null) {
+      setArtistID(selectedOption.id);
+
+      setArtistName(selectedOption.value);
+    }
+  };
+  React.useEffect(() => {}, [artistID]);
+
+  const handleSelectChange = (selectedOptions) => {
+    const selectedArtistIds = selectedOptions.map((option) => {
+      const artist = artistData.find(
+        (artist) => artist.artistName === option.value
+      );
+      return artist ? artist._id : null;
+    });
+    setFeatureArtists(selectedArtistIds);
+  };
+  React.useEffect(() => {}, [featureArtists]);
+
   return (
     <form>
       <Button variant="primary" onClick={handleShow}>
@@ -95,7 +115,7 @@ const SongModal = ({ song }) => {
           <Select
             id="searchArtist"
             options={artistData.map((artist) => ({
-              value: artist?._id,
+              value: artist?.name,
               label: (
                 <div style={{ display: "flex", alignItems: "center" }}>
                   <img
@@ -106,33 +126,23 @@ const SongModal = ({ song }) => {
                     style={{ marginRight: "10px" }}
                   />
                   {artist.artistName}
+                  <div hidden="true">{artist._id}</div>
                 </div>
               ),
+              id: artist?._id,
             }))}
             className="basic-single-select" // Rename the class to indicate single select
             classNamePrefix="select"
             placeholder="Select an artist"
-            defaultValue={
-              artistName
-                ? {
-                    value: artistData.find(
-                      (artist) => artist.artistName === artistName
-                    )?._id,
-                    label: artistName,
-                  }
-                : null
-            }
-            onChange={(selectedOption) => {
-              setArtistID(selectedOption ? selectedOption.value : "");
-              console.log(artistID);
-            }} // Since only one option is allowed, set the selected value to the 'value' property of the option
+            defaultValue={{ value: artistName, label: artistName }}
+            onChange={handleArtistChange}
           />
 
           <label htmlFor="search">Add feature artist: </label>
           <Select
             id="search"
             options={artistData.map((artist) => ({
-              value: artist._id,
+              value: artist.artistName,
               label: (
                 <div style={{ display: "flex", alignItems: "center" }}>
                   <img
@@ -145,6 +155,7 @@ const SongModal = ({ song }) => {
                   {artist.artistName}
                 </div>
               ),
+              id: artist?._id,
             }))}
             isMulti
             className="basic-multi-select"
@@ -153,13 +164,11 @@ const SongModal = ({ song }) => {
             defaultValue={
               featureArtists &&
               featureArtists.map((artist) => ({
-                value: artist._id,
-                label: artist.artistName,
+                value: artist?.artistName,
+                label: artist?.artistName,
               }))
             }
-            onChange={(selectedOptions) =>
-              setFeatureArtists(selectedOptions.map((option) => option.value))
-            }
+            onChange={handleSelectChange}
           />
 
           <label htmlFor="songAlbum">Album: </label>
