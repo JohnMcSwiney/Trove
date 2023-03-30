@@ -14,7 +14,7 @@ const getAllUser = async (req, res) => {
 const getAUser = async (req, res) => {
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ err: "No such user" });
+    return res.status(404).json({ error: "No such user" });
   }
   const user = await User.findById(id)
     .populate({
@@ -27,7 +27,7 @@ const getAUser = async (req, res) => {
     });
 
   if (!user) {
-    return res.status(404).json({ err: "No such user" });
+    return res.status(404).json({ error: "No such user" });
   } else {
     res.status(200).json(user);
   }
@@ -49,55 +49,33 @@ const createUser = async (req, res) => {
   const condition1 = await User.findOne({ email });
 
   if (condition1) {
-    return res.status(400).json({ err: "User name already exists" });
+    return res.status(400).json({ error: "User name already exists" });
   }
 
   const condition2 = await User.findOne({ email });
 
   if (condition2) {
-    return res.status(400).json({ err: "Email already exists" });
+    return res.status(400).json({ error: "Email already exists" });
   }
   try {
     await user.save();
     res.status(201).json(user);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
-};
-//update a new user ONLY FOR GENERAL, dont know how to use it at all
-
-const updateUser = async (req, res) => {
-  const { id } = req.params;
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ err: "No such user" });
-  }
-
-  const user = await User.findOneAndUpdate(
-    { _id: id },
-    {
-      ...req.body,
-    }
-  );
-
-  if (!user) {
-    return res.status(404).json({ err: "No such user" });
-  }
-  res.status(200).json(user);
 };
 
 // UPDATE USER ACCOUNT TAB
 const updateUserAccountTab = async (req, res) => {
-  // const userInfo = localStorage.getItem("user");
-  // const id = JSON.parse(userInfo).id;
   const { id } = req.params;
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ err: "No such user" });
-  }
+  const success = "Update successfully";
 
   const { displayName, dob } = req.body;
-  // , dob
 
   try {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(404).json({ error: "No such user" });
+    }
     const user = await User.findById(id);
 
     user.displayName = displayName;
@@ -109,35 +87,49 @@ const updateUserAccountTab = async (req, res) => {
       user.displayName = "My account";
     }
     await user.save();
-    res
-      .status(200)
-      .json({ message: `we just update your account, ${displayName} !` });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(200).json({ success });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 };
 // UPDATE USER PASSWORD only
 const updateUserPassword = async (req, res) => {
-  // const userInfo = localStorage.getItem("user");
-  // const id = JSON.parse(userInfo).id;
-
   const { id } = req.params;
 
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ err: "No such user" });
-  }
-
-  //const { password, newPassword } = req.body;
-
-  const { password, newPassword } = req.body;
-
+  const { password, newPassword, confirmNewPassword } = req.body;
+  const success = "Updated password successfully";
   try {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(404).json({ error: "No such user" });
+    }
     const user = await User.findById(id);
 
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
-      return res.status(401).json({ error: "Password is not correct" });
+      return res.status(400).json({ error: "Password is not correct" });
+    }
+
+    if (newPassword.length < 8) {
+      return res
+        .status(400)
+        .json({ error: "Passwords should be a minimum of 8 characters " });
+    }
+
+    const isConfirm = newPassword === confirmNewPassword;
+    console.log(isConfirm);
+    if (!isConfirm) {
+      return res
+        .status(400)
+        .json({ error: "Confirm password and password do not match" });
+    }
+
+    if (password === newPassword) {
+      return res
+        .status(400)
+        .json({
+          error: "Can not set the new password as the current password",
+        });
     }
 
     const salt = await bcrypt.genSalt(10);
@@ -170,37 +162,47 @@ const updateUserPassword = async (req, res) => {
 
     transporter.sendMail(mailOptions, function (error, info) {
       if (error) {
-        console.log(err);
+        console.log(error);
       } else {
         console.log("Email sent: " + info.response);
       }
     });
-    res.status(200).json({ message: "Password changed successfully" });
-  } catch (err) {
-    res.status(500).json({ error: "Please try again" });
+    res.status(200).json({ success });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 };
 
 //// UPDATE USER EMAIL only
 const updateUserEmail = async (req, res) => {
   const { id } = req.params;
+  const success = "Updated email successfully";
 
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ err: "No such user" });
-  }
-
-  const { newEmail, password } = req.body;
+  const { currentEmail, newEmail, cPassword } = req.body;
 
   try {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(404).json({ error: "No such user" });
+    }
     const user = await User.findById(id);
 
-    const isMatch = await bcrypt.compare(password, user.password);
+    const isMatch = await bcrypt.compare(cPassword, user.password);
 
     if (!isMatch) {
-      return res.status(401).json({ err: "Password is not correct" });
+      return res.status(400).json({ error: "Password is not correct" });
     }
 
-    //update user password
+    const emailMatch = user.email === currentEmail;
+    if (!emailMatch) {
+      return res.status(400).json({ error: "Current email is not correct" });
+    }
+
+    const sameEmail = currentEmail === newEmail;
+    if (sameEmail) {
+      return res
+        .status(400)
+        .json({ error: "Current email and new email are the same" });
+    }
 
     user.email = newEmail;
     await user.save();
@@ -226,16 +228,16 @@ const updateUserEmail = async (req, res) => {
           `,
     };
 
-    transporter.sendMail(mailOptions, function (err, info) {
-      if (err) {
-        console.log(err);
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
       } else {
         console.log("Email sent: " + info.response);
       }
     });
 
-    res.status(200).json({ message: "Email changed successfully" });
-  } catch (err) {
+    res.status(200).json({ success });
+  } catch (error) {
     res.status(500).json({ error: "Please try again" });
   }
 };
@@ -283,9 +285,9 @@ const resetUserPassword = async (req, res) => {
           `,
       };
 
-      transporter.sendMail(mailOptions, function (err, info) {
-        if (err) {
-          console.log(err);
+      transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+          console.log(error);
         } else {
           console.log("Email sent: " + info.response);
         }
@@ -297,39 +299,15 @@ const resetUserPassword = async (req, res) => {
         "We've sent you an email. Just follow the instructions to reset your password.",
     });
   } catch (error) {
-    // res.status(201).json({
-    //   message:
-    //     "We've sent you an email. Just follow the instructions to reset your password.",
-    // });
-
     res.status(400).json({ error: error.message });
   }
-};
-
-//Delete a user
-const deleteUser = async (req, res) => {
-  const { id } = req.params;
-
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ err: "No such user" });
-  }
-
-  const user = await User.findOneAndDelete({ _id: id });
-
-  if (!user) {
-    return res.status(404).json({ err: "No such user" });
-  }
-  res.status(200).json(user);
 };
 
 module.exports = {
   getAllUser,
   getAUser,
-  createUser,
-  updateUser,
   updateUserPassword,
   updateUserEmail,
   updateUserAccountTab,
-  deleteUser,
   resetUserPassword,
 };

@@ -24,13 +24,8 @@ const loginUser = async (req, res) => {
     const verify = await User.findOne({ email: email });
 
     if (verify == null) {
-      return res.status(400).json({ err: "You haven't signed up" });
+      return res.status(400).json({ error: "You haven't signed up" });
     }
-    // if (!verify.isVerified) {
-    //   return res
-    //     .status(400)
-    //     .json({ err: "Please check your email to verify the email" });
-    // }
 
     const user = await User.login(email, password);
     //create a token
@@ -63,8 +58,8 @@ const loginUser = async (req, res) => {
     });
 
     res.status(200).json(listener);
-  } catch (err) {
-    res.status(400).json({ err: err.message });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
   }
 };
 
@@ -148,8 +143,8 @@ const signupUser = async (req, res) => {
       useImg: user.imageURL,
       dob: user.dob,
     });
-  } catch (err) {
-    res.status(400).json({ err: err.message });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
   }
 };
 
@@ -158,22 +153,9 @@ const logoutUser = (req, res) => {
   res.clearCookie("user");
   res.status(200).json({ message: "Logged out successfully" });
 };
-const verifyUser = async (req, res) => {
-  const id = req.params.id;
 
-  try {
-    const user = await User.findOneAndUpdate({ _id: id }, { isVerified: true });
-    if (!user) {
-      return res.status(404).json("User not found");
-    }
-    return res.send("verify-success");
-  } catch (err) {
-    return res.status(500).send("Error verifying email");
-  }
-};
 module.exports = {
   loginUser,
   signupUser,
   logoutUser,
-  verifyUser,
 };
