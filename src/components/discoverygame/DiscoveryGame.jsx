@@ -28,6 +28,7 @@ import MyTrove from '../../pages/my trove/MyTrove'
 import LikeData from '../../data/likeTemp'
 import { useAuthContext } from '../../hooks/user-hooks/useAuthContext'
 import { MusicContext } from '../../contexts/MusicContext'
+import { json } from 'react-router-dom'
 
 const DiscoveryGame = () => {
   //state
@@ -46,7 +47,7 @@ const DiscoveryGame = () => {
   const [isMuted, setIsMuted] = useState(true)
   //isMuted is totally screwed... but it works. So i'm just gonna leave it as it is <3 sorry if it's confusing (I don't actually know what's happening lol)
   const [prevVolume, updatePrevVol] = useState(0.5)
-  const [isLiked, setIsLiked] = useState(false)
+  const [isLiked, setIsLiked] = useState("")
   const [likedIds, setLikedIds] = useState([])
   const [dislikedIds, setDisikedIds] = useState([])
   const [currentUserLoaded, setCurrentUserLoaded] = useState(false)
@@ -221,7 +222,7 @@ const DiscoveryGame = () => {
   }
 
   const handleSwipe2 = direction => {
-    console.log(direction)
+    console.log("direction test: " + direction)
     
     
     if(state === 4){
@@ -242,14 +243,14 @@ const DiscoveryGame = () => {
       setState(state + 1)
 
     }
-
+    setIsLiked(direction);
   }
   const swipeableProps = useSwipeable({
     trackMouse: true,
     // Dislike
     // or like idfk whats happening
     onSwipedLeft: () => {
-      handleSwipe2('like')
+      handleSwipe2('dislike')
       // if (state === songs.length - 1) return
       // setIndex(prevIndex => (prevIndex + 1) % songs.length)
       // setAccept(accept + 1)
@@ -258,12 +259,13 @@ const DiscoveryGame = () => {
       //   songs[state].title,
       //   songs[state].artist
       // )
+      handleAddLikedSongs(isLiked);
     },
     
     // Like
     // or dislike idfk whats happening
     onSwipedRight: () => {
-      handleSwipe2('dislike')
+      handleSwipe2('like')
       // if (state === songs.length - 1) return
       // setIndex(prevIndex => (prevIndex + 1) % songs.length)
       // setDeny(deny + 1)
@@ -272,7 +274,7 @@ const DiscoveryGame = () => {
       //   songs[state].title,
       //   songs[state].artist
       // 
-      // handleAddLikedSongs()
+      handleAddLikedSongs(isLiked);
     }
   })
   
@@ -285,20 +287,84 @@ const DiscoveryGame = () => {
   //     setLikedslides(LikeData)
   //   }
   // }, [])
-  const handleAddLikedSongs = () => {
-    const newLike = { _id: songs[state]._id }
+  const handleAddLikedSongs = (isLiked) => {
 
-    const updateLikes = [...likedslides, newLike]
+    console.log("isLiked: " + isLiked);
 
-    setLikedslides(updateLikes)
+    let swipeDirection = "";
 
-    localStorage.setItem('likedSongs', JSON.stringify(updateLikes))
+    if (isLiked === "like") {
 
-    fetch(`/api/songs/liked/${newLike}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ likedslides })
-    })
+      swipeDirection = "like";
+
+      const likedSongs = [{ _id: songs[state]._id, swipeDirection: isLiked }];
+
+      setLikedslides(likedSongs);
+
+      localStorage.setItem('likedSongs', JSON.stringify(likedSongs));
+
+      // console.log("likedSongs array: " + JSON.parse(likedSongs));
+
+      fetch(`/api/DG/${user.id}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ likedSongs })
+      });
+
+
+    }
+    else {
+      swipeDirection = "dislike";
+    }
+    
+    console.log("final swipeDirection: " + swipeDirection);
+
+    //const updateLikes = [...likedslides, newLike]
+
+    // fetch(`/api/songs/liked/${likedSongs}`, {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify({ likedSongs })
+    // })
+
+    // React.useEffect(() => {
+    //   // function getdgSongs () {
+        
+    //   if (songsLoaded === true) {
+    //     return;
+    //     setState(0);
+    //   }
+    //   console.log("test " + dgLoops)
+    //   const fetchDGSongs = async () => {
+    //     if (songsLoaded === true) {
+    //       console.log("return p1");
+    //       return
+    //     } else if (songs.length === 0 || songs === [] || songsLoaded === false) {
+    //       console.log("test")
+    //       let temp
+    //       setneedLoadsong(true)
+    //       await fetch(`api/DG/${user.id}`)
+    //         .then(response => response.json())
+    //         .then(json => {
+    //           temp = json
+    //         })
+    //       setneedLoadsong(false)
+    //       if (!songsLoaded) updateSongs(temp)
+    //     } else {
+    //       console.log(songs.length)
+    //       console.log("return p2");
+    //       return
+    //     }
+    //   }
+    //   fetchDGSongs()
+      
+    // }, [dgLoops])
+
+    // fetch(`/api/DG/${user.id}`, {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify({ likedSongs })
+    // });
   }
 
   // * slider * /
@@ -446,7 +512,7 @@ const DiscoveryGame = () => {
             {/* dislike */}
             <button
               onClick={() => {
-                handleSwipe2('click dislike')
+                handleSwipe2('dislike')
                 // if (state === slides.length - 1) return;
                 // setIndex((prevIndex) => (prevIndex + 1) % slides.length);
                 // setDeny(deny + 1);
@@ -457,6 +523,7 @@ const DiscoveryGame = () => {
                 // );
                 // gotoNext();
                 // setState(state + 1);
+                handleAddLikedSongs(isLiked);
               }}
               className='Discovery-Disike'
             >
@@ -477,7 +544,7 @@ const DiscoveryGame = () => {
             {/* like */}
             <button
               onClick={() => {
-                handleSwipe2('click like')
+                handleSwipe2('like')
                 // if (state === slides.length - 1) return;
                 // setIndex((prevIndex) => (prevIndex + 1) % slides.length);
                 // setAccept(accept + 1);
@@ -489,7 +556,8 @@ const DiscoveryGame = () => {
                 // );
                 // gotoNext();
                 // setState(state + 1);
-                // handleAddLikedSongs();
+                //handleAddLikedSongs();
+                handleAddLikedSongs(isLiked);
               }}
               className='Discovery-Like'
             >
