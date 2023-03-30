@@ -327,6 +327,7 @@ const DiscoveryGame = () => {
   {
     return (
       <div className='Discovery-Container'>
+        <div className='DGtitle'><strong>Discovery </strong>Game</div>
         <div className='Discovery-Top-Container'>
           <Slider ref={musicSlides} {...settings} id='carousel'>
             {songs?.map((song, i = 0) => {
@@ -355,6 +356,90 @@ const DiscoveryGame = () => {
               {songs.length !== 0 && songs[state]?.artist.artistName}
               {/* artist */}
             </h2>
+          </div>
+          
+          <div className='Discovery-Player-Container'>
+            {/* <div className={style.DGaudioPlayer}>  JACK */}
+            <div className=''>
+              <audio
+                ref={audioPlayer}
+                src={songs[state]?.songUrl}
+                autoPlay
+                preload='metadata'
+                isPlaying={
+                  (animationRef.current = requestAnimationFrame(whilePlaying))
+                }
+                onLoadedMetadata={() => {
+                  if(isPlaying === false){
+                    togglePlayPause();
+                  }
+                  
+                  changeRange()
+                  animationRef.current = requestAnimationFrame(whilePlaying)
+                }}
+                onChange={() => {
+                  changeRange()
+                  animationRef.current = requestAnimationFrame(whilePlaying)
+                }}
+                onEnded={() => {
+                  if(isPlaying === true){
+                    togglePlayPause(); 
+                  }
+                  console.log("song ended delay beginning (2s)");
+                  setTimeout(()=> {
+                    console.log("song ended delay finished");
+                    
+                    if(state === 4){
+                      console.log("at end");
+                    } 
+                    handleSwipe2('dislike')
+                  }, 2000) 
+                }
+                }
+              ></audio>
+              {/*testing maybe going in audio player to fix not loading the proggress bar on start up onLoadedMetaData={onLoadedMetaData}  */}
+              {/*current time*/}
+              {/* removed for testing */}
+              {/* <div className={style.DGcurrentTime}>{calculateTime(currentTime)}</div> */}
+              {/*progress bar*/}
+              <div className='DGprogressBarContainer'>
+                <input
+                  type='range'
+                  // className={style.DGprogressBar}
+                  className='DGprogressBar'
+                  defaultValue='0'
+                  ref={DGprogressBar}
+                  onChange={() => {
+                    changeRange()
+                    animationRef.current = requestAnimationFrame(whilePlaying)
+                  }}
+                />
+              </div>
+              <div className='DGpsbutsCont'>
+                <button
+                  onClick={togglePlayPause}
+                  className='DGplayPause'
+                  id='playPauseBtn'
+                >
+                  {isPlaying ? <FaPause /> : <FaPlay className='DGplay' />}
+                </button>
+              </div>
+              <div className='DGvolumeContainter'>
+                <button onClick={toggleMute}>
+                  {isMuted ? <BiVolumeFull /> : <BiVolumeMute />}
+                </button>
+                <input
+                  type='range'
+                  ref={DGvolumeRef}
+                  defaultValue='50'
+                  className="volumeBar"
+                  onChange={changeVolumeLevel}
+                  min='0'
+                  max='100'
+                  step='5'
+                ></input>
+              </div>
+            </div>
           </div>
           {/* Swipe Box */}
           <div className='Discovery-Swipe-Container' {...swipeableProps}>
@@ -410,88 +495,6 @@ const DiscoveryGame = () => {
             >
               <BsCheckLg />
             </button>
-          </div>
-          <div className='Discovery-Player-Container'>
-            {/* <div className={style.DGaudioPlayer}>  JACK */}
-            <div className=''>
-              <audio
-                ref={audioPlayer}
-                src={songs[state]?.songUrl}
-                autoPlay
-                preload='metadata'
-                isPlaying={
-                  (animationRef.current = requestAnimationFrame(whilePlaying))
-                }
-                onLoadedMetadata={() => {
-                  if(isPlaying === false){
-                    togglePlayPause();
-                  }
-                  
-                  changeRange()
-                  animationRef.current = requestAnimationFrame(whilePlaying)
-                }}
-                onChange={() => {
-                  changeRange()
-                  animationRef.current = requestAnimationFrame(whilePlaying)
-                }}
-                onEnded={() => {
-                  if(isPlaying === true){
-                    togglePlayPause(); 
-                  }
-                  console.log("song ended delay beginning (3s)");
-                  setTimeout(()=> {
-                    console.log("song ended delay finished");
-                    
-                    if(state === 4){
-                      console.log("at end");
-                    } 
-                    handleSwipe2('dislike')
-                  }, 3000) 
-                }
-                }
-              ></audio>
-              {/*testing maybe going in audio player to fix not loading the proggress bar on start up onLoadedMetaData={onLoadedMetaData}  */}
-              {/*current time*/}
-              {/* removed for testing */}
-              {/* <div className={style.DGcurrentTime}>{calculateTime(currentTime)}</div> */}
-              {/*progress bar*/}
-              <div className='DGprogressBarContainer'>
-                <input
-                  type='range'
-                  // className={style.DGprogressBar}
-                  className='DGprogressBar'
-                  defaultValue='0'
-                  ref={DGprogressBar}
-                  onChange={() => {
-                    changeRange()
-                    animationRef.current = requestAnimationFrame(whilePlaying)
-                  }}
-                />
-              </div>
-              <div className='DGpsbutsCont'>
-                <button
-                  onClick={togglePlayPause}
-                  className='DGplayPause'
-                  id='playPauseBtn'
-                >
-                  {isPlaying ? <FaPause /> : <FaPlay className='DGplay' />}
-                </button>
-              </div>
-              <div className='DGvolumeContainter'>
-                <button onClick={toggleMute}>
-                  {isMuted ? <BiVolumeFull /> : <BiVolumeMute />}
-                </button>
-                <input
-                  type='range'
-                  ref={DGvolumeRef}
-                  defaultValue='10'
-                  onChange={changeVolumeLevel}
-                  min='0'
-                  max='100'
-                  step='5'
-                ></input>
-              </div>
-            </div>
           </div>
         </div>
       </div>

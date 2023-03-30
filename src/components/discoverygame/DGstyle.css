@@ -629,8 +629,45 @@
 }
 
 @media screen and (min-width:1000px){
+    .DGtitle{
+        position: absolute;
+        top: 0;
+        /* justify-self: center; */
+        width: 100%;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        justify-items: center;
+        justify-content: center;
+        font-size: xx-large;
+        margin-top: 1.3%;
+        /* background-color: yellow; */
+        cursor: default;
+    }
     .DGvolumeContainter{
-        display: none;
+        /* display: none; */
+        position: fixed;
+        /* background-color: #db355f4b; */
+        border-radius: 1vw;
+        padding: 1vw;
+        align-items: center;
+        display: flex;
+        justify-items: center;
+        gap: 1vw;
+        /* transform: translateX(-10vw); */
+        transform: translate( 10vw,-8vw);
+        
+        rotate: 270deg;
+        scale: 1.3;
+        background: #8750f41a;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(2.5px);
+        -webkit-backdrop-filter: blur(9.5px);
+        border: 1px solid rgba(255, 255, 255, 0.09);
+
+    }
+    .DGvolumeContainter > button {
+        rotate: 90deg;
     }
     .Discovery-Container{
         display: flex;
@@ -641,9 +678,9 @@
         margin-top: 1vw;
         margin-bottom: 0;
         padding-top: 3.5vw;
-        /* padding-bottom: 10vmin; */
+        padding-bottom: 1.5vw;
         /* position: static; */
-        background: #8750f434;
+        background: #8750f41a;
         width: 40vw;
 
 
@@ -743,13 +780,17 @@
 
     .DGarrowcont{
         display: inline-flex;
-        color: #47419b;
+        color: #47419bbe;
         margin: 2.5px;
-        font-size: x-large;
+        font-size: xx-large;
+        gap:0.25vw;
         width: fit-content;
         background-blend-mode:multiply;
     }
-    
+    .DGarrowcont MdOutlineArrowBackIos,
+    .DGarrowcont MdOutlineArrowForwardIos {
+        margin: 0.25vw;
+    }
     .Discovery-Player-Container{
 
         margin: auto;
@@ -777,45 +818,68 @@
         margin-top: 3vmin;
         width: 20vmin;
         margin: auto;
+        padding: 2vw;
     }
     .Discovery-Swipe-Container{
         display: flex;
         flex-direction: row;
-        width: 45vmin;
-        height: 15vmin;
+        width: 35vw;
+        height: 8vw;
         background-color:rgb(19, 13, 103);
         margin: auto;
-        padding: 1.5vmin;
+        padding: 0.5vw;
         order:4;
         align-items: center;
         position: relative;
         justify-content: space-between;
         border-radius: 50vmin;
         margin-top: 2vmin;
+        margin-bottom: 4vmin;
+        box-shadow: 0vw 0.25vw 0.25vw #042c9c42;
     
     }
     .Discovery-Like, .Discovery-Disike{
-        width: 12vmin;
-        height: 12vmin;
-        font-size: 6vmin;
+        width: 7vw;
+        height: 7vw;
+        font-size: 3.5vw;
     }
     .Discovery-Like{
         background-image: linear-gradient(to right,#0034c4, #8650F4);
         border-radius: 50vmin;
-        border: #8650F4 2px solid;
+        border: #d1bef7a1 2px solid;
         display: flex;
         align-items: center;
         justify-content: center;
         color:rgb(225, 225, 225);
-        
+        background: linear-gradient(-45deg, #db355f,#bb54e4, #8650F4 );
+        /* background: linear-gradient(-45deg, #e7af40,#e0470b,#db355f,#bb54e4, #8650F4 ); */
+        /* background: linear-gradient(-45deg, #e39800, #8650F4, #2a4ff6, #0034C4); */
+        background-size: 300% 300%;
+        animation: gradient 10s ease infinite;
+        /* https://codepen.io/P1N2O/pen/pyBNzX */
     }
     .Discovery-Disike{
-        background-color:#0034c4;
+        background-color:#0034c4de;
         border-radius: 50vmin;
         border: rgba(255, 255, 255, 0.183) 2px solid;
         display: flex;
         align-items: center;
         justify-content: center;
+        opacity: 0.7;
+        
+    }
+    @keyframes gradient {
+        0% {
+            background-position: 0% 50%;
+        }
+
+        50% {
+            background-position: 100% 50%;
+        }
+
+        100% {
+            background-position: 0% 50%;
+        }
     }
     .Discovery-TestingItem-Container{
         background-color: rgb(0, 0, 0);
@@ -848,7 +912,8 @@
     }
     /*safari*/
     .DGprogressBar::-webkit-slider-runnable-track{
-        background-color: rgba(255, 255, 255, 0.232);
+        background-color: rgba(255, 255, 255, 0.068);
+        border: solid 2px #8750f423;
         border-radius: 15px;
         position: relative;
         width: 100%;
@@ -877,6 +942,7 @@
         box-shadow: -1px 0px 5px #8750f46f;
         margin-left: -1px;
         margin-right: -1px;
+        transition: ease-out 2ms;
     }
     .DGprogressBar::-webkit-slider-thumb{
         -webkit-appearance: none;
@@ -887,14 +953,14 @@
         background-color: #8650F4;
         cursor: pointer;
         position: relative;
-        margin-top: -5px;
-        margin-right: 1px;
+        margin-top: -7px;
+        margin-right: 2px;
         z-index: 3;
         box-sizing: border-box;
         box-shadow: -1px 0px 15px rgba(95, 8, 153, 0.692);
         display: flex;
         align-items: flex-end;
-    
+        transition: ease-in-out 6ms;
         
     }
     .DGprogressBar:active::-webkit-slider-thumb{

@@ -26,11 +26,12 @@
   /* background-image: url('./assets/Trv_bg/Trv_bgWave_1.svg'); */
   /* background-size: cover; */
   width: 100%;
+  background-size: 200% 200%;
   /* height: 100%; */
   /* background-position: center; */
   /* position: absolute; */
-  left: 0;
-  top: 0;
+  /* left: 0;
+  top: 0; */
   z-index: -49;
   /* background-blend-mode: multiply; */
   background-repeat: no-repeat;
