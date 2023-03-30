@@ -17,7 +17,7 @@ const AlbumModal = ({ album }) => {
 
   React.useEffect(() => {
     async function fetchSongList() {
-      const response = await fetch(`/api/albums/${album._id}`);
+      const response = await fetch(`/api/albums/${album?._id}`);
       const data = await response.json();
 
       setAlbumData(data);

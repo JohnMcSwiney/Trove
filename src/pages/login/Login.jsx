@@ -49,7 +49,11 @@ const Login = () => {
         />
         <button className="btn btn-success">Login</button>
       </form>
-      {error && <p>{error.error}</p>}
+      {error && (
+        <div>
+          <p>{error}</p>
+        </div>
+      )}
       <div className="artist--signup--link">
         <p>Don't Have an account?</p>
         <NavLink to={"/signup"}>Signup here!</NavLink>
