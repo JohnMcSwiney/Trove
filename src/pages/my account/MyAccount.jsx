@@ -15,39 +15,22 @@ const MyAccount = () => {
     setState(index);
   };
 
-  // const userID = JSON.parse(localStorage.getItem("user"));
-  // React.useEffect(() => {
-  //   fetchUserInfo();
-  // }, []);
-
-  // const [userInfo, setUserInfo] = React.useState({});
-  // const fetchUserInfo = async () => {
-  //   try {
-  //     const response = await fetch(`/api/users/${userID}`);
-  //     const data = await response.json();
-  //     setUserInfo(data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
   //states for forms
   const user = localStorage.getItem("user");
   const userInfo = JSON.parse(user);
 
   const [imgPath, setImagePath] = React.useState("./img/user-demo.png");
   const [email, setEmail] = React.useState(userInfo.email);
-  const [displayName, setDisPlayName] = React.useState(userInfo.displayName);
-  const [password, setPassword] = React.useState("");
-  const [newPassword, setNewPassword] = React.useState("");
-  const [dob, setDOB] = React.useState(userInfo.dob);
-  const [newEmail, setNewEmail] = React.useState("");
-  const [cPassword, setCPassword] = React.useState("");
 
   //toggle
   const [showPassword, setShowPassword] = React.useState(false);
   const toggleHidden = () => {
     setShowPassword(!showPassword);
+  };
+
+  const [showCPassword, setShowCPassword] = React.useState(false);
+  const toggleCHidden = () => {
+    setShowCPassword(!showCPassword);
   };
 
   //toggle
@@ -62,8 +45,9 @@ const MyAccount = () => {
     setShowPasswordTab(!showPasswordTab);
   };
 
-  const { updateAccount, error, isLoading } = useUpdateAccount();
-
+  const { updateAccount, error, isLoading, updateMessage } = useUpdateAccount();
+  const [dob, setDOB] = React.useState(userInfo.dob);
+  const [displayName, setDisPlayName] = React.useState(userInfo.displayName);
   const handleUpdateAccount = async (e) => {
     e.preventDefault();
     try {
@@ -74,24 +58,36 @@ const MyAccount = () => {
     }
   };
 
-  const { updateEmail, emailError, emailIsLoading } = useUpdateEmail();
+  const { updateEmail, emailError, emailIsLoading, emailMessage } =
+    useUpdateEmail();
+  const [currentEmail, setCurrentEmail] = React.useState("");
+  const [newEmail, setNewEmail] = React.useState("");
+  const [cPassword, setCPassword] = React.useState("");
   const handleUpdateEmail = async (e) => {
     e.preventDefault();
     try {
-      await updateEmail(newEmail, cPassword);
+      await updateEmail(currentEmail, newEmail, cPassword);
+      setCurrentEmail("");
+      setNewEmail("");
+      setCPassword("");
     } catch (error) {
-      console.log(error.data?.message || "Please try again");
+      console.log(error);
       return;
     }
   };
 
-  const { updatePassword, passwordError, passwordIsLoading } =
+  const { updatePassword, passwordError, passwordIsLoading, passwordMessage } =
     useUpdatePassword();
-
+  const [password, setPassword] = React.useState("");
+  const [newPassword, setNewPassword] = React.useState("");
+  const [confirmNewPassword, setConfirmNewPassword] = React.useState("");
   const handleUpdatePassword = async (e) => {
     e.preventDefault();
     try {
-      await updatePassword(password, newPassword);
+      await updatePassword(password, newPassword, confirmNewPassword);
+      setPassword("");
+      setNewPassword("");
+      setConfirmNewPassword("");
     } catch (error) {
       console.log(error);
       return;
@@ -182,6 +178,8 @@ const MyAccount = () => {
                   </div>
                 </div>
               </form>
+              {error && <p>{error}</p>}
+              {updateMessage && <p>{updateMessage}</p>}
             </div>
           </div>
 
@@ -193,22 +191,31 @@ const MyAccount = () => {
                   <h5 onClick={toggleShowEmail}>Email</h5>
                   {showEmailTab && (
                     <div>
-                      <label htmlFor="newemail">New email</label>
+                      <label htmlFor="currentEmail">Current email: </label>
+                      <input
+                        type="email"
+                        id="currentEmail"
+                        className="form-control"
+                        placeholder="current@gmail.com"
+                        onChange={(e) => setCurrentEmail(e.target.value)}
+                        value={currentEmail}
+                      />
+                      <label htmlFor="newemail">New email: </label>
                       <input
                         type="email"
                         id="newemail"
                         className="form-control"
-                        placeholder="Change your email here"
+                        placeholder="new@gmail.com"
                         onChange={(e) => setNewEmail(e.target.value)}
                         value={newEmail}
                       />
 
-                      <label htmlFor="Cpassword">Confirm password</label>
+                      <label htmlFor="Cpassword">Confirm password: </label>
                       <input
                         type={"password"}
                         id="Cpassword"
                         className="form-control"
-                        placeholder="Current password"
+                        placeholder="password"
                         onChange={(e) => setCPassword(e.target.value)}
                         value={cPassword}
                       />
@@ -219,6 +226,8 @@ const MyAccount = () => {
                     </div>
                   )}
                 </form>
+                {emailError && <p>{emailError}</p>}
+                {emailMessage && <p>{emailMessage}</p>}
               </div>
 
               <div className="updateMailPassinput">
@@ -226,7 +235,7 @@ const MyAccount = () => {
                   <h5 onClick={toggleShowPasswordTab}>Password</h5>
                   {showPasswordTab && (
                     <div>
-                      <label htmlFor="password">Current password</label>
+                      <label htmlFor="password">Current password: </label>
                       <input
                         type={"password"}
                         id="password"
@@ -235,7 +244,7 @@ const MyAccount = () => {
                         onChange={(e) => setPassword(e.target.value)}
                         value={password}
                       />
-                      <label htmlFor="newpassword">New password</label>
+                      <label htmlFor="newPassword">New password: </label>
                       <div className="newPasswordCont">
                         {showPassword ? (
                           <BiShow onClick={toggleHidden} className="eyeIcon" />
@@ -247,11 +256,35 @@ const MyAccount = () => {
                         )}
                         <input
                           type={showPassword ? "text" : "password"}
-                          id="newpassword"
+                          id="newPassword"
                           className="form-control"
                           placeholder="New password"
                           onChange={(e) => setNewPassword(e.target.value)}
                           value={newPassword}
+                        />
+                      </div>
+
+                      <label htmlFor="confirmNewPassword">
+                        Confirm new password:
+                      </label>
+                      <div className="newPasswordCont">
+                        {showCPassword ? (
+                          <BiShow onClick={toggleCHidden} className="eyeIcon" />
+                        ) : (
+                          <AiOutlineEyeInvisible
+                            onClick={toggleCHidden}
+                            className="eyeIcon"
+                          />
+                        )}
+                        <input
+                          type={showCPassword ? "text" : "password"}
+                          id="confirmNewPassword"
+                          className="form-control"
+                          placeholder="New password"
+                          onChange={(e) =>
+                            setConfirmNewPassword(e.target.value)
+                          }
+                          value={confirmNewPassword}
                         />
                       </div>
 
@@ -261,6 +294,8 @@ const MyAccount = () => {
                     </div>
                   )}
                 </form>
+                {passwordError && <p>{passwordError}</p>}
+                {passwordMessage && <p>{passwordMessage}</p>}
               </div>
             </div>
           </div>

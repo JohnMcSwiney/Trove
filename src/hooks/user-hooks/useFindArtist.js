@@ -1,24 +1,23 @@
-import {useState} from 'react'
+import { useState } from "react";
 
-const useFindArtist = ()=> {
-    const [artistError, setArtistError] = useState(null)
-    const [artistIsLoading, setArtistIsLoading] = useState(false)
+const useFindArtist = () => {
+  const [artistError, setArtistError] = useState(null);
+  const [artistIsLoading, setArtistIsLoading] = useState(false);
 
+  const findArtist = async () => {
+    setArtistIsLoading(true);
+    setArtistError(null);
 
-    const findArtist = async () => {
-        setArtistIsLoading(true)
-        setArtistError(null)
+    const response = await fetch(`/api/artists/${artistID}`);
 
-        const response = await fetch (`/api/artists/${artistID}`)
+    const json = await response.json();
 
-        const json =await response.json();
-
-        if(!response.ok){
-            setArtistError(json.err)
-        }
-
-        setArtistIsLoading(false)
+    if (!response.ok) {
+      setArtistError(json.error);
     }
 
-    return {findArtist, artistError, artistIsLoading};
-}
+    setArtistIsLoading(false);
+  };
+
+  return { findArtist, artistError, artistIsLoading };
+};

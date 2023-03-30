@@ -4,7 +4,7 @@ import { useAuthContext } from "./useAuthContext";
 export const useUpdateAccount = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-
+  const [updateMessage, setUpdateMessage] = useState("");
   const updateAccount = async (displayName, dob) => {
     setIsLoading(true);
     setError(null);
@@ -20,14 +20,15 @@ export const useUpdateAccount = () => {
     const json = await response.json();
 
     if (!response.ok) {
-      setError(json.err);
+      setError(json.error);
     }
     setIsLoading(false);
+    setUpdateMessage(json.success);
     const user = JSON.parse(localStorage.getItem("user"));
     user.displayName = displayName;
     user.dob = dob;
     localStorage.setItem("user", JSON.stringify(user));
   };
 
-  return { updateAccount, error, isLoading };
+  return { updateAccount, error, isLoading, updateMessage };
 };

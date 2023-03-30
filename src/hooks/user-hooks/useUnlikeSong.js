@@ -18,7 +18,7 @@ export const useUnlikeSong = () => {
     const json = await response.json();
 
     if (!response.ok) {
-      setUnlikeError(json.err);
+      setUnlikeError(json.error);
     }
 
     if (response.ok) {

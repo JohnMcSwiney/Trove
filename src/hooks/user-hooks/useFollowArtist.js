@@ -16,7 +16,7 @@ export const useFollowArtist = () => {
     const json = await response.json();
 
     if (!response.ok) {
-      setFollowError(json.err);
+      setFollowError(json.error);
     }
 
     setIsFollowLoading(false);
