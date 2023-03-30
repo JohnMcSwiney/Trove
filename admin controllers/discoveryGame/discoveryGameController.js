@@ -14,54 +14,76 @@ const { getAllSongs } = require("../../admin controllers/song/songController");
 const { resolve } = require("path");
 // const { storage } = require("firebase/compat/storage");
 
-
+const errorCallback = (err) => {
+  console.log(err);
+  throw new Error("decoding audio error");
+}
 //find beat and tempo of a song.
-const calcSongData = async (buffer) => {
+const calcSongData = async (decodedAudioData) => {
 
   return new Promise((resolve, reject) => {
 
     console.log("should be in calcsongdata");
 
-    console.log("buffer in calcsongdata" + buffer);
+    console.log("audiodata in calcsongdata" + decodedAudioData);
 
     let audioData = [];
 
-    if (buffer.numberOfChannels == 2) {
+    if (decodedAudioData.numberOfChannels == 2) {
 
-      let data1 = buffer.getChannelData(0);
-      let data2 = buffer.getChannelData(1);
+      let data1 = decodedAudioData.getChannelData(0);
+      let data2 = decodedAudioData.getChannelData(1);
 
       for (let i = 0; i < data1.length; i++) {
         audioData[i] = (data1[i] + data2[i]) / 2;
       }
     } else {
-      audioData = buffer.getChannelData(0);
+      audioData = decodedAudioData.getChannelData(0);
     }
 
     const songData = new MusicTempo(audioData);
 
-    const tempo = Math.round(songData.tempo);
-    const beat = Math.round(songData.beatInterval);
-
-    console.log("tempo resolve: " + tempo);
-    console.log("beat resolve: " + beat);
+    console.log("tempo resolve: " + Math.round(songData.tempo));
+    console.log("beat resolve: " + Math.round(songData.beatInterval));
 
     resolve(songData);
   })
-    .then((result) => {
-      console.log("result: " + result);
-      return result;
-    })
+    // .then((result) => {
+    //   console.log("result: " + result);
+    //   return result;
+    // })
     .catch((err) => {
       console.log(err);
       reject(err);
       throw new Error("error in calcSongData");
-    })
+    });
 }
 
-const errorCallback = (err) => {
-  console.log(err);
-  throw new Error("decoding audio error");
+const fetchAudioData = async (songUrl) => {
+
+  const res = await fetch(songUrl);
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch response");
+  }
+
+  const buffer = await res.arrayBuffer();
+
+  console.log("buffer" + buffer);
+
+  const context = new AudioContext();
+
+  // const decodedBuffer = await new Promise((resolve, reject) => {
+  //   context.decodeAudioData(buffer, resolve, reject);
+  // });
+
+  const decodedBuffer = await context.decodeAudioData(buffer);
+  // const channelData = decodedBuffer.getChannelData(0);
+  // const audioData = new Float32Array(channelData);
+
+  //return audioData;
+  return decodedBuffer;
+
 }
 
 const compareSongData = async (user) => {
@@ -109,46 +131,17 @@ const compareSongData = async (user) => {
         throw new Error("SongURL does not exist");
       }
 
-      const res = await fetch(songURL);
+      const decodedAudioData = await fetchAudioData(songURL);
 
-      console.log("res: " + res);
+      // const context = new AudioContext();
 
-      if (!res.ok) {
-        throw new Error("Failed to fetch response");
-      }
+      // const decodedBuffer = await new Promise((resolve, reject) => {
+      //   context.decodeAudioData(buffer, resolve, reject);
+      // });
 
-      const buffer = await res.arrayBuffer();
+      const songData = await calcSongData(decodedAudioData);
 
-      if (!buffer || buffer == null) {
-        throw new Error("Failed to get buffer");
-      }
-
-      console.log("buffer: " + buffer.toString());
-
-      //const songData = await calcSongData(buffer);
-
-      const context = new AudioContext();
-
-      //const songData = await calcSongData(buffer)
-      
-      await context.decodeAudioData(
-        buffer,
-        async (buffer) => {
-        await calcSongData(buffer);
-        },
-        
-        );
-
-
-      // const decodedBuffer = await context.decodeAudioData(buffer);
-
-      // console.log("decodedBuffer: " + decodedBuffer);
-
-      // const songData = await context.decodeAudioData(buffer, calcSongData, errorCallback);
-
-      // console.log("songData: " + songData);
-
-      // console.log("decodeSongs: " + decodeSongs)
+      console.log("songData in outer function: " + songData);
 
       // let tempoList = [];
       // let beatList = [];
