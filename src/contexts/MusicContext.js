@@ -19,6 +19,10 @@ export const MusicProvider = ({ children }) => {
   
   const[loopLevel, setLoopLevel] = useState(0);
   
+  const[curr_DiscoveryDecision, setCurr_DiscoveryDecision] = useState("water/ice/salt(aye)");
+  const[discovery_Decision_List, updateDiscovery_Decision_List] = useState([]);
+
+
   const updateDisplayMusicBar = (newDisplayMusicBar) => {
     setDisplayMusicBar(newDisplayMusicBar);
   };
@@ -82,10 +86,29 @@ export const MusicProvider = ({ children }) => {
   const updateLoopLevel = (level) => {
     setLoopLevel(level);
   }
+  // discovery_decision_add,
+  // clear_discovery_decision_list,
 
-  useEffect (()=> {
-    console.log("queue" + queue);
-  },[queue])
+  const discovery_decision_add = (decision, songId) =>{
+    let entry = `${decision}` + " " + `${songId}`;
+    discovery_Decision_List.push(entry)
+    console.log("List (item added):");
+    console.log(discovery_Decision_List);
+  }
+  const clear_discovery_decision_list = () => {
+    
+    console.log('command recieved to clear DG list');
+    console.log("list before:");
+    console.log(discovery_Decision_List);
+
+    updateDiscovery_Decision_List([]);
+
+    // console.log("list after:");
+    // console.log(discovery_Decision_List);
+  }
+  // useEffect (()=> {
+  //   console.log("queue" + queue);
+  // },[queue])
   // play_list is the full list of songs
   // queue is a list that removes a song on listen and can be added to anytime
   // when a song is added to the queue it will pause the play_list position
@@ -112,6 +135,13 @@ export const MusicProvider = ({ children }) => {
     
     loopLevel,
     updateLoopLevel,
+
+    curr_DiscoveryDecision,
+    setCurr_DiscoveryDecision,
+    discovery_Decision_List,
+    updateDiscovery_Decision_List,
+    discovery_decision_add,
+    clear_discovery_decision_list,
   };
 
   

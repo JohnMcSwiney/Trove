@@ -942,7 +942,7 @@
         box-shadow: -1px 0px 5px #8750f46f;
         margin-left: -1px;
         margin-right: -1px;
-        transition: ease-out 2ms;
+        /* transition: ease-out 2ms; */
     }
     .DGprogressBar::-webkit-slider-thumb{
         -webkit-appearance: none;
@@ -953,14 +953,15 @@
         background-color: #8650F4;
         cursor: pointer;
         position: relative;
-        margin-top: -7px;
-        margin-right: 2px;
+        margin-top: -6px;
+        /* margin-right: 1px; */
         z-index: 3;
         box-sizing: border-box;
         box-shadow: -1px 0px 15px rgba(95, 8, 153, 0.692);
         display: flex;
         align-items: flex-end;
         transition: ease-in-out 6ms;
+        /* transform:translateX(-1px); */
         
     }
     .DGprogressBar:active::-webkit-slider-thumb{

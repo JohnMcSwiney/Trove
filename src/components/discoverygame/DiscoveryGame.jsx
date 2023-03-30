@@ -65,7 +65,14 @@ const DiscoveryGame = () => {
   const [songsLoaded, updateSongsLoaded] = useState(false)
   const [needLoadsong, setneedLoadsong] = useState(false)
   const user = useAuthContext()
-  const { displayMusicBar, updateDisplayMusicBar, play_list } = React.useContext(MusicContext)
+  const { displayMusicBar, updateDisplayMusicBar, play_list, 
+    
+    curr_DiscoveryDecision,
+    setCurr_DiscoveryDecision,
+    discovery_Decision_List,
+    updateDiscovery_Decision_List,
+    discovery_decision_add,
+    clear_discovery_decision_list, } = React.useContext(MusicContext)
 
   // hides musicBar when discovery game is active
   // user needs to play more music to get it back
@@ -224,7 +231,19 @@ const DiscoveryGame = () => {
   const handleSwipe2 = direction => {
     console.log("direction test: " + direction)
     
-    
+    switch(direction){
+      case 'like': 
+        console.log("switch like! (song:" + songs[state].title + " )");
+        break;
+
+      case 'dislike':
+        console.log("switch dislike! (song:" + songs[state].title + " )");  
+        break;
+      default:
+        break;     
+    }
+    // setIsLiked(direction);
+    discovery_decision_add(direction, songs[state]._id);
     if(state === 4){
       console.log("we should really get you some new songs hey?");
       if(isPlaying === true){
@@ -238,19 +257,20 @@ const DiscoveryGame = () => {
       updateDgLoops(dgLoops + 1);
       resetSlideIndex();
       setState(0);
+      clear_discovery_decision_list();
     } else {
       gotoNext()
       setState(state + 1)
 
     }
-    setIsLiked(direction);
+    
   }
   const swipeableProps = useSwipeable({
     trackMouse: true,
-    // Dislike
-    // or like idfk whats happening
+    // like
+
     onSwipedLeft: () => {
-      handleSwipe2('dislike')
+      handleSwipe2('like')
       // if (state === songs.length - 1) return
       // setIndex(prevIndex => (prevIndex + 1) % songs.length)
       // setAccept(accept + 1)
@@ -259,13 +279,13 @@ const DiscoveryGame = () => {
       //   songs[state].title,
       //   songs[state].artist
       // )
-      handleAddLikedSongs(isLiked);
+      // handleAddLikedSongs(isLiked);
     },
     
-    // Like
-    // or dislike idfk whats happening
+   
+    // dislike
     onSwipedRight: () => {
-      handleSwipe2('like')
+      handleSwipe2('dislike')
       // if (state === songs.length - 1) return
       // setIndex(prevIndex => (prevIndex + 1) % songs.length)
       // setDeny(deny + 1)
@@ -274,7 +294,7 @@ const DiscoveryGame = () => {
       //   songs[state].title,
       //   songs[state].artist
       // 
-      handleAddLikedSongs(isLiked);
+      // handleAddLikedSongs(isLiked);
     }
   })
   
@@ -523,7 +543,7 @@ const DiscoveryGame = () => {
                 // );
                 // gotoNext();
                 // setState(state + 1);
-                handleAddLikedSongs(isLiked);
+                // handleAddLikedSongs(isLiked);
               }}
               className='Discovery-Disike'
             >
@@ -557,7 +577,7 @@ const DiscoveryGame = () => {
                 // gotoNext();
                 // setState(state + 1);
                 //handleAddLikedSongs();
-                handleAddLikedSongs(isLiked);
+                // handleAddLikedSongs(isLiked);
               }}
               className='Discovery-Like'
             >
