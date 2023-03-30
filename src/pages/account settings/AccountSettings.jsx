@@ -8,6 +8,8 @@ import { useArtistAuthContext } from "../../hooks/useArtistAuthContext";
 import { useUpdateInfo } from "../../hooks/useUpdateInfo";
 import { useUpdateGmail } from "../../hooks/useUpdateGmail";
 import { useUpdatePassword } from "../../hooks/useUpdatePassword";
+import { useUpdateProfilePhoto } from "../../hooks/useUpdateProfilePhoto";
+
 const AccountSetting = () => {
   const [state, setState] = React.useState(1);
 
@@ -96,12 +98,55 @@ const AccountSetting = () => {
       return;
     }
   };
+
+  //artist image
+  const [imageFile, setImageFile] = React.useState();
+  const [artistProfilePic, setArtistProfilePic] = React.useState("");
+  React.useEffect(() => {
+    const fetchArtist = async () => {
+      const artistResponse = await fetch(`/api/artists/${artist?.id}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+      const artistJson = await artistResponse.json();
+      if (artistResponse.ok) {
+        setArtistProfilePic(artistJson.artistImg);
+      }
+    };
+    fetchArtist();
+  }, [artist?._id]);
+
+  const handleImageFileChange = (e) => {
+    setImageFile(e.target.files[0]);
+    setArtistProfilePic(URL.createObjectURL(e.target.files[0]));
+    // setImageWasChanged(true);
+  };
+
+  const { updateProfilePhoto, error } = useUpdateProfilePhoto();
+  const handleUpdatePhoto = async (e) => {
+    console.log("CLICKED SUBMIT")
+    // e.preventDefault();
+
+    try {
+      await updateProfilePhoto(
+        artist?.id,
+        imageFile
+        
+      );
+    } catch (error) {
+      console.log(error);
+    }
+
+    console.log("CLICKED SUBMIT 2");
+  };
+  
+
   return (
     <div className="container">
       <h1 className="my-account-header">Settings</h1>
 
-      <div className="my-account">
-        <div className="tabs ">
+      <div className="my-account box">
+        <div className="my-account tabs ">
           <div className={`${state === 1 ? "active-tab" : "tab"}`}>
             <div className="account-display" onClick={() => action(1)}>
               <h4 className="account-header">Account</h4>
@@ -125,15 +170,28 @@ const AccountSetting = () => {
 
         <div className="contents">
           <div className={`${state === 1 ? "active-content" : "content"}`}>
-            <h3>Detail about your personal information</h3>
+            <h3>Your Account Details</h3>
             <form onSubmit={handleUpdateAccount}>
               <div className="inner-form">
                 <div className="user-img-div">
-                  <img
-                    src={imgPath}
+                <label >
+                  <input
+                    type="file"
+                    name="cover"
+                    value=""
+                    accept="image/*"
+                    // className=""
+                    onChange={handleImageFileChange}
+                  />
+                <img
+                    src={artistProfilePic}
                     className="user-avatar"
                     alt="your-avatar"
                   />
+                  
+                </label>
+                 
+                  <h4>Edit Photo</h4>
                 </div>
 
                 <div>
@@ -166,7 +224,7 @@ const AccountSetting = () => {
                     className="form-control"
                   />
 
-                  <button className="btn btn-primary mt-3">Save</button>
+                  <button className="btn btn-primary mt-3" onClick={handleUpdatePhoto}>Save</button>
                 </div>
               </div>
             </form>

@@ -1,5 +1,5 @@
 
-.artist--login > h1 {
+.artist--signup > h1 {
     color: white;
     margin-left: 30vw;
     margin-right: 30vw;
@@ -7,15 +7,16 @@
     font-size: 3vmin;
 }
 
-.artist--login > h3  {
+.artist--signup > h3  {
     color: #5a65e5;
     font-size: 2vmin;
     font-weight:100;
     margin-left: 30vw;
     margin-right: 30vw;
+    text-align: center;
 } 
 
-.artist--login--form  {
+.artist--signup--form  {
     color: white;
     /* align-items: center;
     display: inline-block;
@@ -27,7 +28,7 @@
     text-align: center;
 }
 
-.artist--login {
+.artist--signup {
     /* margin-top: 15vmin; */
 }
 
@@ -52,7 +53,7 @@
 }
  
 .form-check-first, .form-check-second {
-   float: right;
+   float: left;
 }
 
 .signup--btn {
@@ -74,3 +75,6 @@ button {
   }
 
 
+.artist--trovemusic-span {
+    font-weight: 900;   
+}

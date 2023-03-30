@@ -38,8 +38,11 @@ const Signup = () => {
   
   return (
     <div className="artist--signup form-group container">
-      <h1>Trove Music</h1>
-      <h3>Sign up for free to explore your own music treasure </h3>
+      <h1>
+      <span className="artist--trovemusic-span">Trove</span> 
+      Music
+      </h1>
+      <h3>Sign up for free to share your musical treasures </h3>
       <form className="artist--signup--form" onSubmit={handleSubmit}>
         <label for="email">What's your email?</label>
         <input

@@ -5,7 +5,8 @@
     grid-template-columns: max(15%) max(85%);
     color: white;
     min-height: 100%;
-    background-color: #2d3436;
+    background-color: #0c081c;
+    border-radius: 2vmin;
   }
 
   .my-account-header {
@@ -16,25 +17,29 @@
     height: 100px;
     border-radius: 50%;
   }
-  .tabs {
+  .my-account .tabs {
     display: flex;
     flex-direction: column;
     align-items: center;
     border-right: 1px solid;
+    border-top-right-radius: 0vmin;
+    border-bottom-right-radius: 0vmin;
     min-height: 500px;
     padding: 10px;
+
+    
   }
 
   .tab {
     position: relative;
-    cursor: poiter;
-    padding: 5px;
+    cursor: pointer;
+    padding: 3vmin;
   }
 
   .active-tab:hover {
     background-color: transparent;
     opacity: 0.6;
-    cursor: poiter;
+    cursor: pointer;
   }
 
   .tab:hover {
@@ -42,9 +47,11 @@
     opacity: 0.6;
   }
 
-  .active-tab {
+  .my-account .active-tab {
     border-bottom: solid 1px #8750f4e6;
-    cursor: poiter;
+    cursor: pointer;
+    padding: 3vmin;
+
   }
 
   .contents {
@@ -64,6 +71,28 @@
     position: relative;
     padding: 50px;
   }
+  
+  .user-img-div {
+    padding-bottom: 2vmin;
+  }
+
+  .user-img-div:hover  {
+    opacity: 0.6;
+  }
+
+  .user-img-div > h4 {
+    font-size: 1.8vmin;
+    position: absolute;
+    margin-top: -4vw;
+    margin-left: 2.5vmin;
+    display: none;
+  }
+
+  .user-img-div:hover > h4 {
+    display: block;
+
+  }
+
 }
 
 @media screen and (max-width: 800px) {

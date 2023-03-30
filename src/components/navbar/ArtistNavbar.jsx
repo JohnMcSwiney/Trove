@@ -132,7 +132,7 @@ const ArtistNavbar = () => {
             <div class="vl">
               {artist ? (
                 <>
-                  <button className="btn text-white" onClick={logout}>
+                  <button className="artist--logout btn text-white" onClick={logout}>
                     Logout
                   </button>
 

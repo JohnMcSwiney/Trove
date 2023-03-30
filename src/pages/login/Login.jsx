@@ -1,6 +1,6 @@
 import React from "react";
 import { useLogin } from "../../hooks/useLogin";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import "./login.css"
  
 const Login = () => {
@@ -28,8 +28,8 @@ const Login = () => {
   }, [navigate]);
   return (
     <div className="artist--login">
-      <h1>Login with TroveMusic</h1>
-      <form onSubmit={handleLogin}>
+      <h1>Login to  <span className="artist--trovemusic-span">Trove</span>Music</h1>
+      <form className="artist--login--form" onSubmit={handleLogin}>
         <label for="email">Email</label>
         <input
           className="form-control"
@@ -50,6 +50,10 @@ const Login = () => {
         <button className="btn btn-success">Login</button>
       </form>
       {error && <p>{error.error}</p>}
+      <div className="artist--signup--link">
+        <p>Don't Have an account?</p>
+        <NavLink to={"/signup"}>Signup here!</NavLink>
+      </div>
     </div>
   );
 };

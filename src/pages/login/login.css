@@ -1,0 +1,89 @@
+
+.artist--login > h1 {
+    color: white;
+    margin-left: 30vw;
+    margin-right: 30vw;
+    text-align: center;
+    font-size: 3vmin;
+}
+
+.artist--login > h3  {
+    color: #5a65e5;
+    font-size: 2vmin;
+    font-weight:100;
+    margin-left: 30vw;
+    margin-right: 30vw;
+    text-align: center;
+} 
+
+.artist--login--form  {
+    color: white;
+    /* align-items: center;
+    display: inline-block;
+    justify-content: center; */
+    /* margin: 0 auto;
+    width:50% */
+    margin-left: 30vw;
+    margin-right: 30vw;
+    text-align: center;
+}
+
+.artist--login {
+    /* margin-top: 15vmin; */
+}
+
+.artist--login--link {
+    color: white;
+    margin-left: 30vw;
+    margin-right: 30vw;
+    text-align: center;
+    margin-bottom: 5vmin;
+   
+}
+
+.form-control  {
+    margin-top: 2vmin;
+    margin-bottom: 2vmin;
+}
+
+.form-check {
+    text-align: left;
+    margin-right: 1vmin;
+
+}
+ 
+.form-check-first, .form-check-second {
+   float: left;
+}
+
+.login--btn {
+    padding-top: 3vmin;
+    margin-top: 10vmin;
+}
+
+button {
+
+    background-image: linear-gradient(
+      to left,
+      #8650f4,
+      #6f49e8,
+      #5642dc,
+      #393bd0,
+      #0034c4
+    );
+    border: none;
+  }
+
+
+.artist--trovemusic-span {
+    font-weight: 900;   
+}
+
+.artist--signup--link {
+    color: white;
+    margin-left: 30vw;
+    margin-right: 30vw;
+    text-align: center;
+    margin-bottom: 5vmin;
+   
+}
