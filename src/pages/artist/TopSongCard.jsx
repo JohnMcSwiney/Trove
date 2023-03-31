@@ -9,7 +9,7 @@ export default function TopSongCard (data) {
 
   return (
     <div className='topSongCardCont'>
-      <div className='topSongIndexCont'>{data?.index}</div>
+      <div className='topSongIndexCont'>{data?.index + 1}</div>
       <div className='topSongimgCont'>
         <img src={data?.cover}></img>
       </div>
