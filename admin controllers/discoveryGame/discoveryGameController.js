@@ -1,10 +1,6 @@
 const express = require("express");
 const { default: mongoose } = require("mongoose");
-const AudioContext = require("web-audio-api").AudioContext;
-const AudioBuffer = require("web-audio-api").AudioBuffer;
-const MusicTempo = require("music-tempo");
-const av = require("av");
-const fs = require("fs");
+const URL = require("url").URL;
 const DiscoveryGame = require("../../models/discoveryGame model/discoveryGame-model");
 const Song = require("../../models/song model/song-model");
 const Artist = require("../../models/artist model/artist-model");
@@ -12,8 +8,6 @@ const Album = require("../../models/album model/album-model");
 const User = require("../../models/user model/user-model");
 const { getAllSongs } = require("../../admin controllers/song/songController");
 const { resolve } = require("path");
-const { $where } = require("../../models/discoveryGame model/discoveryGame-model");
-// const { storage } = require("firebase/compat/storage");
 
 
 const compareSongData = async (user) => {
@@ -52,6 +46,22 @@ const compareSongData = async (user) => {
         console.log("SongID should be removed");
       }
 
+      if (currentSong.songUrl) {
+        console.log("inside url validation")
+        try {
+          console.log("if url is valid")
+          new URL(currentSong.songUrl);
+        } catch (err) {
+          console.log("Invalid songUrl, contents not found");
+
+          await Song.updateOne(
+            { _id: currentSong._id },
+            { $set: { isPublished: false } }
+          );
+          console.log("Song should be disabled.");
+        }
+      }
+
       console.log("currentSong title: " + currentSong.title);
 
       songGenre = currentSong.genre;
@@ -59,7 +69,13 @@ const compareSongData = async (user) => {
       console.log("currentSongGenre: " + songGenre);
 
       if (!songGenre || songGenre == null) {
-        throw new Error("SongGenre not found");
+
+        await Song.updateOne(
+          { _id: currentSong._id },
+          { $set: { isPublished: false } }
+        );
+        console.log("song did not contain a genre");
+        //throw new Error("SongGenre not found");
       }
 
       switch (songGenre) {
@@ -104,8 +120,6 @@ const compareSongData = async (user) => {
         if (genreArray[i] > first) {
           first = genreArray[i];
           firstIndex = i;
-          console.log("first: " + first);
-          console.log("firstIndex: " + firstIndex);
         }
 
         else if (genreArray[i] < first && genreArray[i] > third) {
@@ -122,15 +136,16 @@ const compareSongData = async (user) => {
           fourth = genreArray[i];
           fourthIndex = i;
         }
+
+        console.log("first: " + first);
+        console.log("second: " + second);
+        console.log("third: " + third);
+        console.log("fourth: " + fourth);
+        console.log("firstIndex: " + firstIndex);
+        console.log("secondIndex: " + secondIndex);
+        console.log("thirdIndex: " + thirdIndex);
+        console.log("fourthIndex: " + fourthIndex);
       }
-      console.log("first: " + first);
-      console.log("second: " + second);
-      console.log("third: " + third);
-      console.log("fourth: " + fourth);
-      console.log("firstIndex: " + firstIndex);
-      console.log("secondIndex: " + secondIndex);
-      console.log("thirdIndex: " + thirdIndex);
-      console.log("fourthIndex: " + fourthIndex);
 
 
       let genres = ["pop", "rock", "country", "hiphop"];
@@ -168,7 +183,7 @@ const compareSongData = async (user) => {
         }
       }
 
-      if (chance >= 25 && chance < 50) {
+      if (chance < 25 && chance >= 25 && chance < 50) {
         console.log("chance was >25 but <50");
         songGenre = genres[firstIndex];
         console.log("songGenre in if stmt: " + songGenre);
@@ -208,7 +223,7 @@ const compareSongData = async (user) => {
 
       const randomSimilarSong = similarSongs[Math.floor(Math.random() * similarSongs.length)];
 
-      if (!songLimit.includes(randomSimilarSong) && !user.likedSongs.includes(randomSimilarSong)) {
+      if (!songLimit.includes(randomSimilarSong._id) && !user.likedSongs.includes(randomSimilarSong._id)) {
         songLimit.push(randomSimilarSong);
         console.log("added randomSong: " + randomSimilarSong.title);
       }
@@ -356,7 +371,7 @@ const randomSong = async (user) => {
 
     const randomSong = songs[Math.floor(Math.random() * songs.length)];
 
-    if (!songLimit.includes(randomSong) && !user.likedSongs.includes(randomSong)) {
+    if (!songLimit.includes(randomSong._id) && !user.likedSongs.includes(randomSong._id)) {
       songLimit.push(randomSong);
       console.log("added randomSong: " + randomSong.title);
     }
@@ -403,7 +418,7 @@ const loadDiscoveryGame = async (req, res) => {
 
         const randomSong = songs[Math.floor(Math.random() * songs.length)];
 
-        if (!songLimit.includes(randomSong)) {
+        if (!songLimit.includes(randomSong._id) && !user.likedSongs.includes(randomSong._id)) {
           songLimit.push(randomSong);
           console.log("added randomSong: " + randomSong.title);
         }
