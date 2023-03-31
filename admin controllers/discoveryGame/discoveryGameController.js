@@ -12,79 +12,9 @@ const Album = require("../../models/album model/album-model");
 const User = require("../../models/user model/user-model");
 const { getAllSongs } = require("../../admin controllers/song/songController");
 const { resolve } = require("path");
+const { $where } = require("../../models/discoveryGame model/discoveryGame-model");
 // const { storage } = require("firebase/compat/storage");
 
-const errorCallback = (err) => {
-  console.log(err);
-  throw new Error("decoding audio error");
-}
-//find beat and tempo of a song.
-const calcSongData = async (decodedAudioData) => {
-
-  return new Promise((resolve, reject) => {
-
-    console.log("should be in calcsongdata");
-
-    console.log("audiodata in calcsongdata" + decodedAudioData);
-
-    let audioData = [];
-
-    if (decodedAudioData.numberOfChannels == 2) {
-
-      let data1 = decodedAudioData.getChannelData(0);
-      let data2 = decodedAudioData.getChannelData(1);
-
-      for (let i = 0; i < data1.length; i++) {
-        audioData[i] = (data1[i] + data2[i]) / 2;
-      }
-    } else {
-      audioData = decodedAudioData.getChannelData(0);
-    }
-
-    const songData = new MusicTempo(audioData);
-
-    console.log("tempo resolve: " + Math.round(songData.tempo));
-    console.log("beat resolve: " + Math.round(songData.beatInterval));
-
-    resolve(songData);
-  })
-    // .then((result) => {
-    //   console.log("result: " + result);
-    //   return result;
-    // })
-    .catch((err) => {
-      console.log(err);
-      reject(err);
-      throw new Error("error in calcSongData");
-    });
-}
-
-const fetchAudioData = async (songUrl) => {
-
-  const res = await fetch(songUrl);
-
-  if (!res.ok) {
-    throw new Error("Failed to fetch response");
-  }
-
-  const buffer = await res.arrayBuffer();
-
-  console.log("buffer" + buffer);
-
-  const context = new AudioContext();
-
-  // const decodedBuffer = await new Promise((resolve, reject) => {
-  //   context.decodeAudioData(buffer, resolve, reject);
-  // });
-
-  const decodedBuffer = await context.decodeAudioData(buffer);
-  // const channelData = decodedBuffer.getChannelData(0);
-  // const audioData = new Float32Array(channelData);
-
-  //return audioData;
-  return decodedBuffer;
-
-}
 
 const compareSongData = async (user) => {
 
@@ -94,13 +24,20 @@ const compareSongData = async (user) => {
 
     console.log("user liked songs length: " + user.likedSongs.length);
 
-    for (const songId of user.likedSongs) {
+    let numOfPop = 0;
+    let numOfRock = 0;
+    let numOfCountry = 0;
+    let numOfHipHop = 0;
+
+    let songGenre = "";
+
+    user.likedSongs.forEach(async (songId) => {
 
       console.log("songID: " + songId);
 
-      if (!mongoose.Types.ObjectId.isValid(songId)) {
-        return res.status(404).json({ err: "No such song" });
-      }
+      // if (!mongoose.Types.ObjectId.isValid(songId)) {
+      //   return res.status(404).json({ err: "No such song" });
+      // }
 
       const currentSong = await Song.findById(songId);
 
@@ -117,84 +54,182 @@ const compareSongData = async (user) => {
 
       console.log("currentSong title: " + currentSong.title);
 
-      const songURL = currentSong.songUrl;
+      songGenre = currentSong.genre;
 
-      console.log("songurl in compareSongData: " + songURL);
+      console.log("currentSongGenre: " + songGenre);
 
-      if (!songURL) {
-        await User.updateOne(
-          { _id: user._id },
-          { $pull: { likedSongs: songId } }
-        );
-
-        console.log("SongID should be removed");
-        throw new Error("SongURL does not exist");
+      if (!songGenre || songGenre == null) {
+        throw new Error("SongGenre not found");
       }
 
-      const decodedAudioData = await fetchAudioData(songURL);
+      switch (songGenre) {
+        case "pop":
+          numOfPop++;
+          console.log("popValue: " + numOfPop);
+          break;
+        case "rock":
+          numOfRock++;
+          console.log("rockValue: " + numOfRock);
+          break;
+        case "country":
+          numOfCountry++;
+          console.log("countryValue: " + numOfCountry);
+          break;
+        case "hiphop":
+          numOfHipHop++;
+          console.log("hipHopValue: " + numOfHipHop);
+          break;
+        default:
+          console.log("Invalid songGenre");
+          break;
+      }
 
-      // const context = new AudioContext();
+      let genreArray = [numOfPop, numOfRock, numOfCountry, numOfHipHop]
 
-      // const decodedBuffer = await new Promise((resolve, reject) => {
-      //   context.decodeAudioData(buffer, resolve, reject);
-      // });
+      console.log("genreArray: " + genreArray);
 
-      const songData = await calcSongData(decodedAudioData);
+      let first = 0;
+      let second = 0;
+      let third = 0;
+      let fourth = 0;
 
-      console.log("songData in outer function: " + songData);
-
-      // let tempoList = [];
-      // let beatList = [];
-
-      // const songTempo = tempo;
-      // const songBeat = beatInterval;
-
-      // // const songTempo = Math.round(calcSongData.tempo).toFixed(2);
-      // // const songBeat = Math.round(calcSongData.beat).toFixed(2);
-
-      // console.log("songTempo: " + songTempo);
-      // console.log("songBeat: " + songBeat);
+      let firstIndex = 0;
+      let secondIndex = 0;
+      let thirdIndex = 0;
+      let fourthIndex = 0;
 
 
-      // tempoList.push(songTempo);
-      // beatList.push(songBeat);
+      for (let i = 0; i < genreArray.length; i++) {
 
-      // let tempoValue = 0;
-      // let beatValue = 0;
+        if (genreArray[i] > first) {
+          first = genreArray[i];
+          firstIndex = i;
+          console.log("first: " + first);
+          console.log("firstIndex: " + firstIndex);
+        }
 
-      // for (let i = 0; i < tempoList.length; i++) {
-      //   tempoValue += tempoList[i];
-      //   console.log("current tempoValue: " + tempoValue);
-      // }
+        else if (genreArray[i] < first && genreArray[i] > third) {
+          second = genreArray[i];
+          secondIndex = i;
+        }
 
-      // for (let i = 0; i < beatList.length; i++) {
-      //   beatValue += beatList[i];
-      //   console.log("current beatValue: " + beatValue);
+        else if (genreArray[i] < second && genreArray[i] > fourth) {
+          third = genreArray[i];
+          thirdIndex = i;
+        }
 
-      // }
+        else if (genreArray[i] <= fourth) {
+          fourth = genreArray[i];
+          fourthIndex = i;
+        }
+      }
+      console.log("first: " + first);
+      console.log("second: " + second);
+      console.log("third: " + third);
+      console.log("fourth: " + fourth);
+      console.log("firstIndex: " + firstIndex);
+      console.log("secondIndex: " + secondIndex);
+      console.log("thirdIndex: " + thirdIndex);
+      console.log("fourthIndex: " + fourthIndex);
 
-      // const averageTempo = Math.round(tempoValue / user.likedSongs.length).toPrecision(2);
 
-      // const averageBeat = Math.round(beatValue / user.likedSongs.length).toPrecision(2);
+      let genres = ["pop", "rock", "country", "hiphop"];
 
-      // console.log("average tempo of user liked songs: " + averageTempo);
+      let chance = Math.round(Math.random() * 100);
 
-      // console.log("average beat of user liked songs: " + averageBeat);
+      // let shuffle = Math.round(Math.random() * 100);
 
-      // return averageTempo, averageBeat;
+      console.log("chance in genre validation: " + chance);
+
+      // conso.log("shuffle val in genre validation: " + shuffle);
+
+      if (first == second || first == third || first == fourth) {
+        console.log("if there are two or more number of genres that are the same");
+
+        if (chance >= 25 && chance < 50) {
+          console.log("chance was >25 but <50");
+          songGenre = genres[firstIndex];
+          console.log("songGenre in if stmt: " + songGenre);
+        }
+        else if (chance >= 50 && chance < 75) {
+          console.log("chance was >50 but <75");
+          songGenre = genres[secondIndex];
+          console.log("songGenre in if stmt: " + songGenre);
+        }
+        else if (chance == 75) {
+          console.log("chance was greater than 75");
+          songGenre = genres[thirdIndex];
+          console.log("songGenre in if stmt: " + songGenre);
+        }
+        else {
+          console.log("chance was higher than 75");
+          songGenre = genres[fourthIndex];
+          console.log("songGenre in if stmt: " + songGenre);
+        }
+      }
+
+      if (chance >= 25 && chance < 50) {
+        console.log("chance was >25 but <50");
+        songGenre = genres[firstIndex];
+        console.log("songGenre in if stmt: " + songGenre);
+      }
+      else if (chance >= 50 && chance < 75) {
+        console.log("chance was >50 but <75");
+        songGenre = genres[secondIndex];
+        console.log("songGenre in if stmt: " + songGenre);
+      }
+      else if (chance == 75) {
+        console.log("chance was greater than 75");
+        songGenre = genres[thirdIndex];
+        console.log("songGenre in if stmt: " + songGenre);
+      }
+      else {
+        console.log("chance was higher than 75");
+        songGenre = genres[fourthIndex];
+        console.log("songGenre in if stmt: " + songGenre);
+      }
+
+      return songGenre;
+    });
+
+    const similarSongs = await Song.find({ genre: songGenre })
+      .populate("artist")
+      .populate("featuredArtists")
+      .populate("album")
+      .sort();
+
+    if (!similarSongs) {
+      return res.status(404).send("similar songs not found");
     }
 
-    // await user.likedSongs.forEach(async (songId) => {
+    const songLimit = [];
+
+    while (songLimit.length < 5) {
+
+      const randomSimilarSong = similarSongs[Math.floor(Math.random() * similarSongs.length)];
+
+      if (!songLimit.includes(randomSimilarSong) && !user.likedSongs.includes(randomSimilarSong)) {
+        songLimit.push(randomSimilarSong);
+        console.log("added randomSong: " + randomSimilarSong.title);
+      }
+    }
+    console.log("songLimit length: " + songLimit.length)
+
+    if (songLimit.length > 5) {
+      throw new Error("Song limit cannot be greater than 5.");
+    }
+    return songLimit;
 
     //   console.log("songID: " + songId);
 
-    //   if (!mongoose.Types.ObjectId.isValid(songId)) {
-    //     return res.status(404).json({ err: "No such song" });
-    //   }
+    //   // if (!mongoose.Types.ObjectId.isValid(songId)) {
+    //   //   return res.status(404).json({ err: "No such song" });
+    //   // }
 
     //   const currentSong = await Song.findById(songId);
 
     //   if (!currentSong || currentSong == null) {
+
     //     console.log("SongID is null: " + songId);
 
     //     await User.updateOne(
@@ -206,211 +241,133 @@ const compareSongData = async (user) => {
 
     //   console.log("currentSong title: " + currentSong.title);
 
-    //   const songURL = currentSong.songUrl;
+    //   let songGenre = currentSong.genre;
 
-    //   console.log("songurl in compareSongData: " + songURL);
+    //   console.log("songGenre: " + songGenre);
 
-    //   //await fetchSong(songURL);
-
-    //   const res = await fetch(songURL);
-
-    //   const buffer = await res.arrayBuffer();
-
-    //   const context = new AudioContext();
-
-    //   context.decodeAudioData(buffer, calcSongData, errorCallback);
-
-    //   let tempoList = [];
-    //   let beatList = [];
-
-    //   const songTempo = Math.round(calcSongData.tempo).toFixed(2);
-    //   const songBeat = Math.round(calcSongData.beat).toFixed(2);
-
-    //   console.log("songTempo: " + songTempo);
-    //   console.log("songBeat: " + songBeat);
-
-
-    //   tempoList.push(songTempo);
-    //   beatList.push(songBeat);
-
-    //   let tempoValue = 0;
-    //   let beatValue = 0;
-
-    //   for (let i = 0; i < tempoList.length; i++) {
-    //     tempoValue += tempoList[i];
-    //     console.log("current tempoValue: " + tempoValue);
+    //   if (!songGenre || songGenre == null) {
+    //     throw new Error("SongGenre not found");
     //   }
 
-    //   for (let i = 0; i < beatList.length; i++) {
-    //     beatValue += beatList[i];
-    //     console.log("current beatValue: " + beatValue);
+    //   let numOfPop = 0;
+    //   let numOfRock = 0;
+    //   let numOfCountry = 0;
+    //   let numOfHipHop = 0;
 
+    //   switch (songGenre) {
+    //     case "pop":
+    //       numOfPop++;
+    //       console.log("popValue: " + numOfPop);
+    //       break;
+    //     case "rock":
+    //       numOfRock++;
+    //       console.log("rockValue: " + numOfRock);
+    //       break;
+    //     case "country":
+    //       numOfCountry++;
+    //       console.log("countryValue: " + numOfCountry);
+    //       break;
+    //     case "hiphop":
+    //       numOfHipHop++;
+    //       console.log("hipHopValue: " + numOfHipHop);
+    //       break;
+    //     default:
+    //       console.log("Invalid songGenre");
+    //       break;
     //   }
 
-    //   const averageTempo = Math.round(tempoValue / user.likedSongs.length).toPrecision(2);
+    //   let genreArray = [numOfPop, numOfRock, numOfCountry, numOfHipHop]
 
-    //   const averageBeat = Math.round(beatValue / user.likedSongs.length).toPrecision(2);
+    //   console.log("genreArray: " + genreArray);
 
-    //   console.log("average tempo of user liked songs: " + averageTempo);
+    //   let first = 0;
 
-    //   console.log("average beat of user liked songs: " + averageBeat);
+    //   let firstIndex = 0;
 
-    //   return averageTempo, averageBeat;
+    //   for (let i = 0; i < genreArray.length; i++) {
+    //     if (genreArray[i] > first) {
+    //       first = genreArray[i];
+    //       firstIndex = i;
+    //     }
+    //     console.log("first: " + first);
+    //     console.log("firstIndex: " + firstIndex);
+    //   }
 
-    //   // await fetch(songURL)
-    //   //   .then(res => res.arrayBuffer())
-    //   //   .then(async (buffer) => {
+    //   let genres = ["pop", "rock", "country", "hiphop"];
 
-    //   //     console.log("inside fetch songURL");
-
-    //   //     console.log("buffer: " + buffer);
-
-    //   //     const context = new AudioContext();
-
-    //   //     await calcSongData();
-
-    //   //     console.log("calcSongData value: " + calcSongData.tempo);
-
-    //   //     return context.decodeAudioData(buffer);
-
-    //   // let tempoList = [];
-    //   // let beatList = [];
-
-    //   // const songTempo = Math.round(calcTempo.tempo).toFixed(2);
-    //   // const songBeat = Math.round(calcTempo.beat).toFixed(2);
-
-    //   // console.log("songTempo: " + songTempo);
-    //   // console.log("songBeat: " + songBeat);
-
-
-    //   // tempoList.push(songTempo);
-    //   // beatList.push(songBeat);
-
-    //   // let tempoValue = 0;
-    //   // let beatValue = 0;
-
-    //   // for (let i = 0; i < tempoList.length; i++) {
-    //   //   tempoValue += tempoList[i];
-    //   //   console.log("current tempoValue: " + tempoValue);
-    //   // }
-
-    //   // for (let i = 0; i < beatList.length; i++) {
-    //   //   beatValue += beatList[i];
-    //   //   console.log("current beatValue: " + beatValue);
-
-    //   // }
-
-    //   // const averageTempo = Math.round(tempoValue / user.likedSongs.length).toPrecision(2);
-
-    //   // const averageBeat = Math.round(beatValue / user.likedSongs.length).toPrecision(2);
-
-    //   // console.log("average tempo of user liked songs: " + averageTempo);
-
-    //   // console.log("average beat of user liked songs: " + averageBeat);
-
-    //   // return averageTempo, averageBeat;
-
-    //   //   });
-    // });
-
-    // let tempoList = [];
-    // let beatList = [];
-
-    // const songTempo = Math.round(calcTempo.tempo).toFixed(2);
-    // const songBeat = Math.round(calcTempo.beat).toFixed(2);
-
-    // tempoList.push(songTempo);
-    // beatList.push(songBeat);
-
-    // let tempoValue = 0;
-    // let beatValue = 0;
-
-    // for (let i = 0; i < tempoList.length; i++) {
-    //   tempoValue += tempoList[i];
+    //   if (first > 0) {
+    //     songGenre = genres[firstIndex];
+    //     console.log("songGenre in if stmt: " + songGenre);
+    //   }
+    //   return songGenre;
     // }
 
-    // for (let i = 0; i < beatList.length; i++) {
-    //   beatValue += beatList[i];
+    // const similarSongs = await Song.find({ genre: songGenre })
+    //   .populate("artist")
+    //   .populate("featuredArtists")
+    //   .populate("album")
+    //   .sort();
+
+    // if (!similarSongs) {
+    //   return res.status(404).send("songs not found");
     // }
 
-    // const averageTempo = Math.round(tempoValue / user.likedSongs.length).toPrecision(2);
+    // //const songLimit = [];
 
-    // const averageBeat = Math.round(beatValue / user.likedSongs.length).toPrecision(2);
+    // while (songLimit.length < 5) {
 
-    // console.log("average tempo of user liked songs: " + averageTempo);
+    //   const randomSong = similarSongs[Math.floor(Math.random() * similarSongs.length)];
 
-    // console.log("average beat of user liked songs: " + averageBeat);
+    //   if (!songLimit.includes(randomSong) && !user.likedSongs.includes(randomSong)) {
+    //     songLimit.push(randomSong);
+    //     console.log("added randomSong: " + randomSong.title);
+    //   }
+    // }
+    // console.log("songLimit length: " + songLimit.length)
 
-    // return averageTempo, averageBeat;
+    // if (songLimit.length > 5) {
+    //   throw new Error("Song limit cannot be greater than 5.");
+    // }
+
+    // return songLimit;
 
   } catch (err) {
     console.log(err);
     throw new Error("tempo and beat validation failed");
   }
-
 }
 
-const loadSongs = async (user) => {
+const randomSong = async (user) => {
 
-  const songData = await compareSongData(user);
+  const songs = await Song.find()
 
-  console.log("should be done finding songdata");
+    .populate("artist")
+    .populate("featuredArtists")
+    .populate("album")
+    .sort();
 
-  // const allSongs = await Song.find()
+  if (!songs) {
+    return res.status(404).send("songs not found");
+  }
 
-  //   .populate("artist")
-  //   .populate("featuredArtists")
+  const songLimit = [];
 
-  //   .populate("album")
+  while (songLimit.length < 5) {
 
-  //    .sort({createdAt: -1});
+    const randomSong = songs[Math.floor(Math.random() * songs.length)];
 
-  // if (!allSongs) {
-  //   return res.status(404).send("songs not found");
-  // }
+    if (!songLimit.includes(randomSong) && !user.likedSongs.includes(randomSong)) {
+      songLimit.push(randomSong);
+      console.log("added randomSong: " + randomSong.title);
+    }
+  }
+  console.log("songLimit length: " + songLimit.length)
 
-  // let similarSongs = [];
+  if (songLimit.length > 5) {
+    throw new Error("Song limit cannot be greater than 5.");
+  }
 
-  // for (const song of allSongs) {
-
-  //   console.log("song in allSongs: " + song.title);
-
-  //   const songURL = song.songUrl;
-
-  //   console.log("songURL in allSongs: " + songURL);
-
-  //   await fetch(songURL)
-  //     .then(res => res.arrayBuffer())
-  //     .then(buffer => {
-
-  //       const context = new AudioContext();
-
-  //       return context.decodeAudioData(buffer, calcSongData);
-  //     });
-
-  //   const songTempo = Math.round(calcSongData.tempo).toPrecision(2);
-  //   const songBeat = Math.round(calcSongData.beat).toPrecision(2);
-
-  //   if (songTempo == findSongData.averageTempo && songBeat == averageBeat) {
-  //     similarSongs.push(song);
-  //   }
-  // }
-
-  // for (let i = 0; i < 5; i++) {
-  //   const randomSong = similarSongs[Math.floor(Math.random() * similarSongs.length)];
-  //   songLimit[i] = randomSong;
-  //   console.log("songlimit title: " + songLimit[i].title);
-  // }
-
-  // console.log("songLimit length: " + songLimit.length)
-
-  // if (songLimit.length > 5) {
-  //   throw new Error("Song limit cannot be greater than 5.");
-  // }
-
-  // return songLimit;
-
-  // res.status(200).json(songLimit);
+  return songLimit;
 }
 
 //get discovery game
@@ -427,81 +384,58 @@ const loadDiscoveryGame = async (req, res) => {
       return res.status(404).send("User profile not found");
     }
 
-    const songs = await Song.find()
+    if (user.likedSongs.length == 0) {
 
-      .populate("artist")
-      .populate("featuredArtists")
+      const songs = await Song.find()
 
-      .populate("album")
+        .populate("artist")
+        .populate("featuredArtists")
+        .populate("album")
+        .sort();
 
-      .sort();
+      if (!songs) {
+        return res.status(404).send("songs not found");
+      }
 
-    if (!songs) {
-      return res.status(404).send("songs not found");
+      const songLimit = [];
+
+      while (songLimit.length < 5) {
+
+        const randomSong = songs[Math.floor(Math.random() * songs.length)];
+
+        if (!songLimit.includes(randomSong)) {
+          songLimit.push(randomSong);
+          console.log("added randomSong: " + randomSong.title);
+        }
+      }
+      console.log("songLimit length: " + songLimit.length)
+
+      if (songLimit.length > 5) {
+        throw new Error("Song limit cannot be greater than 5.");
+      }
+
+      res.status(200).json(songLimit);
+
     }
+    else {
 
-    const songLimit = [];
+      let chance = Math.round(Math.random() * 100);
 
-    while (songLimit.length < 5) {
+      console.log("chance in outer function: " + chance)
 
-      const randomSong = songs[Math.floor(Math.random() * songs.length)];
+      if (chance > 50) {
+        console.log("chance was higher than 50");
+        const similarSongsLimit = await compareSongData(user);
+        res.status(200).json(similarSongsLimit);
 
-      if (!songLimit.includes(randomSong) && !user.likedSongs.includes(randomSong)) {
-        songLimit.push(randomSong);
-        console.log("added randomSong: " + randomSong.title);
+      }
+
+      else {
+        console.log("chance was less than or equal 50");
+        const differentSongsLimit = await randomSong(user);
+        res.status(200).json(differentSongsLimit);
       }
     }
-    console.log("songLimit length: " + songLimit.length)
-
-    if (songLimit.length > 5) {
-      throw new Error("Song limit cannot be greater than 5.");
-    }
-
-    res.status(200).json(songLimit);
-
-    //console.log(user);
-
-    // if (user.likedSongs.length == 0) {
-
-    //   const songs = await Song.find()
-
-    //     .populate("artist")
-    //     .populate("featuredArtists")
-
-    //     .populate("album")
-
-    //     .sort({ createdAt: -1 });
-
-    //   if (!songs) {
-    //     return res.status(404).send("songs not found");
-    //   }
-
-    //   const songLimit = [];
-
-    //   while (songLimit.length < 5) {
-
-    //     const randomSong = songs[Math.floor(Math.random() * songs.length)];
-
-    //     if (!songLimit.includes(randomSong)) {
-    //       songLimit.push(randomSong);
-    //       console.log("added randomSong: " + randomSong.title);
-    //     }
-    //   }
-    //   console.log("songLimit length: " + songLimit.length)
-
-    //   if (songLimit.length > 5) {
-    //     throw new Error("Song limit cannot be greater than 5.");
-    //   }
-
-    //   res.status(200).json(songLimit);
-
-    // }
-    // else {
-
-    //   const songLimit = await loadSongs(user);
-
-    //   res.status(200).json(songLimit);
-    // }
 
   } catch (err) {
     console.log(err);
@@ -526,40 +460,6 @@ const playDiscoveryGame = async (req, res) => {
     if (!user) {
       return res.status(404).send("User profile not found");
     }
-
-    //   const songs = await Song.find()
-
-    //   .populate("artist")
-    //   .populate("featuredArtists")
-
-    //   .populate("album")
-
-    //   .sort({ createdAt: -1 });
-
-    // if (!songs) {
-    //   return res.status(404).send("songs not found");
-    // }
-
-    // let songLimit = [];
-
-
-    // for (let i = 0; i < 5; i++) {
-    //   const randomSong = songs[Math.floor(Math.random() * songs.length)];
-
-    //   // if (songLimit[i] == randomSong) {
-    //   //   songLimit[i + 1];
-    //   // }
-    //   songLimit[i] = randomSong;
-    //   console.log("songlimit title: " + songLimit[i].title);
-    // }
-
-    // console.log("songLimit length: " + songLimit.length)
-
-    // if (songLimit.length > 5) {
-    //   throw new Error("Song limit cannot be greater than 5.");
-    // }
-
-    // res.status(200).json(songLimit);
 
     console.log("swipe direction test: " + req.body.likedSongs);
 
@@ -602,121 +502,10 @@ const playDiscoveryGame = async (req, res) => {
     console.log("done");
     res.status(200).json({ msg: "successfully ran DG" });
 
-
-    // const songURL = song.songUrl;
-
-    // await fetch(songURL)
-    //   .then(res => res.arrayBuffer())
-    //   .then(buffer => {
-
-    //     const context = new AudioContext();
-
-    //     const musicData = context.decodeAudioData(buffer, calcTempo);
-
-    //     return musicData;
-    //   });
-
   } catch (err) {
     console.log("fetching song err");
     console.log(err);
   }
-
-
-  // const lastlikedSong = user.likedSongs[0];
-
-  // const similarSongs = await Song.find({
-  //     $and: [
-  //         { _id: { $ne: lastlikedSong._id } },
-  //         { genre: lastlikedSong.genre },
-  //         { 'similarity.beat': { $gte: lastlikedSong.songData.beat - 0.1, $lte: lastlikedSong.similarity.beat + 0.1 } },
-  //         { 'similarity.tempo': { $gte: lastlikedSong.similarity.tempo - 5, $lte: lastlikedSong.similarity.tempo + 5 } }
-  //     ]
-  // }).limit(10);
-
-  // const nextSong = similarSongs[Math.floor(Math.random() * similarSongs.length)];
-  // return nextSong;
-
-  // const { songId, direction } = req.body;
-
-  // try {
-
-  //     const user = await User.findOne({
-  //         userOwner: req.user._id
-  //     });
-
-  //     const existingSwipe = user.swipes.find(swipe => swipe.song === songId);
-
-  //     if (existingSwipe) {
-  //         return res.status(400).json({ msg: 'already swiped on this song' });
-  //     }
-
-  //     user.swipes.push({ song: songId, direction });
-
-  //     await user.save();
-
-  //     const discoveryGame = await DiscoveryGame.findOne({ songList: songId });
-
-  //     if (discoveryGame) {
-  //         if (direction === 'like' || 'right') {
-
-  //             discoveryGame.swipes.set(songId, 'like');
-  //         }
-  //         else if (direction === 'dislike' || 'left') {
-
-  //             discoveryGame.swipes.set(songId, 'dislike');
-  //         }
-
-  //         await discoveryGame.save();
-
-  //         // const swipe = user.swipes.find(
-  //         //     swipe => swipe.song.toString() === songId
-  //         // );
-
-  //         // if (swipe) {
-  //         //     return res.status(400).json({ msg: 'alread swiped on this song' });
-  //         // }
-
-  //         // user.swipes.push({ song: songId, direction });
-  //         // await user.save();
-
-  //         // await DiscoveryGame.updateOne(
-  //         //     { _id: songId },
-  //         //     { $inc: { [`swipeCount.${direction}`]: 1 } }
-  //         // );
-  //     }
-  //     res.status(200).send('swiped');
-  // } catch (err) {
-
-  //     console.log(err);
-  //     res.status(500).send('server error');
-  // }
-
-  // const audioContext = new AudioContext();
-
-  // const response = await fetch(song);
-  // const songData = await response.arrayBuffer();
-  // const songBuffer = await audioContext.decodeAudioData(songData);
-
-  // const beatDetector = new BeatDetector(audioContext);
-  // const source = audioContext.createBufferSource();
-  // source.buffer = songBuffer;
-  // source.connect(beatDetector);
-  // beatDetector.connect(audioContext.destination);
-
-  // const tempo = await beatDetector.getTempo();
-  // const beat = await beatDetector.getBeat();
-
-  // const nextSong = await getNextSong(user);
-  // res.send(nextSong);
-
-  // async function getNextSong(user) {
-
-  //     const user = await User.findById(user).populate({
-  //         path: 'user.likedSongs',
-  //         options: {sort: {createdAt: -1}},
-  //         limit: 1
-  //     });
-  // }
 };
 
 //update an artist
