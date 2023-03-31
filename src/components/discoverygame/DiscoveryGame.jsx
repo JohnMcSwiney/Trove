@@ -65,8 +65,8 @@ const DiscoveryGame = () => {
   const [songsLoaded, updateSongsLoaded] = useState(false)
   const [needLoadsong, setneedLoadsong] = useState(false)
   const user = useAuthContext()
-  const { displayMusicBar, updateDisplayMusicBar, play_list, 
-    
+  const { displayMusicBar, updateDisplayMusicBar, play_list,
+
     curr_DiscoveryDecision,
     setCurr_DiscoveryDecision,
     discovery_Decision_List,
@@ -76,12 +76,12 @@ const DiscoveryGame = () => {
 
   // hides musicBar when discovery game is active
   // user needs to play more music to get it back
-  if (displayMusicBar === true){
+  if (displayMusicBar === true) {
     updateDisplayMusicBar(false);
   }
   React.useEffect(() => {
     // function getdgSongs () {
-      
+
     if (songsLoaded === true) {
       return;
       setState(0);
@@ -109,18 +109,18 @@ const DiscoveryGame = () => {
       }
     }
     fetchDGSongs()
-    
+
   }, [dgLoops])
 
-  function updateSongs (songsIn) {
+  function updateSongs(songsIn) {
     if (songsLoaded !== true) {
       // if (songs === 0) {
-        updateSongsLoaded(true)
-        setSongs(songsIn)
+      updateSongsLoaded(true)
+      setSongs(songsIn)
       // }
     }
   }
-  
+
 
   // * Discovery Game Music Player * //
   // ------------------------------- //
@@ -230,30 +230,32 @@ const DiscoveryGame = () => {
 
   const handleSwipe2 = direction => {
     console.log("direction test: " + direction)
-    
-    switch(direction){
-      case 'like': 
+
+    switch (direction) {
+      case 'like':
         console.log("switch like! (song:" + songs[state].title + " )");
+        handleAddLikedSongs(direction);
         break;
 
       case 'dislike':
-        console.log("switch dislike! (song:" + songs[state].title + " )");  
+        console.log("switch dislike! (song:" + songs[state].title + " )");
+        handleAddLikedSongs(direction);
         break;
       default:
-        break;     
+        break;
     }
     // setIsLiked(direction);
-    discovery_decision_add(direction, songs[state]._id);
-    if(state === 4){
+    //discovery_decision_add(songs[state]._id, direction);
+    if (state === 4) {
       console.log("we should really get you some new songs hey?");
-      if(isPlaying === true){
-        togglePlayPause(); 
+      if (isPlaying === true) {
+        togglePlayPause();
       }
       // Send the liked songs to TasteProfile here
       // <3 
       updateSongsLoaded(false);
       updateSongs([])
- 
+
       updateDgLoops(dgLoops + 1);
       resetSlideIndex();
       setState(0);
@@ -263,7 +265,7 @@ const DiscoveryGame = () => {
       setState(state + 1)
 
     }
-    
+
   }
   const swipeableProps = useSwipeable({
     trackMouse: true,
@@ -281,8 +283,8 @@ const DiscoveryGame = () => {
       // )
       // handleAddLikedSongs(isLiked);
     },
-    
-   
+
+
     // dislike
     onSwipedRight: () => {
       handleSwipe2('dislike')
@@ -297,7 +299,7 @@ const DiscoveryGame = () => {
       // handleAddLikedSongs(isLiked);
     }
   })
-  
+
   // useEffect(() => {
   //   const alikedsong = JSON.parse(localStorage.getItem('likedSongs'))
 
@@ -307,17 +309,23 @@ const DiscoveryGame = () => {
   //     setLikedslides(LikeData)
   //   }
   // }, [])
-  const handleAddLikedSongs = (isLiked) => {
+  const handleAddLikedSongs = (direction) => {
 
-    console.log("isLiked: " + isLiked);
+    console.log("swipeDirection: " + direction);
 
-    let swipeDirection = "";
+    if (direction === "like") {
 
-    if (isLiked === "like") {
+      let likedSongs = [5];
 
-      swipeDirection = "like";
+      likedSongs = [{ _id: songs[state]._id, direction: direction }];
 
-      const likedSongs = [{ _id: songs[state]._id, swipeDirection: isLiked }];
+
+      console.log("inside like");
+
+      if (likedSongs.length > 5) {
+        console.log("likedSongs cannot be greater than 5");
+        throw new Error("likedSongs cannot be greater than 5");
+      }
 
       setLikedslides(likedSongs);
 
@@ -334,10 +342,10 @@ const DiscoveryGame = () => {
 
     }
     else {
-      swipeDirection = "dislike";
+      console.log("swipe direction is left, user disliked song");
     }
-    
-    console.log("final swipeDirection: " + swipeDirection);
+
+    console.log("final swipeDirection: " + direction);
 
     //const updateLikes = [...likedslides, newLike]
 
@@ -349,7 +357,7 @@ const DiscoveryGame = () => {
 
     // React.useEffect(() => {
     //   // function getdgSongs () {
-        
+
     //   if (songsLoaded === true) {
     //     return;
     //     setState(0);
@@ -377,7 +385,7 @@ const DiscoveryGame = () => {
     //     }
     //   }
     //   fetchDGSongs()
-      
+
     // }, [dgLoops])
 
     // fetch(`/api/DG/${user.id}`, {
@@ -388,7 +396,7 @@ const DiscoveryGame = () => {
   }
 
   // * slider * /
-  
+
   const settings = {
     speed: 500,
     slidesToShow: 1,
@@ -408,7 +416,7 @@ const DiscoveryGame = () => {
     setState(index)
     console.log(index)
   }
-  
+
 
   {
     return (
@@ -423,7 +431,7 @@ const DiscoveryGame = () => {
                     <img
                       src={song?.imgUrl}
                       className='DGimg'
-                      // onClick={() => printIndex(i++)}
+                    // onClick={() => printIndex(i++)}
                     />
                   </div>
                 </div>
@@ -443,7 +451,7 @@ const DiscoveryGame = () => {
               {/* artist */}
             </h2>
           </div>
-          
+
           <div className='Discovery-Player-Container'>
             {/* <div className={style.DGaudioPlayer}>  JACK */}
             <div className=''>
@@ -456,10 +464,10 @@ const DiscoveryGame = () => {
                   (animationRef.current = requestAnimationFrame(whilePlaying))
                 }
                 onLoadedMetadata={() => {
-                  if(isPlaying === false){
+                  if (isPlaying === false) {
                     togglePlayPause();
                   }
-                  
+
                   changeRange()
                   animationRef.current = requestAnimationFrame(whilePlaying)
                 }}
@@ -468,18 +476,18 @@ const DiscoveryGame = () => {
                   animationRef.current = requestAnimationFrame(whilePlaying)
                 }}
                 onEnded={() => {
-                  if(isPlaying === true){
-                    togglePlayPause(); 
+                  if (isPlaying === true) {
+                    togglePlayPause();
                   }
                   console.log("song ended delay beginning (2s)");
-                  setTimeout(()=> {
+                  setTimeout(() => {
                     console.log("song ended delay finished");
-                    
-                    if(state === 4){
+
+                    if (state === 4) {
                       console.log("at end");
-                    } 
+                    }
                     handleSwipe2('dislike')
-                  }, 2000) 
+                  }, 2000)
                 }
                 }
               ></audio>
@@ -543,7 +551,6 @@ const DiscoveryGame = () => {
                 // );
                 // gotoNext();
                 // setState(state + 1);
-                // handleAddLikedSongs(isLiked);
               }}
               className='Discovery-Disike'
             >
@@ -577,7 +584,6 @@ const DiscoveryGame = () => {
                 // gotoNext();
                 // setState(state + 1);
                 //handleAddLikedSongs();
-                // handleAddLikedSongs(isLiked);
               }}
               className='Discovery-Like'
             >
