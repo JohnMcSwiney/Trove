@@ -517,7 +517,7 @@ const DiscoveryGame = () => {
                 <input
                   type='range'
                   ref={DGvolumeRef}
-                  defaultValue='50'
+                  defaultValue='100'
                   className="volumeBar"
                   onChange={changeVolumeLevel}
                   min='0'

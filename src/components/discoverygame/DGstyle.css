@@ -659,7 +659,7 @@
         
         rotate: 270deg;
         scale: 1.3;
-        background: #8750f41a;
+        background: #ebe9f108;
         box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
         backdrop-filter: blur(2.5px);
         -webkit-backdrop-filter: blur(9.5px);
@@ -680,7 +680,7 @@
         padding-top: 3.5vw;
         padding-bottom: 1.5vw;
         /* position: static; */
-        background: #8750f41a;
+        background: #ebe9f108;
         width: 40vw;
 
 
