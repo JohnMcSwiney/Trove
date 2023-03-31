@@ -429,36 +429,35 @@ const loadDiscoveryGame = async (req, res) => {
 
     const songs = await Song.find()
 
-    .populate("artist")
-    .populate("featuredArtists")
+      .populate("artist")
+      .populate("featuredArtists")
 
-    .populate("album")
+      .populate("album")
 
-    // .sort({ createdAt: -1 });
-    .sort();
+      .sort({ createdAt: -1 });
 
-  if (!songs) {
-    return res.status(404).send("songs not found");
-  }
-
-  const songLimit = [];
-
-  while (songLimit.length < 5) {
-
-    const randomSong = songs[Math.floor(Math.random() * songs.length)];
-
-    if (!songLimit.includes(randomSong) && !user.likedSongs.includes(randomSong)) {
-      songLimit.push(randomSong);
-      console.log("added randomSong: " + randomSong.title);
+    if (!songs) {
+      return res.status(404).send("songs not found");
     }
-  }
-  console.log("songLimit length: " + songLimit.length)
 
-  if (songLimit.length > 5) {
-    throw new Error("Song limit cannot be greater than 5.");
-  }
+    const songLimit = [];
 
-  res.status(200).json(songLimit);
+    while (songLimit.length < 5) {
+
+      const randomSong = songs[Math.floor(Math.random() * songs.length)];
+
+      if (!songLimit.includes(randomSong) && !user.likedSongs.includes(randomSong)) {
+        songLimit.push(randomSong);
+        console.log("added randomSong: " + randomSong.title);
+      }
+    }
+    console.log("songLimit length: " + songLimit.length)
+
+    if (songLimit.length > 5) {
+      throw new Error("Song limit cannot be greater than 5.");
+    }
+
+    res.status(200).json(songLimit);
 
     //console.log(user);
 
@@ -528,39 +527,39 @@ const playDiscoveryGame = async (req, res) => {
       return res.status(404).send("User profile not found");
     }
 
-  //   const songs = await Song.find()
+    //   const songs = await Song.find()
 
-  //   .populate("artist")
-  //   .populate("featuredArtists")
+    //   .populate("artist")
+    //   .populate("featuredArtists")
 
-  //   .populate("album")
+    //   .populate("album")
 
-  //   .sort({ createdAt: -1 });
+    //   .sort({ createdAt: -1 });
 
-  // if (!songs) {
-  //   return res.status(404).send("songs not found");
-  // }
+    // if (!songs) {
+    //   return res.status(404).send("songs not found");
+    // }
 
-  // let songLimit = [];
+    // let songLimit = [];
 
 
-  // for (let i = 0; i < 5; i++) {
-  //   const randomSong = songs[Math.floor(Math.random() * songs.length)];
+    // for (let i = 0; i < 5; i++) {
+    //   const randomSong = songs[Math.floor(Math.random() * songs.length)];
 
-  //   // if (songLimit[i] == randomSong) {
-  //   //   songLimit[i + 1];
-  //   // }
-  //   songLimit[i] = randomSong;
-  //   console.log("songlimit title: " + songLimit[i].title);
-  // }
+    //   // if (songLimit[i] == randomSong) {
+    //   //   songLimit[i + 1];
+    //   // }
+    //   songLimit[i] = randomSong;
+    //   console.log("songlimit title: " + songLimit[i].title);
+    // }
 
-  // console.log("songLimit length: " + songLimit.length)
+    // console.log("songLimit length: " + songLimit.length)
 
-  // if (songLimit.length > 5) {
-  //   throw new Error("Song limit cannot be greater than 5.");
-  // }
+    // if (songLimit.length > 5) {
+    //   throw new Error("Song limit cannot be greater than 5.");
+    // }
 
-  // res.status(200).json(songLimit);
+    // res.status(200).json(songLimit);
 
     console.log("swipe direction test: " + req.body.likedSongs);
 
