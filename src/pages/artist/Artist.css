@@ -1,4 +1,4 @@
-.myTrvcontainer{
+.Artistpage-container{
     display: flex;
     flex-direction: column;
     gap: 2px;
@@ -7,10 +7,11 @@
     align-items: center;
     overflow: hidden;
     width: 100%;
+    position: relative;
     
     
 }
-.account-splitter{
+.Artistpage-account-splitter{
     width: 80%;
     height: 1px;
     background-color: rgba(128, 128, 128, 0.34);
@@ -20,7 +21,7 @@
     padding: 0;
 
 }
-.txt-container{
+.Artistpage-txt-container{
     text-overflow: ellipsis;
     overflow:hidden;
     white-space: wrap;
@@ -32,61 +33,85 @@
     display: flex;
     color: white;
 }
-@media screen and (min-width: 300px ){
-.txt-container{
+
+.Artistpage-txt-container{
     font-size: medium;
 }
-}
+
 @media screen and (max-width: 370px){
-.txt-container{
+.Artistpage-txt-container{
     font-size: large;
 }
 }
-.txt-container{
+@media screen and (min-width: 800px){
+    .Artistpage-txt-container{
+        font-size: xx-large !important;
+    }
+}
+.Artistpage-txt-container{
     margin-left: 3px ;
+
 }
 .text{
     color: #878694;
     text-decoration: none;
+    
 }
 
-.pfp_name_follower_bio_cont{
+.Artistpage-pfp_name_follower_bio_cont{
     display: flex;
     flex-direction: column;
     width: inherit;
-    justify-content: center;
-    margin-bottom: 10px;
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-top: 40px;
-    background-color: antiquewhite;
+    justify-content: center;  
+    padding: 1vw;
+    background-color: rgba(43, 43, 43, 0.452);
+    align-content: center;
+    margin: auto;
+    position: fixed;
+    z-index: 70;
 
 }
-.borderuserimg{
+.Artistpage-borderuserimg{
     background: linear-gradient(to top, #8650F4, #0034C4);
-    border-radius: 50%;
-    padding:5px;
+    border-radius: 55px;
+    /* padding:5px; */
     filter: none;
-    width: 100px;
-    height: 100px;
+    width: 105px;
+    height: 105px;
     flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
-.artist-profile-bio-cont{
+.Artistpage-artist-profile-bio-cont{
     width: 100%;
     height: 80px;
 
 }
-.artist-profile-bio{
+.Artistpage-artist-profile-bio{
     width: 100%;
     height:30px;
     overflow: hidden;
     text-overflow: ellipsis;
 }
-.user-img{
-    border-radius: 50%;
-    width: 96px;
+.Artistpage-user-img{
+    border-radius: 50px;
+    margin: 5px;
+    width: 90px;
+    height: 90px;
+    overflow: hidden;
+    background-color: rgba(49, 48, 49, 0.315);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
 }
-.name_follower_cont{
+.Artistpage-user-img > img {
+ position: absolute;
+ width: 100%;
+ scale: 1.1;
+}
+.Artistpage-name_follower_cont{
     display: flex;
     /* background-color: palegoldenrod; */
     height: fit-content;
@@ -98,7 +123,7 @@
     min-width: 170px;
     max-width: 500px;   
 }
-.follower_cont{
+.Artistpage-follower_cont{
     /* background-color: blueviolet; */
     height: 20px;
     display: flex;
@@ -109,11 +134,11 @@
     
 }
 
-.follower_cont:hover {
+.Artistpage-follower_cont:hover {
     text-decoration: underline;
 }
 
-.follower_cont > div{
+.Artistpage-follower_cont > div{
     display: flex;
     align-content: center;
     min-width: 100px;
@@ -126,7 +151,7 @@
 
 
 }
-.follower_cont > div > h1{
+.Artistpage-follower_cont > div > h1{
     font-size: small;
     width: fit-content;
     /* background-color: darkblue; */
@@ -135,14 +160,14 @@
     color: rgba(255, 255, 255, 0.722);
 
 }
-.follower_cont > div > h2{
+.Artistpage-follower_cont > div > h2{
     font-size: small;
     font-weight: bold;
     color: rgba(255, 255, 255, 0.722);
 
 
 }
-.follower_cont > button{
+.Artistpage-follower_cont > button{
     font-size: x-small;
     height: fit-content;
     padding: 3px 6px 3px 6px ;
@@ -154,7 +179,7 @@
 
 }
 
-.artist-showcase{
+.Artistpage-artist-showcase{
     display: flex;
     justify-content: left;
     margin-top: 0;
@@ -165,7 +190,7 @@
    flex-direction: column;
    gap: 0;
 }
-.artist-showcase-lg{
+.Artistpage-artist-showcase-lg{
     display: flex;
     justify-content: left;
     margin-top: 0;
@@ -173,10 +198,11 @@
     /* background-color: #412e67; */
     width: inherit;
     position: relative;
-    height: 200px;
+    /* height: 200px; */
     justify-content: space-around;
+    flex-direction: column;
 }
-.account-showcase-lg > h1{
+.Artistpage-account-showcase-lg > h1{
     position: absolute;
     top: 0;
     left: 0;
@@ -184,7 +210,7 @@
     color: rgba(255, 255, 255, 0.8);
     margin-left: 10px;
 }
-.account-showcase > h1{
+.Artistpage-account-showcase > h1{
     position: absolute;
     top: 0;
     left: 0;
@@ -207,7 +233,7 @@
     
 }
 
-.artist-card-cont{
+.Artistpage-artist-card-cont{
     display:flex;
     overflow: scroll;
     flex-flow: row;
@@ -216,11 +242,83 @@
     justify-content: flex-start;
     
 }
-.test-container{
+.Artistpage-test-container{
     display: flex;
+    align-items: center;
+    justify-content: center;
 
 }
-.artist-card-showcase{
+.Artistpage-artist-card-showcase{
     display: flex;
     flex-direction: row;
+}
+.Artistpage-mar-t{
+    margin-top: 150px;
+}
+.topSongCardContCont{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.topSongCardCont{
+    display: flex;
+    background-color: rgba(0, 0, 0, 0.199);
+    align-items: center;
+    justify-content: flex-start;
+    width: 50%;
+    position: relative;
+    margin-bottom: 10px;
+}
+.topSongCardCont:hover{
+    scale: 1.3;
+    /* transform: translateX(10px); */
+    width: 40%;
+    /* margin-top: 2%; */
+    /* margin-bottom: 2%; */
+}
+.topSongCardCont:hover > .topSongimgCon {
+    translate: ;
+}
+.topSongimgCont{
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+    border: 2px solid red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    order: 2;
+    overflow: hidden;
+    margin-left: 50px;
+}
+.topSongimgCont > img{
+    position: absolute;
+    width: 100%;
+    left: 0;
+    scale: 1.1;
+
+}
+.topSongIndexCont{
+    position: absolute;
+    left: 0;
+    font-size: xx-large;
+    color: white;
+    width: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.topSongTxtCont{
+    display: flex;
+    width: auto;
+    align-items: center;
+    flex-direction: column;
+    order: 4;
+    padding-left: 10px;
+    cursor: default;
+}
+.topSongTitleCont{
+    font-size: xx-large;
+
 }

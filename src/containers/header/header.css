@@ -76,7 +76,7 @@
     justify-content: center;
     align-content: center;
     margin: auto;
-    color: #878694;
+    color: #ffffff;
     background-color: rgba(102, 51, 153, 0);
     padding: 2px;
     padding-left: 4px;
@@ -84,9 +84,22 @@
     border-radius: 8px;
     transition: background-color 0.2s ease-in-out, color 0.2s;
 }
+@media screen and (min-width: 800px){
+    .trove-logo-link{
+        transform: scale(1) translateX(0px);
+        transition: transform 0.3s ease-in-out;
+    }
+    .trove-logo-link:hover{
+        transform: scale(1.01) translateX(1px);
+        /* transform: translateX(5px); */
+        transition: transform 0.3s ease-in-out;
+    }
+}
 .trove-logo-link:hover{
     color: white;
     background-color: #12164B;
+   
+    /* transform: translateX(5px); */
     transition: background-color 0.4s ease-in-out, color 0.2s;
 }
 

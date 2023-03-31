@@ -9,7 +9,7 @@ import { AiOutlineUser } from "react-icons/ai";
 import { RiUser5Line } from "react-icons/ri"; //for signup
 import { RiLoginBoxLine, RiLogoutBoxLine, RiUpload2Line } from "react-icons/ri"; // login out , upload
 import { MdKeyboardBackspace } from "react-icons/md"; //back button
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Header() {
   const { logout } = useLogout();
@@ -39,7 +39,7 @@ function Header() {
         </button>
       ) : (
         <div className=" p-2">
-          <a className="trove-logo-link navbar-brand" href="/">
+          <Link className="trove-logo-link navbar-brand" to={"/"}>
             <img
               src="./img/troveIcon.png"
               alt="Trove logo"
@@ -48,12 +48,12 @@ function Header() {
             <h1 className="trove-logo-link">
               <span className="span">Trove</span> Music
             </h1>
-          </a>
+          </Link>
         </div>
       )}
       {logo && (
         <div className=" p-2">
-          <a className="trove-logo-link navbar-brand" href="/">
+          <Link className="trove-logo-link navbar-brand" to={"/"}>
             <img
               src="./img/troveIcon.png"
               alt="Trove logo"
@@ -62,7 +62,7 @@ function Header() {
             <h1 className="trove-logo-link">
               <span className="span">Trove</span> Music
             </h1>
-          </a>
+          </Link>
         </div>
       )}
 

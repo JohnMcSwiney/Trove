@@ -87,6 +87,7 @@ const DiscoveryGame = () => {
       setState(0);
     }
     console.log("test " + dgLoops)
+    // console.log(user.user.id);
     const fetchDGSongs = async () => {
       if (songsLoaded === true) {
         console.log("return p1");
