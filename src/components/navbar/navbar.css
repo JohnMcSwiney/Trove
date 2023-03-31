@@ -125,7 +125,7 @@
   align-items: center;
   justify-content: space-between;
   height: 5vw;
-  padding: 0 2rem;
+  /* padding: 0 2rem; */
   /* background-color: rgb(36, 44, 44); */
   /* background-color: black; */
   color: var(--textColor);
@@ -147,6 +147,7 @@ nav a:hover {
 .nav-brand {
   text-decoration: none;
   color: white;
+  margin-left: 1.5vmin;
 
   
 }
@@ -192,7 +193,7 @@ nav {
   /* opacity: 10%; */
   object-position: top;
   mix-blend-mode: soft-light;
-  margin-left: -5vmin;
+  /* margin-left: -5vmin; */
 
   
 }

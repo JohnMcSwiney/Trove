@@ -94,7 +94,7 @@ const ArtistNavbar = () => {
                 setColorBg("help-color");
               }}
             >
-              Help
+              Audience
             </NavLink>
             {/* <NavLink
               to="/discovery"

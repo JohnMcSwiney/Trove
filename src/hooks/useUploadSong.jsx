@@ -213,7 +213,12 @@ const [message, setMessage] =useState("")
         songUrl = await uploadSongToFirebase(file);
 
         console.log("for loop song url: " + songUrl);
-        songTitle = songs[songTitleIndex].title;
+        if(songs[songTitleIndex].title) {
+          songTitle = songs[songTitleIndex].title;
+        } else {
+          let fileNameTitle = file.name.split(".", 1)
+          songTitle = fileNameTitle[0];
+        }
         console.log("for loop song title: " + songTitle);
 
         await createSongObject(songTitle, songUrl, imgUrl);

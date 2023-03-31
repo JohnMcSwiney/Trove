@@ -249,7 +249,7 @@ export default function MusicDetails(props) {
       ) : (
         <div className="uploadmusic--navigate--form--btns">
           <div
-            className="next--btn"
+            className="next--btn musicdets--addsongs-btn"
             onClick={() => props.handleFormNavigation("AddSongs")}
           >
             <button

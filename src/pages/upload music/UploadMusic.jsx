@@ -162,8 +162,8 @@ export default function UploadMusic(props) {
   const { uploadMusic, isUploading, error, message } = useUploadSong();
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
+      
       await uploadMusic(
         songs,
         title,
@@ -296,14 +296,6 @@ export default function UploadMusic(props) {
                     setSongs={setSongs}
                   />
                 );
-              // case 'ReviewSongs':
-              //   return <ReviewSongs
-              //     handleSongFileChange={handleSongFileChange}
-              //     handleTitle={handleTitle}
-              //     handleSubmit={handleSubmit}
-              //     handleFormNavigation={handleFormNavigation}
-              //     pageName ={pageName}
-              //     setPageName={setPageName}/>
               default:
                 return null;
             }
