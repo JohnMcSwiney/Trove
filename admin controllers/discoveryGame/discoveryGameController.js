@@ -434,7 +434,7 @@ const loadDiscoveryGame = async (req, res) => {
 
       .populate("album")
 
-      .sort({ createdAt: -1 });
+      .sort();
 
     if (!songs) {
       return res.status(404).send("songs not found");
