@@ -262,49 +262,42 @@ const updateSong = async (req, res) => {
 
     song.featuredArtists = feartureArtists;
 
-    const artist = await Artist.findOne({ _id: song.artist });
+    const artist = await Artist.findOne({ _id: artistID });
 
-    if (artist._id != artistID) {
-      const newArtist = await Artist.findById(artistID);
-      // const primeArtist = await Artist.findOne({
-      //   artistName: artistName,
-      //   $where: { email: song.featuredArtists.email },
-      // });
-      if (!primeArtist) {
-        res.status(400).json({
-          error:
-            "You must have them as a feature artist first before making to be the primary artist",
-        });
-      }
-      song.featuredArtists.push(song.artist._id);
-      song.artist.id = artistID;
+    if (!artist) {
+      res.status(404).json({ error: "This artist doesn't exist" });
     }
+    song.artist = artist;
 
     if (!album && !ep) {
       song.album = null;
       song.ep = null;
       song.releaseType = ["single"];
     } else if (album && !ep) {
-      const newAlbum = Album.findOne({ albumName: album, artist: song.artist });
+      const newAlbum = await Album.findOne({ _id: album });
+      if (!newAlbum) {
+        res.status(404).json({ error: "This album doesn't exist" });
+      }
       song.album = newAlbum;
       song.ep = null;
       song.releaseType = ["album"];
     } else if (!album && ep) {
-      const newEP = EP.findOne({ epName: album, artist: song.artist });
+      const newEP = await EP.findOne({ _id: ep });
+      if (!newEP) {
+        res.status(404).json({ error: "This ep doesn't exist" });
+      }
       song.album = null;
       song.ep = newEP;
       song.releaseType = ["ep"];
-    } else if (album && ep) {
-      const newAlbum = Album.findOne({ albumName: album, artist: song.artist });
-      const newEP = EP.findOne({ epName: album, artist: song.artist });
-      song.album = album;
-      song.ep = ep;
-      song.releaseType = ["album", "ep"];
+    } else {
+      res
+        .status(404)
+        .json({ error: "Can only this song in either album or ep" });
     }
 
     await song.save();
-    const message = "Updated Song successfully";
-    res.status(200).json({ song, message });
+    const success = "Updated Song successfully";
+    res.status(200).json({ song, success });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
