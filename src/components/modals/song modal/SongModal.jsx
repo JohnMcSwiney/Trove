@@ -8,7 +8,8 @@ const SongModal = ({ song }) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [title, setTitle] = React.useState(song?.title);
-  const [album, setAlbum] = React.useState(song?.album?.albumName);
+  const [albumName, setAlbumName] = React.useState(song?.album?.albumName);
+  const [album, setAlbum] = React.useState(song?.album?._id);
   const [artistName, setArtistName] = React.useState(song?.artist?.artistName);
   const [artistID, setArtistID] = React.useState(song?.artist?._id);
   const [ep, setEP] = React.useState(song?.ep?.epName);
@@ -32,9 +33,10 @@ const SongModal = ({ song }) => {
       }
     };
     fetchAllArtist();
-  }, []);
+  }, [artistData.length]);
 
   const [albumData, setAlbumData] = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
   React.useEffect(() => {
     const fetchAllAlbum = async () => {
       const response = await fetch("/api/albums/", {
@@ -44,11 +46,12 @@ const SongModal = ({ song }) => {
       const json = await response.json();
 
       if (response.ok) {
-        setAlbumData(json);
+        setAlbumData(json.albums);
       }
+      setLoading(false);
     };
     fetchAllAlbum();
-  }, []);
+  }, [albumData.length]);
 
   const [epData, setEPData] = React.useState([]);
   React.useEffect(() => {
@@ -67,24 +70,27 @@ const SongModal = ({ song }) => {
   }, []);
 
   const handleArtistChange = (selectedOption) => {
-    if (selectedOption !== null) {
-      setArtistID(selectedOption.id);
+    const artistID = selectedOption ? selectedOption.id : "";
+    const artistName = selectedOption ? selectedOption.value : "";
 
-      setArtistName(selectedOption.value);
-    }
+    setArtistID(artistID);
+    setArtistName(artistName);
   };
-  React.useEffect(() => {}, [artistID]);
 
   const handleSelectChange = (selectedOptions) => {
-    const selectedArtistIds = selectedOptions.map((option) => {
-      const artist = artistData.find(
-        (artist) => artist.artistName === option.value
-      );
-      return artist ? artist._id : null;
-    });
-    setFeatureArtists(selectedArtistIds);
+    if (!selectedOptions) {
+      setFeatureArtists([]);
+    } else {
+      const selectedIds = selectedOptions.map((option) => option.id);
+      setFeatureArtists(selectedIds);
+    }
   };
-  React.useEffect(() => {}, [featureArtists]);
+
+  const handleAlbumChange = (selectedAlbum) => {
+    const albumID = selectedAlbum ? selectedAlbum.id : "";
+    setAlbum(albumID);
+    console.log(album);
+  };
 
   return (
     <form>
@@ -115,7 +121,7 @@ const SongModal = ({ song }) => {
           <Select
             id="searchArtist"
             options={artistData.map((artist) => ({
-              value: artist?.name,
+              value: artist?.artistName,
               label: (
                 <div style={{ display: "flex", alignItems: "center" }}>
                   <img
@@ -126,7 +132,6 @@ const SongModal = ({ song }) => {
                     style={{ marginRight: "10px" }}
                   />
                   {artist.artistName}
-                  <div hidden="true">{artist._id}</div>
                 </div>
               ),
               id: artist?._id,
@@ -134,7 +139,7 @@ const SongModal = ({ song }) => {
             className="basic-single-select" // Rename the class to indicate single select
             classNamePrefix="select"
             placeholder="Select an artist"
-            defaultValue={{ value: artistName, label: artistName }}
+            defaultValue={{ value: artistID, label: artistName }}
             onChange={handleArtistChange}
           />
 
@@ -171,51 +176,64 @@ const SongModal = ({ song }) => {
             onChange={handleSelectChange}
           />
 
-          <label htmlFor="songAlbum">Album: </label>
-          <input
-            type="text"
-            id="songAlbum"
-            value={album}
-            onChange={(e) => setAlbum(e.target.value)}
-            className="form-control"
-          ></input>
-          {/* <label htmlFor="songAlbum">Album: </label> */}
-          {/* <Select
-            id="songAlbum"
+          <div>
+            <label htmlFor="songAlbum">Album: </label>
+
+            <Select
+              id="songAlbum"
+              options={
+                albumData &&
+                albumData.map((album) => ({
+                  value: album.albumName,
+                  label: (
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                      <img
+                        src={album?.albumArt}
+                        alt={album.albumName}
+                        width="30"
+                        height="30"
+                        style={{ marginRight: "10px" }}
+                      />
+                      {album.albumName}
+                    </div>
+                  ),
+                  id: album._id,
+                }))
+              }
+              className="basic-single-select" // Rename the class to indicate single select
+              classNamePrefix="select"
+              placeholder="Select an album"
+              defaultValue={{ value: album, label: albumName }}
+              onChange={handleAlbumChange}
+            />
+          </div>
+          <label htmlFor="songEP">EP: </label>
+          <Select
+            id="songEP"
             options={
-              albumData?.length > 0 &&
-              albumData.map((album) => ({
-                value: album._id,
+              epData &&
+              epData.map((ep) => ({
+                value: ep.epName,
                 label: (
                   <div style={{ display: "flex", alignItems: "center" }}>
                     <img
-                      src={album?.albumArt}
-                      alt={album?.artist?.artistName}
+                      src={ep?.epArt}
+                      alt={ep?.epName}
                       width="30"
                       height="30"
                       style={{ marginRight: "10px" }}
                     />
-                    {album.albumName}
+                    {ep.epName}
                   </div>
                 ),
               }))
             }
-            isMulti
-            className="basic-multi-select"
+            className="basic-single-select"
             classNamePrefix="select"
-            placeholder="Select an artist"
-            onChange={(selectedOptions) =>
-              setAlbum(selectedOptions.map((option) => option.value))
-            }
-          /> */}
-          <label htmlFor="songAlbum">EP: </label>
-          <input
-            type="text"
-            id="songEP"
-            value={ep}
-            onChange={(e) => setEP(e.target.value)}
-            className="form-control"
-          ></input>
+            placeholder="Select an ep"
+            // defaultValue={{ value: album, label: albumName }}
+            // onChange={handleAlbumChange}
+          />
 
           <label htmlFor="songYear"> Year: </label>
           <input
