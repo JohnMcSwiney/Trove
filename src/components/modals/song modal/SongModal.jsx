@@ -3,11 +3,13 @@ import React from "react";
 import Select from "react-select";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-const SongModal = ({ song }) => {
+import { useEditSong } from "../../../hooks/useEditSong";
+const SongModal = ({ song, artistData, albumData, epData }) => {
   const [show, setShow] = React.useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [title, setTitle] = React.useState(song?.title);
+  const [songImg, setSongImg] = React.useState(song?.imgUrl);
   const [albumName, setAlbumName] = React.useState(song?.album?.albumName);
   const [album, setAlbum] = React.useState(song?.album?._id);
   const [artistName, setArtistName] = React.useState(song?.artist?.artistName);
@@ -18,56 +20,6 @@ const SongModal = ({ song }) => {
   const [featureArtists, setFeatureArtists] = React.useState(
     song?.featuredArtists || []
   );
-
-  const [artistData, setArtistData] = React.useState([]);
-  React.useEffect(() => {
-    const fetchAllArtist = async () => {
-      const response = await fetch("/api/artists/", {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      });
-      const json = await response.json();
-
-      if (response.ok) {
-        setArtistData(json);
-      }
-    };
-    fetchAllArtist();
-  }, [artistData.length]);
-
-  const [albumData, setAlbumData] = React.useState([]);
-  const [loading, setLoading] = React.useState(true);
-  React.useEffect(() => {
-    const fetchAllAlbum = async () => {
-      const response = await fetch("/api/albums/", {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      });
-      const json = await response.json();
-
-      if (response.ok) {
-        setAlbumData(json.albums);
-      }
-      setLoading(false);
-    };
-    fetchAllAlbum();
-  }, [albumData.length]);
-
-  const [epData, setEPData] = React.useState([]);
-  React.useEffect(() => {
-    const fetchAllEP = async () => {
-      const response = await fetch("/api/eps/", {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      });
-      const json = await response.json();
-
-      if (response.ok) {
-        setEPData(json);
-      }
-    };
-    fetchAllEP();
-  }, []);
 
   const handleArtistChange = (selectedOption) => {
     const artistID = selectedOption ? selectedOption.id : "";
@@ -92,231 +44,252 @@ const SongModal = ({ song }) => {
     console.log(album);
   };
 
+  const { editSong, message, editerror, editIsLoading } = useEditSong();
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    try {
+      editSong(
+        song._id,
+        title,
+        artistID,
+        featureArtists,
+        album,
+        ep,
+        songYear,
+        songImg,
+        genre
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
-    <form>
-      <Button variant="primary" onClick={handleShow}>
-        Edit Song
-      </Button>
+    <>
+      <form>
+        <Button variant="primary" onClick={handleShow}>
+          Edit Song
+        </Button>
 
-      <Modal
-        show={show}
-        onHide={handleClose}
-        backdrop="static"
-        keyboard={false}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Edit Song</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <label htmlFor="songTitle">Title: </label>
-          <input
-            type="text"
-            id="songTitle"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className="form-control"
-          ></input>
+        <Modal
+          show={show}
+          onHide={handleClose}
+          backdrop="static"
+          keyboard={false}
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Edit Song</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <label htmlFor="songTitle">Title: </label>
+            <input
+              type="text"
+              id="songTitle"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              className="form-control"
+            ></input>
 
-          <label htmlFor="artist">Artist: </label>
-          <Select
-            id="searchArtist"
-            options={artistData.map((artist) => ({
-              value: artist?.artistName,
-              label: (
-                <div style={{ display: "flex", alignItems: "center" }}>
-                  <img
-                    src={artist.artistImg}
-                    alt={artist.artistName}
-                    width="30"
-                    height="30"
-                    style={{ marginRight: "10px" }}
-                  />
-                  {artist.artistName}
-                </div>
-              ),
-              id: artist?._id,
-            }))}
-            className="basic-single-select" // Rename the class to indicate single select
-            classNamePrefix="select"
-            placeholder="Select an artist"
-            defaultValue={{ value: artistID, label: artistName }}
-            onChange={handleArtistChange}
-          />
-
-          <label htmlFor="search">Add feature artist: </label>
-          <Select
-            id="search"
-            options={artistData.map((artist) => ({
-              value: artist.artistName,
-              label: (
-                <div style={{ display: "flex", alignItems: "center" }}>
-                  <img
-                    src={artist.artistImg}
-                    alt={artist.artistName}
-                    width="30"
-                    height="30"
-                    style={{ marginRight: "10px" }}
-                  />
-                  {artist.artistName}
-                </div>
-              ),
-              id: artist?._id,
-            }))}
-            isMulti
-            className="basic-multi-select"
-            classNamePrefix="select"
-            placeholder="Select an artist"
-            defaultValue={
-              featureArtists &&
-              featureArtists.map((artist) => ({
-                value: artist?.artistName,
-                label: artist?.artistName,
-              }))
-            }
-            onChange={handleSelectChange}
-          />
-
-          <div>
-            <label htmlFor="songAlbum">Album: </label>
-
+            <label htmlFor="artist">Artist: </label>
             <Select
-              id="songAlbum"
-              options={
-                albumData &&
-                albumData.map((album) => ({
-                  value: album.albumName,
-                  label: (
-                    <div style={{ display: "flex", alignItems: "center" }}>
-                      <img
-                        src={album?.albumArt}
-                        alt={album.albumName}
-                        width="30"
-                        height="30"
-                        style={{ marginRight: "10px" }}
-                      />
-                      {album.albumName}
-                    </div>
-                  ),
-                  id: album._id,
-                }))
-              }
-              className="basic-single-select" // Rename the class to indicate single select
-              classNamePrefix="select"
-              placeholder="Select an album"
-              defaultValue={{ value: album, label: albumName }}
-              onChange={handleAlbumChange}
-            />
-          </div>
-          <label htmlFor="songEP">EP: </label>
-          <Select
-            id="songEP"
-            options={
-              epData &&
-              epData.map((ep) => ({
-                value: ep.epName,
+              id="searchArtist"
+              options={artistData.map((artist) => ({
+                value: artist?.artistName,
                 label: (
                   <div style={{ display: "flex", alignItems: "center" }}>
                     <img
-                      src={ep?.epArt}
-                      alt={ep?.epName}
+                      src={artist.artistImg}
+                      alt={artist.artistName}
                       width="30"
                       height="30"
                       style={{ marginRight: "10px" }}
                     />
-                    {ep.epName}
+                    {artist.artistName}
                   </div>
                 ),
-              }))
-            }
-            className="basic-single-select"
-            classNamePrefix="select"
-            placeholder="Select an ep"
-            // defaultValue={{ value: album, label: albumName }}
-            // onChange={handleAlbumChange}
-          />
+                id: artist?._id,
+              }))}
+              className="basic-single-select" // Rename the class to indicate single select
+              classNamePrefix="select"
+              placeholder="Select an artist"
+              defaultValue={{ value: artistID, label: artistName }}
+              onChange={handleArtistChange}
+            />
 
-          <label htmlFor="songYear"> Year: </label>
-          <input
-            type="text" // check this infuture
-            id="songYear"
-            value={songYear}
-            onChange={(e) => setSongYear(e.target.value)}
-            className="form-control"
-          ></input>
+            <label htmlFor="search">Add feature artist: </label>
+            <Select
+              id="search"
+              options={artistData.map((artist) => ({
+                value: artist.artistName,
+                label: (
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <img
+                      src={artist.artistImg}
+                      alt={artist.artistName}
+                      width="30"
+                      height="30"
+                      style={{ marginRight: "10px" }}
+                    />
+                    {artist.artistName}
+                  </div>
+                ),
+                id: artist?._id,
+              }))}
+              isMulti
+              className="basic-multi-select"
+              classNamePrefix="select"
+              placeholder="Select an artist"
+              defaultValue={
+                featureArtists &&
+                featureArtists.map((artist) => ({
+                  value: artist?.artistName,
+                  label: artist?.artistName,
+                }))
+              }
+              onChange={handleSelectChange}
+            />
 
-          <label htmlFor="songImg"> IMG: </label>
-          <img
-            src={song?.imgUrl}
-            alt={song.title}
-            width={"50px"}
-            id="songImg"
-          />
-          <br></br>
-          <label htmlFor="songGenre"> Genre: </label>
-          <br></br>
-          <input
-            class="form-check-input"
-            type="radio"
-            name="genre"
-            id="pop"
-            value="pop"
-            checked={song.genre === "pop"}
-            onChange={(e) => setGenre(e.target.value)}
-          />
-          <label class="form-check-label" htmlFor="pop">
-            POP
-          </label>
+            <div>
+              <label htmlFor="songAlbum">Album: </label>
 
-          <input
-            class="form-check-input"
-            type="radio"
-            name="genre"
-            id="rock"
-            value="rock"
-            checked={song.genre === "rock"}
-            onChange={(e) => setGenre(e.target.value)}
-          />
-          <label class="form-check-label" htmlFor="rock">
-            ROCK
-          </label>
+              <Select
+                id="songAlbum"
+                options={
+                  albumData &&
+                  albumData.map((album) => ({
+                    value: album.albumName,
+                    label: (
+                      <div style={{ display: "flex", alignItems: "center" }}>
+                        <img
+                          src={album?.albumArt}
+                          alt={album.albumName}
+                          width="30"
+                          height="30"
+                          style={{ marginRight: "10px" }}
+                        />
+                        {album.albumName}
+                      </div>
+                    ),
+                    id: album._id,
+                  }))
+                }
+                className="basic-single-select" // Rename the class to indicate single select
+                classNamePrefix="select"
+                placeholder="Select an album"
+                defaultValue={{ value: album, label: albumName }}
+                onChange={handleAlbumChange}
+              />
+            </div>
+            <label htmlFor="songEP">EP: </label>
+            <Select
+              id="songEP"
+              options={
+                epData &&
+                epData.map((ep) => ({
+                  value: ep.epName,
+                  label: (
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                      <img
+                        src={ep?.epArt}
+                        alt={ep?.epName}
+                        width="30"
+                        height="30"
+                        style={{ marginRight: "10px" }}
+                      />
+                      {ep.epName}
+                    </div>
+                  ),
+                }))
+              }
+              className="basic-single-select"
+              classNamePrefix="select"
+              placeholder="Select an ep"
+              // defaultValue={{ value: album, label: albumName }}
+              // onChange={handleAlbumChange}
+            />
 
-          <input
-            class="form-check-input"
-            type="radio"
-            name="genre"
-            id="country"
-            value="country"
-            checked={song.genre === "country"}
-            onChange={(e) => setGenre(e.target.value)}
-          />
-          <label class="form-check-label" htmlFor="country">
-            COUNTRY
-          </label>
+            <label htmlFor="songYear"> Year: </label>
+            <input
+              type="text" // check this infuture
+              id="songYear"
+              value={songYear}
+              onChange={(e) => setSongYear(e.target.value)}
+              className="form-control"
+            ></input>
 
-          <input
-            class="form-check-input"
-            type="radio"
-            name="genre"
-            id="hiphop"
-            value="hiphop"
-            checked={song.genre === "hiphop"}
-            onChange={(e) => setGenre(e.target.value)}
-          />
-          <label class="form-check-label" htmlFor="hiphop">
-            HIP-HOP
-          </label>
-        </Modal.Body>
-        <div className="form-group">
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
-              Close
-            </Button>
-            <Button variant="danger">Delete Song</Button>
-            <Button variant="primary">Update Song</Button>
-          </Modal.Footer>
-        </div>
-      </Modal>
-    </form>
+            <label htmlFor="songImg"> IMG: </label>
+            <img src={songImg} alt={song.title} width={"50px"} id="songImg" />
+            <br></br>
+            <label htmlFor="songGenre"> Genre: </label>
+            <br></br>
+            <input
+              class="form-check-input"
+              type="radio"
+              name="genre"
+              id="pop"
+              value="pop"
+              checked={song.genre === "pop"}
+              onChange={(e) => setGenre(e.target.value)}
+            />
+            <label class="form-check-label" htmlFor="pop">
+              POP
+            </label>
+
+            <input
+              class="form-check-input"
+              type="radio"
+              name="genre"
+              id="rock"
+              value="rock"
+              checked={song.genre === "rock"}
+              onChange={(e) => setGenre(e.target.value)}
+            />
+            <label class="form-check-label" htmlFor="rock">
+              ROCK
+            </label>
+
+            <input
+              class="form-check-input"
+              type="radio"
+              name="genre"
+              id="country"
+              value="country"
+              checked={song.genre === "country"}
+              onChange={(e) => setGenre(e.target.value)}
+            />
+            <label class="form-check-label" htmlFor="country">
+              COUNTRY
+            </label>
+
+            <input
+              class="form-check-input"
+              type="radio"
+              name="genre"
+              id="hiphop"
+              value="hiphop"
+              checked={song.genre === "hiphop"}
+              onChange={(e) => setGenre(e.target.value)}
+            />
+            <label class="form-check-label" htmlFor="hiphop">
+              HIP-HOP
+            </label>
+          </Modal.Body>
+          <div className="form-group">
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleClose}>
+                Close
+              </Button>
+              <Button variant="danger">Delete Song</Button>
+              <Button variant="primary" onClick={handleUpdate}>
+                Update Song
+              </Button>
+            </Modal.Footer>
+          </div>
+        </Modal>
+      </form>
+
+      {message && <p>{message}</p>}
+      {editerror && <p>{editerror}</p>}
+    </>
   );
 };
 

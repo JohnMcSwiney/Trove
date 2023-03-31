@@ -23,6 +23,56 @@ const Song = () => {
     };
     fetchSongs();
   }, []);
+
+  const [artistData, setArtistData] = React.useState([]);
+  React.useEffect(() => {
+    const fetchAllArtist = async () => {
+      const response = await fetch("/api/artists/", {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+      const json = await response.json();
+
+      if (response.ok) {
+        setArtistData(json);
+      }
+    };
+    fetchAllArtist();
+  }, []);
+
+  const [albumData, setAlbumData] = React.useState([]);
+
+  React.useEffect(() => {
+    const fetchAllAlbum = async () => {
+      const response = await fetch("/api/albums/", {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+      const json = await response.json();
+
+      if (response.ok) {
+        setAlbumData(json.albums);
+      }
+    };
+    fetchAllAlbum();
+  }, []);
+
+  const [epData, setEPData] = React.useState([]);
+  React.useEffect(() => {
+    const fetchAllEP = async () => {
+      const response = await fetch("/api/eps/", {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+      const json = await response.json();
+
+      if (response.ok) {
+        setEPData(json);
+      }
+    };
+    fetchAllEP();
+  }, []);
+
   return (
     <div className="container">
       <h1 className="text-light">Song Manager</h1>
@@ -53,7 +103,12 @@ const Song = () => {
                   <th>{song?.album?.albumName}</th>
                   <th>{song?.ep?.epName}</th>
                   <th>
-                    <SongModal song={song} />
+                    <SongModal
+                      song={song}
+                      artistData={artistData}
+                      albumData={albumData}
+                      epData={epData}
+                    />
                   </th>
                 </tr>
               ))}
