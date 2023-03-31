@@ -427,49 +427,82 @@ const loadDiscoveryGame = async (req, res) => {
       return res.status(404).send("User profile not found");
     }
 
+    const songs = await Song.find()
+
+    .populate("artist")
+    .populate("featuredArtists")
+
+    .populate("album")
+
+    // .sort({ createdAt: -1 });
+    .sort();
+
+  if (!songs) {
+    return res.status(404).send("songs not found");
+  }
+
+  const songLimit = [];
+
+  while (songLimit.length < 5) {
+
+    const randomSong = songs[Math.floor(Math.random() * songs.length)];
+
+    if (!songLimit.includes(randomSong) && !user.likedSongs.includes(randomSong)) {
+      songLimit.push(randomSong);
+      console.log("added randomSong: " + randomSong.title);
+    }
+  }
+  console.log("songLimit length: " + songLimit.length)
+
+  if (songLimit.length > 5) {
+    throw new Error("Song limit cannot be greater than 5.");
+  }
+
+  res.status(200).json(songLimit);
+
     //console.log(user);
 
-    if (user.likedSongs.length == 0) {
+    // if (user.likedSongs.length == 0) {
 
-      const songs = await Song.find()
+    //   const songs = await Song.find()
 
-        .populate("artist")
-        .populate("featuredArtists")
+    //     .populate("artist")
+    //     .populate("featuredArtists")
 
-        .populate("album")
+    //     .populate("album")
 
-        .sort({ createdAt: -1 });
+    //     .sort({ createdAt: -1 });
 
-      if (!songs) {
-        return res.status(404).send("songs not found");
-      }
+    //   if (!songs) {
+    //     return res.status(404).send("songs not found");
+    //   }
 
-      const songLimit = [];
+    //   const songLimit = [];
 
-      while (songLimit.length < 5) {
+    //   while (songLimit.length < 5) {
 
-        const randomSong = songs[Math.floor(Math.random() * songs.length)];
+    //     const randomSong = songs[Math.floor(Math.random() * songs.length)];
 
-        if (!songLimit.includes(randomSong)) {
-          songLimit.push(randomSong);
-          console.log("added randomSong: " + randomSong.title);
-        }
-      }
-      console.log("songLimit length: " + songLimit.length)
+    //     if (!songLimit.includes(randomSong)) {
+    //       songLimit.push(randomSong);
+    //       console.log("added randomSong: " + randomSong.title);
+    //     }
+    //   }
+    //   console.log("songLimit length: " + songLimit.length)
 
-      if (songLimit.length > 5) {
-        throw new Error("Song limit cannot be greater than 5.");
-      }
+    //   if (songLimit.length > 5) {
+    //     throw new Error("Song limit cannot be greater than 5.");
+    //   }
 
-      res.status(200).json(songLimit);
+    //   res.status(200).json(songLimit);
 
-    }
-    else {
+    // }
+    // else {
 
-      const songLimit = await loadSongs(user);
+    //   const songLimit = await loadSongs(user);
 
-      res.status(200).json(songLimit);
-    }
+    //   res.status(200).json(songLimit);
+    // }
 
   } catch (err) {
     console.log(err);
@@ -529,10 +562,10 @@ const playDiscoveryGame = async (req, res) => {
 
   // res.status(200).json(songLimit);
 
-    console.log("swipe direction test: " + req.body.songs);
+    console.log("swipe direction test: " + req.body.likedSongs);
 
     const songArray = await Promise.all(
-      req.body.songs.map(async (currentSong, i = 0) => {
+      req.body.likedSongs.map(async (currentSong, i = 0) => {
         const song = await Song.findById(currentSong._id);
 
         if (!song) {
@@ -541,17 +574,17 @@ const playDiscoveryGame = async (req, res) => {
 
         console.log("song: " + song);
 
-        if (!req.body.songs[i].swipeDirection || req.body.songs[i].swipeDirection == null) {
+        if (!req.body.likedSongs[i].direction || req.body.likedSongs[i].direction == null) {
 
           console.log("swipeDirection not found");
         }
         else {
 
-          console.log("swipeDirection[i]: " + req.body.songs[i].swipeDirection);
+          console.log("swipeDirection[i]: " + req.body.likedSongs[i].direction);
 
-          if (req.body.songs[i].swipeDirection === "dislike") {
+          if (req.body.likedSongs[i].direction === "dislike") {
             console.log("they swiped left");
-            res.status(200).json(songLimit)
+            //res.status(200).json(songLimit)
             i++;
 
           } else {
@@ -561,7 +594,7 @@ const playDiscoveryGame = async (req, res) => {
               { $push: { likedSongs: song._id } }
             );
             console.log("liked successfully");
-            res.status(200).json(songLimit);
+            //res.status(200).json(songLimit);
             i++;
           }
         }
