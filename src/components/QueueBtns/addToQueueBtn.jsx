@@ -16,11 +16,11 @@ export default function AddToQueueBtn (song) {
   } = React.useContext(MusicContext)
 
   const appendQueue = () => {
-    if (play_list.length > 0) {
-      console.log('adding to queue - component call')
-      addToQueue(song);
-      return
-    }
+    console.log('adding to queue - component call')
+    addToQueue(song);
+    // if (play_list.length > 0) {
+      
+    // }
   }
 
   return (

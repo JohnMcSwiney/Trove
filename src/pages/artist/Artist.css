@@ -339,3 +339,7 @@
     font-size: xx-large;
 
 }
+.queueBtnBox{
+    position: absolute;
+    right: 0;
+}

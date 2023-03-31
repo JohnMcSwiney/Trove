@@ -174,7 +174,7 @@ const Artist = () => {
         <div className="topSongCardContCont">
           {songs && songs?.map((song, index) => 
           <ErrorBoundary>
-            <TopSongCard key={song._id} index={index} name={song?.title} cover={song?.imgUrl}/>
+            <TopSongCard key={song._id} index={index} name={song?.title} cover={song?.imgUrl} song={song}/>
           </ErrorBoundary>
           
           )}

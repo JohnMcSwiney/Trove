@@ -19,6 +19,7 @@ export const MusicProvider = ({ children }) => {
   
   const[loopLevel, setLoopLevel] = useState(0);
   
+  
   const[curr_DiscoveryDecision, setCurr_DiscoveryDecision] = useState("water/ice/salt(aye)");
   const[discovery_Decision_List, updateDiscovery_Decision_List] = useState([]);
 
@@ -28,11 +29,13 @@ export const MusicProvider = ({ children }) => {
   };
 
   // function to update the currently playing song
-  const updateCurrentSong = (song) => {
+  const updateCurrentSong = (song) => { 
+    console.log(song);
     if(displayMusicBar === false){
       updateDisplayMusicBar(true);
     }
     setCurrentSong(song);
+
   };
 
   //Play_list methods
@@ -63,6 +66,10 @@ export const MusicProvider = ({ children }) => {
   const addToQueue = (song) => {
     queue.push(song);
     console.log(queue);
+    if(displayMusicBar === false){
+      // updateDisplayMusicBar(true);
+      updateCurrentSong(queue[0]);
+    }
   }
   
   const updateQueuePosition = (newQueuePosition) => {

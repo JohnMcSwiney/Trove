@@ -196,7 +196,13 @@ const MusicBar = () => {
   };
 
   const whilePlaying = () => {
-    if(displayMusicBar === false){
+    if(displayMusicBar === false && isPlaying === true){
+      // togglePlayPause();
+      audioPlayer.current.volume = 0;
+      audioPlayer.current.pause();
+      cancelAnimationFrame(animationRef.current);
+      return;
+    } else if (displayMusicBar == false ){
       return;
     }
     if (isPlaying === true) {
@@ -354,9 +360,7 @@ const MusicBar = () => {
 
   return (
     <>
-      {
-      currentSong !== null && 
-      displayMusicBar === true && (
+    
         <>
           <audio
             loop={isLooping}
@@ -416,7 +420,7 @@ const MusicBar = () => {
                       <a>{currentSong?.title}</a>
                     </div>
                     <div className="fc-artist-txt">
-                      <a>{currentSong?.artist.artistName}</a>
+                      <a>{currentSong?.artist?.artistName}</a>
                     </div>
                   </div>
                  
@@ -434,11 +438,11 @@ const MusicBar = () => {
                       if(index === play_listPosition) {
                         return (
                         <div className="bg1">
-                          <Queue_CardSong key={song._id} song={song} index={index}/>
+                          <Queue_CardSong key={song?._id} song={song} index={index}/>
                         </div>
                         )
                       } else { 
-                        return <Queue_CardSong key={song._id} song={song} index={index}/>;
+                        return <Queue_CardSong key={song?._id} song={song} index={index}/>;
                       }
                       
                       
@@ -451,12 +455,20 @@ const MusicBar = () => {
           {/* Regular Player */}
           <div
             className={
-              isFullscreen === false
-                ? "player-container musicbar"
-                : "player-container musicbar"
+              displayMusicBar === true ? 
+              "player-container musicbar"
+              :"player-container musicbar "
             }
           >
-            <div className="musicbar-wrap bg-trv-sm-Play-bg">
+            {/* transform: translateY(200px); */}
+            <div
+            
+            className={
+              displayMusicBar === true ? 
+              "musicbar-wrap bg-trv-sm-Play-bg"
+              :"musicbar-wrap bg-trv-sm-Play-bg translate-down"
+            }>
+
               {/* This style is in the fullscreen css file - idk there was a bug <3 */}
 
               <div className="volumeContainter-ver2">
@@ -534,7 +546,7 @@ const MusicBar = () => {
                     </div>
                     <div className="artist-txt">
                       <a onClick={redirectArtist} id="artistTextLink">
-                        {currentSong?.artist.artistName}
+                        {currentSong?.artist?.artistName}
                       </a>
                     </div>
                   </div>
@@ -598,7 +610,6 @@ const MusicBar = () => {
             </div>
           </div>
         </>
-      )}
     </>
   );
 };

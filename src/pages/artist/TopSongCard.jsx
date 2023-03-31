@@ -1,5 +1,6 @@
 import React from 'react'
 import { MdTitle } from 'react-icons/md'
+import AddToQueueBtn from '../../components/QueueBtns/addToQueueBtn'
 export default function TopSongCard (data) {
   if (data.index > 4) {
     return (
@@ -15,8 +16,9 @@ export default function TopSongCard (data) {
       </div>
       <div className='topSongTxtCont'>
         <div className='topSongTitleCont'>{data?.name}</div>
-        <div></div>
+        
       </div>
+      <div className='queueBtnBox'><AddToQueueBtn song={data?.song}/></div>
     </div>
   )
 }

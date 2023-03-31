@@ -1,4 +1,13 @@
+.translate-down{
+
+    transform: translateY(200px);
+    transition: all 0.5s ease-in-out;
+}
+.translate-up{
+    
+}
 .progress-time-container {
+    
     display: flex;
     position: absolute;
     align-items: center;
@@ -9,6 +18,7 @@
     font-size: medium;
     margin-top: 1vw;
     gap: 1vw;
+    z-index: 99;
 
 }
 
@@ -98,6 +108,8 @@
         position: relative;
         z-index: 15;
         padding: 2px;
+        z-index: 999;
+       
     }
 
     .musicbar-wrap {
@@ -112,6 +124,7 @@
         padding-left: 10px;
         padding-right: 10px;
         padding-top: 10px;
+        transition: all 0.5s ease-in-out;
     }
 
     .musicbar-items {
@@ -638,16 +651,17 @@
         border-radius: 0px 0px 8px 8px;
         /* overflow: hidden;  */
         transition: 0.5s;
+        
     }
 
     .musicbar-wrap {
         width: inherit;
         margin: auto;
         bottom: 80px;
-        position: fixed;
+        position: absolute;
         height: 80px;
         border-radius: 0px 0px 12px 12px;
-
+        
     }
 
     .musicbar-items {

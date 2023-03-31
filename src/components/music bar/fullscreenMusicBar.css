@@ -10,13 +10,13 @@
     /* background-color: #e39800; */
     margin: auto;
     position: fixed;
-    z-index: 0;
+    z-index: 98;
 
 }
 .fullsc-musicbar-wrap{
   width: inherit;
   margin: auto;
-  bottom: 1%;
+  bottom: 0;
   height: 100%;
   width: 100%;
   margin: auto;
@@ -30,6 +30,7 @@
   background: linear-gradient(0deg, #0C081C 0%, #080C3D 112.5%);
   padding-top: 30px;
   overflow: scroll;
+  
   
 }
 .fullscreen-player-info-container{
