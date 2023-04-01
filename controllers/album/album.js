@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const Song = require("../../models/songs/song");
 const Artist = require("../../models/artists/artist");
 const Album = require("../../models/albums/album");
+const album = require("../../models/albums/album");
 
 const getAllAlbum = async (req, res) => {
   try {
@@ -14,12 +15,12 @@ const getAllAlbum = async (req, res) => {
 
     const MonthDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
 
-    // Get all users created after the date 7 days ago
+    // Get all users created after the date 30 days ago
     const newAlbums = await Album.find({
       createdAt: { $gte: MonthDaysAgo },
     }).sort({ createdAt: -1 });
 
-    // Get the number of users created before the date 7 days ago
+    // Get the number of users created before the date 30 days ago
     const oldAlbumsCount = await Album.countDocuments({
       createdAt: { $lt: MonthDaysAgo },
     });
@@ -36,6 +37,7 @@ const getAllAlbum = async (req, res) => {
         : "N/A";
 
     const changeType = totalDiff >= 0 ? "increase" : "decrease";
+
     res.status(200).json({ albums, totalDiff, percentageChange, changeType });
   } catch (error) {
     res.status(500).json({ error: error.message });

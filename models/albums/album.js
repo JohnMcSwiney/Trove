@@ -44,8 +44,8 @@ const albumSchema = new mongoose.Schema(
     },
 
     releaseType: {
-      type: String,
-      enum: ["Album", "EP", "Single"],
+      type: [String],
+      enum: ["album", "ep", "single"],
     },
     releaseYear: {
       type: Number,
