@@ -14,6 +14,11 @@ import { async, reject } from "q";
 
 import { useUploadSong } from "../../hooks/useUploadSong";
 import { useArtistAuthContext } from "../../hooks/useArtistAuthContext";
+
+//loading 
+import LoadingSign from "../../components/load/loading";
+import MusicSubmitted from "./MusicSubmitted";
+
 //  ARTISTS MUSIC SUBMISSION PAGE
 export default function UploadMusic(props) {
   const storage = firebase.storage();
@@ -159,7 +164,7 @@ export default function UploadMusic(props) {
   };
 
   // When music is submitted
-  const { uploadMusic, isUploading, error, message } = useUploadSong();
+  const { uploadMusic, isUploading, uploadProgress, error, message } = useUploadSong();
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -241,6 +246,7 @@ export default function UploadMusic(props) {
                 alt="upload_icon"
               />
             </label>
+            {isUploading ? <LoadingSign /> : null}
           </div>
 
           {(() => {
@@ -271,6 +277,7 @@ export default function UploadMusic(props) {
                     releaseType={releaseType}
                     releaseYear={releaseYear}
                     setPageName={setPageName}
+                    isUploading={isUploading}
                   />
                 );
               case "AddSongs":
@@ -294,13 +301,31 @@ export default function UploadMusic(props) {
                     releaseType={releaseType}
                     songs={songs}
                     setSongs={setSongs}
+                    isUploading={isUploading}
+                    uploadProgress={uploadProgress}
                   />
                 );
               default:
                 return null;
             }
           })()}
+
+          
+          <MusicSubmitted 
+            title={title} 
+            ep={ep}
+            album={album}
+            releaseType={releaseType} 
+            artist={
+              localStorage.getItem("artist") && 
+              JSON.parse(localStorage.getItem("artist")).artistName} 
+            featuredArtists={featuredArtists} 
+            releaseYear={releaseYear} 
+            genre={genre}
+            previewCover={previewCover}
+          />
         </div>
+        
         {/* </form> */}
       </div>
           {error && (

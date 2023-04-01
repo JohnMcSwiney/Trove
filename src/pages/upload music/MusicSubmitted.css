@@ -1,0 +1,46 @@
+.uploadmusic--submittedsongs .modal-body {
+    color: black;
+    
+  }
+
+  .uploadmusic--submittedsongs .modal-title {
+    color: black;
+    
+  }
+
+  .musicsubmitted--confirmation h2{
+    color: blue;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  
+  .musicsubmitted--confirmation h5{
+    font-weight: 400;
+    text-align: center;
+  }
+
+  .musicsubmitted-info {
+    display: flex;
+  }
+
+  .musicsubmitted-info > img {
+    width: 180px;
+    border-radius: 2vmin;
+  }
+
+  .musicsubmitted-info > h5 {
+    margin-left: 2vmin;
+    
+  }
+
+  .musicsubmitted-info > h6 {
+    margin-left: 2vmin;
+    display: inline-flex;
+  }
+
+  .musicsubmitted-stats {
+    margin-left: 2vmin;
+  }
+  
+  

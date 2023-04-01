@@ -4,6 +4,9 @@ import ReactDOM from "react-dom";
 
 import SongInfo from "./SongInfo";
 
+import LoadingSign from "../../components/load/loading";
+import MusicSubmitted from "./MusicSubmitted";
+
 // Add Songs (song files, song title)
 export default function AddSongs(props) {
   React.useEffect(() => {
@@ -73,6 +76,18 @@ export default function AddSongs(props) {
               )
               }
           </div>
+          <div className="uploadmusic--loadingprogress">
+              <div className="uploadmusic--loadinganimation">
+              <LoadingSign />
+              </div>
+             
+             <div className="uploadmusic--loadingtext">
+              <h5>Hold on, we're uploading your music!</h5>
+              <h6>{Math.round(props.uploadProgress)}% Complete</h6>
+             </div>
+
+          </div>
+
 
           <div className="uploadmusic--navigate--form--btns uploadmusic--navigate--add--songs">
             <div

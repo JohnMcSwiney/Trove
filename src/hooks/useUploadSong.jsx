@@ -443,5 +443,5 @@ const [message, setMessage] =useState("")
         break;
     }
   };
-  return { uploadMusic, isUploading, error, message };
+  return { uploadMusic, uploadProgress, isUploading, error, message };
 };

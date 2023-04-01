@@ -8,4 +8,14 @@ form > button {
       #0034c4
     );
     border: none;
+    
   }
+
+  .modal-body   {
+    color: black;
+  }
+
+  .modal-title  {
+    color: black;
+  }
+
