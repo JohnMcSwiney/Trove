@@ -267,6 +267,8 @@
 .RemoveLike{
     color: red;
     float: right;
+    font-size: 25px;
+
 
 }
 
@@ -276,9 +278,13 @@
 
     /*
     border is temp just so i can see the full table size
+    
+    border:1px solid yellow;
     */
+
     
     width: 400px;
+    height: 40px;
 }
 
 .LikeTable{
