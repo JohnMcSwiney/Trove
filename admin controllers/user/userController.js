@@ -70,7 +70,7 @@ const updateUserAccountTab = async (req, res) => {
   const { id } = req.params;
   const success = "Update successfully";
 
-  const { displayName, dob, imgUrl } = req.body;
+  const { displayName, dob, imageURL } = req.body;
 
   try {
     if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -81,8 +81,13 @@ const updateUserAccountTab = async (req, res) => {
     user.displayName = displayName;
     user.dob = dob;
 
+    if (imageURL) {
+      user.imageURL = imageURL;
+    }
+
     console.log(user.dob);
     console.log(user.displayName);
+    console.log(user.imageURL);
     if (!displayName || displayName === null) {
       user.displayName = "My account";
     }
@@ -245,34 +250,6 @@ const updateUserEmail = async (req, res) => {
   }
 };
 
-// Update User Profile Photo
-const updateUserProfilePhoto = async (req, res) => {
-  const { id } = req.params;
-  const success = "Updated profile photo successfully";
-
-  const { imageURL } = req.body;
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      return res.status(404).json({ message: "No such user" });
-    }
-    try {
-    const user = await User.findByIdAndUpdate(
-      { _id: id },
-      {
-       ...req.body
-      }
-    );
-  
-    if (!user) {
-      return res.status(404).json({ message: err.message });
-    }
-  
-    res.status(200).json({ success });
-  } catch (error) {
-    res.status(500).json({ error: "Please try again" });
-  }
-  
-};
-
 // forget password
 
 const resetUserPassword = async (req, res) => {
@@ -340,6 +317,5 @@ module.exports = {
   updateUserPassword,
   updateUserEmail,
   updateUserAccountTab,
-  updateUserProfilePhoto,
   resetUserPassword,
 };

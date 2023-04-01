@@ -7,7 +7,6 @@ const {
   updateUserPassword,
   updateUserEmail,
   updateUserAccountTab,
-  updateUserProfilePhoto,
   resetUserPassword,
 } = require("../../admin controllers/user/userController");
 
@@ -25,9 +24,6 @@ router.patch("/ue/:id", updateUserEmail);
 
 //update user general info
 router.patch("/ua/:id", updateUserAccountTab);
-
-//update user profile photo
-router.patch("/up/:id", updateUserProfilePhoto);
 
 //forget password
 router.post("/forget-password", resetUserPassword);
