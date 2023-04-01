@@ -40,7 +40,7 @@ const getAnArtist = async (req, res) => {
 
 const updateGeneralInfo = async (req, res) => {
   const { id } = req.params;
-  const { artistName, dob } = req.body;
+  const { artistName, dob, imageURL } = req.body;
   const success = "Updated successfully";
   try {
     console.log(req.body);
@@ -51,6 +51,10 @@ const updateGeneralInfo = async (req, res) => {
 
     updateArtist.artistName = artistName;
     updateArtist.dob = dob;
+
+    if (imageURL) {
+      updateArtist.artistImg = imageURL;
+    }
 
     await updateArtist.save();
     res.status(200).json({ success });
