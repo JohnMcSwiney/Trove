@@ -21,13 +21,13 @@
   width: 100%;
   margin: auto;
   position: fixed;
-  border-radius: 12px;
+  /* border-radius: 12px; */
   display: flex;
   flex-direction: column;
-  padding-left: 20vw;
+  padding-left: 10vw;
   padding-right: 10vw;
   padding-top: 10px;
-  background: linear-gradient(0deg, #0C081C 0%, #080C3D 112.5%);
+  background-image: url("../../assets/Trv_bg/animatedWave4.svg");
   padding-top: 30px;
   overflow: scroll;
   
