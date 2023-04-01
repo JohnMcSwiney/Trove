@@ -8,7 +8,7 @@ import { useArtistAuthContext } from "../../hooks/useArtistAuthContext";
 import { useUpdateInfo } from "../../hooks/useUpdateInfo";
 import { useUpdateGmail } from "../../hooks/useUpdateGmail";
 import { useUpdatePassword } from "../../hooks/useUpdatePassword";
-import { useUpdateProfilePhoto } from "../../hooks/useUpdateProfilePhoto";
+
 
 const AccountSetting = () => {
   const [state, setState] = React.useState(1);
@@ -59,12 +59,38 @@ const AccountSetting = () => {
     setShowPasswordTab(!showPasswordTab);
   };
 
+  
+  //artist image
+  const [imageFile, setImageFile] = React.useState();
+  const [artistProfilePic, setArtistProfilePic] = React.useState("");
+  React.useEffect(() => {
+    const fetchArtist = async () => {
+      const artistResponse = await fetch(`/api/artists/${artist?.id}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+      const artistJson = await artistResponse.json();
+      if (artistResponse.ok) {
+        setArtistProfilePic(artistJson.artistImg);
+      }
+    };
+    fetchArtist();
+  }, [artist?._id]);
+
+  const handleImageFileChange = (e) => {
+    setImageFile(e.target.files[0]);
+    setArtistProfilePic(URL.createObjectURL(e.target.files[0]));
+    // setImageWasChanged(true);
+  };
+
+
+  // update general account info
   const { updateInfo, updateError, isLoadingUpdate, infoMessage } =
     useUpdateInfo();
   const handleUpdateAccount = async (e) => {
     e.preventDefault();
     try {
-      await updateInfo(artistName, dob);
+      await updateInfo(artistName, dob, imageFile);
     } catch (error) {
       console.log(updateError);
       return;
@@ -105,46 +131,6 @@ const AccountSetting = () => {
     }
   };
 
-  //artist image
-  const [imageFile, setImageFile] = React.useState();
-  const [artistProfilePic, setArtistProfilePic] = React.useState("");
-  React.useEffect(() => {
-    const fetchArtist = async () => {
-      const artistResponse = await fetch(`/api/artists/${artist?.id}`, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      });
-      const artistJson = await artistResponse.json();
-      if (artistResponse.ok) {
-        setArtistProfilePic(artistJson.artistImg);
-      }
-    };
-    fetchArtist();
-  }, [artist?._id]);
-
-  const handleImageFileChange = (e) => {
-    setImageFile(e.target.files[0]);
-    setArtistProfilePic(URL.createObjectURL(e.target.files[0]));
-    // setImageWasChanged(true);
-  };
-
-  const { updateProfilePhoto, error } = useUpdateProfilePhoto();
-  const handleUpdatePhoto = async (e) => {
-    console.log("CLICKED SUBMIT")
-    // e.preventDefault();
-
-    try {
-      await updateProfilePhoto(
-        artist?.id,
-        imageFile
-        
-      );
-    } catch (error) {
-      console.log(error);
-    }
-
-    console.log("CLICKED SUBMIT 2");
-  };
   
 
   return (
@@ -219,9 +205,9 @@ const AccountSetting = () => {
                     onChange={(e) => setArtistName(e.target.value)}
                     value={artistName}
                   />
-                  <label htmlFor="dob">Date of birth:</label>
+                  <label htmlFor="dob">Date of birth:</label> 
                   <input
-                    type="date"
+                    type="date" 
                     id="dob"
                     name="dob"
                     // defaultValue={time}
@@ -230,7 +216,7 @@ const AccountSetting = () => {
                     className="form-control"
                   />
 
-                  <button className="btn btn-primary mt-3" onClick={handleUpdatePhoto}>Save</button>
+                  <button className="btn btn-primary mt-3" onClick={handleUpdateAccount}>Save</button>
                 </div>
               </div>
             </form>

@@ -81,11 +81,12 @@
   }
 
   .user-img-div > h4 {
-    font-size: 1.8vmin;
+    font-size: 12px;
     position: absolute;
-    margin-top: -4vw;
-    margin-left: 2.5vmin;
+    margin-top: -55px;
+    margin-left: 20px;
     display: none;
+    /* text-align: center; */
   }
 
   .user-img-div:hover > h4 {
@@ -96,7 +97,7 @@
 }
 
 @media screen and (max-width: 800px) {
-  .my-account-header {
+  .my-account-header { 
     color: white;
   }
   .my-account {
