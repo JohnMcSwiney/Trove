@@ -1,18 +1,19 @@
 const mongoose = require('mongoose');
 
-const playlistSchema = new mongoose.Schema(
+const curatedPlaylistSchema = new mongoose.Schema(
   {
 
-    playlistName: {
+    curatedPlaylistName: {
       type: String,
       maxlength: 75,
       default: "My Trove List"
     },
-    playlistCreator: {
+    curatedPlaylistCreator: {
       type: String,
-      ref: "User"
+      //default
+      default: "Trove Music"
     },
-    playlistCoverUrl: {
+    curatedPlaylistCoverUrl: {
       type: String,
     },
     isPublished: {
@@ -30,4 +31,4 @@ const playlistSchema = new mongoose.Schema(
   }
 
 )
-module.exports = mongoose.model('Playlist', playlistSchema);
+module.exports = mongoose.model('CuratedPlaylist', curatedPlaylistSchema);

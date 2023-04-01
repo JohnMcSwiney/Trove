@@ -1,21 +1,26 @@
 const express = require('express');
 const router = express.Router()
-const  {
+const {
     getAllCuratedPlaylist,
-    getCuratedPlaylist,
+    getACuratedPlaylist,
     createCuratedPlaylist,
+    getRandomCuratedPlaylist,
     updateCuratedPlaylist,
-    deleteCuratedPlaylist
-} = require('../../admin controllers/curated/curatedPlaylistController');
+    deleteCuratedPlaylist,
+} = require('../../admin controllers/curatedPlaylist/curatedPlaylistController');
 
-router.get('/',getAllCuratedPlaylist);
+router.get('/', getAllCuratedPlaylist);
 
-router.get('/:id', getCuratedPlaylist);
+router.get('/:id', getACuratedPlaylist);
 
-router.post('/',createCuratedPlaylist);
+router.post('/', createCuratedPlaylist);
+
+// router.post('/', generateRandomCuratedPlaylist);
+
+router.post('/trove-picks', getRandomCuratedPlaylist);
 
 router.patch('/:id', updateCuratedPlaylist);
 
 router.delete('/:id', deleteCuratedPlaylist);
 
-module.exports= router;
+module.exports = router;
