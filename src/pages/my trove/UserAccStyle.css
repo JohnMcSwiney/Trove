@@ -269,3 +269,23 @@
     float: right;
 
 }
+
+
+
+.LikeTable, .RemoveLikeTable{
+
+    /*
+    border is temp just so i can see the full table size
+    */
+    
+    width: 400px;
+}
+
+.LikeTable{
+    max-width: 370px
+}
+
+.RemoveLikeTable{
+    max-width: 30px
+
+}

@@ -9,7 +9,7 @@ import CardPlaylist from "../../components/cards/card_playlist/CardPlaylist";
 import FeaturedArtist from "../../components/featured_artist/FeaturedArtist";
 
 import GenreCard from "../../components/cards/card_genre/CardGenre";
-
+import { BsXCircle } from "react-icons/bs";
 import {
   Likeid,
   Dislikeid,
@@ -126,15 +126,18 @@ const MyTrove = () => {
               {userInfo?.likedSongs &&
                 userInfo?.likedSongs.map((song) => (
                   <div key={song._id}>
-                    <p>
-                      {song.title} - {song.artist?.artistName} 
-                      <button className="RemoveLike" >Remove</button>
+                    <table className="LikeTable">
+                    <tr className="LikeTable">
+                      <th className="LikeTable">{song.title} - {song.artist?.artistName}</th> 
+                      <th className="RemoveLikeTable"> <button className="RemoveLike" ><BsXCircle/></button></th> 
 
                       {/*   
                       add when remove like works
                        onClick{RemoveLike} 
                        */}
-                    </p>
+                    
+                    </tr>
+                    </table>
                     
                   </div>
                 ))}
