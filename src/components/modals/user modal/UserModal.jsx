@@ -2,7 +2,7 @@ import React from "react";
 // import "./editModal.css";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { useEditUser } from "../../../hooks/useEditUser";
+import { useEditUser } from "../../../hooks/update/useEditUser";
 const UserModal = ({ user }) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);

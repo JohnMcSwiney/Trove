@@ -24,6 +24,42 @@ const EP = () => {
     fetchEPs();
   }, []);
 
+  const [songs, setSongs] = React.useState([]);
+  const allSongs = React.useEffect(() => {
+    const fetchSongs = async () => {
+      const response = await fetch("/api/songs", {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+
+      const json = await response.json();
+      if (!response.ok) {
+        setErrors(json.error);
+        return;
+      }
+
+      if (response.ok) {
+        setSongs(json);
+      }
+    };
+    fetchSongs();
+  }, []);
+
+  const [artistData, setArtistData] = React.useState([]);
+  React.useEffect(() => {
+    const fetchAllArtist = async () => {
+      const response = await fetch("/api/artists/", {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+      const json = await response.json();
+
+      if (response.ok) {
+        setArtistData(json);
+      }
+    };
+    fetchAllArtist();
+  }, []);
   return (
     <div className="container">
       <h1 className="text-light">EP</h1>
@@ -49,9 +85,9 @@ const EP = () => {
                   </th>
                   <th>{ep.epName}</th>
                   <th>{ep?.artist?.artistName}</th>
-                  <th>{ep?.totalTracks}</th>
+                  <th>{ep?.songList?.length}</th>
                   <th>
-                    <EPModal ep={ep} />
+                    <EPModal ep={ep} artists={artistData} songs={songs} />
                   </th>
                 </tr>
               ))}

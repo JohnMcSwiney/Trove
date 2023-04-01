@@ -3,7 +3,8 @@ import React from "react";
 import Select from "react-select";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { useEditSong } from "../../../hooks/useEditSong";
+import { useEditSong } from "../../../hooks/update/useEditSong";
+import { useDeleteSong } from "../../../hooks/delete/useDeleteSong";
 const SongModal = ({ song, artistData, albumData, epData }) => {
   const [show, setShow] = React.useState(false);
   const handleClose = () => setShow(false);
@@ -14,7 +15,8 @@ const SongModal = ({ song, artistData, albumData, epData }) => {
   const [album, setAlbum] = React.useState(song?.album?._id);
   const [artistName, setArtistName] = React.useState(song?.artist?.artistName);
   const [artistID, setArtistID] = React.useState(song?.artist?._id);
-  const [ep, setEP] = React.useState(song?.ep?.epName);
+  const [epName, setEPName] = React.useState(song?.ep?.epName);
+  const [ep, setEP] = React.useState(song?.ep);
   const [genre, setGenre] = React.useState(song?.genre);
   const [songYear, setSongYear] = React.useState(song?.releaseYear);
   const [featureArtists, setFeatureArtists] = React.useState(
@@ -32,16 +34,37 @@ const SongModal = ({ song, artistData, albumData, epData }) => {
   const handleSelectChange = (selectedOptions) => {
     if (!selectedOptions) {
       setFeatureArtists([]);
-    } else {
-      const selectedIds = selectedOptions.map((option) => option.id);
-      setFeatureArtists(selectedIds);
+      return;
     }
+    const selectedList = [];
+    for (const item of artistData) {
+      for (var i = 0; i < selectedOptions.length; i++) {
+        if (
+          selectedOptions[i].value === item._id ||
+          (selectedOptions[i].artist && selectedOptions[i].id === item._id)
+        ) {
+          selectedList.push(item);
+          break;
+        }
+      }
+    }
+    setFeatureArtists(selectedList);
   };
 
   const handleAlbumChange = (selectedAlbum) => {
+    if (selectedAlbum && selectedAlbum.value === "no-album") {
+      setAlbum(null);
+    }
     const albumID = selectedAlbum ? selectedAlbum.id : "";
     setAlbum(albumID);
-    console.log(album);
+  };
+
+  const handleEPChange = (selectedEP) => {
+    if (selectedEP && selectedEP.value === "no-ep") {
+      setEP(null);
+    }
+    const epID = selectedEP ? selectedEP.id : "";
+    setEP(epID);
   };
 
   const { editSong, message, editerror, editIsLoading } = useEditSong();
@@ -63,8 +86,17 @@ const SongModal = ({ song, artistData, albumData, epData }) => {
       console.log(error);
     }
   };
+
+  const { deleteSong, deleteError, loadingDetele } = useDeleteSong();
+  const handleDetele = () => {
+    try {
+      deleteSong(song._id);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
-    <>
+    <div>
       <form>
         <Button variant="primary" onClick={handleShow}>
           Edit Song
@@ -107,6 +139,7 @@ const SongModal = ({ song, artistData, albumData, epData }) => {
                   </div>
                 ),
                 id: artist?._id,
+                artistName: artist.artistName,
               }))}
               className="basic-single-select" // Rename the class to indicate single select
               classNamePrefix="select"
@@ -133,6 +166,8 @@ const SongModal = ({ song, artistData, albumData, epData }) => {
                   </div>
                 ),
                 id: artist?._id,
+                artist: artist,
+                artistName: artist.artistName,
               }))}
               isMulti
               className="basic-multi-select"
@@ -141,7 +176,7 @@ const SongModal = ({ song, artistData, albumData, epData }) => {
               defaultValue={
                 featureArtists &&
                 featureArtists.map((artist) => ({
-                  value: artist?.artistName,
+                  value: artist?._id,
                   label: artist?.artistName,
                 }))
               }
@@ -153,25 +188,26 @@ const SongModal = ({ song, artistData, albumData, epData }) => {
 
               <Select
                 id="songAlbum"
-                options={
-                  albumData &&
-                  albumData.map((album) => ({
-                    value: album.albumName,
-                    label: (
-                      <div style={{ display: "flex", alignItems: "center" }}>
-                        <img
-                          src={album?.albumArt}
-                          alt={album.albumName}
-                          width="30"
-                          height="30"
-                          style={{ marginRight: "10px" }}
-                        />
-                        {album.albumName}
-                      </div>
-                    ),
-                    id: album._id,
-                  }))
-                }
+                options={[
+                  { value: "no-album", label: "No Album" }, // Add this new option
+                  ...(albumData &&
+                    albumData.map((album) => ({
+                      value: album.albumName,
+                      label: (
+                        <div style={{ display: "flex", alignItems: "center" }}>
+                          <img
+                            src={album?.albumArt}
+                            alt={album.albumName}
+                            width="30"
+                            height="30"
+                            style={{ marginRight: "10px" }}
+                          />
+                          {album.albumName}
+                        </div>
+                      ),
+                      id: album._id,
+                    }))),
+                ]}
                 className="basic-single-select" // Rename the class to indicate single select
                 classNamePrefix="select"
                 placeholder="Select an album"
@@ -182,29 +218,31 @@ const SongModal = ({ song, artistData, albumData, epData }) => {
             <label htmlFor="songEP">EP: </label>
             <Select
               id="songEP"
-              options={
-                epData &&
-                epData.map((ep) => ({
-                  value: ep.epName,
-                  label: (
-                    <div style={{ display: "flex", alignItems: "center" }}>
-                      <img
-                        src={ep?.epArt}
-                        alt={ep?.epName}
-                        width="30"
-                        height="30"
-                        style={{ marginRight: "10px" }}
-                      />
-                      {ep.epName}
-                    </div>
-                  ),
-                }))
-              }
+              options={[
+                { value: "no-ep", label: "No EP" },
+                ...(epData &&
+                  epData.map((ep) => ({
+                    value: ep.epName,
+                    label: (
+                      <div style={{ display: "flex", alignItems: "center" }}>
+                        <img
+                          src={ep?.epArt}
+                          alt={ep?.epName}
+                          width="30"
+                          height="30"
+                          style={{ marginRight: "10px" }}
+                        />
+                        {ep.epName}
+                      </div>
+                    ),
+                    id: ep?._id,
+                  }))),
+              ]}
               className="basic-single-select"
               classNamePrefix="select"
               placeholder="Select an ep"
-              // defaultValue={{ value: album, label: albumName }}
-              // onChange={handleAlbumChange}
+              defaultValue={{ value: ep, label: epName }}
+              onChange={handleEPChange}
             />
 
             <label htmlFor="songYear"> Year: </label>
@@ -278,18 +316,19 @@ const SongModal = ({ song, artistData, albumData, epData }) => {
               <Button variant="secondary" onClick={handleClose}>
                 Close
               </Button>
-              <Button variant="danger">Delete Song</Button>
+              <Button variant="danger" onClick={handleDetele}>
+                Delete Song
+              </Button>
               <Button variant="primary" onClick={handleUpdate}>
                 Update Song
               </Button>
+              {message && <p>{message}</p>}
+              {editerror && <p>{editerror}</p>}
             </Modal.Footer>
           </div>
         </Modal>
       </form>
-
-      {message && <p>{message}</p>}
-      {editerror && <p>{editerror}</p>}
-    </>
+    </div>
   );
 };
 

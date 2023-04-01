@@ -2,29 +2,40 @@ import React from "react";
 // import "./editModal.css";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-const EPModal = ({ ep }) => {
+import Select from "react-select";
+const EPModal = ({ ep, artists, songs }) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [epName, setEpName] = React.useState(ep?.epName);
   const [artist, setArtist] = React.useState(ep?.artist?.artistName);
-  const [fArtist, setFArtist] = React.useState("");
+  const [featureArtists, setFeatureArtists] = React.useState(
+    ep?.featuredArtists || []
+  );
   const [epArt, setEpArt] = React.useState(ep?.epArt);
   const [totalTracks, setTotalTracks] = React.useState(ep?.totalTracks);
   const [releaseYear, setReleaseYear] = React.useState(ep?.releaseYear);
   const [epData, setEpData] = React.useState([]);
   const [show, setShow] = React.useState(false);
 
-  React.useEffect(() => {
-    async function fetchSongList() {
-      const response = await fetch(`/api/eps/${ep?._id}`);
-      const data = await response.json();
-
-      setEpData(data);
-      setFArtist(data?.featuredArtists?.artistName || "");
+  const handleSelectChange = (selectedOptions) => {
+    if (!selectedOptions) {
+      setFeatureArtists([]);
+      return;
     }
-    fetchSongList();
-  }, [ep?._id]);
-
+    const selectedList = [];
+    for (const item of artists) {
+      for (var i = 0; i < selectedOptions.length; i++) {
+        if (
+          selectedOptions[i].value === item._id ||
+          (selectedOptions[i].artist && selectedOptions[i].id === item._id)
+        ) {
+          selectedList.push(item);
+          break;
+        }
+      }
+    }
+    setFeatureArtists(selectedList);
+  };
   return (
     <form>
       <Button variant="primary" onClick={handleShow}>
@@ -62,15 +73,40 @@ const EPModal = ({ ep }) => {
             className="form-control"
           ></input>
 
-          <label htmlFor="fArtist">Feature Artists: </label>
-
-          <input
-            type="text"
-            id="fArtist"
-            value={fArtist}
-            onChange={(e) => setFArtist(e.target.value)}
-            className="form-control"
-          ></input>
+          <label htmlFor="search">Add feature artist: </label>
+          <Select
+            id="search"
+            options={artists.map((artist) => ({
+              value: artist.artistName,
+              label: (
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <img
+                    src={artist.artistImg}
+                    alt={artist.artistName}
+                    width="30"
+                    height="30"
+                    style={{ marginRight: "10px" }}
+                  />
+                  {artist.artistName}
+                </div>
+              ),
+              id: artist?._id,
+              artist: artist,
+              artistName: artist.artistName,
+            }))}
+            isMulti
+            className="basic-multi-select"
+            classNamePrefix="select"
+            placeholder="Select an artist"
+            defaultValue={
+              featureArtists &&
+              featureArtists.map((artist) => ({
+                value: artist?._id,
+                label: artist?.artistName,
+              }))
+            }
+            onChange={handleSelectChange}
+          />
 
           <label htmlFor="#tracks">Number of Tracks: </label>
           <input
@@ -91,17 +127,33 @@ const EPModal = ({ ep }) => {
           ></input>
 
           <label htmlFor="songList">Song List: </label>
-          <ul>
-            {epData &&
-              epData?.songList &&
-              epData?.songList.map((song) => (
-                <div id="songList">
-                  <li key={song?._id} className="text-dark">
-                    {song.title}
-                  </li>
+          <Select
+            id="songList"
+            options={songs.map((song) => ({
+              value: song?.title,
+              label: (
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <img
+                    src={song.imgUrl}
+                    alt={song.title}
+                    width="30"
+                    height="30"
+                    style={{ marginRight: "10px" }}
+                  />
+                  {song.title}
                 </div>
-              ))}
-          </ul>
+              ),
+              id: song?._id,
+              title: song?.title,
+              song: song,
+            }))}
+            isMulti
+            className="basic-multi-select"
+            classNamePrefix="select"
+            placeholder="Select songs"
+            // defaultValue={{ value: artistID, label: artistName }}
+            // onChange={handleArtistChange}
+          />
         </Modal.Body>
         <div className="form-group">
           <Modal.Footer>

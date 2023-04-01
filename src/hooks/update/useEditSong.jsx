@@ -39,7 +39,7 @@ export const useEditSong = () => {
     }
 
     if (response.ok) {
-      setMessage(json.message);
+      setMessage(json.success);
     }
     setEditIsLoading(false);
   };

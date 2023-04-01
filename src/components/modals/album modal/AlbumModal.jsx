@@ -1,30 +1,42 @@
 import React from "react";
 // import "./editModal.css";
 import Button from "react-bootstrap/Button";
+import Select from "react-select";
 import Modal from "react-bootstrap/Modal";
 
-const AlbumModal = ({ album }) => {
+const AlbumModal = ({ album, artists, songs }) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [albumName, setAlbumName] = React.useState(album?.albumName);
   const [artist, setArtist] = React.useState(album?.artist?.artistName);
-  const [fArtist, setFArtist] = React.useState("");
+  const [featureArtists, setFeatureArtists] = React.useState(
+    album?.featuredArtists || []
+  );
   const [albumArt, setAlbumArt] = React.useState(album?.albumArt);
-  const [totalTracks, setTotalTracks] = React.useState(album?.totalTracks);
+  const [totalTracks, setTotalTracks] = React.useState(album?.songList?.length);
   const [releaseYear, setReleaseYear] = React.useState(album?.releaseYear);
   const [albumData, setAlbumData] = React.useState([]);
   const [show, setShow] = React.useState(false);
 
-  React.useEffect(() => {
-    async function fetchSongList() {
-      const response = await fetch(`/api/albums/${album._id}`);
-      const data = await response.json();
-
-      setAlbumData(data);
-      setFArtist(data?.featuredArtists?.artistName || "");
+  const handleSelectChange = (selectedOptions) => {
+    if (!selectedOptions) {
+      setFeatureArtists([]);
+      return;
     }
-    fetchSongList();
-  }, [album._id]);
+    const selectedList = [];
+    for (const item of artists) {
+      for (var i = 0; i < selectedOptions.length; i++) {
+        if (
+          selectedOptions[i].value === item._id ||
+          (selectedOptions[i].artist && selectedOptions[i].id === item._id)
+        ) {
+          selectedList.push(item);
+          break;
+        }
+      }
+    }
+    setFeatureArtists(selectedList);
+  };
 
   return (
     <form>
@@ -68,15 +80,40 @@ const AlbumModal = ({ album }) => {
             className="form-control"
           ></input>
 
-          <label htmlFor="fArtist">Feature Artists: </label>
-
-          <input
-            type="text"
-            id="fArtist"
-            value={fArtist}
-            onChange={(e) => setFArtist(e.target.value)}
-            className="form-control"
-          ></input>
+          <label htmlFor="search">Add feature artist: </label>
+          <Select
+            id="search"
+            options={artists.map((artist) => ({
+              value: artist.artistName,
+              label: (
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <img
+                    src={artist.artistImg}
+                    alt={artist.artistName}
+                    width="30"
+                    height="30"
+                    style={{ marginRight: "10px" }}
+                  />
+                  {artist.artistName}
+                </div>
+              ),
+              id: artist?._id,
+              artist: artist,
+              artistName: artist.artistName,
+            }))}
+            isMulti
+            className="basic-multi-select"
+            classNamePrefix="select"
+            placeholder="Select an artist"
+            defaultValue={
+              featureArtists &&
+              featureArtists.map((artist) => ({
+                value: artist?._id,
+                label: artist?.artistName,
+              }))
+            }
+            onChange={handleSelectChange}
+          />
           <label htmlFor="#tracks">Number of Tracks: </label>
           <input
             type="number"
@@ -96,17 +133,33 @@ const AlbumModal = ({ album }) => {
           ></input>
 
           <label htmlFor="songList">Song List: </label>
-          <ul>
-            {albumData &&
-              albumData?.songList &&
-              albumData?.songList.map((song) => (
-                <div id="songList">
-                  <li key={song?._id} className="text-dark">
-                    {song.title}
-                  </li>
+          <Select
+            id="songList"
+            options={songs.map((song) => ({
+              value: song?.title,
+              label: (
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <img
+                    src={song.imgUrl}
+                    alt={song.title}
+                    width="30"
+                    height="30"
+                    style={{ marginRight: "10px" }}
+                  />
+                  {song.title}
                 </div>
-              ))}
-          </ul>
+              ),
+              id: song?._id,
+              title: song?.title,
+              song: song,
+            }))}
+            isMulti
+            className="basic-multi-select"
+            classNamePrefix="select"
+            placeholder="Select songs"
+            // defaultValue={{ value: artistID, label: artistName }}
+            // onChange={handleArtistChange}
+          />
         </Modal.Body>
         <div className="form-group">
           <Modal.Footer>

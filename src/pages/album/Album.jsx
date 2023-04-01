@@ -24,6 +24,43 @@ const Album = () => {
     fetchAlbums();
   }, []);
 
+  const [songs, setSongs] = React.useState([]);
+  const allSongs = React.useEffect(() => {
+    const fetchSongs = async () => {
+      const response = await fetch("/api/songs", {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+
+      const json = await response.json();
+      if (!response.ok) {
+        setErrors(json.error);
+        return;
+      }
+
+      if (response.ok) {
+        setSongs(json);
+      }
+    };
+    fetchSongs();
+  }, []);
+
+  const [artistData, setArtistData] = React.useState([]);
+  React.useEffect(() => {
+    const fetchAllArtist = async () => {
+      const response = await fetch("/api/artists/", {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+      const json = await response.json();
+
+      if (response.ok) {
+        setArtistData(json);
+      }
+    };
+    fetchAllArtist();
+  }, []);
+
   return (
     <div className="container">
       <h1 className="text-light">Album Manager</h1>
@@ -49,9 +86,13 @@ const Album = () => {
                   </th>
                   <th>{album.albumName}</th>
                   <th>{album?.artist?.artistName}</th>
-                  <th>{album?.totalTracks}</th>
+                  <th>{album?.songList?.length}</th>
                   <th>
-                    <AlbumModal album={album} />
+                    <AlbumModal
+                      album={album}
+                      artists={artistData}
+                      songs={songs}
+                    />
                   </th>
                 </tr>
               ))}

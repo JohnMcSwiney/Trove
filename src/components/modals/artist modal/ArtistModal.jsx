@@ -2,7 +2,7 @@ import React from "react";
 // import "./editModal.css";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { useEditArtist } from "../../../hooks/useEditArtist";
+import { useEditArtist } from "../../../hooks/update/useEditArtist";
 const ArtistModal = ({ artist }) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
