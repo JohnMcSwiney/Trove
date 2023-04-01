@@ -8,6 +8,7 @@ import { Navigate } from "react-router-dom";
 import { useUpdateAccount } from "../../hooks/user-hooks/useUpdateAccount";
 import { useUpdateEmail } from "../../hooks/user-hooks/useUpdateEmail";
 import { useUpdatePassword } from "../../hooks/user-hooks/useUpdatePassword";
+import { useUpdateProfilePhoto } from "../../hooks/user-hooks/useUpdateProfilePhoto";
 const MyAccount = () => {
   const [state, setState] = React.useState(1);
 
@@ -93,6 +94,49 @@ const MyAccount = () => {
       return;
     }
   };
+
+  //artist image
+  const [imageFile, setImageFile] = React.useState();
+  const [userProfilePic, setUserProfilePic] = React.useState("");
+  React.useEffect(() => {
+    const fetchUser = async () => {
+      const userResponse = await fetch(`/api/users/${userInfo?.id}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+      const userJson = await userResponse.json();
+      if (userResponse.ok) {
+        setUserProfilePic(userJson.imageURL);
+      }
+    };
+    fetchUser();
+  }, [userInfo?._id]);
+
+  const handleImageFileChange = (e) => {
+    setImageFile(e.target.files[0]);
+    setUserProfilePic(URL.createObjectURL(e.target.files[0]));
+    // setImageWasChanged(true);
+  };
+
+  const { updateProfilePhoto, photoError } = useUpdateProfilePhoto();
+  const handleUpdatePhoto = async (e) => {
+    console.log("CLICKED SUBMIT")
+    // e.preventDefault();
+
+    try {
+      await updateProfilePhoto(
+        userInfo?.id,
+        imageFile
+        
+      );
+    } catch (photoError) {
+      console.log(photoError);
+    }
+
+    console.log("CLICKED SUBMIT 2");
+  };
+
+
   return (
     <div className="container ">
       <h1 className="my-account-header">Settings</h1>
@@ -126,16 +170,29 @@ const MyAccount = () => {
               <h3>Your personal information</h3>
               <form onSubmit={handleUpdateAccount}>
                 <div className="inner-form">
-                  \mytrove
+                  
                   <div className="inputContainer">
                     <div className="userimg_displayName">
                       <div>
                         <div className="userImg-border">
-                          <img
-                            src={imgPath}
-                            className="user-avatar"
-                            alt="your-avatar"
-                          />
+                        <label >
+                        <input
+                          type="file"
+                          name="cover"
+                          value=""
+                          accept="image/*"
+                          // className=""
+                          onChange={handleImageFileChange}
+                        />
+                      <img
+                          src={userProfilePic}
+                          className="user-avatar"
+                          alt="your-avatar"
+                        />
+                        
+                      </label>
+                      
+                        <h4>Edit Photo</h4>
                         </div>
                       </div>
                       <div className="dispNameInp">
@@ -174,7 +231,7 @@ const MyAccount = () => {
                         className="form-control"
                       />
                     </div>
-                    <button className="btn btn-primary mt-3">Save</button>
+                    <button onClick={handleUpdatePhoto} className="btn btn-primary mt-3">Save</button>
                   </div>
                 </div>
               </form>
