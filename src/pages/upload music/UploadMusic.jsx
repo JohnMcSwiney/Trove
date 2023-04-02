@@ -15,7 +15,7 @@ import { async, reject } from "q";
 import { useUploadSong } from "../../hooks/useUploadSong";
 import { useArtistAuthContext } from "../../hooks/useArtistAuthContext";
 
-//loading 
+//loading
 import LoadingSign from "../../components/load/loading";
 import MusicSubmitted from "./MusicSubmitted";
 
@@ -163,7 +163,8 @@ export default function UploadMusic(props) {
   };
 
   // When music is submitted
-  const { uploadMusic, isUploading, uploadProgress, error, message } = useUploadSong();
+  const { uploadMusic, isUploading, uploadProgress, error, message } =
+    useUploadSong();
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -282,11 +283,8 @@ export default function UploadMusic(props) {
                     releaseType={releaseType}
                     releaseYear={releaseYear}
                     setPageName={setPageName}
-<<<<<<< Updated upstream
                     isUploading={isUploading}
-=======
                     artists={artistData}
->>>>>>> Stashed changes
                   />
                 );
               case "AddSongs":
@@ -319,26 +317,21 @@ export default function UploadMusic(props) {
             }
           })()}
 
-          
-          <MusicSubmitted 
-            title={title} 
+          <MusicSubmitted
+            title={title}
             ep={ep}
             album={album}
-            releaseType={releaseType} 
+            releaseType={releaseType}
             artist={
-              localStorage.getItem("artist") && 
-              JSON.parse(localStorage.getItem("artist")).artistName} 
-            featuredArtists={featuredArtists} 
-            releaseYear={releaseYear} 
+              localStorage.getItem("artist") &&
+              JSON.parse(localStorage.getItem("artist")).artistName
+            }
+            featuredArtists={featuredArtists}
+            releaseYear={releaseYear}
             genre={genre}
             previewCover={previewCover}
           />
         </div>
-<<<<<<< Updated upstream
-        
-        {/* </form> */}
-=======
->>>>>>> Stashed changes
       </div>
       {error && <p>{error}</p>}
       {message && <p>{message}</p>}
