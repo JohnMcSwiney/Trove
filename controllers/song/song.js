@@ -10,7 +10,7 @@ const createSong = async (req, res) => {
   console.log("createSong", req.body);
 
   switch (req.body.releaseType) {
-    case "Album" || "EP":
+    case "album" || "ep":
       try {
         const artist = await Artist.findOne({ artistName: req.body.artist });
 
@@ -31,7 +31,7 @@ const createSong = async (req, res) => {
             ...req.body,
             artist: artist._id,
             album: album._id,
-            releaseType: "Album",
+            releaseType: ["album"],
           });
 
           if (song.album) {
@@ -68,7 +68,7 @@ const createSong = async (req, res) => {
             ...req.body,
             artist: artist._id,
             album: album._id,
-            releaseType: "Album",
+            releaseType: ["album"],
             featuredArtists: featuredArtists,
           });
 
@@ -106,7 +106,7 @@ const createSong = async (req, res) => {
       }
       break;
 
-    case "Single":
+    case "single":
       try {
         const artist = await Artist.findOne({ artistName: req.body.artist });
         console.log(artist);
@@ -242,7 +242,7 @@ const updateSong = async (req, res) => {
 
     // Add song to the songlist of each featured artist
     for (const fArtist of featureArtists) {
-      const featuredArtist = await Artist.findOne({ _id: fArtist });
+      const featuredArtist = await Artist.findById({ _id: fArtist._id });
 
       if (!featuredArtist) {
         return res
@@ -250,12 +250,13 @@ const updateSong = async (req, res) => {
           .json({ error: "This featured artist doesn't exist" });
       }
       console.log("bfore adding into songlist");
-      console.log("currentSonglist", featuredArtist.songList);
+
       console.log("tf", !featuredArtist.songList.includes(song._id));
 
       if (!featuredArtist.songList.includes(song._id)) {
-        console.log("push");
+        console.log("push", song._id);
         featuredArtist.songList.push(song._id);
+        console.log(featuredArtist.songList.push(song._id));
         await featuredArtist.save();
       }
       console.log("after adding into a song list");
@@ -264,7 +265,7 @@ const updateSong = async (req, res) => {
     // Remove song from featuredArtistList
     for (const fArtist of song.featuredArtists) {
       if (!featureArtists.includes(fArtist)) {
-        const featuredArtist = await Artist.findById(fArtist);
+        const featuredArtist = await Artist.findById({ _id: fArtist._id });
 
         if (!featuredArtist) {
           return res
@@ -278,13 +279,22 @@ const updateSong = async (req, res) => {
     }
 
     const artist = await Artist.findOne({ _id: artistID });
+
     if (!artist) {
       res.status(404).json({ error: "This artist doesn't exist" });
     }
-    song.artist = artist;
 
-    artist.songList.push(song._id);
-    await artist.save();
+    console.log(
+      "compare",
+      artistID,
+      song.artist._id.toString(),
+      song.artist._id.toString() !== artistID
+    );
+    if (song.artist._id.toString() !== artistID) {
+      artist.songList.push(song._id);
+      await artist.save();
+    }
+    song.artist = artist;
     //check if the song is single
     if (!album && !ep) {
       await Album.updateOne(
@@ -303,7 +313,7 @@ const updateSong = async (req, res) => {
       song.album = newAlbum;
       await EP.updateOne({ _id: song.ep }, { $pull: { songList: song._id } });
       if (!newAlbum.songList.includes(song._id)) {
-        await newAlbum.updateOne({ $set: { songList: id } });
+        await newAlbum.updateOne({ $push: { songList: id } });
         song.ep = null;
         song.releaseType = ["album"];
       }
@@ -322,7 +332,7 @@ const updateSong = async (req, res) => {
       );
       song.ep = newEP;
       if (!newEP.songList.includes(song._id)) {
-        const updateEp = await newEP.updateOne({ $set: { songList: id } });
+        const updateEp = await newEP.updateOne({ $push: { songList: id } });
         song.album = null;
         song.releaseType = ["ep"];
       }

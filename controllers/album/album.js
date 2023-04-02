@@ -192,10 +192,6 @@ const updateAlbum = async (req, res) => {
 const deleteAlbum = async (req, res) => {
   const { id } = req.params;
 
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ err: "No such album" });
-  }
-
   try {
     const album = await Album.findById(id);
 
@@ -204,67 +200,34 @@ const deleteAlbum = async (req, res) => {
     }
 
     const artist = await Artist.findOne({ _id: album.artist._id });
-    const artistAlbum = artist.albumList.pull(album._id);
-
-    const albumSongs = await Song.find({ album: id });
-
-    for (const songs in albumSongs) {
-      const song = await Song.findById(songs);
-
-      song.album = null;
-    }
     if (!artist) {
       console.log("artist not found");
 
       throw new Error("Artist not found");
     }
+    artist.albumList.pull(album._id);
 
-    // const songs = await Promise.all(album.songList.map(async () => {
+    const albumSongs = await Song.find({ album: id });
+    for (const song of albumSongs) {
+      const aSong = await Song.findById(song);
+      aSong.album = null;
 
-    //     const song = await Song.findOne({ _id: album.songs });
+      const featureArtistsSong = await Artist.find({
+        songList: { $in: [albumSongs] },
+      });
 
-    //     if (!song) {
-    //         throw new Error(" songs not found");
-    //     }
-
-    //     return song._id;
-    // }));
-
-    const featuredArtists = await Promise.all(
-      album.featuredArtists.map(async () => {
-        const featuredArtist = await Artist.findOne({
-          _id: album.featuredArtists,
-        });
-
-        if (!featuredArtist) {
-          throw new Error(" featured artist not found");
-        }
-
-        return featuredArtist._id;
-      })
-    );
-
-    await Album.findOneAndDelete({ _id: id });
-
-    await Artist.updateOne(
-      { _id: artist._id },
-      { $pull: { albumList: album._id, songList: { $in: album.songList } } }
-    );
-
-    await Song.deleteMany({ _id: album.songList });
-
-    for (const featuredArtistId of featuredArtists) {
-      await Artist.updateOne(
-        { _id: featuredArtistId },
-        { $pull: { albumList: album._id, songList: { $in: album.songList } } }
-      );
-
-      await Song.deleteMany({ _id: featuredArtists.songList });
+      for (const artist of featureArtistsSong) {
+        const thatArtist = await Artist.findById(artist);
+        thatArtist.songList.pull(aSong._id);
+        thatArtist.albumList.pull(album._id);
+        await thatArtist.save();
+      }
+      artist.songList.pull(aSong._id);
+      await aSong.deleteOne({ _id: song });
+      await artist.save();
     }
 
-    if (!album) {
-      return res.status(404).json({ message: "No such album" });
-    }
+    await album.deleteOne({ _id: id });
 
     res.status(200).json(album);
   } catch (err) {
