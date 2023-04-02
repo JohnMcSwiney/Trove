@@ -60,11 +60,6 @@ const getAlbum = async (req, res) => {
     return res.status(400).json({ err: "No such Album" });
   }
 
-  await Album.findOneAndUpdate(
-    { _id: album._id },
-    { $inc: { searchCount: 1 } }
-  );
-
   res.status(200).json(album);
 };
 
@@ -137,133 +132,56 @@ const createAlbum = async (req, res) => {
 //WIP
 const updateAlbum = async (req, res) => {
   const { id } = req.params;
-
+  const { albumArt, albumName, artist, releaseYear, songList } = req.body;
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ err: "No such album" });
   }
 
   try {
-    const artist = await Artist.findById(id);
+    const album = await Album.findById(id);
 
-    if (!artist) {
-      console.log("artist not found");
+    const albumArtist = await Artist.findById(artist);
+    if (!albumArtist) {
+      res.status(404).json({ error: "Artist is not available" });
+    }
+    album.releaseYear = releaseYear;
+    album.albumName = albumName;
+    album.artist = artist;
 
-      throw new Error("Artist not found");
+    album.albumArt = albumArt;
+
+    //adding a song into album songlist
+    for (const song of songList) {
+      const foundSong = await Song.findById(song);
+
+      if (!foundSong) {
+        return res.status(404).json({ error: "This song  doesn't exist" });
+      }
+
+      if (
+        foundSong.album._id.toString() !== id &&
+        !album.songList.includes(foundSong._id)
+      ) {
+        album.songList.push(foundSong._id);
+        foundSong.album = album;
+        await foundSong.save();
+      }
     }
 
-    const songs = await Song.find({}).sort({ createdAt: -1 });
+    //remove the song out of the album
+    for (const song of album.songList) {
+      if (!album.includes(song)) {
+        const foundSong = await Song.findById(song);
 
-    if (!songs) {
-      console.log("songs not found");
-
-      throw new Error("Songs not found");
+        album.songList.pull(song);
+        foundSong.album = null;
+        await foundSong.save();
+      }
     }
 
-    const songList = songs.map((song) => song._id);
-
-    if (!req.body.featuredArtists || req.body.featuredArtists == null) {
-      const album = await Album.findOneAndUpdate(
-        { _id: id },
-        { $set: { ...req.body, artist: artist._id, songList: songList._id } },
-        { new: true }
-      );
-
-      let disableSongs = [];
-
-      for (const featuredArtistId of album.featuredArtists) {
-        await Artist.updateOne(
-          { _id: featuredArtistId },
-          { $pull: { albumList: album._id } }
-        );
-
-        await Song.updateOne(
-          { _id: songList._id },
-          { $pull: { featuredArtists: featuredArtistId } }
-        );
-
-        disableSongs = [
-          ...disableSongs,
-          ...(await Song.find({
-            album: album._id,
-            featuredArtists: featuredArtistId,
-          })),
-        ];
-
-        for (const song of disableSongs) {
-          song.isPublished = false;
-          await song.save();
-        }
-      }
-
-      if (!album) {
-        return res.status(404).json({ message: "No such album" });
-      }
-
-      res.status(200).json(album);
-    } else {
-      const featuredArtists = await Promise.all(
-        req.body.featuredArtists.map(async (name) => {
-          const featuredArtist = await Artist.findOne({ artistName: name });
-
-          if (!featuredArtist) {
-            throw new Error("featured artist(s) not found");
-          }
-
-          return featuredArtist._id;
-        })
-      );
-
-      console.log(featuredArtists);
-
-      const album = await Album.findOneAndUpdate(
-        { _id: id },
-        {
-          $set: {
-            ...req.body,
-            artist: artist._id,
-            songList: songs._id,
-            featuredArtists: featuredArtists,
-          },
-        },
-        { new: true }
-      );
-
-      for (const featuredArtistId of featuredArtists) {
-        const featuredArtist = await Artist.findById(featuredArtistId);
-
-        featuredArtist.albumList
-          ? console.log("do not update album list")
-          : featuredArtist.albumList.push(album._id);
-
-        await featuredArtist.save();
-      }
-
-      // const disableSongs = [];
-
-      // for (const featuredArtistId of album.featuredArtists) {
-
-      //     await Artist.updateOne({ _id: featuredArtistId }, { $pull: { albumList: album._id } });
-
-      //     album.featuredArtists.albumList ? console.log("do not update albumlist") : album.featuredArtists.albumList.push(album._id);
-
-      //     //await Song.updateOne({ _id: songs._id }, { $pull: { featuredArtists: featuredArtistId } });
-
-      //     disableSongs = [...disableSongs, ...(await Song.find({ album: album._id, featuredArtists: featuredArtistId }))];
-
-      //     for (const song of disableSongs) {
-      //         song.isPublished = false;
-      //         await song.save();
-      //     }
-
-      //     album.featuredArtists.save();
-      // }
-
-      if (!album) {
-        return res.status(404).json({ message: "No such album" });
-      }
-
-      res.status(200).json(album);
-    }
+    const success = "Updated album successfully";
+    await album.save();
+    res.status(200).json({ album, success });
   } catch (err) {
     console.log(err);
     res.status(400).json({ message: err.message });
@@ -286,7 +204,15 @@ const deleteAlbum = async (req, res) => {
     }
 
     const artist = await Artist.findOne({ _id: album.artist._id });
+    const artistAlbum = artist.albumList.pull(album._id);
 
+    const albumSongs = await Song.find({ album: id });
+
+    for (const songs in albumSongs) {
+      const song = await Song.findById(songs);
+
+      song.album = null;
+    }
     if (!artist) {
       console.log("artist not found");
 

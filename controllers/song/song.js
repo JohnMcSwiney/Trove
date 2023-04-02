@@ -215,34 +215,14 @@ const getSong = async (request, response) => {
   }
 };
 
-const songViewed = async (req, res) => {
-  const { id } = req.params;
-  console.log(id);
-
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ err: "No such song" });
-  }
-
-  try {
-    const song = await Song.findById(id);
-    await Song.findOneAndUpdate(
-      { _id: song._id },
-      { $inc: { searchCount: 1 } }
-    );
-
-    res.status(201).json({ message: "View +1" });
-  } catch {
-    res.status(200).json();
-  }
-};
 //WIP
 const updateSong = async (req, res) => {
   const { id } = req.params;
 
   const {
     title,
-    artistID,
-    feartureArtists,
+    artistID, // this is the primary artist
+    featureArtists,
     album,
     ep,
     songYear,
@@ -258,13 +238,53 @@ const updateSong = async (req, res) => {
     song.releaseYear = songYear;
     song.imgUrl = imgUrl;
     song.genre = genre;
-    song.featuredArtists = feartureArtists;
+    song.featuredArtists = featureArtists;
+
+    // Add song to the songlist of each featured artist
+    for (const fArtist of featureArtists) {
+      const featuredArtist = await Artist.findOne({ _id: fArtist });
+
+      if (!featuredArtist) {
+        return res
+          .status(404)
+          .json({ error: "This featured artist doesn't exist" });
+      }
+      console.log("bfore adding into songlist");
+      console.log("currentSonglist", featuredArtist.songList);
+      console.log("tf", !featuredArtist.songList.includes(song._id));
+
+      if (!featuredArtist.songList.includes(song._id)) {
+        console.log("push");
+        featuredArtist.songList.push(song._id);
+        await featuredArtist.save();
+      }
+      console.log("after adding into a song list");
+    }
+
+    // Remove song from featuredArtistList
+    for (const fArtist of song.featuredArtists) {
+      if (!featureArtists.includes(fArtist)) {
+        const featuredArtist = await Artist.findById(fArtist);
+
+        if (!featuredArtist) {
+          return res
+            .status(404)
+            .json({ error: "This featured artist doesn't exist" });
+        }
+
+        featuredArtist.songList.pull(song._id);
+        await featuredArtist.save();
+      }
+    }
 
     const artist = await Artist.findOne({ _id: artistID });
     if (!artist) {
       res.status(404).json({ error: "This artist doesn't exist" });
     }
     song.artist = artist;
+
+    artist.songList.push(song._id);
+    await artist.save();
     //check if the song is single
     if (!album && !ep) {
       await Album.updateOne(
@@ -380,92 +400,6 @@ const getArtistSong = async (req, res) => {
   res.status(200).json(songs);
 };
 
-const likedSong = async (req, res) => {
-  const { id } = req.params;
-
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ error: "song not available" });
-  }
-
-  try {
-    const song = await Song.findOne({ _id: id });
-
-    if (!song) {
-      console.log("song not found");
-
-      throw new Error("song not found");
-    }
-    const { userID } = req.body;
-    console.log(userID);
-    const user = await User.findOne({ _id: userID });
-
-    if (!user) {
-      console.log("user not found");
-
-      throw new Error("user not found");
-    }
-
-    if (song.isLoved.includes(user._id)) {
-      return res
-        .status(400)
-        .json({ message: "Song has already been liked by the user" });
-    }
-
-    song.isLoved.push(user._id);
-    user.likedSongs.push(song._id);
-
-    await song.save();
-    await user.save();
-
-    res.status(200).json({ message: "Song liked successfully" });
-  } catch (err) {
-    console.log(err);
-    res.status(400).json({ message: err.message });
-  }
-};
-
-const dislikeSong = async (req, res) => {
-  const { id } = req.params;
-
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ error: "song not available" });
-  }
-
-  try {
-    const song = await Song.findOne({ _id: id });
-
-    if (!song) {
-      console.log("song not found");
-
-      throw new Error("song not found");
-    }
-    const { userID } = req.body;
-    console.log(userID);
-
-    const user = await User.findOne({ _id: userID });
-
-    if (!user) {
-      console.log("user not found");
-
-      throw new Error("user not found");
-    }
-
-    if (song.isLoved.includes(user._id)) {
-      song.isLoved.pop(user._id);
-      user.likedSongs.pop(song._id);
-    }
-
-    await song.save();
-
-    await user.save();
-
-    res.status(200).json({ message: "removed like successfully" });
-  } catch (err) {
-    console.log(err);
-    res.status(400).json({ message: err.message });
-  }
-};
-
 module.exports = {
   getAllSongs,
   getSong,
@@ -473,7 +407,4 @@ module.exports = {
   createSong,
   deleteSong,
   updateSong,
-  likedSong,
-  dislikeSong,
-  songViewed,
 };
