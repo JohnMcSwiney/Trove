@@ -3,17 +3,19 @@ import React from "react";
 import Button from "react-bootstrap/Button";
 import Select from "react-select";
 import Modal from "react-bootstrap/Modal";
+import { useEditAlbum } from "../../../hooks/update/useEditAlbum";
 
 const AlbumModal = ({ album, artists, songs }) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [albumName, setAlbumName] = React.useState(album?.albumName);
   const [artist, setArtist] = React.useState(album?.artist?.artistName);
-
+  const [artistID, setArtistID] = React.useState(album?.artist?._id);
   const [albumArt, setAlbumArt] = React.useState(album?.albumArt);
   const [totalTracks, setTotalTracks] = React.useState(album?.songList?.length);
   const [releaseYear, setReleaseYear] = React.useState(album?.releaseYear);
   const [albumData, setAlbumData] = React.useState([]);
+  const [genre, setGenre] = React.useState(album?.albumGenre);
   const [show, setShow] = React.useState(false);
 
   const [songList, setSongList] = React.useState(album?.songList);
@@ -38,6 +40,22 @@ const AlbumModal = ({ album, artists, songs }) => {
     setSongList(selectedList);
   };
 
+  const { editAlbum, message, editerror, editIsLoading } = useEditAlbum();
+  const handleUpdate = (e) => {
+    e.preventDefault();
+    try {
+      editAlbum(
+        album._id,
+        albumArt,
+        albumName,
+        artistID,
+        releaseYear,
+        songList
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <form>
       <Button variant="primary" onClick={handleShow}>
@@ -146,6 +164,59 @@ const AlbumModal = ({ album, artists, songs }) => {
             }
             onChange={handleSongListChange}
           />
+          <label htmlFor="songGenre"> Genre: </label>
+          <br></br>
+          <input
+            class="form-check-input"
+            type="radio"
+            name="genre"
+            id="pop"
+            value="pop"
+            checked={album.albumGenre === "pop"}
+            onChange={(e) => setGenre(e.target.value)}
+          />
+          <label class="form-check-label" htmlFor="pop">
+            POP
+          </label>
+
+          <input
+            class="form-check-input"
+            type="radio"
+            name="genre"
+            id="rock"
+            value="rock"
+            checked={album.albumGenre === "rock"}
+            onChange={(e) => setGenre(e.target.value)}
+          />
+          <label class="form-check-label" htmlFor="rock">
+            ROCK
+          </label>
+
+          <input
+            class="form-check-input"
+            type="radio"
+            name="genre"
+            id="country"
+            value="country"
+            checked={album.albumGenre === "country"}
+            onChange={(e) => setGenre(e.target.value)}
+          />
+          <label class="form-check-label" htmlFor="country">
+            COUNTRY
+          </label>
+
+          <input
+            class="form-check-input"
+            type="radio"
+            name="genre"
+            id="hiphop"
+            value="hiphop"
+            checked={album.albumGenre === "hiphop"}
+            onChange={(e) => setGenre(e.target.value)}
+          />
+          <label class="form-check-label" htmlFor="hiphop">
+            HIP-HOP
+          </label>
         </Modal.Body>
         <div className="form-group">
           <Modal.Footer>
@@ -153,7 +224,11 @@ const AlbumModal = ({ album, artists, songs }) => {
               Close
             </Button>
             <Button variant="danger">Delete Album</Button>
-            <Button variant="primary">Update Album</Button>
+            <Button variant="primary" onClick={handleUpdate}>
+              Update Album
+            </Button>
+            {message && <p>{message}</p>}
+            {editerror && <p>{editerror}</p>}
           </Modal.Footer>
         </div>
       </Modal>
