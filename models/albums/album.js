@@ -21,7 +21,7 @@ const albumSchema = new mongoose.Schema(
     albumGenre: {
       type: String,
       required: [true, `Please provide album's genre`],
-      enum: ["Pop", "Rock", "Hiphop", "Country"],
+      enum: ["pop", "rock", "hiphop", "country"],
     },
 
     featuredArtists: [

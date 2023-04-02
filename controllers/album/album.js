@@ -148,6 +148,7 @@ const updateAlbum = async (req, res) => {
     album.albumName = albumName;
     album.artist = artist;
 
+    console.log(album.artist, artist);
     album.albumArt = albumArt;
 
     //adding a song into album songlist
@@ -170,7 +171,7 @@ const updateAlbum = async (req, res) => {
 
     //remove the song out of the album
     for (const song of album.songList) {
-      if (!album.includes(song)) {
+      if (!album.songList.includes(song)) {
         const foundSong = await Song.findById(song);
 
         album.songList.pull(song);

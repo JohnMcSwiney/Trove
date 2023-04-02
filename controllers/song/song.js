@@ -215,7 +215,6 @@ const getSong = async (request, response) => {
   }
 };
 
-//WIP
 const updateSong = async (req, res) => {
   const { id } = req.params;
 
@@ -240,6 +239,11 @@ const updateSong = async (req, res) => {
     song.genre = genre;
     song.featuredArtists = featureArtists;
 
+    console.log("featureArtists", featureArtists);
+    const featureArtistsIds =
+      (featureArtists && featureArtists.map((item) => item._id)) || [];
+
+    // let testId = 0;
     // Add song to the songlist of each featured artist
     for (const fArtist of featureArtists) {
       const featuredArtist = await Artist.findById({ _id: fArtist._id });
@@ -255,26 +259,46 @@ const updateSong = async (req, res) => {
 
       if (!featuredArtist.songList.includes(song._id)) {
         console.log("push", song._id);
+        console.log("songList", featuredArtist.songList);
         featuredArtist.songList.push(song._id);
-        console.log(featuredArtist.songList.push(song._id));
+        // console.log("featuredArtist", featuredArtist);
         await featuredArtist.save();
+
+        // testId = fArtist._id;
       }
-      console.log("after adding into a song list");
     }
 
+    console.log("featureArtistsIds", featureArtistsIds);
+
     // Remove song from featuredArtistList
-    for (const fArtist of song.featuredArtists) {
-      if (!featureArtists.includes(fArtist)) {
-        const featuredArtist = await Artist.findById({ _id: fArtist._id });
 
-        if (!featuredArtist) {
-          return res
-            .status(404)
-            .json({ error: "This featured artist doesn't exist" });
+    console.log("song.featureArtists", song.featuredArtists);
+    if (featureArtistsIds.length === 0) {
+      const foundArtists = await Artist.find({
+        songList: { $in: [song._id] },
+      });
+
+      for (const artist of foundArtists) {
+        artist.songList.pull(song._id);
+        await artist.save();
+      }
+    } else {
+      for (const fArtist of song.featuredArtists) {
+        console.log("current id=", fArtist);
+        if (!featureArtistsIds.includes(fArtist.toString())) {
+          const featuredArtist = await Artist.findById({
+            _id: fArtist.toString(),
+          });
+
+          if (!featuredArtist) {
+            return res
+              .status(404)
+              .json({ error: "This featured artist doesn't exist" });
+          }
+          console.log("here is run!!!!!!!!!!!!!!!!");
+          featuredArtist.songList.pull(song._id);
+          await featuredArtist.save();
         }
-
-        featuredArtist.songList.pull(song._id);
-        await featuredArtist.save();
       }
     }
 
