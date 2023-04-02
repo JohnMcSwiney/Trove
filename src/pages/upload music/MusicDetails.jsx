@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 import AddSongs from "./AddSongs";
 import SongInfo from "./SongInfo";
-
+import Select from "react-select";
 // Music Information page
 export default function MusicDetails(props) {
   // const [isMultiple, setIsMultiple] = useState(false);
 
   const handleRemoveSong = () => {
     props.handleSongFileChange(props.songFile.filter((_, i) => i !== props.i));
-    props.handleSongFileChange(props.toUploadSongs.filter((_, i) => i !== props.i));
-  }
-
+    props.handleSongFileChange(
+      props.toUploadSongs.filter((_, i) => i !== props.i)
+    );
+  };
 
   return (
     <div className="uploadmusic--column uploadmusic--song--form">
@@ -64,17 +65,34 @@ export default function MusicDetails(props) {
             </fieldset>
             <tr>
               <td className="uploadmusic--columnt">
-                <label>
-                  Featured Artists:
-                  <br />
-                  <textarea
-                    value={props.featuredArtists}
-                    name="artistName"
-                    placeholder="Artist Name"
-                    onChange={props.handleFeaturedArtists}
-                  />
-                </label>
-                {console.log("first FT: " + props.featuredArtists)}
+                <label htmlFor="search">Add feature artist: </label>
+                <Select
+                  id="search"
+                  options={props.artists.map((artist) => ({
+                    value: artist.artistName,
+                    label: (
+                      <div style={{ display: "flex", alignItems: "center" }}>
+                        <img
+                          src={artist.artistImg}
+                          alt={artist.artistName}
+                          width="30"
+                          height="30"
+                          style={{ marginRight: "10px" }}
+                        />
+                        {artist.artistName}
+                      </div>
+                    ),
+                    id: artist?._id,
+                    artist: artist,
+                    artistName: artist.artistName,
+                  }))}
+                  isMulti
+                  className="basic-multi-select"
+                  classNamePrefix="select"
+                  placeholder="Select an artist"
+
+                  // onChange={handleSelectChange}
+                />
               </td>
             </tr>
             {props.releaseType === "album" && (
@@ -127,7 +145,6 @@ export default function MusicDetails(props) {
                       onChange={props.handleTitle}
                     />
                     {console.log("Song Name: " + props.title)}
-
                   </label>
                 </td>
               </tr>

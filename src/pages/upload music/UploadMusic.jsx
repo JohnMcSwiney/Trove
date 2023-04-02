@@ -105,7 +105,6 @@ export default function UploadMusic(props) {
   };
 
   const handleSongFileChange = (e) => {
-
     //setSongFile(e.target.files[0]);
 
     console.log("relerwerwsdfdsfds: " + releaseType);
@@ -168,7 +167,6 @@ export default function UploadMusic(props) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      
       await uploadMusic(
         songs,
         title,
@@ -210,21 +208,28 @@ export default function UploadMusic(props) {
   function handleFormNavigation(pageName) {
     setPageName(pageName);
   }
-
+  const [artistData, setArtistData] = React.useState([]);
   React.useEffect(() => {
-    console.log(pageName);
-  }, [pageName]);
+    const fetchAllArtist = async () => {
+      const response = await fetch("/api/artists/", {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+      const json = await response.json();
 
+      if (response.ok) {
+        setArtistData(json);
+      }
+    };
+    fetchAllArtist();
+  }, []);
   return (
     <section>
       {menu}
 
       {/* HEADER */}
-      {/* Form starts */}
-      <div className="uploadmusic--upload--form container">
-        {/* <form className="upload--form"
-                onSubmit={handleSubmit}> */}
 
+      <div className="uploadmusic--upload--form container">
         <div className="uploadmusic--row">
           <div className="uploadmusic--upload--image">
             <div className="uploadmusic--column uploadmusic--upload--zone">
@@ -277,7 +282,11 @@ export default function UploadMusic(props) {
                     releaseType={releaseType}
                     releaseYear={releaseYear}
                     setPageName={setPageName}
+<<<<<<< Updated upstream
                     isUploading={isUploading}
+=======
+                    artists={artistData}
+>>>>>>> Stashed changes
                   />
                 );
               case "AddSongs":
@@ -325,15 +334,14 @@ export default function UploadMusic(props) {
             previewCover={previewCover}
           />
         </div>
+<<<<<<< Updated upstream
         
         {/* </form> */}
+=======
+>>>>>>> Stashed changes
       </div>
-          {error && (
-            <p>{error}</p>
-          )}
-           {message && (
-            <p>{message}</p>
-          )}
+      {error && <p>{error}</p>}
+      {message && <p>{message}</p>}
     </section>
   );
 }
