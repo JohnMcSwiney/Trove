@@ -9,7 +9,7 @@ export const useEditSong = () => {
     id,
     title,
     artistID,
-    feartureArtists,
+    featureArtists,
     album,
     ep,
     songYear,
@@ -24,7 +24,7 @@ export const useEditSong = () => {
       body: JSON.stringify({
         title,
         artistID,
-        feartureArtists,
+        featureArtists,
         album,
         ep,
         songYear,

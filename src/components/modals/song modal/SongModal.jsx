@@ -23,6 +23,7 @@ const SongModal = ({ song, artistData, albumData, epData }) => {
     song?.featuredArtists || []
   );
 
+  console.log(song?.imgUrl);
   const handleArtistChange = (selectedOption) => {
     const artistID = selectedOption ? selectedOption.id : "";
     const artistName = selectedOption ? selectedOption.value : "";

@@ -17,6 +17,7 @@ const EPModal = ({ ep, artists, songs }) => {
   const [epData, setEpData] = React.useState([]);
   const [show, setShow] = React.useState(false);
 
+  const [songList, setSongList] = React.useState(ep?.songList);
   const handleSelectChange = (selectedOptions) => {
     if (!selectedOptions) {
       setFeatureArtists([]);
@@ -35,6 +36,26 @@ const EPModal = ({ ep, artists, songs }) => {
       }
     }
     setFeatureArtists(selectedList);
+  };
+
+  const handleSongListChange = (selectedSongs) => {
+    if (!selectedSongs) {
+      setSongList([]);
+      return;
+    }
+    const selectedList = [];
+    for (const song of songs) {
+      for (var i = 0; i < selectedSongs.length; i++) {
+        if (
+          selectedSongs[i].value === song._id ||
+          (selectedSongs[i].song && selectedSongs[i].id === song._id)
+        ) {
+          selectedList.push(song);
+          break;
+        }
+      }
+    }
+    setSongList(selectedList);
   };
   return (
     <form>
@@ -129,10 +150,13 @@ const EPModal = ({ ep, artists, songs }) => {
           <label htmlFor="songList">Song List: </label>
           <Select
             id="songList"
-            options={songs.map((song) => ({
+            options={songs.map((song, index) => ({
               value: song?.title,
               label: (
-                <div style={{ display: "flex", alignItems: "center" }}>
+                <div
+                  key={index}
+                  style={{ display: "flex", alignItems: "center" }}
+                >
                   <img
                     src={song.imgUrl}
                     alt={song.title}
@@ -151,8 +175,25 @@ const EPModal = ({ ep, artists, songs }) => {
             className="basic-multi-select"
             classNamePrefix="select"
             placeholder="Select songs"
-            // defaultValue={{ value: artistID, label: artistName }}
-            // onChange={handleArtistChange}
+            defaultValue={
+              songList &&
+              songList.map((song) => ({
+                value: song._id,
+                label: (
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <img
+                      src={song.imgUrl}
+                      alt={song.title}
+                      width="30"
+                      height="30"
+                      style={{ marginRight: "10px" }}
+                    />
+                    {song.title}
+                  </div>
+                ),
+              }))
+            }
+            onChange={handleSongListChange}
           />
         </Modal.Body>
         <div className="form-group">
