@@ -83,8 +83,11 @@ const createSong = async (req, res) => {
     } else if (req.body.releaseType === "album") {
    
       success = "Created an album successfully";
-      const album = await Album.findOne({ albumName: req.body.album });
+      console.log("----------------------",req.body.album)
+      console.log(req.body.albumName)
 
+      const album = await Album.findOne({ albumName: req.body.album });
+      
       if (!album) {
         res.status(404).json({error: "Album does not exist"})
       }

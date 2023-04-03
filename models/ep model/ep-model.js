@@ -33,13 +33,6 @@ const epSchema = new mongoose.Schema({
         enum: ["pop", "rock", "hiphop", "country"],
       },
 
-    totalTracks: {
-        type: Number,
-        default: 0,
-        //length: 5
-        //required: [true, `Please provide number of tracks`],
-    },
-
     isPublished: {
         type: Boolean,
         require: true

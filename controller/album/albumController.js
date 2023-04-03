@@ -53,6 +53,7 @@ const createAlbum = async (req, res) => {
       await album.save();
       await artist.save();
 
+      console.log("made album properly");
       res.status(201).json({album, success});
     } else {
       const featuredArtists = await Promise.all(
