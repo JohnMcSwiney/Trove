@@ -87,7 +87,7 @@ const ArtistNavbar = () => {
               Home
             </NavLink>
             <NavLink
-              to="/help"
+              to="/audience"
               className={`${state === 2 ? "active-tab " : ""} `}
               onClick={() => {
                 action(2);

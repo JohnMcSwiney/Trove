@@ -10,3 +10,28 @@
 table {
     border-radius: 2vmin;
 }
+
+.artist--welcome > h5 {
+    font-size: 70px;
+    font-weight: 700;
+}
+
+.artist--namespan {
+    background-image: linear-gradient(
+        to left,
+        #8650f4,
+        #6f49e8,
+        #5642dc,
+        #393bd0,
+        #0034c4
+      );
+      -webkit-background-clip: text;
+      -moz-background-clip: text;
+      -webkit-text-fill-color: transparent; 
+      -moz-text-fill-color: transparent;
+         
+}
+
+.artist--signinplz > a {
+    background-image: none;
+}

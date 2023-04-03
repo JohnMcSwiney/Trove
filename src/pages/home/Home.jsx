@@ -64,8 +64,17 @@ const Home = () => {
 
   return (
     <div className="artist--home">
-      <h5>Hello, {artist ? artist?.artistName : <NavLink to={"/login"}>please sign in.</NavLink>} </h5>
+      <div className="artist--welcome">
+      {/* <h5>Hello, {artist ? <span className="artist--namespan">{artist?.artistName}</span> : <NavLink to={"/login"}>please sign in.</NavLink>} </h5> */}
 
+
+      {artist ? <h5>Hello, <span className="artist--namespan">{artist?.artistName}</span></h5> :
+        <div className="artist--welcome">
+        Hello, <NavLink to={"/login"}>please sign in.</NavLink>
+        </div>
+      }
+      </div>
+      
       {artistSongs?.length > 0 && (
         <>
           <h3>Songs</h3>
@@ -127,7 +136,7 @@ const Home = () => {
       {artistEPs?.length > 0 && (
         <>
           <h3>EPs</h3>
-          <table class="table table-dark table-bordered mysong">
+          <table class="table table-light table-bordered mysong">
             <thead>
               <tr>
                 <th scope="col">EP</th>

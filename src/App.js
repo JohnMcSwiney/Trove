@@ -5,7 +5,7 @@ import './App.css'
 
 import {
   Home,
-  Help,
+  Audience,
   UploadMusic,
   Login,
   Signup,
@@ -21,8 +21,7 @@ const App = () => {
         <div className="container">
           <Routes>
             <Route path="/" element={<Home />}></Route>
-            <Route path="/help" element={<Help />}></Route>
-
+            <Route path="/audience" element={<Audience />}></Route>
             <Route path="/uploadmusic" element={<UploadMusic />}></Route>
             <Route path="/signup" element={<Signup />}></Route>
             <Route path="/login" element={<Login />}></Route>

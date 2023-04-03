@@ -134,7 +134,7 @@ const [message, setMessage] =useState("")
       return metadata !== false;
     };
 
-    const createSongObject = async (songTitle, songUrl, imgUrl) => {
+    const createSongObject = async (songTitle, songUrl, imgUrl, songFeaturedArtists) => {
       console.log("AUUUUGGHGHHHHHHH");
 
       const res = await fetch("api/songs/", {
@@ -154,7 +154,7 @@ const [message, setMessage] =useState("")
           imgUrl: imgUrl,
           releaseType,
           releaseYear,
-          featuredArtists,
+          featuredArtists: songFeaturedArtists,
         }),
       });
 
@@ -265,14 +265,16 @@ const [message, setMessage] =useState("")
       setMessage(data.success)
       let songTitleIndex = 0;
       let songTitle = "";
+      let songFeaturedArtists =[];
       for (const file of songFile) {
         songUrl = await uploadSongToFirebase(file);
 
         console.log("for loop song url: " + songUrl);
         songTitle = songs[songTitleIndex].title;
+        songFeaturedArtists = songs[songTitleIndex].featuredArtists;
         console.log("for loop song title: " + songTitle);
 
-        await createSongObject(songTitle, songUrl, imgUrl);
+        await createSongObject(songTitle, songUrl, imgUrl, songFeaturedArtists);
         songTitleIndex++;
 
         console.log("SHOULD SHOW THIS AFTER CREATESONGOBJECT");
