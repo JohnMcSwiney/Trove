@@ -13,6 +13,26 @@ export default function MusicDetails(props) {
     );
   };
 
+  const handleSelectChange = (selectedOptions) => {
+    console.log(selectedOptions)
+    if (!selectedOptions) {
+      props.setFeaturedArtists([]);
+      return;
+    }
+    const selectedList = [];
+    for (const item of props.artists) {
+      for (var i = 0; i < selectedOptions.length; i++) {
+        if (
+          selectedOptions[i].value === item._id ||
+          (selectedOptions[i].artist && selectedOptions[i].id === item._id)
+        ) {
+          selectedList.push(item._id);
+          break;
+        }
+      }
+    }
+    props.setFeaturedArtists(selectedList);
+  }
   return (
     <div className="uploadmusic--column uploadmusic--song--form">
       <h2>MUSIC DETAILS</h2>
@@ -91,7 +111,7 @@ export default function MusicDetails(props) {
                   classNamePrefix="select"
                   placeholder="Select an artist"
 
-                  // onChange={handleSelectChange}
+                  onChange={handleSelectChange}
                 />
                  </label>
               </td>
