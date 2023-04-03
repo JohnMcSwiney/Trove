@@ -7,7 +7,8 @@ const mongoose = require("mongoose");
 
 const createSong = async (req, res) => {
   console.log("createSong", req.body);
-
+  
+  
   const artistID = req.body.artistID;
   let success = "";
   
@@ -50,30 +51,30 @@ const createSong = async (req, res) => {
       } else {
         console.log("featured artists: " + req.body.featuredArtists);
 
-        for (const artist of featuredArtists){
-          console.log(artist)
-          const fArtist = await Artist.findById(artist._id)
-          
-          if (!fArtist) {
-                  res.status(404).json({error: "This artist is not on our platform."})
-                  
-                }
-    
-           fArtist.songList.push(song._id)
-           await fArtist.save()
-        }
+
         
+       
 
         const song = new Song({
           ...req.body,
           artist: artist._id,
           releaseType: "single",
-          featuredArtists: fArtist,
+          featuredArtists: req.body.featuredArtists,
         });
+
+        for (const artist of req.body.featuredArtists ){
+            const fArtist = await Artist.findById(artist)
+
+            if(!fArtist){
+            res.status(404).json({error: "This artist is not on our platform."})
+            }
+
+            fArtist.songList.push(song._id);
+            await fArtist.save()
+        }
 
         artist.songList.push(song._id);
 
-        
 
         await song.save();
         await artist.save();
@@ -103,11 +104,9 @@ const createSong = async (req, res) => {
         if (song.album) {
           album.songList.push(song._id);
 
-          album.totalTracks++;
+          song.genre = album.albumGenre;
 
           song.releaseYear = album.releaseYear;
-
-          song.genre = album.genre;
 
           await album.save();
         }
@@ -123,43 +122,39 @@ const createSong = async (req, res) => {
         await artist.save();
         res.status(201).json({song, success});
       } else {
-        const featuredArtists = await Promise.all(
-          req.body.featuredArtists.map(async (name) => {
-            const featuredArtist = await Artist.findOne({ artistName: name });
-
-            res.status(404).json({error: "This artist is not on our platform."})
-
-            return featuredArtist._id;
-          })
-        );
-
-        console.log(featuredArtists);
-        
         const song = new Song({
           ...req.body,
           artist: artist._id,
           album: album._id,
           releaseType: "album",
-          featuredArtists: featuredArtists,
+          featuredArtists: req.body.featuredArtists,
         });
+
+        
+        for (const artist of req.body.featuredArtists ){
+            const fArtist = await Artist.findById(artist)
+
+            if(!fArtist){
+            res.status(404).json({error: "This artist is not on our platform."})
+            }
+
+            fArtist.songList.push(song._id);
+            await fArtist.save()
+        }
 
         if (song.album) {
           album.songList.push(song._id);
 
-          album.totalTracks++;
+          song.genre = album.albumGenre;
 
           song.releaseYear = album.releaseYear;
 
           await album.save();
         }
-        console.log(album.albumGenre)
+
         artist.songList.push(song._id);
 
-        for (const featuredArtistId of featuredArtists) {
-          const featuredArtist = await Artist.findById(featuredArtistId);
-          featuredArtist.songList.push(song._id);
-          await featuredArtist.save();
-        }
+     
 
         await song.save();
         await artist.save();
@@ -187,7 +182,7 @@ const createSong = async (req, res) => {
         if (song.ep) {
           ep.songList.push(song._id);
 
-          ep.totalTracks++;
+          song.genre =ep.epGenre
 
           song.releaseYear = ep.releaseYear;
 
@@ -204,28 +199,26 @@ const createSong = async (req, res) => {
 
         await artist.save();
         res.status(201).json({song, success});
-      } else {
-        const featuredArtists = await Promise.all(
-          req.body.featuredArtists.map(async (name) => {
-            const featuredArtist = await Artist.findOne({ artistName: name });
-
-            if (!featuredArtist) {
-              res.status(404).json({error: "This artist is not on our platform."})
-            }
-
-            return featuredArtist._id;
-          })
-        );
-
-        
+      } else { 
 
         const song = new Song({
           ...req.body,
           artist: artist._id,
-          ep: ep._id,
-          releaseType: "ep",
-          featuredArtists: featuredArtists,
+          releaseType: "single",
+          featuredArtists: req.body.featuredArtists,
         });
+
+        for (const artist of req.body.featuredArtists ){
+            const fArtist = await Artist.findById(artist)
+
+            if(!fArtist){
+            res.status(404).json({error: "This artist is not on our platform."})
+            }
+
+            fArtist.songList.push(song._id);
+            await fArtist.save()
+        }
+       
 
         if (song.ep) {
           ep.songList.push(song._id);
@@ -238,12 +231,6 @@ const createSong = async (req, res) => {
         }
 
         artist.songList.push(song._id);
-
-        for (const featuredArtistId of featuredArtists) {
-          const featuredArtist = await Artist.findById(featuredArtistId);
-          featuredArtist.songList.push(song._id);
-          await featuredArtist.save();
-        }
 
         await song.save();
         await artist.save();

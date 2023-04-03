@@ -7,7 +7,7 @@ const {
   createSong,
   deleteSong,
   updateSong,
-} = require("../../controller/song/songController");
+} = require("../../controller/song/songControllerSuprem");
 
 router.post("/", createSong);
 
