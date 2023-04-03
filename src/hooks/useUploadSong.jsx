@@ -195,6 +195,7 @@ const [message, setMessage] =useState("")
           releaseType,
           releaseYear,
           songList: [],
+          albumGenre:genre
         }),
       });
 
@@ -248,6 +249,7 @@ const [message, setMessage] =useState("")
           releaseType,
           releaseYear,
           songList: [],
+          epGenre:genre
         }),
       });
 

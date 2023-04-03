@@ -117,7 +117,7 @@ export default function UploadMusic(props) {
         }
         break;
       case "single":
-        setSongFile(e.target.files[0]);
+        setSongFile(Array.from(e.target.files));
       default:
         break;
     }
@@ -281,7 +281,9 @@ export default function UploadMusic(props) {
                     setPageName={setPageName}
                     isUploading={isUploading}
                     artists={artistData}
-                    
+                    setSongFile={setSongFile}
+                    setToUploadSongs={setToUploadSongs}
+
                   />
                 );
               case "AddSongs":

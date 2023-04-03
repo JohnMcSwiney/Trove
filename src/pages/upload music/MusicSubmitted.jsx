@@ -7,6 +7,7 @@ const MusicSubmitted = (props) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [musicTitle, setMusicTitle] = React.useState("");
+  const [musicFeatured, setMusicFeatured] = React.useState([]);
 
   React.useEffect(() => {
     if(props.album) {
@@ -26,6 +27,30 @@ const MusicSubmitted = (props) => {
 
   }, [props.submitted]);
 
+  React.useEffect(() => {
+    const featuredList = [];
+    const fetchFeaturedArtists = async () => {
+
+
+    for (const item of props.featuredArtists) {
+      const response = await fetch(`/api/artists/${item}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+      const json = await response.json();
+
+      if (response.ok) {
+        featuredList.push(json.artistName);
+      }
+      
+     }
+     setMusicFeatured(featuredList);
+    }
+   
+    fetchFeaturedArtists();
+  
+  }, [props.submitted]);
+  
   return (
     <form className="uploadmusic--submittedsongs">
       {/* <Button variant="primary" onClick={handleShow}>
@@ -51,7 +76,10 @@ const MusicSubmitted = (props) => {
 
                 <div className="musicsubmitted-stats">
                     <h5><span className="musicsubmitted-statshead">Title: </span>{musicTitle}</h5>
-                    <h5><span className="musicsubmitted-statshead">Artists: </span>{props.artist}, {props.featuredArtists}</h5>
+                    <h5><span className="musicsubmitted-statshead">Artists: </span>{props.artist}{
+                    musicFeatured && musicFeatured.length> 0 &&musicFeatured.map((artist, index)=>(
+                     <span key={index}>, {artist}</span>
+                    ))}</h5>
                     <h5><span className="musicsubmitted-statshead">Genre: </span>{props.genre.toUpperCase()}</h5>
                     <h5><span className="musicsubmitted-statshead">Release Type: </span>{props.releaseType.toUpperCase()}</h5>
                     <h5><span className="musicsubmitted-statshead">Release Year: </span>{props.releaseYear}</h5>

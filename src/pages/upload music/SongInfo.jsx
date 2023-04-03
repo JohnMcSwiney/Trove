@@ -38,24 +38,6 @@ export default function SongInfo(props) {
 
   }
 
-//   const handleSongTitleChange = (e) => {
-//     props.songs.map(song => {
-//       if (song.songId === props.i) {
-//         // No change
-//         return{
-//         ...song,
-//         title: e.target.value
-//         };
-//       } else {
-//         // Return a new circle 50px below
-//         return 
-//         song
-//         ;
-//       }
-
-//   }
-//   )
-// }
 
   return (
     <div className="uploadmusic--song--info" key={props.id}>

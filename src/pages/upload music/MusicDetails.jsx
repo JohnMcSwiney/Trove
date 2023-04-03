@@ -6,13 +6,6 @@ import Select from "react-select";
 export default function MusicDetails(props) {
   // const [isMultiple, setIsMultiple] = useState(false);
 
-  const handleRemoveSong = () => {
-    props.handleSongFileChange(props.songFile.filter((_, i) => i !== props.i));
-    props.handleSongFileChange(
-      props.toUploadSongs.filter((_, i) => i !== props.i)
-    );
-  };
-
   const handleSelectChange = (selectedOptions) => {
     console.log(selectedOptions)
     if (!selectedOptions) {
@@ -33,6 +26,13 @@ export default function MusicDetails(props) {
     }
     props.setFeaturedArtists(selectedList);
   }
+
+  const handleRemoveSong = () => {
+    props.setSongFile(props.songFile.filter((_, i) => i !== 0));
+    props.setToUploadSongs(props.toUploadSongs.filter((_, i) => i !== 0));
+
+  };
+
   return (
     <div className="uploadmusic--column uploadmusic--song--form">
       <h2>MUSIC DETAILS</h2>
@@ -99,6 +99,7 @@ export default function MusicDetails(props) {
                   </label>
                 </td>
               </tr>
+            { props.releaseType === "single" &&
             <tr>
               <td className="uploadmusic--columnt">
                 <label htmlFor="search">Featured Artists: 
@@ -132,6 +133,7 @@ export default function MusicDetails(props) {
                  </label>
               </td>
             </tr>
+            }
             {props.releaseType === "album" && (
               <tr>
                 <td className="uploadmusic--columnt">
@@ -266,22 +268,29 @@ export default function MusicDetails(props) {
       </div>
       {props.releaseType == "single" ? (
         <> 
-            <div className="upload--music--songfile--name single ">
-              {props.songFile && 
+            <div className="upload--music--singlefile--name  ">
+
                     <div className="uploadmusic--single--info " >
-                      
+                    {props.songFile.length > 0 ?
+                    <>  
                     <div className="uploadmusic--delsingle">
                         <img src="../assets/xsongsymbol.png" alt="deletesongicon" onClick={handleRemoveSong} />
                     </div>
-                    <div className="uploadmusic--songfile--name single">
+                    <div className="uploadmusic--single--name">
                     {props.songFile && (
                         <>
-                          <label>{props.songFile.name}</label>
+                          <label>{props.songFile[0].name}</label>
                         </>
                       )}
                     </div>
-                  </div>
+                    </> :
+                    <>
+                      <label>No File Chosen</label>
+                    </>
+
               }
+                  </div>
+              
             </div>
  
           <div className="uploadmusic--navigate--form--btns uploadmusic--navigate--single--songs">

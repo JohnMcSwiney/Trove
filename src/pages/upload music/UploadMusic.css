@@ -466,15 +466,17 @@ body {
     background-color: #12164b;
     margin-bottom: 5vmin;
     border-radius: 1vmin;
-    width: 30%;
+    width: 50%;
     justify-content: center;
-    margin-left: 35%;
+    margin-left: 25%;
+    
   }
   
   .uploadmusic--single--info:hover {
     transform: scale(1.01); 
     box-shadow: 0 0 22px #0034C4;
   }
+
 
   .uploadmusic--delsingle > img{
     width: 2vw;
@@ -503,10 +505,25 @@ body {
   .uploadmusic--songfile--name {
     /* width: 100vw; */
     display: flex;
+
+  }
+
+  .uploadmusic--singlefile--name {
+    /* width: 100vw; */
+    display: flex;
+    justify-content: center;
+
   }
 
   .uploadmusic--songfile--name > label {
     margin-left: 2vmin;
+
+  }
+
+
+  .uploadmusic--single--name > label {
+    margin-left: 2vmin;
+    text-align: center;
   }
 
   .uploadmusic--songfile--name > button {
