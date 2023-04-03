@@ -425,7 +425,7 @@ const DiscoveryGame = () => {
         <div className='DGtitle'><strong>Discovery </strong>Game</div>
         <div className='Discovery-Top-Container'>
           <Slider ref={musicSlides} {...settings} id='carousel'>
-            {songs?.map((song, i = 0) => {
+            {songs && songs.length > 0 && songs?.map((song, i = 0) => {
               return (
                 <div className='test2'>
                   <div className='Discovery-Img-Container'>
