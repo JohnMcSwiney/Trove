@@ -101,8 +101,6 @@ const compareSongData = async (user) => {
 
       let genreArray = [numOfPop, numOfRock, numOfCountry, numOfHipHop]
 
-      console.log("genreArray: " + genreArray);
-
       let first = 0;
       let second = 0;
       let third = 0;
@@ -131,7 +129,12 @@ const compareSongData = async (user) => {
           thirdIndex = i;
         }
 
-        else if (genreArray[i] <= fourth) {
+        // else if (genreArray[i] <= fourth) {
+        //   fourth = genreArray[i];
+        //   fourthIndex = i;
+        // }
+
+        else {
           fourth = genreArray[i];
           fourthIndex = i;
         }
@@ -174,32 +177,44 @@ const compareSongData = async (user) => {
         }
       }
 
-      if (second == third || second == fourth) {
-        console.log("if there are two or more number of genres that are the same");
+      // else if (second == third || second == fourth) {
+      //   console.log("if there are two or more number of genres that are the same");
 
-        if (chance >= 25 && chance < 50) {
-          console.log("chance was >25 but <50");
-          songGenre = genres[firstIndex];
-          console.log("songGenre in if stmt: " + songGenre);
-        }
-        else if (chance >= 50 && chance < 75) {
-          console.log("chance was >50 but <75");
-          songGenre = genres[secondIndex];
-          console.log("songGenre in if stmt: " + songGenre);
-        }
-        else if (chance == 75) {
-          console.log("chance was greater than 75");
-          songGenre = genres[thirdIndex];
-          console.log("songGenre in if stmt: " + songGenre);
-        }
-        else {
-          console.log("chance was higher than 75");
-          songGenre = genres[fourthIndex];
-          console.log("songGenre in if stmt: " + songGenre);
-        }
-      }
+      //   if (chance >= 25 && chance < 50) {
+      //     console.log("chance was >25 but <50");
+      //     songGenre = genres[secondIndex];
+      //     console.log("songGenre in if stmt: " + songGenre);
+      //   }
+      //   else if (chance >= 50 && chance < 75) {
+      //     console.log("chance was >50 but <75");
+      //     songGenre = genres[thirdIndex];
+      //     console.log("songGenre in if stmt: " + songGenre);
+      //   }
+      //   else {
+      //     console.log("chance was greater than 75");
+      //     songGenre = genres[fourthIndex];
+      //     console.log("songGenre in if stmt: " + songGenre);
+      //   }
+      // }
 
-      if (chance < 25 && chance >= 25 && chance < 50) {
+      // else {
+      //   console.log("if there are two or more number of genres that are the same");
+
+      //   if (chance >= 25 && chance < 50) {
+      //     console.log("chance was >25 but <50");
+      //     songGenre = genres[thirdIndex];
+      //     console.log("songGenre in if stmt: " + songGenre);
+      //   }
+      //   else {
+      //     console.log("chance was greater than 50");
+      //     songGenre = genres[fourthIndex];
+      //     console.log("songGenre in if stmt: " + songGenre);
+      //   }
+      // }
+
+      //assign genre in set of final if statements
+
+      if (chance < 25 || chance >= 25 && chance < 50) {
         console.log("chance was >25 but <50");
         songGenre = genres[firstIndex];
         console.log("songGenre in if stmt: " + songGenre);
@@ -224,6 +239,9 @@ const compareSongData = async (user) => {
       console.log("second place: " + second + "[" + secondIndex + "]");
       console.log("third place: " + third + "[" + thirdIndex + "]");
       console.log("fourth place: " + fourth + "[" + fourthIndex + "]");
+
+      console.log("genreArray: " + genreArray);
+
 
       return songGenre;
     });
@@ -257,7 +275,7 @@ const compareSongData = async (user) => {
           console.log("randomSong not found");
         }
 
-        if (!songLimit.includes(randomSimilarSong._id) && !user.likedSongs.includes(randomSimilarSong._id)) {
+        if (!songLimit.includes(randomSimilarSong._id) || !user.likedSongs.includes(randomSimilarSong._id) || !songLimit.includes(randomSimilarSong._id) && !user.likedSongs.includes(randomSimilarSong._id) ) {
           songLimit.push(randomSimilarSong);
           console.log("added randomSong: " + randomSimilarSong.title);
         }
@@ -406,7 +424,7 @@ const randomSong = async (user) => {
 
     const randomSong = songs[Math.floor(Math.random() * songs.length)];
 
-    if (!songLimit.includes(randomSong._id) && !user.likedSongs.includes(randomSong._id)) {
+    if (!songLimit.includes(randomSong._id) || !user.likedSongs.includes(randomSong._id) || !songLimit.includes(randomSong._id) && !user.likedSongs.includes(randomSong._id)) {
       songLimit.push(randomSong);
       console.log("added randomSong: " + randomSong.title);
     }
@@ -453,7 +471,7 @@ const loadDiscoveryGame = async (req, res) => {
 
         const randomSong = songs[Math.floor(Math.random() * songs.length)];
 
-        if (!songLimit.includes(randomSong._id) && !user.likedSongs.includes(randomSong._id)) {
+        if (!songLimit.includes(randomSong._id) || !user.likedSongs.includes(randomSong._id) || !songLimit.includes(randomSong._id) && !user.likedSongs.includes(randomSong._id) ) {
           songLimit.push(randomSong);
           console.log("added randomSong: " + randomSong.title);
         }
