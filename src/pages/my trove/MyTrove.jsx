@@ -55,13 +55,17 @@ const MyTrove = () => {
   {/*  }
 
   //Work in progress
-      React.useEffect(() => {
-        const RemoveLike = async () => {
-          fetch(`/api/users/${userID.likedSongs}` + song._id ,
-            method: 'DELETE')
-          
-        }
-      }, []);
+
+          React.useEffect(() => {
+      const removeLike = async () => {
+        const response = await fetch(`/api/users/${userID}/likedSongs/${song._id}`, {
+          method: 'DELETE'
+        });
+        const data = await response.json();
+        setUserInfo(data);
+      };
+      removeLike();
+    }, [userID, song._id]);
     {*/}
   
   return (
