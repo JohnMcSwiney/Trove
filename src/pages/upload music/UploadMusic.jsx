@@ -310,6 +310,7 @@ export default function UploadMusic(props) {
                     isUploading={isUploading}
                     uploadProgress={uploadProgress}
                     submitted={submitted}
+                    artists={artistData}
                   />
                 );
               default:

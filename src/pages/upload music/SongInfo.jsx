@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import Select from 'react-select'
 // Component for displaying individual song info
 export default function SongInfo(props) {
   //object songs
@@ -37,7 +37,48 @@ export default function SongInfo(props) {
   props.setSongs(titleChange);
 
   }
+    const handleSelectChange = (selectedOptions) => {
+    console.log(selectedOptions)
+    if (!selectedOptions) {
+      props.setFeaturedArtists([]);
+      return;
+    }
+    const selectedList = [];
+    for (const item of props.artists) {
+      for (var i = 0; i < selectedOptions.length; i++) {
+        if (
+          selectedOptions[i].value === item._id ||
+          (selectedOptions[i].artist && selectedOptions[i].id === item._id)
+        ) {
+          selectedList.push(item._id);
+          break;
+        }
+      }
+    }
+    // props.setFeaturedArtists(selectedList);
+    
 
+    function handleSongfArtistChange(e) {
+      console.log(props.songs[props.i]?.featuredArtists)
+      const fArtistChange = props.songs.map((song) => {
+        if (song.songId === props.i) {
+          // No change
+          return{
+          ...song,
+          featuredArtists: selectedList
+          };
+        } else {
+          return song;
+        }
+  
+    }
+    );
+    props.setSongs(fArtistChange);
+    
+  }
+  handleSongfArtistChange();
+  
+    }
 
   return (
     <div className="uploadmusic--song--info" key={props.id}>
@@ -63,13 +104,35 @@ export default function SongInfo(props) {
         ></input>
         </div>
         <div className="uploadmusic--songfile--ftartists">
-        <input
-          type="text"
-          value={props.featuredArtists}
-          name="artistName"
-          placeholder="Featured Artists"
-          onChange={props.handleFeaturedArtists}
-        />
+                       <label htmlFor="search">Featured Artists: 
+                <Select
+                  id="search"
+                  options={props.artists&& props.artists.length>0 && props.artists.map((artist) => ({
+                    value: artist.artistName,
+                    label: (
+                      <div style={{ display: "flex", alignItems: "center" }}>
+                        <img
+                          src={artist.artistImg}
+                          alt={artist.artistName}
+                          width="30"
+                          height="30"
+                          style={{ marginRight: "10px" }}
+                        />
+                        {artist.artistName}
+                      </div>
+                    ),
+                    id: artist?._id,
+                    artist: artist,
+                    artistName: artist.artistName,
+                  }))}
+                  isMulti
+                  className="uploadmusic--basic-multi-select"
+                  classNamePrefix="select"
+                  placeholder="Select an artist"
+
+                  onChange={handleSelectChange}
+                />
+                 </label>
         </div>
         {/* </div> */}
         {console.log("first FT: " + props.featuredArtists)}

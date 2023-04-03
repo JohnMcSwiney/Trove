@@ -211,6 +211,7 @@ const [message, setMessage] =useState("")
       setMessage(data.success)
       let songTitleIndex = 0;
       let songTitle = "";
+      let songFeaturedArtists =[];
       for (const file of songFile) {
         songUrl = await uploadSongToFirebase(file);
 
@@ -221,9 +222,10 @@ const [message, setMessage] =useState("")
           let fileNameTitle = file.name.split(".", 1)
           songTitle = fileNameTitle[0];
         }
+        songFeaturedArtists = songs[songTitleIndex].featuredArtists;
         console.log("for loop song title: " + songTitle);
 
-        await createSongObject(songTitle, songUrl, imgUrl);
+        await createSongObject(songTitle, songUrl, imgUrl, songFeaturedArtists);
         songTitleIndex++;
       }
 

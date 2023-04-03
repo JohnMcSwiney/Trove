@@ -70,6 +70,7 @@ export default function AddSongs(props) {
                     setToUploadSongs={props.setToUploadSongs}
                     songs={props.songs}
                     setSongs={props.setSongs}
+                    artists={props.artists}
                   />
                 );
               }
