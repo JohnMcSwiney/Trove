@@ -75,6 +75,22 @@ const userSchema = new mongoose.Schema(
       },
     ],
 
+    likedAlbums: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Album",
+        default: null,
+      },
+    ],
+
+    likedCuratedPlaylists: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "CuratedPlaylist",
+        default: null,
+      },
+    ],
+
     likedArtists: [
       {
         type: mongoose.Schema.Types.ObjectId,
