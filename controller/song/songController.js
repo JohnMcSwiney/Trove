@@ -51,15 +51,15 @@ const createSong = async (req, res) => {
         console.log("featured artists: " + req.body.featuredArtists);
 
         const featuredArtists = await Promise.all(
-          req.body.featuredArtists.map(async (name) => {
-            const featuredArtist = await Artist.findOne({ artistName: name });
+          req.body.featuredArtists.map(async (id) => {
+            const featuredArtist = await Artist.findOne({ _id: id });
 
             if (!featuredArtist) {
               res.status(404).json({error: "This artist is not on our platform."})
               
             }
 
-            return featuredArtist._id;
+            return featuredArtist;
           })
         );
 
@@ -109,6 +109,8 @@ const createSong = async (req, res) => {
           album.totalTracks++;
 
           song.releaseYear = album.releaseYear;
+
+          song.genre = album.genre;
 
           await album.save();
         }
