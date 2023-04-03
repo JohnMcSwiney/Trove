@@ -28,7 +28,7 @@ const createAlbum = async (req, res) => {
   const artistID = req.body.artistID;
   const success = "Created album successfully"
   try {
-    const artist = await Artist.findOne({ _id: artistID });
+    const artist = await Artist.findById(artistID);
 
     //console.log(artist);
 
@@ -90,7 +90,7 @@ const createAlbum = async (req, res) => {
       res.status(201).json({album, success});
     }
   } catch (error) {
-    console.log(err);
+    console.log(error);
     res.status(400).json({ error: error.message });
   }
 };
