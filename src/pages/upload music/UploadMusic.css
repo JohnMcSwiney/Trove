@@ -147,6 +147,12 @@ body {
   }
 
 
+  .uploadmusic--custom-single-upload:hover {
+    transform: scale(1.01);
+    box-shadow: 0 0 11px #0034c4;
+
+  }
+
   .uploadmusic--gradient--btn,
   .uploadmusic--custom-song-upload,
   .uploadmusic--custom-file-upload {
@@ -208,6 +214,11 @@ body {
 
   .uploadmusic--single--btn {
     margin-left: 50%;
+  }
+
+  .uploadmusic--single--btn:hover {
+    transform: scale(1.01);
+    box-shadow: 0 0 11px #0034c4;
   }
 
   .uploadmusic--song--form > input[type="file"] {
@@ -471,11 +482,7 @@ body {
     margin-left: 25%;
     
   }
-  
-  .uploadmusic--single--info:hover {
-    transform: scale(1.01); 
-    box-shadow: 0 0 22px #0034C4;
-  }
+
 
 
   .uploadmusic--delsingle > img{

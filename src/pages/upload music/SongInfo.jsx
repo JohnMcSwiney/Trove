@@ -8,7 +8,7 @@ export default function SongInfo(props) {
 
   // added song
   React.useEffect(() => {
-    props.setSongs((prevSongs) => [ ...prevSongs, { songId: props.i, title: "", songFile: props.songF } ])
+    props.setSongs((prevSongs) => [ ...prevSongs, { songId: props.i, title: "", featuredArtists:[] } ])
     
   }, []);
 
