@@ -52,21 +52,24 @@ const MyTrove = () => {
   }, []);
   console.log(userInfo.likedSongs);
   
-  {/*  }
+ 
 
   //Work in progress
 
-          React.useEffect(() => {
-      const removeLike = async () => {
-        const response = await fetch(`/api/users/${userID}/likedSongs/${song._id}`, {
-          method: 'DELETE'
-        });
-        const data = await response.json();
-        setUserInfo(data);
-      };
-      removeLike();
-    }, [userID, song._id]);
-    {*/}
+  // React.useEffect(() => {
+  //   const removeLike = async (song) => {
+  //     const response = await fetch(`/api/users/${userID}/likedSongs/${song._id}`, {
+  //       method: 'DELETE'
+  //     });
+  //     const data = await response.json();
+  //     setUserInfo(data);
+  //   };
+  //   if (song) {
+  //     removeLike(song);
+  //   }
+  // }, [userID, song]);
+
+ 
   
   return (
     <div className="container">
@@ -137,7 +140,7 @@ const MyTrove = () => {
 
                       {/*   
                       add when remove like works
-                       onClick{RemoveLike} 
+                       onClick={() => removeLike(song)} * 
                        */}
                     
                     </tr>
