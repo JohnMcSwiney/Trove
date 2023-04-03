@@ -96,7 +96,7 @@ const DiscoveryGame = () => {
         console.log("test")
         let temp
         setneedLoadsong(true)
-        await fetch(`api/DG/${user.id}`)
+        await fetch(`api/DG/${JSON.parse(localStorage.getItem('user')).id}`)
           .then(response => response.json())
           .then(json => {
             temp = json
