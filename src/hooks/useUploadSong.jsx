@@ -6,6 +6,7 @@ export const useUploadSong = () => {
   const [error, setError] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
+  const [submitted, setSubmitted] = useState(false);
   const storage = firebase.storage();
   const currentYear = new Date().getFullYear();
 const [message, setMessage] =useState("")
@@ -322,6 +323,7 @@ const [message, setMessage] =useState("")
 
           setIsUploading(false);
           setUploadProgress(0);
+          setSubmitted(true);
         } catch (err) {
           console.log(err);
 
@@ -374,6 +376,7 @@ const [message, setMessage] =useState("")
 
           setIsUploading(false);
           setUploadProgress(0);
+          setSubmitted(true);
         } catch (err) {
           console.log(err);
 
@@ -428,6 +431,7 @@ const [message, setMessage] =useState("")
 
           setIsUploading(false);
           setUploadProgress(0);
+          setSubmitted(true);
         } catch (err) {
           console.log(err);
 
@@ -443,5 +447,5 @@ const [message, setMessage] =useState("")
         break;
     }
   };
-  return { uploadMusic, uploadProgress, isUploading, error, message };
+  return { uploadMusic, uploadProgress, isUploading, error, message, submitted };
 };

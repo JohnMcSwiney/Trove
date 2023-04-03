@@ -163,7 +163,7 @@ export default function UploadMusic(props) {
   };
 
   // When music is submitted
-  const { uploadMusic, isUploading, uploadProgress, error, message } =
+  const { uploadMusic, isUploading, uploadProgress, error, message, submitted } =
     useUploadSong();
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -252,7 +252,6 @@ export default function UploadMusic(props) {
                 alt="upload_icon"
               />
             </label>
-            {isUploading ? <LoadingSign /> : null}
           </div>
 
           {(() => {
@@ -310,6 +309,7 @@ export default function UploadMusic(props) {
                     setSongs={setSongs}
                     isUploading={isUploading}
                     uploadProgress={uploadProgress}
+                    submitted={submitted}
                   />
                 );
               default:
@@ -330,6 +330,7 @@ export default function UploadMusic(props) {
             releaseYear={releaseYear}
             genre={genre}
             previewCover={previewCover}
+            submitted={submitted}
           />
         </div>
       </div>

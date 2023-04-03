@@ -73,21 +73,31 @@ export default function AddSongs(props) {
                   />
                 );
               }
-              )
+              ) 
               }
           </div>
-          <div className="uploadmusic--loadingprogress">
-              <div className="uploadmusic--loadinganimation">
-              <LoadingSign />
-              </div>
-             
-             <div className="uploadmusic--loadingtext">
-              <h5>Hold on, we're uploading your music!</h5>
-              <h6>{Math.round(props.uploadProgress)}% Complete</h6>
-             </div>
+          {props.isUploading ? 
+                    <div className="uploadmusic--loadingprogress">
+                    <div className="uploadmusic--loadinganimation">
+                    <LoadingSign />
+                    </div>
+                   
+                   <div className="uploadmusic--loadingtext">
+                    <h5>Hold on, we're uploading your music!</h5>
+                    <h6>{Math.round(props.uploadProgress)}% Complete</h6>
+                   </div>
+      
+                </div>
+          : null}
 
-          </div>
-
+          {props.submitted ? 
+                  <div className="uploadmusic--loadingtext">
+                    <h5>Your Music was Uploaded!</h5>
+                    <h6>100% Complete</h6>
+                   </div>
+            : null
+        
+          }
 
           <div className="uploadmusic--navigate--form--btns uploadmusic--navigate--add--songs">
             <div

@@ -58,6 +58,10 @@ body {
     text-align: center;
     color: white;
   }
+  
+  .uploadmusic--song--form h2 {
+    font-weight: 600;
+  }
 
   .uploadmusic--upload--songfile input[type="radio"] {
     margin-left: 25vmin;
@@ -448,6 +452,11 @@ body {
     justify-content: center;
   }
 
+  .uploadmusic--basic-multi-select {
+    width: 100%;
+    color: black;
+
+  }
 
 /* } */
 

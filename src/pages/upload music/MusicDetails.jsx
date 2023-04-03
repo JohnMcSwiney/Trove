@@ -65,7 +65,7 @@ export default function MusicDetails(props) {
             </fieldset>
             <tr>
               <td className="uploadmusic--columnt">
-                <label htmlFor="search">Add feature artist: </label>
+                <label htmlFor="search">Featured Artists: 
                 <Select
                   id="search"
                   options={props.artists.map((artist) => ({
@@ -87,12 +87,13 @@ export default function MusicDetails(props) {
                     artistName: artist.artistName,
                   }))}
                   isMulti
-                  className="basic-multi-select"
+                  className="uploadmusic--basic-multi-select"
                   classNamePrefix="select"
                   placeholder="Select an artist"
 
                   // onChange={handleSelectChange}
                 />
+                 </label>
               </td>
             </tr>
             {props.releaseType === "album" && (

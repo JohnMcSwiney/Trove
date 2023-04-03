@@ -4,24 +4,56 @@
   }
 
   .uploadmusic--submittedsongs .modal-title {
-    color: black;
+    color: white;
+
     
   }
 
   .musicsubmitted--confirmation h2{
-    color: blue;
+    color: linear-gradient(
+      to left,
+      #8650f4,
+      #6f49e8,
+      #5642dc,
+      #393bd0,
+      #0034c4
+    );
     font-weight: 700;
     text-align: center;
+    font-size: 25px;
+    background-image: linear-gradient(
+      to left,
+      #8650f4,
+      #6f49e8,
+      #5642dc,
+      #393bd0,
+      #0034c4
+    );
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    -webkit-text-fill-color: transparent; 
+    -moz-text-fill-color: transparent;
+
   }
 
   
   .musicsubmitted--confirmation h5{
     font-weight: 400;
     text-align: center;
+    margin-top: 5vmin;
+    font-size: 20px;
+  }
+
+  .musicsubmitted--confirmation h6{
+    font-weight: 400;
+    text-align: center;
+    font-size: 15px;
   }
 
   .musicsubmitted-info {
     display: flex;
+    margin-top: 5vmin;
+    margin-left: 2vmin;
   }
 
   .musicsubmitted-info > img {
@@ -31,16 +63,100 @@
 
   .musicsubmitted-info > h5 {
     margin-left: 2vmin;
+    font-size: 10px;
     
   }
 
   .musicsubmitted-info > h6 {
     margin-left: 2vmin;
     display: inline-flex;
+    
   }
 
-  .musicsubmitted-stats {
-    margin-left: 2vmin;
+  .musicsubmitted--trovemusic-span {
+    font-weight: 900;   
+    background-image: linear-gradient(
+      to left,
+      #8650f4,
+      #6f49e8,
+      #5642dc,
+      #393bd0,
+      #0034c4
+    );
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    -webkit-text-fill-color: transparent; 
+    -moz-text-fill-color: transparent;
+    
+}
+
+
+  .musicsubmitted-stats > h5 {
+    margin-left: 5vmin;
+    margin-top: 1vmin;
+    font-size: 15px;
+
+  }
+
+  .musicsubmitted-statshead {
+    font-weight: 600;
+    background-image: linear-gradient(
+      to left,
+      #8650f4,
+      #6f49e8,
+      #5642dc,
+      #393bd0,
+      #0034c4
+    );
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    -webkit-text-fill-color: transparent; 
+    -moz-text-fill-color: transparent;
+  }
+
+  .modal-header {
+    background-image: linear-gradient(
+      to left,
+      #8650f4,
+      #6f49e8,
+      #5642dc,
+      #393bd0,
+      #0034c4
+    );
+    color: white;
+  }
+
+  .musicsubmitted--confirmation a {
+    font-weight: 600;
+    background-image: linear-gradient(
+      to left,
+      #8650f4,
+      #6f49e8,
+      #5642dc,
+      #393bd0,
+      #0034c4
+    );
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    -webkit-text-fill-color: transparent; 
+    -moz-text-fill-color: transparent;
+    border-bottom: 3px solid;
+  }
+
+  .musicsubmitted--confirmation > h6 {
+    background-image: linear-gradient(
+      to left,
+      #8650f4,
+      #6f49e8,
+      #5642dc,
+      #393bd0,
+      #0034c4
+    );
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    -webkit-text-fill-color: transparent; 
+    -moz-text-fill-color: transparent;
+    
   }
   
   
