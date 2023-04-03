@@ -275,7 +275,10 @@ export default function UploadMusic(props) {
                     ep={ep}
                     genre={genre}
                     title={title}
-                    artist={artist}
+                    artist={
+                      localStorage.getItem("artist") &&
+                      JSON.parse(localStorage.getItem("artist")).artistName
+                    }
                     featuredArtists={featuredArtists}
                     imageFile={imageFile}
                     songFile={songFile}
@@ -284,6 +287,7 @@ export default function UploadMusic(props) {
                     setPageName={setPageName}
                     isUploading={isUploading}
                     artists={artistData}
+                    
                   />
                 );
               case "AddSongs":

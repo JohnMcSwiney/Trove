@@ -93,15 +93,6 @@ export default function SongInfo(props) {
         {console.log("first FT: " + props.featuredArtists)}
         {console.log("songs AREEE" + JSON.stringify(props.songs))}
 
-        {/* <br />
-                {/* <h3>{props.title}</h3> */}
-        {/* {console.log("index: " + [props.i])}
-                {console.log("file: " + props.songFile[props.i])}
-                {console.log("file name: " + props.songFile[props.i].name)}
-                {console.log("Props title: " + props.title)} */}
-        {/* {console.log("Props title[0]: " + props.title[0])} */}
-
-        {/* <input type="text" name={`songName` + props.i} value={props.title[`songName` + props.i]} placeholder="Song Title" onChange={props.handleTitle}></input> */}
       </div>
     </div>
   );

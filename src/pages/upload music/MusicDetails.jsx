@@ -64,6 +64,22 @@ export default function MusicDetails(props) {
               </tr>
             </fieldset>
             <tr>
+                <td className="uploadmusic--columnt">
+                  <label>
+                    Artist:
+                    <br />
+                    <input
+                      type="text"
+                      value={props.artist}
+                      readOnly
+                      name="albumName"
+                      placeholder="Artist Name"
+                      // onChange={props.handleAlbumName}
+                    />
+                  </label>
+                </td>
+              </tr>
+            <tr>
               <td className="uploadmusic--columnt">
                 <label htmlFor="search">Featured Artists: 
                 <Select
@@ -229,40 +245,52 @@ export default function MusicDetails(props) {
         </table>
       </div>
       {props.releaseType == "single" ? (
-        <>
-          <div className="uploadmusic--song--info">
-            <div className="upload--music--songfile--name">
-              {props.songFile && (
-                <>
-                  <label>{props.songFile.name}</label>
-                  <button onClick={handleRemoveSong}>Remove</button>
-                </>
-              )}
+        <> 
+            <div className="upload--music--songfile--name single ">
+              {props.songFile && 
+                    <div className="uploadmusic--single--info " >
+                      
+                    <div className="uploadmusic--delsingle">
+                        <img src="../assets/xsongsymbol.png" alt="deletesongicon" onClick={handleRemoveSong} />
+                    </div>
+                    <div className="uploadmusic--songfile--name single">
+                    {props.songFile && (
+                        <>
+                          <label>{props.songFile.name}</label>
+                        </>
+                      )}
+                    </div>
+                  </div>
+              }
+            </div>
+ 
+          <div className="uploadmusic--navigate--form--btns uploadmusic--navigate--single--songs">
+          <div className="uploadmusic--upload--songfile">
+              <label className="uploadmusic--custom-single-upload">
+                <input
+                  type="file"
+                  name="songFile"
+                  value=""
+                  accept="audio/*"
+                  className="uploadmusic--hide--file"
+                  onChange={props.handleSongFileChange}
+                  required
+                />
+                Upload Song
+              </label>
+            </div>
+            <div className="uploadmusic--next--btn uploadmusic--finish--btn">
+              <input
+                type="submit"
+                value="Submit"
+                className="uploadmusic--gradient--btn uploadmusic--single--btn"
+                onClick={props.handleSubmit}
+              />
             </div>
           </div>
 
-          <div className="uploadmusic--upload--songfile">
-            <label className="uploadmusic--custom-song-upload">
-              <input
-                type="file"
-                name="songFile"
-                value=""
-                accept="audio/*"
-                className="uploadmusic--hide--file"
-                onChange={props.handleSongFileChange}
-                required
-              />
-              Upload Song
-            </label>
-          </div>
-          <div className="uploadmusic--next--btn uploadmusic--finish--btn">
-            <input
-              type="submit"
-              value="Submit"
-              className="uploadmusic--gradient--btn uploadmusic--submit--btn"
-              onClick={props.handleSubmit}
-            />
-          </div>
+
+          
         </>
       ) : (
         <div className="uploadmusic--navigate--form--btns">
