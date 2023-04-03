@@ -13,7 +13,7 @@ const Audience = () => {
       {/* <h5>Hello, {artist ? <span className="artist--namespan">{artist?.artistName}</span> : <NavLink to={"/login"}>please sign in.</NavLink>} </h5> */}
 
 
-      {artist ? <h5><span className="artist--namespan">{artist?.artistName}</span>'s Audience</h5> :
+      {artist ? <h5><span className="artist--namespan">{artist?.artistName}'s</span> Audience</h5> :
         <div className="artist--welcome">
         Hello, <NavLink to={"/login"}>please sign in.</NavLink>
         </div>
