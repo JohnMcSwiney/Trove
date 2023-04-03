@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-// import MusicBar from "../ArtistProfile/musicBar/MusicBar";
-// import SideBar from "../ArtistProfile/Sidebar/Sidebar"
 import WavesBG from "../Vector.svg";
 import MusicDetails from "./MusicDetails";
 import AddSongs from "./AddSongs";
@@ -64,9 +62,6 @@ export default function UploadMusic(props) {
   const { width } = useViewport();
 
   let menu;
-  if (showMenu) {
-    //  menu = <SideBar />
-  }
 
   const [songs, setSongs] = useState([]);
   const [title, setTitle] = useState("");
@@ -84,12 +79,6 @@ export default function UploadMusic(props) {
   const handleTitle = (e) => {
     setTitle(e.target.value);
 
-    // if (releaseType === "single") {
-    //   setTitle(e.target.value);
-
-    // } else {
-
-    // }
   };
 
   const handleAlbumName = (e) => {
@@ -153,7 +142,9 @@ export default function UploadMusic(props) {
     : null;
 
   const handleFeaturedArtists = (e) => {
-    const inputtedArtists = e.target.value;
+    const inputtedArtists = Array.from(e.target.value);
+
+    console.log("inputtedArtists: " + inputtedArtists);
 
     const artistArray = inputtedArtists
       .split("/[s,]+/")
@@ -224,6 +215,8 @@ export default function UploadMusic(props) {
     };
     fetchAllArtist();
   }, []);
+
+  
   return (
     <section>
       {menu}
@@ -280,6 +273,7 @@ export default function UploadMusic(props) {
                       JSON.parse(localStorage.getItem("artist")).artistName
                     }
                     featuredArtists={featuredArtists}
+                    setFeaturedArtists={setFeaturedArtists}
                     imageFile={imageFile}
                     songFile={songFile}
                     releaseType={releaseType}
