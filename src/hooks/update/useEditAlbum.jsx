@@ -11,7 +11,8 @@ export const useEditAlbum = () => {
     albumName,
     artist,
     releaseYear,
-    songList
+    songList,
+    genre
   ) => {
     setEditError(null);
     setEditIsLoading(true);
@@ -25,6 +26,7 @@ export const useEditAlbum = () => {
         artist,
         releaseYear,
         songList,
+        genre,
       }),
     });
 

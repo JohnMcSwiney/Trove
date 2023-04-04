@@ -27,6 +27,7 @@ const AlbumModal = ({ album, artists, songs }) => {
     }
     const selectedList = [];
     for (const song of songs) {
+      console.log(song);
       for (var i = 0; i < selectedSongs.length; i++) {
         if (
           selectedSongs[i].value === song._id ||
@@ -50,7 +51,8 @@ const AlbumModal = ({ album, artists, songs }) => {
         albumName,
         artistID,
         releaseYear,
-        songList
+        songList,
+        genre
       );
     } catch (error) {
       console.log(error);
