@@ -291,6 +291,31 @@ const getMySong = async (req, res) => {
   res.status(200).json(songs);
 };
 
+// get artist's TOP song
+const getMyTopSong = async (req, res) => {
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: "You have not sign in" });
+  }
+
+  const songs = await Song.find({ artist: id }).sort({ createdAt: -1 });
+  if (!songs) {
+    return res.status(404).json({ error: "You don't have any song" });
+  }
+
+  let topSong = null;
+
+  for (const song of songs) {
+    if(song.searchCount && song.searchCount > topSong.searchCount || !topSong) {
+      topSong = song;
+    }
+    console.log(song.searchCount)
+
+  }
+    
+  res.status(200).json(topSong);
+}; 
+
 //WIP
 const updateSong = async (req, res) => {
   const { id } = req.params;
@@ -589,6 +614,7 @@ const deleteSong = async (req, res) => {
 module.exports = {
   getAllSongs,
   getMySong,
+  getMyTopSong,
   getSong,
   createSong,
   deleteSong,
