@@ -40,8 +40,8 @@
   margin-top: 50px;
   display: flex;
   flex-direction: column;
-  padding-left: 20vw;
-  padding-right: 20vw;
+  padding-left: 10vw;
+  padding-right: 10vw;
   padding-top: 10px;
   /* background-image: url("../../assets/Trv_bg/animatedWave4.svg"); */
   background-size: 125% ;
@@ -302,7 +302,10 @@
 }
 .brihgleggmoie{
     height: 70vh;
+    width: 100%;
+    /* width: 100%; */
     overflow-y: scroll;
+    /* overflow:visible; */
     /* padding-top: 10px; */
     padding-bottom: 600px; 
     border-radius: 15px;
@@ -353,11 +356,16 @@
     gap:4px;
     display: flex;
     flex-direction: column;
+    width: 70%;
+    overflow: visible;
+    margin: auto;
+    
 
 }
 .activeSong-Q-card{
-    scale: 1.02;
+    scale: 1.15;
     margin: 2.5px;
+    margin-bottom: 5px;
     transition: 0.25s;
     border-radius: 15px;
     border-bottom: solid 2px #8650F4;
