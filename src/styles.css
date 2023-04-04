@@ -61,7 +61,7 @@ html {
 1. Remove the margin in all browsers.
 2. Inherit line-height from `html` so users can set them as a class directly on the `html` element.
 */
-
+/* 
 body {
   margin: 0;
   background-image: url("./assets/Trv_bg/trove bg.png");
@@ -74,7 +74,7 @@ body {
   display: flex;
   flex-direction: column;
   padding-bottom: 200px;
-}
+} */
 
 .footer-div {
   height: 250px;

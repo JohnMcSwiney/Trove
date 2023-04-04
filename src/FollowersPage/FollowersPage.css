@@ -10,8 +10,8 @@
     
 }
 
-body {
-    /* background-color: #0C081C; */
+/* body {
+    background-color: #0C081C;
     background-image: linear-gradient(to right, #0c081c, #0e0924, #0d0a2c, #0b0b35, #080c3d);
     height: 100%;
     margin: 0;
@@ -21,7 +21,7 @@ body {
     color: white;
    
     
-}
+} */
 
 /* DESKTOP */
 @media only screen and (min-width: 769px) {

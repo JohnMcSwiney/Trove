@@ -396,25 +396,23 @@ const MusicBar = () => {
           >
             <div className="fullsc-musicbar-wrap">
               {/* Attempting to change on scroll */}
+              <h2>Currently Playing</h2>
               <div
                 id="fcplayerbox"
                 className="fullscreen-player-info-container "
               >
-              
-                <h2>Currently Playing</h2>
+                
                 <div className="fullscreen-song-img ">
+                
+                  <div className="fullscreen-img">
                   <img
-                    src={currentSong?.imgUrl}
-                    className="fullscreen-img"
+                    src={currentSong?.imgUrl}    
                   ></img>
-
+                  </div>   
                   <button className="exitBtn" onClick={toggleFC}>
                     x
                   </button>
-                </div>
-
-                <div className="fullscreen-song-txt-container-container ">
-                  
+                  <div className="fullscreen-song-txt-container-container "> 
                   <div className="fullscreen-song-info-txt-container">
                     <div className="fc-song-txt">
                       <a>{currentSong?.title}</a>
@@ -425,24 +423,30 @@ const MusicBar = () => {
                   </div>
                  
                 </div>
+                </div>
+                
 
+              </div>
+              <div className="queueBtnsCont">
+                  <ClearQueueBtn/>
               </div>
               {/* Queue & Play_list */}
               <div className="brihgleggmoie">
-                <ClearQueueBtn/>
-                <h6 className="queueHeader">Song Queue:</h6>
-                <div className="queueHolder">
+                <h6 className="queueHeader bg-fglass-b">Song Queue:</h6>
+                <div className="queueContainerV2">
                   {play_list &&
                     play_list.map((song, index) => {
                       // console.log("play_listPos: " + play_ListPosition + " index " + index )
-                      if(index === play_listPosition) {
+                      if(index === play_listPosition && currentSong?._id === song?._id) {
                         return (
-                        <div className="bg1">
+                        <div className="activeSong-Q-card bg-fglass-b">
                           <Queue_CardSong key={song?._id} song={song} index={index}/>
                         </div>
                         )
                       } else { 
-                        return <Queue_CardSong key={song?._id} song={song} index={index}/>;
+                        return <div className="inactiveSong-Q-card bg-fglass-b ">
+                        <Queue_CardSong key={song?._id} song={song} index={index}/>
+                      </div>;
                       }
                       
                       

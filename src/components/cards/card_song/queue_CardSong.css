@@ -5,6 +5,10 @@
     display: flex;
     flex-flow: row;
     padding: 4px;
+    /* padding-left: 20px;
+    padding-right: 20px; */
+    margin-left: 10px;
+    margin-right: 10px;
   }
 .queue--song-img-div{
     width:50px;
@@ -62,7 +66,27 @@
     text-align: center;
 
 }
-
+.queueTitleCont{
+    /* background: #12164B; */
+    width: 30px;
+    /* height:; */
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    margin-right:3px;
+    /* margin: auto; */
+    position: relative;
+    /* left: 0; */
+    float: left;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-right: 15px;
+}
+.queueTitleCont > h2{
+    text-align: center;
+    margin: 0;
+    /* text-justify: */
+}
 .queue--genreCont{
     padding:2px;
     padding-left: 6px;

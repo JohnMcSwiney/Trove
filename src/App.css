@@ -13,7 +13,8 @@
   }
 }
 .appBackground{
-  background: linear-gradient(0deg, #0C081C 0%, #0e198b 112.5%);
+  /* background: linear-gradient(0deg, #0C081C 0%, #0e198b 112.5%); */
+  background-color: #09104D;
   z-index: -50;
   display: block;
   margin: 0;
