@@ -78,7 +78,6 @@ export default function UploadMusic(props) {
   // Handle State Changes
   const handleTitle = (e) => {
     setTitle(e.target.value);
-
   };
 
   const handleAlbumName = (e) => {
@@ -154,8 +153,14 @@ export default function UploadMusic(props) {
   };
 
   // When music is submitted
-  const { uploadMusic, isUploading, uploadProgress, error, message, submitted } =
-    useUploadSong();
+  const {
+    uploadMusic,
+    isUploading,
+    uploadProgress,
+    error,
+    message,
+    submitted,
+  } = useUploadSong();
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -216,7 +221,6 @@ export default function UploadMusic(props) {
     fetchAllArtist();
   }, []);
 
-  
   return (
     <section>
       {menu}
@@ -283,7 +287,6 @@ export default function UploadMusic(props) {
                     artists={artistData}
                     setSongFile={setSongFile}
                     setToUploadSongs={setToUploadSongs}
-
                   />
                 );
               case "AddSongs":
@@ -336,7 +339,6 @@ export default function UploadMusic(props) {
         </div>
       </div>
       {error && <p>{error}</p>}
-      {message && <p>{message}</p>}
     </section>
   );
 }
