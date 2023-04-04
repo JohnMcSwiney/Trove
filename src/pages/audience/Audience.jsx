@@ -39,6 +39,22 @@ const Audience = () => {
     fetchMySongs();
   }, [id]);
 
+  // artist top song
+  const [topSong, setTopSong] = React.useState(null);
+  React.useEffect(() => {
+    const fetchMyTopSong = async () => {
+      const response = await fetch(`/api/songs/artist-topsong/${id}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+      const json = await response.json();
+      if (response.ok) {
+        setTopSong(json);
+      }
+    };
+    fetchMyTopSong();
+  }, [id]);
+
 
   //top song 
   // const [topSong, setTopSong] = React.useState();
@@ -76,6 +92,9 @@ const Audience = () => {
           </h2> 
           <h2>
           You Currently Have {<span className="artist--namespan">{artistAudience.followers.length}</span>} Fans.
+          </h2> 
+          <h2>
+          Your Most Loved Song is {<span className="artist--namespan">{topSong?.title}</span>} 
           </h2> 
 
       </div>

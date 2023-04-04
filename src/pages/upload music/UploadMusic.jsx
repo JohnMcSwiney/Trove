@@ -129,6 +129,18 @@ export default function UploadMusic(props) {
 
   const handleReleaseType = (e) => {
     setReleaseType(e.target.value);
+
+    //clear state
+    setSongs([]);
+    setTitle("");
+    setAlbum(null);
+    setEP(null);
+    setGenre("");
+    setSongFile([]);
+    setImageFile();
+    setReleaseYear("");
+    setFeaturedArtists([]);
+
   };
 
   const handleReleaseYear = (e) => {
