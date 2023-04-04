@@ -215,7 +215,8 @@
 
 /*safari*/
 .fullscreen-progressBar::-webkit-slider-runnable-track{
-    background-color: rgba(255, 255, 255, 0.289);
+    background-color: rgba(255, 255, 255, 0.109);
+    box-shadow: inset -1px 1px 1px rgba(6, 6, 6, 0.109);
     border-radius: 10px;
     position: relative;
     width: 100%;
@@ -258,7 +259,7 @@
 .fullscreen-progressBar:active::-webkit-slider-thumb{
     transform: scale(1.6);
     transition: ease-in-out .05s;
-    border: 1px solid rgba(245, 245, 245, 0.447);
+    border: 1px solid rgba(245, 245, 245, 0.903);
     border-radius: 50%;
     box-shadow: rgba(255, 255, 255, 0.318); 
     background-color: #8650F4;
@@ -362,14 +363,29 @@
     
 
 }
+.hoverCardCss:hover{
+
+    transition: 0.2s;
+
+}
+.hoverCardCss:hover{
+    scale: 1.1;
+    transition: 0.2s;
+    /* margin: 2.5px; */
+    /* margin-bottom: 3px; */
+}
+.activeSong-Q-card:hover{
+    scale: 1.16;
+}
+
 .activeSong-Q-card{
     scale: 1.15;
     margin: 2.5px;
     margin-bottom: 5px;
     transition: 0.25s;
     border-radius: 15px;
-    border-bottom: solid 2px #8650F4;
-    box-shadow: #784bea58 0px 1px 2px;
+    border-bottom: solid 2px #b083f4;
+    box-shadow: #ab79f758 0px 1px 2px;
 }
 .inactiveSong-Q-card{
     border-radius: 15px;

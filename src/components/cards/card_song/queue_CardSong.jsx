@@ -17,6 +17,7 @@ const Queue_CardSong = ({ song, index }) => {
         playlists,
         play_list,
         updateQueuePosition,
+        updatePlay_listPosition,
       } = React.useContext(MusicContext);
   // const [currentSongforPlayer, setCurrentSongforPlayer] = React.useState(null);
       
@@ -24,18 +25,17 @@ const Queue_CardSong = ({ song, index }) => {
     if (currentSong && currentSong._id === song._id) {
       return;
     } else {
-      updateQueuePosition(index);  
+      updatePlay_listPosition(index);  
       updateCurrentSong(song);
       fetchSongView()
     }
   };
 
-  const handleQueue = (song_in_id) => {
-    // const newPos = play_list.map((song) => {if(song._id === currentSong._id){
-    //     console.log(song);
-    // }});
-    // console.log(newPos);
-  }
+  // const handleQueue = (song_in_id) => {
+  //   const newPos = play_list.map((song) => {if(song._id === currentSong._id){
+  //       console.log(song.songName);
+  //   }});
+  // }
 
   // Pass the callback to update the current song URL to the onClick handler
 
@@ -56,7 +56,7 @@ const Queue_CardSong = ({ song, index }) => {
       className="queue--song-info-div"
       onClick={() => {
         handlePlaySong()
-        handleQueue(song._id)
+        // handleQueue(song._id)
         // song.songUrl
 
       }}

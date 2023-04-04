@@ -439,12 +439,12 @@ const MusicBar = () => {
                       // console.log("play_listPos: " + play_ListPosition + " index " + index )
                       if(index === play_listPosition && currentSong?._id === song?._id) {
                         return (
-                        <div className="activeSong-Q-card bg-fglass-b">
+                        <div className="activeSong-Q-card bg-fglass-b hoverCardCss">
                           <Queue_CardSong key={song?._id} song={song} index={index}/>
                         </div>
                         )
                       } else { 
-                        return <div className="inactiveSong-Q-card bg-fglass-b ">
+                        return <div className="inactiveSong-Q-card bg-fglass-b hoverCardCss">
                         <Queue_CardSong key={song?._id} song={song} index={index}/>
                       </div>;
                       }
