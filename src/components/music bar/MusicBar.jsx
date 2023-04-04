@@ -155,7 +155,7 @@ const MusicBar = () => {
     changeVolumeLevel();
     if (!prevValue) {
       audioPlayer.current.play();
-      animationRef.current = requestAnimationFrame(whilePlaying); //fix this
+      // animationRef.current = requestAnimationFrame(whilePlaying); //fix this
     } else {
       audioPlayer.current.pause();
       cancelAnimationFrame(animationRef.current);
@@ -394,7 +394,7 @@ const MusicBar = () => {
           <div
             className={isFullscreen === true ? "fullscreenMusicBar" : "hidden"}
           >
-            <div className="fullsc-musicbar-wrap bg-trv-sm-Play-bg">
+            <div className="fullsc-musicbar-wrap">
               {/* Attempting to change on scroll */}
               <div
                 id="fcplayerbox"
