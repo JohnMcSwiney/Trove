@@ -22,7 +22,13 @@ body {
    
     
 } */
-
+.album-containter-ver2{
+  /* display: flex; */
+  justify-content: center;
+  margin: auto;
+  flex-direction: column;
+  margin-bottom: 400px;
+}
 /* DESKTOP */
 @media only screen and (min-width: 769px) {
   .profile--body {

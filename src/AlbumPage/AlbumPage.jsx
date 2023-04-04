@@ -125,7 +125,7 @@ export default function AlbumPage () {
   // }
 
   return (
-    <section>
+    <section className='album-containter-ver2'>
       <div className='bg-fglass--1--playlist'>
         <div className='playlist--info'>
           <button className='playlist--playbtn' onClick={handlePlayAlbum}>
