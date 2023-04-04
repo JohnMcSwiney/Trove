@@ -370,7 +370,7 @@ const MusicBar = () => {
             autoPlay="true"
             onChange={() => {
               changeRange();
-              animationRef.current = requestAnimationFrame(whilePlaying);
+              // animationRef.current = requestAnimationFrame(whilePlaying);
             }}
             onLoadedMetadata={() => {
               updateDisplayMusicBar(true);
@@ -378,7 +378,7 @@ const MusicBar = () => {
               setIsLoaded(true);
               toBeginningOfSong();
               changeRange();
-              animationRef.current = requestAnimationFrame(whilePlaying);
+              // animationRef.current = requestAnimationFrame(whilePlaying);
               toBeginningOfSong();
               
             }}
@@ -469,8 +469,8 @@ const MusicBar = () => {
             
             className={
               displayMusicBar === true ? 
-              "musicbar-wrap bg-trv-sm-Play-bg"
-              :"musicbar-wrap bg-trv-sm-Play-bg translate-down"
+              "musicbar-wrap bg-trv-sm-Play-bg bg-fglass-b"
+              :"musicbar-wrap bg-trv-sm-Play-bg translate-down bg-fglass-b"
             }>
 
               {/* This style is in the fullscreen css file - idk there was a bug <3 */}
