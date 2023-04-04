@@ -239,7 +239,6 @@ const updateSong = async (req, res) => {
     song.genre = genre;
     song.featuredArtists = featureArtists;
 
-    console.log("featureArtists", featureArtists);
     const featureArtistsIds =
       (featureArtists && featureArtists.map((item) => item._id)) || [];
 
@@ -253,26 +252,13 @@ const updateSong = async (req, res) => {
           .status(404)
           .json({ error: "This featured artist doesn't exist" });
       }
-      console.log("bfore adding into songlist");
-
-      console.log("tf", !featuredArtist.songList.includes(song._id));
 
       if (!featuredArtist.songList.includes(song._id)) {
-        console.log("push", song._id);
-        console.log("songList", featuredArtist.songList);
         featuredArtist.songList.push(song._id);
-        // console.log("featuredArtist", featuredArtist);
         await featuredArtist.save();
-
-        // testId = fArtist._id;
       }
     }
 
-    console.log("featureArtistsIds", featureArtistsIds);
-
-    // Remove song from featuredArtistList
-
-    console.log("song.featureArtists", song.featuredArtists);
     if (featureArtistsIds.length === 0) {
       const foundArtists = await Artist.find({
         songList: { $in: [song._id] },
@@ -295,7 +281,7 @@ const updateSong = async (req, res) => {
               .status(404)
               .json({ error: "This featured artist doesn't exist" });
           }
-          console.log("here is run!!!!!!!!!!!!!!!!");
+
           featuredArtist.songList.pull(song._id);
           await featuredArtist.save();
         }

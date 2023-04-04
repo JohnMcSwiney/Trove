@@ -132,7 +132,8 @@ const createAlbum = async (req, res) => {
 //WIP
 const updateAlbum = async (req, res) => {
   const { id } = req.params;
-  const { albumArt, albumName, artist, releaseYear, songList } = req.body;
+  const { albumArt, albumName, artist, releaseYear, songList, genre } =
+    req.body;
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ err: "No such album" });
   }
@@ -150,7 +151,9 @@ const updateAlbum = async (req, res) => {
 
     console.log(album.artist, artist);
     album.albumArt = albumArt;
+    album.genre = genre;
 
+    const songListIDs = (songList && songList.map((item) => item._id)) || [];
     //adding a song into album songlist
     for (const song of songList) {
       const foundSong = await Song.findById(song);
@@ -160,26 +163,38 @@ const updateAlbum = async (req, res) => {
       }
 
       if (
-        foundSong.album._id.toString() !== id &&
-        !album.songList.includes(foundSong._id)
+        foundSong.album === null ||
+        (foundSong.album._id.toString() !== id &&
+          !album.songList.includes(foundSong._id))
       ) {
         album.songList.push(foundSong._id);
         foundSong.album = album;
         await foundSong.save();
       }
     }
-
     //remove the song out of the album
-    for (const song of album.songList) {
-      if (!album.songList.includes(song)) {
-        const foundSong = await Song.findById(song);
+    if (songList.length === 0) {
+      const albumSongs = await Song.find({ album: id });
+      console.log(albumSongs);
 
-        album.songList.pull(song);
-        foundSong.album = null;
-        await foundSong.save();
+      for (const song of albumSongs) {
+        song.album = null;
+        song.releaseType = ["single"];
+        album.songList = [];
+        await song.save();
+      }
+    } else {
+      for (const songs of album.songList) {
+        if (!songListIDs.includes(songs.toString())) {
+          album.songList.pull(songs);
+          const foundSong = await Song.findById(songs);
+
+          foundSong.album = null;
+          await foundSong.save();
+        }
       }
     }
-
+    album.songList = songList;
     const success = "Updated album successfully";
     await album.save();
     res.status(200).json({ album, success });
