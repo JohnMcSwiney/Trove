@@ -102,18 +102,21 @@ const getRandomCuratedPlaylist = async (req, res) => {
 
     try {
 
-        let random = Math.floor(Math.random() * 100);
+        // let random = Math.floor(Math.random() * 100);
+        let random = 45;
+
 
         const popNames = ["Poppin' Nights", "Friday Popz", "P-O-Pcorn"];
         const rockNames = ["Rockin' Fridays", "Rockslidez", "Rockefeller"];
         const countryNames = ["Country Vibes", "Western Dayz", "Big Iron"];
         const hipHopNames = ["Trappin' Thursdays", "Westside Vibez", "Daily Beatz"];
+        const songNames = ["Top Beatz", "Popular Tracks", "Most Searched"];
         const randomNames = ["Random Vibez", "The Shuffler", "Mystery Music"]
 
         console.log("random value: " + random);
 
-        if (random <= 25) {
-            console.log("random was <= 25");
+        if (random < 10) {
+            console.log("random was <= 10");
 
             const popSongs = await createRandomPopPlaylist();
 
@@ -135,8 +138,8 @@ const getRandomCuratedPlaylist = async (req, res) => {
             res.status(201).json(curatedPlaylist);
 
         }
-        else if (random > 25 && random <= 50) {
-            console.log("random was >25 but <=50");
+        else if (random > 10 && random < 20) {
+            console.log("random was >10 but <=20");
 
             const rockSongs = await createRandomRockPlaylist();
 
@@ -157,8 +160,8 @@ const getRandomCuratedPlaylist = async (req, res) => {
 
             res.status(201).json(curatedPlaylist);
         }
-        else if (random > 50 && random <= 75) {
-            console.log("random was >50 but <=75");
+        else if (random > 20 && random < 30) {
+            console.log("random was >20 but <=30");
             //no country songs atm so it will crash
 
             console.log("no country songs atm");
@@ -182,8 +185,8 @@ const getRandomCuratedPlaylist = async (req, res) => {
             // res.status(201).json(curatedPlaylist);
             res.status(201).json({msg: "no country songs atm"});
         }
-        else if (random > 75) {
-            console.log("random was greater than 75");
+        else if (random > 30 && random < 40) {
+            console.log("random was greater than >30 but <=40");
 
             const hipHopSongs = await createRandomHipHopPlaylist();
 
@@ -198,6 +201,29 @@ const getRandomCuratedPlaylist = async (req, res) => {
             const curatedPlaylist = new CuratedPlaylist({
                 curatedPlaylistName: name,
                 songList: hipHopSongs,
+            });
+
+            await curatedPlaylist.save();
+
+            res.status(201).json(curatedPlaylist);
+        }
+
+        else if (random > 40 && random < 50) {
+            console.log("random was greater than >30 but <=40");
+
+            const topSongs = await createTopSongsPlaylist();
+
+            let name = "";
+            let index = 0;
+
+            index = Math.floor(Math.random() * songNames.length);
+            name = songNames[index];
+
+            console.log("name: " + name);
+
+            const curatedPlaylist = new CuratedPlaylist({
+                curatedPlaylistName: name,
+                songList: topSongs,
             });
 
             await curatedPlaylist.save();
@@ -385,6 +411,46 @@ const createRandomHipHopPlaylist = async (req, res) => {
         if (!songs) {
             return res.status(404).send("songs not found");
         }
+
+        const songLimit = [];
+
+        while (songLimit.length < 3) {
+
+            const randomSong = songs[Math.floor(Math.random() * songs.length)];
+
+            if (!songLimit.includes(randomSong._id)) {
+                songLimit.push(randomSong);
+                console.log("added randomSong: " + randomSong.title);
+            }
+        }
+        console.log("songLimit length: " + songLimit.length);
+
+        if (songLimit.length > 3) {
+            throw new Error("Song limit cannot be greater than 50.");
+        }
+
+        return songLimit;
+    } catch (err) {
+        console.log(err);
+        res.status(400).json({ message: err.message });
+    }
+}
+
+const createTopSongsPlaylist = async (req, res) => {
+
+    try {
+
+        const songs = await Song.find()
+            .populate("artist")
+            .populate("featuredArtists")
+            .populate("album")
+            .sort({searchCount: -1});
+
+        if (!songs) {
+            return res.status(404).send("songs not found");
+        }
+
+        console.log("songs: " + songs.searchCount);
 
         const songLimit = [];
 
