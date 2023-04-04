@@ -26,7 +26,7 @@ const getAlbum = async (req, res) => {
 
 const createAlbum = async (req, res) => {
   const artistID = req.body.artistID;
-  const success = "Created album successfully"
+  const success = "Created album successfully";
   try {
     const artist = await Artist.findById(artistID);
 
@@ -38,68 +38,80 @@ const createAlbum = async (req, res) => {
       throw new Error("Artist not found");
     }
 
-    console.log("Request Body FT: " + req.body.featuredArtists);
+    const album = new Album({
+      ...req.body,
+      artist: artist._id,
+    });
 
-    if (!req.body.featuredArtists || req.body.featuredArtists == null) {
-      console.log("inside album method");
-      const album = new Album({
-        ...req.body,
-        artist: artist._id,
-      });
+    album.songList = [];
+    artist.albumList.push(album._id);
 
-      album.songList = [];
-      artist.albumList.push(album._id);
+    await album.save();
+    await artist.save();
 
-      await album.save();
-      await artist.save();
-
-      console.log("made album properly");
-      res.status(201).json({album, success});
-    } else {
-      const featuredArtists = await Promise.all(
-        req.body.featuredArtists.map(async (name) => {
-          const featuredArtist = await Artist.findOne({ artistName: name });
-
-          if (!featuredArtist) {
-            throw new Error("featured artist(s) not found");
-          }
-
-          return featuredArtist._id;
-        })
-      );
-
-      console.log(featuredArtists);
-
-      const album = new Album({
-        ...req.body,
-        artist: artist._id,
-        featuredArtists: featuredArtists,
-      });
-
-      album.songList = [];
-      artist.albumList.push(album._id);
-
-      for (const featuredArtistId of featuredArtists) {
-        const featuredArtist = await Artist.findById(featuredArtistId);
-        featuredArtist.albumList.push(album._id);
-        await featuredArtist.save();
-      }
-
-      await album.save();
-      await artist.save();
-
-      res.status(201).json({album, success});
-    }
+    console.log("made album properly");
+    res.status(201).json({ album, success });
   } catch (error) {
     console.log(error);
     res.status(400).json({ error: error.message });
   }
 };
+// console.log("Request Body FT: " + req.body.featuredArtists);
+
+// if (!req.body.featuredArtists || req.body.featuredArtists == null) {
+//   console.log("inside album method");
+//   const album = new Album({
+//     ...req.body,
+//     artist: artist._id,
+//   });
+
+//   album.songList = [];
+//   artist.albumList.push(album._id);
+
+//   await album.save();
+//   await artist.save();
+
+//   console.log("made album properly");
+//   res.status(201).json({album, success});
+// } else {
+//   const featuredArtists = await Promise.all(
+//     req.body.featuredArtists.map(async (name) => {
+//       const featuredArtist = await Artist.findOne({ artistName: name });
+
+//       if (!featuredArtist) {
+//         throw new Error("featured artist(s) not found");
+//       }
+
+//       return featuredArtist._id;
+//     })
+//   );
+
+//   console.log(featuredArtists);
+
+//   const album = new Album({
+//     ...req.body,
+//     artist: artist._id,
+//     featuredArtists: featuredArtists,
+//   });
+
+//   album.songList = [];
+//   artist.albumList.push(album._id);
+
+//   for (const featuredArtistId of featuredArtists) {
+//     const featuredArtist = await Artist.findById(featuredArtistId);
+//     featuredArtist.albumList.push(album._id);
+//     await featuredArtist.save();
+//   }
+
+//   await album.save();
+//   await artist.save();
+
+//   res.status(201).json({album, success});
 
 //WIP
 const updateAlbum = async (req, res) => {
   const { id } = req.params;
-  const success = "Updated album successfully"
+  const success = "Updated album successfully";
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ err: "No such album" });
   }
@@ -235,7 +247,7 @@ const updateAlbum = async (req, res) => {
 //WIP
 const deleteAlbum = async (req, res) => {
   const { id } = req.params;
-  const success = "Deleted album successfully"
+  const success = "Deleted album successfully";
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ err: "No such album" });
   }
@@ -291,7 +303,7 @@ const deleteAlbum = async (req, res) => {
       return res.status(404).json({ message: "No such album" });
     }
 
-    res.status(200).json({album, success});
+    res.status(200).json({ album, success });
   } catch (err) {
     console.log(err);
     res.status(400).json({ message: err.message });
@@ -300,18 +312,18 @@ const deleteAlbum = async (req, res) => {
 
 const getMyAlbum = async (req, res) => {
   const { id } = req.params;
-  try{
+  try {
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(404).json({ error: "Server error occurred" });
     }
-  
+
     const albums = await Album.find({ artist: id }).sort({ createdAt: -1 });
     if (!albums) {
       return res.status(404).json({ error: "You don't have any song" });
     }
     res.status(200).json(albums);
-  }catch(error){
-    res.status(404).json({error:error.message})
+  } catch (error) {
+    res.status(404).json({ error: error.message });
   }
 };
 

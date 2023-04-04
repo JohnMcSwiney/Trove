@@ -11,29 +11,29 @@ const getAllEP = async (req, res) => {
 const getEP = async (req, res) => {
   const { id } = req.params;
 
- try{
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ error: "No such EP" });
+  try {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(404).json({ error: "No such EP" });
+    }
+
+    const ep = await EP.findById(id);
+
+    if (!ep) {
+      return res.status(404).json({ error: "No such EP" });
+    }
+
+    res.status(200).json(ep);
+  } catch (error) {
+    res.status(404).json({ error: error.message });
   }
-
-  const ep = await EP.findById(id);
-
-  if (!ep) {
-    return res.status(404).json({ error: "No such EP" });
-  }
-
-  res.status(200).json(ep);
- }catch(error){
-  res.status(404).json({error:error.message})
- }
 };
 
 const createEP = async (req, res) => {
   const artistID = req.body.artistID;
 
-  const success = "Created EP successfully"
+  const success = "Created EP successfully";
   try {
-    const artist = await Artist.findOne({ _id: artistID });
+    const artist = await Artist.findById(artistID);
 
     //console.log(artist);
 
@@ -43,67 +43,79 @@ const createEP = async (req, res) => {
       throw new Error("Artist not found");
     }
 
-    console.log("Request Body FT: " + req.body.featuredArtists);
+    const ep = new EP({
+      ...req.body,
+      artist: artist._id,
+    });
 
-    console.log("outside of if stmt");
+    ep.songList = [];
+    artist.epList.push(ep._id);
 
-    if (!req.body.featuredArtists || req.body.featuredArtists == null) {
-      console.log("should be in here");
+    await ep.save();
+    await artist.save();
 
-      console.log("inside ep method");
-
-      const ep = new EP({
-        ...req.body,
-        artist: artist._id,
-      });
-
-      ep.songList = [];
-      artist.epList.push(ep._id);
-
-      await ep.save();
-      await artist.save();
-
-      res.status(201).json(ep);
-    } else {
-      const featuredArtists = await Promise.all(
-        req.body.featuredArtists.map(async (name) => {
-          const featuredArtist = await Artist.findOne({ artistName: name });
-
-          if (!featuredArtist) {
-            throw new Error("featured artist(s) not found");
-          }
-
-          return featuredArtist._id;
-        })
-      );
-
-      console.log("bruhhhhh : " + featuredArtists);
-
-      const ep = new EP({
-        ...req.body,
-        artist: artist._id,
-        featuredArtists: featuredArtists,
-      });
-
-      ep.songList = [];
-      artist.epList.push(ep._id);
-
-      for (const featuredArtistId of featuredArtists) {
-        const featuredArtist = await Artist.findById(featuredArtistId);
-        featuredArtist.epList.push(ep._id);
-        await featuredArtist.save();
-      }
-
-      await ep.save();
-      await artist.save();
-
-      res.status(201).json({ep, success});
-    }
+    res.status(201).json(ep);
   } catch (error) {
-    
     res.status(400).json({ error: error.message });
   }
 };
+
+// console.log("Request Body FT: " + req.body.featuredArtists);
+
+// console.log("outside of if stmt");
+
+// if (!req.body.featuredArtists || req.body.featuredArtists == null) {
+//   console.log("should be in here");
+
+//   console.log("inside ep method");
+
+//   const ep = new EP({
+//     ...req.body,
+//     artist: artist._id,
+//   });
+
+//   ep.songList = [];
+//   artist.epList.push(ep._id);
+
+//   await ep.save();
+//   await artist.save();
+
+//   res.status(201).json(ep);
+// } else {
+//   const featuredArtists = await Promise.all(
+//     req.body.featuredArtists.map(async (name) => {
+//       const featuredArtist = await Artist.findOne({ artistName: name });
+
+//       if (!featuredArtist) {
+//         throw new Error("featured artist(s) not found");
+//       }
+
+//       return featuredArtist._id;
+//     })
+//   );
+
+//   console.log("bruhhhhh : " + featuredArtists);
+
+//   const ep = new EP({
+//     ...req.body,
+//     artist: artist._id,
+//     featuredArtists: featuredArtists,
+//   });
+
+//   ep.songList = [];
+//   artist.epList.push(ep._id);
+
+//   for (const featuredArtistId of featuredArtists) {
+//     const featuredArtist = await Artist.findById(featuredArtistId);
+//     featuredArtist.epList.push(ep._id);
+//     await featuredArtist.save();
+//   }
+
+//   await ep.save();
+//   await artist.save();
+
+//   res.status(201).json({ep, success});
+// }
 
 //WIP
 const updateEP = async (req, res) => {
