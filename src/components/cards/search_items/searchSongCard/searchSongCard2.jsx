@@ -9,7 +9,7 @@ import "./searchSongCard2.css";
 //for testing atm
 import AddToQueueBtn from '../../../QueueBtns/addToQueueBtn';
 const SearchSongCard2 = ({ song }) => {
-  const { currentSong, updateCurrentSong, currentSongData } =
+  const { currentSong, updateCurrentSong, currentSongData,clearQueue,clearPlay_list } =
     React.useContext(MusicContext);
   // const [currentSongforPlayer, setCurrentSongforPlayer] = React.useState(null);
 
@@ -18,6 +18,8 @@ const SearchSongCard2 = ({ song }) => {
       return;
     } else {
       updateCurrentSong(song);
+      clearQueue();
+      clearPlay_list();
       fetchSongView()
     }
   };

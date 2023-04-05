@@ -339,6 +339,7 @@
         transition: 0.15s;
         
     }
+    
     .control-container>.playbtnstyle:hover {  
      scale: 1.05;
      box-shadow: #dbdadf74 0px 1px 2px;

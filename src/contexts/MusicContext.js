@@ -31,10 +31,11 @@ export const MusicProvider = ({ children }) => {
   // function to update the currently playing song
   const updateCurrentSong = (song) => { 
     console.log(song);
+    setCurrentSong(song);
     if(displayMusicBar === false){
       updateDisplayMusicBar(true);
     }
-    setCurrentSong(song);
+    
 
   };
 
@@ -54,21 +55,46 @@ export const MusicProvider = ({ children }) => {
 
   const clearPlay_list = () => {
     if(play_list?.length!== 0){
-    console.log("queue clearing");
+    console.log("play_list clearing");
     updatePlay_list([]);
     }
   };
 
   //queue methods
   const advanceQueue = () => {
-    queue.shift();
-  }
-  const addToQueue = (song) => {
-    queue.push(song);
-    console.log(queue);
-    if(displayMusicBar === false){
-      // updateDisplayMusicBar(true);
+    if(currentSong !== queue[0]){
       updateCurrentSong(queue[0]);
+    } else {
+      queue.shift();
+      updateCurrentSong(queue[0]);
+    }
+    // console.log(queue.length);
+    
+    // console.log("queue being added into system or whatever (pre shift)");
+    // console.log(queue[0])
+    // console.log()
+    // console.log(queue)
+    // queue.shift();
+    // console.log("queue being added into system or whatever (post shift)");
+    // console.log(queue[0])
+    // console.log()
+    // console.log(queue)
+    // console.log("queue:")
+    
+    // updateCurrentSong(queue[0]);
+  }
+
+  const addToQueue = (inputtedItem) => {
+    console.log(inputtedItem.song);
+    queue.push(inputtedItem.song);
+    
+    // console.log(queue.song);
+    if(displayMusicBar === false ){
+      updateDisplayMusicBar(true);
+      if(play_list.length === 0 && queue.length === 0){
+        updateCurrentSong(queue[0]);
+      }
+      
     }
   }
   
@@ -76,16 +102,16 @@ export const MusicProvider = ({ children }) => {
   
     setQueuePosition(newQueuePosition);
 
-    if(play_list?.length !== newQueuePosition){
-      updateCurrentSong(play_list[newQueuePosition]);
+    if(queue?.length !== newQueuePosition){
+      updateCurrentSong(queue[newQueuePosition]);
     }
   };
 
   const clearQueue = () => {
     if(queue?.length!== 0){
-    
+    console.log("queue clearing");
     setQueue([]);
-    console.log(queue);
+    
     }
   };
   
