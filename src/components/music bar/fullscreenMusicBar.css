@@ -449,4 +449,44 @@
     transition: 0.25s;
     border-bottom: solid 2px #38383883;
     box-shadow: rgba(0, 0, 0, 0.095) 0px 1px 2px;
+    display: flex;
+    position: relative;
+}
+.bg-Q-card{  
+    background-color: #8650F4;
+    transition: 0.25s;
+}
+.bg-Q-card:hover{
+    background-color: #a37df0;
+    transition: 0.25s;
+}
+.removeFromQueueButton{
+    transition: 0.25s;
+    scale: 1.5;
+    display: flex;
+    color: white;
+    background-color: #0C081C;
+    height: 30px;
+    width: 30px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    position: absolute;
+    right: 0;
+    z-index: 40;
+    padding-left: 0px;
+    /* padding-bottom: 4px; */
+    font-size: x-large;
+    margin-top: 14px;
+    margin-right: 14px;
+
+}   
+.bg-Q-card:hover > .removeFromQueueButton{
+    transform: translateX(-20px);
+    scale: 1.8;
+    transition: 0.25s;
+}
+.bg-Q-card:hover >div>.queueTitleCont{
+    display: none;
+    transition: 0.5s;
 }

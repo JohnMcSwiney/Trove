@@ -463,7 +463,7 @@ const MusicBar = () => {
                       // console.log(index + ' Queue Song: ' + song._id)
                       // return;
                       return (
-                        <div className='inactiveSong-Q-card bg1 hoverCardCss'>
+                        <div className='inactiveSong-Q-card bg-Q-card hoverCardCss'>
                           <Queue_CardSong
                             key={song?._id}
                             song={song}

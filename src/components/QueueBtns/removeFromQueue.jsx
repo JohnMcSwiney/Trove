@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { MusicContext } from '../../contexts/MusicContext'
-
+import {IoIosRemove} from 'react-icons/io';
 export default function RemoveFromQueueBtn (index) {
   const {
     displayMusicBar,
@@ -16,7 +16,7 @@ export default function RemoveFromQueueBtn (index) {
     removeFromQueue,
   } = React.useContext(MusicContext)
 
-  const appendQueue = () => {
+  const removeFrmQueue = () => {
     console.log('removing from queue - component call')
     removeFromQueue(index);
     // if (play_list.length > 0) {
@@ -25,16 +25,13 @@ export default function RemoveFromQueueBtn (index) {
   }
 
   return (
-    <div>
       <button
-        className='btn'
+        className='removeFromQueueButton'
         onClick={() => {
-          appendQueue()
+            removeFrmQueue()
         }}
       >
-        x
+        <IoIosRemove/>
       </button>
-      
-    </div>
   )
 }
