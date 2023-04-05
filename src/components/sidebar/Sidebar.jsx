@@ -1,7 +1,6 @@
 import React from "react";
-
-import "./style.css";
 import { NavLink } from "react-router-dom";
+
 function Sidebar() {
   return (
     <div className="bg-white sidebar p-2">
@@ -10,36 +9,73 @@ function Sidebar() {
       </div>
       <hr className="text-dark" />
       <div className="list-group list-group-flush">
-        <NavLink className="list-group-item py-2" to={"/"}>
+        <NavLink
+          className="list-group-item py-2"
+          to={"/"}
+          activeClassName="active"
+        >
           <span>Dashboard</span>
         </NavLink>
-        <NavLink className="list-group-item py-2" to={"/user"}>
+        <NavLink
+          className="list-group-item py-2"
+          to={"/user"}
+          activeClassName="active"
+        >
           <span>Users</span>
         </NavLink>
 
-        <NavLink className="list-group-item py-2" to={"/artist"}>
+        <NavLink
+          className="list-group-item py-2"
+          to={"/artist"}
+          activeClassName="active"
+        >
           <span>Artist</span>
         </NavLink>
 
-        <NavLink className="list-group-item py-2" to={"/song"}>
+        <NavLink
+          className="list-group-item py-2"
+          to={"/song"}
+          activeClassName="active"
+        >
           <span>Songs</span>
         </NavLink>
 
-        <NavLink className="list-group-item py-2" to={"/album"}>
+        <NavLink
+          className="list-group-item py-2"
+          to={"/album"}
+          activeClassName="active"
+        >
           <span>Albums</span>
         </NavLink>
-        {/* <i className="bi bi-people fs-5 me-3"></i> */}
-        <NavLink className="list-group-item py-2" to={"/ep"}>
+
+        <NavLink
+          className="list-group-item py-2"
+          to={"/ep"}
+          activeClassName="active"
+        >
           <span>EPs</span>
         </NavLink>
 
-        <NavLink className="list-group-item py-2" to={"/collection"}>
+        <NavLink
+          className="list-group-item py-2"
+          to={"/collection"}
+          activeClassName="active"
+        >
           <span>Collections</span>
         </NavLink>
 
-        <button className="btn btn-dark">Logout</button>
+        <NavLink
+          className="list-group-item py-2"
+          to={"/admin"}
+          activeClassName="active"
+        >
+          <span>Admin</span>
+        </NavLink>
+
+        <button className="btn btn-dark mt-3">Logout</button>
       </div>
     </div>
   );
 }
+
 export default Sidebar;

@@ -3,39 +3,29 @@ import React from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Select from "react-select";
+import { useEditEP } from "../../../hooks/update/useEditEP";
 const EPModal = ({ ep, artists, songs }) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [epName, setEpName] = React.useState(ep?.epName);
   const [artist, setArtist] = React.useState(ep?.artist?.artistName);
-  const [featureArtists, setFeatureArtists] = React.useState(
-    ep?.featuredArtists || []
-  );
+  const [artistID, setArtistID] = React.useState(ep?.artist?._id);
   const [epArt, setEpArt] = React.useState(ep?.epArt);
   const [totalTracks, setTotalTracks] = React.useState(ep?.totalTracks);
   const [releaseYear, setReleaseYear] = React.useState(ep?.releaseYear);
-  const [epData, setEpData] = React.useState([]);
   const [show, setShow] = React.useState(false);
 
+  const [genre, setGenre] = React.useState(ep?.epGenre);
   const [songList, setSongList] = React.useState(ep?.songList);
-  const handleSelectChange = (selectedOptions) => {
-    if (!selectedOptions) {
-      setFeatureArtists([]);
-      return;
+  const { editEP, message, editerror, editIsLoading } = useEditEP();
+
+  const handleUpdate = (e) => {
+    e.preventDefault();
+    try {
+      editEP(ep._id, epArt, epName, artistID, releaseYear, songList, genre);
+    } catch (error) {
+      console.log(error);
     }
-    const selectedList = [];
-    for (const item of artists) {
-      for (var i = 0; i < selectedOptions.length; i++) {
-        if (
-          selectedOptions[i].value === item._id ||
-          (selectedOptions[i].artist && selectedOptions[i].id === item._id)
-        ) {
-          selectedList.push(item);
-          break;
-        }
-      }
-    }
-    setFeatureArtists(selectedList);
   };
 
   const handleSongListChange = (selectedSongs) => {
@@ -93,41 +83,6 @@ const EPModal = ({ ep, artists, songs }) => {
             onChange={(e) => setArtist(e.target.value)}
             className="form-control"
           ></input>
-
-          <label htmlFor="search">Add feature artist: </label>
-          <Select
-            id="search"
-            options={artists.map((artist) => ({
-              value: artist.artistName,
-              label: (
-                <div style={{ display: "flex", alignItems: "center" }}>
-                  <img
-                    src={artist.artistImg}
-                    alt={artist.artistName}
-                    width="30"
-                    height="30"
-                    style={{ marginRight: "10px" }}
-                  />
-                  {artist.artistName}
-                </div>
-              ),
-              id: artist?._id,
-              artist: artist,
-              artistName: artist.artistName,
-            }))}
-            isMulti
-            className="basic-multi-select"
-            classNamePrefix="select"
-            placeholder="Select an artist"
-            defaultValue={
-              featureArtists &&
-              featureArtists.map((artist) => ({
-                value: artist?._id,
-                label: artist?.artistName,
-              }))
-            }
-            onChange={handleSelectChange}
-          />
 
           <label htmlFor="#tracks">Number of Tracks: </label>
           <input
@@ -195,6 +150,60 @@ const EPModal = ({ ep, artists, songs }) => {
             }
             onChange={handleSongListChange}
           />
+
+          <label htmlFor="songGenre"> Genre: </label>
+          <br></br>
+          <input
+            class="form-check-input"
+            type="radio"
+            name="genre"
+            id="pop"
+            value="pop"
+            checked={ep.epGenre === "pop"}
+            onChange={(e) => setGenre(e.target.value)}
+          />
+          <label class="form-check-label" htmlFor="pop">
+            POP
+          </label>
+
+          <input
+            class="form-check-input"
+            type="radio"
+            name="genre"
+            id="rock"
+            value="rock"
+            checked={ep.epGenre === "rock"}
+            onChange={(e) => setGenre(e.target.value)}
+          />
+          <label class="form-check-label" htmlFor="rock">
+            ROCK
+          </label>
+
+          <input
+            class="form-check-input"
+            type="radio"
+            name="genre"
+            id="country"
+            value="country"
+            checked={ep.epGenre === "country"}
+            onChange={(e) => setGenre(e.target.value)}
+          />
+          <label class="form-check-label" htmlFor="country">
+            COUNTRY
+          </label>
+
+          <input
+            class="form-check-input"
+            type="radio"
+            name="genre"
+            id="hiphop"
+            value="hiphop"
+            checked={ep.epGenre === "hiphop"}
+            onChange={(e) => setGenre(e.target.value)}
+          />
+          <label class="form-check-label" htmlFor="hiphop">
+            HIP-HOP
+          </label>
         </Modal.Body>
         <div className="form-group">
           <Modal.Footer>
@@ -202,7 +211,11 @@ const EPModal = ({ ep, artists, songs }) => {
               Close
             </Button>
             <Button variant="danger">Delete Ep</Button>
-            <Button variant="primary">Update Ep</Button>
+            <Button variant="primary" onClick={handleUpdate}>
+              Update Ep
+            </Button>
+            {message && <p>{message}</p>}
+            {editerror && <p>{editerror}</p>}
           </Modal.Footer>
         </div>
       </Modal>
