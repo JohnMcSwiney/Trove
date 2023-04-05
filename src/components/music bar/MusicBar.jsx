@@ -51,6 +51,7 @@ import { useUnlikeSong } from '../../hooks/user-hooks/useUnlikeSong'
 
 import { MusicContext } from '../../contexts/MusicContext'
 import ClearQueueBtn from './clearQueueBtn'
+import RemoveFromQueueBtn from "../QueueBtns/removeFromQueue";
 
 const MusicBar = () => {
   const [newSong, setNewSong] = useState()
@@ -468,6 +469,7 @@ const MusicBar = () => {
                             song={song}
                             index={index -1}
                           />
+                          <RemoveFromQueueBtn index={index}/>
                         </div>
                       )
                     }

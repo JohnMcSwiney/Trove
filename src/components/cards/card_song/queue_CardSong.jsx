@@ -4,6 +4,7 @@ import { createContext, useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { MusicContext } from "../../../contexts/MusicContext";
 import "./queue_CardSong.css";
+import RemoveFromQueueBtn from "../../QueueBtns/removeFromQueue";
 
 const Queue_CardSong = ({ song, index }) => {
     const {
@@ -79,9 +80,7 @@ const Queue_CardSong = ({ song, index }) => {
         </div>
       </div>
 
-      {/* <div className="queue--genreCont">
-        {song.genre}
-      </div> */}
+      
     </div>
   );
 };
