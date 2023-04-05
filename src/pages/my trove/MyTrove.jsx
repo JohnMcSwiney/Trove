@@ -56,18 +56,14 @@ const MyTrove = () => {
 
   //Work in progress
 
-  // React.useEffect(() => {
-  //   const removeLike = async (song) => {
-  //     const response = await fetch(`/api/users/${userID}/likedSongs/${song._id}`, {
-  //       method: 'DELETE'
-  //     });
-  //     const data = await response.json();
-  //     setUserInfo(data);
-  //   };
-  //   if (song) {
-  //     removeLike(song);
-  //   }
-  // }, [userID, song]);
+  const removeLike = async (song) => {
+    const response = await fetch(`/api/users/${userID}/likedSongs/${song._id}`, {
+      method: "DELETE",
+    });
+    const data = await response.json();
+    setUserInfo(data);
+    console.log(data)
+  };
 
  
   
@@ -136,11 +132,11 @@ const MyTrove = () => {
                     <table className="LikeTable">
                     <tr className="LikeTable">
                       <th className="LikeTable">{song.title} - {song.artist?.artistName}</th> 
-                      <th className="RemoveLikeTable"> <button className="RemoveLike" ><BsXCircle/></button></th> 
+                      <th className="RemoveLikeTable"> <button className="RemoveLike" onClick={() => removeLike(song)}  ><BsXCircle/></button></th> 
 
                       {/*   
                       add when remove like works
-                       onClick={() => removeLike(song)} * 
+                       onClick={() => removeLike(song)} 
                        */}
                     
                     </tr>
