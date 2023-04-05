@@ -371,16 +371,18 @@ const MusicBar = () => {
     })
     const json = response.json()
   }
-
+ 
   return (
     <>
       <>
+      
         <audio
           loop={isLooping}
           ref={audioPlayer}
           src={currentSong?.songUrl}
           preload='metadata'
           autoPlay='true'
+          id='audio'
           onChange={() => {
             changeRange()
             // animationRef.current = requestAnimationFrame(whilePlaying);
@@ -395,12 +397,18 @@ const MusicBar = () => {
             toBeginningOfSong()
             audioPlayer.current.isplaying = 0
           }}
-          onEnded={() => {
-            handleForward()
-          }}
-          isPlaying={
+          onLoadedData = {
             (animationRef.current = requestAnimationFrame(whilePlaying))
           }
+          onEnded={() => {
+            (animationRef.current = requestAnimationFrame(whilePlaying))
+            handleForward()
+          }}
+          onTimeUpdate={
+            (animationRef.current = requestAnimationFrame(whilePlaying))
+          }
+
+          
         ></audio>
 
         {/* Full Screen */}
@@ -518,6 +526,7 @@ const MusicBar = () => {
         </div>
 
         {/* Regular Player */}
+        
         <div
           className={
             displayMusicBar === true
