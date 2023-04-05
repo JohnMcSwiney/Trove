@@ -20,6 +20,10 @@ const curatedPlaylistSchema = new mongoose.Schema(
       type: Boolean,
       default: false
     },
+    isGenerated: {
+      type: Boolean,
+      default: false
+    },
     songList: [
       {
         type: mongoose.Schema.Types.ObjectId,
