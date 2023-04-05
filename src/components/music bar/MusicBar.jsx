@@ -208,7 +208,7 @@ const MusicBar = () => {
       // progressBar.current?.value = audioPlayer.current.currentTime;
       FCprogressBar.current.value = audioPlayer?.current?.currentTime
       changePlayerCurrentTime()
-      animationRef.current = requestAnimationFrame(whilePlaying) //potential memory leak
+      //animationRef.current = requestAnimationFrame(whilePlaying) //potential memory leak
     } else {
     }
   }
@@ -395,18 +395,18 @@ const MusicBar = () => {
             changeRange()
             // animationRef.current = requestAnimationFrame(whilePlaying);
             toBeginningOfSong()
-            audioPlayer.current.isplaying = 0
+            
           }}
-          onLoadedData = {
-            (animationRef.current = requestAnimationFrame(whilePlaying))
-          }
+          // onLoadedData = {
+          //   (animationRef.current = requestAnimationFrame(whilePlaying))
+          // }
           onEnded={() => {
-            (animationRef.current = requestAnimationFrame(whilePlaying))
+            // (animationRef.current = requestAnimationFrame(whilePlaying))
             handleForward()
           }}
-          onTimeUpdate={
+          onTimeUpdate={() => {
             (animationRef.current = requestAnimationFrame(whilePlaying))
-          }
+          }}
 
           
         ></audio>
