@@ -324,7 +324,7 @@ const getSongsBySearchCount = async (req, res) => {
     return res.status(404).json({ error: "You have not sign in" });
   }
 
-  const songs = await Song.find({ artist: id }).sort({ searchCount: -1, title: 1 });
+  const songs = await Song.find({ artist: id }).limit(5).sort({ searchCount: -1, title: 1 });
   if (!songs) {
     return res.status(404).json({ error: "You don't have any song" });
   }
