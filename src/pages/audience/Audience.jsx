@@ -3,6 +3,8 @@ import "./audience.css"
 import { useArtistAuthContext } from "../../hooks/useArtistAuthContext";
 import { NavLink } from "react-router-dom";
 
+import FiveLoved from "./charts/fiveLoved";
+
 const Audience = () => {
 
   // artist
@@ -70,22 +72,6 @@ const Audience = () => {
     fetchMyMostLovedSong();
   }, [id]);
 
-  //top song 
-  // const [topSong, setTopSong] = React.useState();
-  // let songCount = 0;
-  // React.useEffect(() => {
-  //   const artistTopSong = async () => {
-  //     for (const song of artistSongs) {
-  //       if(song.searchCount > so) {
-  //         setTopSong(song);
-  //       }
-      
-  //     }
-  //   };
-  //   artistTopSong();
-  // }, []);
-
-
   return (
   <div className="artist--audience">
       <div className="artist--welcome">
@@ -98,7 +84,7 @@ const Audience = () => {
         </div>
       }
       </div>
-      {artistAudience ? 
+      {/* {artistAudience ? 
       
       <div className="artist--audience--stats">
           <h2>
@@ -135,9 +121,9 @@ const Audience = () => {
           
       </div>
           : null
-      }
+      } */}
 
-
+  <FiveLoved mostLoved={topSong}/>
 
   </div>
 
