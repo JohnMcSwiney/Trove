@@ -9,6 +9,7 @@
     padding-right: 20px; */
     margin-left: 10px;
     margin-right: 10px;
+    transition: 0.25s;
   }
 .queue--song-img-div{
     width:50px;
@@ -16,6 +17,7 @@
     border-radius: 9px;
     overflow: hidden;
     position: relative;
+    transition: 0.25s;
 }
 .queue--song-img-searchcard2{
     /* object-position: center;
