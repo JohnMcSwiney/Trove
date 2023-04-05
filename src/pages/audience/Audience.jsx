@@ -43,7 +43,7 @@ const Audience = () => {
   const [topSong, setTopSong] = React.useState(null);
   React.useEffect(() => {
     const fetchMyTopSong = async () => {
-      const response = await fetch(`/api/songs/artist-topsong/${id}`, {
+      const response = await fetch(`/api/songs/artist-topsearch/${id}`, {
         method: "GET",
         headers: { "Content-Type": "application/json" },
       });
@@ -55,6 +55,20 @@ const Audience = () => {
     fetchMyTopSong();
   }, [id]);
 
+  const [mostLoved, setMostLoved] = React.useState(null);
+  React.useEffect(() => {
+    const fetchMyMostLovedSong = async () => {
+      const response = await fetch(`/api/songs/artist-toploved/${id}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+      const json = await response.json();
+      if (response.ok) {
+        setMostLoved(json);
+      }
+    };
+    fetchMyMostLovedSong();
+  }, [id]);
 
   //top song 
   // const [topSong, setTopSong] = React.useState();
@@ -94,8 +108,22 @@ const Audience = () => {
           You Currently Have {<span className="artist--namespan">{artistAudience.followers.length}</span>} Fans.
           </h2> 
           <h2>
-          Your Most Loved Song is {<span className="artist--namespan">{topSong?.title}</span>} 
+          Your Most Searched Song is {<span className="artist--namespan">
+            {topSong[0]?.title}</span>} 
           </h2> 
+          <h2>
+          Your Most Loved Song is {<span className="artist--namespan">{mostLoved?.title}</span>} 
+          </h2>
+          <h2>
+          Your Most Searched Songs are {<span className="artist--namespan">
+          <br />1. {topSong[0]?.title}
+          <br />2. {topSong[1]?.title}
+          <br />3. {topSong[2]?.title}
+          <br />4. {topSong[3]?.title}
+          <br />5. {topSong[4]?.title}
+            </span>} 
+          </h2> 
+          
 
       </div>
           : null
