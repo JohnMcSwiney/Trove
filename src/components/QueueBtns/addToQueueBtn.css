@@ -64,11 +64,13 @@ box-shadow: #0c081c51 0px 1px 2px;
     transition: 0.02s;
     display: none;
     color: transparent;
+
 }
 
 .addQueueClicked:hover > .addQueueTxt{
     background-color:#8650F4;
     box-shadow: #8750f491 0px 1px 2px;
+    width: 115px;
 }
 
 .addQueueClicked > .addQueueTxt > .addQueueAddQuery{
@@ -77,6 +79,7 @@ box-shadow: #0c081c51 0px 1px 2px;
     top: 0;
     color: transparent;
     cursor: default;
+    
 }
 .addQueueClicked > .addQueueTxt > .addQueueAdded{
     display: flex;
