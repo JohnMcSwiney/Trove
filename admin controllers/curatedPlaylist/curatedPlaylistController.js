@@ -543,9 +543,11 @@ const createTopArtistPlaylist = async (req, res) => {
     try {
 
         const artists = await Artist.find()
+        .populate("songList", "title songUrl genre")
+        .populate("albumList")
             //.populate("searchCount", "title songUrl genre")
             // .populate('albumList')
-            .sort({ searchCount: -1 });
+        .sort({ searchCount: -1 });
 
         console.log("all artists from largest SC to smallest: " + artists);
 
@@ -553,37 +555,48 @@ const createTopArtistPlaylist = async (req, res) => {
             return res.status(404).send("artists not found");
         }
 
+        artists.map(async (artist) => {
+
+            const currentArtist = await Artist.findById(artist._id);
+
+            console.log("current artist: " + currentArtist.artistName);
+        });
+
         const songs = await Song.find({$all: artists})
             .populate("artist")
             .populate("featuredArtists")
             .populate("album")
             .sort();
 
-        console.log("songs: " + songs);
+            songs.map(async (song) => {
 
+                const currentSong = await Song.findById(song._id);
+
+                console.log("current song: " + currentSong.title);
+            })
 
         if (!songs) {
             return res.status(404).send("songs not found");
         }
 
-        const songLimit = [];
+        // const songLimit = [];
 
-        while (songLimit.length < 3) {
+        // while (songLimit.length < 3) {
 
-            const randomSong = songs[Math.floor(Math.random() * songs.length)];
+        //     const randomSong = songs[Math.floor(Math.random() * songs.length)];
 
-            if (!songLimit.includes(randomSong._id)) {
-                songLimit.push(randomSong);
-                console.log("added randomSong: " + randomSong.title);
-            }
-        }
-        console.log("songLimit length: " + songLimit.length);
+        //     if (!songLimit.includes(randomSong._id)) {
+        //         songLimit.push(randomSong);
+        //         console.log("added randomSong: " + randomSong.title);
+        //     }
+        // }
+        // console.log("songLimit length: " + songLimit.length);
 
-        if (songLimit.length > 3) {
-            throw new Error("Song limit cannot be greater than 50.");
-        }
+        // if (songLimit.length > 3) {
+        //     throw new Error("Song limit cannot be greater than 50.");
+        // }
 
-        return songLimit;
+        // return songLimit;
 
     } catch (err) {
         console.log(err);

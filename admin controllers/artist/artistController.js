@@ -12,7 +12,6 @@ const getAllArtist = async (req, res) => {
   const artists = await Artist.find({})
     .populate("songList", "title songUrl genre")
     .populate("albumList")
-    // .populate('albumList')
     .sort({ createAt: -1 });
   res.status(200).json(artists);
 };
