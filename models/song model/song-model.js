@@ -85,9 +85,11 @@ const songSchema = new mongoose.Schema(
     searchCount: {
       type: Number, 
       default: 0,
-    }
+    }, 
+    
   },
   { timestamps: true }
+  
 );
 
 module.exports = mongoose.model("Song", songSchema);

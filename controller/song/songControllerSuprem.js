@@ -366,14 +366,42 @@ const getSongsByLoveCount = async (req, res) => {
     return res.status(404).json({ error: "You have not sign in" });
   }
 
-  const songs = await Song.find({ artist: id }).sort({isLoved: -1, title: 1 });
+  // Song.aggregate().addFields({totalLoved: { "$size": "$isLoved"}})
+  // ([
+  //   {
+  //     $addFields: {
+  //       totalLoved: { $sum: isLoved} ,
+  //     }
+  //   },
+
+  // ]) 
+  
+  const songs = await Song.aggregate([
+    {
+      $match: {
+        artist:  mongoose.Types.ObjectId(id)
+      }
+    },
+    {
+      $set: {
+        totalLoved: { $size: "$isLoved" }
+      }
+    },
+    {
+      $sort: {
+        totalLoved: -1
+      }
+    }
+  ])
+  
+  // const lovedSongs = await Song.find({ artist: id }).sort({ totalLoved: -1 });
   if (!songs) {
     return res.status(404).json({ error: "You don't have any song" });
   }
-
     
   res.status(200).json(songs);
 }; 
+
 //WIP
 const updateSong = async (req, res) => {
   const { id } = req.params;

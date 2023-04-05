@@ -21,7 +21,9 @@ router.get("/artist-songs/:id", getMySong);
 
 router.get("/artist-topsearch/:id", getSongsBySearchCount);
 
-router.get("/artist-toploved/:id", getMyTopLovedSong);
+router.get("/artist-toploved/:id", getSongsByLoveCount);
+
+// router.get("/artist-toploved/:id", getMyTopLovedSong);
 
 router.get("/:id", getSong);
 
