@@ -75,6 +75,7 @@ const MusicBar = () => {
     advanceQueue,
     addToQueue,
     updateQueuePosition,
+    clearQueue,
 
     loopLevel,
     updateLoopLevel
@@ -305,12 +306,28 @@ const MusicBar = () => {
     console.log('forward!')
     if (loopLevel === 2) {
       toBeginningOfSong()
+      togglePlayPause()
+      return;
     }
     if (queue.length > 0) {
-      console.log('queue has songs')
+      if(queue.length === 1){
+        clearQueue();
+        updatePlay_listPosition(play_listPosition + 1);
+        return;
+      }
+      if(currentSong._id === queue[0]._id && currentSong._id === queue[1]._id){
+        console.log(currentSong._id + " qp1 " + queue[0]._id );
+        console.log(currentSong._id + " qp2 " + queue[1]._id);
+        advanceQueue();
+        return;
+      }
+      
+      console.log('queue has songs') 
       console.log(queue.length)
-      advanceQueue()
-    } else {
+      advanceQueue() 
+      
+    } 
+    else{
       if (play_list.length === play_listPosition + 1) {
         console.log('at end of playlist')
         if (loopLevel === 1) {

@@ -86,6 +86,7 @@
     box-shadow: #0c081c51 0px 1px 2px;
     /* background-color: yellow; */
     cursor: default;
+    max-width: 80%;
 }
 .fullscreen-player-info-container > h2{
     color: rgba(255, 255, 255, 0.354);
@@ -103,7 +104,8 @@
     order: 1;
     
     overflow: hidden;
-    /* width: 135px; */
+    min-width: 325x;
+    max-width: 100%;
     display: flex;
     align-items: center;
 
@@ -232,12 +234,12 @@
 }
 .fullscreen-control-container{
     order:4;
-    height: 60px;
+    max-height: 60px;
     font-size: 60px;
     display: flex;
     align-items: center;
     margin-top: 10px;
-    gap: 5px;
+    /* gap: 5px; */
     color: white;
 }
 
@@ -245,10 +247,17 @@
     text-align: center;
     font-size: xx-large;
     color: white;
+    height: 30px;
+    text-overflow: ellipsis;
+    max-width: 50%;
 }
 .fc-artist-txt{
     text-align: center;
     font-size: large;
+    height: 25px;
+    margin-top: 5px;
+    text-overflow: ellipsis;
+    max-width: 50%;
 }
 .fullscreen-progressBar{
     appearance: none;
