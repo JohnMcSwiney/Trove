@@ -7,7 +7,7 @@ const {
   getMyEP,
   updateEP,
   deleteEP,
-} = require("../../controllers/ep/ep");
+} = require("../../controllers/ep/epSupreme");
 
 router.get("/", getAllEP);
 

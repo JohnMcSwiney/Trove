@@ -41,15 +41,6 @@ const userSchema = new mongoose.Schema(
       default: "My Account",
     },
 
-    isVerified: {
-      type: Boolean,
-      default: false,
-    },
-    isAdmin: {
-      type: Boolean,
-      default: false,
-    },
-
     playlists: [
       {
         type: mongoose.Schema.Types.ObjectId,

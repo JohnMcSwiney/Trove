@@ -70,9 +70,7 @@ const createAlbum = async (req, res) => {
     console.log(artist);
 
     if (!artist) {
-      console.log("artist not found");
-
-      throw new Error("Artist not found");
+      return res.status(404).json({ error: "No such artist" });
     }
 
     if (!req.body.featuredArtists) {
@@ -94,7 +92,7 @@ const createAlbum = async (req, res) => {
           const featuredArtist = await Artist.findOne({ artistName: name });
 
           if (!featuredArtist) {
-            throw new Error("featured artist(s) not found");
+            return res.status(404).json({ error: "No featured artist " });
           }
 
           return featuredArtist._id;
@@ -147,7 +145,7 @@ const updateAlbum = async (req, res) => {
     }
     album.releaseYear = releaseYear;
     album.albumName = albumName;
-    album.artist = artist;
+    album.artist = albumArtist;
 
     console.log(album.artist, artist);
     album.albumArt = albumArt;
@@ -169,13 +167,13 @@ const updateAlbum = async (req, res) => {
       ) {
         album.songList.push(foundSong._id);
         foundSong.album = album;
+        foundSong.releaseType = ["album"];
         await foundSong.save();
       }
     }
     //remove the song out of the album
     if (songList.length === 0) {
       const albumSongs = await Song.find({ album: id });
-      console.log(albumSongs);
 
       for (const song of albumSongs) {
         song.album = null;
@@ -190,6 +188,7 @@ const updateAlbum = async (req, res) => {
           const foundSong = await Song.findById(songs);
 
           foundSong.album = null;
+          foundSong.releaseType = ["single"];
           await foundSong.save();
         }
       }
@@ -198,9 +197,8 @@ const updateAlbum = async (req, res) => {
     const success = "Updated album successfully";
     await album.save();
     res.status(200).json({ album, success });
-  } catch (err) {
-    console.log(err);
-    res.status(400).json({ message: err.message });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
   }
 };
 

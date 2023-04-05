@@ -1,0 +1,280 @@
+const mongoose = require("mongoose");
+const Song = require("../../models/songs/song");
+const Artist = require("../../models/artists/artist");
+const Album = require("../../models/albums/album");
+const EP = require("../../models/ep/ep");
+const artist = require("../../models/artists/artist");
+
+const getAllEP = async (req, res) => {
+  const eps = await EP.find({})
+    .populate("songList")
+    .populate("featuredArtists")
+    .populate("artist")
+    .populate("songList")
+    .sort({ createdAt: -1 });
+  res.status(200).json(eps);
+};
+
+const getEP = async (req, res) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ err: "No such EP" });
+  }
+
+  const ep = await EP.findById(id)
+    .populate("songList")
+    .populate("featuredArtists")
+    .populate("artist")
+    .populate("songList");
+
+  if (!ep) {
+    return res.status(400).json({ err: "No such EP" });
+  }
+
+  res.status(200).json(ep);
+};
+
+const createEP = async (req, res) => {
+  const artistID = req.body.artistID;
+  try {
+    const artist = await Artist.findOne({ _id: artistID });
+
+    if (!artist) {
+      return res.status(404).json({ error: "No such artist " });
+    }
+
+    if (!req.body.featuredArtists || req.body.featuredArtists == null) {
+      const ep = new EP({
+        ...req.body,
+        artist: artist._id,
+      });
+
+      ep.songList = [];
+      artist.epList.push(ep._id);
+
+      await ep.save();
+      await artist.save();
+
+      res.status(201).json(ep);
+    } else {
+      const featuredArtists = await Promise.all(
+        req.body.featuredArtists.map(async (name) => {
+          const featuredArtist = await Artist.findOne({ artistName: name });
+
+          if (!featuredArtist) {
+            return res.status(404).json({ error: "No featured artist " });
+          }
+
+          return featuredArtist._id;
+        })
+      );
+
+      const ep = new EP({
+        ...req.body,
+        artist: artist._id,
+        featuredArtists: featuredArtists,
+      });
+
+      ep.songList = [];
+      artist.epList.push(ep._id);
+
+      for (const featuredArtistId of featuredArtists) {
+        const featuredArtist = await Artist.findById(featuredArtistId);
+        featuredArtist.epList.push(ep._id);
+        await featuredArtist.save();
+      }
+
+      await ep.save();
+      await artist.save();
+
+      res.status(201).json(ep);
+    }
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+//WIP
+const updateEP = async (req, res) => {
+  const { id } = req.params;
+  const { epArt, epName, artist, releaseYear, songList, genre } = req.body;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: "No such ep" });
+  }
+
+  try {
+    const ep = await EP.findById(id);
+
+    if (!ep) {
+      res.status(404).json({ error: "ep is not available" });
+    }
+
+    const epArtist = await Artist.findById(artist);
+
+    if (!epArtist) {
+      console.log("artist not found");
+
+      throw new Error("Artist not found");
+    }
+
+    ep.epArt = epArt;
+    ep.epName = epName;
+    ep.releaseYear = releaseYear;
+    ep.epGenre = genre;
+    ep.artist = epArtist;
+
+    const songListIDs = songList && songList.map((item) => item._id || []);
+    if (songListIDs.length > 5) {
+      res.status(500).json({ error: "EP can contain max to 5 songs" });
+    }
+
+    //adding song to songList
+    for (const songs of songList) {
+      const foundSong = await Song.findById(songs);
+
+      if (!foundSong) {
+        return res.status(404).json({ error: "This song  doesn't exist" });
+      }
+
+      if (
+        foundSong.ep === null ||
+        (foundSong.ep._id.toString() !== id &&
+          !ep.songList.includes(foundSong._id))
+      ) {
+        ep.songList.push(foundSong._id);
+        foundSong.ep = ep;
+        foundSong.releaseType = ["ep"];
+        await foundSong.save();
+      }
+    }
+
+    //remove
+
+    if (songList.length === 0) {
+      const epSongs = await Song.find({ ep: id });
+
+      for (const song of epSongs) {
+        song.ep = null;
+        song.releaseType = ["single"];
+        ep.songList = [];
+        await song.save();
+      }
+    } else {
+      for (const songs of ep.songList) {
+        if (!songListIDs.includes(songs.toString())) {
+          ep.songList.pull(songs);
+          const foundSong = await Song.findById(songs);
+
+          foundSong.ep = null;
+          foundSong.releaseType = ["single"];
+          await foundSong.save();
+        }
+      }
+    }
+    ep.songList = songList;
+    const success = "Updated ep successfully";
+    await ep.save();
+    res.status(200).json({ ep, success });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+const getMyEP = async (req, res) => {
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: "EP does not exist" });
+  }
+
+  const eps = await EP.find({ artist: id }).sort({ createdAt: -1 });
+  if (!eps) {
+    return res.status(404).json({ error: "You don't have any song" });
+  }
+  res.status(200).json(eps);
+};
+
+const deleteEP = async (req, res) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ err: "No such ep" });
+  }
+
+  try {
+    const ep = await EP.findById(id);
+
+    if (!ep) {
+      throw new Error("ep not found");
+    }
+
+    const artist = await Artist.findOne({ _id: ep.artist._id });
+
+    if (!artist) {
+      console.log("artist not found");
+
+      throw new Error("Artist not found");
+    }
+
+    // const songs = await Promise.all(ep.songList.map(async () => {
+
+    //     const song = await Song.findOne({ _id: ep.songs });
+
+    //     if (!song) {
+    //         throw new Error(" songs not found");
+    //     }
+
+    //     return song._id;
+    // }));
+
+    const featuredArtists = await Promise.all(
+      ep.featuredArtists.map(async () => {
+        const featuredArtist = await Artist.findOne({
+          _id: ep.featuredArtists,
+        });
+
+        if (!featuredArtist) {
+          throw new Error(" featured artist not found");
+        }
+
+        return featuredArtist._id;
+      })
+    );
+
+    await EP.findOneAndDelete({ _id: id });
+
+    await Artist.updateOne(
+      { _id: artist._id },
+      { $pull: { epList: ep._id, songList: { $in: ep.songList } } }
+    );
+
+    await Song.deleteMany({ _id: ep.songList });
+
+    for (const featuredArtistId of featuredArtists) {
+      await Artist.updateOne(
+        { _id: featuredArtistId },
+        { $pull: { epList: ep._id, songList: { $in: ep.songList } } }
+      );
+
+      await Song.deleteMany({ _id: featuredArtists.songList });
+    }
+
+    if (!ep) {
+      return res.status(404).json({ message: "No such ep" });
+    }
+
+    res.status(200).json(ep);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({ message: err.message });
+  }
+};
+module.exports = {
+  getEP,
+  getMyEP,
+  getAllEP,
+  createEP,
+  updateEP,
+  deleteEP,
+};
