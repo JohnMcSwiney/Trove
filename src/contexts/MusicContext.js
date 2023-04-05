@@ -114,7 +114,14 @@ export const MusicProvider = ({ children }) => {
     
     }
   };
-  
+  const removeFromQueue = (index) => {
+    console.log("remove" + index.index);  
+    console.log("old" + queue);
+    const newArray = [...queue.slice(0, index.index), ...queue.slice(index.index + 1)];
+      
+      setQueue(newArray);
+      console.log("new" + queue); 
+  }
 
   const updateLoopLevel = (level) => {
     setLoopLevel(level);
@@ -165,7 +172,8 @@ export const MusicProvider = ({ children }) => {
     addToQueue,
     clearQueue,
     updateQueuePosition,
-    
+    removeFromQueue,
+
     loopLevel,
     updateLoopLevel,
 

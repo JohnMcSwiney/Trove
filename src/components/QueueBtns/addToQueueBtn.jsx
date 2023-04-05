@@ -13,6 +13,7 @@ export default function AddToQueueBtn (song) {
     updatePlay_list,
     clearPlay_list,
     clearQueue,
+    removeFromQueue,
   } = React.useContext(MusicContext)
 
   const appendQueue = () => {

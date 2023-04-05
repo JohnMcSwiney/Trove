@@ -13,6 +13,7 @@ export default function ClearQueueBtn () {
     currentSongData,
     playlists,
     play_list,
+    queue,
     loopLevel,
     updateLoopLevel,
     updatePlay_list,
@@ -29,7 +30,7 @@ export default function ClearQueueBtn () {
   }
 
   const clearQueue2 = () => {
-    if (play_list.length > 0) {
+    if (queue.length > 0) {
       console.log('clearing queue - component call')
       clearQueue()
       return

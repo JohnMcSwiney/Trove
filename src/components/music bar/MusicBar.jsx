@@ -51,6 +51,7 @@ import { useUnlikeSong } from '../../hooks/user-hooks/useUnlikeSong'
 
 import { MusicContext } from '../../contexts/MusicContext'
 import ClearQueueBtn from './clearQueueBtn'
+import RemoveFromQueueBtn from "../QueueBtns/removeFromQueue";
 
 const MusicBar = () => {
   const [newSong, setNewSong] = useState()
@@ -462,12 +463,13 @@ const MusicBar = () => {
                       // console.log(index + ' Queue Song: ' + song._id)
                       // return;
                       return (
-                        <div className='inactiveSong-Q-card bg1 hoverCardCss'>
+                        <div className='inactiveSong-Q-card bg-Q-card hoverCardCss'>
                           <Queue_CardSong
                             key={song?._id}
                             song={song}
                             index={index -1}
                           />
+                          <RemoveFromQueueBtn index={index}/>
                         </div>
                       )
                     }
