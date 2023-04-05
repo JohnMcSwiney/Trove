@@ -291,8 +291,8 @@ const getMySong = async (req, res) => {
   res.status(200).json(songs);
 };
 
-// get artist's TOP song
-const getMyTopSong = async (req, res) => {
+// get artist's TOP searched song
+const getMyTopSearchSong = async (req, res) => {
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "You have not sign in" });
@@ -306,16 +306,74 @@ const getMyTopSong = async (req, res) => {
   let topSong = null;
 
   for (const song of songs) {
-    if(song.searchCount && song.searchCount > topSong.searchCount || !topSong) {
+    if(song.searchCount && song.searchCount > topSong.searchCount|| !topSong) {
       topSong = song;
+      console.log(song.searchCount)
     }
-    console.log(song.searchCount)
-
+      // console.log(song)
+  
   }
     
   res.status(200).json(topSong);
 }; 
 
+// sort artist's songs by most searched
+const getSongsBySearchCount = async (req, res) => {
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: "You have not sign in" });
+  }
+
+  const songs = await Song.find({ artist: id }).sort({ searchCount: -1, title: 1 });
+  if (!songs) {
+    return res.status(404).json({ error: "You don't have any song" });
+  }
+
+    
+  res.status(200).json(songs);
+}; 
+
+// get artist's most loved song
+const getMyTopLovedSong = async (req, res) => {
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: "You have not sign in" });
+  }
+
+  const songs = await Song.find({ artist: id }).sort({ createdAt: -1 });
+  if (!songs) {
+    return res.status(404).json({ error: "You don't have any song" });
+  }
+
+  let topSong = null;
+
+  for (const song of songs) {
+    if(song.isLoved.length && song.isLoved.length > topSong.isLoved.length || !topSong) {
+      topSong = song;
+      console.log(song.isLoved.length)
+    }
+      // console.log(song)
+  
+  }
+    
+  res.status(200).json(topSong);
+}; 
+
+// get artist loved songs from greatest to least
+const getSongsByLoveCount = async (req, res) => {
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: "You have not sign in" });
+  }
+
+  const songs = await Song.find({ artist: id }).sort({isLoved: -1, title: 1 });
+  if (!songs) {
+    return res.status(404).json({ error: "You don't have any song" });
+  }
+
+    
+  res.status(200).json(songs);
+}; 
 //WIP
 const updateSong = async (req, res) => {
   const { id } = req.params;
@@ -614,7 +672,10 @@ const deleteSong = async (req, res) => {
 module.exports = {
   getAllSongs,
   getMySong,
-  getMyTopSong,
+  getMyTopSearchSong,
+  getSongsBySearchCount,
+  getMyTopLovedSong,
+  getSongsByLoveCount,
   getSong,
   createSong,
   deleteSong,

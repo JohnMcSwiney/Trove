@@ -4,7 +4,10 @@ const {
   getAllSongs,
   getSong,
   getMySong,
-  getMyTopSong,
+  getMyTopSearchSong,
+  getSongsBySearchCount,
+  getMyTopLovedSong,
+  getSongsByLoveCount,
   createSong,
   deleteSong,
   updateSong,
@@ -16,7 +19,9 @@ router.get("/", getAllSongs);
 
 router.get("/artist-songs/:id", getMySong);
 
-router.get("/artist-topsong/:id", getMyTopSong);
+router.get("/artist-topsearch/:id", getSongsBySearchCount);
+
+router.get("/artist-toploved/:id", getMyTopLovedSong);
 
 router.get("/:id", getSong);
 

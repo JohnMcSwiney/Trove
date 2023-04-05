@@ -82,6 +82,10 @@ const songSchema = new mongoose.Schema(
         ref: "User",
       },
     ],
+    searchCount: {
+      type: Number, 
+      default: 0,
+    }
   },
   { timestamps: true }
 );
