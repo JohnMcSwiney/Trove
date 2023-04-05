@@ -112,7 +112,7 @@ const Audience = () => {
             {topSong[0]?.title}</span>} 
           </h2> 
           <h2>
-          Your Most Loved Song is {<span className="artist--namespan">{mostLoved?.title}</span>} 
+          Your Most Loved Song is {<span className="artist--namespan">{mostLoved[0]?.title}</span>} 
           </h2>
           <h2>
           Your Most Searched Songs are {<span className="artist--namespan">
@@ -121,10 +121,18 @@ const Audience = () => {
           <br />3. {topSong[2]?.title}
           <br />4. {topSong[3]?.title}
           <br />5. {topSong[4]?.title}
-            </span>} 
+          </span>} 
+          </h2> 
+          <h2>
+          Your Most Loved Songs are {<span className="artist--namespan">
+          <br />1. {mostLoved[0]?.title}
+          <br />2. {mostLoved[1]?.title}
+          <br />3. {mostLoved[2]?.title}
+          <br />4. {mostLoved[3]?.title}
+          <br />5. {mostLoved[4]?.title}
+          </span>} 
           </h2> 
           
-
       </div>
           : null
       }
