@@ -112,66 +112,66 @@ const getRandomCuratedPlaylist = async (req, res) => {
         // const topArtistNames = ["Top Beatz", "Popular Tracks", "Most Searched"];
         const randomNames = ["Random Vibez", "The Shuffler", "Mystery Music"]
 
-        const topSongsPlaylist = await CuratedPlaylist.findOne({curatedPlaylistName: {$in: topSongNames}});
+        const topSongsPlaylist = await CuratedPlaylist.findOne({ curatedPlaylistName: { $in: topSongNames } });
 
         //  const topArtistPlaylist = await CuratedPlaylist.findOne({curatedPlaylistName: {$in: topArtistNames}});
-        const topArtistPlaylist = await CuratedPlaylist.findOne({curatedPlaylistName: "AUUUGGHHH"});
+        // const topArtistPlaylist = await CuratedPlaylist.findOne({curatedPlaylistName: "AUUUGGHHH"});
 
 
-        console.log("topSongsPlaylist: " + topSongsPlaylist);
+        // console.log("topSongsPlaylist: " + topSongsPlaylist);
 
-        if (!topSongsPlaylist) {
-            console.log("no topSongsPlaylist found");
+        // if (!topSongsPlaylist) {
+        //     console.log("no topSongsPlaylist found");
 
-            const topSongs = await createTopSongsPlaylist();
+        //     const topSongs = await createTopSongsPlaylist();
 
-            let name = "";
-            let index = 0;
+        //     let name = "";
+        //     let index = 0;
 
-            index = Math.floor(Math.random() * topSongNames.length);
-            name = topSongNames[index];
+        //     index = Math.floor(Math.random() * topSongNames.length);
+        //     name = topSongNames[index];
 
-            console.log("name: " + name);
+        //     console.log("name: " + name);
 
-            const curatedPlaylist = new CuratedPlaylist({
-                curatedPlaylistName: name,
-                songList: topSongs
-            });
+        //     const curatedPlaylist = new CuratedPlaylist({
+        //         curatedPlaylistName: name,
+        //         songList: topSongs
+        //     });
 
-            await curatedPlaylist.save();
-            return res.status(201).json(curatedPlaylist);
-        }
+        //     await curatedPlaylist.save();
+        //     return res.status(201).json(curatedPlaylist);
+        // }
 
-        else if (!topArtistPlaylist) {
-            console.log("no topArtistPlaylist found");
+        // else if (!topArtistPlaylist) {
+        //     console.log("no topArtistPlaylist found");
 
-            const topArtistSongs = await createTopArtistPlaylist();
+        //     const topArtistSongs = await createTopArtistPlaylist();
 
-            const name = "AUUUGGHHH";
+        //     const name = "AUUUGGHHH";
 
-            // let name = "";
-            // let index = 0;
+        //     // let name = "";
+        //     // let index = 0;
 
-            // index = Math.floor(Math.random() * topSongNames.length);
-            // name = topSongNames[index];
+        //     // index = Math.floor(Math.random() * topSongNames.length);
+        //     // name = topSongNames[index];
 
-            console.log("name: " + name);
+        //     console.log("name: " + name);
 
-            const curatedPlaylist = new CuratedPlaylist({
-                curatedPlaylistName: name,
-                songList: topArtistSongs
-            });
+        //     const curatedPlaylist = new CuratedPlaylist({
+        //         curatedPlaylistName: name,
+        //         songList: topArtistSongs
+        //     });
 
-            await curatedPlaylist.save();
-            return res.status(201).json(curatedPlaylist);
-        }
+        //     await curatedPlaylist.save();
+        //     return res.status(201).json(curatedPlaylist);
+        // }
 
-        else {
-            console.log("topSongs playlist already exists");
-        }
+        // else {
+        //     console.log("topSongs playlist already exists");
+        // }
 
-        let random = Math.floor(Math.random() * 100);
-        // let random = 45;
+        // let random = Math.floor(Math.random() * 100);
+        let random = 45;
 
         console.log("random value: " + random);
 
@@ -199,26 +199,49 @@ const getRandomCuratedPlaylist = async (req, res) => {
 
         }
         else if (random > 25 && random <= 50) {
-            console.log("random was >25 but <=50");
 
-            const rockSongs = await createRandomRockPlaylist();
+            //const topArtistPlaylist = await CuratedPlaylist.findOne({curatedPlaylistName: "AUUUGGHHH"});
 
-            let name = "";
-            let index = 0;
+            const topArtistSongs = await createTopArtistPlaylist();
 
-            index = Math.floor(Math.random() * rockNames.length);
-            name = rockNames[index];
+            // const name = "AUUUGGHHH";
 
-            console.log("name: " + name);
+            // // let name = "";
+            // // let index = 0;
 
-            const curatedPlaylist = new CuratedPlaylist({
-                curatedPlaylistName: name,
-                songList: rockSongs,
-            });
+            // // index = Math.floor(Math.random() * topSongNames.length);
+            // // name = topSongNames[index];
 
-            await curatedPlaylist.save();
+            // console.log("name: " + name);
 
-            res.status(201).json(curatedPlaylist);
+            // const curatedPlaylist = new CuratedPlaylist({
+            //     curatedPlaylistName: name,
+            //     songList: topArtistSongs
+            // });
+
+            // await curatedPlaylist.save();
+            // return res.status(201).json(curatedPlaylist);
+
+            // console.log("random was >25 but <=50");
+
+            // const rockSongs = await createRandomRockPlaylist();
+
+            // let name = "";
+            // let index = 0;
+
+            // index = Math.floor(Math.random() * rockNames.length);
+            // name = rockNames[index];
+
+            // console.log("name: " + name);
+
+            // const curatedPlaylist = new CuratedPlaylist({
+            //     curatedPlaylistName: name,
+            //     songList: rockSongs,
+            // });
+
+            // await curatedPlaylist.save();
+
+            // res.status(201).json(curatedPlaylist);
         }
         else if (random > 50 && random <= 75) {
             console.log("random was >50 but <=75");
@@ -542,14 +565,15 @@ const createTopArtistPlaylist = async (req, res) => {
 
     try {
 
+        let temp = [];
+
         const artists = await Artist.find()
-        .populate("songList", "title songUrl genre")
-        .populate("albumList")
+            // .populate("songList", "title songUrl genre")
+            // .populate("albumList")
             //.populate("searchCount", "title songUrl genre")
             // .populate('albumList')
-        .sort({ searchCount: -1 });
-
-        console.log("all artists from largest SC to smallest: " + artists);
+            .limit(3)
+            .sort({ searchCount: -1 });
 
         if (!artists) {
             return res.status(404).send("artists not found");
@@ -557,27 +581,53 @@ const createTopArtistPlaylist = async (req, res) => {
 
         artists.map(async (artist) => {
 
-            const currentArtist = await Artist.findById(artist._id);
+            console.log("current artist: " + artist.artistName + ", search count: " + artist.searchCount);
 
-            console.log("current artist: " + currentArtist.artistName);
-        });
+            console.log("artist songList: " + artist.songList.length);
 
-        const songs = await Song.find({$all: artists})
-            .populate("artist")
-            .populate("featuredArtists")
-            .populate("album")
-            .sort();
+            const songs = await Song.find({ $in: artist.songList })
+                // .populate("artist")
+                // .populate("featuredArtists")
+                // .populate("album")
+                .limit(5)
+                .sort({ searchCount: -1 });
 
             songs.map(async (song) => {
 
-                const currentSong = await Song.findById(song._id);
+                console.log("current song: " + song.title + " by " + artist.artistName + ", search count: " + song.searchCount);
+                console.log(" ");
 
-                console.log("current song: " + currentSong.title);
+                while (temp.length < 3) {
+
+                    const currentSong = songs.shift();
+        
+                    if (!temp.includes(currentSong._id)) {
+                        temp.push(currentSong);
+                        console.log("added currentSong: " + currentSong.title);
+                        console.log("searchCount of currentSong: " + currentSong.searchCount);
+                    }
+                }
+                return temp;
             })
 
-        if (!songs) {
-            return res.status(404).send("songs not found");
-        }
+        });
+
+        console.log("temp in outer function: " + temp.length);
+
+        // const songs = await Song.find({$in: artists.songList})
+        //     .populate("artist")
+        //     .populate("featuredArtists")
+        //     .populate("album")
+        //     .sort({searchCount: -1});
+
+        // songs.map(async (song) => {
+
+        //     console.log("current song: " + song.title  + ", search count: " + song.searchCount);
+        // })
+
+        // if (!songs) {
+        //     return res.status(404).send("songs not found");
+        // }
 
         // const songLimit = [];
 
