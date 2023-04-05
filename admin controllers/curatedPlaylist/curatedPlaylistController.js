@@ -565,14 +565,14 @@ const createTopArtistPlaylist = async (req, res) => {
 
     try {
 
-        let temp = [];
+        const songLimit = [];
 
         const artists = await Artist.find()
             // .populate("songList", "title songUrl genre")
             // .populate("albumList")
             //.populate("searchCount", "title songUrl genre")
             // .populate('albumList')
-            .limit(3)
+            .limit(5)
             .sort({ searchCount: -1 });
 
         if (!artists) {
@@ -582,35 +582,92 @@ const createTopArtistPlaylist = async (req, res) => {
         artists.map(async (artist) => {
 
             console.log("current artist: " + artist.artistName + ", search count: " + artist.searchCount);
+            //console.log(" ");
+        });
 
-            console.log("artist songList: " + artist.songList.length);
+        for (const artist of artists) {
 
-            const songs = await Song.find({ $in: artist.songList })
-                // .populate("artist")
-                // .populate("featuredArtists")
-                // .populate("album")
-                .limit(5)
+            const song = await Song.findOne({ artist: artist._id })
                 .sort({ searchCount: -1 });
 
-            songs.map(async (song) => {
+            console.log("current song: " + song.title + ", search count: " + song.searchCount);
 
-                console.log("current song: " + song.title + " by " + artist.artistName + ", search count: " + song.searchCount);
-                console.log(" ");
+            //const songLimit = [];
 
-                while (temp.length < 3) {
+            while (songLimit.length < 3) {
 
-                    const currentSong = songs.shift();
-        
-                    if (!temp.includes(currentSong._id)) {
-                        temp.push(currentSong);
-                        console.log("added currentSong: " + currentSong.title);
-                        console.log("searchCount of currentSong: " + currentSong.searchCount);
-                    }
+                //const randomSong = songs[Math.floor(Math.random() * songs.length)];
+
+                if (!songLimit.includes(song._id)) {
+                    songLimit.push(song);
+                    console.log("added randomSong: " + song.title);
                 }
-                return temp;
-            })
+            }
+            console.log("songLimit length: " + songLimit.length);
 
-        });
+            if (songLimit.length > 3) {
+                throw new Error("Song limit cannot be greater than 50.");
+            }
+        }
+        return songLimit;
+
+        console.log("songLimit in outer loop: " + songLimit)
+
+        // const songs = await Song.find({ $in: artists })
+        //     // .populate("artist")
+        //     // .populate("featuredArtists")
+        //     // .populate("album")
+        //     .limit(5)
+        //     .sort({ searchCount: -1 });
+
+        // songs.map(async (song) => {
+
+        //     console.log("current song: " + song.title + ", search count: " + song.searchCount);
+        //     //console.log(" ");
+        // })
+
+        // while (temp.length < 3) {
+
+        //     const currentSong = songs.shift();
+
+        //     if (!temp.includes(currentSong._id)) {
+        //         temp.push(currentSong);
+        //         console.log("added currentSong: " + currentSong.title);
+        //         console.log("searchCount of currentSong: " + currentSong.searchCount);
+        //     }
+        // }
+
+        // await Promise.all(artists).map(async (artist) => {
+
+        //     console.log("current artist: " + artist.artistName + ", search count: " + artist.searchCount);
+
+        //     console.log("artist songList: " + artist.songList.length);
+
+        //     const songs = await Song.find({ $in: artist.songList })
+        //         // .populate("artist")
+        //         // .populate("featuredArtists")
+        //         // .populate("album")
+        //         .limit(5)
+        //         .sort({ searchCount: -1 });
+
+        //     songs.map(async (song) => {
+
+        //         console.log("current song: " + song.title + " by " + artist.artistName + ", search count: " + song.searchCount);
+        //         console.log(" ");
+
+        //         while (temp.length < 3) {
+
+        //             const currentSong = songs.shift();
+
+        //             if (!temp.includes(currentSong._id)) {
+        //                 temp.push(currentSong);
+        //                 console.log("added currentSong: " + currentSong.title);
+        //                 console.log("searchCount of currentSong: " + currentSong.searchCount);
+        //             }
+        //         }
+        //         return temp;
+        //     })
+        // });
 
         console.log("temp in outer function: " + temp.length);
 
