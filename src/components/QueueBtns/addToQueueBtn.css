@@ -20,7 +20,8 @@
     transition-delay: 0.05s;
     opacity: 1;
     background-color: rgb(0, 0, 0);
-    transform: translateX(100px);
+    transform: translateY(-35px);
+    
 }
 .addQueueTxt{
     /* display: none; */

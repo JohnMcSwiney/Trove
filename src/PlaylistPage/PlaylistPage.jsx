@@ -10,6 +10,7 @@ import { Navigate, useNavigate, Link } from 'react-router-dom'
 import { BsFillPlayFill } from 'react-icons/bs'
 import LoadingSearch from '../components/loadingitems/loadingSearch/LoadingSearch'
 
+import AddPlaylist_ToQueue from "./addPlaylist_ToQueue";
 //fetching
 import { useParams } from 'react-router-dom'
 
@@ -25,10 +26,32 @@ export default function PlaylistPage (props) {
     play_list,
     updatePlay_list,
     updateQueue,
-    addToQueue
+    addToQueue,
+    clearPlay_list,
+    updatePlay_listPosition,
   } = React.useContext(MusicContext)
 
   const [playlist, setPlaylist] = React.useState(null)
+  React.useEffect(() => {
+    const findPlaylistCreator = async () => {
+      // setDone(false);
+      fetch(`/api/users/${playlist.playlistCreator}`)
+        .then(response => response.json())
+        .then(json => {
+          setPlaylistCreator(json)
+        })
+    }
+    findPlaylistCreator()
+    
+    if(playlist === undefined && clicks !== 1){
+      console.log(play_list);
+      setClicks(clicks+1);
+    }
+    if(playlist?.songList === play_list){
+      console.log("we have a match");
+    }
+  }, [])
+  
   React.useEffect(() => {
     const fetchPlaylist = async () => {
       // const playlistResponse = await fetch(`/api/playlists/${id}`, {
@@ -54,39 +77,53 @@ export default function PlaylistPage (props) {
 
   const [playlistCreator, setPlaylistCreator] = React.useState(null)
   const [done, setDone] = React.useState(false)
+  const [clicks, setClicks] = React.useState(0);
+
   
-  React.useEffect(() => {
-    const findPlaylistCreator = async () => {
-      // setDone(false);
-      fetch(`/api/users/${playlist.playlistCreator}`)
-        .then(response => response.json())
-        .then(json => {
-          setPlaylistCreator(json)
-        })
-    }
-    findPlaylistCreator()
-  }, [])
 
   const handlePlayPlaylist = () => {
-    // console.log(playlist.songList);
-    updatePlay_list(playlist.songList)
-    updateCurrentSong(playlist.songList[0])
+    console.log("handlePlayPlaylist");  
+    if(play_list !== playlist?.songList){
+      setClicks(clicks+1);
+      return;
+
+    }
+  }
+  React.useEffect(() => {
+    // This code will run after every render
+    setPlaylistasPlay_list();
+    
+  }, [clicks]); // Only re-run the effect if count changes
+
+
+  const setPlaylistasPlay_list = () =>{
+    console.log('in playlist play_List method');
+    
+    if(play_list !== playlist?.songList ){
+      clearPlay_list();
+      updatePlay_list(playlist?.songList);
+    }
   }
   const navigate = useNavigate()
   function redirectEditPlaylist () {
     navigate(`/editplaylist/${playlist._id}`)
   }
-
   return (
     <section className='playlist-containter-ver2'>
       {/* HEADER */}
 
       {/* ALBUM COVER / INFO */}
       <div className='bg-fglass--1--playlist'>
-        <div className='playlist--info'>
-          <button className='playlist--playbtn' onClick={handlePlayPlaylist}>
-            <BsFillPlayFill className='playIconPlayList' />
+        <div className='playlist--info' 
+        // onClick={handlePlayPlaylist()}
+        >
+          {/* for on load ^ then for on click v */}
+          <button className='playlist--playbtn' onClick={
+            handlePlayPlaylist
+            }>
+            <BsFillPlayFill className='playIconPlayList'  />
           </button>
+          <AddPlaylist_ToQueue input ={playlist?.songList}/>
           {!done ? (
             <LoadingSearch />
           ) : (
@@ -142,7 +179,9 @@ export default function PlaylistPage (props) {
           </div>
         )}
       </div>
+                <div onLoad={handlePlayPlaylist}>
 
+                </div>
       {/* <NavBar /> */}
     </section>
   )

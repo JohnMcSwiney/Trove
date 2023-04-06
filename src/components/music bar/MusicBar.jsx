@@ -313,7 +313,7 @@ const MusicBar = () => {
     if (queue.length > 0) {
       if(queue.length === 1){
         clearQueue();
-        updatePlay_listPosition(play_listPosition + 1);
+        updatePlay_listPosition(play_listPosition);
         return;
       }
       if(currentSong._id === queue[0]._id && currentSong._id === queue[1]._id){
@@ -411,7 +411,7 @@ const MusicBar = () => {
           
         ></audio>
 
-        {/* Full Screen */}
+        {/* Full Screen / Queue */}
         <div
           className={isFullscreen === true ? 'fullscreenMusicBar' : 'hidden'}
         >
@@ -465,7 +465,7 @@ const MusicBar = () => {
                         console.log('empty')
                         return;
                       }else if(currentSong?._id === queue?._id) {
-                        console.log(queue[0]);
+                        // console.log(queue[0]);
                         return;
                       }
                       // console.log(index + ' Queue Song: ' + song._id)
@@ -493,31 +493,21 @@ const MusicBar = () => {
                 {play_list &&
                   play_list.map((song, index) => {
                     // console.log("play_listPos: " + play_ListPosition + " index " + index )
-                    if (index <= play_listPosition) {
-                      return
-                    } else if (
-                      index === play_listPosition &&
-                      currentSong?._id === song?._id
-                    ) {
-                      return (
-                        <div className='activeSong-Q-card bg-fglass-b hoverCardCss'>
-                          <Queue_CardSong
-                            key={song?._id}
-                            song={song}
-                            index={index}
-                          />
-                        </div>
-                      )
-                    } else {
-                      return (
-                        <div className='inactiveSong-Q-card bg-fglass-b hoverCardCss'>
-                          <Queue_CardSong
-                            key={song?._id}
-                            song={song}
-                            index={index}
-                          />
-                        </div>
-                      )
+                    if (index < play_listPosition) {
+                      return;
+                    }  else {
+                      if(currentSong?._id !== play_list[index]?._id){
+                        return (
+                          <div className='inactiveSong-Q-card bg-fglass-b hoverCardCss'>
+                            <Queue_CardSong
+                              key={song?._id}
+                              song={song}
+                              index={index}
+                            />
+                          </div>
+                        )
+                      }
+                      
                     }
                   })}
               </div>

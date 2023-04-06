@@ -41,16 +41,20 @@ export const MusicProvider = ({ children }) => {
 
   //Play_list methods
   const updatePlay_list = (newPlaylists) => {
+    
     setPlay_list(newPlaylists);
+    
+    return;
     // console.log(newPlaylists)
   };
   const updatePlay_listPosition = (newPlay_listPosition) => {
-  
+    console.log();
     setPlay_listPosition(newPlay_listPosition);
 
     if(play_list?.length !== newPlay_listPosition){
       updateCurrentSong(play_list[newPlay_listPosition]);
     }
+    
   };
 
   const clearPlay_list = () => {
@@ -97,7 +101,41 @@ export const MusicProvider = ({ children }) => {
       
     }
   }
-  
+  const addQueueList = (inputtedItem) => {
+    
+    let i = 0;
+    if(inputtedItem.length === 0 ){
+      return
+    } else {
+      while(i < inputtedItem.length){
+          queue.push(inputtedItem[i])
+          i++;
+        }
+    }
+    
+    if(queue){
+      if(displayMusicBar === false ){
+        updateDisplayMusicBar(true);
+        // console.log(queue[0])
+        if(!play_list){
+          updateCurrentSong(queue[0]);
+        }
+        
+
+        // if(play_list.length === 0 && queue.length === 0){
+        //   console.log(queue[0])
+          
+        // }
+        
+      }
+    }
+    // console.log(queue[0]._id);
+    // inputtedItem.forEach(addToQueue);
+    // const newArr = 
+    // const arr = inputtedItem;
+    // arr.forEach(addToQueue);
+    
+  }
   const updateQueuePosition = (newQueuePosition) => {
   
     setQueuePosition(newQueuePosition);
@@ -146,6 +184,35 @@ export const MusicProvider = ({ children }) => {
     // console.log("list after:");
     // console.log(discovery_Decision_List);
   }
+  useEffect (() => {
+
+    if(play_list){
+      console.log(play_list.length);
+      if (play_list.length === 0){
+        console.log('play_list exists but empty')
+      } else {
+        console.log('play_list exists')
+        console.log(play_list);
+
+        console.log('queue length')
+        console.log(queue.length);
+        if(queue){
+          if(queue.length === 0){
+            updatePlay_listPosition(0)
+          } else {
+            return
+          }
+        } else {
+          updatePlay_listPosition(0)
+        }
+      }
+    } else {
+      
+    }
+  },[play_list])
+  useEffect (() => {
+
+  })
   // useEffect (()=> {
   //   console.log("queue" + queue);
   // },[queue])
@@ -173,6 +240,7 @@ export const MusicProvider = ({ children }) => {
     clearQueue,
     updateQueuePosition,
     removeFromQueue,
+    addQueueList,
 
     loopLevel,
     updateLoopLevel,
