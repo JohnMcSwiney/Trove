@@ -1,6 +1,7 @@
 const CuratedPlaylist = require("../../models/curatedPlaylists/curatedPlaylist");
 const Song = require("../../models/songs/song");
 const Artist = require("../../models/artists/artist");
+const Admin = require("../../models/admin/admin");
 
 
 const mongoose = require("mongoose");
@@ -56,9 +57,9 @@ const createCuratedPlaylist = async (req, res) => {
     console.log(req.body.id);
     try {
 
-        const user = await User.findOne({ _id: req.body.id });
+        const admin = await Admin.findOne({ _id: req.body.id });
 
-        if (!user) {
+        if (!admin) {
             throw new Error("Please sign in to play this");
         }
 
@@ -80,16 +81,16 @@ const createCuratedPlaylist = async (req, res) => {
 
         const curatedPlaylist = new Playlist({
             ...req.body,
-            curatedPlaylistCreator: user._id,
+            curatedPlaylistCreator: admin._id,
             songList: songList,
             isGenerated: false
         });
 
         // curatedPlaylist.songList = songList;
-        user.curatedPlaylists.push(curatedPlaylist._id);
+        admin.curatedPlaylists.push(curatedPlaylist._id);
 
         await curatedPlaylist.save();
-        await user.save();
+        await admin.save();
 
         res.status(201).json(curatedPlaylist);
     } catch (err) {
@@ -707,7 +708,7 @@ const updateCuratedPlaylist = async (req, res) => {
             {
                 $set: {
                     ...req.body,
-                    // curatedPlaylistCreator: user._id,
+                    // curatedPlaylistCreator: admin._id,
                     curatedPlaylistName: req.body.curatedPlaylistName,
                     songList: songList,
                 },

@@ -26,6 +26,14 @@ const adminSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+
+    curatedPlaylists: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "CuratedPlaylist",
+        default: null,
+      },
+    ]
   },
   { timestamps: true }
 );
