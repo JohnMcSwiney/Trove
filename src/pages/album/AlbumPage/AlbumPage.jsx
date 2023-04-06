@@ -25,7 +25,10 @@ export default function AlbumPage () {
     updatePlay_list,
     updateQueue,
     addToQueue,
-    updateQueuePosition
+    clearPlay_list,
+    updatePlay_listPosition,
+    isPlay_Global,
+    toggleIsPlay_G,
   } = React.useContext(MusicContext)
 
   const [album, setAlbum] = React.useState(null)
@@ -35,6 +38,24 @@ export default function AlbumPage () {
   const [albumSongList, setAlbumSongList] = React.useState([])
   const [test, setTest] = React.useState(false);
   const [test2, setTest2] = React.useState(false);
+  
+  React.useEffect(() => {
+    const fetchArtist = async () => {
+      const artistResponse = await fetch(`/api/artists/${album?.artist}`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+      })
+      const artistJson = await artistResponse.json()
+      if (artistResponse.ok) {
+        setArtist(artistJson)
+        // console.log(artist);
+      } else {
+        // setDone(false);
+      }
+    }
+    fetchArtist()
+  }, [album])
+
   React.useEffect(() => {
     const fetchAlbum = async () => {
       const albumResponse = await fetch(`/api/albums/${id}`, {
@@ -53,22 +74,7 @@ export default function AlbumPage () {
     fetchAlbum()
   }, [id])
 
-  React.useEffect(() => {
-    const fetchArtist = async () => {
-      const artistResponse = await fetch(`/api/artists/${album?.artist}`, {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' }
-      })
-      const artistJson = await artistResponse.json()
-      if (artistResponse.ok) {
-        setArtist(artistJson)
-        // console.log(artist);
-      } else {
-        // setDone(false);
-      }
-    }
-    fetchArtist()
-  }, [album])
+  
 
   const fetchAlbumSongs = async () => {
     // if(album && albumSongList?.length <= album?.songList.length){
@@ -88,6 +94,7 @@ export default function AlbumPage () {
       }
     }
   }
+
   React.useEffect(() => {
     if (albumSongList.length === album?.songList.length - 1){
       console.log("List filled");
@@ -111,9 +118,10 @@ export default function AlbumPage () {
     
       setTimeout(() => {
         updatePlay_list(albumSongList)
+        console.log(albumSongList)
         setTimeout(() => {
         updateCurrentSong(albumSongList[0]);
-        updateQueuePosition(0)
+        updatePlay_listPosition(0)
         }, 400)
       }, 400)
 
@@ -123,6 +131,7 @@ export default function AlbumPage () {
   // function redirectEditPlaylist () {
   //   navigate(`/editplaylist/${playlist._id}`)
   // }
+console.log(album);
 
   return (
     <section className='album-containter-ver2'>
@@ -143,10 +152,10 @@ export default function AlbumPage () {
           ) : (
             <div className='playlist--stats--info'>
               <div className='playlist--release--info'>
-                <h6>{album && album.releaseType}</h6>
+                <h6>Album</h6>
                 {/* <div className="playlist--release--filler--div">|</div><h5>2014</h5> */}
                 <div className='playlist--release--filler--div'>|</div>
-                <h4>By: {artist?.artistName}</h4>
+                <h4>By: {album?.artist.artistName}</h4>
               </div>
               <h3>{album && album.albumName}</h3>
             </div>
@@ -160,28 +169,30 @@ export default function AlbumPage () {
           <LoadingSearch />
         ) : (
           <div className='playlist--songs'>
-            <ul className='playlist--songlist--container'>
-              {albumSongList?.length === album?.songList.length &&
-                albumSongList?.map((song, index) => {
+            
+              {albumSongList &&
+              <ul className='playlist--songlist--container'>
+              {albumSongList.length === album?.songList.length &&
+                albumSongList.map((song, index) => {
                   //fetchAlbumSong(song);
                   // console.log(song.title);
                   return (
                     <li className='playlist--song--container'>
                       <h1>{index + 1}</h1>
                       <searchSongCard2 key={song._id} song={song} />
-
-                      {/* <p className="hiddens">  {song._id}</p> */}
-                      {/* 
-                      <p> {song.title}</p> */}
+                      {song._id}
                     </li>
                   )
                 })}
-            </ul>
+                </ul>
+              }
+            
           </div>
         )}
       </div>
+      <div onLoad={handlePlayAlbum}>
 
-      {/* <NavBar /> */}
+</div>
     </section>
   )
 }
