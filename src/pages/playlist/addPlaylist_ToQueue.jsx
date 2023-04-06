@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { MusicContext } from '../contexts/MusicContext'
+import { MusicContext } from '../../contexts/MusicContext'
 import {IoIosAdd} from 'react-icons/io'
 import './addPlaylistQueue.css'
 

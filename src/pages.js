@@ -12,6 +12,6 @@ export { default as DiscoveryGame } from "./pages/discoverygame/discoverygamepag
 export { default as AlbumPage } from "./AlbumPage/AlbumPage.jsx";
 export { default as FollowersPage } from "./FollowersPage/FollowersPage.jsx";
 export { default as FollowingPage } from "./FollowingPage/FollowingPage.jsx";
-export { default as PlaylistPage } from "./PlaylistPage/PlaylistPage.jsx";
-export { default as CreatePlaylistPage } from "./pages/create playlist/CreatePlaylist.jsx";
-export { default as UpdatePlaylistPage } from "./pages/update playlist/UpdatePlaylist.jsx";
+export { default as PlaylistPage } from "./pages/playlist/PlaylistPage.jsx";
+export { default as CreatePlaylist } from "./pages/playlist/createPlaylist/CreatePlaylist.jsx";
+export { default as UpdatePlaylist } from "./pages/playlist/updatePlaylist/UpdatePlaylist.jsx";

@@ -2,13 +2,13 @@ import React from 'react'
 
 import './PlaylistPage.css'
 // import NavBar from './nav bar/NavBar';
-import albumsongs from '../data/albumsongs.json'
+import albumsongs from '../../data/albumsongs.json'
 import PlaylistSong from './PlaylistSong'
-import SearchSongCard2 from '../components/cards/search_items/searchSongCard/searchSongCard2'
-import { MusicContext } from '../contexts/MusicContext'
+import SearchSongCard2 from '../../components/cards/search_items/searchSongCard/searchSongCard2'
+import { MusicContext } from '../../contexts/MusicContext'
 import { Navigate, useNavigate, Link } from 'react-router-dom'
 import { BsFillPlayFill } from 'react-icons/bs'
-import LoadingSearch from '../components/loadingitems/loadingSearch/LoadingSearch'
+import LoadingSearch from '../../components/loadingitems/loadingSearch/LoadingSearch'
 import { BsPlay, BsPause } from 'react-icons/bs'
 
 import AddPlaylist_ToQueue from "./addPlaylist_ToQueue";
@@ -128,17 +128,17 @@ export default function PlaylistPage (props) {
         <div className='playlist--info' 
         // onClick={handlePlayPlaylist()}
         >
-          {/* for on load ^ then for on click v */}
+          <div className='playPauseQueueBtnCont'>
           {clicks !== 0 && play_list === playlist?.songList ? (
             <button
             className='playlist--playbtn'
             // id='playPauseBtn'
-           
+            onClick={togglePlayPause}
           >
             {isPlay_Global ? (
-              <BsPause   onClick={togglePlayPause}/>
+              <BsPause />
             ) : (
-              <BsPlay className='BsPlayStyleLg'  onClick={togglePlayPause} />
+              <BsPlay className='playIconPlayList' />
             )}
           </button>
           )
@@ -150,10 +150,17 @@ export default function PlaylistPage (props) {
             <BsFillPlayFill className='playIconPlayList'  />
           </button>
         )}
+        <div>
+          
+        </div>
+        <AddPlaylist_ToQueue input ={playlist?.songList} className='AddPlaylist_ToQueue'/>
+        
+        </div>
+ 
 
 
           
-          <AddPlaylist_ToQueue input ={playlist?.songList}/>
+          
           {!done ? (
             <LoadingSearch />
           ) : (

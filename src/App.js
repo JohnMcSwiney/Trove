@@ -23,9 +23,9 @@ import {
   FollowersPage,
   FollowingPage,
   PlaylistPage,
-  UpdatePlaylistPage,
+  UpdatePlaylist,
 } from "./pages";
-import CreatePlaylist from "./pages/create playlist/CreatePlaylist";
+import CreatePlaylist from "./pages/playlist/createPlaylist/CreatePlaylist";
 
 function App() {
   return (
@@ -67,7 +67,7 @@ function App() {
             </Route>
             <Route path="/createplaylist" element={<CreatePlaylist />}></Route>
             <Route path="/editplaylist/">
-              <Route path=":id" element={<UpdatePlaylistPage />}></Route>
+              <Route path=":id" element={<UpdatePlaylist />}></Route>
             </Route>
           </Routes>
         </div>

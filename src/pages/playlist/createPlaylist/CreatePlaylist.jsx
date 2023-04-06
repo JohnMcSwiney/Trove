@@ -1,13 +1,13 @@
 import React from "react";
 
 import "./CreatePlaylist.css";
-import albumsongs from "../../data/albumsongs.json";
+import albumsongs from "../../../data/albumsongs.json";
 import PlaylistSong from "./PlaylistSong";
 import PopUp from "./Popup";
 
 import firebase from "./firebaseConfig";
 
-import { useCreatePlaylist } from "../../hooks/user-hooks/useCreatePlaylist";
+import { useCreatePlaylist } from "../../../hooks/user-hooks/useCreatePlaylist";
 
 import {FiUpload} from 'react-icons/fi';
 
@@ -48,9 +48,9 @@ export default function CreatePlaylist(props) {
   const id = JSON.parse(user).id;
 
   //playlist val states
-  const default_album = "../assets/default_playlistcover.png";
-  const addSongImg = "../assets/addsongsymbol.png";
-  const removeSongImg = "../assets/xsongsymbol.png";
+  const default_album = "../../assets/default_playlistcover.png";
+  const addSongImg = "../../assets/addsongsymbol.png";
+  const removeSongImg = "../../assets/xsongsymbol.png";
   const [previewCover, setPreviewCover] = React.useState(default_album);
   const [albumSongs, setAlbumSongs] = React.useState(albumsongs);
   const [playlistSongList, setPlaylistSongList] = React.useState([]);

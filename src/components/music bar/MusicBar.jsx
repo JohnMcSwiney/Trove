@@ -403,6 +403,10 @@ const MusicBar = () => {
             changeRange()
             // animationRef.current = requestAnimationFrame(whilePlaying);
             toBeginningOfSong()
+            if(isPlay_Global === false){
+              togglePlayPause()
+            }
+            
             
           }}
           // onLoadedData = {

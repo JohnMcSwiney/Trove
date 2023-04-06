@@ -4,7 +4,7 @@ import { Navigate, NavLink } from "react-router-dom";
 
 
 //for searching songs
-import LoadingSearch from "../../components/loadingitems/loadingSearch/LoadingSearch";
+import LoadingSearch from "../../../components/loadingitems/loadingSearch/LoadingSearch";
 
 export default function PopUp(props) { 
       function handleClick() {

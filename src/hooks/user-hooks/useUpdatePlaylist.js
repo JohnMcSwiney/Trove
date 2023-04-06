@@ -1,5 +1,5 @@
 import { useState } from "react";
-import firebase from "../../pages/update playlist/firebaseConfig";
+import firebase from "../../pages/playlist/updatePlaylist/firebaseConfig";
 
 export const useUpdatePlaylist = () => {
   const [error, setError] = useState(null);

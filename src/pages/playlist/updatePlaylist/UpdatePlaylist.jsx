@@ -1,13 +1,13 @@
 import React from "react";
 
 import "./UpdatePlaylist.css";
-import albumsongs from "../../data/albumsongs.json";
+import albumsongs from "../../../data/albumsongs.json";
 import PlaylistSong from "./PlaylistSong";
 import PopUp from "./Popup";
 
 import firebase from "./firebaseConfig";
 
-import { useUpdatePlaylist } from "../../hooks/user-hooks/useUpdatePlaylist";
+import { useUpdatePlaylist } from "../../../hooks/user-hooks/useUpdatePlaylist";
 import { useParams } from "react-router-dom";
 // To create a playlist
 export default function UpdatePlaylist(props) {
