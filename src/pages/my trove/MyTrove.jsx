@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+
 
 import "./UserAccStyle.css";
 
@@ -15,9 +16,16 @@ import {
   Dislikeid,
 } from "../../components/discoverygame/DiscoveryGame";
 
+import { useRemoveLikes } from "../../hooks/user-hooks/useRemoveLikes";
 import { useAuthContext } from "../../hooks/user-hooks/useAuthContext";
 import { Navigate, useNavigate, Link, NavLink } from "react-router-dom";
+
+
 const MyTrove = () => {
+
+  const [unlikeError, setUnlikeError] = useState(null);
+  const [unlikeIsLoading, setUnlikeIsLoading] = useState(false);
+
   const { user } = useAuthContext();
 
   const userID = JSON.parse(localStorage.getItem("user")).id;
@@ -51,22 +59,124 @@ const MyTrove = () => {
     fetchUserInfo();
   }, []);
   console.log(userInfo.likedSongs);
+
+
+
+  //Work in progress but useing a modefiedversion of Dans code
+
+
+  /*
+  const [songId, setSongId] = useState('');
+    const handleRemoveSong = async (songId) => {
+      console.log(songId);
+   
+      const response = await fetch(`/api/users/${userID}/likedSongs/${songId._id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          body: JSON.stringify({ userID }),
+          body: JSON.stringify({ songId }),
+        },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setUserInfo(data);
+      } else {
+        console.log('Failed to remove song from liked songs.');
+      }
   
- 
+      
+    };
+  */
 
-  //Work in progress
 
-  const removeLike = async (song) => {
-    const response = await fetch(`/api/users/${userID}/likedSongs/${song._id}`, {
-      method: "DELETE",
+  // const { handleRemoveSong, unlikeError, unlikeIsLoading } = useRemoveLikes()
+
+  const handleRemoveSong = async (songId) => {
+
+    setUnlikeIsLoading(true);
+    setUnlikeError(null);
+
+    const newLikedSongs = userInfo.likedSongs.filter((likedSong) => likedSong._id !== songId._id);
+    setUserInfo({...userInfo, likedSongs: newLikedSongs});
+
+    console.log("songId: " + songId._id);
+
+    const response = await fetch(`/api/songs/removelike/${songId._id}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userID }),
     });
-    const data = await response.json();
-    setUserInfo(data);
-    console.log(data)
-  };
+    const json = await response.json();
 
- 
-  
+    console.log("json data: " + json);
+
+    console.log("userInfo: " + userInfo.likedSongs);
+
+
+    if (!response.ok) {
+      setUnlikeError(json.error);
+    }
+
+    //   if (response.ok) {
+    //     const itsUser = localStorage.getItem("user");
+    //     const likedSongs = itsUser ? JSON.parse(itsUser).likedSongs || [] : [];
+    //     const songIndex = likedSongs.indexOf(songId._id);
+    //     if (songIndex !== -1) {
+    //       likedSongs.splice(songIndex, 1);
+    //       localStorage.setItem(
+    //         "user",
+    //         JSON.stringify({ ...JSON.parse(user), likedSongs })
+    //       );
+    //     }
+    //   }
+    //   setunLikeIsLoading(false);
+    // };
+  }
+
+  // const removeLikes  = () => {
+  // const [songId, setSongId] = useState('');
+  // const [unlikeError, setUnlikeError] = useState(null);
+  // const [unlikeIsLoading, setunLikeIsLoading] = useState(false)
+  // const itsUser = localStorage.getItem("user");
+  // const itsUserID = itsUser ? JSON.parse(itsUser).id : null;
+
+
+  // const handleRemoveSong = async (songId) => {
+
+  //   setunLikeIsLoading(true);
+  //   setUnlikeError(null);
+
+  //   console.log(songId._id);
+  //   const response = await fetch(`/api/songs/removelike/${songId._id}`, {
+  //     method: "POST",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify({ itsUserID }),
+  //   });
+  //   const json = await response.json();
+
+  //   if (!response.ok) {
+  //     setUnlikeError(json.error);
+  //   }
+
+  //   if (response.ok) {
+  //     const itsUser = localStorage.getItem("user");
+  //     const likedSongs = itsUser ? JSON.parse(itsUser).likedSongs || [] : [];
+  //     const songIndex = likedSongs.indexOf(songId._id);
+  //     if (songIndex !== -1) {
+  //       likedSongs.splice(songIndex, 1);
+  //       localStorage.setItem(
+  //         "user",
+  //         JSON.stringify({ ...JSON.parse(user), likedSongs })
+  //       );
+  //     }
+  //   }
+  //   setunLikeIsLoading(false);
+  // };
+  // return { handleRemoveSong, unlikeError, unlikeIsLoading };
+  // };
+
+
   return (
     <div className="container">
       <div className="myTrvcontainer ">
@@ -125,27 +235,23 @@ const MyTrove = () => {
           <div className="account-showcase">
             <div className="TPlikedSongs">
               <h1>Liked Songs</h1>
-              
               {userInfo?.likedSongs &&
                 userInfo?.likedSongs.map((song) => (
                   <div key={song._id}>
                     <table className="LikeTable">
-                    <tr className="LikeTable">
-                      <th className="LikeTable">{song.title} - {song.artist?.artistName}</th> 
-                      <th className="RemoveLikeTable"> <button className="RemoveLike" onClick={() => removeLike(song)}  ><BsXCircle/></button></th> 
-
-                      {/*   
-                      add when remove like works
-                       onClick={() => removeLike(song)} 
-                       */}
-                    
-                    </tr>
+                      <tr className="LikeTable">
+                        <th className="LikeTable">{song.title} - {song.artist?.artistName}</th>
+                        <th className="RemoveLikeTable">
+                          <button className="RemoveLike" onClick={() => handleRemoveSong(song)} >
+                            <BsXCircle />
+                          </button>
+                        </th>
+                      </tr>
                     </table>
-                    
                   </div>
                 ))}
             </div>
-                  
+
             <br />
           </div>
         )}

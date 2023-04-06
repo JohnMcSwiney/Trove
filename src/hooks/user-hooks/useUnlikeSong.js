@@ -10,6 +10,7 @@ export const useUnlikeSong = () => {
   const unlike = async () => {
     setunLikeIsLoading(true);
     setUnlikeError(null);
+    console.log(currentSong._id);
     const response = await fetch(`/api/songs/removelike/${currentSong._id}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
