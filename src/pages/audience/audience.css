@@ -5,12 +5,29 @@
 
 }
 
+.artist--welcome > h5{ 
+  font-weight: 600;
+  text-align: center;
+
+}
+
+.artist--audience--searcheffect {
+
+      text-shadow:3px 3px #0034c4;
+}
+
 .grid-container {
     display: grid;
     grid-template-columns: auto auto ;
     grid-gap: 10px;
-    padding: 10px;
-    grid-column-gap: 250px;
+    /* grid-template-columns: 1fr;
+    grid-template-rows: 1fr; */
+    align-items: center;
+    justify-content: center;
+    grid-column-gap: 50px;
+    margin-left: 15%;
+    margin-top: 5%;
+
   }
 
   .grid-container > div > h1 {
@@ -21,4 +38,87 @@
     text-align: center;
     justify-content: center;
     display: flex;
+  }
+
+  .item2 > h1 {
+    font-size:8vmin;
+    /* text-decoration: underline blue 2px; */
+    text-shadow:3px 3px #0034c4;
+    
+  }
+  
+  .item1 > div > h2 {
+    font-weight: 600;
+    font-size: 30px;
+
+  }
+
+  .item1 { 
+    text-align: center;
+    background-color: white;
+    color: #080c3d;
+    border-radius: 2vmin;
+    width: 550px;
+    padding: 20px;
+
+
+  }
+  
+  .item1:hover { 
+    transform: scale(1.01);
+    box-shadow: 0 0 25px #0034c4;
+  }
+
+  .item3 > h1 {
+    font-size:75px;
+    font-size:8vmin;
+    transform: scale(1.01);
+    box-shadow: 0 0 25px #0034c4;
+    border-radius: 5vmin;
+    padding: 15vmin;
+  }
+
+  .item4 {
+    text-align: center;
+    background-color: white;
+    color: #080c3d;
+    border-radius: 2vmin;
+    justify-content: center;
+    display: flex;
+    margin-top: 5%;
+
+  }
+
+  .item4 > div {
+    display: inline-block;
+    justify-content: center;
+    width: 600px;
+    height: 500px;
+    margin-top: 5%;
+    background-color: white;
+    color: #080c3d;
+    border-radius: 2vmin;
+    padding: 20px;
+
+  }
+
+  .item4 > div h2 {
+    font-weight: 600;
+    font-size: 30px;
+  }
+
+  
+  .item4 > div canvas {
+    margin-top: 10%;
+  }
+
+  .item4:hover { 
+    transform: scale(1.01);
+    box-shadow: 0 0 25px #0034c4;
+  }
+
+  .artist--audience--content {
+    align-self: center;
+    justify-self: center;
+
   }

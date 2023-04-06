@@ -79,7 +79,7 @@ const Audience = () => {
       {/* <h5>Hello, {artist ? <span className="artist--namespan">{artist?.artistName}</span> : <NavLink to={"/login"}>please sign in.</NavLink>} </h5> */}
 
 
-      {artistAudience ? <h5>{artistAudience?.artistName}'s<span className="artist--namespan"> Audience</span> </h5> :
+      {artistAudience ? <h5> <span className="artist--audience--searcheffect">{artistAudience?.artistName}'s</span><span className="artist--namespan"> Audience</span> </h5> :
         <div className="artist--welcome">
         Hello, <NavLink to={"/login"}>please sign in.</NavLink>
         </div>
@@ -124,25 +124,27 @@ const Audience = () => {
           : null
       } */}
   
-  <div class="grid-container">
+  <div className="artist--audience--content">
+      <div class="grid-container">
       <div class="item1">
         <FiveSearched topSong={topSong}/>
       </div>
       <div class="item2">
         <h1>
-        {<span className="artist--namespan">{artistAudience?.searchCount}</span>} Searches.
+        {artistAudience?.searchCount} Searches
         </h1> 
       </div>
       <div class="item3">
         <h1>
-        {<span className="artist--namespan">{artistAudience?.followers.length}</span>} Fans.
+        {<span className="artist--namespan">{artistAudience?.followers.length}</span>} Fans
         </h1> 
       </div>  
       <div class="item4">
         <FiveLoved mostLoved={mostLoved} />
       </div>
   </div>
-  
+  </div>
+
 
   </div>
 
