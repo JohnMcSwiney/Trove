@@ -54,7 +54,11 @@ const Queue_CardSong = ({ song, index }) => {
   return (
     <div
       key={song._id}
-      className="queue--song-info-div"
+      className="
+      song-info-div"
+      // className="
+      // queue--song-info-div 
+      // song-info-div"
       onClick={() => {
         handlePlaySong()
         // handleQueue(song._id)
@@ -65,15 +69,15 @@ const Queue_CardSong = ({ song, index }) => {
       <h2> {index+1}</h2>
     </div>
       
-      <div className="queue--song-img-div">
+      <div className="song-img-div-ver2">
         <img src={song.imgUrl} alt={song.title} className="queue--song-img-searchcard2"/>
       </div>
       
-      <div className="queue--song-text-div">
-        <div className="queue--titlesongcard">
+      <div className="song-text-div">
+        <div className="titlesongcard">
           {song.title}
         </div>
-        <div className="queue--artistsongcard">
+        <div className="artistsongcard">
           {/* <NavLink to={`/artist/${song.artist._id}`} className="queue--song-art-link"> */}
             {song.artist.artistName}
           {/* </NavLink> */}

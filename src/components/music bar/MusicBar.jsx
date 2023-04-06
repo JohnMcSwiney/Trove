@@ -320,9 +320,14 @@ const MusicBar = () => {
     }
     if (queue.length > 0) {
       if(queue.length === 1){
-        clearQueue();
-        updatePlay_listPosition(play_listPosition);
-        return;
+        if(currentSong._id === queue[0]._id ){
+          clearQueue();
+          updatePlay_listPosition(play_listPosition);
+          return;
+        }else {
+          advanceQueue();
+        }
+       
       }
       if(currentSong._id === queue[0]._id && currentSong._id === queue[1]._id){
         console.log(currentSong._id + " qp1 " + queue[0]._id );

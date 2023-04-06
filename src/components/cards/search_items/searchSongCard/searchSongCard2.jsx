@@ -54,7 +54,7 @@ const SearchSongCard2 = ({ song }) => {
         // song.songUrl
 
       }}>
-        <img src={song.imgUrl} alt={song.title}/>
+        <img src={song.imgUrl} alt={song.title} className="queue--song-img-searchcard2"/>
       </div>
       
       <div className="song-text-div">
