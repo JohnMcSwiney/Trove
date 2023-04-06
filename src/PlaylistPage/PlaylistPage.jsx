@@ -100,8 +100,13 @@ export default function PlaylistPage (props) {
     console.log('in playlist play_List method');
     
     if(play_list !== playlist?.songList ){
-      clearPlay_list();
-      updatePlay_list(playlist?.songList);
+      if(playlist?.songList.length === 0 ){
+        return;
+      } else {
+        console.log("setting Play_list")
+        updatePlay_list(playlist?.songList);
+      }
+      
     }
   }
   const navigate = useNavigate()
