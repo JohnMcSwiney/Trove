@@ -1,7 +1,6 @@
 const express = require("express");
 const { default: mongoose } = require("mongoose");
 const URL = require("url").URL;
-const DiscoveryGame = require("../../models/discoveryGame model/discoveryGame-model");
 const Song = require("../../models/song model/song-model");
 const Artist = require("../../models/artist model/artist-model");
 const Album = require("../../models/album model/album-model");
