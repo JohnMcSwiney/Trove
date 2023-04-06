@@ -175,23 +175,24 @@ const compareSongData = async (user) => {
           songGenre = genres[fourthIndex];
           console.log("songGenre in if stmt: " + songGenre);
         }
+        return songGenre;
       }
 
 
       //assign genre in set of final if statements
 
-      if (chance < 25 || chance >= 25 && chance < 50) {
-        console.log("chance was >25 but <50");
+      if (chance >= 50 && chance < 80) {
+        console.log("chance was >=50 but <80");
         songGenre = genres[firstIndex];
         console.log("songGenre in if stmt: " + songGenre);
       }
-      else if (chance >= 50 && chance < 75) {
-        console.log("chance was >50 but <75");
+      else if (chance < 50) {
+        console.log("chance was < 50");
         songGenre = genres[secondIndex];
         console.log("songGenre in if stmt: " + songGenre);
       }
-      else if (chance == 75) {
-        console.log("chance was greater than 75");
+      else if (chance >= 80) {
+        console.log("chance was greater than or equal to 80");
         songGenre = genres[thirdIndex];
         console.log("songGenre in if stmt: " + songGenre);
       }
@@ -211,6 +212,8 @@ const compareSongData = async (user) => {
 
       return songGenre;
     });
+
+    console.log("final songGenre: " + songGenre);
 
     const similarSongs = await Song.find({ genre: songGenre })
       .populate("artist")
