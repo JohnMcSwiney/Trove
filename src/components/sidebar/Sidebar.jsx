@@ -1,7 +1,15 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 function Sidebar() {
+  const navigate = useNavigate();
+  const handleSignout = () => {
+    localStorage.removeItem("admin");
+    fetch("/api/admins/logout").then(() => {
+      navigate("/");
+      window.location.reload(false);
+    });
+  };
   return (
     <div className="bg-white sidebar p-2">
       <div className="m-2">
@@ -11,7 +19,7 @@ function Sidebar() {
       <div className="list-group list-group-flush">
         <NavLink
           className="list-group-item py-2"
-          to={"/"}
+          to={"/dashboard"}
           activeClassName="active"
         >
           <span>Dashboard</span>
@@ -72,7 +80,9 @@ function Sidebar() {
           <span>Admin</span>
         </NavLink>
 
-        <button className="btn btn-dark mt-3">Logout</button>
+        <button className="btn btn-dark mt-3" onClick={handleSignout}>
+          Logout
+        </button>
       </div>
     </div>
   );
