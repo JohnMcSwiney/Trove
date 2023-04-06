@@ -31,7 +31,7 @@ const createSong = async (req, res) => {
             ...req.body,
             artist: artist._id,
             album: album._id,
-            releaseType: ["album"],
+            releaseType: "album",
           });
 
           if (song.album) {
@@ -68,7 +68,7 @@ const createSong = async (req, res) => {
             ...req.body,
             artist: artist._id,
             album: album._id,
-            releaseType: ["album"],
+            releaseType: "album",
             featuredArtists: featuredArtists,
           });
 
@@ -314,7 +314,7 @@ const updateSong = async (req, res) => {
       await EP.updateOne({ _id: song.ep }, { $pull: { songList: song._id } });
       song.album = null;
       song.ep = null;
-      song.releaseType = ["single"];
+      song.releaseType = "single";
     } else if (album && !ep) {
       const newAlbum = await Album.findOne({ _id: album });
       if (!newAlbum) {
@@ -325,7 +325,7 @@ const updateSong = async (req, res) => {
       if (!newAlbum.songList.includes(song._id)) {
         await newAlbum.updateOne({ $push: { songList: id } });
         song.ep = null;
-        song.releaseType = ["album"];
+        song.releaseType = "album";
       }
     } else if (!album && ep) {
       const newEP = await EP.findById(ep);
@@ -344,7 +344,7 @@ const updateSong = async (req, res) => {
       if (!newEP.songList.includes(song._id)) {
         const updateEp = await newEP.updateOne({ $push: { songList: id } });
         song.album = null;
-        song.releaseType = ["ep"];
+        song.releaseType = "ep";
       }
     } else {
       res
