@@ -23,10 +23,11 @@ body {
     
 } */
 .playlist-containter-ver2{
-  display: flex;
+  /* display: flex; */
   justify-content: center;
   margin: auto;
   flex-direction: column;
+  margin-bottom: 400px;
 }
 
 /* DESKTOP */

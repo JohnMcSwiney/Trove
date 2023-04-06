@@ -79,7 +79,11 @@ const MusicBar = () => {
     clearQueue,
 
     loopLevel,
-    updateLoopLevel
+    updateLoopLevel,
+
+    isPlay_Global,
+    toggleIsPlay_G,
+    setIsPlay_Global,
   } = React.useContext(MusicContext)
   //state
   //testing play/pause
@@ -148,17 +152,21 @@ const MusicBar = () => {
     return `${returnedMinutes} : ${returnedSeconds}`
   }
 
-  const togglePlayPause = () => {
-    const prevValue = isPlaying
-    setIsPlaying(!prevValue)
-    changeVolumeLevel()
-    if (!prevValue) {
+  useEffect(() => {
+    changeVolumeLevel();
+    if(isPlay_Global === true){
+      console.log("isPlay_Global : true (in musicBar useEffect)")
       audioPlayer.current.play()
-      // animationRef.current = requestAnimationFrame(whilePlaying); //fix this
     } else {
+      console.log("isPlay_Global : false (in musicBar useEffect)")
       audioPlayer.current.pause()
       cancelAnimationFrame(animationRef.current)
     }
+
+
+  },[isPlay_Global])
+  const togglePlayPause = () => {
+    toggleIsPlay_G();
   }
 
   const toggleMute = () => {
@@ -528,8 +536,8 @@ const MusicBar = () => {
           <div
             className={
               displayMusicBar === true
-                ? 'musicbar-wrap bg-trv-sm-Play-bg bg-fglass-b'
-                : 'musicbar-wrap bg-trv-sm-Play-bg translate-down bg-fglass-b'
+                ? 'musicbar-wrap bg-trv-sm-Play-bg '
+                : 'musicbar-wrap bg-trve-sm-Play-bg translate-down '
             }
           >
             {/* This style is in the fullscreen css file - idk there was a bug <3 */}
@@ -624,7 +632,7 @@ const MusicBar = () => {
                   id='playPauseBtn'
                   onClick={togglePlayPause}
                 >
-                  {isPlaying ? (
+                  {isPlay_Global ? (
                     <BsPause />
                   ) : (
                     <BsPlay className='BsPlayStyleLg' />

@@ -23,6 +23,7 @@ export const MusicProvider = ({ children }) => {
   const[curr_DiscoveryDecision, setCurr_DiscoveryDecision] = useState("water/ice/salt(aye)");
   const[discovery_Decision_List, updateDiscovery_Decision_List] = useState([]);
 
+  const[isPlay_Global, setIsPlay_Global] = useState(false);  
 
   const updateDisplayMusicBar = (newDisplayMusicBar) => {
     setDisplayMusicBar(newDisplayMusicBar);
@@ -53,6 +54,7 @@ export const MusicProvider = ({ children }) => {
 
     if(play_list?.length !== newPlay_listPosition){
       updateCurrentSong(play_list[newPlay_listPosition]);
+      
     }
     
   };
@@ -101,8 +103,7 @@ export const MusicProvider = ({ children }) => {
       
     }
   }
-  const addQueueList = (inputtedItem) => {
-    
+  const addQueueList = (inputtedItem) => {  
     let i = 0;
     if(inputtedItem.length === 0 ){
       return
@@ -119,21 +120,10 @@ export const MusicProvider = ({ children }) => {
         // console.log(queue[0])
         if(!play_list){
           updateCurrentSong(queue[0]);
-        }
-        
-
-        // if(play_list.length === 0 && queue.length === 0){
-        //   console.log(queue[0])
-          
-        // }
-        
+          // toggleIsPlay_G();
+        }       
       }
     }
-    // console.log(queue[0]._id);
-    // inputtedItem.forEach(addToQueue);
-    // const newArr = 
-    // const arr = inputtedItem;
-    // arr.forEach(addToQueue);
     
   }
   const updateQueuePosition = (newQueuePosition) => {
@@ -142,6 +132,7 @@ export const MusicProvider = ({ children }) => {
 
     if(queue?.length !== newQueuePosition){
       updateCurrentSong(queue[newQueuePosition]);
+      
     }
   };
 
@@ -206,6 +197,7 @@ export const MusicProvider = ({ children }) => {
           updatePlay_listPosition(0)
         }
       }
+      toggleIsPlay_G();
     } else {
       
     }
@@ -213,6 +205,13 @@ export const MusicProvider = ({ children }) => {
   useEffect (() => {
 
   })
+  // const[isPlay_Global, setIsPlay_Global] = useState(false);  
+  const toggleIsPlay_G = () => {
+    const prevValue = isPlay_Global
+    console.log("global isPlaying : " + isPlay_Global);
+    setIsPlay_Global(!prevValue)
+    
+  }
   // useEffect (()=> {
   //   console.log("queue" + queue);
   // },[queue])
@@ -244,6 +243,10 @@ export const MusicProvider = ({ children }) => {
 
     loopLevel,
     updateLoopLevel,
+    
+    isPlay_Global,
+    toggleIsPlay_G,
+    setIsPlay_Global,
 
     curr_DiscoveryDecision,
     setCurr_DiscoveryDecision,

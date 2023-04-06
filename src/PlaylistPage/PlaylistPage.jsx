@@ -9,6 +9,7 @@ import { MusicContext } from '../contexts/MusicContext'
 import { Navigate, useNavigate, Link } from 'react-router-dom'
 import { BsFillPlayFill } from 'react-icons/bs'
 import LoadingSearch from '../components/loadingitems/loadingSearch/LoadingSearch'
+import { BsPlay, BsPause } from 'react-icons/bs'
 
 import AddPlaylist_ToQueue from "./addPlaylist_ToQueue";
 //fetching
@@ -29,6 +30,9 @@ export default function PlaylistPage (props) {
     addToQueue,
     clearPlay_list,
     updatePlay_listPosition,
+    isPlay_Global,
+    toggleIsPlay_G,
+
   } = React.useContext(MusicContext)
 
   const [playlist, setPlaylist] = React.useState(null)
@@ -51,7 +55,9 @@ export default function PlaylistPage (props) {
       console.log("we have a match");
     }
   }, [])
-  
+  const togglePlayPause = () => {
+    toggleIsPlay_G();
+  }
   React.useEffect(() => {
     const fetchPlaylist = async () => {
       // const playlistResponse = await fetch(`/api/playlists/${id}`, {
@@ -98,16 +104,16 @@ export default function PlaylistPage (props) {
 
   const setPlaylistasPlay_list = () =>{
     console.log('in playlist play_List method');
-    
-    if(play_list !== playlist?.songList ){
-      if(playlist?.songList.length === 0 ){
-        return;
-      } else {
-        console.log("setting Play_list")
-        updatePlay_list(playlist?.songList);
+    if(clicks !== 0){
+      if(play_list !== playlist?.songList ){
+        if(playlist?.songList.length === 0 ){
+          return;
+        } else {
+          console.log("setting Play_list")
+          updatePlay_list(playlist?.songList);
+        }
       }
-      
-    }
+    } 
   }
   const navigate = useNavigate()
   function redirectEditPlaylist () {
@@ -123,11 +129,30 @@ export default function PlaylistPage (props) {
         // onClick={handlePlayPlaylist()}
         >
           {/* for on load ^ then for on click v */}
+          {clicks !== 0 && play_list === playlist?.songList ? (
+            <button
+            className='playlist--playbtn'
+            // id='playPauseBtn'
+           
+          >
+            {isPlay_Global ? (
+              <BsPause   onClick={togglePlayPause}/>
+            ) : (
+              <BsPlay className='BsPlayStyleLg'  onClick={togglePlayPause} />
+            )}
+          </button>
+          )
+        :
+        (
           <button className='playlist--playbtn' onClick={
             handlePlayPlaylist
             }>
             <BsFillPlayFill className='playIconPlayList'  />
           </button>
+        )}
+
+
+          
           <AddPlaylist_ToQueue input ={playlist?.songList}/>
           {!done ? (
             <LoadingSearch />
