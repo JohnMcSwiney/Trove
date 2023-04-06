@@ -12,6 +12,11 @@ const playlistSchema = new mongoose.Schema(
       type: String,
       ref: "User"
     },
+    playlistBio: {
+      type: String,
+      maxLength: 100,
+      default: null
+    },
     playlistCoverUrl: {
       type: String,
     },

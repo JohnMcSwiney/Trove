@@ -13,6 +13,11 @@ const curatedPlaylistSchema = new mongoose.Schema(
       //default
       default: "Trove Music"
     },
+    curatedPlaylistBio: {
+      type: String,
+      maxLength: 100,
+      default: "generated playlist provided to you by Trove Music."
+    },
     curatedPlaylistCoverUrl: {
       type: String,
     },

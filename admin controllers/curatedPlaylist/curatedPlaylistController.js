@@ -1,7 +1,6 @@
 const CuratedPlaylist = require("../../models/curatedPlaylist model/curatedPlaylist-model");
 const Song = require("../../models/song model/song-model");
 const Artist = require("../../models/artist model/artist-model");
-const cron = require("node-cron");
 
 
 const mongoose = require("mongoose");
@@ -118,53 +117,7 @@ const generateCuratedPlaylists = async (req, res) => {
 
         await createRandomPlaylist();
 
-        return res.status(201).json({msg: "required curated playlists created!"});
-
-        // const popNames = ["Poppin' Nights", "Friday Popz", "P-O-Pcorn"];
-        // const rockNames = ["Rockin' Fridays", "Rockslidez", "Rockefeller"];
-        // const countryNames = ["Country Vibes", "Western Dayz", "Big Iron"];
-        // const hipHopNames = ["Trappin' Thursdays", "Westside Vibez", "Daily Beatz"];
-        // const topSongNames = ["Top Beatz", "Popular Tracks", "Most Searched"];
-        // const topArtistNames = "M.V.P";
-        // const randomNames = ["Random Vibez", "The Shuffler", "Mystery Music"]
-
-        // const topSongsPlaylist = await CuratedPlaylist.findOne({ curatedPlaylistName: { $in: topSongNames } });
-        // // const topArtistPlaylist = await CuratedPlaylist.findOne({curatedPlaylistName: {$in: topArtistNames}});
-        // const topArtistPlaylist = await CuratedPlaylist.findOne({ curatedPlaylistName: topArtistNames });
-        // const popPlaylist = await CuratedPlaylist.findOne({ curatedPlaylistName: { $in: popNames } })
-        // const rockPlaylist = await CuratedPlaylist.findOne({ curatedPlaylistName: { $in: rockNames } })
-        // const countryPlaylist = await CuratedPlaylist.findOne({ curatedPlaylistName: { $in: countryNames } })
-        // const hipHopPlaylist = await CuratedPlaylist.findOne({ curatedPlaylistName: { $in: hipHopNames } })
-        // const randomPlaylist = await CuratedPlaylist.findOne({curatedPlaylistName: { $in: randomNames } });
-
-        // if (!topSongsPlaylist) {
-        //     const topSongs = await createTopSongsPlaylist();
-        //     return res.status(201).json(topSongs);
-        // }
-        // if (!topArtistPlaylist) {
-        //     const topArtistSongs = await createTopArtistPlaylist();
-        //     return res.status(201).json(topArtistSongs);
-        // }
-        // if (!popPlaylist) {
-        //     const popSongs = await createRandomPopPlaylist();
-        //     return res.status(201).json(popSongs);
-        // }
-        // if (!rockPlaylist) {
-        //     const rockSongs = await createRandomRockPlaylist();
-        //     return res.status(201).json(rockSongs);
-        // }
-        // if (!countryPlaylist) {
-        //     const countrySongs = await createRandomCountryPlaylist();
-        //     return res.status(201).json(countrySongs);
-        // }
-        // if (!hipHopPlaylist) {
-        //     const hipHopSongs = await createRandomHipHopPlaylist();
-        //     return res.status(201).json(hipHopSongs);
-        // }
-        // if (!randomPlaylist) {
-        //     const randomSongs = await createRandomPlaylist();
-        //     return res.status(201).json(randomSongs);
-        // }
+        //return res.status(201).json({msg: "required curated playlists created!"});
     } catch (err) {
         console.log(err);
         res.status(400).json({ message: err.message });
@@ -347,6 +300,7 @@ const createRandomPlaylist = async (req, res) => {
 
         const curatedPlaylist = new CuratedPlaylist({
             curatedPlaylistName: name,
+            curatedPlaylistBio: "Listen to a mix of random of songs!",
             songList: songLimit,
             isGenerated: true
         });
@@ -404,6 +358,7 @@ const createRandomPopPlaylist = async (req, res) => {
 
         const curatedPlaylist = new CuratedPlaylist({
             curatedPlaylistName: name,
+            curatedPlaylistBio: "Listen to a mix of random of pop songs!",
             songList: songLimit,
             isGenerated: true
         });
@@ -434,7 +389,7 @@ const createRandomRockPlaylist = async (req, res) => {
 
         const songLimit = [];
 
-        while (songLimit.length < 3) {
+        while (songLimit.length < 5) {
 
             const randomSong = songs[Math.floor(Math.random() * songs.length)];
 
@@ -445,7 +400,7 @@ const createRandomRockPlaylist = async (req, res) => {
         }
         console.log("songLimit length: " + songLimit.length);
 
-        if (songLimit.length > 3) {
+        if (songLimit.length > 5) {
             throw new Error("Song limit cannot be greater than 50.");
         }
 
@@ -461,6 +416,7 @@ const createRandomRockPlaylist = async (req, res) => {
 
         const curatedPlaylist = new CuratedPlaylist({
             curatedPlaylistName: name,
+            curatedPlaylistBio: "Listen to a mix of random of rock songs!",
             songList: songLimit,
             isGenerated: true
         });
@@ -491,7 +447,7 @@ const createRandomCountryPlaylist = async (req, res) => {
 
         const songLimit = [];
 
-        while (songLimit.length < 3) {
+        while (songLimit.length < 5) {
 
             const randomSong = songs[Math.floor(Math.random() * songs.length)];
 
@@ -502,7 +458,7 @@ const createRandomCountryPlaylist = async (req, res) => {
         }
         console.log("songLimit length: " + songLimit.length);
 
-        if (songLimit.length > 3) {
+        if (songLimit.length > 5) {
             throw new Error("Song limit cannot be greater than 50.");
         }
 
@@ -518,6 +474,7 @@ const createRandomCountryPlaylist = async (req, res) => {
 
         const curatedPlaylist = new CuratedPlaylist({
             curatedPlaylistName: name,
+            curatedPlaylistBio: "Listen to a mix of random of country songs!",
             songList: songLimit,
             isGenerated: true
         });
@@ -548,7 +505,7 @@ const createRandomHipHopPlaylist = async (req, res) => {
 
         const songLimit = [];
 
-        while (songLimit.length < 3) {
+        while (songLimit.length < 5) {
 
             const randomSong = songs[Math.floor(Math.random() * songs.length)];
 
@@ -559,11 +516,11 @@ const createRandomHipHopPlaylist = async (req, res) => {
         }
         console.log("songLimit length: " + songLimit.length);
 
-        if (songLimit.length > 3) {
+        if (songLimit.length > 5) {
             throw new Error("Song limit cannot be greater than 50.");
         }
 
-        const hipHopNames = ["Trappin' Thursdays", "Westside Vibez", "Daily Beatz"];
+        const hipHopNames = ["Trappin' Thursdays", "Westside Vibez", "HipHop Beatz"];
 
         let name = "";
         let index = 0;
@@ -575,6 +532,7 @@ const createRandomHipHopPlaylist = async (req, res) => {
 
         const curatedPlaylist = new CuratedPlaylist({
             curatedPlaylistName: name,
+            curatedPlaylistBio: "Listen to a mix of random of hiphop songs!",
             songList: songLimit,
             isGenerated: true
         });
@@ -605,7 +563,7 @@ const createTopSongsPlaylist = async (req, res) => {
 
         const songLimit = [];
 
-        while (songLimit.length < 3) {
+        while (songLimit.length < 5) {
 
             const currentSong = songs.shift();
 
@@ -617,7 +575,7 @@ const createTopSongsPlaylist = async (req, res) => {
         }
         console.log("songLimit length: " + songLimit.length);
 
-        if (songLimit.length > 3) {
+        if (songLimit.length > 5) {
             throw new Error("Song limit cannot be greater than 50.");
         }
 
@@ -633,6 +591,7 @@ const createTopSongsPlaylist = async (req, res) => {
 
         const curatedPlaylist = new CuratedPlaylist({
             curatedPlaylistName: name,
+            curatedPlaylistBio: "Listen to the most popular songs on the platform!",
             songList: songLimit,
             isGenerated: true
         });
@@ -693,6 +652,7 @@ const createTopArtistPlaylist = async (req, res) => {
 
         const curatedPlaylist = new CuratedPlaylist({
             curatedPlaylistName: topArtistNames,
+            curatedPlaylistBio: "Listen to the most popular hits from the most popular artists!",
             songList: songLimit,
             isGenerated: true
         });
@@ -789,15 +749,6 @@ const deleteCuratedPlaylist = async (req, res) => {
         res.status(400).json({ message: err.message });
     }
 };
-
-cron.schedule("0 0 * * 0", async () => {
-    await CuratedPlaylist.deleteMany({$where: {isGenerated: true}}, (err) => {
-        if (err) {
-            console.log(err);
-        }
-        generateCuratedPlaylists();
-    })
-});
 
 module.exports = {
     getAllCuratedPlaylist,
