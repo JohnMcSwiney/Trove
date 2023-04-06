@@ -189,7 +189,7 @@ const MyTrove = () => {
       <div className="myTrvcontainer ">
         <div className="pfp_name_follower_cont">
           <div className="borderuserimg">
-            <img src={user?.imageURL} className="user-img"></img>
+            <img src={userInfo.imageURL} className="user-img"></img>
           </div>
           <div className="name_follower_cont">
             <div className="txt-container">
@@ -212,7 +212,7 @@ const MyTrove = () => {
           </div>
           <div className="showcase-items-cont">
             <button className="newPlaylistBtn" onClick={redirectCreatePlaylist}>
-              <div className="newPlaylistBtnText">Create New Playlist</div>
+              <div className="newPlaylistBtnText">Add Playlist</div>
               <div className="newPlaylistPlusBtn">+</div>
             </button>
             {playlists &&
@@ -228,7 +228,7 @@ const MyTrove = () => {
         </div>
         <div className="mytrove-splitter"></div>
         <div className="account-showcase">
-          <h1>Top Genre(s):</h1>
+          <h1>Top Genres:</h1>
           <div className="CardCont">
             <GenreCard color={"#fc6ff1"} name={"Pop"} percent={"50%"} />
 
