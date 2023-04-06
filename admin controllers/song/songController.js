@@ -177,12 +177,9 @@ const createSong = async (req, res) => {
 const getAllSongs = async (req, res) => {
   try {
     const songs = await Song.find()
-
       .populate("artist")
       .populate("featuredArtists")
-
       .populate("album")
-
       .sort({ createdAt: -1 });
 
     console.log("getAllSongs method working");
@@ -632,6 +629,108 @@ const dislikeSong = async (req, res) => {
   }
 };
 
+const genreStats = async (req, res) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: "song not available" });
+  }
+
+  try {
+    // const { userID } = req.body;
+
+    // console.log(userID);
+
+    const user = await User.findById(id);
+
+    if (!user) {
+      console.log("user not found");
+      throw new Error("user not found");
+    }
+
+    let numOfPop = 0;
+    let numOfRock = 0;
+    let numOfCountry = 0;
+    let numOfHipHop = 0;
+
+    let first = 0;
+    let second = 0;
+    let third = 0;
+
+
+    console.log("user liked songs: " + user.likedSongs.length)
+
+    const songs = await Song.find({_id: {$in: user.likedSongs}})
+      .sort({genre: -1});
+
+    songs.map(async (song) => {
+
+      //await Song.findOne({ user: user._id })
+
+      console.log("current song title: " + song.title + ", genre: " + song.genre)
+
+      switch (song.genre) {
+        case "pop":
+          numOfPop++;
+          console.log("# of pop: " + numOfPop);
+          break;
+        case "rock":
+          numOfRock++;
+          console.log("# of rock: " + numOfRock);
+          break;
+        case "country":
+          numOfCountry++;
+          console.log("# of country: " + numOfCountry);
+          break;
+        case "hiphop":
+          numOfHipHop++;
+          console.log("# of hiphop: " + numOfHipHop);
+          break;
+        default:
+          console.log("Invalid songGenre");
+          break;
+      }
+
+      let genreArray = [numOfPop, numOfRock, numOfCountry, numOfHipHop]
+
+      let firstIndex = 0;
+      let secondIndex = 0;
+      let thirdIndex = 0;
+
+      for (let i = 0; i < genreArray.length; i++) {
+
+        if (genreArray[i] > first) {
+          first = genreArray[i];
+          //firstIndex = i;
+        }
+        else if (genreArray[i] < first && genreArray[i] > third) {
+          second = genreArray[i];
+          //secondIndex = i;
+        }
+        else {
+          third = genreArray[i];
+          //thirdIndex = i;
+        }
+      }
+    })
+
+    console.log("final # of pop: " + numOfPop);
+    console.log("final # of rock: " + numOfRock);
+    console.log("final # of country: " + numOfCountry);
+    console.log("final # of hiphop: " + numOfHipHop);
+
+    console.log("first: " + first);
+    console.log("second: " + second);
+    console.log("third: " + third);
+
+
+
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({ message: err.message });
+  }
+}
+
 module.exports = {
   getAllSongs,
   getSong,
@@ -642,4 +741,5 @@ module.exports = {
   likedSong,
   dislikeSong,
   songViewed,
+  genreStats
 };
