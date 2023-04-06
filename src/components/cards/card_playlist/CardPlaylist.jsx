@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./CardPlaylist.css";
 
-import AlbumPage from "../../../AlbumPage/AlbumPage.jsx";
+import AlbumPage from "../../../pages/album/AlbumPage/AlbumPage.jsx";
 import { Navigate, useNavigate, Link } from "react-router-dom";
 
 function CardArtist({ playlist }) {

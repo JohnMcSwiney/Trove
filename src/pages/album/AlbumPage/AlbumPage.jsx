@@ -2,15 +2,15 @@ import React from 'react'
 
 import './AlbumPage.css'
 // import NavBar from './nav bar/NavBar';
-import albumsongs from '../data/albumsongs.json'
+import albumsongs from '../../../data/albumsongs.json'
 import AlbumSong from './AlbumSong'
 
 //fetching
 import { useParams } from 'react-router-dom'
 
-import LoadingSearch from '../components/loadingitems/loadingSearch/LoadingSearch'
-import SearchSongCard2 from '../components/cards/search_items/searchSongCard/searchSongCard2'
-import { MusicContext } from '../contexts/MusicContext'
+import LoadingSearch from '../../../components/loadingitems/loadingSearch/LoadingSearch'
+import SearchSongCard2 from '../../../components/cards/search_items/searchSongCard/searchSongCard2'
+import { MusicContext } from '../../../contexts/MusicContext'
 import { Navigate, useNavigate, Link } from 'react-router-dom'
 import { BsFillPlayFill } from 'react-icons/bs'
 import { escapeSelector } from 'jquery'
