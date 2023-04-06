@@ -23,7 +23,7 @@ const adminLogin = async (req, res) => {
     }
     const isMatch = await bcrypt.compare(password, admin.password);
     if (!isMatch) {
-      return res.status(400).json({ message: "Invalid email or password" });
+      return res.status(400).json({ error: "Invalid email or password" });
     }
     const token = createToken(admin._id);
     const authAdmin = { adminID: admin._id, token, adminName: admin.adminName };
