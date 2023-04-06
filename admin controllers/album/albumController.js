@@ -16,7 +16,14 @@ const getAlbum = async (req, res) => {
   }
 
   const album = await Album.findById(id)
-  .populate("artist", "artistName")
+  .populate("artist")
+  .populate({
+                path: "songList",
+                populate: {
+                    path: "artist",
+                    select: "artistName",
+                },
+            });
   
 
   if (!album) {

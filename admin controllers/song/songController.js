@@ -177,9 +177,9 @@ const createSong = async (req, res) => {
 const getAllSongs = async (req, res) => {
   try {
     const songs = await Song.find()
-      .populate("artist")
-      .populate("featuredArtists")
-      .populate("album")
+    .populate("artist")
+    .populate("featuredArtists")
+    .populate("album")
       .sort({ createdAt: -1 });
 
     console.log("getAllSongs method working");
