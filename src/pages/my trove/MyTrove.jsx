@@ -49,18 +49,24 @@ const MyTrove = () => {
   };
 
   const [userInfo, setUserInfo] = useState([]);
-  React.useEffect(() => {
+ 
+
     const fetchUserInfo = async () => {
       const response = await fetch(`/api/users/${userID}`);
       const data = await response.json();
 
       setUserInfo(data);
+
     };
-    fetchUserInfo();
-  }, []);
+
+ 
   console.log(userInfo.likedSongs);
 
 
+
+  React.useEffect(() => {
+    fetchUserInfo();
+  }, []);
 
   //Work in progress but useing a modefiedversion of Dans code
 
@@ -93,6 +99,7 @@ const MyTrove = () => {
   // const { handleRemoveSong, unlikeError, unlikeIsLoading } = useRemoveLikes()
 
   const handleRemoveSong = async (songId) => {
+
 
     setUnlikeIsLoading(true);
     setUnlikeError(null);
@@ -242,7 +249,10 @@ const MyTrove = () => {
                       <tr className="LikeTable">
                         <th className="LikeTable">{song.title} - {song.artist?.artistName}</th>
                         <th className="RemoveLikeTable">
-                          <button className="RemoveLike" onClick={() => handleRemoveSong(song)} >
+                          <button className="RemoveLike" onClick={() => {
+                              handleRemoveSong(song);
+
+                            }} >
                             <BsXCircle />
                           </button>
                         </th>
