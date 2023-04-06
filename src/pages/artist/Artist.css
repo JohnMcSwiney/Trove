@@ -8,6 +8,7 @@
     overflow: hidden;
     width: 100%;
     position: relative;
+    padding-bottom: 50px;
     
     
 }
@@ -72,7 +73,7 @@
     width: inherit;
     justify-content: center;  
     padding: 1vw;
-    background-color: rgba(43, 43, 43, 0.452);
+    background-color: rgba(17, 4, 52, 0.758);
     align-content: center;
     margin: auto;
     position: fixed;
@@ -222,6 +223,8 @@
 
 .Artistpage-artist-showcase .gap-4  {
     margin-left: 25px;
+    overflow: scroll;
+    width: 95%;
 
 } 
 
@@ -292,6 +295,7 @@
 
 .artistprofile--songs {
     margin-left: 20px;
+
 
 }
 

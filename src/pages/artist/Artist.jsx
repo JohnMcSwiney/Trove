@@ -113,6 +113,22 @@ const Artist = () => {
   };
   console.log(artist);
   console.log(songs);
+
+  const [topSong, setTopSong] = React.useState([]);
+  React.useEffect(() => {
+    const fetchMyTopSong = async () => {
+      const response = await fetch(`/api/songs/artist-topsearch/${artist?._id}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+      const json = await response.json();
+      if (response.ok) {
+        setTopSong(json);
+      }
+    };
+    fetchMyTopSong();
+  }, [artist?._id]);
+
   return (
     <div className="Artistpage-container ">
       <div className="Artistpage-pfp_name_follower_bio_cont bg-fglass-1">
@@ -172,7 +188,7 @@ const Artist = () => {
       <div className="Artistpage-artist-showcase-lg Artistpage-mar-t">
         <h1>Top Songs </h1>
         <div className="topSongCardContCont">
-          {songs && songs?.map((song, index) => 
+          {topSong && topSong?.map((song, index) => 
           <ErrorBoundary>
             <TopSongCard key={song._id} index={index} name={song?.title} cover={song?.imgUrl} song={song}/>
           </ErrorBoundary>

@@ -35,7 +35,7 @@ export default function Follower(props) {
                 <div className="followers--tiny--icon">
                 <div className="follower--circle--border"> 
                     <div className="follower--artist--icon">
-                        <img width="215vmin" src={follower?.imageUrl} alt="profile"/>
+                        <img width="215vmin" src={follower?.imageURL} alt="profile"/>
                     </div>
                 </div>
                 </div>   
