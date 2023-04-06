@@ -273,14 +273,60 @@ const MusicBar = () => {
   //   console.log(`show queue`)
   // }
 
+  const userID = JSON.parse(localStorage.getItem("user")).id;
+
+  const [userInfo, setUserInfo] = useState([]);
+
+
+  
+
+
+    const fetchUserInfo = async () => {
+      const response = await fetch(`/api/users/${userID}`);
+      const data = await response.json();
+      setUserInfo(data);
+
+
+
+
+      let likedata = userInfo.likedSongs;
+      let myValue = currentSong._id;
+
+      
+
+      if (likedata.some(item => item._id === myValue)) {
+        
+        
+        setIsLiked(true)
+      } else {
+        
+        
+        setIsLiked(false)
+      }
+      
+
+    };
+    
+
+  
+  React.useEffect(() => {
+    
+    
+    fetchUserInfo();
+    
+  }, [currentSong]);
+
+
   const { like, likeError, likeIsLoading } = useLikeSong()
   const { unlike, unlikeError, unlikeIsLoading } = useUnlikeSong()
 
   const toggleLiked = () => {
-    setIsLiked(!isLiked)
+    
     if (!isLiked) {
       like()
+      
     } else {
+      
       unlike()
     }
   }
@@ -423,6 +469,7 @@ const MusicBar = () => {
           }}
           onTimeUpdate={() => {
             (animationRef.current = requestAnimationFrame(whilePlaying))
+            fetchUserInfo();
           }}
 
           
@@ -606,7 +653,7 @@ const MusicBar = () => {
             <div className='player-info-container-ver2 '>
               {/*  */}
               <div className='like-btn '>
-                <button onClick={toggleLiked}>
+                <button onClick={() => {toggleLiked();}}>
                   {isLiked ? (
                     <FaHeart className='text-white' />
                   ) : (
@@ -639,7 +686,7 @@ const MusicBar = () => {
                 <button
                   className='playbtnstyle'
                   id='playPauseBtn'
-                  onClick={togglePlayPause}
+                  onClick={() => {togglePlayPause();  fetchUserInfo();}}
                 >
                   {isPlay_Global ? (
                     <BsPause />
