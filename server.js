@@ -6,7 +6,7 @@ const userRoute = require("./routes/user/user-route");
 const artistRoute = require("./routes/artist/artist-route");
 const albumRoute = require("./routes/album/album-route");
 const songRoute = require("./routes/song-route/song-route");
-const collectionRoute = require("./routes/collection/collection");
+const curatedPlaylistRoute = require("./routes/curatedPlaylist/curatedPlaylist-route");
 const epRoute = require("./routes/ep-route/ep-route");
 const adminRoute = require("./routes/admin login/admin-login");
 const app = express();
@@ -65,7 +65,7 @@ app.use("/api/admins", adminRoute);
 app.use("/api/users", userRoute);
 app.use("/api/albums", albumRoute);
 app.use("/api/songs", songRoute);
-app.use("/api/collections", collectionRoute);
+app.use("/api/curated", curatedPlaylistRoute);
 app.use("/api/artists", artistRoute);
 app.use("/api/eps", epRoute);
 
