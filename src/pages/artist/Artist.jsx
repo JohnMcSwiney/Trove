@@ -113,6 +113,22 @@ const Artist = () => {
   };
   console.log(artist);
   console.log(songs);
+
+  const [topSong, setTopSong] = React.useState([]);
+  React.useEffect(() => {
+    const fetchMyTopSong = async () => {
+      const response = await fetch(`/api/songs/artist-topsearch/${artist?._id}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+      const json = await response.json();
+      if (response.ok) {
+        setTopSong(json);
+      }
+    };
+    fetchMyTopSong();
+  }, [artist?._id]);
+
   return (
     <div className="Artistpage-container ">
       <div className="Artistpage-pfp_name_follower_bio_cont bg-fglass-1">
@@ -128,11 +144,11 @@ const Artist = () => {
               <h1>{artist?.artistName}</h1>
             </div>
             <div onClick={redirectFollowers} className="Artistpage-follower_cont">
+            <button onClick={followHandler}>Follow</button>
               <div>
                 <h2>{artist?.followers.length}</h2>
                 <h1>Followers</h1>
               </div>
-              <button onClick={followHandler}>Follow</button>
             </div>
           </div>
         </div>
@@ -170,9 +186,9 @@ const Artist = () => {
       
 
       <div className="Artistpage-artist-showcase-lg Artistpage-mar-t">
-        <h1>{artist?.artistName}'s Top Songs: </h1>
+        <h1>Top Songs </h1>
         <div className="topSongCardContCont">
-          {songs && songs?.map((song, index) => 
+          {topSong && topSong?.map((song, index) => 
           <ErrorBoundary>
             <TopSongCard key={song._id} index={index} name={song?.title} cover={song?.imgUrl} song={song}/>
           </ErrorBoundary>
@@ -184,8 +200,8 @@ const Artist = () => {
 
       <div className="Artistpage-account-splitter"></div>
       <div className="Artistpage-artist-showcase">
-        <h1>Albums:</h1>
-        <div className="flex gap-4 justify-center">
+        <h1>Albums</h1>
+        <div className="flex gap-4 ">
         {albums &&
             albums.map((album) => 
             // <SearchAlbumCard 
@@ -201,8 +217,8 @@ const Artist = () => {
 
       <div className="Artistpage-account-splitter"></div>
       <div className="Artistpage-artist-showcase">
-        <h1>{artist?.artistName}'s Songs</h1>
-        <div className="CardCont">
+        <h1>All Songs</h1>
+        <div className="CardCont artistprofile--songs">
         {songs &&
           songs.length > 0 &&
           songs.map((song) => (
