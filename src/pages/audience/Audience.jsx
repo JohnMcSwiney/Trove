@@ -3,6 +3,7 @@ import "./audience.css"
 import { useArtistAuthContext } from "../../hooks/useArtistAuthContext";
 import { NavLink } from "react-router-dom";
 
+import FiveSearched from "./charts/fiveSearched";
 import FiveLoved from "./charts/fiveLoved";
 
 const Audience = () => {
@@ -42,7 +43,7 @@ const Audience = () => {
   }, [id]);
 
   // artist top song
-  const [topSong, setTopSong] = React.useState(null);
+  const [topSong, setTopSong] = React.useState([]);
   React.useEffect(() => {
     const fetchMyTopSong = async () => {
       const response = await fetch(`/api/songs/artist-topsearch/${id}`, {
@@ -57,7 +58,7 @@ const Audience = () => {
     fetchMyTopSong();
   }, [id]);
 
-  const [mostLoved, setMostLoved] = React.useState(null);
+  const [mostLoved, setMostLoved] = React.useState([]);
   React.useEffect(() => {
     const fetchMyMostLovedSong = async () => {
       const response = await fetch(`/api/songs/artist-toploved/${id}`, {
@@ -122,8 +123,26 @@ const Audience = () => {
       </div>
           : null
       } */}
-
-  <FiveLoved mostLoved={topSong}/>
+  
+  <div class="grid-container">
+      <div class="item1">
+        <FiveSearched topSong={topSong}/>
+      </div>
+      <div class="item2">
+        <h1>
+        {<span className="artist--namespan">{artistAudience?.searchCount}</span>} Searches.
+        </h1> 
+      </div>
+      <div class="item3">
+        <h1>
+        {<span className="artist--namespan">{artistAudience?.followers.length}</span>} Fans.
+        </h1> 
+      </div>  
+      <div class="item4">
+        <FiveLoved mostLoved={mostLoved} />
+      </div>
+  </div>
+  
 
   </div>
 
