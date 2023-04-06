@@ -66,7 +66,8 @@ const SearchSongCard2 = ({ song }) => {
         </div>
         <div className="artistsongcard">
           <NavLink to={`/artist/${song.artist._id}`} className="song-art-link">
-            {song.artist.artistName}
+            {song?.artist?.artistName}
+        
           </NavLink>
         </div>
       </div>
