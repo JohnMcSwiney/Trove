@@ -632,6 +632,21 @@ const dislikeSong = async (req, res) => {
   }
 };
 
+const getSongsBySearchCount = async (req, res) => {
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: "You have not sign in" });
+  }
+
+  const songs = await Song.find({ artist: id }).limit(5).sort({ searchCount: -1, title: 1 });
+  if (!songs) {
+    return res.status(404).json({ error: "You don't have any song" });
+  }
+
+    
+  res.status(200).json(songs);
+}; 
+
 module.exports = {
   getAllSongs,
   getSong,
@@ -642,4 +657,5 @@ module.exports = {
   likedSong,
   dislikeSong,
   songViewed,
+  getSongsBySearchCount,
 };

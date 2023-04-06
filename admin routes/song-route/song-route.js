@@ -9,7 +9,8 @@ const {
   updateSong,
   likedSong,
   dislikeSong,
-  songViewed
+  songViewed,
+  getSongsBySearchCount
 } = require("../../admin controllers/song/songController");
 router.get("/", getAllSongs);
 
@@ -27,7 +28,8 @@ router.post("/liked/:id", likedSong);
 
 router.post("/removelike/:id", dislikeSong);
 
-
 router.patch ('/update-view/:id',songViewed)
+
+router.get("/artist-topsearch/:id", getSongsBySearchCount);
 
 module.exports = router;
