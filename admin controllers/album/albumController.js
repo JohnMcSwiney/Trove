@@ -16,8 +16,8 @@ const getAlbum = async (req, res) => {
   }
 
   const album = await Album.findById(id)
-  .populate("artist", artistName)
-  .populate("featuredArtists");
+  .populate("artist", "artistName")
+  
 
   if (!album) {
     return res.status(400).json({ err: "No such Album" });
