@@ -10,11 +10,14 @@ const {
   likedSong,
   dislikeSong,
   songViewed,
-  getSongsBySearchCount
+  getSongsBySearchCount,
+  genreStats
 } = require("../../admin controllers/song/songController");
 router.get("/", getAllSongs);
 
 router.get("/:id", getSong);
+
+router.get("/genre-stats/:id", genreStats);
 
 router.get("/artist-songs/:id", getArtistSong);
 

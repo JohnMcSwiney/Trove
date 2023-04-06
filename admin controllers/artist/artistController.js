@@ -10,7 +10,8 @@ const cookieParser = require("cookie-parser");
 //get all artists
 const getAllArtist = async (req, res) => {
   const artists = await Artist.find({})
-    .populate("songList", "title songUrl genre")
+    .populate("songList" )
+    // /"title songUrl genre"
     .populate("albumList")
     .sort({ createAt: -1 });
   res.status(200).json(artists);
