@@ -3,6 +3,7 @@ import { Form, Button } from "react-bootstrap";
 import { useLoginAdmin } from "../../hooks/login & signup/useLoginAdmin";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import { useAuth } from "../../context/AuthContext";
 
 const AdminLogin = () => {
   const [email, setEmail] = useState("");
@@ -15,10 +16,16 @@ const AdminLogin = () => {
     setEmail(event.target.value);
   };
 
-  console.log(cookies);
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
   };
+
+  const { isLoggedIn } = useAuth();
+  React.useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/dashboard");
+    }
+  }, [isLoggedIn, navigate]);
   const { loginAdmin, loginError, loginIsloading } = useLoginAdmin();
 
   const handleSubmit = async (event) => {
@@ -70,6 +77,8 @@ const AdminLogin = () => {
                     Login
                   </Button>
                 </div>
+
+                {loginError && <p>{loginError}</p>}
               </form>
             </div>
           </div>
