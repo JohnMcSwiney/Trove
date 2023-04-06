@@ -239,8 +239,8 @@ const getAllSongs = async (req, res) => {
   try {
     const songs = await Song.find({})
 
-      .populate("featuredArtists", "artist")
-
+      .populate("featuredArtists")
+      .populate('artist')
       .populate("album")
       .populate("ep")
       .sort({ createdAt: -1 });
@@ -284,7 +284,13 @@ const getMySong = async (req, res) => {
     return res.status(404).json({ error: "You have not sign in" });
   }
 
-  const songs = await Song.find({ artist: id }).sort({ createdAt: -1 });
+  const songs = await Song.find({ artist: id })
+  .populate("featuredArtists")
+  .populate('artist')
+  .populate("album")
+  .populate("ep")
+  .sort({ createdAt: -1 })
+  ;
   if (!songs) {
     return res.status(404).json({ error: "You don't have any song" });
   }
@@ -298,7 +304,13 @@ const getMyTopSearchSong = async (req, res) => {
     return res.status(404).json({ error: "You have not sign in" });
   }
 
-  const songs = await Song.find({ artist: id }).sort({ createdAt: -1 });
+  const songs = await Song.find({ artist: id })
+  .populate("featuredArtists")
+  .populate('artist')
+  .populate("album")
+  .populate("ep")
+  .sort({ createdAt: -1 });
+
   if (!songs) {
     return res.status(404).json({ error: "You don't have any song" });
   }

@@ -317,7 +317,11 @@ const getMyAlbum = async (req, res) => {
       return res.status(404).json({ error: "Server error occurred" });
     }
 
-    const albums = await Album.find({ artist: id }).sort({ createdAt: -1 });
+    const albums = await Album.find({ artist: id })
+    .populate("featuredArtists")
+    .populate('artist')
+    .populate('songList')
+    .sort({ createdAt: -1 });
     if (!albums) {
       return res.status(404).json({ error: "You don't have any song" });
     }

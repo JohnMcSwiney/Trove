@@ -336,7 +336,11 @@ const getMyEP = async (req, res) => {
     return res.status(404).json({ err: "EP does not exist" });
   }
 
-  const eps = await EP.find({ artist: id }).sort({ createdAt: -1 });
+  const eps = await EP.find({ artist: id })
+  .populate("featuredArtists")
+  .populate('artist')
+  .populate('songList')
+  .sort({ createdAt: -1 });
   if (!eps) {
     return res.status(404).json({ error: "You don't have any song" });
   }
