@@ -8,14 +8,17 @@ const albumRoute = require("./routes/album/album-route");
 const songRoute = require("./routes/song-route/song-route");
 const collectionRoute = require("./routes/collection/collection");
 const epRoute = require("./routes/ep-route/ep-route");
+const adminRoute = require("./routes/admin login/admin-login");
 const app = express();
-
+const jwt = require("jsonwebtoken");
+const cookieParser = require("cookie-parser");
 app.use(
   cors({
     origin: "http://localhost:3000",
     methods: ["GET", "PUT", "PATCH", "POST", "DELETE"],
   })
 );
+
 mongoose.set("strictQuery", true);
 
 mongoose.set("strictQuery", true);
@@ -40,6 +43,25 @@ app.use((req, res, next) => {
   next();
 });
 
+// const checkAuth = (req, res, next) => {
+//   const token = req.cookies.token;
+//   console.log(token);
+//   if (!token) {
+//     return res.redirect("/login"); // make it to frontend login for admin
+//   }
+//   jwt.verify(token, process.env.SECRET, (err, decoded) => {
+//     if (err) {
+//       res.clearCookie("token");
+//       return res.redirect("/login"); // make it to frontend login for admin
+//     }
+//     req.admin = decoded;
+//     next();
+//   });
+// };
+
+// app.use(cookieParser);
+// app.use(checkAuth);
+app.use("/api/admins", adminRoute);
 app.use("/api/users", userRoute);
 app.use("/api/albums", albumRoute);
 app.use("/api/songs", songRoute);

@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
-
+const validator = require("validator");
 const adminSchema = new mongoose.Schema(
   {
     email: {
@@ -30,4 +30,4 @@ const adminSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-adminSchema.statics.signup = async function (email, password, adminName) {};
+module.exports = mongoose.model("Admin", adminSchema);
