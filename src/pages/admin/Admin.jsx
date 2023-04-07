@@ -37,56 +37,52 @@ const Admin = () => {
   const { authAdmin, isLoggedIn } = useAuth();
   return (
     <>
-      {isLoggedIn ? (
-        <>
-          <div>
-            <h1>Hello {currentAdmin}</h1>
-          </div>
-          <div
-            className="d-flex bg-light justify-content-center"
-            style={{ width: "20%", float: "right" }}
-          >
-            <div>
-              <h3 className="text-center mb-4">Create Admin</h3>
-              <Form onSubmit={handleSubmit}>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <Form.Label>Email address</Form.Label>
-                  <Form.Control
-                    type="email"
-                    placeholder="Enter email"
-                    value={email}
-                    onChange={handleEmailChange}
-                  />
-                </Form.Group>
+      <div>
+        <h1>Hello {currentAdmin}</h1>
+      </div>
+      <div
+        className="d-flex bg-light justify-content-center"
+        style={{ width: "20%", float: "right" }}
+      >
+        <div>
+          <h3 className="text-center mb-4">Create Admin</h3>
+          <Form onSubmit={handleSubmit}>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label>Email address</Form.Label>
+              <Form.Control
+                type="email"
+                placeholder="Enter email"
+                value={email}
+                onChange={handleEmailChange}
+              />
+            </Form.Group>
 
-                <Form.Group className="mb-3" controlId="formBasicPassword">
-                  <Form.Label>Password</Form.Label>
-                  <Form.Control
-                    type="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={handlePasswordChange}
-                  />
-                </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={handlePasswordChange}
+              />
+            </Form.Group>
 
-                <Form.Group className="mb-3" controlId="formBasicAdminName">
-                  <Form.Label>Admin Name</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Enter admin name"
-                    value={adminName}
-                    onChange={handleAdminNameChange}
-                  />
-                </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicAdminName">
+              <Form.Label>Admin Name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter admin name"
+                value={adminName}
+                onChange={handleAdminNameChange}
+              />
+            </Form.Group>
 
-                <Button variant="primary" type="submit">
-                  Sign Up
-                </Button>
-              </Form>
-            </div>
-          </div>
-        </>
-      ) : null}
+            <Button variant="primary" type="submit">
+              Sign Up
+            </Button>
+          </Form>
+        </div>
+      </div>
     </>
   );
 };

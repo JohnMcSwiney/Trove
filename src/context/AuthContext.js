@@ -7,12 +7,13 @@ export function useAuth() {
 }
 export function AuthProvider(props) {
   const [cookies, setCookie] = useCookies(["authAdmin"]);
-  const [authAdmin, setAuthAdmin] = useState(cookies["authAdmin"] || null);
+  const [authAdmin, setAuthAdmin] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  useEffect(() => {
-    setCookie("authAdmin", authAdmin, { path: "/" });
-  }, [authAdmin, setCookie]);
+  if (authAdmin) {
+    localStorage.setItem("TroveAdminToken", authAdmin.token);
+  }
+
   const value = {
     authAdmin,
     setAuthAdmin,

@@ -5,6 +5,7 @@ function Sidebar() {
   const navigate = useNavigate();
   const handleSignout = () => {
     localStorage.removeItem("admin");
+    localStorage.removeItem("TroveAdminToken");
     fetch("/api/admins/logout").then(() => {
       navigate("/");
       window.location.reload(false);
@@ -77,7 +78,7 @@ function Sidebar() {
           to={"/admin"}
           activeClassName="active"
         >
-          <span>Admin</span>
+          <span>Request Musics</span>
         </NavLink>
 
         <button className="btn btn-dark mt-3" onClick={handleSignout}>

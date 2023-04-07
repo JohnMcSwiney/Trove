@@ -16,11 +16,13 @@ import { useAuth } from "./context/AuthContext";
 import { Navigate } from "react-router-dom";
 const App = () => {
   const { authAdmin, isLoggedIn } = useAuth();
+
+  const troveAdminToken = localStorage.getItem("TroveAdminToken");
   return (
     <BrowserRouter>
       <Container fluid className="bg-secondary min-vh-100">
         <Row>
-          {isLoggedIn ? (
+          {troveAdminToken ? (
             <Col
               xs={12}
               md={2}
@@ -40,35 +42,35 @@ const App = () => {
             <Routes>
               <Route
                 path="/dashboard"
-                element={isLoggedIn ? <DashBoard /> : <Navigate to="/" />}
+                element={troveAdminToken ? <DashBoard /> : <Navigate to="/" />}
               />
               <Route
                 path="/user"
-                element={isLoggedIn ? <Users /> : <Navigate to="/" />}
+                element={troveAdminToken ? <Users /> : <Navigate to="/" />}
               />
               <Route
                 path="/artist"
-                element={isLoggedIn ? <Artist /> : <Navigate to="/" />}
+                element={troveAdminToken ? <Artist /> : <Navigate to="/" />}
               />
               <Route
                 path="/song"
-                element={isLoggedIn ? <Song /> : <Navigate to="/" />}
+                element={troveAdminToken ? <Song /> : <Navigate to="/" />}
               />
               <Route
                 path="/album"
-                element={isLoggedIn ? <Album /> : <Navigate to="/" />}
+                element={troveAdminToken ? <Album /> : <Navigate to="/" />}
               />
               <Route
                 path="/ep"
-                element={isLoggedIn ? <EP /> : <Navigate to="/" />}
+                element={troveAdminToken ? <EP /> : <Navigate to="/" />}
               />
               <Route
                 path="/collection"
-                element={isLoggedIn ? <Collection /> : <Navigate to="/" />}
+                element={troveAdminToken ? <Collection /> : <Navigate to="/" />}
               />
               <Route
                 path="/admin"
-                element={isLoggedIn ? <Admin /> : <Navigate to="/login" />}
+                element={troveAdminToken ? <Admin /> : <Navigate to="/login" />}
               />
               <Route path="/" element={<AdminLogin />} />
             </Routes>
