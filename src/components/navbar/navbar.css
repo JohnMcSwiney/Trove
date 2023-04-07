@@ -149,6 +149,7 @@ nav a:hover {
   color: white;
   margin-left: 1.5vmin;
 
+
   
 }
 
@@ -192,15 +193,25 @@ nav {
   position: fixed;
   /* opacity: 10%; */
   object-position: top;
-  mix-blend-mode: soft-light;
+  filter: opacity(0.15);
   /* margin-left: -5vmin; */
-  background-color: white;
+  /* background-color: white; */
+  background-image: linear-gradient(
+    to left,
+    #8650f4,
+    #6f49e8,
+    #5642dc,
+    #393bd0,
+    #0034c4
+  );
 
   
 }
 
 .artist--navbar {
-  background-color: white;
+  /* background-color: white;
+  opacity: 0;
+  height: 25vh; */
 }
 
 .artist--small {

@@ -35,9 +35,9 @@ body {
 
   /* UPLOAD SONG NEW */
   .uploadmusic--upload--zone {
-    width: 50vmin;
+    width: 400px;
     flex-shrink: 0;
-    height: 50vmin;
+    height: 400px;
     margin-top: 10vmin;
     margin-left: 20vmin;
     background-color: #12164b;
@@ -54,7 +54,7 @@ body {
     width: 50%;
     height: 100%;
     margin-top: 10vmin;
-    padding-left: 8%;
+    padding-left: 100px;
     text-align: center;
     color: white;
   }
@@ -176,7 +176,7 @@ body {
     display: inline-flex;
     fill: currentcolor;
     /* font-family: "Google Sans",Roboto,Arial,sans-serif; */
-    font-size: 2vmin;
+    font-size: 15px;
     font-weight: bold;
     height: 5vmin;
     justify-content: center;
@@ -184,7 +184,7 @@ body {
     line-height: normal;
     max-width: 100%;
     overflow: visible;
-    padding: 2px 24px;
+    padding: 2.5% 24px;
     position: relative;
     text-align: center;
     text-transform: none;
@@ -301,6 +301,11 @@ body {
   .uploadmusic--songfile--ftartists {
     margin-top: 1vmin;
     
+  }
+
+  .songinfo.uploadmusic--songfile--ftartists {
+    /* margin-top: -2vmin; */
+
   }
 
   .uploadmusic--columnt {
@@ -437,8 +442,8 @@ body {
   .uploadmusic--song--info {
     display: block;
     /* margin-left: 5%; */
-    padding-top: 5vmin;
-    padding-bottom: 5vmin;
+    padding-top: 40px;
+    padding-bottom: 40px;
     padding-left: 2%;
     /* padding-right: 3vmin; */
     background-color: #12164b;

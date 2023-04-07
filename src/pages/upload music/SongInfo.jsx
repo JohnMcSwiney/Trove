@@ -103,8 +103,9 @@ export default function SongInfo(props) {
           onChange={handleSongTitleChange}
         ></input>
         </div>
-        <div className="uploadmusic--songfile--ftartists">
-                       <label htmlFor="search">Featured Artists: 
+        <div className="songinfo uploadmusic--songfile--ftartists">
+                       <label htmlFor="search">
+                        {/* Featured Artists:  */}
                 <Select
                   id="search"
                   options={props.artists&& props.artists.length>0 && props.artists.map((artist) => ({
@@ -128,7 +129,7 @@ export default function SongInfo(props) {
                   isMulti
                   className="uploadmusic--basic-multi-select"
                   classNamePrefix="select"
-                  placeholder="Select an artist"
+                  placeholder="Featured Artists?"
 
                   onChange={handleSelectChange}
                 />

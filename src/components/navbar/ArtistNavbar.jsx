@@ -59,15 +59,15 @@ const ArtistNavbar = () => {
    const { width } = useViewport();
 
   return (
-    <div>
-      <div>
+    <div  className="artist--navbar">
+      <div> 
         <header className={`header-nav`}>
         <div className={`${
           small ? "artist--small" : "artist--waves"
         }`}>   
-          <img className={`${
+          {/* <img className={`${
           small ? "artist--small" : "artist--waves"
-        }`} name="waves" src="../../../assets/waves.gif" alt="waves"/>
+        }`} name="waves" src="../../../assets/waves.gif" alt="waves"/> */}
         </div>
           <a className="nav-brand" href="/">
             <h3>
