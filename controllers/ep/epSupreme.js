@@ -270,6 +270,15 @@ const deleteEP = async (req, res) => {
     res.status(400).json({ message: err.message });
   }
 };
+const getUnVerifiedEPs = async (req, res) => {
+  const eps = await EP.find({ isVerified: false, releaseType: "ep" })
+    .populate("artist")
+    .populate("featuredArtists")
+    .populate("songList")
+
+    .sort({ createdAt: -1 });
+  res.status(200).json(eps);
+};
 module.exports = {
   getEP,
   getMyEP,
@@ -277,4 +286,5 @@ module.exports = {
   createEP,
   updateEP,
   deleteEP,
+  getUnVerifiedEPs,
 };

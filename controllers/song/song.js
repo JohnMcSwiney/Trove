@@ -163,9 +163,9 @@ const createSong = async (req, res) => {
           await artist.save();
           res.status(201).json(song);
         }
-      } catch (err) {
-        console.log(err);
-        res.status(400).json({ message: err.message });
+      } catch (error) {
+        console.log(error);
+        res.status(400).json({ error: error.message });
       }
       break;
     default:
@@ -187,9 +187,9 @@ const getAllSongs = async (req, res) => {
       .sort({ createdAt: -1 });
 
     res.status(200).json(songs);
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ msg: "fetching songs failed" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "fetching songs failed" });
   }
 };
 
@@ -420,6 +420,25 @@ const getArtistSong = async (req, res) => {
   res.status(200).json(songs);
 };
 
+const getUnVerifiedSongs = async (req, res) => {
+  try {
+    const songs = await Song.find({ isVerified: false, releaseType: "single" })
+
+      .populate("artist")
+      .populate("featuredArtists")
+
+      .populate("album")
+
+      .populate("ep")
+      .sort({ createdAt: -1 });
+
+    res.status(200).json(songs);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "fetching songs failed" });
+  }
+};
+
 module.exports = {
   getAllSongs,
   getSong,
@@ -427,4 +446,5 @@ module.exports = {
   createSong,
   deleteSong,
   updateSong,
+  getUnVerifiedSongs,
 };

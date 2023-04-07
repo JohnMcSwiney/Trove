@@ -7,8 +7,11 @@ const {
   createSong,
   deleteSong,
   updateSong,
+  getUnVerifiedSongs,
 } = require("../../controllers/song/song");
 router.get("/", getAllSongs);
+
+router.get("/unverified", getUnVerifiedSongs);
 
 router.get("/:id", getSong);
 

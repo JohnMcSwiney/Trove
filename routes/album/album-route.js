@@ -7,9 +7,11 @@ const {
   createAlbum,
   updateAlbum,
   deleteAlbum,
+  getUnVerifiedAlbums,
 } = require("../../controllers/album/album");
 
 router.get("/", getAllAlbum);
+router.get("/unverified", getUnVerifiedAlbums);
 
 router.get("/:id", getAlbum);
 

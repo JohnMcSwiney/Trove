@@ -38,14 +38,6 @@ const songSchema = new mongoose.Schema(
       default: null,
     },
 
-    // highlightStart: {
-    //     type: Number
-    // },
-
-    // highlightStop: {
-    //     type: Number
-    // },
-
     duration: {
       type: Number,
       //required: true,
@@ -76,11 +68,10 @@ const songSchema = new mongoose.Schema(
       type: Number,
       min: 1900,
       max: new Date().getFullYear(),
-      required: [true, 'Please provide a valid release year'],
+      required: [true, "Please provide a valid release year"],
       get: (v) => Math.round(v), // Round the number to remove decimal places
       set: (v) => Math.round(v), // Round the number to remove decimal places
-    
-  },
+    },
     //double check releaseType with album model, may conflict.
     releaseType: {
       type: String,
@@ -100,6 +91,10 @@ const songSchema = new mongoose.Schema(
     searchCount: {
       type: Number,
       default: 0,
+    },
+    isVerified: {
+      type: Boolean,
+      default: false,
     },
   },
   { timestamps: true }

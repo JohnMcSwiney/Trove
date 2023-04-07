@@ -262,6 +262,15 @@ const getArtistAlbum = async (req, res) => {
   }
   res.status(200).json(albums);
 };
+const getUnVerifiedAlbums = async (req, res) => {
+  const albums = await Album.find({ isVerified: false, releaseType: "album" })
+    .populate("artist")
+    .populate("featuredArtists")
+    .populate("songList")
+
+    .sort({ createdAt: -1 });
+  res.status(200).json(albums);
+};
 
 module.exports = {
   getAlbum,
@@ -270,4 +279,5 @@ module.exports = {
   createAlbum,
   updateAlbum,
   deleteAlbum,
+  getUnVerifiedAlbums,
 };

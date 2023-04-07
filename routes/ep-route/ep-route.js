@@ -7,9 +7,12 @@ const {
   getMyEP,
   updateEP,
   deleteEP,
+  getUnVerifiedEPs,
 } = require("../../controllers/ep/epSupreme");
 
 router.get("/", getAllEP);
+
+router.get("/unverified", getUnVerifiedEPs);
 
 router.get("/artist-eps/:id", getMyEP);
 router.get("/:id", getEP);
