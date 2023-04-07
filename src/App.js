@@ -72,7 +72,10 @@ const App = () => {
                 path="/admin"
                 element={troveAdminToken ? <Admin /> : <Navigate to="/login" />}
               />
-              <Route path="/" element={<AdminLogin />} />
+              <Route
+                path="/"
+                element={troveAdminToken ? <DashBoard /> : <AdminLogin />}
+              />
             </Routes>
           </Col>
         </Row>
