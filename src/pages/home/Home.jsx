@@ -1,15 +1,15 @@
 import React from "react";
 import { useArtistAuthContext } from "../../hooks/useArtistAuthContext";
 
-import SongModel from "../../components/modals/song modal/SongModal";
+import SongModal from "../../components/modals/song modal/SongModal";
 import AlbumModel from "../../components/modals/album modal/AlbumModal";
 import EPModel from "../../components/modals/ep modal/EPModal";
 import { NavLink, useNavigate } from "react-router-dom";
 import './home.css'
 
 const Home = () => {
-  const [artistSongs, setArtistSongs] = React.useState(null);
-  const [artistAlbums, setArtistAlbum] = React.useState(null);
+  const [artistSongs, setArtistSongs] = React.useState([]);
+  const [artistAlbums, setArtistAlbum] = React.useState([]);
   const artistInfo = JSON.parse(localStorage.getItem("artist"));
   const id = artistInfo ? artistInfo.id : null;
   React.useEffect(() => {
@@ -24,7 +24,7 @@ const Home = () => {
       }
     };
     fetchMySongs();
-  }, [id]);
+  }, []);
 
   React.useEffect(() => {
     const fetchMyAlbums = async () => {
@@ -38,8 +38,7 @@ const Home = () => {
       }
     };
     fetchMyAlbums();
-    console.log("fetch album");
-  }, [id]);
+  }, []);
 
   const [artistEPs, setArtistEPs] = React.useState([]);
   React.useEffect(() => {
@@ -54,8 +53,24 @@ const Home = () => {
       }
     };
     fetchMyEP();
-    console.log("fetch ep");
-  }, [id]);
+    
+  }, []);
+
+
+  const [artists, setArtists] = React.useState([]);
+  React.useEffect(()=>{
+    const fetchArtists = async () => {
+      const response = await fetch(`/api/artists`,{
+        method:"GET",
+        headers:{"Content": "application/json"}
+      })
+      const json = await response.json();
+      
+        setArtists(json)
+      
+    }
+    fetchArtists()
+  }, [])
 
   const { artist } = useArtistAuthContext();
 
@@ -87,19 +102,26 @@ const Home = () => {
                 <th scope="col">Publish</th>
               </tr>
             </thead>
+            <tbody>
             {artistSongs &&
               artistSongs.map((song) => (
-                <tbody>
-                  <tr key={song._id}>
-                    <th scope="row">{song.title}</th>
-                    <th>{song.isVerified}</th>
-                    <th>
-                      <SongModel song={song} />
-                    </th>
-                    <th>Published</th>
-                  </tr>
-                </tbody>
+                <tr key={song._id}>
+                  <th scope="row">{song.title}</th>
+                 
+                  <th>{song?.isVerified}</th>
+                 
+                  <th>
+                    <SongModal
+                      song={song}
+                      artistData={artists}
+                      albumData={artistAlbums}
+                      epData={artistEPs}
+                    />
+                  </th>
+                  <th>{song?.isPublished}</th>
+                </tr>
               ))}
+              </tbody>
           </table>
         </>
       )}
@@ -123,7 +145,7 @@ const Home = () => {
                     <th scope="row">{album?.albumName}</th>
                     <th>{album?.isVerified}</th>
                     <th>
-                      <AlbumModel />
+                      <AlbumModel album={album} songs={artistSongs}  />
                     </th>
                     <th>Publish</th>
                   </tr>
@@ -152,7 +174,7 @@ const Home = () => {
                     <th scope="row">{ep?.epName}</th>
                     <th>{ep?.isVerified}</th>
                     <th>
-                      <EPModel />
+                      <EPModel ep={ep} songs = {artistSongs}  />
                     </th>
                     <th>Publish</th>
                   </tr>
