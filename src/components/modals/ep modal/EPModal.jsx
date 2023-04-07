@@ -3,6 +3,7 @@ import React from "react";
 import Button from "react-bootstrap/Button";
 import Select from "react-select";
 import Modal from "react-bootstrap/Modal";
+import { useEditEP } from "../../../hooks/update/useEditEP";
 const EPModal = ({ ep, songs }) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -15,16 +16,16 @@ const EPModal = ({ ep, songs }) => {
 
   const [genre, setGenre] = React.useState(ep?.epGenre);
   const [songList, setSongList] = React.useState(ep?.songList);
-  // const { editEP, message, editerror, editIsLoading } = useEditEP();
+  const { editEP, message, editerror, editIsLoading } = useEditEP();
 
-  // const handleUpdate = (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     editEP(ep._id, epArt, epName, artistID, releaseYear, songList, genre);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  const handleUpdate = (e) => {
+    e.preventDefault();
+    try {
+      editEP(ep._id, epArt, epName, artistID, releaseYear, songList, genre);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleSongListChange = (selectedSongs) => {
     if (!selectedSongs) {
@@ -87,7 +88,6 @@ const EPModal = ({ ep, songs }) => {
             type="number"
             id="#tracks"
             value={songList.length}
-   
             className="form-control"
           ></input>
 
@@ -209,11 +209,11 @@ const EPModal = ({ ep, songs }) => {
               Close
             </Button>
             <Button variant="danger">Delete Ep</Button>
-            <Button variant="primary" >
+            <Button variant="primary" onClick={handleUpdate}>
               Update Ep
             </Button>
-            {/* {message && <p>{message}</p>}
-            {editerror && <p>{editerror}</p>} */}
+            {message && <p>{message}</p>}
+            {editerror && <p>{editerror}</p>}
           </Modal.Footer>
         </div>
       </Modal>

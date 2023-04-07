@@ -5,10 +5,9 @@ import { BiShow } from "react-icons/bi";
 import { AiOutlineEyeInvisible } from "react-icons/ai";
 import { Navigate } from "react-router-dom";
 import { useArtistAuthContext } from "../../hooks/useArtistAuthContext";
-import { useUpdateInfo } from "../../hooks/useUpdateInfo";
-import { useUpdateGmail } from "../../hooks/useUpdateGmail";
-import { useUpdatePassword } from "../../hooks/useUpdatePassword";
-
+import { useUpdateInfo } from "../../hooks/update/useUpdateInfo";
+import { useUpdateGmail } from "../../hooks/update/useUpdateGmail";
+import { useUpdatePassword } from "../../hooks/update/useUpdatePassword";
 
 const AccountSetting = () => {
   const [state, setState] = React.useState(1);
@@ -59,7 +58,6 @@ const AccountSetting = () => {
     setShowPasswordTab(!showPasswordTab);
   };
 
-  
   //artist image
   const [imageFile, setImageFile] = React.useState();
   const [artistProfilePic, setArtistProfilePic] = React.useState("");
@@ -82,7 +80,6 @@ const AccountSetting = () => {
     setArtistProfilePic(URL.createObjectURL(e.target.files[0]));
     // setImageWasChanged(true);
   };
-
 
   // update general account info
   const { updateInfo, updateError, isLoadingUpdate, infoMessage } =
@@ -131,8 +128,6 @@ const AccountSetting = () => {
     }
   };
 
-  
-
   return (
     <div className="container">
       <h1 className="my-account-header">Settings</h1>
@@ -166,23 +161,22 @@ const AccountSetting = () => {
             <form onSubmit={handleUpdateAccount}>
               <div className="inner-form">
                 <div className="user-img-div">
-                <label >
-                  <input
-                    type="file"
-                    name="cover"
-                    value=""
-                    accept="image/*"
-                    // className=""
-                    onChange={handleImageFileChange}
-                  />
-                <img
-                    src={artistProfilePic}
-                    className="user-avatar"
-                    alt="your-avatar"
-                  />
-                  
-                </label>
-                 
+                  <label>
+                    <input
+                      type="file"
+                      name="cover"
+                      value=""
+                      accept="image/*"
+                      // className=""
+                      onChange={handleImageFileChange}
+                    />
+                    <img
+                      src={artistProfilePic}
+                      className="user-avatar"
+                      alt="your-avatar"
+                    />
+                  </label>
+
                   <h4>Edit Photo</h4>
                 </div>
 
@@ -205,9 +199,9 @@ const AccountSetting = () => {
                     onChange={(e) => setArtistName(e.target.value)}
                     value={artistName}
                   />
-                  <label htmlFor="dob">Date of birth:</label> 
+                  <label htmlFor="dob">Date of birth:</label>
                   <input
-                    type="date" 
+                    type="date"
                     id="dob"
                     name="dob"
                     // defaultValue={time}
@@ -216,7 +210,12 @@ const AccountSetting = () => {
                     className="form-control"
                   />
 
-                  <button className="btn btn-primary mt-3" onClick={handleUpdateAccount}>Save</button>
+                  <button
+                    className="btn btn-primary mt-3"
+                    onClick={handleUpdateAccount}
+                  >
+                    Save
+                  </button>
                 </div>
               </div>
             </form>

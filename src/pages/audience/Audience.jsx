@@ -1,5 +1,5 @@
 import React from "react";
-import "./audience.css"
+import "./audience.css";
 import { useArtistAuthContext } from "../../hooks/useArtistAuthContext";
 import { NavLink } from "react-router-dom";
 
@@ -7,7 +7,6 @@ import FiveSearched from "./charts/fiveSearched";
 import FiveLoved from "./charts/fiveLoved";
 
 const Audience = () => {
-
   // artist
   const [artistAudience, setArtistAudience] = React.useState(null);
   const artistInfo = JSON.parse(localStorage.getItem("artist"));
@@ -27,7 +26,7 @@ const Audience = () => {
   }, [id]);
 
   // artist's songs
-  const [artistSongs, setArtistSongs] = React.useState(null);
+  const [artistSongs, setArtistSongs] = React.useState([]);
   React.useEffect(() => {
     const fetchMySongs = async () => {
       const response = await fetch(`/api/songs/artist-songs/${id}`, {
@@ -74,16 +73,23 @@ const Audience = () => {
   }, [id]);
 
   return (
-  <div className="artist--audience">
+    <div className="artist--audience">
       <div className="artist--welcome">
-      {/* <h5>Hello, {artist ? <span className="artist--namespan">{artist?.artistName}</span> : <NavLink to={"/login"}>please sign in.</NavLink>} </h5> */}
+        {/* <h5>Hello, {artist ? <span className="artist--namespan">{artist?.artistName}</span> : <NavLink to={"/login"}>please sign in.</NavLink>} </h5> */}
 
-
-      {artistAudience ? <h5> <span className="artist--audience--searcheffect">{artistAudience?.artistName}'s</span><span className="artist--namespan"> Audience</span> </h5> :
-        <div className="artist--welcome">
-        Hello, <NavLink to={"/login"}>please sign in.</NavLink>
-        </div>
-      }
+        {artistAudience ? (
+          <h5>
+            {" "}
+            <span className="artist--audience--searcheffect">
+              {artistAudience?.artistName}'s
+            </span>
+            <span className="artist--namespan"> Audience</span>{" "}
+          </h5>
+        ) : (
+          <div className="artist--welcome">
+            Hello, <NavLink to={"/login"}>please sign in.</NavLink>
+          </div>
+        )}
       </div>
       {/* {artistAudience ? 
       
@@ -123,31 +129,31 @@ const Audience = () => {
       </div>
           : null
       } */}
-  
-  <div className="artist--audience--content">
-      <div class="grid-container">
-      <div class="item1">
-        <FiveSearched topSong={topSong}/>
-      </div>
-      <div class="item2">
-        <h1>
-        {artistAudience?.searchCount} Searches
-        </h1> 
-      </div>
-      <div class="item3">
-        <h1>
-        {<span className="artist--namespan">{artistAudience?.followers.length}</span>} Fans
-        </h1> 
-      </div>  
-      <div class="item4">
-        <FiveLoved mostLoved={mostLoved} />
-      </div>
-  </div>
-  </div>
 
-
-  </div>
-
+      <div className="artist--audience--content">
+        <div class="grid-container">
+          <div class="item1">
+            <FiveSearched topSong={topSong} />
+          </div>
+          <div class="item2">
+            <h1>{artistAudience?.searchCount} Searches</h1>
+          </div>
+          <div class="item3">
+            <h1>
+              {
+                <span className="artist--namespan">
+                  {artistAudience?.followers?.length}
+                </span>
+              }{" "}
+              Fans
+            </h1>
+          </div>
+          <div class="item4">
+            <FiveLoved mostLoved={mostLoved} />
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 

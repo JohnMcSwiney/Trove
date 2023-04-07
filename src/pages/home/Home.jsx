@@ -5,7 +5,7 @@ import SongModal from "../../components/modals/song modal/SongModal";
 import AlbumModel from "../../components/modals/album modal/AlbumModal";
 import EPModel from "../../components/modals/ep modal/EPModal";
 import { NavLink, useNavigate } from "react-router-dom";
-import './home.css'
+import "./home.css";
 
 const Home = () => {
   const [artistSongs, setArtistSongs] = React.useState([]);
@@ -53,24 +53,21 @@ const Home = () => {
       }
     };
     fetchMyEP();
-    
   }, []);
 
-
   const [artists, setArtists] = React.useState([]);
-  React.useEffect(()=>{
+  React.useEffect(() => {
     const fetchArtists = async () => {
-      const response = await fetch(`/api/artists`,{
-        method:"GET",
-        headers:{"Content": "application/json"}
-      })
+      const response = await fetch(`/api/artists`, {
+        method: "GET",
+        headers: { Content: "application/json" },
+      });
       const json = await response.json();
-      
-        setArtists(json)
-      
-    }
-    fetchArtists()
-  }, [])
+
+      setArtists(json);
+    };
+    fetchArtists();
+  }, []);
 
   const { artist } = useArtistAuthContext();
 
@@ -80,16 +77,20 @@ const Home = () => {
   return (
     <div className="artist--home">
       <div className="artist--welcome">
-      {/* <h5>Hello, {artist ? <span className="artist--namespan">{artist?.artistName}</span> : <NavLink to={"/login"}>please sign in.</NavLink>} </h5> */}
+        {/* <h5>Hello, {artist ? <span className="artist--namespan">{artist?.artistName}</span> : <NavLink to={"/login"}>please sign in.</NavLink>} </h5> */}
 
-
-      {artist ? <h5>Hello, <span className="artist--namespan">{artist?.artistName}</span></h5> :
-        <div className="artist--welcome">
-        Hello, <NavLink to={"/login"}>please sign in.</NavLink>
-        </div>
-      }
+        {artist ? (
+          <h5>
+            Hello,{" "}
+            <span className="artist--namespan">{artist?.artistName}</span>
+          </h5>
+        ) : (
+          <div className="artist--welcome">
+            Hello, <NavLink to={"/login"}>please sign in.</NavLink>
+          </div>
+        )}
       </div>
-      
+
       {artistSongs?.length > 0 && (
         <>
           <h3>Songs</h3>
@@ -103,25 +104,27 @@ const Home = () => {
               </tr>
             </thead>
             <tbody>
-            {artistSongs &&
-              artistSongs.map((song) => (
-                <tr key={song._id}>
-                  <th scope="row">{song.title}</th>
-                 
-                  <th>{song?.isVerified}</th>
-                 
-                  <th>
-                    <SongModal
-                      song={song}
-                      artistData={artists}
-                      albumData={artistAlbums}
-                      epData={artistEPs}
-                    />
-                  </th>
-                  <th>{song?.isPublished}</th>
-                </tr>
-              ))}
-              </tbody>
+              {artistSongs &&
+                artistSongs.map((song) => (
+                  <tr key={song._id}>
+                    <th scope="row">{song.title}</th>
+
+                    <th>
+                      {song.isVerified.toString() ? "Pending" : "Approved"}
+                    </th>
+
+                    <th>
+                      <SongModal
+                        song={song}
+                        artistData={artists}
+                        albumData={artistAlbums}
+                        epData={artistEPs}
+                      />
+                    </th>
+                    <th>{song?.isPublished}</th>
+                  </tr>
+                ))}
+            </tbody>
           </table>
         </>
       )}
@@ -143,9 +146,11 @@ const Home = () => {
                 <tbody>
                   <tr key={album._id}>
                     <th scope="row">{album?.albumName}</th>
-                    <th>{album?.isVerified}</th>
                     <th>
-                      <AlbumModel album={album} songs={artistSongs}  />
+                      {album?.isVerified.toString() ? "Pending" : "Approved"}
+                    </th>
+                    <th>
+                      <AlbumModel album={album} songs={artistSongs} />
                     </th>
                     <th>Publish</th>
                   </tr>
@@ -172,9 +177,11 @@ const Home = () => {
                 <tbody>
                   <tr key={ep._id}>
                     <th scope="row">{ep?.epName}</th>
-                    <th>{ep?.isVerified}</th>
                     <th>
-                      <EPModel ep={ep} songs = {artistSongs}  />
+                      {ep?.isVerified.toString() ? "Pending" : "Approved"}
+                    </th>
+                    <th>
+                      <EPModel ep={ep} songs={artistSongs} />
                     </th>
                     <th>Publish</th>
                   </tr>

@@ -3,6 +3,7 @@ import "../album modal/AlbumModal";
 import Select from "react-select";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import { useEditSong } from "../../../hooks/update/useEditSong";
 const SongModal = ({ song, artistData, albumData, epData }) => {
   const [show, setShow] = React.useState(false);
   const handleClose = () => setShow(false);
@@ -21,7 +22,6 @@ const SongModal = ({ song, artistData, albumData, epData }) => {
     song?.featuredArtists || []
   );
 
-  
   const handleArtistChange = (selectedOption) => {
     const artistID = selectedOption ? selectedOption.id : "";
     const artistName = selectedOption ? selectedOption.value : "";
@@ -65,36 +65,25 @@ const SongModal = ({ song, artistData, albumData, epData }) => {
     setEP(epID);
   };
 
-  // const { editSong, message, editerror, editIsLoading } = useEditSong();
-  // const handleUpdate = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     editSong(
-  //       song._id,
-  //       title,
-  //       artistID,
-  //       featureArtists,
-  //       album,
-  //       ep,
-  //       songYear,
-  //       songImg,
-  //       genre
-  //     );
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  // const { deleteSong, deleteError, loadingDetele } = useDeleteSong();
-  // const handleDetele = () => {
-  //   try {
-  //     deleteSong(song._id);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-
+  const { editSong, message, editerror, editIsLoading } = useEditSong();
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    try {
+      editSong(
+        song._id,
+        title,
+        artistID,
+        featureArtists,
+        album,
+        ep,
+        songYear,
+        songImg,
+        genre
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div>
@@ -317,14 +306,12 @@ const SongModal = ({ song, artistData, albumData, epData }) => {
               <Button variant="secondary" onClick={handleClose}>
                 Close
               </Button>
-              <Button variant="danger" >
-                Delete Song
-              </Button>
-              <Button variant="primary">
+              <Button variant="danger">Delete Song</Button>
+              <Button variant="primary" onClick={handleUpdate}>
                 Update Song
               </Button>
-              {/* {message && <p>{message}</p>}
-              {editerror && <p>{editerror}</p>} */}
+              {message && <p>{message}</p>}
+              {editerror && <p>{editerror}</p>}
             </Modal.Footer>
           </div>
         </Modal>
@@ -332,6 +319,5 @@ const SongModal = ({ song, artistData, albumData, epData }) => {
     </div>
   );
 };
-
 
 export default SongModal;

@@ -26,8 +26,6 @@ export default function UploadMusic(props) {
   // following states
   const [follow, setFollow] = React.useState(false);
   const [followers, setFollowers] = React.useState(200);
-  // menu
-  const [showMenu, setShowMenu] = React.useState(false);
 
   const windowBreakpoint = 480;
 
@@ -38,30 +36,6 @@ export default function UploadMusic(props) {
       );
     }
   }, []);
-
-  const useViewport = () => {
-    const [width, setWidth] = React.useState(window.innerWidth);
-    const [artistList, setArtistList] = React.useState([]);
-
-    React.useEffect(() => {
-      const handleWindowResize = () => setWidth(window.innerWidth);
-      window.addEventListener("resize", handleWindowResize);
-      if (width > windowBreakpoint) {
-        setShowMenu(true);
-      } else {
-        setShowMenu(false);
-      }
-
-      return () => window.removeEventListener("resize", handleWindowResize);
-    }, []);
-
-    // Return the width so we can use it in our components
-    return { width };
-  };
-
-  const { width } = useViewport();
-
-  let menu;
 
   const [songs, setSongs] = useState([]);
   const [title, setTitle] = useState("");
@@ -140,7 +114,6 @@ export default function UploadMusic(props) {
     setImageFile();
     setReleaseYear("");
     setFeaturedArtists([]);
-
   };
 
   const handleReleaseYear = (e) => {
@@ -235,8 +208,6 @@ export default function UploadMusic(props) {
 
   return (
     <section>
-      {menu}
-
       {/* HEADER */}
 
       <div className="uploadmusic--upload--form container">

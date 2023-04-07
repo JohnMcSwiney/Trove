@@ -179,11 +179,7 @@ export const useUploadSong = () => {
     };
 
     const createAlbumObject = async (imgUrl) => {
-      console.log("SHOULD NOT GO IN HERE");
-
       let songUrl = "";
-
-      console.log("before fetch");
       const res = await fetch("api/albums/", {
         method: "POST",
         headers: {
@@ -195,19 +191,13 @@ export const useUploadSong = () => {
           albumName: album,
           albumArt: imgUrl,
           artistID,
-          // featuredArtists,
           releaseType,
           releaseYear,
           songList: [],
           albumGenre: genre,
         }),
       });
-
-      console.log("after fetch: " + res);
-
       const data = await res.json();
-      console.log("Album Data: " + data);
-
       if (!res.ok) {
         setError(data.error);
       }
@@ -227,19 +217,15 @@ export const useUploadSong = () => {
           songTitle = fileNameTitle[0];
         }
         songFeaturedArtists = songs[songTitleIndex].featuredArtists;
-        console.log("for loop song title: " + songTitle);
 
         await createSongObject(songTitle, songUrl, imgUrl, songFeaturedArtists);
         songTitleIndex++;
       }
-
-      console.log("songs created!");
     };
 
     const createEPObject = async (imgUrl) => {
       let songUrl = "";
 
-      console.log("before fetch");
       const res = await fetch("api/eps/", {
         method: "POST",
         headers: {
@@ -251,7 +237,6 @@ export const useUploadSong = () => {
           epName: ep,
           epArt: imgUrl,
           artistID,
-          // featuredArtists,
           releaseType,
           releaseYear,
           songList: [],
@@ -275,7 +260,6 @@ export const useUploadSong = () => {
       for (const file of songFile) {
         songUrl = await uploadSongToFirebase(file);
 
-        console.log("for loop song url: " + songUrl);
         if (songs[songTitleIndex].title) {
           songTitle = songs[songTitleIndex].title;
         } else {
@@ -283,12 +267,9 @@ export const useUploadSong = () => {
           songTitle = fileNameTitle[0];
         }
         songFeaturedArtists = songs[songTitleIndex].featuredArtists;
-        console.log("for loop song title: " + songTitle);
 
         await createSongObject(songTitle, songUrl, imgUrl, songFeaturedArtists);
         songTitleIndex++;
-
-        console.log("SHOULD SHOW THIS AFTER CREATESONGOBJECT");
       }
 
       console.log("songs created!");
@@ -329,10 +310,7 @@ export const useUploadSong = () => {
           }
 
           if (!imageFile || imageFile == null) {
-            console.log("no image selected");
-
             imgUrl = process.env.DEFAULT_COVER;
-
             data = await createAlbumObject(imgUrl);
           } else {
             imgUrl = await uploadImageToFirebase();
@@ -353,8 +331,6 @@ export const useUploadSong = () => {
         break;
       case "ep":
         try {
-          //const imgUrl = await uploadImageToFirebase();
-
           let imgUrl = "";
 
           let data = "";
@@ -387,8 +363,6 @@ export const useUploadSong = () => {
           }
 
           if (!imageFile || imageFile == null) {
-            console.log("no image selected");
-
             imgUrl = process.env.DEFAULT_COVER;
 
             data = await createEPObject(imgUrl);
@@ -397,7 +371,6 @@ export const useUploadSong = () => {
 
             data = await createEPObject(imgUrl);
           }
-          console.log("End Response Data: " + data);
 
           setIsUploading(false);
           setUploadProgress(0);

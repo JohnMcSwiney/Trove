@@ -3,7 +3,8 @@ import "./albummodal.css";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Select from "react-select";
-const AlbumModal = ({ album,songs }) => {
+import { useEditAlbum } from "../../../hooks/update/useEditAlbum";
+const AlbumModal = ({ album, songs }) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [albumName, setAlbumName] = React.useState(album?.albumName);
@@ -39,23 +40,23 @@ const AlbumModal = ({ album,songs }) => {
     setSongList(selectedList);
   };
 
-  // const { editAlbum, message, editerror, editIsLoading } = useEditAlbum();
-  // const handleUpdate = (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     editAlbum(
-  //       album._id,
-  //       albumArt,
-  //       albumName,
-  //       artistID,
-  //       releaseYear,
-  //       songList,
-  //       genre
-  //     );
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  const { editAlbum, message, editerror, editIsLoading } = useEditAlbum();
+  const handleUpdate = (e) => {
+    e.preventDefault();
+    try {
+      editAlbum(
+        album._id,
+        albumArt,
+        albumName,
+        artistID,
+        releaseYear,
+        songList,
+        genre
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <form>
       <Button variant="primary" onClick={handleShow}>
@@ -224,11 +225,11 @@ const AlbumModal = ({ album,songs }) => {
               Close
             </Button>
             <Button variant="danger">Delete Album</Button>
-            {/* <Button variant="primary" onClick={handleUpdate}>
+            <Button variant="primary" onClick={handleUpdate}>
               Update Album
-            </Button> */}
-            {/* {message && <p>{message}</p>}
-            {editerror && <p>{editerror}</p>} */}
+            </Button>
+            {message && <p>{message}</p>}
+            {editerror && <p>{editerror}</p>}
           </Modal.Footer>
         </div>
       </Modal>
