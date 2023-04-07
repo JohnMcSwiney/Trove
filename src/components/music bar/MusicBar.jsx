@@ -154,6 +154,7 @@ const MusicBar = () => {
 
   useEffect(() => {
     changeVolumeLevel();
+
     if(isPlay_Global === true){
       console.log("isPlay_Global : true (in musicBar useEffect)")
       audioPlayer.current.play()
@@ -273,10 +274,9 @@ const MusicBar = () => {
   //   console.log(`show queue`)
   // }
 
-  const userID = JSON.parse(localStorage.getItem("user")).id;
+  const userID = JSON.parse(localStorage.getItem("user")) ? JSON.parse(localStorage.getItem("user")).id : null;
 
   const [userInfo, setUserInfo] = useState([]);
-
 
   
 
@@ -290,8 +290,9 @@ const MusicBar = () => {
 
 
       let likedata = userInfo.likedSongs;
+      if(currentSong){
       let myValue = currentSong._id;
-
+      
       
 
       if (likedata.some(item => item._id === myValue)) {
@@ -304,7 +305,7 @@ const MusicBar = () => {
         setIsLiked(false)
       }
       
-
+    }
     };
     
 
