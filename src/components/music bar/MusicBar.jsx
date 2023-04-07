@@ -324,11 +324,14 @@ const MusicBar = () => {
     
     if (!isLiked) {
       like()
+      setIsLiked(true)
       
     } else {
       
       unlike()
+      setIsLiked(false)
     }
+  
   }
   const handleRewind = () => {
     const currentTimeInSong = audioPlayer.current.currentTime
@@ -469,7 +472,7 @@ const MusicBar = () => {
           }}
           onTimeUpdate={() => {
             (animationRef.current = requestAnimationFrame(whilePlaying))
-            fetchUserInfo();
+            
           }}
 
           
@@ -686,7 +689,7 @@ const MusicBar = () => {
                 <button
                   className='playbtnstyle'
                   id='playPauseBtn'
-                  onClick={() => {togglePlayPause();  fetchUserInfo();}}
+                  onClick={() => {togglePlayPause();  }}
                 >
                   {isPlay_Global ? (
                     <BsPause />
