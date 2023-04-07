@@ -136,13 +136,13 @@ const Audience = () => {
             <FiveSearched topSong={topSong} />
           </div>
           <div class="item2">
-            <h1>{artistAudience?.searchCount} Searches</h1>
+            <h1>{artistAudience?.searchCount ? artistAudience?.searchCount : 0 } Searches</h1>
           </div>
           <div class="item3">
             <h1>
               {
                 <span className="artist--namespan">
-                  {artistAudience?.followers?.length}
+                  {artistAudience?.followers?.length ? artistAudience?.followers?.length : 0}
                 </span>
               }{" "}
               Fans

@@ -417,18 +417,18 @@ export const useUploadSong = () => {
             throw new Error("Please enter a valid year");
           }
 
-          const songUrl = await uploadSongToFirebase(songFile);
+          const songUrl = await uploadSongToFirebase(songFile[0]);
 
           if (!imageFile || imageFile == null) {
             console.log("no image selected");
 
             imgUrl = process.env.DEFAULT_COVER;
 
-            data = await createSongObject(title, songUrl, imgUrl);
+            data = await createSongObject(title, songUrl, imgUrl, featuredArtists);
           } else {
             imgUrl = await uploadImageToFirebase();
 
-            data = await createSongObject(title, songUrl, imgUrl);
+            data = await createSongObject(title, songUrl, imgUrl, featuredArtists);
           }
           console.log("End Response Data: " + data);
 

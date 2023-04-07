@@ -91,9 +91,11 @@ export default function UploadMusic(props) {
         break;
       case "single":
         setSongFile(Array.from(e.target.files));
+
       default:
         break;
     }
+    console.log(songFile)
   };
 
   const handleImageFileChange = (e) => {
@@ -179,7 +181,7 @@ export default function UploadMusic(props) {
     setToUploadSongs(songFile);
 
     if (songFile) {
-      console.log(songFile.name);
+      console.log(songFile[0].name);
     }
   }, [songFile]);
 
