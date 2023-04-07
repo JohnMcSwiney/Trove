@@ -1,7 +1,6 @@
 const express = require("express");
 const { default: mongoose } = require("mongoose");
 const URL = require("url").URL;
-const DiscoveryGame = require("../../models/discoveryGame model/discoveryGame-model");
 const Song = require("../../models/song model/song-model");
 const Artist = require("../../models/artist model/artist-model");
 const Album = require("../../models/album model/album-model");
@@ -175,57 +174,24 @@ const compareSongData = async (user) => {
           songGenre = genres[fourthIndex];
           console.log("songGenre in if stmt: " + songGenre);
         }
+        return songGenre;
       }
 
-      // else if (second == third || second == fourth) {
-      //   console.log("if there are two or more number of genres that are the same");
-
-      //   if (chance >= 25 && chance < 50) {
-      //     console.log("chance was >25 but <50");
-      //     songGenre = genres[secondIndex];
-      //     console.log("songGenre in if stmt: " + songGenre);
-      //   }
-      //   else if (chance >= 50 && chance < 75) {
-      //     console.log("chance was >50 but <75");
-      //     songGenre = genres[thirdIndex];
-      //     console.log("songGenre in if stmt: " + songGenre);
-      //   }
-      //   else {
-      //     console.log("chance was greater than 75");
-      //     songGenre = genres[fourthIndex];
-      //     console.log("songGenre in if stmt: " + songGenre);
-      //   }
-      // }
-
-      // else {
-      //   console.log("if there are two or more number of genres that are the same");
-
-      //   if (chance >= 25 && chance < 50) {
-      //     console.log("chance was >25 but <50");
-      //     songGenre = genres[thirdIndex];
-      //     console.log("songGenre in if stmt: " + songGenre);
-      //   }
-      //   else {
-      //     console.log("chance was greater than 50");
-      //     songGenre = genres[fourthIndex];
-      //     console.log("songGenre in if stmt: " + songGenre);
-      //   }
-      // }
 
       //assign genre in set of final if statements
 
-      if (chance < 25 || chance >= 25 && chance < 50) {
-        console.log("chance was >25 but <50");
+      if (chance >= 50 && chance < 80) {
+        console.log("chance was >=50 but <80");
         songGenre = genres[firstIndex];
         console.log("songGenre in if stmt: " + songGenre);
       }
-      else if (chance >= 50 && chance < 75) {
-        console.log("chance was >50 but <75");
+      else if (chance < 50) {
+        console.log("chance was < 50");
         songGenre = genres[secondIndex];
         console.log("songGenre in if stmt: " + songGenre);
       }
-      else if (chance == 75) {
-        console.log("chance was greater than 75");
+      else if (chance >= 80) {
+        console.log("chance was greater than or equal to 80");
         songGenre = genres[thirdIndex];
         console.log("songGenre in if stmt: " + songGenre);
       }
@@ -245,6 +211,8 @@ const compareSongData = async (user) => {
 
       return songGenre;
     });
+
+    console.log("final songGenre: " + songGenre);
 
     const similarSongs = await Song.find({ genre: songGenre })
       .populate("artist")
@@ -288,116 +256,6 @@ const compareSongData = async (user) => {
       return songLimit;
     }
 
-    //   console.log("songID: " + songId);
-
-    //   // if (!mongoose.Types.ObjectId.isValid(songId)) {
-    //   //   return res.status(404).json({ err: "No such song" });
-    //   // }
-
-    //   const currentSong = await Song.findById(songId);
-
-    //   if (!currentSong || currentSong == null) {
-
-    //     console.log("SongID is null: " + songId);
-
-    //     await User.updateOne(
-    //       { _id: user._id },
-    //       { $pull: { likedSongs: songId } }
-    //     );
-    //     console.log("SongID should be removed");
-    //   }
-
-    //   console.log("currentSong title: " + currentSong.title);
-
-    //   let songGenre = currentSong.genre;
-
-    //   console.log("songGenre: " + songGenre);
-
-    //   if (!songGenre || songGenre == null) {
-    //     throw new Error("SongGenre not found");
-    //   }
-
-    //   let numOfPop = 0;
-    //   let numOfRock = 0;
-    //   let numOfCountry = 0;
-    //   let numOfHipHop = 0;
-
-    //   switch (songGenre) {
-    //     case "pop":
-    //       numOfPop++;
-    //       console.log("popValue: " + numOfPop);
-    //       break;
-    //     case "rock":
-    //       numOfRock++;
-    //       console.log("rockValue: " + numOfRock);
-    //       break;
-    //     case "country":
-    //       numOfCountry++;
-    //       console.log("countryValue: " + numOfCountry);
-    //       break;
-    //     case "hiphop":
-    //       numOfHipHop++;
-    //       console.log("hipHopValue: " + numOfHipHop);
-    //       break;
-    //     default:
-    //       console.log("Invalid songGenre");
-    //       break;
-    //   }
-
-    //   let genreArray = [numOfPop, numOfRock, numOfCountry, numOfHipHop]
-
-    //   console.log("genreArray: " + genreArray);
-
-    //   let first = 0;
-
-    //   let firstIndex = 0;
-
-    //   for (let i = 0; i < genreArray.length; i++) {
-    //     if (genreArray[i] > first) {
-    //       first = genreArray[i];
-    //       firstIndex = i;
-    //     }
-    //     console.log("first: " + first);
-    //     console.log("firstIndex: " + firstIndex);
-    //   }
-
-    //   let genres = ["pop", "rock", "country", "hiphop"];
-
-    //   if (first > 0) {
-    //     songGenre = genres[firstIndex];
-    //     console.log("songGenre in if stmt: " + songGenre);
-    //   }
-    //   return songGenre;
-    // }
-
-    // const similarSongs = await Song.find({ genre: songGenre })
-    //   .populate("artist")
-    //   .populate("featuredArtists")
-    //   .populate("album")
-    //   .sort();
-
-    // if (!similarSongs) {
-    //   return res.status(404).send("songs not found");
-    // }
-
-    // //const songLimit = [];
-
-    // while (songLimit.length < 5) {
-
-    //   const randomSong = similarSongs[Math.floor(Math.random() * similarSongs.length)];
-
-    //   if (!songLimit.includes(randomSong) && !user.likedSongs.includes(randomSong)) {
-    //     songLimit.push(randomSong);
-    //     console.log("added randomSong: " + randomSong.title);
-    //   }
-    // }
-    // console.log("songLimit length: " + songLimit.length)
-
-    // if (songLimit.length > 5) {
-    //   throw new Error("Song limit cannot be greater than 5.");
-    // }
-
-    // return songLimit;
 
   } catch (err) {
     console.log(err);

@@ -7,7 +7,7 @@ const passport = require("passport");
 const userRouter = require("./admin routes/user-route/user-route");
 const albumRouter = require("./admin routes/album-route/album-route");
 const artistRouter = require("./admin routes/artist-route/artist-route");
-const curatedPlaylistRouter = require("./admin routes/curatedPlaylist-route/curatedPlaylist-route");
+// const curatedPlaylistRouter = require("./admin routes/curatedPlaylist-route/curatedPlaylist-route");
 
 // const tastepRouter = require("./admin routes/tastep-route/tastep-route");
 const playlistRouter = require("./admin routes/playlist-route/playlist-route");
@@ -80,7 +80,7 @@ app.use("/api/albums", albumRouter);
 app.use("/api/artists", artistRouter);
 
 //curated playlists
-app.use("/api/curated", curatedPlaylistRouter);
+// app.use("/api/curated", curatedPlaylistRouter);
 
 // //playlist
 app.use("/api/playlists", playlistRouter);
