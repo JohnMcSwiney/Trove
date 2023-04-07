@@ -120,136 +120,87 @@ const createEP = async (req, res) => {
 //WIP
 const updateEP = async (req, res) => {
   const { id } = req.params;
+  const { epArt, epName, artist, releaseYear, songList, genre } = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ err: "No such ep" });
+    return res.status(404).json({ error: "No such ep" });
   }
 
   try {
-    const artist = await Artist.findOne({ artistName: req.body.artist });
+    const ep = await EP.findById(id);
 
-    if (!artist) {
+    if (!ep) {
+      res.status(404).json({ error: "ep is not available" });
+    }
+
+    const epArtist = await Artist.findById(artist);
+
+    if (!epArtist) {
       console.log("artist not found");
 
       throw new Error("Artist not found");
     }
 
-    const songs = await Song.find({}).sort({ createdAt: -1 });
+    ep.epArt = epArt;
+    ep.epName = epName;
+    ep.releaseYear = releaseYear;
+    ep.epGenre = genre;
+    ep.artist = epArtist;
 
-    if (!songs) {
-      console.log("songs not found");
-
-      throw new Error("Songs not found");
+    const songListIDs = songList && songList.map((item) => item._id || []);
+    if (songListIDs.length > 5) {
+      res.status(500).json({ error: "EP can contain max to 5 songs" });
     }
 
-    const songList = songs.map((song) => song._id);
+    //adding song to songList
+    for (const songs of songList) {
+      const foundSong = await Song.findById(songs);
 
-    if (!req.body.featuredArtists || req.body.featuredArtists == null) {
-      const ep = await EP.findOneAndUpdate(
-        { _id: id },
-        { $set: { ...req.body, artist: artist._id, songList: songList._id } },
-        { new: true }
-      );
+      if (!foundSong) {
+        return res.status(404).json({ error: "This song  doesn't exist" });
+      }
 
-      let disableSongs = [];
+      if (
+        foundSong.ep === null ||
+        (foundSong.ep._id.toString() !== id &&
+          !ep.songList.includes(foundSong._id))
+      ) {
+        ep.songList.push(foundSong._id);
+        foundSong.ep = ep;
+        foundSong.releaseType = ["ep"];
+        await foundSong.save();
+      }
+    }
 
-      for (const featuredArtistId of ep.featuredArtists) {
-        await Artist.updateOne(
-          { _id: featuredArtistId },
-          { $pull: { epList: ep._id } }
-        );
+    //remove
 
-        await Song.updateOne(
-          { _id: songList._id },
-          { $pull: { featuredArtists: featuredArtistId } }
-        );
+    if (songList.length === 0) {
+      const epSongs = await Song.find({ ep: id });
 
-        disableSongs = [
-          ...disableSongs,
-          ...(await Song.find({
-            ep: ep._id,
-            featuredArtists: featuredArtistId,
-          })),
-        ];
+      for (const song of epSongs) {
+        song.ep = null;
+        song.releaseType = ["single"];
+        ep.songList = [];
+        await song.save();
+      }
+    } else {
+      for (const songs of ep.songList) {
+        if (!songListIDs.includes(songs.toString())) {
+          ep.songList.pull(songs);
+          const foundSong = await Song.findById(songs);
 
-        for (const song of disableSongs) {
-          song.isPublished = false;
-          await song.save();
+          foundSong.ep = null;
+          foundSong.releaseType = ["single"];
+          await foundSong.save();
         }
       }
-
-      if (!ep) {
-        return res.status(404).json({ message: "No such ep" });
-      }
-
-      res.status(200).json(ep);
-    } else {
-      const featuredArtists = await Promise.all(
-        req.body.featuredArtists.map(async (name) => {
-          const featuredArtist = await Artist.findOne({ artistName: name });
-
-          if (!featuredArtist) {
-            throw new Error("featured artist(s) not found");
-          }
-
-          return featuredArtist._id;
-        })
-      );
-
-      console.log(featuredArtists);
-
-      const ep = await EP.findOneAndUpdate(
-        { _id: id },
-        {
-          $set: {
-            ...req.body,
-            artist: artist._id,
-            songList: songs._id,
-            featuredArtists: featuredArtists,
-          },
-        },
-        { new: true }
-      );
-
-      for (const featuredArtistId of featuredArtists) {
-        const featuredArtist = await Artist.findById(featuredArtistId);
-
-        featuredArtist.epList
-          ? console.log("do not update ep list")
-          : featuredArtist.epList.push(ep._id);
-
-        await featuredArtist.save();
-      }
-
-      // const disableSongs = [];
-
-      // for (const featuredArtistId of ep.featuredArtists) {
-
-      //     await Artist.updateOne({ _id: featuredArtistId }, { $pull: { epList: ep._id } });
-
-      //     ep.featuredArtists.epList ? console.log("do not update eplist") : ep.featuredArtists.epList.push(ep._id);
-
-      //     //await Song.updateOne({ _id: songs._id }, { $pull: { featuredArtists: featuredArtistId } });
-
-      //     disableSongs = [...disableSongs, ...(await Song.find({ ep: ep._id, featuredArtists: featuredArtistId }))];
-
-      //     for (const song of disableSongs) {
-      //         song.isPublished = false;
-      //         await song.save();
-      //     }
-
-      //     ep.featuredArtists.save();
-      // }
-
-      if (!ep) {
-        return res.status(404).json({ message: "No such ep" });
-      }
-
-      res.status(200).json(ep);
     }
-  } catch (err) {
-    console.log(err);
-    res.status(400).json({ message: err.message });
+    ep.songList = songList;
+    const success = "Updated ep successfully";
+    await ep.save();
+    res.status(200).json({ ep, success });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
   }
 };
 
@@ -336,7 +287,11 @@ const getMyEP = async (req, res) => {
     return res.status(404).json({ err: "EP does not exist" });
   }
 
-  const eps = await EP.find({ artist: id }).sort({ createdAt: -1 });
+  const eps = await EP.find({ artist: id })
+    .populate("featuredArtists")
+    .populate("artist")
+    .populate("songList")
+    .sort({ createdAt: -1 });
   if (!eps) {
     return res.status(404).json({ error: "You don't have any song" });
   }
