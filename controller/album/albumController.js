@@ -4,7 +4,10 @@ const Artist = require("../../models/artist model/artist-model");
 const Album = require("../../models/album model/album-model");
 
 const getAllAlbum = async (req, res) => {
-  const albums = await Album.find({}).sort({ createdAt: -1 });
+  const albums = await Album.find({})
+  .populate("artist")
+  .populate("featuredArtist")
+  .sort({ createdAt: -1 });
   res.status(200).json(albums);
 };
 
@@ -15,7 +18,9 @@ const getAlbum = async (req, res) => {
     return res.status(400).json({ err: "No such Album" });
   }
 
-  const album = await Album.findById(id);
+  const album = await Album.findById(id)
+  .populate("artist")
+  .populate("featuredArtist");
 
   if (!album) {
     return res.status(400).json({ err: "No such Album" });
