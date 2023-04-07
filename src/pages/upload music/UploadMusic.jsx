@@ -181,7 +181,7 @@ export default function UploadMusic(props) {
     setToUploadSongs(songFile);
 
     if (songFile) {
-      console.log(songFile[0].name);
+      console.log(songFile[0]?.name);
     }
   }, [songFile]);
 

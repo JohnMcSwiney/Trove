@@ -194,8 +194,13 @@ nav {
   object-position: top;
   mix-blend-mode: soft-light;
   /* margin-left: -5vmin; */
+  background-color: white;
 
   
+}
+
+.artist--navbar {
+  background-color: white;
 }
 
 .artist--small {
