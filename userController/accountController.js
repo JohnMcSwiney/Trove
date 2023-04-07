@@ -23,7 +23,7 @@ const loginUser = async (req, res) => {
   try {
     const verify = await User.findOne({ email: email });
 
-    if (verify == null) {
+    if (!verify) {
       return res.status(400).json({ error: "You haven't signed up" });
     }
 
