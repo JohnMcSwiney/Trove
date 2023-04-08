@@ -218,17 +218,17 @@ const compareSongData = async (user) => {
       }
       else if (chance < 50) {
         console.log("chance was < 50");
-        songGenre = genreObjects[0].genre;
+        songGenre = genreObjects[1].genre;
         console.log("songGenre in if stmt: " + songGenre);
       }
       else if (chance >= 80) {
         console.log("chance was greater than or equal to 80");
-        songGenre = genreObjects[0].genre;
+        songGenre = genreObjects[2].genre;
         console.log("songGenre in if stmt: " + songGenre);
       }
       else {
         console.log("chance was higher than 75");
-        songGenre = genreObjects[0].genre;
+        songGenre = genreObjects[3].genre;
         console.log("songGenre in if stmt: " + songGenre);
       }
       //return songGenre;
@@ -244,17 +244,17 @@ const compareSongData = async (user) => {
     }
     else if (chance < 50) {
       console.log("chance was < 50");
-      songGenre = genreObjects[0].genre;
+      songGenre = genreObjects[1].genre;
       console.log("songGenre in if stmt: " + songGenre);
     }
     else if (chance >= 80) {
       console.log("chance was greater than or equal to 80");
-      songGenre = genreObjects[0].genre;
+      songGenre = genreObjects[2].genre;
       console.log("songGenre in if stmt: " + songGenre);
     }
     else {
       console.log("chance was higher than 75");
-      songGenre = genreObjects[0].genre;
+      songGenre = genreObjects[3].genre;
       console.log("songGenre in if stmt: " + songGenre);
     }
     //return songGenre;
