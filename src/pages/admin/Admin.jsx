@@ -5,6 +5,9 @@ import { useAuth } from "../../context/AuthContext";
 
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
+import { useApproveSong } from "../../hooks/approve/useApproveSong";
+import { useApproveAlbum } from "../../hooks/approve/useApproveAlbum";
+import { useApproveEP } from "../../hooks/approve/useApproveEP";
 
 const Admin = () => {
   const [email, setEmail] = useState("");
@@ -39,8 +42,11 @@ const Admin = () => {
   const currentAdmin = localStorage.getItem("admin");
   const { authAdmin, isLoggedIn } = useAuth();
 
+  const { approveSong, approveError, approveIsLoading } = useApproveSong();
+
   //fetch unverified data
   const [single, setSingle] = React.useState([]);
+
   React.useEffect(() => {
     const fetchUSingles = async () => {
       const response = await fetch("/api/songs/unverified", {
@@ -58,7 +64,10 @@ const Admin = () => {
     fetchUSingles();
   }, []);
 
+  const { approveAlbum, approveAlbumError, setApproveAlbumIsLoading } =
+    useApproveAlbum();
   const [albums, setAlbums] = React.useState([]);
+
   React.useEffect(() => {
     const fetchUAlbums = async () => {
       const response = await fetch("/api/albums/unverified", {
@@ -77,6 +86,8 @@ const Admin = () => {
   }, []);
 
   const [eps, setEPs] = React.useState([]);
+  const { approveEP, approveEPError, setApproveEPIsLoading } = useApproveEP();
+
   React.useEffect(() => {
     const fetchUEPs = async () => {
       const response = await fetch("/api/eps/unverified", {
@@ -126,7 +137,16 @@ const Admin = () => {
                         <th>
                           <img src={singleSongs.imgUrl} width={"50px"} alt="" />
                         </th>
-                        <th>V</th>
+                        <th>
+                          <button
+                            className="btn btn-success"
+                            onClick={() => {
+                              approveSong(singleSongs._id);
+                            }}
+                          >
+                            Approve
+                          </button>
+                        </th>
                         <th>X</th>
                       </tr>
                     ))}
@@ -146,18 +166,23 @@ const Admin = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {albums?.map((albumSongs) => (
-                      <tr key={albumSongs._id}>
-                        <th>{albumSongs?.albumName}</th>
-                        <th>{albumSongs?.artist?.artistName}</th>
+                    {albums?.map((album) => (
+                      <tr key={album._id}>
+                        <th>{album?.albumName}</th>
+                        <th>{album?.artist?.artistName}</th>
                         <th>
-                          <img
-                            src={albumSongs.albumArt}
-                            width={"50px"}
-                            alt=""
-                          />
+                          <img src={album.albumArt} width={"50px"} alt="" />
                         </th>
-                        <th>V</th>
+                        <th>
+                          <button
+                            className="btn btn-success"
+                            onClick={() => {
+                              approveAlbum(album._id);
+                            }}
+                          >
+                            Approve
+                          </button>
+                        </th>
                         <th>X</th>
                       </tr>
                     ))}
@@ -177,14 +202,24 @@ const Admin = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {eps?.map((epSongs) => (
-                      <tr key={epSongs._id}>
-                        <th>{epSongs?.epName}</th>
-                        <th>{epSongs?.artist?.artistName}</th>
+                    {eps?.map((ep) => (
+                      <tr key={ep._id}>
+                        <th>{ep?.epName}</th>
+                        <th>{ep?.artist?.artistName}</th>
                         <th>
-                          <img src={epSongs.epArt} width={"50px"} alt="" />
+                          <img src={ep?.epArt} width={"50px"} alt="" />
                         </th>
-                        <th>V</th>
+                        <th>
+                          {" "}
+                          <button
+                            className="btn btn-success"
+                            onClick={() => {
+                              approveEP(ep._id);
+                            }}
+                          >
+                            Approve
+                          </button>
+                        </th>
                         <th>X</th>
                       </tr>
                     ))}
