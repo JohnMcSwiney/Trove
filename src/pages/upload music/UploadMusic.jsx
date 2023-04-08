@@ -147,6 +147,7 @@ export default function UploadMusic(props) {
     error,
     message,
     submitted,
+    setError
   } = useUploadSong();
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -211,6 +212,18 @@ export default function UploadMusic(props) {
   return (
     <section>
       {/* HEADER */}
+      {error && 
+      <div className="uploadmusic--error">
+        <div className="uploadmusic--errormsg--header">
+            <h2>ERROR</h2>
+        </div>
+        <div className="uploadmusic--errormsg">
+            <p>{error}</p>
+            <h3 onClick={() => setError(null)}>OK!</h3>
+        </div>
+      </div>
+      } 
+
 
       <div className="uploadmusic--upload--form container">
         <div className="uploadmusic--row">
@@ -323,7 +336,7 @@ export default function UploadMusic(props) {
           />
         </div>
       </div>
-      {error && <p>{error}</p>}
+      {/* {error && <p>{error}</p>} */}
     </section>
   );
 }

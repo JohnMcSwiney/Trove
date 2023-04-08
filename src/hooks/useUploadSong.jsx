@@ -458,5 +458,6 @@ export const useUploadSong = () => {
     error,
     message,
     submitted,
+    setError
   };
 };

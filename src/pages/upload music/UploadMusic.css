@@ -584,6 +584,61 @@ body {
 
   }
 
+  .uploadmusic--errormsg {
+    color: #5642dc;
+    text-align: center;
+    width: 70%;
+    height: 100px;
+    background-color: white;
+    border-radius: 2vmin;
+    padding-top: 25px;
+    border-top-left-radius: 0vmin;
+    border-top-right-radius: 0vmin;
+    justify-content: center;
+
+    
+  }
+  
+  .uploadmusic--errormsg > h3 {
+    text-decoration: underline;
+    color: #0034c4;
+    font-size: 20px;
+  }
+
+  .uploadmusic--errormsg--header > h2 {
+      margin-left: 20px;
+      padding-top: 5px;
+      font-weight: 700;
+      /* text-align: center; */
+  }
+
+  .uploadmusic--errormsg--header {
+    color: white;
+    text-align: left;
+    width: 70%;
+    height: 50px;
+    background-image: linear-gradient(
+      to right,
+      #8650f4,
+      #6f49e8,
+      #5642dc,
+      #393bd0,
+      #0034c4
+    );
+    border-radius: 2vmin;
+    border-bottom-left-radius: 0vmin;
+    border-bottom-right-radius: 0vmin;
+
+  }
+
+  .uploadmusic--error {
+    display: flex;
+    /* justify-items: center; */
+    justify-content: center;
+    /* align-content: center; */
+    flex-wrap: wrap;
+  }
+
 /* } */
 
 @media only screen and (max-width: 769px) {
