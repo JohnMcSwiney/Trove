@@ -626,10 +626,19 @@ const createTopArtistPlaylist = async (req, res) => {
 
             console.log("current artist: " + artist.artistName + ", search count: " + artist.searchCount);
 
+            console.log("current artist songList: " + artist.songList);
+
+
             const song = await Song.findOne({ artist: artist._id })
+            // const song = await Song.findOne({_id: {$in: artist.songList}})
                 .sort({ searchCount: -1 });
 
-            console.log("current song: " + song.title + ", search count: " + song.searchCount);
+                // artist.songList.map(async (song) => {
+                //     console.log("inside artist.songList")
+                //     console.log("current song: " + song.title + ", search count: " + song.searchCount);
+                // })
+
+            // console.log("current song: " + song.title + ", search count: " + song.searchCount);
 
             if (!songLimit.includes(song._id)) {
                 songLimit.push(song);
