@@ -177,9 +177,9 @@ const createSong = async (req, res) => {
 const getAllSongs = async (req, res) => {
   try {
     const songs = await Song.find()
-    .populate("artist")
-    .populate("featuredArtists")
-    .populate("album")
+      .populate("artist")
+      .populate("featuredArtists")
+      .populate("album")
       .sort({ createdAt: -1 });
 
     console.log("getAllSongs method working");
@@ -640,9 +640,9 @@ const getSongsBySearchCount = async (req, res) => {
     return res.status(404).json({ error: "You don't have any song" });
   }
 
-    
+
   res.status(200).json(songs);
-}; 
+};
 const genreStats = async (req, res) => {
   const { id } = req.params;
 
@@ -667,15 +667,16 @@ const genreStats = async (req, res) => {
     let numOfCountry = 0;
     let numOfHipHop = 0;
 
-    let first = 0;
-    let second = 0;
-    let third = 0;
+    const genres = ["pop", "rock", "country", "hiphop"];
 
+    const genreObjects = [];
+
+    const finalGenreStats = [];
 
     console.log("user liked songs: " + user.likedSongs.length)
 
-    const songs = await Song.find({_id: {$in: user.likedSongs}})
-      .sort({genre: -1});
+    const songs = await Song.find({ _id: { $in: user.likedSongs } })
+      .sort({ genre: -1 });
 
     songs.map(async (song) => {
 
@@ -704,41 +705,54 @@ const genreStats = async (req, res) => {
           console.log("Invalid songGenre");
           break;
       }
-
-      let genreArray = [numOfPop, numOfRock, numOfCountry, numOfHipHop]
-
-      let firstIndex = 0;
-      let secondIndex = 0;
-      let thirdIndex = 0;
-
-      for (let i = 0; i < genreArray.length; i++) {
-
-        if (genreArray[i] > first) {
-          first = genreArray[i];
-          //firstIndex = i;
-        }
-        else if (genreArray[i] < first && genreArray[i] > third) {
-          second = genreArray[i];
-          //secondIndex = i;
-        }
-        else {
-          third = genreArray[i];
-          //thirdIndex = i;
-        }
-      }
-    })
+    });
 
     console.log("final # of pop: " + numOfPop);
     console.log("final # of rock: " + numOfRock);
     console.log("final # of country: " + numOfCountry);
     console.log("final # of hiphop: " + numOfHipHop);
 
-    console.log("first: " + first);
-    console.log("second: " + second);
-    console.log("third: " + third);
+    while (genreObjects < 4) {
+      genreObjects.push({ genre: genres[0], value: numOfPop});
+      genreObjects.push({ genre: genres[1], value: numOfRock});
+      genreObjects.push({ genre: genres[2], value: numOfCountry});
+      genreObjects.push({ genre: genres[3], value: numOfHipHop});
+    }
+
+    if (genreObjects.length > 4) {
+      console.log("err length cannot be greater than 4");
+    }
+
+    genreObjects.sort(function (a, b) {
+      return b.value - a.value;
+    });
+
+    genreObjects.map((obj) => {
+      console.log("genre: " + obj.genre + ", value: " + obj.value);
+    });
+
+    console.log("genreObjects length: " + genreObjects.length);
+
+    console.log("firstGenre: " + genreObjects[0].genre + ", value: " + genreObjects[0].value);
+    console.log("secondGenre: " + genreObjects[1].genre + ", value: " + genreObjects[1].value);
+    console.log("thirdGenre: " + genreObjects[2].genre + ", value: " + genreObjects[2].value);
+
+    const length = user.likedSongs.length;
+
+    const firstPlace = (genreObjects[0].value / length) * 100;
+    const secondPlace = (genreObjects[1].value / length) * 100;
+    const thirdPlace = (genreObjects[2].value / length) * 100;
+
+    console.log("percentage of " + genreObjects[0].genre + " in likedSongs: " + firstPlace);
+    console.log("percentage of " + genreObjects[1].genre + " in likedSongs: " + secondPlace);
+    console.log("percentage of " + genreObjects[2].genre + " in likedSongs: " + thirdPlace);
+
+    finalGenreStats.push({ genre: genreObjects[0].genre, value: firstPlace});
+    finalGenreStats.push({ genre: genreObjects[1].genre, value: secondPlace});
+    finalGenreStats.push({ genre: genreObjects[2].genre, value: thirdPlace});
 
 
-
+    res.status(200).json({finalGenreStats});
   } catch (err) {
     console.log(err);
     res.status(400).json({ message: err.message });

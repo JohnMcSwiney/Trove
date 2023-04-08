@@ -98,80 +98,54 @@ const compareSongData = async (user) => {
           break;
       }
 
-      let genreArray = [numOfPop, numOfRock, numOfCountry, numOfHipHop]
+      //let genreArray = [numOfPop, numOfRock, numOfCountry, numOfHipHop];
 
-      let first = 0;
-      let second = 0;
-      let third = 0;
-      let fourth = 0;
+      const genres = ["pop", "rock", "country", "hiphop"];
 
-      let firstIndex = 0;
-      let secondIndex = 0;
-      let thirdIndex = 0;
-      let fourthIndex = 0;
+      const genreObjects = [];
 
-
-      for (let i = 0; i < genreArray.length; i++) {
-
-        if (genreArray[i] > first) {
-          first = genreArray[i];
-          firstIndex = i;
-        }
-
-        else if (genreArray[i] < first && genreArray[i] > third) {
-          second = genreArray[i];
-          secondIndex = i;
-        }
-
-        else if (genreArray[i] < second && genreArray[i] > fourth) {
-          third = genreArray[i];
-          thirdIndex = i;
-        }
-
-        // else if (genreArray[i] <= fourth) {
-        //   fourth = genreArray[i];
-        //   fourthIndex = i;
-        // }
-
-        else {
-          fourth = genreArray[i];
-          fourthIndex = i;
-        }
-
+      while (genreObjects < 4) {
+        genreObjects.push({ genre: genres[0], value: numOfPop});
+        genreObjects.push({ genre: genres[1], value: numOfRock});
+        genreObjects.push({ genre: genres[2], value: numOfCountry});
+        genreObjects.push({ genre: genres[3], value: numOfHipHop});
       }
 
-
-      let genres = ["pop", "rock", "country", "hiphop"];
+      genreObjects.sort(function (a, b) {
+        return b.value - a.value;
+      });
+  
+      genreObjects.map((obj) => {
+        console.log("genre: " + obj.genre + ", value: " + obj.value);
+      });
+  
+      console.log("genreObjects length: " + genreObjects.length);
 
       let chance = Math.round(Math.random() * 100);
 
-      // let shuffle = Math.round(Math.random() * 100);
-
       console.log("chance in genre validation: " + chance);
-
-      // conso.log("shuffle val in genre validation: " + shuffle);
 
       if (first == second || first == third || first == fourth) {
         console.log("if there are two or more number of genres that are the same");
 
-        if (chance >= 25 && chance < 50) {
-          console.log("chance was >25 but <50");
-          songGenre = genres[firstIndex];
+        if (chance >= 50 && chance < 80) {
+          console.log("chance was >=50 but <80");
+          songGenre = genreObjects[0].genre;
           console.log("songGenre in if stmt: " + songGenre);
         }
-        else if (chance >= 50 && chance < 75) {
-          console.log("chance was >50 but <75");
-          songGenre = genres[secondIndex];
+        else if (chance < 50) {
+          console.log("chance was < 50");
+          songGenre = genreObjects[0].genre;
           console.log("songGenre in if stmt: " + songGenre);
         }
-        else if (chance == 75) {
-          console.log("chance was greater than 75");
-          songGenre = genres[thirdIndex];
+        else if (chance >= 80) {
+          console.log("chance was greater than or equal to 80");
+          songGenre = genreObjects[0].genre;
           console.log("songGenre in if stmt: " + songGenre);
         }
         else {
           console.log("chance was higher than 75");
-          songGenre = genres[fourthIndex];
+          songGenre = genreObjects[0].genre;
           console.log("songGenre in if stmt: " + songGenre);
         }
         return songGenre;
@@ -182,33 +156,24 @@ const compareSongData = async (user) => {
 
       if (chance >= 50 && chance < 80) {
         console.log("chance was >=50 but <80");
-        songGenre = genres[firstIndex];
+        songGenre = genreObjects[0].genre;
         console.log("songGenre in if stmt: " + songGenre);
       }
       else if (chance < 50) {
         console.log("chance was < 50");
-        songGenre = genres[secondIndex];
+        songGenre = genreObjects[0].genre;
         console.log("songGenre in if stmt: " + songGenre);
       }
       else if (chance >= 80) {
         console.log("chance was greater than or equal to 80");
-        songGenre = genres[thirdIndex];
+        songGenre = genreObjects[0].genre;
         console.log("songGenre in if stmt: " + songGenre);
       }
       else {
         console.log("chance was higher than 75");
-        songGenre = genres[fourthIndex];
+        songGenre = genreObjects[0].genre;
         console.log("songGenre in if stmt: " + songGenre);
       }
-
-      console.log("first place: " + first + "[" + firstIndex + "]");
-      console.log("second place: " + second + "[" + secondIndex + "]");
-      console.log("third place: " + third + "[" + thirdIndex + "]");
-      console.log("fourth place: " + fourth + "[" + fourthIndex + "]");
-
-      console.log("genreArray: " + genreArray);
-
-
       return songGenre;
     });
 
