@@ -8,6 +8,8 @@ const {
   deleteSong,
   updateSong,
   getUnVerifiedSongs,
+  approveSong,
+  rejectSingle,
 } = require("../../controllers/song/song");
 router.get("/", getAllSongs);
 
@@ -18,6 +20,9 @@ router.get("/:id", getSong);
 router.get("/artist-songs/:id", getArtistSong);
 
 router.post("/", createSong);
+
+router.post("/approved/:id", approveSong);
+router.delete("/rejected/:id", rejectSingle);
 
 router.patch("/:id", updateSong);
 

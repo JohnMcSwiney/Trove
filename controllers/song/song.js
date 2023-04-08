@@ -5,7 +5,7 @@ const EP = require("../../models/ep/ep");
 const mongoose = require("mongoose");
 const { json } = require("express");
 const song = require("../../models/songs/song");
-
+const nodemailer = require("nodemailer");
 const createSong = async (req, res) => {
   console.log("createSong", req.body);
 
@@ -438,6 +438,133 @@ const getUnVerifiedSongs = async (req, res) => {
     res.status(500).json({ error: "fetching songs failed" });
   }
 };
+const approveSong = async (req, res) => {
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: "song not found" });
+  }
+  try {
+    const foundSong = await Song.findById(id)
+      .populate("artist")
+      .populate("featuredArtists")
+      .populate("album")
+      .populate("ep");
+    if (!foundSong) {
+      return res.status(404).json({ error: "song not found" });
+    }
+
+    const artistEmail = foundSong.artist.email;
+    foundSong.isVerified = true;
+    await foundSong.save();
+
+    const transporter = nodemailer.createTransport({
+      service: "Gmail",
+      auth: {
+        user: process.env.GOOGLE_USER,
+        pass: process.env.GOOGLE_PASSWORD,
+      },
+    });
+    const mailOptions = {
+      from: process.env.AUTH_EMAIL_ACCOUNT,
+      to: artistEmail,
+      subject: "Song Approved",
+      html: `
+            <p>Hi ${foundSong?.artist?.artistName},</p>
+            <p>Thank you for upload song to TroveMusic!</p>
+            <p>The song "${foundSong.title}" has been approved.</p>
+            <p>The Trove Music Team</p>
+          `,
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Email sent: " + info.response);
+      }
+    });
+    const success = "Song approved";
+    res.status(200).json({ foundSong, success });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const rejectSingle = async (req, res) => {
+  const { id } = req.params;
+  const { message } = req.body;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: "song not found" });
+  }
+
+  try {
+    const song = await Song.findById(id)
+      .populate("artist")
+      .populate("featuredArtists");
+
+    const songListOfArtists = await Artist.find({
+      songList: { $in: [id] },
+    });
+
+    if (!songListOfArtists) {
+      throw new Error("None of the artist has this song");
+    }
+    // delete the song from each artist's songList
+    for (const artist of songListOfArtists) {
+      await Artist.updateMany({ _id: artist._id }, { $pull: { songList: id } });
+    }
+
+    const albums = await Album.find({ songList: { $in: [id] } });
+    for (const album of albums) {
+      await Album.updateMany({ _id: album._id }, { $pull: { songList: id } });
+    }
+
+    const eps = await EP.find({ songList: { $in: [id] } });
+    for (const ep of eps) {
+      await EP.updateMany({ _id: ep._id }, { $pull: { songList: id } });
+    }
+
+    const artistEmail = song.artist.email;
+    const transporter = nodemailer.createTransport({
+      service: "Gmail",
+      auth: {
+        user: process.env.GOOGLE_USER,
+        pass: process.env.GOOGLE_PASSWORD,
+      },
+    });
+
+    const mailOptions = {
+      from: process.env.AUTH_EMAIL_ACCOUNT,
+      to: artistEmail,
+      subject: "EP Recjected",
+      html: `
+            <p>Hi ${song?.artist?.artistName},</p>
+            <p>Thank you for upload song to TroveMusic!</p>
+            <p>Your song is not qualified for listeners.</p>
+            <p>Here are the reasons: </p>
+            <p>${message}</p>
+            <p>The Trove Music Team</p>
+            
+          `,
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Email sent: " + info.response);
+      }
+    });
+
+    // delete the song itself
+    await Song.findByIdAndDelete(id);
+
+    res.status(200).json({ msg: "song deleted!" });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ error: error.message });
+  }
+};
 
 module.exports = {
   getAllSongs,
@@ -447,4 +574,6 @@ module.exports = {
   deleteSong,
   updateSong,
   getUnVerifiedSongs,
+  approveSong,
+  rejectSingle,
 };

@@ -49,7 +49,7 @@ const artistSchema = mongoose.Schema({
   albumList: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Artist",
+      ref: "Album",
       default: null,
     },
   ],
@@ -61,6 +61,13 @@ const artistSchema = mongoose.Schema({
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Song",
+      default: null,
+    },
+  ],
+  epList: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "EP",
       default: null,
     },
   ],

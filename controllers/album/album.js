@@ -2,8 +2,7 @@ const mongoose = require("mongoose");
 const Song = require("../../models/songs/song");
 const Artist = require("../../models/artists/artist");
 const Album = require("../../models/albums/album");
-const album = require("../../models/albums/album");
-
+const nodemailer = require("nodemailer");
 const getAllAlbum = async (req, res) => {
   try {
     const albums = await Album.find({})
@@ -167,7 +166,7 @@ const updateAlbum = async (req, res) => {
       ) {
         album.songList.push(foundSong._id);
         foundSong.album = album;
-        foundSong.releaseType = ["album"];
+        foundSong.releaseType = "album";
         await foundSong.save();
       }
     }
@@ -177,7 +176,7 @@ const updateAlbum = async (req, res) => {
 
       for (const song of albumSongs) {
         song.album = null;
-        song.releaseType = ["single"];
+        song.releaseType = "single";
         album.songList = [];
         await song.save();
       }
@@ -188,7 +187,7 @@ const updateAlbum = async (req, res) => {
           const foundSong = await Song.findById(songs);
 
           foundSong.album = null;
-          foundSong.releaseType = ["single"];
+          foundSong.releaseType = "single";
           await foundSong.save();
         }
       }
@@ -233,7 +232,7 @@ const deleteAlbum = async (req, res) => {
       for (const artist of featureArtistsSong) {
         const thatArtist = await Artist.findById(artist);
         thatArtist.songList.pull(aSong._id);
-        thatArtist.albumList.pull(album._id);
+        // thatArtist.albumList.pull(album._id);
         await thatArtist.save();
       }
       artist.songList.pull(aSong._id);
@@ -244,9 +243,8 @@ const deleteAlbum = async (req, res) => {
     await album.deleteOne({ _id: id });
 
     res.status(200).json(album);
-  } catch (err) {
-    console.log(err);
-    res.status(400).json({ message: err.message });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
   }
 };
 
@@ -267,9 +265,149 @@ const getUnVerifiedAlbums = async (req, res) => {
     .populate("artist")
     .populate("featuredArtists")
     .populate("songList")
-
     .sort({ createdAt: -1 });
   res.status(200).json(albums);
+};
+
+const approveAlbum = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(404).json({ error: "Album is not available" });
+    }
+
+    const album = await Album.findById(id)
+      .populate("artist")
+      .populate("featuredArtists")
+      .populate("songList");
+
+    album.isVerified = true;
+    albumSongs = album.songList;
+
+    for (const songs of albumSongs) {
+      const song = await Song.findById(songs);
+      song.isVerified = true;
+      await song.save();
+    }
+
+    const artistEmail = album.artist.email;
+    const transporter = nodemailer.createTransport({
+      service: "Gmail",
+      auth: {
+        user: process.env.GOOGLE_USER,
+        pass: process.env.GOOGLE_PASSWORD,
+      },
+    });
+
+    const mailOptions = {
+      from: process.env.AUTH_EMAIL_ACCOUNT,
+      to: artistEmail,
+      subject: "Song Approved",
+      html: `
+            <p>Hi ${album?.artist?.artistName},</p>
+            <p>Thank you for upload album to TroveMusic!</p>
+            <p>Your album is ready to be served for listeners.</p>
+            <p>The Trove Music Team</p>
+          `,
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Email sent: " + info.response);
+      }
+    });
+    const success = "Album approved";
+    await album.save();
+    res.status(200).json({ album, success });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const rejectAlbum = async (req, res) => {
+  const { id } = req.params;
+  const { message } = req.body;
+  try {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(404).json({ error: "Album is not available" });
+    }
+
+    const album = await Album.findById(id)
+      .populate("artist")
+      .populate("featuredArtists")
+      .populate("songList");
+    if (!album) {
+      return res.status(404).json({ error: "You don't have any song" });
+    }
+
+    const artist = await Artist.findOne({ _id: album.artist._id });
+    if (!artist) {
+      console.log("artist not found");
+
+      throw new Error("Artist not found");
+    }
+    artist.albumList.pull(album._id);
+
+    const albumSongs = await Song.find({ album: id });
+    for (const song of albumSongs) {
+      const aSong = await Song.findById(song);
+      aSong.album = null;
+
+      const featureArtistsSong = await Artist.find({
+        songList: { $in: [albumSongs] },
+      });
+
+      for (const artist of featureArtistsSong) {
+        const thatArtist = await Artist.findById(artist);
+        thatArtist.songList.pull(aSong._id);
+        // thatArtist.albumList.pull(album._id);
+        await thatArtist.save();
+      }
+      artist.songList.pull(aSong._id);
+      await aSong.deleteOne({ _id: song });
+      await artist.save();
+    }
+
+    const artistEmail = album.artist.email;
+    const transporter = nodemailer.createTransport({
+      service: "Gmail",
+      auth: {
+        user: process.env.GOOGLE_USER,
+        pass: process.env.GOOGLE_PASSWORD,
+      },
+    });
+
+    const mailOptions = {
+      from: process.env.AUTH_EMAIL_ACCOUNT,
+      to: artistEmail,
+      subject: "Album Recjected",
+      html: `
+            <p>Hi ${album?.artist?.artistName},</p>
+            <p>Thank you for upload album to TroveMusic!</p>
+            <p>Your album is not qualified for listeners.</p>
+            <p>Here are the reasons: </p>
+            <p>${message}</p>
+            <p>The Trove Music Team</p>
+            
+          `,
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Email sent: " + info.response);
+      }
+    });
+
+    await album.deleteOne({ _id: id });
+    res.status(201).json({ message: "Rejected album" });
+  } catch (error) {
+    res.status(500).json({ error });
+  }
 };
 
 module.exports = {
@@ -280,4 +418,6 @@ module.exports = {
   updateAlbum,
   deleteAlbum,
   getUnVerifiedAlbums,
+  approveAlbum,
+  rejectAlbum,
 };

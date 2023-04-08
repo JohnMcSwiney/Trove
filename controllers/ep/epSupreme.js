@@ -4,7 +4,7 @@ const Artist = require("../../models/artists/artist");
 const Album = require("../../models/albums/album");
 const EP = require("../../models/ep/ep");
 const artist = require("../../models/artists/artist");
-
+const nodemailer = require("nodemailer");
 const getAllEP = async (req, res) => {
   const eps = await EP.find({})
     .populate("songList")
@@ -19,7 +19,7 @@ const getEP = async (req, res) => {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(400).json({ err: "No such EP" });
+    return res.status(400).json({ error: "No such EP" });
   }
 
   const ep = await EP.findById(id)
@@ -29,7 +29,7 @@ const getEP = async (req, res) => {
     .populate("songList");
 
   if (!ep) {
-    return res.status(400).json({ err: "No such EP" });
+    return res.status(400).json({ error: "No such EP" });
   }
 
   res.status(200).json(ep);
@@ -91,7 +91,7 @@ const createEP = async (req, res) => {
       res.status(201).json(ep);
     }
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(400).json({ error: error.message });
   }
 };
 
@@ -145,7 +145,7 @@ const updateEP = async (req, res) => {
       ) {
         ep.songList.push(foundSong._id);
         foundSong.ep = ep;
-        foundSong.releaseType = ["ep"];
+        foundSong.releaseType = "ep";
         await foundSong.save();
       }
     }
@@ -157,7 +157,7 @@ const updateEP = async (req, res) => {
 
       for (const song of epSongs) {
         song.ep = null;
-        song.releaseType = ["single"];
+        song.releaseType = "single";
         ep.songList = [];
         await song.save();
       }
@@ -168,7 +168,7 @@ const updateEP = async (req, res) => {
           const foundSong = await Song.findById(songs);
 
           foundSong.ep = null;
-          foundSong.releaseType = ["single"];
+          foundSong.releaseType = "single";
           await foundSong.save();
         }
       }
@@ -199,7 +199,7 @@ const deleteEP = async (req, res) => {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ err: "No such ep" });
+    return res.status(404).json({ error: "No such ep" });
   }
 
   try {
@@ -217,57 +217,36 @@ const deleteEP = async (req, res) => {
       throw new Error("Artist not found");
     }
 
-    // const songs = await Promise.all(ep.songList.map(async () => {
+    artist.epList.pull(ep._id);
 
-    //     const song = await Song.findOne({ _id: ep.songs });
+    const epSongs = await Song.find({ ep: id });
 
-    //     if (!song) {
-    //         throw new Error(" songs not found");
-    //     }
+    for (const song of epSongs) {
+      const aSong = await Song.findById(song);
+      aSong.ep = null;
+      const featureArtistsSong = await Artist.find({
+        songList: { $in: [epSongs] },
+      });
 
-    //     return song._id;
-    // }));
-
-    const featuredArtists = await Promise.all(
-      ep.featuredArtists.map(async () => {
-        const featuredArtist = await Artist.findOne({
-          _id: ep.featuredArtists,
-        });
-
-        if (!featuredArtist) {
-          throw new Error(" featured artist not found");
-        }
-
-        return featuredArtist._id;
-      })
-    );
-
-    await EP.findOneAndDelete({ _id: id });
-
-    await Artist.updateOne(
-      { _id: artist._id },
-      { $pull: { epList: ep._id, songList: { $in: ep.songList } } }
-    );
-
-    await Song.deleteMany({ _id: ep.songList });
-
-    for (const featuredArtistId of featuredArtists) {
-      await Artist.updateOne(
-        { _id: featuredArtistId },
-        { $pull: { epList: ep._id, songList: { $in: ep.songList } } }
-      );
-
-      await Song.deleteMany({ _id: featuredArtists.songList });
+      for (const artist of featureArtistsSong) {
+        const thatArtist = await Artist.findById(artist);
+        thatArtist.songList.pull(aSong._id);
+        // thatArtist.epList.pull(ep._id);
+        await thatArtist.save();
+      }
+      artist.songList.pull(aSong._id);
+      await aSong.deleteOne({ _id: song });
+      await artist.save();
     }
 
     if (!ep) {
-      return res.status(404).json({ message: "No such ep" });
+      return res.status(404).json({ error: "No such ep" });
     }
-
+    await ep.deleteOne({ _id: id });
     res.status(200).json(ep);
-  } catch (err) {
-    console.log(err);
-    res.status(400).json({ message: err.message });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ error: error.message });
   }
 };
 const getUnVerifiedEPs = async (req, res) => {
@@ -279,6 +258,147 @@ const getUnVerifiedEPs = async (req, res) => {
     .sort({ createdAt: -1 });
   res.status(200).json(eps);
 };
+
+const approveEP = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(404).json({ error: "Album is not available" });
+    }
+
+    const ep = await EP.findById(id)
+      .populate("artist")
+      .populate("featuredArtists")
+      .populate("songList");
+
+    ep.isVerified = true;
+
+    for (const songs of ep.songList) {
+      const song = await Song.findById(songs);
+      song.isVerified = true;
+      await song.save();
+    }
+
+    const artistEmail = ep.artist.email;
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.GOOGLE_USER,
+        pass: process.env.GOOGLE_PASSWORD,
+      },
+    });
+
+    const mailOptions = {
+      from: process.env.AUTH_EMAIL_ACCOUNT,
+      to: artistEmail,
+      subject: "EP Approved",
+      html: `
+            <p>Hi ${ep?.artist?.artistName},</p>
+            <p>Thank you for upload ep to TroveMusic!</p>
+            <p>Your ep is ready to be served for listeners.</p>
+            <p>The Trove Music Team</p>
+          `,
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        res.status(500).json({ error: error.message });
+      } else {
+        console.log("Email sent: " + info.response);
+      }
+    });
+    const success = "ep approved";
+    await ep.save();
+    res.status(200).json({ ep, success });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const rejectEP = async (req, res) => {
+  const { id } = req.params;
+  const { message } = req.body;
+  try {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(404).json({ error: "EP is not available" });
+    }
+
+    const ep = await EP.findById(id)
+      .populate("artist")
+      .populate("featuredArtists")
+      .populate("songList");
+    if (!ep) {
+      return res.status(404).json({ error: "You don't have any song" });
+    }
+
+    const artist = await Artist.findOne({ _id: ep.artist._id });
+    if (!artist) {
+      console.log("artist not found");
+
+      throw new Error("Artist not found");
+    }
+    artist.epList.pull(ep._id);
+
+    const epSongs = await Song.find({ ep: id });
+    for (const song of epSongs) {
+      const aSong = await Song.findById(song);
+      aSong.ep = null;
+
+      const featureArtistsSong = await Artist.find({
+        songList: { $in: [epSongs] },
+      });
+
+      for (const artist of featureArtistsSong) {
+        const thatArtist = await Artist.findById(artist);
+        thatArtist.songList.pull(aSong._id);
+        // thatArtist.epList.pull(ep._id);
+        await thatArtist.save();
+      }
+      artist.songList.pull(aSong._id);
+      await aSong.deleteOne({ _id: song });
+      await artist.save();
+    }
+
+    const artistEmail = ep.artist.email;
+    const transporter = nodemailer.createTransport({
+      service: "Gmail",
+      auth: {
+        user: process.env.GOOGLE_USER,
+        pass: process.env.GOOGLE_PASSWORD,
+      },
+    });
+
+    const mailOptions = {
+      from: process.env.AUTH_EMAIL_ACCOUNT,
+      to: artistEmail,
+      subject: "EP Recjected",
+      html: `
+            <p>Hi ${ep?.artist?.artistName},</p>
+            <p>Thank you for upload album to TroveMusic!</p>
+            <p>Your album is not qualified for listeners.</p>
+            <p>Here are the reasons: </p>
+            <p>${message}</p>
+            <p>The Trove Music Team</p>
+            
+          `,
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Email sent: " + info.response);
+      }
+    });
+
+    await ep.deleteOne({ _id: id });
+    res.status(201).json({ message: "EP rejected" });
+  } catch (error) {
+    res.status(500).json({ error });
+  }
+};
+
 module.exports = {
   getEP,
   getMyEP,
@@ -287,4 +407,6 @@ module.exports = {
   updateEP,
   deleteEP,
   getUnVerifiedEPs,
+  approveEP,
+  rejectEP,
 };

@@ -8,11 +8,15 @@ const {
   updateAlbum,
   deleteAlbum,
   getUnVerifiedAlbums,
+  approveAlbum,
+  rejectAlbum,
 } = require("../../controllers/album/album");
 
 router.get("/", getAllAlbum);
 router.get("/unverified", getUnVerifiedAlbums);
 
+router.post("/approved/:id", approveAlbum);
+router.delete("/rejected/:id", rejectAlbum);
 router.get("/:id", getAlbum);
 
 router.get("/artist-albums/:id", getArtistAlbum);
