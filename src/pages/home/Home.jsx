@@ -23,6 +23,22 @@ const Home = () => {
   // console.log(favoriteArtists);
 
   const [userInfo, setUserInfo] = useState([])
+  const [curatedPlaylist, updateCurated] = useState([]);
+
+  useEffect(() => {
+    const fetchCurated = async () => {
+      setDone(false)
+      setTimeout(() => {
+        fetch(`api/curated`)
+        .then(response => response.json())
+          .then(json => {
+            console.log(json)
+            updateCurated(json)
+            setDone(true)
+          })
+      }, 500)
+    }
+  })
   useEffect(() => {
     const fetchUserInfo = async () => {
       setDone(false)
@@ -58,7 +74,9 @@ const Home = () => {
     // centerPadding: '-1vw',
     // focusOnSelect: true
   }
-
+if(curatedPlaylist.length !== 0 ){
+  console.log(curatedPlaylist)
+}
   return (
     // <div className=' '>
     <main className='container '>
