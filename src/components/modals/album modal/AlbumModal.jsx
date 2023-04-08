@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import Select from "react-select";
 import Modal from "react-bootstrap/Modal";
 import { useEditAlbum } from "../../../hooks/update/useEditAlbum";
+import { useDeleteAlbum } from "../../../hooks/delete/useDeleteAlbum";
 
 const AlbumModal = ({ album, artists, songs }) => {
   const handleClose = () => setShow(false);
@@ -58,6 +59,7 @@ const AlbumModal = ({ album, artists, songs }) => {
       console.log(error);
     }
   };
+  const { deleteAlbum, deleteError, loadingDetele } = useDeleteAlbum();
   return (
     <form>
       <Button variant="primary" onClick={handleShow}>
@@ -225,7 +227,9 @@ const AlbumModal = ({ album, artists, songs }) => {
             <Button variant="secondary" onClick={handleClose}>
               Close
             </Button>
-            <Button variant="danger">Delete Album</Button>
+            <Button variant="danger" onClick={() => deleteAlbum(album._id)}>
+              Delete Album
+            </Button>
             <Button variant="primary" onClick={handleUpdate}>
               Update Album
             </Button>

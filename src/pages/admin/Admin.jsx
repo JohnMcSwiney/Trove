@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
+import Modal from "react-bootstrap/Modal";
 import { useCreateAdmin } from "../../hooks/login & signup/useCreateAdmin";
 import { useAuth } from "../../context/AuthContext";
 
@@ -8,6 +9,9 @@ import "react-tabs/style/react-tabs.css";
 import { useApproveSong } from "../../hooks/approve/useApproveSong";
 import { useApproveAlbum } from "../../hooks/approve/useApproveAlbum";
 import { useApproveEP } from "../../hooks/approve/useApproveEP";
+import { useRejectSingle } from "../../hooks/reject/useRejectSingle";
+import { useRejectAlbum } from "../../hooks/reject/useRejectAlbum";
+import { useRejectEP } from "../../hooks/reject/useRejectEP";
 
 const Admin = () => {
   const [email, setEmail] = useState("");
@@ -15,6 +19,10 @@ const Admin = () => {
   const [adminName, setAdminName] = useState("");
   const [error, setError] = useState(null);
 
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
   };
@@ -105,6 +113,25 @@ const Admin = () => {
     fetchUEPs();
   }, []);
 
+  const {
+    rejectSingle,
+    rejectSingleError,
+    rejectSingleIsLoading,
+    rejectSingleStatus,
+  } = useRejectSingle();
+
+  const {
+    rejectAlbum,
+    rejectAlbumError,
+    rejectAlbumIsLoading,
+    rejectAlbumStatus,
+  } = useRejectAlbum();
+
+  const { rejectEP, rejectEPError, rejectEPIsLoading, rejectEPStatus } =
+    useRejectEP();
+  const [singleMessage, setSingleMessage] = React.useState("");
+  const [albumMessage, setAlbumMessage] = React.useState("");
+  const [epMessage, setEPMessage] = React.useState("");
   return (
     <>
       <Container>
@@ -147,7 +174,46 @@ const Admin = () => {
                             Approve
                           </button>
                         </th>
-                        <th>X</th>
+                        <th>
+                          <Button variant="danger" onClick={handleShow}>
+                            Reject
+                          </Button>
+
+                          <Modal show={show} onHide={handleClose}>
+                            <Modal.Header closeButton>
+                              <Modal.Title>Reject Single Song</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                              <div class="form-group">
+                                <label for="exampleFormControlTextarea1">
+                                  Feed back
+                                </label>
+                                <textarea
+                                  class="form-control"
+                                  id="exampleFormControlTextarea1"
+                                  rows="3"
+                                  onChange={(e) =>
+                                    setSingleMessage(e.target.value)
+                                  }
+                                  value={singleMessage}
+                                ></textarea>
+                              </div>
+                            </Modal.Body>
+                            <Modal.Footer>
+                              <Button variant="secondary" onClick={handleClose}>
+                                Close
+                              </Button>
+                              <Button
+                                variant="danger"
+                                onClick={() =>
+                                  rejectSingle(singleSongs._id, singleMessage)
+                                }
+                              >
+                                Save Changes
+                              </Button>
+                            </Modal.Footer>
+                          </Modal>
+                        </th>
                       </tr>
                     ))}
                   </tbody>
@@ -183,7 +249,46 @@ const Admin = () => {
                             Approve
                           </button>
                         </th>
-                        <th>X</th>
+                        <th>
+                          <Button variant="danger" onClick={handleShow}>
+                            Reject
+                          </Button>
+
+                          <Modal show={show} onHide={handleClose}>
+                            <Modal.Header closeButton>
+                              <Modal.Title>Reject Album</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                              <div class="form-group">
+                                <label for="exampleFormControlTextarea1">
+                                  Feed back
+                                </label>
+                                <textarea
+                                  class="form-control"
+                                  id="exampleFormControlTextarea1"
+                                  rows="3"
+                                  onChange={(e) =>
+                                    setAlbumMessage(e.target.value)
+                                  }
+                                  value={albumMessage}
+                                ></textarea>
+                              </div>
+                            </Modal.Body>
+                            <Modal.Footer>
+                              <Button variant="secondary" onClick={handleClose}>
+                                Close
+                              </Button>
+                              <Button
+                                variant="danger"
+                                onClick={() =>
+                                  rejectAlbum(album._id, albumMessage)
+                                }
+                              >
+                                Save Changes
+                              </Button>
+                            </Modal.Footer>
+                          </Modal>
+                        </th>
                       </tr>
                     ))}
                   </tbody>
@@ -220,7 +325,42 @@ const Admin = () => {
                             Approve
                           </button>
                         </th>
-                        <th>X</th>
+                        <th>
+                          <Button variant="danger" onClick={handleShow}>
+                            Reject
+                          </Button>
+
+                          <Modal show={show} onHide={handleClose}>
+                            <Modal.Header closeButton>
+                              <Modal.Title>Reject EP</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                              <div class="form-group">
+                                <label for="exampleFormControlTextarea1">
+                                  Feed back
+                                </label>
+                                <textarea
+                                  class="form-control"
+                                  id="exampleFormControlTextarea1"
+                                  rows="3"
+                                  onChange={(e) => setEPMessage(e.target.value)}
+                                  value={epMessage}
+                                ></textarea>
+                              </div>
+                            </Modal.Body>
+                            <Modal.Footer>
+                              <Button variant="secondary" onClick={handleClose}>
+                                Close
+                              </Button>
+                              <Button
+                                variant="danger"
+                                onClick={() => rejectEP(ep._id, epMessage)}
+                              >
+                                Save Changes
+                              </Button>
+                            </Modal.Footer>
+                          </Modal>
+                        </th>
                       </tr>
                     ))}
                   </tbody>

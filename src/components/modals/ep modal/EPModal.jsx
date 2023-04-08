@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Select from "react-select";
 import { useEditEP } from "../../../hooks/update/useEditEP";
+import { useDeleteEP } from "../../../hooks/delete/useDeleteEP";
 const EPModal = ({ ep, artists, songs }) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -47,6 +48,7 @@ const EPModal = ({ ep, artists, songs }) => {
     }
     setSongList(selectedList);
   };
+  const { deleteEP, deleteError, loadingDetele } = useDeleteEP();
   return (
     <form>
       <Button variant="primary" onClick={handleShow}>
@@ -210,7 +212,9 @@ const EPModal = ({ ep, artists, songs }) => {
             <Button variant="secondary" onClick={handleClose}>
               Close
             </Button>
-            <Button variant="danger">Delete Ep</Button>
+            <Button variant="danger" onClick={() => deleteEP(ep._id)}>
+              Delete Ep
+            </Button>
             <Button variant="primary" onClick={handleUpdate}>
               Update Ep
             </Button>

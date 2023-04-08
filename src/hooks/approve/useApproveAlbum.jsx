@@ -3,7 +3,7 @@ import { useState } from "react";
 export const useApproveAlbum = () => {
   const [approveAlbumError, setApproveAlbumError] = useState(null);
   const [approveAlbumIsLoading, setApproveAlbumIsLoading] = useState(false);
-
+  const [approveAlbumStatus, setApproveAlbumStatus] = useState("");
   const approveAlbum = async (albumID) => {
     setApproveAlbumIsLoading(true);
     setApproveAlbumError(null);
@@ -18,8 +18,16 @@ export const useApproveAlbum = () => {
       setApproveAlbumError(json.error);
     }
 
+    if (response.ok) {
+      setApproveAlbumStatus("success");
+    }
     setApproveAlbumIsLoading(false);
   };
 
-  return { approveAlbum, approveAlbumError, setApproveAlbumIsLoading };
+  return {
+    approveAlbum,
+    approveAlbumError,
+    setApproveAlbumIsLoading,
+    approveAlbumStatus,
+  };
 };
