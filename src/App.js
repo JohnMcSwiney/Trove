@@ -10,6 +10,7 @@ import {
   Login,
   Signup,
   AccountSetting,
+  ErrorPage
 } from "./pages/pages";
 
 const App = () => {
@@ -26,6 +27,7 @@ const App = () => {
             <Route path="/signup" element={<Signup />}></Route>
             <Route path="/login" element={<Login />}></Route>
             <Route path="/settings" element={<AccountSetting />}></Route>
+            <Route path="*" element={<ErrorPage />}></Route>
           </Routes>
         </div>
       </BrowserRouter>
