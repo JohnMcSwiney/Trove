@@ -15,6 +15,9 @@ import { Navigate, useNavigate, Link } from 'react-router-dom'
 import { BsFillPlayFill } from 'react-icons/bs'
 import { escapeSelector } from 'jquery'
 
+import { BsPlay, BsPause } from 'react-icons/bs'
+
+import AddPlaylist_ToQueue from "../../playlist/addPlaylist_ToQueue";
 // User's Top Genres
 export default function AlbumPage () {
   let { id } = useParams()
@@ -25,7 +28,10 @@ export default function AlbumPage () {
     updatePlay_list,
     updateQueue,
     addToQueue,
-    updateQueuePosition
+    clearPlay_list,
+    updatePlay_listPosition,
+    isPlay_Global,
+    toggleIsPlay_G,
   } = React.useContext(MusicContext)
 
   const [album, setAlbum] = React.useState(null)
@@ -35,6 +41,9 @@ export default function AlbumPage () {
   const [albumSongList, setAlbumSongList] = React.useState([])
   const [test, setTest] = React.useState(false);
   const [test2, setTest2] = React.useState(false);
+  const [clicks, setClicks] = React.useState(0);
+ 
+
   React.useEffect(() => {
     const fetchAlbum = async () => {
       const albumResponse = await fetch(`/api/albums/${id}`, {
@@ -53,41 +62,27 @@ export default function AlbumPage () {
     fetchAlbum()
   }, [id])
 
-  React.useEffect(() => {
-    const fetchArtist = async () => {
-      const artistResponse = await fetch(`/api/artists/${album?.artist}`, {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' }
-      })
-      const artistJson = await artistResponse.json()
-      if (artistResponse.ok) {
-        setArtist(artistJson)
-        // console.log(artist);
-      } else {
-        // setDone(false);
-      }
-    }
-    fetchArtist()
-  }, [album])
+  
 
-  const fetchAlbumSongs = async () => {
-    // if(album && albumSongList?.length <= album?.songList.length){
-    if (test === true) {
-      console.log(albumSongList)
-      if (albumSongList?.length <= album?.songList.length) {
-        let songListin = album.songList
-        for (const id of songListin) {
-          const contents = await fetch(`/api/songs/${id}`)
-            .then(response => response.json())
-            .then(json => {
-              if (albumSongList?.length <= album?.songList.length - 1) {
-                albumSongList.push(json)
-              }
-            })
-        }
-      }
-    }
-  }
+  // const fetchAlbumSongs = async () => {
+  //   // if(album && albumSongList?.length <= album?.songList.length){
+  //   if (test === true) {
+  //     console.log(albumSongList)
+  //     if (albumSongList?.length <= album?.songList.length) {
+  //       let songListin = album.songList
+  //       for (const id of songListin) {
+  //         const contents = await fetch(`/api/songs/${id}`)
+  //           .then(response => response.json())
+  //           .then(json => {
+  //             if (albumSongList?.length <= album?.songList.length - 1) {
+  //               albumSongList.push(json)
+  //             }
+  //           })
+  //       }
+  //     }
+  //   }
+  // }
+
   React.useEffect(() => {
     if (albumSongList.length === album?.songList.length - 1){
       console.log("List filled");
@@ -107,30 +102,61 @@ export default function AlbumPage () {
   const handlePlayAlbum = () => {
     
       setTest(true)
-      fetchAlbumSongs()
-    
+      // fetchAlbumSongs()
+    if(album){
       setTimeout(() => {
-        updatePlay_list(albumSongList)
+        updatePlay_list(album.songList)
+        // console.log(albumSongList)
         setTimeout(() => {
-        updateCurrentSong(albumSongList[0]);
-        updateQueuePosition(0)
-        }, 400)
+        updateCurrentSong(album.songList[0]);
+        updatePlay_listPosition(0)
+        }, 200)
       }, 400)
+    }
+     
 
     
+  }
+  const togglePlayPause = () => {
+    toggleIsPlay_G();
   }
   // const navigate = useNavigate()
   // function redirectEditPlaylist () {
   //   navigate(`/editplaylist/${playlist._id}`)
   // }
+console.log(album);
 
   return (
     <section className='album-containter-ver2'>
       <div className='bg-fglass--1--playlist'>
         <div className='playlist--info'>
-          <button className='playlist--playbtn' onClick={handlePlayAlbum}>
-            <BsFillPlayFill className='playIconPlayList' />
+        <div className='playPauseQueueBtnCont'>
+          {clicks !== 0 && play_list === album?.songList ? (
+            <button
+            className='playlist--playbtn'
+            // id='playPauseBtn'
+            onClick={togglePlayPause}
+          >
+            {isPlay_Global ? (
+              <BsPause />
+            ) : (
+              <BsPlay className='playIconPlayList' />
+            )}
           </button>
+          )
+        :
+        (
+          <button className='playlist--playbtn' onClick={
+            handlePlayAlbum
+            }>
+            <BsFillPlayFill className='playIconPlayList'  />
+          </button>
+        )}
+        <div>
+          
+        </div>
+        <AddPlaylist_ToQueue input ={album?.songList} className='AddPlaylist_ToQueue'/>
+        </div>
           {!done ? (
             <LoadingSearch />
           ) : (
@@ -143,10 +169,10 @@ export default function AlbumPage () {
           ) : (
             <div className='playlist--stats--info'>
               <div className='playlist--release--info'>
-                <h6>{album && album.releaseType}</h6>
+                <h6>Album</h6>
                 {/* <div className="playlist--release--filler--div">|</div><h5>2014</h5> */}
                 <div className='playlist--release--filler--div'>|</div>
-                <h4>By: {artist?.artistName}</h4>
+                <h4>By: {album?.artist?.artistName}</h4>
               </div>
               <h3>{album && album.albumName}</h3>
             </div>
@@ -160,28 +186,30 @@ export default function AlbumPage () {
           <LoadingSearch />
         ) : (
           <div className='playlist--songs'>
-            <ul className='playlist--songlist--container'>
-              {albumSongList?.length === album?.songList.length &&
-                albumSongList?.map((song, index) => {
+            
+              {album &&
+              <ul className='playlist--songlist--container'>
+              {
+                album.songList.map((song, index) => {
                   //fetchAlbumSong(song);
                   // console.log(song.title);
                   return (
                     <li className='playlist--song--container'>
                       <h1>{index + 1}</h1>
-                      <searchSongCard2 key={song._id} song={song} />
-
-                      {/* <p className="hiddens">  {song._id}</p> */}
-                      {/* 
-                      <p> {song.title}</p> */}
+                      <SearchSongCard2 key={song._id} song={song} />
+                      {/* {song._id} */}
                     </li>
                   )
                 })}
-            </ul>
+                </ul>
+              }
+            
           </div>
         )}
       </div>
+      <div onLoad={handlePlayAlbum}>
 
-      {/* <NavBar /> */}
+</div>
     </section>
   )
 }

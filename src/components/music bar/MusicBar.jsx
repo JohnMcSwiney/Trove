@@ -154,6 +154,7 @@ const MusicBar = () => {
 
   useEffect(() => {
     changeVolumeLevel();
+
     if(isPlay_Global === true){
       console.log("isPlay_Global : true (in musicBar useEffect)")
       audioPlayer.current.play()
@@ -273,16 +274,65 @@ const MusicBar = () => {
   //   console.log(`show queue`)
   // }
 
+  const userID = JSON.parse(localStorage.getItem("user")) ? JSON.parse(localStorage.getItem("user")).id : null;
+
+  const [userInfo, setUserInfo] = useState([]);
+
+  
+
+
+    const fetchUserInfo = async () => {
+      const response = await fetch(`/api/users/${userID}`);
+      const data = await response.json();
+      setUserInfo(data);
+
+
+
+
+      let likedata = userInfo.likedSongs;
+      if(currentSong){
+      let myValue = currentSong._id;
+      
+      
+
+      if (likedata.some(item => item._id === myValue)) {
+        
+        
+        setIsLiked(true)
+      } else {
+        
+        
+        setIsLiked(false)
+      }
+      
+    }
+    };
+    
+
+  
+  React.useEffect(() => {
+    
+    
+    fetchUserInfo();
+    
+  }, [currentSong]);
+
+
   const { like, likeError, likeIsLoading } = useLikeSong()
   const { unlike, unlikeError, unlikeIsLoading } = useUnlikeSong()
 
   const toggleLiked = () => {
-    setIsLiked(!isLiked)
+    
     if (!isLiked) {
       like()
+      setIsLiked(true)
+      
     } else {
+      
       unlike()
+      setIsLiked(false)
     }
+  
   }
   const handleRewind = () => {
     const currentTimeInSong = audioPlayer.current.currentTime
@@ -320,9 +370,14 @@ const MusicBar = () => {
     }
     if (queue.length > 0) {
       if(queue.length === 1){
-        clearQueue();
-        updatePlay_listPosition(play_listPosition);
-        return;
+        if(currentSong._id === queue[0]._id ){
+          clearQueue();
+          updatePlay_listPosition(play_listPosition);
+          return;
+        }else {
+          advanceQueue();
+        }
+       
       }
       if(currentSong._id === queue[0]._id && currentSong._id === queue[1]._id){
         console.log(currentSong._id + " qp1 " + queue[0]._id );
@@ -418,6 +473,7 @@ const MusicBar = () => {
           }}
           onTimeUpdate={() => {
             (animationRef.current = requestAnimationFrame(whilePlaying))
+            
           }}
 
           
@@ -601,7 +657,7 @@ const MusicBar = () => {
             <div className='player-info-container-ver2 '>
               {/*  */}
               <div className='like-btn '>
-                <button onClick={toggleLiked}>
+                <button onClick={() => {toggleLiked();}}>
                   {isLiked ? (
                     <FaHeart className='text-white' />
                   ) : (
@@ -634,7 +690,7 @@ const MusicBar = () => {
                 <button
                   className='playbtnstyle'
                   id='playPauseBtn'
-                  onClick={togglePlayPause}
+                  onClick={() => {togglePlayPause();  }}
                 >
                   {isPlay_Global ? (
                     <BsPause />

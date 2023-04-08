@@ -118,7 +118,7 @@ export const MusicProvider = ({ children }) => {
       if(displayMusicBar === false ){
         updateDisplayMusicBar(true);
         // console.log(queue[0])
-        if(!play_list){
+        if(play_list.length === 0){
           updateCurrentSong(queue[0]);
           // toggleIsPlay_G();
         }       

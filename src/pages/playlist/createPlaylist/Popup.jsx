@@ -22,28 +22,33 @@ export default function PopUp(props) {
      
        return (
         <div className="createplaylist--modal">
-          <div className="createplaylist--modal_content">
+          
           <div className="createplaylist--delsong">
                     <img src="../assets/xsongsymbol.png" alt="deletesongicon" onClick={handleClick} />
           </div>
           {/* <span className="createplaylist--close" onClick={handleClick}>&times;    </span> */}
-          <input type="text" id="searchbar" value={props.search} name="songSearch" placeholder="Search Songs" onChange={((e) => props.setSearch(e.target.value))}/>
+          <input type="text" id="searchbar" value={props.search} name="songSearch" className="searchBox " onChange={((e) => props.setSearch(e.target.value))}/>
           {/* <p>I'm A Pop Up!!!</p> */}
 
-          <div className="createplaylist--songs createplaylist--add">
+          <div className="playlist--songs 
+          createplaylist--add
+          ">
+          
             {
                !props.done ? <LoadingSearch /> :
                     <div>
                       {props.searchResult.songs && props.search.length > 0 && (
-                      <div>
+                      <ul className='playlist--songlist--container'>
                         {props.searchResult.songs.map((song, index) => (
+                          <li className='playlist--song--container'>
                           <PlaylistSong key={song._id} song={song} setSongData={props.setSongData}
                           handleRemoveSong={props.handleRemoveSong}
                           songActionImg={props.songActionImg}
                           songAction={"add"}
                           />
+                          </li>
                         ))}
-                      </div>
+                      </ul>
                     )}
                     </div>
 
@@ -63,9 +68,10 @@ export default function PopUp(props) {
                     //     />
                     //     ) }})
                         }
+                        
             </div>
           </div>
-        </div>
+        
        );
 
 }
