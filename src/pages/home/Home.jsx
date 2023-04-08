@@ -110,7 +110,9 @@ const Home = () => {
                     <th scope="row">{song.title}</th>
 
                     <th>
-                      {song.isVerified.toString() ? "Pending" : "Approved"}
+                      {song.isVerified.toString() === "true"
+                        ? "Approved"
+                        : "Pending"}
                     </th>
 
                     <th>
@@ -147,7 +149,9 @@ const Home = () => {
                   <tr key={album._id}>
                     <th scope="row">{album?.albumName}</th>
                     <th>
-                      {album?.isVerified.toString() ? "Pending" : "Approved"}
+                      {album?.isVerified.toString() === "true"
+                        ? "Approved"
+                        : "Pending"}
                     </th>
                     <th>
                       <AlbumModel album={album} songs={artistSongs} />
@@ -178,7 +182,9 @@ const Home = () => {
                   <tr key={ep._id}>
                     <th scope="row">{ep?.epName}</th>
                     <th>
-                      {ep?.isVerified.toString() ? "Pending" : "Approved"}
+                      {ep?.isVerified.toString() === "true"
+                        ? "Approved"
+                        : "Pending"}
                     </th>
                     <th>
                       <EPModel ep={ep} songs={artistSongs} />
