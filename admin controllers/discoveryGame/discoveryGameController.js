@@ -24,59 +24,59 @@ const compareSongData = async (user) => {
 
     let songGenre = "";
 
+    const songs = await Song.find({ _id: { $in: user.likedSongs } })
+    .sort({ genre: -1 });
 
-    user.likedSongs.forEach(async (songId) => {
+    songs.map(async (song) => {
 
-      console.log("songID: " + songId);
+      console.log("songID: " + song._id);
 
-      if (!mongoose.Types.ObjectId.isValid(songId)) {
+      if (!mongoose.Types.ObjectId.isValid(song._id)) {
         return res.status(404).json({ err: "No such song" });
       }
 
-      const currentSong = await Song.findById(songId);
+      if (!song || song == null) {
 
-      if (!currentSong || currentSong == null) {
-
-        console.log("SongID is null: " + songId);
+        console.log("SongID is null: " + song._id);
 
         await User.updateOne(
           { _id: user._id },
-          { $pull: { likedSongs: songId } }
+          { $pull: { likedSongs: song._id } }
         );
         console.log("SongID should be removed");
       }
 
-      if (currentSong.songUrl) {
-        console.log("inside url validation")
-        try {
-          console.log("if url is valid")
-          new URL(currentSong.songUrl);
-        } catch (err) {
-          console.log("Invalid songUrl, contents not found");
+      // if (song.songUrl) {
+      //   console.log("inside url validation")
+      //   try {
+      //     console.log("if url is valid")
+      //     new URL(currentSong.songUrl);
+      //   } catch (err) {
+      //     console.log("Invalid songUrl, contents not found");
 
-          await Song.updateOne(
-            { _id: currentSong._id },
-            { $set: { isPublished: false } }
-          );
-          console.log("Song should be disabled.");
-        }
-      }
+      //     await Song.updateOne(
+      //       { _id: currentSong._id },
+      //       { $set: { isPublished: false } }
+      //     );
+      //     console.log("Song should be disabled.");
+      //   }
+      // }
 
-      console.log("currentSong title: " + currentSong.title);
+      console.log("currentSong title: " + song.title);
 
-      console.log("currentSongGenre: " + currentSong.genre);
+      console.log("currentSongGenre: " + song.genre);
 
-      if (!currentSong.genre || currentSong.genre == null) {
+      if (!song.genre || song.genre == null) {
 
         await Song.updateOne(
-          { _id: currentSong._id },
+          { _id: song._id },
           { $set: { isPublished: false } }
         );
         console.log("song did not contain a genre");
         //throw new Error("SongGenre not found");
       }
 
-      switch (currentSong.genre) {
+      switch (song.genre) {
         case "pop":
           numOfPop++;
           console.log("popValue: " + numOfPop);
@@ -98,6 +98,86 @@ const compareSongData = async (user) => {
           break;
       }
     });
+
+
+    // user.likedSongs.forEach(async (songId) => {
+
+    //   console.log("songID: " + songId);
+
+    //   if (!mongoose.Types.ObjectId.isValid(songId)) {
+    //     return res.status(404).json({ err: "No such song" });
+    //   }
+
+    //   const currentSong = await Song.findById(songId);
+
+    //   if (!currentSong || currentSong == null) {
+
+    //     console.log("SongID is null: " + songId);
+
+    //     await User.updateOne(
+    //       { _id: user._id },
+    //       { $pull: { likedSongs: songId } }
+    //     );
+    //     console.log("SongID should be removed");
+    //   }
+
+    //   if (currentSong.songUrl) {
+    //     console.log("inside url validation")
+    //     try {
+    //       console.log("if url is valid")
+    //       new URL(currentSong.songUrl);
+    //     } catch (err) {
+    //       console.log("Invalid songUrl, contents not found");
+
+    //       await Song.updateOne(
+    //         { _id: currentSong._id },
+    //         { $set: { isPublished: false } }
+    //       );
+    //       console.log("Song should be disabled.");
+    //     }
+    //   }
+
+    //   console.log("currentSong title: " + currentSong.title);
+
+    //   console.log("currentSongGenre: " + currentSong.genre);
+
+    //   if (!currentSong.genre || currentSong.genre == null) {
+
+    //     await Song.updateOne(
+    //       { _id: currentSong._id },
+    //       { $set: { isPublished: false } }
+    //     );
+    //     console.log("song did not contain a genre");
+    //     //throw new Error("SongGenre not found");
+    //   }
+
+    //   switch (currentSong.genre) {
+    //     case "pop":
+    //       numOfPop++;
+    //       console.log("popValue: " + numOfPop);
+    //       break;
+    //     case "rock":
+    //       numOfRock++;
+    //       console.log("rockValue: " + numOfRock);
+    //       break;
+    //     case "country":
+    //       numOfCountry++;
+    //       console.log("countryValue: " + numOfCountry);
+    //       break;
+    //     case "hiphop":
+    //       numOfHipHop++;
+    //       console.log("hipHopValue: " + numOfHipHop);
+    //       break;
+    //     default:
+    //       console.log("Invalid songGenre");
+    //       break;
+    //   }
+    // });
+
+    console.log("final # of pop: " + numOfPop);
+    console.log("final # of rock: " + numOfRock);
+    console.log("final # of country: " + numOfCountry);
+    console.log("final # of hiphop: " + numOfHipHop);
 
     const genres = ["pop", "rock", "country", "hiphop"];
 
@@ -151,7 +231,7 @@ const compareSongData = async (user) => {
         songGenre = genreObjects[0].genre;
         console.log("songGenre in if stmt: " + songGenre);
       }
-      return songGenre;
+      //return songGenre;
     }
 
 
@@ -177,7 +257,7 @@ const compareSongData = async (user) => {
       songGenre = genreObjects[0].genre;
       console.log("songGenre in if stmt: " + songGenre);
     }
-    return songGenre;
+    //return songGenre;
 
     console.log("bdksadjsabdbdsabsa")
 
@@ -198,7 +278,11 @@ const compareSongData = async (user) => {
     else {
       console.log("it found similar songs");
 
-      console.log("similarSongs array: " + similarSongs);
+      //console.log("similarSongs array: " + similarSongs.tit);
+
+      similarSongs.map((song) => {
+        console.log("song title: " + song.title + ", genre: " + song.genre);
+      });
 
       const songLimit = [];
 
