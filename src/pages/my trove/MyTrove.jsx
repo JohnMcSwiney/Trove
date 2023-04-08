@@ -31,7 +31,7 @@ const MyTrove = () => {
   const userID = JSON.parse(localStorage.getItem("user")).id;
 
   const [playlists, setPlaylists] = useState([]);
-
+const [topGenres, setTopGenres] = useState([]);
   React.useEffect(() => {
     const fetchPlaylists = async () => {
       const response = await fetch(`/api/playlists/mylist/${userID}`);
@@ -61,11 +61,19 @@ const MyTrove = () => {
 
  
   console.log(userInfo.likedSongs);
-
+    const fetchTopGenres = async () => {
+const response = await fetch(`/api/songs/genre-stats/${userID}`);
+const data = await response.json();
+console.log(data.finalGenreStats[0])
+setTopGenres(data);
+    };
 
 
   React.useEffect(() => {
     fetchUserInfo();
+    if(userID){
+      fetchTopGenres();
+    }
   }, []);
 
   //Work in progress but useing a modefiedversion of Dans code
@@ -183,7 +191,10 @@ const MyTrove = () => {
   // return { handleRemoveSong, unlikeError, unlikeIsLoading };
   // };
 
-
+console.log(topGenres[0]);
+if(topGenres.length !== 0){
+  console.log(topGenres.finalGenreStats[0]);
+}
   return (
     <div className="container">
       <div className="myTrvcontainer ">
@@ -229,13 +240,15 @@ const MyTrove = () => {
         <div className="mytrove-splitter"></div>
         <div className="account-showcase">
           <h1>Top Genres:</h1>
-          <div className="CardCont">
-            <GenreCard color={"#fc6ff1"} name={"Pop"} percent={"50%"} />
+            {topGenres && topGenres.length !== 0 &&
+          <div className="CardCont">      
+            <GenreCard color={"#fc6ff1"} name={topGenres?.finalGenreStats[1].genre} percent={topGenres?.finalGenreStats[1].value} />
 
-            <GenreCard color={"#ff930f"} name={"Rap"} percent={"25%"} />
+            <GenreCard color={"#ff930f"} name={topGenres?.finalGenreStats[0].genre} percent={topGenres?.finalGenreStats[0].value} />
 
-            <GenreCard color={"#ff3b0f"} name={"Rock"} percent={"25%"} />
+            <GenreCard color={"#ff3b0f"} name={topGenres?.finalGenreStats[2].genre} percent={topGenres?.finalGenreStats[2].value} />
           </div>
+            }
         </div>
         <div className="mytrove-splitter"></div>
         {userInfo?.likedSongs?.length > 0 && (

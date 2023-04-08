@@ -40,6 +40,7 @@ import { AiOutlineShareAlt } from 'react-icons/ai'
 import HeartIcon from '../../assets/Trv_icons/Trv_likeIcon_outline.svg'
 import { RiFolderMusicFill, RiFolderMusicLine } from 'react-icons/ri'
 import { BsSkipStart, BsSkipEnd, BsPlay, BsPause } from 'react-icons/bs'
+import {IoIosArrowDown} from 'react-icons/io'
 
 // Hardcoded data
 // import queue from '../../data/albumsongs.json'
@@ -500,7 +501,7 @@ const MusicBar = () => {
                   <img src={currentSong?.imgUrl}></img>
                 </div>
                 <button className='exitBtn' onClick={toggleFC}>
-                  x
+                  <IoIosArrowDown className='exitItem'/>
                 </button>
                 <div className='fullscreen-song-txt-container-container '>
                   <div className='fullscreen-song-info-txt-container'>

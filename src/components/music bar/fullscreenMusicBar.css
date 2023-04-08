@@ -374,8 +374,8 @@
     display: flex;
     color: white;
     background-color: #0C081C;
-    height: 30px;
-    width: 30px;
+    height: 40px;
+    width: 40px;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
@@ -387,7 +387,23 @@
     margin-right: 5vmin;
     padding-left: 0px;
     padding-bottom: 2px;
-    font-size: large;
+    font-size: x-large;
+    transition: 0.25s;
+}
+.exitBtn > .exitItem {
+    padding-top: 2px;
+    transition: 0.25s;
+}
+.exitBtn:hover{
+    box-shadow: 0 0 5px #456ddb7e;
+    font-size: xx-large;
+    transition: 0.25s;
+}
+.exitBtn:hover> .exitItem{
+    transform: translateY(1px);
+    text-shadow: 0 0 5px #f5f5f77e;
+    font-size: xx-large;
+    transition: 0.25s;
 }
 .queueHeader{
     /* margin-top: 20px; */
