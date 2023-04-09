@@ -21,19 +21,26 @@ router.get("/:search", async (req, res) => {
 
     const albums = await Album.find({
       albumName: { $regex: new RegExp(search, "i") },
+      isVerified: true,
     })
       .populate("artist")
       .exec();
 
     const eps = await EP.find({
       epName: { $regex: new RegExp(search, "i") },
+      isVerified: true,
     })
       .populate("artist")
       .exec();
     const songs = await Song.find({
-      $or: [
-        { title: { $regex: new RegExp(search, "i") } },
-        { artist: { $in: artists.map((artist) => artist._id) } },
+      $and: [
+        {
+          $or: [
+            { title: { $regex: new RegExp(search, "i") } },
+            { artist: { $in: artists.map((artist) => artist._id) } },
+          ],
+        },
+        { isVerified: true }, // Add this condition to filter by isVerified: true
       ],
     })
       .populate("artist")
