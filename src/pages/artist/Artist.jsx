@@ -180,15 +180,18 @@ const Artist = () => {
           <div className="flex gap-4 ">
             {artist?.albumList &&
               artist?.albumList?.length > 0 &&
-              artist?.albumList.map((album) => (
-                <SearchAlbumCard
-                  key={album._id}
-                  id={album._id}
-                  name={album.albumName}
-                  artist={artist?.artistName}
-                  cover={album.albumArt}
-                />
-              ))}
+              artist?.albumList.map(
+                (album) =>
+                  album.isVerified && (
+                    <SearchAlbumCard
+                      key={album._id}
+                      id={album._id}
+                      name={album.albumName}
+                      artist={artist?.artistName}
+                      cover={album.albumArt}
+                    />
+                  )
+              )}
           </div>
         </div>
       )}
@@ -199,15 +202,18 @@ const Artist = () => {
           <div className="flex gap-4 ">
             {artist?.epList &&
               artist?.epList?.length > 0 &&
-              artist?.epList.map((ep) => (
-                <SearchAlbumCard
-                  key={ep._id}
-                  id={ep._id}
-                  name={ep.epName}
-                  artist={artist?.artistName}
-                  cover={ep.epArt}
-                />
-              ))}
+              artist?.epList.map(
+                (ep) =>
+                  ep.isVerified && (
+                    <SearchAlbumCard
+                      key={ep._id}
+                      id={ep._id}
+                      name={ep.epName}
+                      artist={artist?.artistName}
+                      cover={ep.epArt}
+                    />
+                  )
+              )}
           </div>
         </div>
       )}
@@ -218,9 +224,12 @@ const Artist = () => {
         <div className="CardCont artistprofile--songs">
           {artist?.songList &&
             artist?.songList?.length > 0 &&
-            artist?.songList.map((song) => (
-              <SearchSongCard2 song={song} key={song._id} />
-            ))}
+            artist?.songList.map(
+              (song) =>
+                song.isVerified && (
+                  <SearchSongCard2 song={song} key={song._id} />
+                )
+            )}
         </div>
       </div>
       <div className="Artistpage-account-splitter"></div>
