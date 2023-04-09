@@ -462,7 +462,7 @@ React.useEffect(() => {
           </div>
 
           <div className='Discovery-Player-Container'>
-            {/* <div className={style.DGaudioPlayer}>  JACK */}
+
             <div className=''>
               <audio
                 ref={audioPlayer}
