@@ -1,0 +1,43 @@
+.artist--errorpage {
+    color: white;
+    display: flex;
+    align-content: center;
+}
+
+.artist--errorpage > img {
+    width: 250px;
+    height: auto;
+    float: right;
+}
+
+.artist--errorpage >  h4 {
+    display: block;
+
+}
+
+.artist--errorpage h3 {
+    display: block;
+    font-weight: 800;
+
+}
+
+#big404 {
+    font-size: 150px;
+
+    
+}
+
+.artist--errorpage-msg {
+    width: 50%;
+    margin-left: 5%;
+
+}
+
+.artist--errorpage-msg > a {
+    color: #0034c4;
+    font-weight: 700;
+}
+
+.artist--errorpage-msg > a:hover {
+    color: #6f49e8;
+}
