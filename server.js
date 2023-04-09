@@ -85,6 +85,9 @@ app.use("/api/artists", artistRouter);
 // //playlist
 app.use("/api/playlists", playlistRouter);
 
+//eps
+const epRouter = require("./admin routes/ep-route/ep-route");
+app.use("/api/eps/", epRouter);
 //song
 app.use("/api/songs", songRouter);
 

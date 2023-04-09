@@ -51,6 +51,14 @@ const epSchema = new mongoose.Schema({
       //length: 5
     },
   ],
+  searchCount: {
+    type: Number,
+    default: 0,
+  },
+  isVerified: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 module.exports = mongoose.model("EP", epSchema);

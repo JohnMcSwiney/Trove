@@ -3,7 +3,6 @@ const router = express.Router();
 const {
   getAUser,
   getAllUser,
-
   updateUserPassword,
   updateUserEmail,
   updateUserAccountTab,
@@ -19,7 +18,7 @@ router.get("/:id", getAUser);
 //update user password
 router.patch("/up/:id", updateUserPassword);
 
-//update user email 
+//update user email
 router.patch("/ue/:id", updateUserEmail);
 
 //update user general info

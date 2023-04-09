@@ -34,10 +34,6 @@ const artistSchema = mongoose.Schema({
   gender: {
     type: String,
   },
-  //remove this one later (artistFollowers)
-  artistFollowers: {
-    type: Number,
-  },
 
   followers: [
     {
@@ -61,9 +57,6 @@ const artistSchema = mongoose.Schema({
       default: null,
     },
   ],
-  albumArtURL: {
-    type: String,
-  },
 
   songList: [
     {
@@ -72,12 +65,6 @@ const artistSchema = mongoose.Schema({
       default: null,
     },
   ],
-  isPublished: {
-    type: Boolean,
-  },
-  publishDate: {
-    type: Date,
-  },
 
   searchCount: {
     type: Number,

@@ -10,7 +10,7 @@ const cookieParser = require("cookie-parser");
 //get all artists
 const getAllArtist = async (req, res) => {
   const artists = await Artist.find({})
-    .populate("songList" )
+    .populate("songList")
     // /"title songUrl genre"
     .populate("albumList")
     .sort({ createAt: -1 });
@@ -34,61 +34,18 @@ const getAnArtist = async (req, res) => {
     { _id: artist._id },
     { $inc: { searchCount: 1 } }
   );
-  res.status(200).json(artist);
-};
 
-//create an artist
-const createArtist = async (req, res) => {
-  try {
-    const artist = new Artist(req.body);
-    artist.songList = [];
-    artist.albumList = [];
-
-    await artist.save();
-
-    res.status(201).json(artist);
-  } catch (err) {
-    res.status(400).json({ msg: err.message });
-  }
-};
-
-//update an artist
-const updateArtist = async (req, res) => {
-  const { id } = req.params;
-
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ message: "No such artist" });
-  }
-
-  const artist = await Artist.findByIdAndUpdate(
-    { _id: id },
-    {
-      ...req.body,
-    }
-  );
-
-  if (!artist) {
-    return res.status(404).json({ message: err.message });
-  }
-
-  res.status(200).json(artist);
-};
-
-//
-const deleteArtist = async (req, res) => {
-  const { id } = req.params;
-
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ message: "No such artist" });
-  }
-
-  const artist = await Artist.findOneAndDelete({ _id: id });
-
-  if (!artist) {
-    return res.status(404).json({ message: "Artist's not found" });
-  }
-
-  res.status(200).json(artist);
+  const artistInfo = {
+    artistName: artist.artistName,
+    bio: artist.bio,
+    artistImg: artist.artistImg,
+    followers: artist.followers,
+    albumList: artist.albumList,
+    epList: artist.epList,
+    songList: artist.songList,
+    searchCount: artist.searchCount,
+  };
+  res.status(200).json(artistInfo);
 };
 
 const followArtist = async (req, res) => {
@@ -108,10 +65,6 @@ const followArtist = async (req, res) => {
     }
 
     const { userID } = req.body;
-    // const userCookie = req.cookies;
-    // console.log(req.userCookie);
-    // const cookieData = cookieParser.JSONCookie(userCookie);
-    // const userID = cookieData.id;
 
     const user = await User.findOne({ _id: userID });
 
@@ -185,9 +138,7 @@ const unfollowArtist = async (req, res) => {
 module.exports = {
   getAllArtist,
   getAnArtist,
-  createArtist,
-  updateArtist,
-  deleteArtist,
+
   followArtist,
   unfollowArtist,
 };
