@@ -230,16 +230,13 @@ const MyTrove = () => {
             {topGenres && topGenres.length !== 0 &&
           <div className="topGenreCont">  
           <div className='topGenre2'>
-            <GenreCard  color={"#fc6ff1"} name={topGenres?.finalGenreStats[1].genre} percent={topGenres?.finalGenreStats[1].value} />
-            <h2>#2</h2>
+            <GenreCard  color={"#C0C0C0"} index={2} name={topGenres?.finalGenreStats[1].genre} percent={topGenres?.finalGenreStats[1].value} />
           </div>    
           <div className='topGenre1'>
-          <GenreCard color={"#ff930f"} name={topGenres?.finalGenreStats[0].genre} percent={topGenres?.finalGenreStats[0].value} />
-          <h1>#1</h1>
+          <GenreCard color={"#D6AD60"} index={1} name={topGenres?.finalGenreStats[0].genre} percent={topGenres?.finalGenreStats[0].value} /> 
           </div>
           <div className='topGenre3'>
-          <GenreCard color={"#ff3b0f"} name={topGenres?.finalGenreStats[2].genre} percent={topGenres?.finalGenreStats[2].value} />
-          <h3>#3</h3>
+          <GenreCard color={"#A97142"} index={3} name={topGenres?.finalGenreStats[2].genre} percent={topGenres?.finalGenreStats[2].value} />
           </div>
            </div>
             }
