@@ -7,6 +7,9 @@ const GenreCard = ({ index, color, name, percent }) => {
   const style = {
     backgroundColor: color
   }
+  const textStyle = {
+    color: color
+  }
   const percentage = percent
   return (
     <div className={'top'+index+'card'}>
@@ -28,7 +31,9 @@ const GenreCard = ({ index, color, name, percent }) => {
         </div>
        
       </div>
-      <h1>#{index}</h1> 
+      <h1
+      style={textStyle}
+      >#{index}</h1> 
     </div>
   )
 }
