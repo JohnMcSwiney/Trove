@@ -106,7 +106,6 @@ const loginArtist = async (req, res) => {
     }
     await Artist.login(email, password);
     const token = createToken(artist._id);
-    req.session.artist = artist; // Set the session here
 
     const hashEmail = maskEmailsPhones(artist.email);
     const artistInfo = {
