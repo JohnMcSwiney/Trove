@@ -20,6 +20,7 @@ import {
   Artist,
   DiscoveryGame,
   AlbumPage,
+  EpPage,
   FollowersPage,
   FollowingPage,
   PlaylistPage,
@@ -54,7 +55,7 @@ function App() {
             </Route>
 
             <Route path="/eppage/">
-              <Route path=":id" element={<AlbumPage />}></Route>
+              <Route path=":id" element={<EpPage />}></Route>
             </Route>
             {/* <Route path="/albumpage" element={<AlbumPage />}></Route> */}
 
