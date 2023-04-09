@@ -934,4 +934,19 @@ body {
   padding-bottom: 0;
 }
 
+.updateplaylist--gradient--btn.updateplaylist--submit--btn.delbtn {
+  background-color: #12164B;
+  background-image: none;
+  margin-right: 0%;
+  border-width: 20px;
+  border-radius: 25vmin;
+  border-image: linear-gradient(to left, #8650f4, #6f49e8, #5642dc, #393bd0, #0034c4);
+
+}
+
+.updateplaylist--gradient--btn.updateplaylist--submit--btn:hover {
+  transform: scale(1.01); 
+  box-shadow: 0 0 22px #0034C4;
+}
+
 }

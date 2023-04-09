@@ -8,6 +8,7 @@ import PopUp from "./Popup";
 import firebase from "./firebaseConfig";
 
 import { useUpdatePlaylist } from "../../../hooks/user-hooks/useUpdatePlaylist";
+import { useDeletePlaylist } from "../../../hooks/user-hooks/useDeletePlaylist";
 import { useParams } from "react-router-dom";
 // To create a playlist
 export default function UpdatePlaylist(props) {
@@ -148,6 +149,22 @@ export default function UpdatePlaylist(props) {
     console.log("CLICKED SUBMIT 2");
   };
 
+  const { deletePlaylist } = useDeletePlaylist();
+  const handleDelete = async (e) => {
+    console.log("CLICKED SUBMIT")
+    // e.preventDefault();
+
+    try {
+      await deletePlaylist(
+        id
+      );
+    } catch (error) {
+      console.log(error);
+    }
+
+    console.log("CLICKED SUBMIT 2");
+  };
+
   
 
   return (
@@ -207,6 +224,14 @@ export default function UpdatePlaylist(props) {
               value="Update"
               className="updateplaylist--gradient--btn updateplaylist--submit--btn"
               onClick={handleSubmit}
+            />
+          </div>
+          <div className="updateplaylist--delbtn">
+            <input
+              type="submit"
+              value="Delete"
+              className="updateplaylist--gradient--btn updateplaylist--submit--btn delbtn"
+              onClick={handleDelete}
             />
           </div>
           <input
