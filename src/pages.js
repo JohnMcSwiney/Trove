@@ -9,7 +9,9 @@ export { default as Artist } from "./pages/artist/Artist";
 
 export { default as DiscoveryGame } from "./pages/discoverygame/discoverygamepage";
 
+export { default as EpPage } from "./pages/album/EpPage/EpPage.jsx";
 export { default as AlbumPage } from "./pages/album/AlbumPage/AlbumPage.jsx";
+
 export { default as FollowersPage } from "./pages/follow/FollowersPage/FollowersPage.jsx";
 export { default as FollowingPage } from "./pages/follow/FollowingPage/FollowingPage.jsx";
 export { default as PlaylistPage } from "./pages/playlist/PlaylistPage.jsx";

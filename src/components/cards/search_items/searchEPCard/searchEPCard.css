@@ -1,0 +1,59 @@
+.searchAlbumCard{
+    display: flex;
+    flex-flow: column;
+    height: 18vw;
+    width: 11vw;
+    background-color: rgba(165, 42, 42, 0);
+    align-items: center;
+    margin-bottom: 1vm;
+    padding: 0.5vw;
+    gap: 0.5vw;
+    
+}
+.searchAlbumCover{
+    width: 10vw;
+    height: 10vw;
+    position: relative;
+    border-radius: 1vw;
+    overflow: hidden;
+}
+
+.searchAlbumCover > img{
+    position: absolute;
+    left: 0%;
+    top: 0%;
+    width: 100%;
+    scale: 1.1;
+    background: black;
+    transition: 0.25s ease-in-out;
+}
+.searchAlbumCover > img:hover{
+    scale: 1.15;
+    
+}
+.searchAlbumInfo{
+    display: flex;
+    background-color: rgba(255, 255, 255, 0);
+    flex-direction: column;
+  
+    color: black;
+    width: 10vw;
+    text-align: center;;
+    color: white;
+    text-decoration: none !important;
+    height: 5vw;
+    overflow: hidden;
+}
+.searchAlbumInfo > h3{
+    font-size: 1.3vw;
+}
+.searchAlbumInfo > h4{
+    font-size: 1vw;
+    opacity: 0.7;
+    text-decoration: none;
+}
+.border-w2{
+    border: solid  2px #12164bce !important;
+    border-radius: 1.5vw;
+}
+
