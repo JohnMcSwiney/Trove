@@ -361,7 +361,7 @@ const randomSong = async (user) => {
 
     // const index = Math.floor(Math.random() * uniqueSongs.length);
     // const randomSong = uniqueSongs[index];
-    const randomSimilarSong = similarSongs[Math.floor(Math.random() * similarSongs.length)];
+    const randomSong= songs[Math.floor(Math.random() * songs.length)];
 
     //console.log("randomSong in for loop: " + randomSimilarSong);
 
