@@ -92,9 +92,8 @@ const updateUserAccountTab = async (req, res) => {
       user.displayName = "My account";
     }
 
-    
     await user.save();
-    
+
     res.status(200).json({ success });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -133,11 +132,9 @@ const updateUserPassword = async (req, res) => {
     }
 
     if (password === newPassword) {
-      return res
-        .status(400)
-        .json({
-          error: "Can not set the new password as the current password",
-        });
+      return res.status(400).json({
+        error: "Can not set the new password as the current password",
+      });
     }
 
     const salt = await bcrypt.genSalt(10);
@@ -165,6 +162,7 @@ const updateUserPassword = async (req, res) => {
       html: `
             <p>Hi ${user.email},</p>
             <p>Your action of changing password is successfully, let us know if you did not attempt to change password</p>
+            <p>The Trove Music Team</p>
           `,
     };
 
@@ -233,6 +231,7 @@ const updateUserEmail = async (req, res) => {
       html: `
             <p>Hi ${newEmail},</p>
             <p>Your action of changing Email is successfully, let us know if you need help</p>
+            <p>The Trove Music Team</p>
           `,
     };
 

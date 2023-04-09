@@ -121,6 +121,7 @@ const signupUser = async (req, res) => {
             <p>Hi ${email},</p>
             <p>Thank you for signing up for My Awesome App!</p>
             <p>We're thrilled to have you join our community.</p>
+           <p>The Trove Music Team</p>
             
           `,
     };

@@ -4,7 +4,7 @@ const albumSchema = new mongoose.Schema({
   albumName: {
     type: String,
     required: [true, `Please provide album's name`],
-    maxlength: 75,
+    maxlength: 100,
   },
 
   albumArt: {
@@ -20,7 +20,7 @@ const albumSchema = new mongoose.Schema({
   albumGenre: {
     type: String,
     required: [true, `Please provide album's genre`],
-    enum: ["Pop", "Rock", "Hiphop", "Country"],
+    enum: ["pop", "rock", "hiphop", "country"],
   },
 
   featuredArtists: [
@@ -48,7 +48,7 @@ const albumSchema = new mongoose.Schema({
 
   releaseType: {
     type: String,
-    enum: ["Album", "EP", "Single"],
+    enum: ["album", "ep", "single"],
   },
   releaseYear: {
     type: Number,
@@ -63,6 +63,10 @@ const albumSchema = new mongoose.Schema({
   searchCount: {
     type: Number,
     default: 0,
+  },
+  isVerified: {
+    type: Boolean,
+    default: false,
   },
 });
 

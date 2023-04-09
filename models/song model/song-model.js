@@ -5,7 +5,7 @@ const songSchema = new mongoose.Schema(
     title: {
       type: String,
       required: [true, `Please provide song's name`],
-      maxlength: 75,
+      maxlength: 100,
     },
 
     artist: {
@@ -32,7 +32,6 @@ const songSchema = new mongoose.Schema(
       default: null,
     },
 
-
     songUrl: {
       type: String,
       required: [true, `Please provide song`],
@@ -46,12 +45,10 @@ const songSchema = new mongoose.Schema(
       type: Number,
       min: 1900,
       max: new Date().getFullYear(),
-      required: [true, 'Please provide a valid release year'],
+      required: [true, "Please provide a valid release year"],
       get: (v) => Math.round(v), // Round the number to remove decimal places
       set: (v) => Math.round(v), // Round the number to remove decimal places
-
-
-  },
+    },
     //double check releaseType with album model, may conflict.
     releaseType: {
       type: String,
