@@ -1,16 +1,20 @@
-import React,{useRef,} from "react";
+import React, { useRef } from "react";
 import { createContext, useContext } from "react";
 
 import { NavLink } from "react-router-dom";
 import { MusicContext } from "../../../../contexts/MusicContext";
 import "./searchSongCard2.css";
 
-
 //for testing atm
-import AddToQueueBtn from '../../../QueueBtns/addToQueueBtn';
+import AddToQueueBtn from "../../../QueueBtns/addToQueueBtn";
 const SearchSongCard2 = ({ song }) => {
-  const { currentSong, updateCurrentSong, currentSongData,clearQueue,clearPlay_list } =
-    React.useContext(MusicContext);
+  const {
+    currentSong,
+    updateCurrentSong,
+    currentSongData,
+    clearQueue,
+    clearPlay_list,
+  } = React.useContext(MusicContext);
   // const [currentSongforPlayer, setCurrentSongforPlayer] = React.useState(null);
 
   const handlePlaySong = () => {
@@ -20,7 +24,7 @@ const SearchSongCard2 = ({ song }) => {
       updateCurrentSong(song);
       clearQueue();
       clearPlay_list();
-      fetchSongView()
+      fetchSongView();
     }
   };
 
@@ -29,10 +33,9 @@ const SearchSongCard2 = ({ song }) => {
   const fetchSongView = async () => {
     const response = await fetch(`/api/songs/update-view/${song._id}`, {
       method: "PATCH",
-      // body: `${song._id}`
     });
-    const json = await response.json()
-  }
+    const json = await response.json();
+  };
   const audioRef = useRef();
   const calculateTime = (secs) => {
     const minutes = Math.floor(secs / 60);
@@ -43,41 +46,59 @@ const SearchSongCard2 = ({ song }) => {
     return `${returnedMinutes} : ${returnedSeconds}`;
   };
   return (
-    <div
-      key={song._id}
-      className="song-info-div"
-      
-    >
+    <div key={song._id} className="song-info-div">
       <audio ref={audioRef} src={song.songUrl}></audio>
-      <div className="song-img-div-ver2" onClick={() => {
-        handlePlaySong()
-        // song.songUrl
-
-      }}>
-        <img src={song.imgUrl} alt={song.title} className="queue--song-img-searchcard2"/>
+      <div
+        className="song-img-div-ver2"
+        onClick={() => {
+          handlePlaySong();
+          // song.songUrl
+        }}
+      >
+        <img
+          src={song.imgUrl}
+          alt={song.title}
+          className="queue--song-img-searchcard2"
+        />
       </div>
-      
+
       <div className="song-text-div">
-        <div className="titlesongcard" onClick={() => {
-        handlePlaySong()
-        // song.songUrl
-      }}>
+        <div
+          className="titlesongcard"
+          onClick={() => {
+            handlePlaySong();
+            // song.songUrl
+          }}
+        >
           {song.title}
         </div>
         <div className="artistsongcard">
           <NavLink to={`/artist/${song.artist._id}`} className="song-art-link">
             {song?.artist?.artistName}
-        
           </NavLink>
+
+          {song.featuredArtists && song.featuredArtists.length > 0 && (
+            <div className="featured-artists-container">
+              {song.featuredArtists
+                .map((featuredArtist) => (
+                  <NavLink
+                    key={featuredArtist._id}
+                    to={`/artist/${featuredArtist._id}`}
+                    className="song-art-link"
+                  >
+                    {featuredArtist.artistName}
+                  </NavLink>
+                ))
+                .join(", ")}
+            </div>
+          )}
         </div>
       </div>
       {/* <div className="durationCont">
         {calculateTime(Math.floor(audioRef?.current?.duration))}
       </div> */}
-      <div className="genreCont">
-        {song.genre}
-      </div>
-      <AddToQueueBtn song={song}/>
+      <div className="genreCont">{song.genre}</div>
+      <AddToQueueBtn song={song} />
     </div>
   );
 };

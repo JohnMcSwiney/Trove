@@ -79,7 +79,14 @@ const DiscoveryGame = () => {
   if (displayMusicBar === true) {
     updateDisplayMusicBar(false);
   }
-  React.useEffect(() => {
+
+const hasEffectRun = React.useRef(false);
+
+React.useEffect(() => {
+
+    if (hasEffectRun.current) {
+      return;
+    }
     // function getdgSongs () {
 
     if (songsLoaded === true) {
@@ -109,8 +116,8 @@ const DiscoveryGame = () => {
         return
       }
     }
-    fetchDGSongs()
-
+    fetchDGSongs();
+    hasEffectRun.current = true;
   }, [dgLoops])
 
   function updateSongs(songsIn) {
@@ -249,6 +256,7 @@ const DiscoveryGame = () => {
     //discovery_decision_add(songs[state]._id, direction);
     if (state === 4) {
       console.log("we should really get you some new songs hey?");
+      hasEffectRun.current = false;
       if (isPlaying === true) {
         togglePlayPause();
       }
@@ -454,7 +462,7 @@ const DiscoveryGame = () => {
           </div>
 
           <div className='Discovery-Player-Container'>
-            {/* <div className={style.DGaudioPlayer}>  JACK */}
+
             <div className=''>
               <audio
                 ref={audioPlayer}

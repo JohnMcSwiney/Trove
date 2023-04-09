@@ -271,9 +271,7 @@ const MusicBar = () => {
   const shareSong = () => {
     console.log(`share btn`)
   }
-  // const showQueue = () => {
-  //   console.log(`show queue`)
-  // }
+
 
   const userID = JSON.parse(localStorage.getItem("user")) ? JSON.parse(localStorage.getItem("user")).id : null;
 
@@ -281,7 +279,7 @@ const MusicBar = () => {
 
   
 
-
+  // Fetches the like song data
     const fetchUserInfo = async () => {
       const response = await fetch(`/api/users/${userID}`);
       const data = await response.json();
@@ -289,12 +287,12 @@ const MusicBar = () => {
 
 
 
-
+    
       let likedata = userInfo.likedSongs;
+  
+      // sets the song to show the correct value when changeing between songs
       if(currentSong){
-      let myValue = currentSong._id;
-      
-      
+        let myValue = currentSong._id;
 
       if (likedata.some(item => item._id === myValue)) {
         
@@ -322,6 +320,8 @@ const MusicBar = () => {
   const { like, likeError, likeIsLoading } = useLikeSong()
   const { unlike, unlikeError, unlikeIsLoading } = useUnlikeSong()
 
+
+  //toggels when a song is liked when the like / dislike function is clicked in the music player
   const toggleLiked = () => {
     
     if (!isLiked) {
