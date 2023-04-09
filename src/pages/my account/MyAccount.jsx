@@ -20,7 +20,6 @@ const MyAccount = () => {
   const user = localStorage.getItem("user");
   const userInfo = JSON.parse(user);
 
-  const [imgPath, setImagePath] = React.useState("./img/user-demo.png");
   const [email, setEmail] = React.useState(userInfo.email);
 
   //toggle
@@ -61,13 +60,12 @@ const MyAccount = () => {
       }
     };
     fetchUser();
-  }, [userInfo?._id]);
+  }, []);
 
   const handleImageFileChange = (e) => {
     setImageFile(e.target.files[0]);
     setUserProfilePic(URL.createObjectURL(e.target.files[0]));
   };
-  
 
   const { updateAccount, error, isLoading, updateMessage } = useUpdateAccount();
   const [dob, setDOB] = React.useState(userInfo.dob);
@@ -118,9 +116,6 @@ const MyAccount = () => {
     }
   };
 
-
-
-
   return (
     <div className="container ">
       <h1 className="my-account-header">Settings</h1>
@@ -154,29 +149,27 @@ const MyAccount = () => {
               <h3>Your personal information</h3>
               <form onSubmit={handleUpdateAccount}>
                 <div className="inner-form">
-                  
                   <div className="inputContainer">
                     <div className="userimg_displayName">
                       <div>
                         <div className="userImg-border">
-                        <label >
-                        <input
-                          type="file"
-                          name="cover"
-                          value=""
-                          accept="image/*"
-                          // className=""
-                          onChange={handleImageFileChange}
-                        />
-                      <img
-                          src={userProfilePic}
-                          className="user-avatar"
-                          alt="your-avatar"
-                        />
-                        
-                      </label>
-                      
-                        <h4>Edit Photo</h4>
+                          <label>
+                            <input
+                              type="file"
+                              name="cover"
+                              value=""
+                              accept="image/*"
+                              // className=""
+                              onChange={handleImageFileChange}
+                            />
+                            <img
+                              src={userProfilePic}
+                              className="user-avatar"
+                              alt="your-avatar"
+                            />
+                          </label>
+
+                          <h4>Edit Photo</h4>
                         </div>
                       </div>
                       <div className="dispNameInp">
@@ -215,7 +208,12 @@ const MyAccount = () => {
                         className="form-control"
                       />
                     </div>
-                    <button onClick={handleUpdateAccount} className="btn btn-primary mt-3">Save</button>
+                    <button
+                      onClick={handleUpdateAccount}
+                      className="btn btn-primary mt-3"
+                    >
+                      Save
+                    </button>
                   </div>
                 </div>
               </form>
