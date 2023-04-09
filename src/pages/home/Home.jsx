@@ -25,11 +25,11 @@ const Home = () => {
   const [userInfo, setUserInfo] = useState([])
   const [curatedPlaylist, updateCurated] = useState([]);
 
-  useEffect(() => {
+  if(curatedPlaylist.length === 0){
     const fetchCurated = async () => {
       setDone(false)
       setTimeout(() => {
-        fetch(`api/curated`)
+        fetch(`api/curated/`)
         .then(response => response.json())
           .then(json => {
             console.log(json)
@@ -38,7 +38,9 @@ const Home = () => {
           })
       }, 500)
     }
-  })
+  }
+   
+
   useEffect(() => {
     const fetchUserInfo = async () => {
       setDone(false)
@@ -77,6 +79,7 @@ const Home = () => {
 if(curatedPlaylist.length !== 0 ){
   console.log(curatedPlaylist)
 }
+console.log(curatedPlaylist)
   return (
     // <div className=' '>
     <main className='container '>

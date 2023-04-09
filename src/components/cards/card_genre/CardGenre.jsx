@@ -20,7 +20,8 @@ const GenreCard = ({color, name, percent}) => {
                 {genreName}
             </div>
             <div className="genrePercent">
-                {percent}
+                {Math.round(percent)
+}{'%'}
             </div>
             
         </div>

@@ -241,13 +241,20 @@ if(topGenres.length !== 0){
         <div className="account-showcase">
           <h1>Top Genres:</h1>
             {topGenres && topGenres.length !== 0 &&
-          <div className="CardCont">      
-            <GenreCard color={"#fc6ff1"} name={topGenres?.finalGenreStats[1].genre} percent={topGenres?.finalGenreStats[1].value} />
-
-            <GenreCard color={"#ff930f"} name={topGenres?.finalGenreStats[0].genre} percent={topGenres?.finalGenreStats[0].value} />
-
-            <GenreCard color={"#ff3b0f"} name={topGenres?.finalGenreStats[2].genre} percent={topGenres?.finalGenreStats[2].value} />
+          <div className="topGenreCont">  
+          <div className='topGenre2'>
+            <GenreCard  color={"#fc6ff1"} name={topGenres?.finalGenreStats[1].genre} percent={topGenres?.finalGenreStats[1].value} />
+            <h2>#2</h2>
+          </div>    
+          <div className='topGenre1'>
+          <GenreCard color={"#ff930f"} name={topGenres?.finalGenreStats[0].genre} percent={topGenres?.finalGenreStats[0].value} />
+          <h1>#1</h1>
           </div>
+          <div className='topGenre3'>
+          <GenreCard color={"#ff3b0f"} name={topGenres?.finalGenreStats[2].genre} percent={topGenres?.finalGenreStats[2].value} />
+          <h3>#3</h3>
+          </div>
+           </div>
             }
         </div>
         <div className="mytrove-splitter"></div>
