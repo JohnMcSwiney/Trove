@@ -45,7 +45,7 @@ const Users = () => {
                 <tr key={user._id}>
                   <th scope="row">{user._id}</th>
                   <th>
-                    <img src={user.imageURL} alt="" />
+                    <img src={user.imageURL} width={"50px"} alt="" />
                   </th>
                   <th>{user.displayName}</th>
                   <th>{user.email}</th>

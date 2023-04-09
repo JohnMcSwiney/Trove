@@ -41,6 +41,9 @@ const Admin = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     createAdmin(email, password, adminName);
+    setEmail("");
+    setPassword("");
+    setAdminName("");
     try {
     } catch (error) {
       console.log(error);
@@ -371,7 +374,7 @@ const Admin = () => {
           <Col md={3} xs={12} className="mt-3 mt-md-0">
             <div className="bg-light p-3">
               <h3 className="text-center mb-4">Create Admin</h3>
-              <Form onSubmit={handleSubmit}>
+              <Form>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Label>Email address</Form.Label>
                   <Form.Control
@@ -379,12 +382,14 @@ const Admin = () => {
                     placeholder="Enter email"
                     value={email}
                     onChange={handleEmailChange}
+                    required
                   />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicPassword">
                   <Form.Label>Password</Form.Label>
                   <Form.Control
+                    required
                     type="password"
                     placeholder="Password"
                     value={password}
@@ -395,6 +400,7 @@ const Admin = () => {
                 <Form.Group className="mb-3" controlId="formBasicAdminName">
                   <Form.Label>Admin Name</Form.Label>
                   <Form.Control
+                    required
                     type="text"
                     placeholder="Enter admin name"
                     value={adminName}
@@ -402,9 +408,15 @@ const Admin = () => {
                   />
                 </Form.Group>
 
-                <Button variant="primary" type="submit">
-                  Sign Up
+                <Button
+                  variant="primary"
+                  type="submit"
+                  const
+                  onClick={handleSubmit}
+                >
+                  Create
                 </Button>
+                {message && <p>{message}</p>}
               </Form>
             </div>
           </Col>
