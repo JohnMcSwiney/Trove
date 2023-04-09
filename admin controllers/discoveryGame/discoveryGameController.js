@@ -214,22 +214,18 @@ const compareSongData = async (user) => {
       if (chance >= 50 && chance < 80) {
         console.log("chance was >=50 but <80");
         songGenre = genreObjects[0].genre;
-        console.log("songGenre in if stmt: " + songGenre);
       }
       else if (chance < 50) {
         console.log("chance was < 50");
         songGenre = genreObjects[1].genre;
-        console.log("songGenre in if stmt: " + songGenre);
       }
       else if (chance >= 80) {
         console.log("chance was greater than or equal to 80");
         songGenre = genreObjects[2].genre;
-        console.log("songGenre in if stmt: " + songGenre);
       }
       else {
         console.log("chance was higher than 75");
         songGenre = genreObjects[3].genre;
-        console.log("songGenre in if stmt: " + songGenre);
       }
       //return songGenre;
     }
@@ -240,22 +236,18 @@ const compareSongData = async (user) => {
     if (chance >= 50 && chance < 80) {
       console.log("chance was >=50 but <80");
       songGenre = genreObjects[0].genre;
-      console.log("songGenre in if stmt: " + songGenre);
     }
     else if (chance < 50) {
       console.log("chance was < 50");
       songGenre = genreObjects[1].genre;
-      console.log("songGenre in if stmt: " + songGenre);
     }
     else if (chance >= 80) {
       console.log("chance was greater than or equal to 80");
       songGenre = genreObjects[2].genre;
-      console.log("songGenre in if stmt: " + songGenre);
     }
     else {
       console.log("chance was higher than 75");
       songGenre = genreObjects[3].genre;
-      console.log("songGenre in if stmt: " + songGenre);
     }
     //return songGenre;
 
@@ -284,10 +276,19 @@ const compareSongData = async (user) => {
         console.log("song title: " + song.title + ", genre: " + song.genre);
       });
 
+      // const uniqueSongs = [...new Set(similarSongs)];
+
+      // if (uniqueSongs.length < 5) {
+      //   console.log("not enough unique songs found");
+      //   return randomSong(user);
+      // }
+
       const songLimit = [];
 
       while (songLimit.length < 5) {
 
+        // const index = Math.floor(Math.random() * uniqueSongs.length);
+        // const randomSimilarSong = uniqueSongs[index];
         const randomSimilarSong = similarSongs[Math.floor(Math.random() * similarSongs.length)];
 
         //console.log("randomSong in for loop: " + randomSimilarSong);
@@ -296,11 +297,29 @@ const compareSongData = async (user) => {
           console.log("randomSong not found");
         }
 
-        if (!songLimit.includes(randomSimilarSong._id) || !user.likedSongs.includes(randomSimilarSong._id) || !songLimit.includes(randomSimilarSong._id) && !user.likedSongs.includes(randomSimilarSong._id) ) {
+        if (!songLimit.some((song) => song._id === randomSimilarSong._id) && !user.likedSongs.includes(randomSimilarSong._id)) {
           songLimit.push(randomSimilarSong);
-          console.log("added randomSong: " + randomSimilarSong.title + "randomSong genre: " + randomSimilarSong.genre);
+          console.log("added randomSong: " + randomSimilarSong.title + ", randomSong genre: " + randomSimilarSong.genre);
         }
+
+        // if (!songLimit.includes(randomSimilarSong._id) || !user.likedSongs.includes(randomSimilarSong._id) || !songLimit.includes(randomSimilarSong._id) && !user.likedSongs.includes(randomSimilarSong._id)) {
+        //   songLimit.push(randomSimilarSong);
+        //   console.log("added randomSong: " + randomSimilarSong.title + ", randomSong genre: " + randomSimilarSong.genre);
+        // }
+
+        // if ((!songLimit.some((song) => song._id === randomSimilarSong._id) || !user.likedSongs.includes(randomSimilarSong._id)) || (!songLimit.some((song) => song._id === randomSimilarSong._id) && !user.likedSongs.includes(randomSimilarSong._id))) {
+        //   songLimit.push(randomSimilarSong);
+        //   console.log("added randomSong: " + randomSimilarSong.title + ", randomSong genre: " + randomSimilarSong.genre);
+        // }
+
+        // if (!songLimit.includes(randomSimilarSong._id) || !songLimit.some((song) => song._id === randomSimilarSong._id) && !user.likedSongs.includes(randomSimilarSong._id)) {
+        //   songLimit.push(randomSimilarSong);
+        //   console.log("added randomSong: " + randomSimilarSong.title + ", randomSong genre: " + randomSimilarSong.genre);
+        // }
       }
+
+      console.log("songLimit contents: " + songLimit);
+
       console.log("songLimit length: " + songLimit.length)
 
       if (songLimit.length > 5) {
@@ -329,16 +348,43 @@ const randomSong = async (user) => {
     return res.status(404).send("songs not found");
   }
 
+  // const uniqueSongs = [...new Set(songs)];
+
+  // if (uniqueSongs.length < 5) {
+  //   console.log("not enough unique songs found");
+  //   return randomSong(user);
+  // }
+
   const songLimit = [];
 
   while (songLimit.length < 5) {
 
-    const randomSong = songs[Math.floor(Math.random() * songs.length)];
+    // const index = Math.floor(Math.random() * uniqueSongs.length);
+    // const randomSong = uniqueSongs[index];
+    const randomSimilarSong = similarSongs[Math.floor(Math.random() * similarSongs.length)];
 
-    if (!songLimit.includes(randomSong._id) || !user.likedSongs.includes(randomSong._id) || !songLimit.includes(randomSong._id) && !user.likedSongs.includes(randomSong._id)) {
-      songLimit.push(randomSong);
-      console.log("added randomSong: " + randomSong.title);
+    //console.log("randomSong in for loop: " + randomSimilarSong);
+
+    if (!randomSong) {
+      console.log("randomSong not found");
     }
+
+    if (!songLimit.some((song) => song._id === randomSong._id) && !user.likedSongs.includes(randomSong._id)) {
+      songLimit.push(randomSong);
+      console.log("added randomSong: " + randomSong.title + ", randomSong genre: " + randomSong.genre);
+    }
+
+    // const randomSong = songs[Math.floor(Math.random() * songs.length)];
+
+    // // if (!songLimit.includes(randomSong._id) || !user.likedSongs.includes(randomSong._id) || !songLimit.includes(randomSong._id) && !user.likedSongs.includes(randomSong._id)) {
+    // //   songLimit.push(randomSong);
+    // //   console.log("added randomSong: " + randomSong.title);
+    // // }
+
+    // if (!songLimit.some((song) => song._id === randomSong._id) || !user.likedSongs.includes(randomSong._id)) {
+    //   songLimit.push(randomSong);
+    //   console.log("added randomSong: " + randomSong.title);
+    // }
   }
   console.log("songLimit length: " + songLimit.length)
 
@@ -364,37 +410,8 @@ const loadDiscoveryGame = async (req, res) => {
     }
 
     if (user.likedSongs.length == 0) {
-
-      const songs = await Song.find()
-
-        .populate("artist")
-        .populate("featuredArtists")
-        .populate("album")
-        .sort();
-
-      if (!songs) {
-        return res.status(404).send("songs not found");
-      }
-
-      const songLimit = [];
-
-      while (songLimit.length < 5) {
-
-        const randomSong = songs[Math.floor(Math.random() * songs.length)];
-
-        if (!songLimit.includes(randomSong._id) || !user.likedSongs.includes(randomSong._id) || !songLimit.includes(randomSong._id) && !user.likedSongs.includes(randomSong._id) ) {
-          songLimit.push(randomSong);
-          console.log("added randomSong: " + randomSong.title);
-        }
-      }
-      console.log("songLimit length: " + songLimit.length)
-
-      if (songLimit.length > 5) {
-        throw new Error("Song limit cannot be greater than 5.");
-      }
-
-      res.status(200).json(songLimit);
-
+      const differentSongsLimit = await randomSong(user);
+      res.status(200).json(differentSongsLimit);
     }
     else {
 
