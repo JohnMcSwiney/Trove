@@ -66,14 +66,15 @@ const createAdmin = async (req, res) => {
       password: hash,
       adminName,
     });
-    const token = createToken(admin._id);
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: true,
-      sameSite: "strict",
-      expires: new Date(Date.now() + 86400 * 1000), // Set the cookie to expire in 1 day
-    });
-    res.status(201).json({ email, token, adminName, id: admin._id });
+    // const token = createToken(admin._id);
+    // res.cookie("token", token, {
+    //   httpOnly: true,
+    //   secure: true,
+    //   sameSite: "strict",
+    //   expires: new Date(Date.now() + 86400 * 1000), // Set the cookie to expire in 1 day
+    // });
+    const success = `Created admin ${adminName} successfully`;
+    res.status(201).json({ admin, success });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
