@@ -40,7 +40,7 @@ import { AiOutlineShareAlt } from 'react-icons/ai'
 import HeartIcon from '../../assets/Trv_icons/Trv_likeIcon_outline.svg'
 import { RiFolderMusicFill, RiFolderMusicLine } from 'react-icons/ri'
 import { BsSkipStart, BsSkipEnd, BsPlay, BsPause } from 'react-icons/bs'
-import {IoIosArrowDown} from 'react-icons/io'
+import { IoIosArrowDown } from 'react-icons/io'
 
 // Hardcoded data
 // import queue from '../../data/albumsongs.json'
@@ -111,7 +111,7 @@ const MusicBar = () => {
 
   //refrences
   const audioPlayer = useRef() //reference audio component
-  const progressBar = useRef() //reference progress bar
+  // const progressBar = useRef() //reference progress bar
   const FCprogressBar = useRef() //reference FCprogress bar two running always to be swapped between
   const animationRef = useRef() //reference progress bar 'before'
   const volumeRef = useRef() //reference volume bar
@@ -138,7 +138,7 @@ const MusicBar = () => {
 
       const seconds = Math.floor(audioPlayer?.current?.duration)
       setDuration(seconds) // 45.26
-      progressBar.current.max = seconds
+      // progressBar.current.max = seconds
       FCprogressBar.current.max = seconds
     }
   }, [audioPlayer?.current?.loadedmetadata, audioPlayer?.current?.readyState])
@@ -156,7 +156,7 @@ const MusicBar = () => {
   useEffect(() => {
     changeVolumeLevel();
 
-    if(isPlay_Global === true){
+    if (isPlay_Global === true) {
       console.log("isPlay_Global : true (in musicBar useEffect)")
       audioPlayer.current.play()
     } else {
@@ -166,7 +166,7 @@ const MusicBar = () => {
     }
 
 
-  },[isPlay_Global])
+  }, [isPlay_Global])
   const togglePlayPause = () => {
     toggleIsPlay_G();
   }
@@ -194,7 +194,7 @@ const MusicBar = () => {
     }
   }
   const toBeginningOfSong = () => {
-    progressBar.current.value = 0
+    // progressBar.current.value = 0
     FCprogressBar.current.value = 0
     audioPlayer.current.currentTime = 0
     audioPlayer.current.currentTime = 0
@@ -224,7 +224,7 @@ const MusicBar = () => {
   }
 
   const changeRange = () => {
-    audioPlayer.current.currentTime = progressBar.current.value
+    // audioPlayer.current.currentTime = progressBar.current.value
 
     audioPlayer.current.currentTime = FCprogressBar.current.value
     changePlayerCurrentTime()
@@ -236,10 +236,10 @@ const MusicBar = () => {
       `${(FCprogressBar.current.value / duration) * 100}%`
     )
 
-    progressBar.current.style.setProperty(
-      '--seek-before-width',
-      `${(progressBar.current.value / duration) * 100}%`
-    )
+    // progressBar.current.style.setProperty(
+    //   '--seek-before-width',
+    //   `${(progressBar.current.value / duration) * 100}%`
+    // )
     setCurrentTime(FCprogressBar.current.value)
   }
 
@@ -277,43 +277,43 @@ const MusicBar = () => {
 
   const [userInfo, setUserInfo] = useState([]);
 
-  
+
 
   // Fetches the like song data
-    const fetchUserInfo = async () => {
-      const response = await fetch(`/api/users/${userID}`);
-      const data = await response.json();
-      setUserInfo(data);
+  const fetchUserInfo = async () => {
+    const response = await fetch(`/api/users/${userID}`);
+    const data = await response.json();
+    setUserInfo(data);
 
 
 
-    
-      let likedata = userInfo.likedSongs;
-  
-      // sets the song to show the correct value when changeing between songs
-      if(currentSong){
-        let myValue = currentSong._id;
+
+    let likedata = userInfo.likedSongs;
+
+    // sets the song to show the correct value when changeing between songs
+    if (currentSong) {
+      let myValue = currentSong._id;
 
       if (likedata.some(item => item._id === myValue)) {
-        
-        
+
+
         setIsLiked(true)
       } else {
-        
-        
+
+
         setIsLiked(false)
       }
-      
-    }
-    };
-    
 
-  
+    }
+  };
+
+
+
   React.useEffect(() => {
-    
-    
+
+
     fetchUserInfo();
-    
+
   }, [currentSong]);
 
 
@@ -323,17 +323,17 @@ const MusicBar = () => {
 
   //toggels when a song is liked when the like / dislike function is clicked in the music player
   const toggleLiked = () => {
-    
+
     if (!isLiked) {
       like()
       setIsLiked(true)
-      
+
     } else {
-      
+
       unlike()
       setIsLiked(false)
     }
-  
+
   }
   const handleRewind = () => {
     const currentTimeInSong = audioPlayer.current.currentTime
@@ -370,29 +370,29 @@ const MusicBar = () => {
       return;
     }
     if (queue.length > 0) {
-      if(queue.length === 1){
-        if(currentSong._id === queue[0]._id ){
+      if (queue.length === 1) {
+        if (currentSong._id === queue[0]._id) {
           clearQueue();
           updatePlay_listPosition(play_listPosition);
           return;
-        }else {
+        } else {
           advanceQueue();
         }
-       
+
       }
-      if(currentSong._id === queue[0]._id && currentSong._id === queue[1]._id){
-        console.log(currentSong._id + " qp1 " + queue[0]._id );
+      if (currentSong._id === queue[0]._id && currentSong._id === queue[1]._id) {
+        console.log(currentSong._id + " qp1 " + queue[0]._id);
         console.log(currentSong._id + " qp2 " + queue[1]._id);
         advanceQueue();
         return;
       }
-      
-      console.log('queue has songs') 
+
+      console.log('queue has songs')
       console.log(queue.length)
-      advanceQueue() 
-      
-    } 
-    else{
+      advanceQueue()
+
+    }
+    else {
       if (play_list.length === play_listPosition + 1) {
         console.log('at end of playlist')
         if (loopLevel === 1) {
@@ -435,11 +435,11 @@ const MusicBar = () => {
     })
     const json = response.json()
   }
- 
+
   return (
     <>
       <>
-      
+
         <audio
           loop={isLooping}
           ref={audioPlayer}
@@ -459,11 +459,11 @@ const MusicBar = () => {
             changeRange()
             // animationRef.current = requestAnimationFrame(whilePlaying);
             toBeginningOfSong()
-            if(isPlay_Global === false){
+            if (isPlay_Global === false) {
               togglePlayPause()
             }
-            
-            
+
+
           }}
           // onLoadedData = {
           //   (animationRef.current = requestAnimationFrame(whilePlaying))
@@ -474,10 +474,10 @@ const MusicBar = () => {
           }}
           onTimeUpdate={() => {
             (animationRef.current = requestAnimationFrame(whilePlaying))
-            
+
           }}
 
-          
+
         ></audio>
 
         {/* Full Screen / Queue */}
@@ -501,7 +501,7 @@ const MusicBar = () => {
                   <img src={currentSong?.imgUrl}></img>
                 </div>
                 <button className='exitBtn' onClick={toggleFC}>
-                  <IoIosArrowDown className='exitItem'/>
+                  <IoIosArrowDown className='exitItem' />
                 </button>
                 <div className='fullscreen-song-txt-container-container '>
                   <div className='fullscreen-song-info-txt-container'>
@@ -533,7 +533,7 @@ const MusicBar = () => {
                       if (queue.length === 0) {
                         console.log('empty')
                         return;
-                      }else if(currentSong?._id === queue?._id) {
+                      } else if (currentSong?._id === queue?._id) {
                         // console.log(queue[0]);
                         return;
                       }
@@ -544,9 +544,9 @@ const MusicBar = () => {
                           <Queue_CardSong
                             key={song?._id}
                             song={song}
-                            index={index -1}
+                            index={index - 1}
                           />
-                          <RemoveFromQueueBtn index={index}/>
+                          <RemoveFromQueueBtn index={index} />
                         </div>
                       )
                     }
@@ -564,8 +564,8 @@ const MusicBar = () => {
                     // console.log("play_listPos: " + play_ListPosition + " index " + index )
                     if (index < play_listPosition) {
                       return;
-                    }  else {
-                      if(currentSong?._id !== play_list[index]?._id){
+                    } else {
+                      if (currentSong?._id !== play_list[index]?._id) {
                         return (
                           <div className='inactiveSong-Q-card bg-fglass-b hoverCardCss'>
                             <Queue_CardSong
@@ -576,7 +576,7 @@ const MusicBar = () => {
                           </div>
                         )
                       }
-                      
+
                     }
                   })}
               </div>
@@ -585,7 +585,7 @@ const MusicBar = () => {
         </div>
 
         {/* Regular Player */}
-        
+
         <div
           className={
             displayMusicBar === true
@@ -598,26 +598,12 @@ const MusicBar = () => {
             className={
               displayMusicBar === true
                 ? 'musicbar-wrap bg-trv-sm-Play-bg '
-                : 'musicbar-wrap bg-trve-sm-Play-bg translate-down '
+                : 'musicbar-wrap bg-trv-sm-Play-bg translate-down '
             }
           >
             {/* This style is in the fullscreen css file - idk there was a bug <3 */}
 
-            <div className='volumeContainter-ver2'>
-              <input
-                type='range'
-                ref={volumeRef}
-                defaultValue='50'
-                className='volumeBar'
-                onChange={changeVolumeLevel}
-                min='0'
-                max='100'
-                step='5'
-              ></input>
-              <button onClick={toggleMute}>
-                {isMuted ? <BiVolumeFull /> : <BiVolumeMute />}
-              </button>
-            </div>
+
 
             {/* Progress Bar */}
             {/* time visible on fullscreen*/}
@@ -631,7 +617,7 @@ const MusicBar = () => {
                 onMouseDown={toggleMute}
                 onMouseUp={toggleMute}
               >
-                <input
+                {/* <input
                   className='progressBar'
                   type='range'
                   ref={progressBar}
@@ -639,7 +625,7 @@ const MusicBar = () => {
                   onMouseDown={togglePlayPause}
                   onMouseUp={togglePlayPause}
                   onChange={changeRange}
-                />
+                /> */}
                 <input
                   className='fullscreen-progressBar'
                   type='range'
@@ -658,7 +644,7 @@ const MusicBar = () => {
             <div className='player-info-container-ver2 '>
               {/*  */}
               <div className='like-btn '>
-                <button onClick={() => {toggleLiked();}}>
+                <button onClick={() => { toggleLiked(); }}>
                   {isLiked ? (
                     <FaHeart className='text-white' />
                   ) : (
@@ -691,7 +677,7 @@ const MusicBar = () => {
                 <button
                   className='playbtnstyle'
                   id='playPauseBtn'
-                  onClick={() => {togglePlayPause();  }}
+                  onClick={() => { togglePlayPause(); }}
                 >
                   {isPlay_Global ? (
                     <BsPause />
@@ -704,33 +690,61 @@ const MusicBar = () => {
                 </button>
               </div>
               <div className='fillerDivPlayer'></div>
-              {/* Loop and Queue */}
-              <div className='otherItemBtnContainer'>
-                {/* import {TbRepeatOff, TbRepeatOnce, TbRepeat} from 'react-icons/tb' */}
-                <button
-                  className={loopLevel === 0 ? 'loopBtn' : 'hiddenBtn'}
-                  onClick={changeLoopLevel}
-                >
-                  <TbRepeatOff className='loopLvl1' />
-                </button>
-                <button
-                  className={loopLevel === 1 ? 'loopBtn' : 'hiddenBtn'}
-                  onClick={changeLoopLevel}
-                >
-                  <TbRepeat className='loopLvl2' />
-                </button>
-                <button
-                  className={loopLevel === 2 ? 'loopBtn' : 'hiddenBtn'}
-                  onClick={() => updateLoopLevel(0)}
-                  onMouseDown={() => setLooping(false)}
+              {/* className={
+              displayMusicBar === true
+                ? 'musicbar-wrap bg-trv-sm-Play-bg '
+                : 'musicbar-wrap bg-trv-sm-Play-bg translate-down '
+            } */}
+              <div className={
+                displayMusicBar === true
+                ? 'extraItemsCont bg-fglass-b'
+                : 'extraItemsCont bg-fglass-b translate-down '
+              
+              }>
+                {/* Loop and Queue */}
+                <div className='otherItemBtnContainer'>
+                  {/* import {TbRepeatOff, TbRepeatOnce, TbRepeat} from 'react-icons/tb' */}
+                  <button
+                    className={loopLevel === 0 ? 'loopBtn' : 'hiddenBtn'}
+                    onClick={changeLoopLevel}
+                  >
+                    <TbRepeatOff className='loopLvl1' />
+                  </button>
+                  <button
+                    className={loopLevel === 1 ? 'loopBtn' : 'hiddenBtn'}
+                    onClick={changeLoopLevel}
+                  >
+                    <TbRepeat className='loopLvl2' />
+                  </button>
+                  <button
+                    className={loopLevel === 2 ? 'loopBtn' : 'hiddenBtn'}
+                    onClick={() => updateLoopLevel(0)}
+                    onMouseDown={() => setLooping(false)}
                   // onMouseUp={() => console.log(isLooping)}
-                >
-                  <TbRepeatOnce className='loopLvl3' />
-                </button>
-                <button className='fcBtn' onClick={toggleFC}>
-                  Queue
-                  <MdQueueMusic className='queueMusicIcon' />
-                </button>
+                  >
+                    <TbRepeatOnce className='loopLvl3' />
+                  </button>
+                  <button className='fcBtn' onClick={toggleFC}>
+                    Queue
+                    <MdQueueMusic className='queueMusicIcon' />
+                  </button>
+                </div>
+
+                <div className='volumeContainter-ver2'>
+                  <input
+                    type='range'
+                    ref={volumeRef}
+                    defaultValue='50'
+                    className='volumeBar'
+                    onChange={changeVolumeLevel}
+                    min='0'
+                    max='100'
+                    step='5'
+                  ></input>
+                  <button onClick={toggleMute}>
+                    {isMuted ? <BiVolumeFull /> : <BiVolumeMute />}
+                  </button>
+                </div>
               </div>
             </div>
           </div>

@@ -39,6 +39,9 @@
     /* font-weight: bold; */
     transform: scale(0.9);
 }
+/* .top3card{
+    transform: translateX(-40px);
+} */
 .genreFiller{
     width: 100px;
     height: 140px;
@@ -82,10 +85,10 @@
     padding-left: 1px;
     padding-right: 1px;
     position: absolute;
-    background-color: rgba(190, 175, 175, 0.651);
+    background-color: rgba(190, 175, 175, 0.824);
     border-radius: 5px;
     align-self: center;
-    color:#12164B;
+    color:#020207;
     bottom: 0;
     margin-bottom: 2px;
     font-size: x-small;
@@ -96,6 +99,7 @@
     transform: translateY(15px);
     transition: 0.25s;
     opacity: 0.0;
+    font-weight: 600;
 }
 .genreCardCont:hover > .genrePercent {
     scale: 1.3;
