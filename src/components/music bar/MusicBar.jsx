@@ -154,8 +154,6 @@ const MusicBar = () => {
   }
 
   useEffect(() => {
-    // changeVolumeLevel();
-
     if (isPlay_Global === true) {
       console.log("isPlay_Global : true (in musicBar useEffect)")
       audioPlayer.current.play()

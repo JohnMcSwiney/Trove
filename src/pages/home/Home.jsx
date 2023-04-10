@@ -25,23 +25,25 @@ const Home = () => {
   const [userInfo, setUserInfo] = useState([])
   const [curatedPlaylist, updateCurated] = useState([]);
 
-  if(curatedPlaylist.length === 0){
-    const fetchCurated = async () => {
-      setDone(false)
-      setTimeout(() => {
-        fetch(`api/curated/`)
-        .then(response => response.json())
-          .then(json => {
-            console.log(json)
-            updateCurated(json)
-            setDone(true)
-          })
-      }, 500)
-    }
-  }
+  // // if(curatedPlaylist.length === 0){
+  //   const fetchCurated = async () => {
+  //     setDone(false)
+  //     setTimeout(() => {
+  //       fetch(`api/curated/`)
+  //       .then(response => response.json())
+  //         .then(json => {
+  //           console.log("curated")
+  //           console.log(json)
+  //           updateCurated(json)
+  //           setDone(true)
+  //         })
+  //     }, 500)
+  //   }
+  // // }
    
 
   useEffect(() => {
+    
     const fetchUserInfo = async () => {
       setDone(false)
       setTimeout(() => {
@@ -54,7 +56,19 @@ const Home = () => {
       }, 500)
     }
   })
-
+  const fetchCurated = async () => {
+    setDone(false)
+    setTimeout(() => {
+      fetch(`api/curated/`)
+      .then(response => response.json())
+        .then(json => {
+          console.log("curated")
+          console.log(json)
+          updateCurated(json)
+          setDone(true)
+        })
+    }, 500)
+  }
   const settings = {
     speed: 800,
     slidesToShow: 1,
@@ -76,10 +90,10 @@ const Home = () => {
     // centerPadding: '-1vw',
     // focusOnSelect: true
   }
-if(curatedPlaylist.length !== 0 ){
-  console.log(curatedPlaylist)
-}
-console.log(curatedPlaylist)
+// if(curatedPlaylist.length !== 0 ){
+//   console.log(curatedPlaylist)
+// }
+// console.log(curatedPlaylist)
   return (
     // <div className=' '>
     <main className='container '>

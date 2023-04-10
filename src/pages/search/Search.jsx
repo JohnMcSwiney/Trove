@@ -35,7 +35,7 @@ const Search = () => {
             .then((response) => response.json())
             .then((json) => {
               setSearchResult(json);
-              
+
               setDone(true);
             });
         }, 500);
@@ -88,7 +88,7 @@ const Search = () => {
                             alt="avatar"
                           />
                         </div>
-                        
+
                       </div>
                       <div className="artistNameCont">
                         <NavLink to={`/artist/${artist._id}`} className="no-decoration-bruh">
@@ -99,16 +99,20 @@ const Search = () => {
                     <h3 className="artSearchSongHeader">Songs</h3>
                     {searchResult.songs
                       .filter((song) => song.artist._id === artist._id)
-                      .map((song) => (
-                        
-                          <SearchSongCard2
-                          key={song._id}
-                          song={song}
-                          setSongData={setSongData}
-                          />
-                        
-                        
-                      ))}
+                      .map((song, index) => {
+                        if (index > 2) {
+                          return;
+                        } else {
+                          return (
+                            <SearchSongCard2
+                              key={song._id}
+                              song={song}
+                              setSongData={setSongData}
+                            />
+                          )
+                        }
+                      }
+                      )}
                   </div>
                 ))}
               </div>
@@ -118,12 +122,12 @@ const Search = () => {
               <div>
                 <h2>Albums</h2>
                 <div className="flex gap-4">
-                {searchResult.albums.map((album) => (
-                    <SearchAlbumCard key={album._id} id={album._id} name={album.albumName} artist={album.artist.artistName} cover={album.albumArt}/> 
-                
-              ))}
+                  {searchResult.albums.map((album) => (
+                    <SearchAlbumCard key={album._id} id={album._id} name={album.albumName} artist={album.artist.artistName} cover={album.albumArt} />
+
+                  ))}
                 </div>
-                
+
               </div>
             )}
 
@@ -131,11 +135,11 @@ const Search = () => {
               <div>
                 <h2>EPs</h2>
                 <div className="flex gap-4">
-                
-                {searchResult.eps.map((ep) => (
-                  <SearchEPCard key={ep._id} id={ep._id} name={ep.epName} artist={ep.artist.artistName} cover={ep.epArt}/>  
-                ))}
-                </div> 
+
+                  {searchResult.eps.map((ep) => (
+                    <SearchEPCard key={ep._id} id={ep._id} name={ep.epName} artist={ep.artist.artistName} cover={ep.epArt} />
+                  ))}
+                </div>
               </div>
             )}
 
@@ -146,7 +150,7 @@ const Search = () => {
                   <SearchSongCard2 key={song._id} song={song} setSongData={setSongData} />
                 ))}
 
-                <div>
+                {/* <div>
                   <h2>Also Appears In:</h2>
                   {searchResult.songs
 
@@ -158,7 +162,7 @@ const Search = () => {
                         </NavLink>
                       </div>
                     ))}
-                </div>
+                </div> */}
               </div>
             )}
           </div>
