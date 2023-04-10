@@ -43,7 +43,7 @@ const Search = () => {
     };
     fetchSearch();
   }, [search]);
-  console.log(searchResult)
+  // console.log(searchResult)
   return (
     <div className="searchCont">
       <div className="searchInpCont">

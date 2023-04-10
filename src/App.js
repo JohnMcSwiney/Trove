@@ -57,7 +57,6 @@ function App() {
             <Route path="/eppage/">
               <Route path=":id" element={<EpPage />}></Route>
             </Route>
-            {/* <Route path="/albumpage" element={<AlbumPage />}></Route> */}
 
             <Route path="/followers">
               <Route path=":id" element={<FollowersPage />}></Route>

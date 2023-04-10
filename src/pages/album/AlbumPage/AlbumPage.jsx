@@ -175,6 +175,9 @@ console.log(album);
                 <h4>By: {album?.artist?.artistName}</h4>
               </div>
               <h3>{album && album.albumName}</h3>
+              <h5>{album && album.publishDate}</h5>
+
+              <h5>{album && album.releaseYear}</h5>
             </div>
           )}
         </div>

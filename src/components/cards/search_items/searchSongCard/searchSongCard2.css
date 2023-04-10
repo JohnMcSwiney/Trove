@@ -100,3 +100,6 @@
     background-color: #12164b63;
     border-radius: 5px;
 }
+.durationCont > h4{
+    font-size: small;
+}

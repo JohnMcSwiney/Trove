@@ -82,17 +82,27 @@
     padding-left: 1px;
     padding-right: 1px;
     position: absolute;
-    background-color: rgba(190, 175, 175, 0.849);
+    background-color: rgba(190, 175, 175, 0.651);
     border-radius: 5px;
     align-self: center;
     color:#12164B;
     bottom: 0;
     margin-bottom: 2px;
-    font-size: xx-small;
+    font-size: x-small;
     backdrop-filter: blur(1px);
     border: 1px solid rgba(190, 175, 175, 0.929);
     box-shadow: rgba(0, 0, 0, 0.382) 0px 1px 2px;
     cursor:default;
+    transform: translateY(15px);
+    transition: 0.25s;
+    opacity: 0.0;
+}
+.genreCardCont:hover > .genrePercent {
+    scale: 1.3;
+    transform: translateY(-15px);
+    transition: 0.25s;
+    opacity: 1;
+    box-shadow: rgba(190, 175, 175, 0.63) 0px 1px 2px;
 }
 .genreNameCont{
     padding:2px;

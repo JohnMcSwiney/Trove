@@ -137,6 +137,7 @@ console.log(ep);
                 <h4>By: {ep?.artist?.artistName}</h4>
               </div>
               <h3>{ep && ep.epName}</h3>
+              <h5>{ep && ep.releaseYear}</h5>
             </div>
           )}
         </div>

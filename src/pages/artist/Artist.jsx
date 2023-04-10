@@ -7,6 +7,7 @@ import FeaturedArtist from "../../components/featured_artist/FeaturedArtist";
 import GenreCard from "../../components/cards/card_genre/CardGenre";
 import SearchSongCard2 from "../../components/cards/search_items/searchSongCard/searchSongCard2";
 import SearchAlbumCard from "../../components/cards/search_items/searchAlbumCard/searchAlbumCard";
+import SearchEPCard from "../../components/cards/search_items/searchEPCard/searchEPCard";
 import DiscoveryGame from "../../components/discoverygame/DiscoveryGame";
 import Popup from "reactjs-popup";
 import Song from "../../components/song detail/Song";
@@ -205,7 +206,7 @@ const Artist = () => {
               artist?.epList.map(
                 (ep) =>
                   ep.isVerified && (
-                    <SearchAlbumCard
+                    <SearchEPCard
                       key={ep._id}
                       id={ep._id}
                       name={ep.epName}
