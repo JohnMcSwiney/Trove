@@ -204,56 +204,53 @@ const compareSongData = async (user) => {
 
     console.log("genreObjects length: " + genreObjects.length);
 
-    let chance = Math.round(Math.random() * 100);
+    let chance = Math.round(Math.random() * 501);
 
     console.log("chance in genre validation: " + chance);
 
     if (genreObjects[0].value == genreObjects[1].value || genreObjects[0].value == genreObjects[2].value || genreObjects[0].value == genreObjects[3].value) {
       console.log("if there are two or more number of genres that are the same");
-
-      if (chance >= 50 && chance < 80) {
-        console.log("chance was >=50 but <80");
+      if (chance >= 100 && chance < 200) {
+        console.log("chance was >= 100 but < 200");
         songGenre = genreObjects[0].genre;
       }
-      else if (chance < 50) {
-        console.log("chance was < 50");
+      else if (chance > 200 && chance < 300) {
+        console.log("chance was > 200 but < 300");
         songGenre = genreObjects[1].genre;
       }
-      else if (chance >= 80) {
-        console.log("chance was greater than or equal to 80");
+      else if (chance > 300) {
+        console.log("chance was > 300");
         songGenre = genreObjects[2].genre;
       }
       else {
-        console.log("chance was higher than 75");
+        console.log("chance was < 100");
         songGenre = genreObjects[3].genre;
       }
-      //return songGenre;
     }
 
 
     //assign genre in set of final if statements
-
-    if (chance >= 50 && chance < 80) {
-      console.log("chance was >=50 but <80");
+    if (chance >= 100 && chance < 200) {
+      console.log("chance was >= 100 but < 200");
       songGenre = genreObjects[0].genre;
     }
-    else if (chance < 50) {
-      console.log("chance was < 50");
+    else if (chance > 200 && chance < 300) {
+      console.log("chance was > 200 but < 300");
       songGenre = genreObjects[1].genre;
     }
-    else if (chance >= 80) {
-      console.log("chance was greater than or equal to 80");
+    else if (chance >= 300) {
+      console.log("chance was >= 300");
       songGenre = genreObjects[2].genre;
     }
     else {
-      console.log("chance was higher than 75");
+      console.log("chance was < 100");
       songGenre = genreObjects[3].genre;
     }
     //return songGenre;
 
     console.log("bdksadjsabdbdsabsa")
 
-    console.log("songGenre random event: " + songGenre);
+    console.log("songGenre after random shuffler: " + songGenre);
 
     let similarSongs = [];
 
@@ -262,6 +259,8 @@ const compareSongData = async (user) => {
       .populate("featuredArtists")
       .populate("album")
       .sort();
+
+      console.log("similarSongs length: " + similarSongs.length)
 
     if (!similarSongs || similarSongs.length === 0) {
       console.log("it did not find similar songs with current genre");
@@ -272,28 +271,40 @@ const compareSongData = async (user) => {
         if (!genreObjects[i].tried) {
           songGenre = genreObjects[i].genre;
           genreObjects[i].tried = true;
-  
+
           console.log("check if songGenre from random event contains songs: " + songGenre);
-  
+
           similarSongs = await Song.find({ genre: songGenre })
             .populate("artist")
             .populate("featuredArtists")
             .populate("album")
             .sort();
         }
+        break;
       }
+    }
+
+    if (similarSongs.length < 5 && similarSongs.length > 0) {
+      console.log("this genre has less than 5 songs, give user random songs.");
+      return randomSong(user);
+    }
+
+    if (similarSongs.length === 5) {
+      console.log("similarSongs only has 5 songs, so we're returning it to the outer function.");
       return similarSongs;
     }
 
+
+    console.log("should be out of for loop after finding similarSongs");
     // else {
     //   console.log("if that didn't work just give them random songs")
     //   return randomSong(user);
     // }
 
-
     similarSongs.map((song) => {
       console.log("song title in similarSongs: " + song.title + ", genre: " + song.genre);
     });
+    //else {}
 
     const songLimit = [];
 
@@ -411,11 +422,11 @@ const loadDiscoveryGame = async (req, res) => {
     }
     else {
 
-      let chance = Math.round(Math.random() * 100);
+      let chance = Math.round(Math.random() * 101);
 
       console.log("chance in outer function: " + chance)
 
-      if (chance >= 25) {
+      if (chance >= 50) {
         console.log("chance was higher or equal than 25");
         const similarSongsLimit = await compareSongData(user);
         res.status(200).json(similarSongsLimit);
