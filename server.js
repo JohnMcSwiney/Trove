@@ -3,7 +3,6 @@ const express = require("express");
 const mongoose = require("mongoose");
 const passport = require("passport");
 
-//For admin
 const userRouter = require("./admin routes/user-route/user-route");
 const albumRouter = require("./admin routes/album-route/album-route");
 const artistRouter = require("./admin routes/artist-route/artist-route");
@@ -14,7 +13,7 @@ const playlistRouter = require("./admin routes/playlist-route/playlist-route");
 const songRouter = require("./admin routes/song-route/song-route");
 const discoveryGameRouter = require("./admin routes/discoveryGame-route/discoveryGame-route");
 
-//For User
+//For User login
 const userlogin = require("./user routes/user-login-route/user");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
@@ -61,6 +60,17 @@ app.use((req, res, next) => {
 
 const facebookLogin = require("./user routes/facebook-route/facebook-auth");
 app.use("/auth/facebook", facebookLogin);
+
+//deployment tasks
+
+const path = require("path");
+app.use(express.static(path.join(__dirname, "build")));
+
+app.get("/", function (req, res) {
+  res.sendFile(path.join(__dirname, "build", "index.html"));
+});
+
+app.listen(9000);
 
 //FOR USER
 app.use("/api/user", userlogin);
