@@ -25,7 +25,7 @@ const compareSongData = async (user) => {
     let songGenre = "";
 
     const songs = await Song.find({ _id: { $in: user.likedSongs } })
-    .sort({ genre: -1 });
+      .sort({ genre: -1 });
 
     songs.map(async (song) => {
 
@@ -184,10 +184,10 @@ const compareSongData = async (user) => {
     const genreObjects = [];
 
     while (genreObjects < 4) {
-      genreObjects.push({ genre: genres[0], value: numOfPop});
-      genreObjects.push({ genre: genres[1], value: numOfRock});
-      genreObjects.push({ genre: genres[2], value: numOfCountry});
-      genreObjects.push({ genre: genres[3], value: numOfHipHop});
+      genreObjects.push({ genre: genres[0], value: numOfPop, tried: false });
+      genreObjects.push({ genre: genres[1], value: numOfRock, tried: false });
+      genreObjects.push({ genre: genres[2], value: numOfCountry, tried: false });
+      genreObjects.push({ genre: genres[3], value: numOfHipHop, tried: false });
     }
 
     genreObjects.map((obj) => {
@@ -253,92 +253,88 @@ const compareSongData = async (user) => {
 
     console.log("bdksadjsabdbdsabsa")
 
-    console.log("final songGenre: " + songGenre);
+    console.log("songGenre random event: " + songGenre);
 
-    const similarSongs = await Song.find({ genre: songGenre })
+    let similarSongs = [];
+
+    similarSongs = await Song.find({ genre: songGenre })
       .populate("artist")
       .populate("featuredArtists")
       .populate("album")
       .sort();
 
     if (!similarSongs || similarSongs.length === 0) {
-      console.log("No similar songs found");
-      return randomSong(user);
-      //return res.status(404).send("similar songs not found");
+      console.log("it did not find similar songs with current genre");
+      console.log("searching other genres");
+
+      for (let i = 0; i < genreObjects.length; i++) {
+
+        if (!genreObjects[i].tried) {
+          songGenre = genreObjects[i].genre;
+          genreObjects[i].tried = true;
+  
+          console.log("check if songGenre from random event contains songs: " + songGenre);
+  
+          similarSongs = await Song.find({ genre: songGenre })
+            .populate("artist")
+            .populate("featuredArtists")
+            .populate("album")
+            .sort();
+        }
+      }
+      return similarSongs;
     }
 
-    else {
-      console.log("it found similar songs");
+    // else {
+    //   console.log("if that didn't work just give them random songs")
+    //   return randomSong(user);
+    // }
 
-      //console.log("similarSongs array: " + similarSongs.tit);
 
-      similarSongs.map((song) => {
-        console.log("song title: " + song.title + ", genre: " + song.genre);
-      });
+    similarSongs.map((song) => {
+      console.log("song title in similarSongs: " + song.title + ", genre: " + song.genre);
+    });
 
-      // const uniqueSongs = [...new Set(similarSongs)];
+    const songLimit = [];
 
-      // if (uniqueSongs.length < 5) {
-      //   console.log("not enough unique songs found");
-      //   return randomSong(user);
-      // }
+    while (songLimit.length < 5) {
+      // const index = Math.floor(Math.random() * uniqueSongs.length);
+      // const randomSimilarSong = uniqueSongs[index];
+      const randomSimilarSong = similarSongs[Math.floor(Math.random() * similarSongs.length)];
 
-      const songLimit = [];
+      //console.log("randomSong in for loop: " + randomSimilarSong);
 
-      while (songLimit.length < 5) {
-
-        // const index = Math.floor(Math.random() * uniqueSongs.length);
-        // const randomSimilarSong = uniqueSongs[index];
-        const randomSimilarSong = similarSongs[Math.floor(Math.random() * similarSongs.length)];
-
-        //console.log("randomSong in for loop: " + randomSimilarSong);
-
-        if (!randomSimilarSong) {
-          console.log("randomSong not found");
-        }
-
-        if (!songLimit.some((song) => song._id === randomSimilarSong._id) && !user.likedSongs.includes(randomSimilarSong._id)) {
-          songLimit.push(randomSimilarSong);
-          console.log("added randomSong: " + randomSimilarSong.title + ", randomSong genre: " + randomSimilarSong.genre);
-        }
-
-        // if (!songLimit.includes(randomSimilarSong._id) || !user.likedSongs.includes(randomSimilarSong._id) || !songLimit.includes(randomSimilarSong._id) && !user.likedSongs.includes(randomSimilarSong._id)) {
-        //   songLimit.push(randomSimilarSong);
-        //   console.log("added randomSong: " + randomSimilarSong.title + ", randomSong genre: " + randomSimilarSong.genre);
-        // }
-
-        // if ((!songLimit.some((song) => song._id === randomSimilarSong._id) || !user.likedSongs.includes(randomSimilarSong._id)) || (!songLimit.some((song) => song._id === randomSimilarSong._id) && !user.likedSongs.includes(randomSimilarSong._id))) {
-        //   songLimit.push(randomSimilarSong);
-        //   console.log("added randomSong: " + randomSimilarSong.title + ", randomSong genre: " + randomSimilarSong.genre);
-        // }
-
-        // if (!songLimit.includes(randomSimilarSong._id) || !songLimit.some((song) => song._id === randomSimilarSong._id) && !user.likedSongs.includes(randomSimilarSong._id)) {
-        //   songLimit.push(randomSimilarSong);
-        //   console.log("added randomSong: " + randomSimilarSong.title + ", randomSong genre: " + randomSimilarSong.genre);
-        // }
+      if (!randomSimilarSong) {
+        console.log("randomSong not found");
       }
 
-      console.log("songLimit contents: " + songLimit);
-
-      console.log("songLimit length: " + songLimit.length)
-
-      if (songLimit.length > 5) {
-        throw new Error("Song limit cannot be greater than 5.");
+      if (!songLimit.some((song) => song._id === randomSimilarSong._id) && !user.likedSongs.includes(randomSimilarSong._id)) {
+        songLimit.push(randomSimilarSong);
+        console.log("added randomSong: " + randomSimilarSong.title + ", randomSong genre: " + randomSimilarSong.genre);
       }
-      return songLimit;
     }
 
+    songLimit.map((song) => {
+      console.log("song title in songlimit: " + song.title + ", genre: " + song.genre);
+    });
+
+    console.log("songLimit length: " + songLimit.length)
+
+    if (songLimit.length > 5) {
+      throw new Error("Song limit cannot be greater than 5.");
+    }
+
+    return songLimit;
 
   } catch (err) {
     console.log(err);
-    throw new Error("tempo and beat validation failed");
+    throw new Error("Error with fetching songs");
   }
 }
 
 const randomSong = async (user) => {
 
   const songs = await Song.find()
-
     .populate("artist")
     .populate("featuredArtists")
     .populate("album")
@@ -361,7 +357,7 @@ const randomSong = async (user) => {
 
     // const index = Math.floor(Math.random() * uniqueSongs.length);
     // const randomSong = uniqueSongs[index];
-    const randomSong= songs[Math.floor(Math.random() * songs.length)];
+    const randomSong = songs[Math.floor(Math.random() * songs.length)];
 
     //console.log("randomSong in for loop: " + randomSimilarSong);
 
