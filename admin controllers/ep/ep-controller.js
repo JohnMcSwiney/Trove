@@ -13,7 +13,7 @@ const getEP = async (req, res) => {
     return res.status(400).json({ err: "No such ep" });
   }
 
-  const ep = await AlEPbum.findById(id)
+  const ep = await EP.findById(id)
     .populate({
       path: "artist",
       select: "-password -email -dob; -gender", // Exclude password and email fields
