@@ -29,6 +29,11 @@ const userSchema = new mongoose.Schema(
     //   unique: true,
     // },
 
+    resetCode:{
+      type: String
+
+    },
+
     provider: {
       type: String,
     },

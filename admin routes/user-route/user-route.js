@@ -7,6 +7,8 @@ const {
   updateUserEmail,
   updateUserAccountTab,
   resetUserPassword,
+  verifyResetCode,
+  updateNewPassword
 } = require("../../admin controllers/user/userController");
 
 // Getting all
@@ -26,5 +28,9 @@ router.patch("/ua/:id", updateUserAccountTab);
 
 //forget password
 router.post("/forget-password", resetUserPassword);
+
+router.post('/verify-code',verifyResetCode)
+
+router.patch('/new-password', updateNewPassword)
 
 module.exports = router;

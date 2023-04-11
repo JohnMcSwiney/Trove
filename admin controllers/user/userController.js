@@ -250,7 +250,6 @@ const updateUserEmail = async (req, res) => {
 };
 
 // forget password
-
 const resetUserPassword = async (req, res) => {
   const { email } = req.body;
 
@@ -258,15 +257,13 @@ const resetUserPassword = async (req, res) => {
     const user = await User.findOne({ email });
 
     if (user) {
-      const token = jwt.sign(
-        { _id: user._id, timestamp: Date.now() },
-        process.env.SECRET,
-        { expiresIn: "1h" }
-      );
+      // Generate reset code
+      const resetCode = Math.floor(100000 + Math.random() * 900000).toString();
 
-      const resetLink = `${req.protocol}://${req.get(
-        "host"
-      )}/reset-password/${token}`;
+      // Save reset code in user's document in the database
+      user.resetCode = resetCode;
+      await user.save();
+
       const transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
@@ -284,9 +281,9 @@ const resetUserPassword = async (req, res) => {
         subject: "Reset your password",
         html: `
             <p>Hello ${user.displayName},</p>
-            <p>No need to worry, you can reset your Trove Music password by clicking the link below: </p>
-            <a href="${resetLink}">Reset password</a>
-            <p>If you didn't request a password reset, feel free to delete this email and carry on enjoying your music!</p>
+            <p>No need to worry, you can reset your Trove Music password by entering the following reset code on the reset password page: </p>
+            <p><strong>${resetCode}</strong></p>
+            <p>If you didn't request a password reset, feel free to ignore this email and carry on enjoying your music!</p>
             <p>Hope you are doing great</p>	
             <p>The Trove Music Team</p>
           `,
@@ -299,16 +296,99 @@ const resetUserPassword = async (req, res) => {
           console.log("Email sent: " + info.response);
         }
       });
-    }
 
-    res.status(201).json({
-      message:
-        "We've sent you an email. Just follow the instructions to reset your password.",
-    });
+      res.status(201).json({
+        message:
+          "We've sent you an email with a reset code. Please check your email and enter the code on the reset password page.",
+      });
+    } else {
+      res.status(404).json({ error: "User not found" });
+    }
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
+
+const verifyResetCode = async (req, res) => {
+  const { email, resetCode } = req.body;
+
+  try {
+    const user = await User.findOne({ email });
+
+    if (user) {
+      // Check if reset code matches
+      if (user.resetCode === resetCode) {
+        // Reset code matches, allow user to update password
+        // You can implement your password update logic here
+        // ...
+        
+        // Reset the resetCode in user's document to null after successful password update
+        user.resetCode = null;
+        await user.save();
+
+        res.status(200).json({ message: "Reset code verified successfully. You can now update your password." });
+      } else {
+        // Reset code does not match
+        res.status(401).json({ error: "Reset code does not match" });
+      }
+    } else {
+      res.status(404).json({ error: "User not found" });
+    }
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+const updateNewPassword = async(req, res)=> {
+    const {email, password} =req.body;
+
+    const user = await User.findOne({email: email});
+
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(password, salt);
+
+    //update user password
+
+    user.password = hash;
+    await user.save();
+
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.GOOGLE_USER,
+        pass: process.env.GOOGLE_PASSWORD,
+      },
+      tls: {
+        rejectUnauthorized: false,
+      },
+    });
+
+    const mailOptions = {
+      from: process.env.GOOGLE_USER,
+      to: email,
+      subject: "Changed password successfully",
+      html: `
+          <p>Hello ${user.displayName},</p>
+          <p>Changed password successfully</p>
+          <p>Hope you are doing great</p>	
+          <p>The Trove Music Team</p>
+        `,
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Email sent: " + info.response);
+      }
+    });
+
+    res.status(201).json({
+      message:
+        "Changed password Successfully",
+    });
+}
+
 
 module.exports = {
   getAllUser,
@@ -317,4 +397,6 @@ module.exports = {
   updateUserEmail,
   updateUserAccountTab,
   resetUserPassword,
+  verifyResetCode,
+  updateNewPassword
 };
