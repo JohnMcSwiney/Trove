@@ -2,7 +2,7 @@ import React from "react";
 import { useLogin } from "../../hooks/user-hooks/useLogin";
 import { Navigate, useNavigate } from "react-router-dom";
 import "./login.css";
-
+import ChangePassword from "../../components/changePasswordModal/ChangePassword";
 import { BsGoogle, BsFacebook } from "react-icons/bs";
 import useFBLogin from "../../hooks/facebook-auth/useFBLogin";
 
@@ -79,7 +79,7 @@ const Login = () => {
 
           <div className="row mb-4">
             <div className="col">
-              <a href="#!">Forgot password?</a>
+              <ChangePassword/>
             </div>
           </div>
 
