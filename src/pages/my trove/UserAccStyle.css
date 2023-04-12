@@ -268,7 +268,7 @@
     border-radius: 15px;
     float:left;
     padding: 10px;
-    max-width: 400px;
+    max-width: 350px;
     margin-bottom: 80px;
 
 }
@@ -278,7 +278,7 @@
     border-radius: 15px;
     float:left;
     padding: 10px;
-    max-width: 400px; 
+    max-width: 350px; 
 }
 
 .RemoveLike{
@@ -300,12 +300,12 @@
     */
 
     
-    width: 400px;
+    width: 350px;
     height: 40px;
 }
 
 .LikeTable{
-    max-width: 370px
+    max-width: 320px
 }
 
 .RemoveLikeTable{
