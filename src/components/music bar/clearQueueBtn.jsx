@@ -27,7 +27,7 @@ export default function ClearQueueBtn () {
       clearPlay_list()
       return
     }
-  }
+  };
 
   const clearQueue2 = () => {
     if (queue.length > 0) {
@@ -35,7 +35,7 @@ export default function ClearQueueBtn () {
       clearQueue()
       return
     }
-  }
+  };
 
   return (
     <div>
@@ -57,4 +57,4 @@ export default function ClearQueueBtn () {
       </button>
     </div>
   )
-}
+};

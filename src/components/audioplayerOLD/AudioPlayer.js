@@ -24,6 +24,7 @@ const json = `
     "explicit": true
 }
 `;
+
 const obj = JSON.parse(json);
 
 const AudioPlayer = () => {
@@ -255,4 +256,4 @@ const AudioPlayer = () => {
     )
 }
 
-export { AudioPlayer }
+export { AudioPlayer };

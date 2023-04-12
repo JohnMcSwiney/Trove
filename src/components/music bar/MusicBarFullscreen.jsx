@@ -80,7 +80,7 @@ const MusicBarFullscreen = () => {
     const returnedSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`
 
     return `${returnedMinutes} : ${returnedSeconds}`
-  }
+  };
 
   const togglePlayPause = () => {
     const prevValue = isPlaying
@@ -93,7 +93,7 @@ const MusicBarFullscreen = () => {
       audioPlayer.current.pause()
       cancelAnimationFrame(animationRef.current)
     }
-  }
+  };
 
   const toggleMute = () => {
     const prevValue = isMuted
@@ -116,18 +116,18 @@ const MusicBarFullscreen = () => {
       volumeRef.current.value = 0
       // console.log(`current vol:` + volumeLevel);
     }
-  }
+  };
 
   const whilePlaying = () => {
     progressBar.current.value = audioPlayer.current.currentTime
     changePlayerCurrentTime()
     animationRef.current = requestAnimationFrame(whilePlaying) //potential memory leak
-  }
+  };
 
   const changeRange = () => {
     audioPlayer.current.currentTime = progressBar.current.value
     changePlayerCurrentTime()
-  }
+  };
 
   const changePlayerCurrentTime = () => {
     progressBar.current.style.setProperty(
@@ -135,20 +135,20 @@ const MusicBarFullscreen = () => {
       `${(progressBar.current.value / duration) * 100}%`
     )
     setCurrentTime(progressBar.current.value)
-  }
+  };
 
   const changeVolumeLevel = () => {
     setIsMuted(true)
     // console.log(audioPlayer.current.volume);
     // console.log(volumeRef.current.value);
     audioPlayer.current.volume = volumeRef.current.value / 100
-  }
+  };
   const shareSong = () => {
     console.log(`share btn`)
-  }
+  };
   const showQueue = () => {
     console.log(`show queue`)
-  }
+  };
 
   //https://storage.cloud.google.com/trv_test_music/TroveMusic/country/wavepool_abortion/wavepool_abortion/blood_everywhere/wavepool%20abortion%20-%20wavepool%20abortion%20-%2010%20blood%20everywhere.mp3
   const songURL =
@@ -156,7 +156,7 @@ const MusicBarFullscreen = () => {
 
   const toggleLiked = () => {
     setIsLiked(!isLiked)
-  }
+  };
 
   return (
     <>
@@ -283,4 +283,4 @@ const MusicBarFullscreen = () => {
   )
 }
 
-export default MusicBarFullscreen
+export default MusicBarFullscreen;

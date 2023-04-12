@@ -26,7 +26,7 @@ export default function AddToQueueBtn (song) {
     // if (play_list.length > 0) {
       
     // }
-  }
+  };
   const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
@@ -67,4 +67,4 @@ export default function AddToQueueBtn (song) {
       
     </div>
   )
-}
+};

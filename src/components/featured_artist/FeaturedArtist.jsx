@@ -56,4 +56,4 @@ const FeaturedArtist = ({ artist }) => {
   )
 }
 
-export default FeaturedArtist
+export default FeaturedArtist;

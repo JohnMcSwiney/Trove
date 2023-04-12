@@ -111,14 +111,14 @@ React.useEffect(() => {
         setneedLoadsong(false)
         if (!songsLoaded) updateSongs(temp)
       } else {
-        console.log(songs.length)
+        console.log(songs.length);
         console.log("return p2");
         return
       }
-    }
+    };
     fetchDGSongs();
     hasEffectRun.current = true;
-  }, [dgLoops])
+  }, [dgLoops]);
 
   function updateSongs(songsIn) {
     if (songsLoaded !== true) {
@@ -127,7 +127,7 @@ React.useEffect(() => {
       setSongs(songsIn)
       // }
     }
-  }
+  };
 
 
   // * Discovery Game Music Player * //
@@ -148,7 +148,7 @@ React.useEffect(() => {
       // console.log("NO SONGS!");
       return
     }
-  }, [audioPlayer?.current?.loadmetadata, audioPlayer?.current?.readyState])
+  }, [audioPlayer?.current?.loadmetadata, audioPlayer?.current?.readyState]);
 
   /* maybe replacing useEffect 
     const onLoadedMetaData = () =>
@@ -160,7 +160,7 @@ React.useEffect(() => {
     const seconds = Math.floor(secs % 60)
     const returnedSeconds = seconds < 10 ? `0${seconds}` : seconds
     return `${returnedMinutes}:${returnedSeconds}`
-  }
+  };
   const togglePlayPause = () => {
     if (songs) {
       const prevValue = isPlaying
@@ -176,7 +176,7 @@ React.useEffect(() => {
         cancelAnimationFrame(animationRef.current)
       }
     }
-  }
+  };
   const toggleMute = () => {
     const prevValue = isMuted
     updatePrevVol(audioPlayer.current.volume)
@@ -198,7 +198,7 @@ React.useEffect(() => {
       DGvolumeRef.current.value = 0
       // console.log(`current vol:` + volumeLevel);
     }
-  }
+  };
   const whilePlaying = () => {
     // console.log('whilePlaying')
     if (songs.length !== 0) {
@@ -207,24 +207,24 @@ React.useEffect(() => {
       changePlayerCurrentTime()
       animationRef.current = requestAnimationFrame(whilePlaying) //potential memory leak
     }
-  }
+  };
   const changeRange = () => {
     if (songs.length !== 0) {
       audioPlayer.current.currentTime = DGprogressBar.current.value
       changePlayerCurrentTime()
     }
-  }
+  };
   const changePlayerCurrentTime = () => {
     DGprogressBar.current.style.setProperty(
       '--seek-before-width',
       `${(DGprogressBar.current.value / duration) * 100}%`
     )
     setCurrentTime(DGprogressBar.current.value)
-  }
+  };
   const changeVolumeLevel = input => {
     setIsMuted(true)
     audioPlayer.current.volume = DGvolumeRef.current.value / 100
-  }
+  };
 
   // * Discovery Swiping Elements * //
   //
@@ -356,6 +356,8 @@ React.useEffect(() => {
 
     console.log("final swipeDirection: " + direction);
 
+  };
+
     //const updateLikes = [...likedslides, newLike]
 
     // fetch(`/api/songs/liked/${likedSongs}`, {
@@ -402,7 +404,7 @@ React.useEffect(() => {
     //   headers: { 'Content-Type': 'application/json' },
     //   body: JSON.stringify({ likedSongs })
     // });
-  }
+
 
   // * slider * /
 
@@ -417,14 +419,14 @@ React.useEffect(() => {
     centerMode: true,
     // centerPadding: '1vw',
     focusOnSelect: true
-  }
+  };
 
   const [slides, setSlides] = React.useState([])
 
   const printIndex = index => {
     setState(index)
     console.log(index)
-  }
+  };
 
 
   {

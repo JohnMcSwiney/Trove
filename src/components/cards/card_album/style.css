@@ -3,16 +3,20 @@
 @tailwind utilities; 
 
 @layer base{
-    .bg{
+    .bg
+    {
         @apply pb-1
     }
-    .bg:hover{
+    .bg:hover
+    {
         @apply bg-gradient-to-t from-trv-Purple to-trv-Blue
     }
-    .albtxt{
+    .albtxt
+    {
         @apply w-full flex flex-wrap h-8 overflow-hidden text-trv-sm-Song-txt text-center m-auto items-center justify-center 
     }
-    .arttxt{
+    .arttxt
+    {
         @apply w-full flex flex-wrap h-6 p-0 my-0 overflow-hidden text-trv-sm-Artist-txt text-center m-auto items-center justify-center 
     }
 

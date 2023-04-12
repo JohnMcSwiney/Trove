@@ -38,4 +38,4 @@ const GenreCard = ({ index, color, name, percent }) => {
   )
 }
 
-export default GenreCard
+export default GenreCard;
