@@ -100,7 +100,7 @@ const Home = () => {
   // if(curatedPlaylist.length !== 0 ){
   //   console.log(curatedPlaylist)
   // }
-  // console.log(curatedPlaylist)
+  console.log(curatedPlaylist)
   return (
     // <div className=' '>
     <main className='container '>
