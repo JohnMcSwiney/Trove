@@ -1,0 +1,55 @@
+.curatedPlaylistCard{
+    display: flex;
+    flex-flow: column;
+    height: 15vw;
+    width: 11vw;
+    background-color: rgba(165, 42, 42, 0);
+    align-items: center;
+    margin-bottom: 1vm;
+    padding: 0.5vw;
+    gap: 0.5vw;
+    
+}
+.curatedPlaylistCover{
+    width: 10vw;
+    height: 10vw;
+    position: relative;
+    border-radius: 1vw;
+    overflow: hidden;
+}
+
+.curatedPlaylistCover > img{
+    position: absolute;
+    left: 0%;
+    top: 0%;
+    width: 100%;
+    scale: 1.1;
+    background: black;
+    transition: 0.25s ease-in-out;
+}
+.curatedPlaylistCover > img:hover{
+    scale: 1.15;
+    
+}
+.curatedPlaylistInfo{
+    display: flex;
+    background-color: rgba(255, 255, 255, 0);
+    flex-direction: column;
+  
+    color: black;
+    width: 10vw;
+    text-align: center;;
+    color: white;
+    text-decoration: none !important;
+    height: 2vw;
+    overflow: hidden;
+}
+.curatedPlaylistInfo > h3{
+    font-size: 1.3vw;
+}
+
+.border-w2{
+    border: solid  2px #12164bce !important;
+    border-radius: 1.5vw;
+}
+

@@ -671,7 +671,7 @@ const MusicBar = () => {
 
               <div className='control-container'>
                 <button onClick={handleRewind}>
-                  <BsSkipStart />
+                  <BsSkipStart className='rwBtn'/>
                 </button>
                 <button
                   className='playbtnstyle'
@@ -685,7 +685,7 @@ const MusicBar = () => {
                   )}
                 </button>
                 <button onClick={handleForward}>
-                  <BsSkipEnd />
+                  <BsSkipEnd className='ffBtn'/>
                 </button>
               </div>
               <div className='fillerDivPlayer'></div>

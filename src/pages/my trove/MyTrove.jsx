@@ -152,10 +152,10 @@ const MyTrove = () => {
             <GenreCard  color={"#C0C0C0"} index={2} name={topGenres?.finalGenreStats[1].genre} percent={topGenres?.finalGenreStats[1].value} />
           </div>    
           <div className='topGenre1'>
-          <GenreCard color={"#D6AD60"} index={1} name={topGenres?.finalGenreStats[0].genre} percent={topGenres?.finalGenreStats[0].value} /> 
+            <GenreCard color={"#D6AD60"} index={1} name={topGenres?.finalGenreStats[0].genre} percent={topGenres?.finalGenreStats[0].value} /> 
           </div>
           <div className='topGenre3'>
-          <GenreCard color={"#A97142"} index={3} name={topGenres?.finalGenreStats[2].genre} percent={topGenres?.finalGenreStats[2].value} />
+            <GenreCard color={"#A97142"} index={3} name={topGenres?.finalGenreStats[2].genre} percent={topGenres?.finalGenreStats[2].value} />
           </div>
            </div>
             }

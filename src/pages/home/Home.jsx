@@ -104,9 +104,9 @@ const Home = () => {
   return (
     // <div className=' '>
     <main className='container '>
-      <div>
+      <div className='myTrvcontainer'>
         {/* <h4 className='text-invisible'>...</h4> */}
-        <div className='homeShowcase'>
+        {/* <div className='homeShowcase'>
           <Slider {...settings}>
             <CardCarousel
               title={'Our Daily Mixtape'}
@@ -134,7 +134,7 @@ const Home = () => {
             ></CardCarousel>
           </Slider>
           <div className='carousel-dots'> ... </div>
-        </div>
+        </div> */}
       </div>
 
       <div>
