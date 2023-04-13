@@ -101,7 +101,7 @@ const Login = () => {
         </a>
       </div>
 
-      <div className="user-go-fa-div">
+      {/* <div className="user-go-fa-div">
         <p>Continue with</p>
         <div className="user-go-fa-wrap">
           <div className="go">
@@ -111,7 +111,7 @@ const Login = () => {
             <BsFacebook className="fa-icon" />
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
