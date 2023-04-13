@@ -1,3 +1,105 @@
+@media screen and (max-width:799px) {
+    .DG-card-container{
+        /* background: linear-gradient(15deg, #af8fef, #6d28f8); */
+        background: linear-gradient(-45deg, #db355f,#bb54e4, #8650F4 );
+        background-size: 300% 300%;
+        animation: gradient 40s ease infinite;
+        /* https://codepen.io/P1N2O/pen/pyBNzX */
+
+        min-width: 100px;
+        max-width: 90% !important;
+    
+        min-height: 80px;
+        max-height: 500px;
+    
+        border-radius: 12px !important;
+        margin: auto;
+        margin: 10px;
+        display: flex;
+    
+        
+        border: 2px solid rgba(255, 255, 255, 0.178);
+        transition: 0.3s box-shadow ease-in-out;
+        box-shadow: 0vw 0vw 1vw rgba(255, 255, 255, 0.281) ;
+        overflow: hidden;
+    
+        margin:auto;
+        background-blend-mode:soft-light;
+
+    }
+    .DG-card-container:hover{
+        transition: 0.4s box-shadow ease-in-out;
+        box-shadow: 0vw 0vw 1.5vw rgba(255, 255, 255, 0.404) ;
+    }
+    .DG-bg-Img{
+        background-image: url('../../../assets/Trv_bg/Trv_bgWave_1.svg');
+        background-position: center;
+        background-size:contain;
+        object-position:center;
+        /* object-fit: scale-down; */
+        background-size: 500% 500%;
+        background-repeat: repeat;
+        background-blend-mode:soft-light;
+        width: 100%;
+        fill: #dfd8ed11 !important;
+        color: rgba(255, 255, 255, 0.199);
+        display: flex;
+        align-items: center;
+        animation: dgflair 300s ease infinite;
+        position: relative;
+        transform: scale(1.3);
+        /* opacity: 0.5; */
+    }
+    @keyframes gradient {
+        0% {
+            background-position: 0% 50%;
+        }
+
+        50% {
+            background-position: 100% 50%;
+        }
+
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+    @keyframes dgflair {
+        0% {
+            background-position: 50% 0% ;
+        }
+
+        50% {
+            background-position: 50% 100% ;
+        }
+
+        100% {
+            background-position: 50% 0% ;
+        }
+    }
+    .DG-title-card{
+        position: absolute;
+        background-color: rgba(0, 0, 139, 0);
+        height: 50%;
+        width: 100%;    
+        text-align: center;
+        transform: none;
+        margin: auto;
+        height: fit-content;
+        padding-top: 25px;
+        padding-bottom: 25px;
+        cursor: pointer;
+        /* opacity: 1 !important; */
+        text-shadow:0px 1px 3px #28272934;
+    }
+    .DG-title-card > .DG_title{
+        color: rgb(255, 255, 255);
+        text-align: center;
+        /* font-weight: bold; */
+        margin: 0;
+        /* opacity: 1 !important; */
+        
+    }
+}
 @media screen and (min-width:800px) {
     .DG-card-container{
         /* background: linear-gradient(15deg, #af8fef, #6d28f8); */
