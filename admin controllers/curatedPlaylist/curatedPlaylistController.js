@@ -28,7 +28,7 @@ const getACuratedPlaylist = async (req, res) => {
         return res.status(404).json({ err: "No such curatedPlaylist" });
     }
 
-    const curatedPlaylist = await Playlist.findById(id)
+    const curatedPlaylist = await CuratedPlaylist.findById(id)
         .populate("curatedPlaylistCreator")
         .populate({
             path: "songList",
