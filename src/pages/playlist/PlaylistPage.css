@@ -197,7 +197,7 @@
     background-color: #0e092400;
     align-items: center;
     gap: 0.25vw;
-    padding-top: 0.25vw;
+    padding-top: 0.1vw;
     padding-bottom: 0.25vw;
   }
   .playlist--song--container{
@@ -216,7 +216,7 @@
     width: 2vw;
     height: 3vw;
     margin: auto;
-    font-size: small;
+    font-size: large;
     color: white;
     opacity: 0.6;
     justify-content: center;

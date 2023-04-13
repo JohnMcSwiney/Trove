@@ -75,15 +75,15 @@
     /* font-size: small; */
 }
 
-@media only screen and (max-width: 799px) {
+@media only screen and (max-width: 799.99px) {
     .song-info-div {
         width: 85vw;
         height: 10vw;
         padding: 5px;
       }
     .song-img-div-ver2{
-        height: 8vw;
-        width: 8vw;
+        height: 6vw;
+        width: 6vw;
         border-radius: 1vw;      
     }
     .song-text-div{      
@@ -105,7 +105,58 @@
         margin-left: 5px;
         margin-right: auto; 
     }
+    .titlesongcard{
+        font-size: small;
+    }
+    .artistsongcard{
+       font-size: x-small;
+    }
+    .durationCont{
+        font-size: 1vw;
+        width: 55px;
+        border-radius: 5px;
+    }
+    .durationCont > h4{
+        font-size: small;
+    }
+}
+@media only screen and (min-width: 800px) and (max-width:829) {
+    .song-info-div {
+        width: 40vw;
+        height: 6vw;
+        padding: 5px;
+        /* background-color: yellow !important; */
+      }
+    .song-img-div-ver2{
+        height: 3.5vw;
+        width: 3.5vw;
+        border-radius: 0.5vw;      
+    }
+    .song-text-div{      
+        margin-left: 5px;
+        width: 25vw;
+        padding-left: 1vw;
+        
+    }
+    .artistSearchGenrediv{
+        padding: 3px;  
+    }
     
+    .genreCont{
+        padding:2px;
+        padding-left: 6px;
+        padding-right: 6px;
+        border-radius: 5px;
+        width: 50px;
+        margin-left: 5px;
+        margin-right: auto; 
+    }
+    .titlesongcard{
+       
+    }
+    .artistsongcard{
+       
+    }
     .durationCont{
         font-size: 1vw;
         width: 55px;
@@ -116,12 +167,10 @@
     }
 }
 
-
-@media only screen and (min-width: 800px) {
+@media only screen and (min-width: 830px) {
     .song-info-div {
-        
-        width: 45vw;
-        height: 5vw;
+        width: 55vw;
+        height: 6vw;
         padding: 5px;
         
       }
@@ -149,7 +198,12 @@
         margin-left: 5px;
         margin-right: auto; 
     }
-    
+    .titlesongcard{
+       
+    }
+    .artistsongcard{
+       
+    }
     .durationCont{
         font-size: 1vw;
         width: 55px;
