@@ -53,7 +53,7 @@ const SearchSongCard2 = ({ song }) => {
   // console.log(duration);
   React.useEffect(()=>{
 
-  },[audioRef])
+  },[audioRef]);
   return (
     <div key={song._id} className="song-info-div">
       <audio ref={audioRef} src={song.songUrl}></audio>

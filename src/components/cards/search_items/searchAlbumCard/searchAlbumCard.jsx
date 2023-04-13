@@ -20,4 +20,4 @@ export default function SearchAlbumCard ({ id, name, artist, cover }) {
       </div>
     </div>
   )
-}
+};

@@ -141,7 +141,7 @@ const MusicBar = () => {
       // progressBar.current.max = seconds
       FCprogressBar.current.max = seconds
     }
-  }, [audioPlayer?.current?.loadedmetadata, audioPlayer?.current?.readyState])
+  }, [audioPlayer?.current?.loadedmetadata, audioPlayer?.current?.readyState]);
 
   // Music Player Functions
   const calculateTime = secs => {
@@ -151,7 +151,7 @@ const MusicBar = () => {
     const returnedSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`
 
     return `${returnedMinutes} : ${returnedSeconds}`
-  }
+  };
 
   useEffect(() => {
     if (isPlay_Global === true) {
@@ -164,10 +164,10 @@ const MusicBar = () => {
     }
 
 
-  }, [isPlay_Global])
+  }, [isPlay_Global]);
   const togglePlayPause = () => {
     toggleIsPlay_G();
-  }
+  };
 
   const toggleMute = () => {
     const prevValue = isMuted
@@ -190,7 +190,7 @@ const MusicBar = () => {
       volumeRef.current.value = 0
       // console.log(`current vol:` + volumeLevel);
     }
-  }
+  };
   const toBeginningOfSong = () => {
     // progressBar.current.value = 0
     FCprogressBar.current.value = 0
@@ -200,7 +200,7 @@ const MusicBar = () => {
     setTimeout(() => {
       document.getElementById('playPauseBtn').click()
     }, 500)
-  }
+  };
 
   const whilePlaying = () => {
     if (displayMusicBar === false && isPlaying === true) {
@@ -219,14 +219,14 @@ const MusicBar = () => {
       //animationRef.current = requestAnimationFrame(whilePlaying) //potential memory leak
     } else {
     }
-  }
+  };
 
   const changeRange = () => {
     // audioPlayer.current.currentTime = progressBar.current.value
 
     audioPlayer.current.currentTime = FCprogressBar.current.value
     changePlayerCurrentTime()
-  }
+  };
 
   const changePlayerCurrentTime = () => {
     FCprogressBar.current.style.setProperty(
@@ -239,14 +239,14 @@ const MusicBar = () => {
     //   `${(progressBar.current.value / duration) * 100}%`
     // )
     setCurrentTime(FCprogressBar.current.value)
-  }
+  };
 
   const changeVolumeLevel = () => {
     setIsMuted(true)
     // console.log(audioPlayer.current.volume);
     // console.log(volumeRef.current.value);
     audioPlayer.current.volume = volumeRef.current.value / 100
-  }
+  };
 
   const changeLoopLevel = () => {
     const currentLoopLvl = loopLevel
@@ -265,11 +265,10 @@ const MusicBar = () => {
         console.log(`default`)
         updateLoopLevel(1)
     }
-  }
+  };
   const shareSong = () => {
     console.log(`share btn`)
-  }
-
+  };
 
   const userID = JSON.parse(localStorage.getItem("user")) ? JSON.parse(localStorage.getItem("user")).id : null;
 
@@ -332,7 +331,7 @@ const MusicBar = () => {
       setIsLiked(false)
     }
 
-  }
+  };
   const handleRewind = () => {
     const currentTimeInSong = audioPlayer.current.currentTime
 
@@ -359,7 +358,8 @@ const MusicBar = () => {
       toBeginningOfSong()
     }
     // updateSong();
-  }
+  };
+
   const handleForward = () => {
     console.log('forward!')
     if (loopLevel === 2) {
@@ -411,7 +411,8 @@ const MusicBar = () => {
       console.log(play_listPosition)
       // updateSong();
     }
-  }
+  };
+
   const toggleFC = event => {
     // if the user clickson the artist name it's ignored
     if (event.target.id == 'artistTextLink') {
@@ -419,12 +420,12 @@ const MusicBar = () => {
     } else {
       setFullscreen(!isFullscreen)
     }
-  }
+  };
 
   const navigate = useNavigate()
   const redirectArtist = () => {
     navigate(`/artist/${currentSong.artist._id}`)
-  }
+  };
 
   // Like and dislike function
   const fetchUnlike = async () => {
@@ -432,7 +433,7 @@ const MusicBar = () => {
       method: 'POST'
     })
     const json = response.json()
-  }
+  };
 
   return (
     <>
@@ -670,7 +671,7 @@ const MusicBar = () => {
 
               <div className='control-container'>
                 <button onClick={handleRewind}>
-                  <BsSkipStart />
+                  <BsSkipStart className='rwBtn'/>
                 </button>
                 <button
                   className='playbtnstyle'
@@ -684,7 +685,7 @@ const MusicBar = () => {
                   )}
                 </button>
                 <button onClick={handleForward}>
-                  <BsSkipEnd />
+                  <BsSkipEnd className='ffBtn'/>
                 </button>
               </div>
               <div className='fillerDivPlayer'></div>
@@ -752,4 +753,4 @@ const MusicBar = () => {
   )
 }
 
-export default MusicBar
+export default MusicBar;

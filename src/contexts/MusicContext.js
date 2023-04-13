@@ -88,7 +88,7 @@ export const MusicProvider = ({ children }) => {
     // console.log("queue:")
     
     // updateCurrentSong(queue[0]);
-  }
+  };
 
   const addToQueue = (inputtedItem) => {
     console.log(inputtedItem.song);
@@ -102,7 +102,8 @@ export const MusicProvider = ({ children }) => {
       }
       
     }
-  }
+  };
+
   const addQueueList = (inputtedItem) => {  
     let i = 0;
     if(inputtedItem.length === 0 ){
@@ -125,7 +126,8 @@ export const MusicProvider = ({ children }) => {
       }
     }
     
-  }
+  };
+
   const updateQueuePosition = (newQueuePosition) => {
   
     setQueuePosition(newQueuePosition);
@@ -150,11 +152,11 @@ export const MusicProvider = ({ children }) => {
       
       setQueue(newArray);
       console.log("new" + queue); 
-  }
+  };
 
   const updateLoopLevel = (level) => {
     setLoopLevel(level);
-  }
+  };
   // discovery_decision_add,
   // clear_discovery_decision_list,
 
@@ -163,7 +165,7 @@ export const MusicProvider = ({ children }) => {
     discovery_Decision_List.push(entry)
     console.log("List (item added):");
     console.log(discovery_Decision_List);
-  }
+  };
   const clear_discovery_decision_list = () => {
     
     console.log('command recieved to clear DG list');
@@ -174,7 +176,7 @@ export const MusicProvider = ({ children }) => {
 
     // console.log("list after:");
     // console.log(discovery_Decision_List);
-  }
+  };
   useEffect (() => {
 
     if(play_list){
@@ -211,7 +213,8 @@ export const MusicProvider = ({ children }) => {
     console.log("global isPlaying : " + isPlay_Global);
     setIsPlay_Global(!prevValue)
     
-  }
+  };
+
   // useEffect (()=> {
   //   console.log("queue" + queue);
   // },[queue])

@@ -67,33 +67,7 @@ const MyTrove = () => {
     }
   }, []);
 
-  //Work in progress but useing a modefiedversion of Dans code
-
-  /*
-  const [songId, setSongId] = useState('');
-    const handleRemoveSong = async (songId) => {
-      console.log(songId);
-   
-      const response = await fetch(`/api/users/${userID}/likedSongs/${songId._id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          body: JSON.stringify({ userID }),
-          body: JSON.stringify({ songId }),
-        },
-      });
-      if (response.ok) {
-        const data = await response.json();
-        setUserInfo(data);
-      } else {
-        console.log('Failed to remove song from liked songs.');
-      }
   
-      
-    };
-  */
-
-  // const { handleRemoveSong, unlikeError, unlikeIsLoading } = useRemoveLikes()
 
   const handleRemoveSong = async (songId) => {
     setUnlikeIsLoading(true);
@@ -120,63 +94,8 @@ const MyTrove = () => {
     if (!response.ok) {
       setUnlikeError(json.error);
     }
-
-    //   if (response.ok) {
-    //     const itsUser = localStorage.getItem("user");
-    //     const likedSongs = itsUser ? JSON.parse(itsUser).likedSongs || [] : [];
-    //     const songIndex = likedSongs.indexOf(songId._id);
-    //     if (songIndex !== -1) {
-    //       likedSongs.splice(songIndex, 1);
-    //       localStorage.setItem(
-    //         "user",
-    //         JSON.stringify({ ...JSON.parse(user), likedSongs })
-    //       );
-    //     }
-    //   }
-    //   setunLikeIsLoading(false);
-    // };
   };
 
-  // const removeLikes  = () => {
-  // const [songId, setSongId] = useState('');
-  // const [unlikeError, setUnlikeError] = useState(null);
-  // const [unlikeIsLoading, setunLikeIsLoading] = useState(false)
-  // const itsUser = localStorage.getItem("user");
-  // const itsUserID = itsUser ? JSON.parse(itsUser).id : null;
-
-  // const handleRemoveSong = async (songId) => {
-
-  //   setunLikeIsLoading(true);
-  //   setUnlikeError(null);
-
-  //   console.log(songId._id);
-  //   const response = await fetch(`/api/songs/removelike/${songId._id}`, {
-  //     method: "POST",
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify({ itsUserID }),
-  //   });
-  //   const json = await response.json();
-
-  //   if (!response.ok) {
-  //     setUnlikeError(json.error);
-  //   }
-
-  //   if (response.ok) {
-  //     const itsUser = localStorage.getItem("user");
-  //     const likedSongs = itsUser ? JSON.parse(itsUser).likedSongs || [] : [];
-  //     const songIndex = likedSongs.indexOf(songId._id);
-  //     if (songIndex !== -1) {
-  //       likedSongs.splice(songIndex, 1);
-  //       localStorage.setItem(
-  //         "user",
-  //         JSON.stringify({ ...JSON.parse(user), likedSongs })
-  //       );
-  //     }
-  //   }
-  //   setunLikeIsLoading(false);
-  // };
-  // return { handleRemoveSong, unlikeError, unlikeIsLoading };
-  // };
 
   console.log(topGenres[0]);
   if (topGenres.length !== 0) {
@@ -233,10 +152,10 @@ const MyTrove = () => {
             <GenreCard  color={"#C0C0C0"} index={2} name={topGenres?.finalGenreStats[1].genre} percent={topGenres?.finalGenreStats[1].value} />
           </div>    
           <div className='topGenre1'>
-          <GenreCard color={"#D6AD60"} index={1} name={topGenres?.finalGenreStats[0].genre} percent={topGenres?.finalGenreStats[0].value} /> 
+            <GenreCard color={"#D6AD60"} index={1} name={topGenres?.finalGenreStats[0].genre} percent={topGenres?.finalGenreStats[0].value} /> 
           </div>
           <div className='topGenre3'>
-          <GenreCard color={"#A97142"} index={3} name={topGenres?.finalGenreStats[2].genre} percent={topGenres?.finalGenreStats[2].value} />
+            <GenreCard color={"#A97142"} index={3} name={topGenres?.finalGenreStats[2].genre} percent={topGenres?.finalGenreStats[2].value} />
           </div>
            </div>
             }

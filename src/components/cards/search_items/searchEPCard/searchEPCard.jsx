@@ -20,4 +20,4 @@ export default function SearchEPCard ({ id, name, artist, cover }) {
       </div>
     </div>
   )
-}
+};

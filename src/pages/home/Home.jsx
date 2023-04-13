@@ -8,6 +8,7 @@ import { Navigate, useNavigate, Link } from 'react-router-dom'
 import './home.css'
 import { useAuthContext } from '../../hooks/user-hooks/useAuthContext'
 import LoadingSearch from '../../components/loadingitems/loadingSearch/LoadingSearch'
+import CardCurated from '../../components/cards/card_curated/CardCurated'
 
 import Slider from 'react-slick'
 import CardCarousel from '../../components/cards/card_carousel/CardCarousel'
@@ -23,7 +24,7 @@ const Home = () => {
   // console.log(favoriteArtists);
 
   const [userInfo, setUserInfo] = useState([])
-  const [curatedPlaylist, updateCurated] = useState([]);
+  const [curatedPlaylist, updateCurated] = useState([])
 
   // // if(curatedPlaylist.length === 0){
   //   const fetchCurated = async () => {
@@ -40,10 +41,8 @@ const Home = () => {
   //     }, 500)
   //   }
   // // }
-   
 
   useEffect(() => {
-    
     const fetchUserInfo = async () => {
       setDone(false)
       setTimeout(() => {
@@ -55,20 +54,28 @@ const Home = () => {
           })
       }, 500)
     }
-  })
-  const fetchCurated = async () => {
-    setDone(false)
-    setTimeout(() => {
-      fetch(`api/curated/`)
-      .then(response => response.json())
-        .then(json => {
-          console.log("curated")
-          console.log(json)
+    fetchUserInfo()
+  }, [])
+
+  useEffect(() => {
+    const fetchCurated = async () => {
+      setDone(false)
+      setTimeout(async () => {
+        const response = await fetch(`/api/curated`, {
+          method: 'GET'
+        })
+
+        const json = await response.json()
+
+        if (response.ok) {
           updateCurated(json)
           setDone(true)
-        })
-    }, 500)
-  }
+        }
+      }, 500)
+    } 
+
+    fetchCurated()
+  }, [])
   const settings = {
     speed: 800,
     slidesToShow: 1,
@@ -83,31 +90,51 @@ const Home = () => {
     cssEase: 'ease',
     dots: true,
     pauseOnHover: true,
-    pauseOnFocus: true,
+    pauseOnFocus: true
     // dotsClass:"carousel-dots"
     // pauseOnDotsHover: true,
     // centerMode: true,
     // centerPadding: '-1vw',
     // focusOnSelect: true
   }
-// if(curatedPlaylist.length !== 0 ){
-//   console.log(curatedPlaylist)
-// }
-// console.log(curatedPlaylist)
+  // if(curatedPlaylist.length !== 0 ){
+  //   console.log(curatedPlaylist)
+  // }
+  // console.log(curatedPlaylist)
   return (
     // <div className=' '>
     <main className='container '>
-      <div>
+      <div className='myTrvcontainer'>
         {/* <h4 className='text-invisible'>...</h4> */}
-        <div className='homeShowcase'>
+        {/* <div className='homeShowcase'>
           <Slider {...settings}>
-            <CardCarousel title={'Our Daily Mixtape'} imgUrl={'https://images.unsplash.com/photo-1494232410401-ad00d5433cfa?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2340&q=80'}></CardCarousel>
-            <CardCarousel title={'Rock On!'} imgUrl={'https://images.unsplash.com/photo-1499415479124-43c32433a620?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2232&q=80'}></CardCarousel>
-            <CardCarousel title={'Only on TroveMusic'} imgUrl={'https://images.unsplash.com/photo-1468164016595-6108e4c60c8b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2340&q=80'}></CardCarousel>
-            <CardCarousel title={'Ever wanted to be an artist?'} imgUrl={'https://images.unsplash.com/photo-1508898578281-774ac4893c0c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80'}></CardCarousel>
+            <CardCarousel
+              title={'Our Daily Mixtape'}
+              imgUrl={
+                'https://images.unsplash.com/photo-1494232410401-ad00d5433cfa?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2340&q=80'
+              }
+            ></CardCarousel>
+            <CardCarousel
+              title={'Rock On!'}
+              imgUrl={
+                'https://images.unsplash.com/photo-1499415479124-43c32433a620?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2232&q=80'
+              }
+            ></CardCarousel>
+            <CardCarousel
+              title={'Only on TroveMusic'}
+              imgUrl={
+                'https://images.unsplash.com/photo-1468164016595-6108e4c60c8b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2340&q=80'
+              }
+            ></CardCarousel>
+            <CardCarousel
+              title={'Ever wanted to be an artist?'}
+              imgUrl={
+                'https://images.unsplash.com/photo-1508898578281-774ac4893c0c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80'
+              }
+            ></CardCarousel>
           </Slider>
           <div className='carousel-dots'> ... </div>
-        </div>
+        </div> */}
       </div>
 
       <div>
@@ -141,10 +168,20 @@ const Home = () => {
         </div>
       )}
 
-      <h4 className='homeHeaderText'>Suggested Albums:</h4>
-      <div className='grid grid-flow-col overflow-scroll '>
-        <CardAlbum />
-      </div>
+      <h4 className='homeHeaderText'>Try Something New:</h4>
+      <ul className='grid grid-flow-col overflow-scroll '>
+        {curatedPlaylist?.length > 0 &&
+          curatedPlaylist?.map(curatedPlaylist => {
+            return (
+              <CardCurated
+                key={curatedPlaylist._id}
+                id={curatedPlaylist._id}
+                name={curatedPlaylist.curatedPlaylistName}
+                // cover={curatedPlaylist.albumArt}
+              />
+            )
+          })}
+      </ul>
     </main>
     // </div>
   )

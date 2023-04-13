@@ -9,4 +9,4 @@ export default function CardCarousel(title) {
         <h2>{title.title}</h2>
     </div>
   )
-}
+};

@@ -14,4 +14,4 @@ const TasteProfile = () => {
   )
 }
 
-export default TasteProfile
+export default TasteProfile;

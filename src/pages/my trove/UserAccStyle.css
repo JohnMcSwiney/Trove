@@ -7,7 +7,7 @@
     align-items: center;
     overflow: hidden;
     width: 100%;
-    
+    margin-bottom: 30px;
     
 }
 .mytrove-splitter{
@@ -34,15 +34,64 @@
     color: white;
 
 }
+
 @media screen and (min-width: 300px ){
 .txt-container{
     font-size: medium;
 }
+.topGenreCont{
+    display: flex;
+    
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    justify-content: space-around;
+    /* padding-bottom: 5px; */
+    padding-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    }
+    .topGenreCont >.topGenre1{
+ order: 1;
+ margin-bottom: 15px;
+ margin-top: 10px;
+    }
+    .topGenreCont > .topGenre2{
+    order:2;
+    }
+    .topGenreCont > .topGenre3{
+    /* transform: translateX(-80px); */
+    order: 3;
+    }
 }
 @media screen and (max-width: 370px){
 .txt-container{
     font-size: large;
+
 }
+.topGenreCont{
+    display: flex;
+    
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    justify-content: space-around;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin: auto;
+    }
+    .topGenreCont >.topGenre1{
+        order: 1;
+           }
+           .topGenreCont > .topGenre2{
+           order:2;
+           }
+           .topGenreCont > .topGenre3{
+           /* transform: translateX(-80px); */
+           order: 3;
+           }
 }
 @media screen and (min-width: 800px){
     .CardCont{
@@ -54,6 +103,16 @@
         padding-left: 5px;
         padding-right: 5px; 
     }
+    .topGenreCont{
+        display: inline-flex;
+        width: 100%;
+        align-items: center;
+        justify-content: space-around;
+        padding-bottom: 10px;
+        padding-top: 10px;
+        margin-left: 20px;
+        margin-right: 20px;
+        }
 }
 .txt-container{
     margin-left: 3px ;
@@ -154,10 +213,13 @@
     justify-content: center;
     margin-top: 0;
     margin-bottom: 0;
+    margin-right: auto;
+    margin-left: auto;
     /* background-color: #412e67; */
     width: inherit;
     position: relative;
     flex-direction: column;
+    width: 100%;
 }
 
 .account-showcase h1 {
@@ -268,7 +330,7 @@
     border-radius: 15px;
     float:left;
     padding: 10px;
-    max-width: 400px;
+    max-width: 350px;
     margin-bottom: 80px;
 
 }
@@ -278,7 +340,7 @@
     border-radius: 15px;
     float:left;
     padding: 10px;
-    max-width: 400px; 
+    max-width: 350px; 
 }
 
 .RemoveLike{
@@ -300,38 +362,20 @@
     */
 
     
-    width: 400px;
+    width: 350px;
     height: 40px;
 }
 
 .LikeTable{
-    max-width: 370px
+    max-width: 320px
 }
 
 .RemoveLikeTable{
     max-width: 30px
 
 }
-.topGenreCont{
-display: inline-flex;
-width: 100%;
-align-items: center;
-justify-content: space-around;
-padding-bottom: 10px;
-padding-top: 10px;
-margin-left: 20px;
-margin-right: 20px;
-}
+
 .topGenreCont > div{
     text-align: center;
     scale: 1;
-}
-topGenreCont >.topGenre1{
-
-}
-topGenreCont > .topGenre2{
-
-}
-topGenreCont > .topGenre3{
-/* transform: translateX(-80px); */
 }

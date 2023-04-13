@@ -22,7 +22,7 @@ export default function RemoveFromQueueBtn (index) {
     // if (play_list.length > 0) {
       
     // }
-  }
+  };
 
   return (
       <button
