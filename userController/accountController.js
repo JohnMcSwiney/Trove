@@ -5,6 +5,7 @@ const Cookie = require("js-cookie");
 const crypto = require("crypto");
 const maskEmailsPhones = require("mask-email-phone");
 require("dotenv").config();
+const config = require('../config');
 
 const handleErrors = (err) => {
   console.log(err.message, err.code);
@@ -13,7 +14,7 @@ const handleErrors = (err) => {
 // hashing email
 
 const createToken = (_id) => {
-  return jwt.sign({ _id: _id }, process.env.SECRET || "randombull", { expiresIn: "1d" });
+  return jwt.sign({ _id: _id }, config.SECRET, { expiresIn: "1d" });
 };
 
 //login user
@@ -108,13 +109,13 @@ const signupUser = async (req, res) => {
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: process.env.GOOGLE_USER || "dannguyen0826@gmail.com",
-        pass: process.env.GOOGLE_PASSWORD || "rbrtlmmcotupmmzz",
+        user: config.GOOGLE_USER ,
+        pass: config.GOOGLE_PASSWORD,
       },
     });
 
     const mailOptions = {
-      from: process.env.AUTH_EMAIL_ACCOUNT,
+      from: config.AUTH_EMAIL_ACCOUNT,
       to: email,
       subject: "Welcome to TroveMusic!",
       html: `
@@ -126,8 +127,7 @@ const signupUser = async (req, res) => {
           `,
     };
 
-    // <p>Please click the following link to verify your email address:</p>
-    //  <a href="${process.env.APP_URL_BACKEND}/api/user/verify-email/${user._id}">Verify Here</a>
+  
     transporter.sendMail(mailOptions, function (error, info) {
       if (error) {
         handleErrors(error);

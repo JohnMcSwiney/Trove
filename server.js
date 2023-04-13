@@ -5,12 +5,7 @@ const passport = require("passport");
 const userRouter = require("./admin routes/user-route/user-route");
 const albumRouter = require("./admin routes/album-route/album-route");
 const artistRouter = require("./admin routes/artist-route/artist-route");
-<<<<<<< Updated upstream
 const curatedPlaylistRouter = require("./admin routes/curatedPlaylist-route/curatedPlaylist-route");
-
-=======
-// const curatedPlaylistRouter = require("./admin routes/curatedPlaylist-route/curatedPlaylist-route");
->>>>>>> Stashed changes
 // const tastepRouter = require("./admin routes/tastep-route/tastep-route");
 const playlistRouter = require("./admin routes/playlist-route/playlist-route");
 const songRouter = require("./admin routes/song-route/song-route");
@@ -37,9 +32,11 @@ app.use(
 //     saveUninitialized: false,
 //   })
 // );
+
+const config = require("./config")
 mongoose.set("strictQuery", true);
 mongoose
-  .connect(process.env.DB_URL || "mongodb+srv://admin:trovepassword@trove.dguzpr3.mongodb.net/?retryWrites=true&w=majority", { useNewUrlParser: true })
+  .connect(config.DB_URL, { useNewUrlParser: true })
   .then(() => {
     console.log("Database connected");
   })
@@ -74,7 +71,7 @@ app.get("/", function (req, res) {
 
 
 
-const prefix = process.env.PREFIX || '/'
+const prefix = config.PREFIX || '/'
 
 //FOR USER
 app.use(prefix+"user", userlogin);
@@ -98,11 +95,8 @@ app.use(prefix+"albums", albumRouter);
 app.use(prefix+"artists", artistRouter);
 
 //curated playlists
-<<<<<<< Updated upstream
-app.use("/api/curated", curatedPlaylistRouter);
-=======
-// app.use(prefix+"curated", curatedPlaylistRouter);
->>>>>>> Stashed changes
+// app.use("/api/curated", curatedPlaylistRouter);
+app.use(prefix+"curated", curatedPlaylistRouter);
 
 // //playlist
 app.use(prefix+"playlists", playlistRouter);
@@ -115,6 +109,6 @@ app.use(prefix+"songs", songRouter);
 
 app.use(prefix+"DG", discoveryGameRouter);
 
-app.listen(process.env.PORT || 8080, "0.0.0.0", () => {
-  console.log(`Listening to port ` + process.env.PORT || 8080);
+app.listen(config.PORT, "0.0.0.0", () => {
+  console.log(`Listening to port ` + config.PORT);
 });

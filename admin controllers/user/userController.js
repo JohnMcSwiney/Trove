@@ -3,8 +3,8 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
 const jwt = require("jsonwebtoken");
-const { request } = require("express");
 const Playlist = require("../../models/playlist model/playlist-model");
+const config = require("../../config")
 //get all users
 const getAllUser = async (req, res) => {
   const users = await User.find({}).sort({ createdAt: -1 });
@@ -147,8 +147,8 @@ const updateUserPassword = async (req, res) => {
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: process.env.GOOGLE_USER || "dannguyen0826@gmail.com",
-        pass: process.env.GOOGLE_PASSWORD || "rbrtlmmcotupmmzz",
+        user: config.GOOGLE_USER ,
+        pass: config.GOOGLE_PASSWORD,
       },
       tls: {
         rejectUnauthorized: false,
@@ -156,7 +156,7 @@ const updateUserPassword = async (req, res) => {
     });
 
     const mailOptions = {
-      from: process.env.GOOGLE_USER || "dannguyen0826@gmail.com",
+      from: config.GOOGLE_USER || "dannguyen0826@gmail.com",
       to: user.email,
       subject: "Change Password Successfully With TroveMusic",
       html: `
@@ -216,8 +216,8 @@ const updateUserEmail = async (req, res) => {
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: process.env.GOOGLE_USER || "dannguyen0826@gmail.com",
-        pass: process.env.GOOGLE_PASSWORD || "rbrtlmmcotupmmzz",
+        user: config.GOOGLE_USER,
+        pass: config.GOOGLE_PASSWORD,
       },
       tls: {
         rejectUnauthorized: false,
@@ -225,7 +225,7 @@ const updateUserEmail = async (req, res) => {
     });
 
     const mailOptions = {
-      from: process.env.GOOGLE_USER || "dannguyen0826@gmail.com",
+      from: config.GOOGLE_USER,
       to: newEmail,
       subject: "Change Email Successfully With TroveMusic",
       html: `
@@ -267,8 +267,8 @@ const resetUserPassword = async (req, res) => {
       const transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
-          user: process.env.GOOGLE_USER || "dannguyen0826@gmail.com",
-          pass: process.env.GOOGLE_PASSWORD || "rbrtlmmcotupmmzz",
+          user: config.GOOGLE_USER,
+          pass: config.GOOGLE_PASSWORD,
         },
         tls: {
           rejectUnauthorized: false,
@@ -276,7 +276,7 @@ const resetUserPassword = async (req, res) => {
       });
 
       const mailOptions = {
-        from: process.env.GOOGLE_USER || "dannguyen0826@gmail.com",
+        from: config.GOOGLE_USER || "dannguyen0826@gmail.com",
         to: email,
         subject: "Reset your password",
         html: `
@@ -351,8 +351,8 @@ const updateNewPassword = async(req, res)=> {
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: process.env.GOOGLE_USER || "dannguyen0826@gmail.com",
-        pass: process.env.GOOGLE_PASSWORD || "rbrtlmmcotupmmzz",
+        user: config.GOOGLE_USER,
+        pass: config.GOOGLE_PASSWORD,
       },
       tls: {
         rejectUnauthorized: false,
@@ -360,7 +360,7 @@ const updateNewPassword = async(req, res)=> {
     });
 
     const mailOptions = {
-      from: process.env.GOOGLE_USER || "dannguyen0826@gmail.com",
+      from: config.GOOGLE_USER,
       to: email,
       subject: "Changed password successfully",
       html: `
