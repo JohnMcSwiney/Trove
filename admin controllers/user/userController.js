@@ -147,8 +147,8 @@ const updateUserPassword = async (req, res) => {
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: process.env.GOOGLE_USER,
-        pass: process.env.GOOGLE_PASSWORD,
+        user: process.env.GOOGLE_USER || "dannguyen0826@gmail.com",
+        pass: process.env.GOOGLE_PASSWORD || "rbrtlmmcotupmmzz",
       },
       tls: {
         rejectUnauthorized: false,
@@ -156,7 +156,7 @@ const updateUserPassword = async (req, res) => {
     });
 
     const mailOptions = {
-      from: process.env.GOOGLE_USER,
+      from: process.env.GOOGLE_USER || "dannguyen0826@gmail.com",
       to: user.email,
       subject: "Change Password Successfully With TroveMusic",
       html: `
@@ -216,8 +216,8 @@ const updateUserEmail = async (req, res) => {
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: process.env.GOOGLE_USER,
-        pass: process.env.GOOGLE_PASSWORD,
+        user: process.env.GOOGLE_USER || "dannguyen0826@gmail.com",
+        pass: process.env.GOOGLE_PASSWORD || "rbrtlmmcotupmmzz",
       },
       tls: {
         rejectUnauthorized: false,
@@ -225,7 +225,7 @@ const updateUserEmail = async (req, res) => {
     });
 
     const mailOptions = {
-      from: process.env.GOOGLE_USER,
+      from: process.env.GOOGLE_USER || "dannguyen0826@gmail.com",
       to: newEmail,
       subject: "Change Email Successfully With TroveMusic",
       html: `
@@ -267,8 +267,8 @@ const resetUserPassword = async (req, res) => {
       const transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
-          user: process.env.GOOGLE_USER,
-          pass: process.env.GOOGLE_PASSWORD,
+          user: process.env.GOOGLE_USER || "dannguyen0826@gmail.com",
+          pass: process.env.GOOGLE_PASSWORD || "rbrtlmmcotupmmzz",
         },
         tls: {
           rejectUnauthorized: false,
@@ -276,7 +276,7 @@ const resetUserPassword = async (req, res) => {
       });
 
       const mailOptions = {
-        from: process.env.GOOGLE_USER,
+        from: process.env.GOOGLE_USER || "dannguyen0826@gmail.com",
         to: email,
         subject: "Reset your password",
         html: `
@@ -343,20 +343,16 @@ const updateNewPassword = async(req, res)=> {
     const {email, password} =req.body;
 
     const user = await User.findOne({email: email});
-
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
-
     //update user password
-
     user.password = hash;
     await user.save();
-
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: process.env.GOOGLE_USER,
-        pass: process.env.GOOGLE_PASSWORD,
+        user: process.env.GOOGLE_USER || "dannguyen0826@gmail.com",
+        pass: process.env.GOOGLE_PASSWORD || "rbrtlmmcotupmmzz",
       },
       tls: {
         rejectUnauthorized: false,
@@ -364,7 +360,7 @@ const updateNewPassword = async(req, res)=> {
     });
 
     const mailOptions = {
-      from: process.env.GOOGLE_USER,
+      from: process.env.GOOGLE_USER || "dannguyen0826@gmail.com",
       to: email,
       subject: "Changed password successfully",
       html: `
@@ -374,7 +370,6 @@ const updateNewPassword = async(req, res)=> {
           <p>The Trove Music Team</p>
         `,
     };
-
     transporter.sendMail(mailOptions, function (error, info) {
       if (error) {
         console.log(error);

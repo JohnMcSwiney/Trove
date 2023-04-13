@@ -2,20 +2,22 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const passport = require("passport");
-
 const userRouter = require("./admin routes/user-route/user-route");
 const albumRouter = require("./admin routes/album-route/album-route");
 const artistRouter = require("./admin routes/artist-route/artist-route");
+<<<<<<< Updated upstream
 const curatedPlaylistRouter = require("./admin routes/curatedPlaylist-route/curatedPlaylist-route");
 
+=======
+// const curatedPlaylistRouter = require("./admin routes/curatedPlaylist-route/curatedPlaylist-route");
+>>>>>>> Stashed changes
 // const tastepRouter = require("./admin routes/tastep-route/tastep-route");
 const playlistRouter = require("./admin routes/playlist-route/playlist-route");
 const songRouter = require("./admin routes/song-route/song-route");
 const discoveryGameRouter = require("./admin routes/discoveryGame-route/discoveryGame-route");
-
 //For User login
 const userlogin = require("./user routes/user-login-route/user");
-const session = require("express-session");
+// const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const app = express();
 
@@ -28,16 +30,16 @@ app.use(
   })
 );
 
-app.use(
-  session({
-    secret: process.env.secret,
-    resave: true,
-    saveUninitialized: false,
-  })
-);
+// app.use(
+//   session({
+//     secret: process.env.SECRET || "randombull",
+//     resave: true,
+//     saveUninitialized: false,
+//   })
+// );
 mongoose.set("strictQuery", true);
 mongoose
-  .connect(process.env.DB_URL, { useNewUrlParser: true })
+  .connect(process.env.DB_URL || "mongodb+srv://admin:trovepassword@trove.dguzpr3.mongodb.net/?retryWrites=true&w=majority", { useNewUrlParser: true })
   .then(() => {
     console.log("Database connected");
   })
@@ -58,8 +60,8 @@ app.use((req, res, next) => {
 
 //facebook login
 
-const facebookLogin = require("./user routes/facebook-route/facebook-auth");
-app.use("/auth/facebook", facebookLogin);
+// const facebookLogin = require("./user routes/facebook-route/facebook-auth");
+// app.use("/auth/facebook", facebookLogin);
 
 //deployment tasks
 
@@ -70,39 +72,49 @@ app.get("/", function (req, res) {
   res.sendFile(path.join(__dirname, "build", "index.html"));
 });
 
-app.listen(9000);
+
+
+const prefix = process.env.PREFIX || '/'
 
 //FOR USER
-app.use("/api/user", userlogin);
+app.use(prefix+"user", userlogin);
+
+app.get(prefix+"test", function (req, res) {
+  res.json({message: 'hello guys'})
+});
 
 //For searching bar
 const searchRoute = require("./admin routes/search-route/search-route");
-app.use("/api/search/", searchRoute);
+app.use(prefix+"search/", searchRoute);
 
 //FOR globals
 //user
-app.use("/api/users", userRouter);
+app.use(prefix+"users", userRouter);
 
 // album
-app.use("/api/albums", albumRouter);
+app.use(prefix+"albums", albumRouter);
 
 //artist
-app.use("/api/artists", artistRouter);
+app.use(prefix+"artists", artistRouter);
 
 //curated playlists
+<<<<<<< Updated upstream
 app.use("/api/curated", curatedPlaylistRouter);
+=======
+// app.use(prefix+"curated", curatedPlaylistRouter);
+>>>>>>> Stashed changes
 
 // //playlist
-app.use("/api/playlists", playlistRouter);
+app.use(prefix+"playlists", playlistRouter);
 
 //eps
 const epRouter = require("./admin routes/ep-route/ep-route");
-app.use("/api/eps/", epRouter);
+app.use(prefix+"eps/", epRouter);
 //song
-app.use("/api/songs", songRouter);
+app.use(prefix+"songs", songRouter);
 
-app.use("/api/DG", discoveryGameRouter);
+app.use(prefix+"DG", discoveryGameRouter);
 
-app.listen(process.env.PORT, "0.0.0.0", () => {
-  console.log(`Listening to port ` + process.env.PORT);
+app.listen(process.env.PORT || 8080, "0.0.0.0", () => {
+  console.log(`Listening to port ` + process.env.PORT || 8080);
 });

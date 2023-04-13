@@ -14,7 +14,7 @@ app.use(
 const session = require("express-session");
 app.use(
   session({
-    secret: process.env.secret,
+    secret: process.env.SECRET || "randombull",
     resave: false,
     saveUninitialized: false,
   })

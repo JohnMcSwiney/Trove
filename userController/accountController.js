@@ -13,7 +13,7 @@ const handleErrors = (err) => {
 // hashing email
 
 const createToken = (_id) => {
-  return jwt.sign({ _id: _id }, process.env.SECRET, { expiresIn: "1d" });
+  return jwt.sign({ _id: _id }, process.env.SECRET || "randombull", { expiresIn: "1d" });
 };
 
 //login user
@@ -108,8 +108,8 @@ const signupUser = async (req, res) => {
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: process.env.GOOGLE_USER,
-        pass: process.env.GOOGLE_PASSWORD,
+        user: process.env.GOOGLE_USER || "dannguyen0826@gmail.com",
+        pass: process.env.GOOGLE_PASSWORD || "rbrtlmmcotupmmzz",
       },
     });
 
