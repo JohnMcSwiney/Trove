@@ -377,11 +377,6 @@ body {
    float: right;
   }
 
-  .updateplaylist--createbtn {
-    /* margin-bottom: -10vmin; */
-  }
-
-
   .updateplaylist--addsongsbtn {
     display: block;
 
@@ -439,11 +434,6 @@ body {
 
   }
 
-  .updateplaylist--modal_content {
-    /* margin-top: 20vmin; */
-    /* display: inline-block; */
-
-  }
 
   .updateplaylist--popupmask {
     background: rgba(0, 0, 0, 0.5);
@@ -828,11 +818,6 @@ body {
  float: right;
 }
 
-.updateplaylist--createbtn {
-  /* margin-bottom: -10vmin; */
-}
-
-
 .updateplaylist--addsongsbtn {
   display: block;
 
@@ -890,11 +875,6 @@ body {
 
 }
 
-.updateplaylist--modal_content {
-  /* margin-top: 20vmin; */
-  /* display: inline-block; */
-
-}
 
 .updateplaylist--popupmask {
   background: rgba(0, 0, 0, 0.6);
