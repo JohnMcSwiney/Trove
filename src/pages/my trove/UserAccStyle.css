@@ -362,13 +362,16 @@
     max-width: 30px
 
 }
+.LikeTitle{
+    padding: 5px;
+}
 
 
 @media only screen and (max-width: 768px) {
     .TPlikedSongs{
         max-width: 100%;
         min-width: unset; /* remove min-width for mobile view */
-        margin-bottom: 1em;
+        margin-bottom: 170px;
     }
     
     .LikeTable,

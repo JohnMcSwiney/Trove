@@ -31,6 +31,8 @@ const MyTrove = () => {
 
   const [playlists, setPlaylists] = useState([]);
   const [topGenres, setTopGenres] = useState([]);
+  
+  // Fetchs user information for playlists on page open
   React.useEffect(() => {
     const fetchPlaylists = async () => {
       const response = await fetch(`/api/playlists/mylist/${userID}`);
@@ -48,6 +50,8 @@ const MyTrove = () => {
   const [userInfo, setUserInfo] = useState({});
 
   console.log(userInfo.likedSongs);
+
+  //Fetches the top Genre's of the user
   const fetchTopGenres = async () => {
     const response = await fetch(`/api/songs/genre-stats/${userID}`);
     const data = await response.json();
@@ -55,6 +59,7 @@ const MyTrove = () => {
     setTopGenres(data);
   };
 
+  //fetches User information for 
   React.useEffect(() => {
     const fetchUserInfo = async () => {
       const response = await fetch(`/api/users/${userID}`);
@@ -68,6 +73,7 @@ const MyTrove = () => {
     }
   }, []);
 
+  //The fetch to Removes Liked songs from users data
   const handleRemoveSong = async (songId) => {
     setUnlikeIsLoading(true);
     setUnlikeError(null);
@@ -177,7 +183,7 @@ const MyTrove = () => {
         {userInfo?.likedSongs?.length > 0 && (
           <div className="account-showcase">
             <div className="TPlikedSongs">
-              <h1>Liked Songs</h1>
+              <h1 className="LikeTitle">Liked Songs</h1>
               {userInfo?.likedSongs &&
                 userInfo?.likedSongs.map((song) => (
                   <div key={song._id}>
@@ -191,9 +197,10 @@ const MyTrove = () => {
                             className="RemoveLike"
                             onClick={() => {
                               handleRemoveSong(song);
-                            }}
+                            }
+                          }
                           >
-                            <BsXCircle />
+                            <BsXCircle/>
                           </button>
                         </th>
                       </tr>
