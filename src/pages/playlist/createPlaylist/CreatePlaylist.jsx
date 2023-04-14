@@ -97,7 +97,6 @@ export default function CreatePlaylist(props) {
     try {
       await uploadPlaylist(playlistName, id, imageFile, songList);
       navigate("/mytrove");
-      window.location.reload(false);
     } catch (error) {
       console.log(error);
     }

@@ -1,24 +1,25 @@
 import { useState } from "react";
 import firebase from "../../pages/playlist/updatePlaylist/firebaseConfig";
+import { useNavigate } from "react-router-dom";
 
 export const useUpdatePlaylist = () => {
   const [error, setError] = useState(null);
   const storage = firebase.storage();
   const [uploadProgress, setUploadProgress] = useState(0);
-  let playlistCoverUrl ="";
+
+  let playlistCoverUrl = "";
+  const navigate = useNavigate();
 
   const updatePlaylist = async (
     id,
     playlistName,
-    creatorid, 
-    imageFile, 
+    creatorid,
+    imageFile,
     songList
   ) => {
-
     const storageRef = storage.ref();
 
     const uploadImageToFirebase = async () => {
-
       let imageCounter = 0;
 
       while (await checkImageExists(imageCounter)) {
@@ -66,25 +67,21 @@ export const useUpdatePlaylist = () => {
     };
 
     const checkImageExists = async (imageCounter) => {
-
       const imageRef = storageRef.child(`images/${imageCounter}`);
 
-      const metadata = await imageRef.getMetadata()
-      .catch(err => {
-
+      const metadata = await imageRef.getMetadata().catch((err) => {
         if (err.code === "storage/object-not-found") {
           return false;
-        }
-        else {
+        } else {
           console.log(err);
           return true;
         }
       });
-      return metadata !== false
-    }
+      return metadata !== false;
+    };
 
     const updatePlaylistObject = async (playlistCoverUrl) => {
-      if(playlistCoverUrl) {
+      if (playlistCoverUrl) {
         const res = await fetch(`/api/playlists/${id}`, {
           method: "PATCH",
           headers: {
@@ -94,18 +91,18 @@ export const useUpdatePlaylist = () => {
           },
           body: JSON.stringify({
             playlistName,
-            // id: creatorid, 
+            // id: creatorid,
             playlistCoverUrl: playlistCoverUrl,
-            songList
+            songList,
           }),
         });
 
         const data = await res.json();
 
         console.log("Update Playlist Object: " + res);
-  
+
         console.log("Playlist title: " + data.playlistName);
-  
+
         if (!res.ok) {
           setError(data.error);
         }
@@ -119,28 +116,31 @@ export const useUpdatePlaylist = () => {
           },
           body: JSON.stringify({
             playlistName,
-            // id: creatorid, 
-            songList
+            // id: creatorid,
+            songList,
           }),
         });
 
         const data = await res.json();
 
         console.log("Update Playlist Object: " + res);
-  
+
         console.log("Playlist title: " + data.playlistName);
-  
+
         if (!res.ok) {
           setError(data.error);
         }
       }
-
     };
 
-    if(imageFile) {
+    if (imageFile) {
       playlistCoverUrl = await uploadImageToFirebase();
     }
     await updatePlaylistObject(playlistCoverUrl);
+    if (!error) {
+      navigate("/mytrove");
+      // window.location.reload(false);
+    }
   };
 
   return { updatePlaylist, error };

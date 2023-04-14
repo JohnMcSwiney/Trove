@@ -31,7 +31,7 @@ const MyTrove = () => {
 
   const [playlists, setPlaylists] = useState([]);
   const [topGenres, setTopGenres] = useState([]);
-  
+
   // Fetchs user information for playlists on page open
   React.useEffect(() => {
     const fetchPlaylists = async () => {
@@ -40,7 +40,7 @@ const MyTrove = () => {
       setPlaylists(data);
     };
     fetchPlaylists();
-  }, []);
+  }, [playlists?.length]);
 
   const navigate = useNavigate();
   const redirectCreatePlaylist = () => {
@@ -59,7 +59,7 @@ const MyTrove = () => {
     setTopGenres(data);
   };
 
-  //fetches User information for 
+  //fetches User information for
   React.useEffect(() => {
     const fetchUserInfo = async () => {
       const response = await fetch(`/api/users/${userID}`);
@@ -197,10 +197,9 @@ const MyTrove = () => {
                             className="RemoveLike"
                             onClick={() => {
                               handleRemoveSong(song);
-                            }
-                          }
+                            }}
                           >
-                            <BsXCircle/>
+                            <BsXCircle />
                           </button>
                         </th>
                       </tr>

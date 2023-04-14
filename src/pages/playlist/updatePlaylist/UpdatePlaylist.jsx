@@ -116,7 +116,7 @@ export default function UpdatePlaylist(props) {
       ) {
         playlistSongList.push(song._id);
         songList.push(song._id);
-      } else if (songList?.length > 0 && playlistSongList?.length > 0) {
+      } else if (songList?.length > 0 && playlistSongList.length > 0) {
         setPlaylistSongList((prevPlaylistSongs) => [
           ...prevPlaylistSongs,
           song,
@@ -137,10 +137,10 @@ export default function UpdatePlaylist(props) {
   // submit playlist
   const { updatePlaylist, error } = useUpdatePlaylist();
   const handleSubmit = async (e) => {
+    // e.preventDefault();
     try {
       await updatePlaylist(id, playlistName, creatorid, imageFile, songList);
       navigate("/mytrove");
-      window.location.reload(false);
     } catch (error) {
       console.log(error);
     }
@@ -151,8 +151,6 @@ export default function UpdatePlaylist(props) {
     console.log("CLICKED SUBMIT");
     try {
       await deletePlaylist(id);
-      navigate("/mytrove");
-      window.location.reload(false);
     } catch (error) {
       console.log(error);
     }
