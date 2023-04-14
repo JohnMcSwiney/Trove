@@ -99,62 +99,70 @@ const updatePlaylist = async (req, res) => {
   const { id } = req.params;
 
   console.log(req.body);
+
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ err: "No such playlist" });
   }
 
   try {
-    const playlist = await Playlist.findById(id);
 
-    const user = await User.findOne({ _id: playlist.playlistCreator });
+    const user = await User.findById(id);
 
     if (!user) {
       console.log(user);
       throw new Error("User not found");
     }
 
-    let songList = [];
-    let song;
+    const playlist = await Playlist.findOne({ playlistCreator: user._id });
 
-    for (i = 0; i < req.body.songList.length; i++) {
-      song = await Song.findOne({ _id: req.body.songList[i] });
-      songList = [...songList, song._id];
-      console.log(songList);
-
-      if (!song) {
-        throw new Error("Please sign in to play this SONG");
-      }
+    if (!playlist) {
+      console.log(playlist);
+      throw new Error("playlist not found");
     }
 
-    // const songs = await Song.find({}).sort({ createdAt: -1 });
+    console.log(playlist);
 
-    // if (!songs) {
-    //   throw new Error("Songs not found");
-    // }
+    for (song of req.body.songList) {
+      console.log("song: " + song);
 
-    // let songList = songs.map((song) => song._id);
+      const currentSong = await Song.findOne({title: song})
 
-    const playlistUpdate = await Playlist.findOneAndUpdate(
-      { _id: id },
+      console.log("currentSong: " + currentSong);
+
+      playlist.songList.push(currentSong);
+
+      console.log("song should be added");
+    }
+
+    if (!req.body.songList || req.body.songList.length === 0) {
+      const currentSong = await Song.findOne({title: song})
+
+      console.log("currentSong: " + currentSong);
+
+      playlist.songList.pop(currentSong);
+
+      console.log("song should be removed");
+    }
+
+    console.log("playlist songList: " + playlist.songList);
+
+    await Playlist.updateOne(
+      { _id: playlist._id },
       {
         $set: {
           ...req.body,
-          // playlistCreator: user._id,
+          playlistCreator: user._id,
           playlistName: req.body.playlistName,
-          songList: songList,
+          songList: playlist.songList,
         },
       },
       { new: true }
     );
 
-    await playlistUpdate.save();
-    //figure out how to remove songs...
+    await playlist.save();
 
-    if (!playlistUpdate) {
-      return res.status(404).json({ message: "No such playlist" });
-    }
+    res.status(200).json(playlist);
 
-    res.status(200).json(playlistUpdate);
   } catch (err) {
     console.log(err);
     res.status(400).json({ message: err.message });
