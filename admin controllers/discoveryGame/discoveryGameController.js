@@ -332,9 +332,9 @@ const compareSongData = async (user) => {
         songLimit.push(randomSimilarSong);
         console.log(
           "added randomSong: " +
-            randomSimilarSong.title +
-            ", randomSong genre: " +
-            randomSimilarSong.genre
+          randomSimilarSong.title +
+          ", randomSong genre: " +
+          randomSimilarSong.genre
         );
       }
     }
@@ -396,9 +396,9 @@ const randomSong = async (user) => {
       songLimit.push(randomSong);
       console.log(
         "added randomSong: " +
-          randomSong.title +
-          ", randomSong genre: " +
-          randomSong.genre
+        randomSong.title +
+        ", randomSong genre: " +
+        randomSong.genre
       );
     }
 
@@ -504,6 +504,11 @@ const playDiscoveryGame = async (req, res) => {
             await User.updateOne(
               { _id: user._id },
               { $push: { likedSongs: song._id } }
+            );
+
+            await Song.updateOne(
+              {_id: song._id},
+              {$push: {isLoved: user._id}}
             );
             console.log("liked successfully");
             //res.status(200).json(songLimit);
