@@ -20,7 +20,20 @@ const Home = () => {
   const navigate = useNavigate();
 
   const { user } = useAuthContext();
-  const notify = () => toast("You need to sign in for Discovery Game!");
+
+  const notify = () => {
+    if (!toast.isActive("signinNotification")) {
+      toast.dismiss();
+      toast("You need to sign in for Discovery Game!", {
+        toastId: "signinNotification",
+        style: {
+          backgroundImage: "linear-gradient(to right, #0034c4, #8650F4)",
+          color: "white",
+          fontWeight: "bold",
+        },
+      });
+    }
+  };
   const redirectDiscovery = () => {
     if (!user) {
       notify();
