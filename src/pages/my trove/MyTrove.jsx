@@ -43,14 +43,7 @@ const MyTrove = () => {
     navigate("/createPlaylist");
   };
 
-  const [userInfo, setUserInfo] = useState([]);
-
-  const fetchUserInfo = async () => {
-    const response = await fetch(`/api/users/${userID}`);
-    const data = await response.json();
-
-    setUserInfo(data);
-  };
+  const [userInfo, setUserInfo] = useState({});
 
   console.log(userInfo.likedSongs);
   const fetchTopGenres = async () => {
@@ -61,13 +54,17 @@ const MyTrove = () => {
   };
 
   React.useEffect(() => {
+    const fetchUserInfo = async () => {
+      const response = await fetch(`/api/users/${userID}`);
+      const data = await response.json();
+      setUserInfo(data);
+    };
+
     fetchUserInfo();
     if (userID) {
       fetchTopGenres();
     }
   }, []);
-
-  
 
   const handleRemoveSong = async (songId) => {
     setUnlikeIsLoading(true);
@@ -95,7 +92,6 @@ const MyTrove = () => {
       setUnlikeError(json.error);
     }
   };
-
 
   console.log(topGenres[0]);
   if (topGenres.length !== 0) {
@@ -146,19 +142,34 @@ const MyTrove = () => {
         <div className="mytrove-splitter"></div>
         <div className="account-showcase">
           <h1>Top Genres:</h1>
-            {topGenres && topGenres.length !== 0 &&
-          <div className="topGenreCont">  
-          <div className='topGenre2'>
-            <GenreCard  color={"#C0C0C0"} index={2} name={topGenres?.finalGenreStats[1].genre} percent={topGenres?.finalGenreStats[1].value} />
-          </div>    
-          <div className='topGenre1'>
-            <GenreCard color={"#D6AD60"} index={1} name={topGenres?.finalGenreStats[0].genre} percent={topGenres?.finalGenreStats[0].value} /> 
-          </div>
-          <div className='topGenre3'>
-            <GenreCard color={"#A97142"} index={3} name={topGenres?.finalGenreStats[2].genre} percent={topGenres?.finalGenreStats[2].value} />
-          </div>
-           </div>
-            }
+          {topGenres && topGenres.length !== 0 && (
+            <div className="topGenreCont">
+              <div className="topGenre2">
+                <GenreCard
+                  color={"#C0C0C0"}
+                  index={2}
+                  name={topGenres?.finalGenreStats[1].genre}
+                  percent={topGenres?.finalGenreStats[1].value}
+                />
+              </div>
+              <div className="topGenre1">
+                <GenreCard
+                  color={"#D6AD60"}
+                  index={1}
+                  name={topGenres?.finalGenreStats[0].genre}
+                  percent={topGenres?.finalGenreStats[0].value}
+                />
+              </div>
+              <div className="topGenre3">
+                <GenreCard
+                  color={"#A97142"}
+                  index={3}
+                  name={topGenres?.finalGenreStats[2].genre}
+                  percent={topGenres?.finalGenreStats[2].value}
+                />
+              </div>
+            </div>
+          )}
         </div>
         <div className="mytrove-splitter"></div>
         {userInfo?.likedSongs?.length > 0 && (
