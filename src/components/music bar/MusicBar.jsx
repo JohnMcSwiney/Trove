@@ -144,6 +144,8 @@ const MusicBar = () => {
   }, [audioPlayer?.current?.loadedmetadata, audioPlayer?.current?.readyState]);
 
   // Music Player Functions
+
+  //Calculates the time for the music bar
   const calculateTime = secs => {
     const minutes = Math.floor(secs / 60)
     const returnedMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`
@@ -169,6 +171,8 @@ const MusicBar = () => {
     toggleIsPlay_G();
   };
 
+
+  //Mutes song on musicBar
   const toggleMute = () => {
     const prevValue = isMuted
     updatePrevVol(audioPlayer.current.volume)
@@ -191,6 +195,8 @@ const MusicBar = () => {
       // console.log(`current vol:` + volumeLevel);
     }
   };
+
+  //Sets the song to the beginning
   const toBeginningOfSong = () => {
     // progressBar.current.value = 0
     FCprogressBar.current.value = 0
@@ -202,6 +208,7 @@ const MusicBar = () => {
     }, 500)
   };
 
+  //makes the song play or stop playing
   const whilePlaying = () => {
     if (displayMusicBar === false && isPlaying === true) {
       // togglePlayPause();
@@ -241,6 +248,7 @@ const MusicBar = () => {
     setCurrentTime(FCprogressBar.current.value)
   };
 
+  //changes volume
   const changeVolumeLevel = () => {
     setIsMuted(true)
     // console.log(audioPlayer.current.volume);
@@ -248,6 +256,8 @@ const MusicBar = () => {
     audioPlayer.current.volume = volumeRef.current.value / 100
   };
 
+
+  //loops for songs
   const changeLoopLevel = () => {
     const currentLoopLvl = loopLevel
     const newLooplvl = currentLoopLvl + 1
@@ -305,7 +315,7 @@ const MusicBar = () => {
   };
 
 
-
+//use effect for fetching the likeuserinfo when the currentsong is changed
   React.useEffect(() => {
 
 
@@ -332,6 +342,8 @@ const MusicBar = () => {
     }
 
   };
+
+  //Rewindsong / go back to previous song
   const handleRewind = () => {
     const currentTimeInSong = audioPlayer.current.currentTime
 
@@ -360,6 +372,7 @@ const MusicBar = () => {
     // updateSong();
   };
 
+  //Fast forward song / Skip song
   const handleForward = () => {
     console.log('forward!')
     if (loopLevel === 2) {
