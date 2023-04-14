@@ -336,13 +336,7 @@
 
 }
 
-.TPdislikedSongs{
-    border: solid 4px rgba(255, 255, 255, 0.089);
-    border-radius: 15px;
-    float:left;
-    padding: 10px;
-    max-width: 350px; 
-}
+
 
 .RemoveLike{
     color: red;
@@ -371,8 +365,7 @@
 
 
 @media only screen and (max-width: 768px) {
-    .TPlikedSongs,
-    .TPdislikedSongs {
+    .TPlikedSongs{
         max-width: 100%;
         min-width: unset; /* remove min-width for mobile view */
         margin-bottom: 1em;

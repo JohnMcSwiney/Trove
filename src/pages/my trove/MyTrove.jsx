@@ -205,25 +205,6 @@ const MyTrove = () => {
             <br />
           </div>
         )}
-        {/*userInfo?.dislikedSongs?.length > 0 && (
-          <div className="account-showcase">
-            <div className="TPdislikedSongs">
-              <h1>Disliked Songs</h1>
-
-              {userInfo?.dislikedSongs &&
-                userInfo?.dislikedSongs.map((song) => (
-                  <div key={song._id}>
-                    <p>
-                      {song.title} - {song.artist?.artistName}
-                    </p>
-                  </div>
-                ))}
-            </div>
-
-            <br />
-          </div>
-          )*/}
-        {/* <div className="mytrove-splitter"></div> */}
         <div className="account-showcase">
           <h1></h1>
         </div>
