@@ -1,14 +1,15 @@
 .curatedCardCont{
-    background-color: #080c3d7c;
+    background-color: #080c3d38;
     padding: 0%;
     margin: auto;
     border-radius: 20px;
-    border: 2px solid rgba(242, 242, 245, 0.212);
+    border: 2px solid rgba(242, 242, 245, 0.089);
     overflow: hidden;
     border-radius: 16px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(3.2px);
-    -webkit-backdrop-filter: blur(3.2px);
+    backdrop-filter: blur(1.2px);
+    -webkit-backdrop-filter: blur(1.2px);
+    transition: 0.15s ease-in-out;
 }
 .curatedPlaylistCard{
     display: flex;
@@ -28,16 +29,21 @@
     position: relative;
     border-radius: 15px;
     overflow: hidden;
+    transition: 0.10s ease-in-out;
 }
-
+.curatedPlaylistCover:hover{
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    scale: 1.025;
+    transition: 0.10s ease-in-out;
+}
 .curatedPlaylistCover > img{
     position: absolute;
     left: 0%;
     top: 0%;
     width: 100%;
-    scale: 1.1;
+    scale: 1.05;
     background: black;
-    transition: 0.25s ease-in-out;
+    transition: 0.20s ease-in-out;
 }
 .curatedPlaylistCover > img:hover{
     scale: 1.15;
