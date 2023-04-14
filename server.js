@@ -33,7 +33,7 @@ app.use(
 //   })
 // );
 
-const config = require("./config")
+const config = require("./config");
 mongoose.set("strictQuery", true);
 mongoose
   .connect(config.DB_URL, { useNewUrlParser: true })
@@ -69,45 +69,43 @@ app.get("/", function (req, res) {
   res.sendFile(path.join(__dirname, "build", "index.html"));
 });
 
-
-
-const prefix = config.PREFIX || '/'
+const prefix = config.PREFIX;
 
 //FOR USER
-app.use(prefix+"user", userlogin);
+app.use(prefix + "user", userlogin);
 
-app.get(prefix+"test", function (req, res) {
-  res.json({message: 'hello guys'})
+app.get(prefix + "test", function (req, res) {
+  res.json({ message: "hello guys" });
 });
 
 //For searching bar
 const searchRoute = require("./admin routes/search-route/search-route");
-app.use(prefix+"search/", searchRoute);
+app.use(prefix + "search/", searchRoute);
 
 //FOR globals
 //user
-app.use(prefix+"users", userRouter);
+app.use(prefix + "users", userRouter);
 
 // album
-app.use(prefix+"albums", albumRouter);
+app.use(prefix + "albums", albumRouter);
 
 //artist
-app.use(prefix+"artists", artistRouter);
+app.use(prefix + "artists", artistRouter);
 
 //curated playlists
 // app.use("/api/curated", curatedPlaylistRouter);
-app.use(prefix+"curated", curatedPlaylistRouter);
+app.use(prefix + "curated", curatedPlaylistRouter);
 
 // //playlist
-app.use(prefix+"playlists", playlistRouter);
+app.use(prefix + "playlists", playlistRouter);
 
 //eps
 const epRouter = require("./admin routes/ep-route/ep-route");
-app.use(prefix+"eps/", epRouter);
+app.use(prefix + "eps/", epRouter);
 //song
-app.use(prefix+"songs", songRouter);
+app.use(prefix + "songs", songRouter);
 
-app.use(prefix+"DG", discoveryGameRouter);
+app.use(prefix + "DG", discoveryGameRouter);
 
 app.listen(config.PORT, "0.0.0.0", () => {
   console.log(`Listening to port ` + config.PORT);
