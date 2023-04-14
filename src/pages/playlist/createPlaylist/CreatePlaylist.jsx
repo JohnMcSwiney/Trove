@@ -98,6 +98,7 @@ export default function CreatePlaylist(props) {
 
     try {
       uploadPlaylist(playlistName, id, imageFile, songList);
+      navigate("/mytrove");
     } catch (error) {
       console.log(error);
     }

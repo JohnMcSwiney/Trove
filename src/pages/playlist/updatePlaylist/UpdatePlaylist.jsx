@@ -9,7 +9,7 @@ import firebase from "./firebaseConfig";
 
 import { useUpdatePlaylist } from "../../../hooks/user-hooks/useUpdatePlaylist";
 import { useDeletePlaylist } from "../../../hooks/user-hooks/useDeletePlaylist";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 // To create a playlist
 export default function UpdatePlaylist(props) {
   //search
@@ -23,7 +23,6 @@ export default function UpdatePlaylist(props) {
   let { id } = useParams();
   const [playlist, setPlaylist] = React.useState(null);
 
-  
   React.useEffect(() => {
     const fetchPlaylist = async () => {
       const playlistResponse = await fetch(`/api/playlists/${id}`, {
@@ -40,24 +39,20 @@ export default function UpdatePlaylist(props) {
 
   const searchAPI = React.useEffect(() => {
     const fetchSearch = async () => {
-      
-      if (search == ""){
-        console.log(" this shit empty");
+      if (search == "") {
         setDone(true);
         return;
       } else {
-        setDone(false)
+        setDone(false);
         setTimeout(() => {
           fetch(`/api/search/${search}`)
-          
-          .then((response) => response.json())
-          .then((json) => {
-            setSearchResult(json);
-            setDone(true);
-          });
-        }, 500)
+            .then((response) => response.json())
+            .then((json) => {
+              setSearchResult(json);
+              setDone(true);
+            });
+        }, 500);
       }
-      
     };
     fetchSearch();
   }, [search]);
@@ -80,11 +75,11 @@ export default function UpdatePlaylist(props) {
   const [imageWasChanged, setImageWasChanged] = React.useState(false);
 
   React.useEffect(() => {
-    setPreviewCover(playlist?.playlistCoverUrl)
-    setPlaylistSongList(playlist?.songList)
+    setPreviewCover(playlist?.playlistCoverUrl);
+    setPlaylistSongList(playlist?.songList);
     setSongList(playlistSongList?.map((song) => song._id));
     // setSongList(playlist?.songList._id)
-    setPlaylistName(playlist?.playlistName)
+    setPlaylistName(playlist?.playlistName);
   }, [playlist]);
 
   //handle changes
@@ -96,25 +91,38 @@ export default function UpdatePlaylist(props) {
 
   const handlePlaylistName = (e) => {
     setPlaylistName(e.target.value);
-    
   };
 
   // remove song from playlist songlist
-  function handleRemoveSong(song, songAction) {
+  function handleRemoveSong(song, songAction, index) {
     console.log(song._id);
 
     if (songAction === "remove") {
-      const newList = playlistSongList.filter((item) => item._id !== song._id);
-      const newSongList = songList.filter((item) => item !== song._id);
+      if (songList?.length > 0 && playlistSongList?.length > 0) {
+        const newPlaylistSongList = [...playlistSongList];
+        newPlaylistSongList.splice(index, 1); // remove the song at the specified index
+        setPlaylistSongList(newPlaylistSongList);
 
-      setPlaylistSongList(newList);
-      setSongList(newSongList);
-
-      console.log("DEL SONG" + songList)
+        const newSongList = [...songList];
+        newSongList.splice(index, 1); // remove the song ID at the specified index
+        setSongList(newSongList);
+      }
     } else if (songAction === "add") {
-      setPlaylistSongList((prevPlaylistSongs) => [...prevPlaylistSongs, song]);
-      setSongList((prevSongList) => [...prevSongList, song._id]);
-      console.log("ADD SONG " + songList)
+      if (
+        songList &&
+        songList.length === 0 &&
+        playlistSongList &&
+        playlistSongList?.length === 0
+      ) {
+        playlistSongList.push(song._id);
+        songList.push(song._id);
+      } else if (songList?.length > 0 && playlistSongList?.length > 0) {
+        setPlaylistSongList((prevPlaylistSongs) => [
+          ...prevPlaylistSongs,
+          song,
+        ]);
+        setSongList((prevSongList) => [...prevSongList, song._id]);
+      }
     }
   }
 
@@ -123,49 +131,32 @@ export default function UpdatePlaylist(props) {
 
   function togglePop() {
     setIsOpen((prevModalIsOpen) => !prevModalIsOpen);
-    console.log("OPENED!");
   }
 
-
-
+  const navigate = useNavigate();
   // submit playlist
   const { updatePlaylist, error } = useUpdatePlaylist();
   const handleSubmit = async (e) => {
-    console.log("CLICKED SUBMIT")
     // e.preventDefault();
-
     try {
-      await updatePlaylist(
-        id,
-        playlistName,
-        creatorid,
-        imageFile,
-        songList
-      );
+      await updatePlaylist(id, playlistName, creatorid, imageFile, songList);
+      navigate("/mytrove");
     } catch (error) {
       console.log(error);
     }
-
-    console.log("CLICKED SUBMIT 2");
   };
 
   const { deletePlaylist } = useDeletePlaylist();
   const handleDelete = async (e) => {
-    console.log("CLICKED SUBMIT")
-    // e.preventDefault();
-
+    console.log("CLICKED SUBMIT");
     try {
-      await deletePlaylist(
-        id
-      );
+      await deletePlaylist(id);
     } catch (error) {
       console.log(error);
     }
 
     console.log("CLICKED SUBMIT 2");
   };
-
-  
 
   return (
     <section>
@@ -206,7 +197,13 @@ export default function UpdatePlaylist(props) {
           </label>
         </div>
         <div className="updateplaylist--stats--info">
-          <input type="text" id="playlisttitle" placeholder="Playlist Name" value={playlistName} onChange={handlePlaylistName}/>
+          <input
+            type="text"
+            id="playlisttitle"
+            placeholder="Playlist Name"
+            value={playlistName}
+            onChange={handlePlaylistName}
+          />
           <div className="updateplaylist--release--info">
             {/* <h5>2014</h5> */}
             {/* <h6>PLAYLIST</h6> */}
@@ -244,7 +241,7 @@ export default function UpdatePlaylist(props) {
         </div>
 
         <div className="updateplaylist--songs">
-          { playlistSongList &&
+          {playlistSongList &&
             playlistSongList.map((item, index) => {
               return (
                 <PlaylistSong
@@ -255,8 +252,6 @@ export default function UpdatePlaylist(props) {
                   handleRemoveSong={handleRemoveSong}
                   songActionImg={removeSongImg}
                   songAction={"remove"}
-
-                  
                 />
               );
             })}
