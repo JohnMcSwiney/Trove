@@ -25,7 +25,9 @@ const MyTrove = () => {
 
   const { user } = useAuthContext();
 
-  const userID = JSON.parse(localStorage.getItem("user")).id;
+  const userID = JSON.parse(localStorage.getItem("user"))
+    ? JSON.parse(localStorage.getItem("user")).id
+    : null;
 
   const [playlists, setPlaylists] = useState([]);
   const [topGenres, setTopGenres] = useState([]);
