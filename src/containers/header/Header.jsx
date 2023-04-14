@@ -68,9 +68,8 @@ function Header () {
       )}
 
       <div className='p-2'>
-        {!user && logo && (
+        {logo && (
           <Dropdown 
-          className="hidden"
           >
             <Dropdown.Toggle
               id='dropdown-basic'
