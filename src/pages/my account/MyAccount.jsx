@@ -227,7 +227,9 @@ const MyAccount = () => {
             <div className="updateMailPassCont">
               <div className="updateMailPassinput">
                 <form onSubmit={handleUpdateEmail}>
-                  <h5 onClick={toggleShowEmail}>Email</h5>
+                  <h5 onClick={toggleShowEmail} style={{ cursor: "pointer" }}>
+                    Email
+                  </h5>
                   {showEmailTab && (
                     <div>
                       <label htmlFor="currentEmail">Current email: </label>
@@ -271,7 +273,12 @@ const MyAccount = () => {
 
               <div className="updateMailPassinput">
                 <form onSubmit={handleUpdatePassword}>
-                  <h5 onClick={toggleShowPasswordTab}>Password</h5>
+                  <h5
+                    onClick={toggleShowPasswordTab}
+                    style={{ cursor: "pointer" }}
+                  >
+                    Password
+                  </h5>
                   {showPasswordTab && (
                     <div>
                       <label htmlFor="password">Current password: </label>
