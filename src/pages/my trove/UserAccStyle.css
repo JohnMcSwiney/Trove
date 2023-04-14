@@ -331,6 +331,7 @@
     float:left;
     padding: 10px;
     max-width: 350px;
+    min-width: 300px;
     margin-bottom: 80px;
 
 }
@@ -355,13 +356,6 @@
 
 .LikeTable, .RemoveLikeTable{
 
-    /*
-    border is temp just so i can see the full table size
-    
-    border:1px solid yellow;
-    */
-
-    
     width: 350px;
     height: 40px;
 }
@@ -374,6 +368,33 @@
     max-width: 30px
 
 }
+
+
+@media only screen and (max-width: 768px) {
+    .TPlikedSongs,
+    .TPdislikedSongs {
+        max-width: 100%;
+        min-width: unset; /* remove min-width for mobile view */
+        margin-bottom: 1em;
+    }
+    
+    .LikeTable,
+    .RemoveLikeTable {
+        width: 100%;
+        min-width: unset; /* remove min-width for mobile view */
+        height: auto;
+    }
+    
+    .LikeTable{
+        max-width: 90%;
+    }
+    
+    .RemoveLikeTable{
+        max-width: 10%;
+    }
+}
+
+
 
 .topGenreCont > div{
     text-align: center;
