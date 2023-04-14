@@ -209,8 +209,33 @@
     box-shadow: rgba(255, 255, 255, 0.671);
     
 }
+.app_background{
+  background-color: linear-gradient(0deg, #0C081C 0%, #0e198b 112.5%);
+      
+  /* @media only screen and (min-width: 800px) {
+    background-color: #010E4C;
+    background-image: url('https://firebasestorage.googleapis.com/v0/b/helical-analyst-376421.appspot.com/o/AppFiles%2Fdesktopbg.png?alt=media&token=5974bbc1-128f-4968-8066-45ef67d52fec');
+    }
+  @media only screen and (max-width: 799px) {
+    background-color: #010E4C;
+    background-image: url('https://firebasestorage.googleapis.com/v0/b/helical-analyst-376421.appspot.com/o/AppFiles%2Fmobilebg.png?alt=media&token=85911adc-381a-464f-b3de-c6e891a8563b');      
+  } */
+  /* background-image: url('https://firebasestorage.googleapis.com/v0/b/helical-analyst-376421.appspot.com/o/AppFiles%2Fmobilebg.png?alt=media&token=85911adc-381a-464f-b3de-c6e891a8563b'); */
+  
+  
+  /* Moving Background vv too memory intensive */
+  /* background-image: url('./stackedwaveshaikei_2.svg'); */
+  /* 2 is dark blue, 6 is light blue */
+  /* other test colors as well */
+  
+  /* background-color: #b2b5d0; */
+  /* background-position: center; */
+  position: absolute;
+  /* background-size:contain; */
+  width: 100%;
+  /* transform: */
 
-
+}
 
 
 @layer components {

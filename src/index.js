@@ -8,9 +8,9 @@ import { MusicProvider } from "./contexts/MusicContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <AuthContextProvider>
+  <AuthContextProvider >
     <MusicProvider>
-      <App />
+      <App classname='app_background'/>
     </MusicProvider>
   </AuthContextProvider>
 );
