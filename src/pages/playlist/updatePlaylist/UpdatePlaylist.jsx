@@ -137,10 +137,10 @@ export default function UpdatePlaylist(props) {
   // submit playlist
   const { updatePlaylist, error } = useUpdatePlaylist();
   const handleSubmit = async (e) => {
-    // e.preventDefault();
     try {
       await updatePlaylist(id, playlistName, creatorid, imageFile, songList);
       navigate("/mytrove");
+      window.location.reload(false);
     } catch (error) {
       console.log(error);
     }
@@ -151,6 +151,8 @@ export default function UpdatePlaylist(props) {
     console.log("CLICKED SUBMIT");
     try {
       await deletePlaylist(id);
+      navigate("/mytrove");
+      window.location.reload(false);
     } catch (error) {
       console.log(error);
     }
