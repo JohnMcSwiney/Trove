@@ -7,7 +7,7 @@ import './CardCurated.css'
       navigate(`/curated/${id}`)
     }
     return (
-      <div className='bg-fglass border-w2'>
+      <div className='curatedCardCont'>
         <div className='curatedPlaylistCard' onClick={redirectAlbum}>
         <div className='curatedPlaylistInfo'>
             <h3>{name}</h3>

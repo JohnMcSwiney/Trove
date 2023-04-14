@@ -169,7 +169,7 @@ const Home = () => {
       )}
 
       <h4 className='homeHeaderText'>Try Something New:</h4>
-      <ul className='grid grid-flow-col overflow-scroll '>
+      <ul className='homeCuratedShowcase'>
         {curatedPlaylist?.length > 0 &&
           curatedPlaylist?.map(curatedPlaylist => {
             return (
@@ -177,7 +177,7 @@ const Home = () => {
                 key={curatedPlaylist._id}
                 id={curatedPlaylist._id}
                 name={curatedPlaylist.curatedPlaylistName}
-                // cover={curatedPlaylist.albumArt}
+                cover={curatedPlaylist.curatedPlaylistCoverUrl}
               />
             )
           })}
