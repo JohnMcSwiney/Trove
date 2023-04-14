@@ -93,11 +93,11 @@ export default function CreatePlaylist(props) {
   // submit playlist
   const navigate = useNavigate();
   const { uploadPlaylist, error } = useCreatePlaylist();
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     try {
-      uploadPlaylist(playlistName, id, imageFile, songList);
-      window.location.reload(false);
+      await uploadPlaylist(playlistName, id, imageFile, songList);
       navigate("/mytrove");
+      window.location.reload(false);
     } catch (error) {
       console.log(error);
     }
