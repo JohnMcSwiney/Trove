@@ -1,89 +1,70 @@
-.hideOverflow{
+.hideOverflow {
   overflow: hidden;
 }
-.account-header, .privacy-header, .support-header{
+.account-header,
+.privacy-header,
+.support-header {
   padding: 1vw 2vw 0vw 2vw;
   display: flex;
- align-items: center;
- text-align: center;
-
+  align-items: center;
+  text-align: center;
 }
 @media screen and (max-width: 350px) {
-.user-avatar {
-  width: 50px !important;
-  height: 50px !important;
-  display: flex;
-  object-fit:fill;
-  border-radius: 50%;    
-}
-.userImg-border{
-  background: linear-gradient(to top, #8650F4, #0034C4);
-  border-radius: 50% !important;
-  margin: 5px;
-  padding: 1vw;
-  box-sizing: border-box;
-  display: flex;
-  filter: none;
-  height: 60px !important;
-  width: 60px !important;
-  overflow: hidden;
-  align-items: center;
-  justify-content: center;
-  
-}
+  .user-avatar {
+    width: 50px !important;
+    height: 50px !important;
+    display: flex;
+    object-fit: fill;
+    border-radius: 50%;
+  }
+  .userImg-border {
+    background: linear-gradient(to top, #8650f4, #0034c4);
+    border-radius: 50% !important;
+    margin: 5px;
+    padding: 1vw;
+    box-sizing: border-box;
+    display: flex;
+    filter: none;
+    height: 60px !important;
+    width: 60px !important;
+    overflow: hidden;
+    align-items: center;
+    justify-content: center;
+  }
 
-
-
-.userimg_displayName{
-  display: flex;
-  align-items: center;
-  margin: 0 auto;
-  gap: 10px;
-  /* height: 30vw; */
-  max-height: 150px !important;
-}
+  .userimg_displayName {
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
+    gap: 10px;
+    /* height: 30vw; */
+    max-height: 150px !important;
+  }
 }
 .user-avatar {
   width: 90px;
   height: 90px;
   display: flex;
-  object-fit:fill;
-  border-radius: 50%;    
+  object-fit: fill;
+  border-radius: 50%;
   /* margin-left: 35%; */
-
-  
-
 }
-.userImg-border{
-  /* background: linear-gradient(to top, #8650F4, #0034C4); */
-  border-radius: 50% !important;
-  margin: 5px;
-  padding: 1vw;
-  box-sizing: border-box;
-  display: flex;
-  filter: none;
-  height: 100px ;
-  width: 100px;
-  overflow: hidden;
-  align-items: center;
-  justify-content: center;
 
-}
-.userimg_displayName{
+.userimg_displayName {
   display: flex;
   align-items: center;
   margin: auto;
   gap: 10px;
   height: 30vw;
 }
-.newPasswordCont{
+.newPasswordCont {
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
   gap: 6px;
 }
 
-.eyeIcon{
+.eyeIcon {
   transform: translateX(-30px);
 }
 
@@ -95,7 +76,7 @@
     color: rgb(255, 255, 255);
     min-height: 100%;
   }
-  .bg-fglass-1{
+  .bg-fglass-1 {
     background-color: #2d34360b;
 
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
@@ -103,7 +84,7 @@
     -webkit-backdrop-filter: blur(6px);
   }
 
-  .bg-fglass-2{
+  .bg-fglass-2 {
     background-color: #2d34362c;
     border-radius: 16px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
@@ -117,9 +98,8 @@
     width: 100px;
     height: 100px;
     border-radius: 50%;
-    
   }
-  .userImg-border{
+  .userImg-border {
     /* background: linear-gradient(to top, #8650F4, #0034C4); */
     border-radius: 500px !important;
     margin: 5px;
@@ -127,26 +107,25 @@
     box-sizing: border-box;
     display: flex;
     filter: none;
-    height:110px !important;
+    height: 110px !important;
     width: 110px !important;
     overflow: hidden;
     align-items: center;
     justify-content: center;
-    
   }
 
   .userImg-border input[type="file"] {
     display: none;
   }
 
-  .userImg-border{
+  .userImg-border {
     padding-bottom: 2vmin;
   }
-  
-  .userImg-border:hover  {
+
+  .userImg-border:hover {
     opacity: 0.6;
   }
-  
+
   .userImg-border > h4 {
     font-size: 1.8vmin;
     position: absolute;
@@ -154,17 +133,16 @@
     display: none;
     text-align: center;
   }
-  
+
   .userImg-border:hover > h4 {
     display: block;
-  
   }
-  .userimg_displayName{
+  .userimg_displayName {
     display: flex;
     align-items: center;
     max-height: 150px !important;
   }
-  .dispNameInp{
+  .dispNameInp {
     margin-left: 15px;
   }
   .tabs {
@@ -177,7 +155,6 @@
     padding: 10px;
     /* background-color: aquamarine; */
     border-radius: 12px 0 0 13px;
-    
   }
 
   .tab {
@@ -213,26 +190,24 @@
     padding-right: 5px;
     box-sizing: border-box;
   }
-  .personalInfoCont{
+  .personalInfoCont {
     display: flex;
     max-width: 500px;
     align-items: center;
     flex-direction: column;
     /* margin: auto; */
-    
   }
-  
-  .inputContainer{
+
+  .inputContainer {
     display: flex;
     flex-direction: column;
     gap: 10px;
   }
-  .emailImpCont > .form-control{
+  .emailImpCont > .form-control {
     background-color: transparent;
     color: rgb(198, 198, 198);
   }
   .contents {
-    
   }
 
   .form-control {
@@ -249,13 +224,13 @@
     position: relative;
     padding: 50px;
   }
-  .updateMailPassCont{
+  .updateMailPassCont {
     display: flex;
     /* background-color: rgba(255, 255, 0, 0.242); */
     flex-direction: row;
     gap: 5vw;
   }
-  .updateMailPassinput{
+  .updateMailPassinput {
     width: 20vw;
   }
 }
@@ -302,7 +277,7 @@
     position: relative;
     padding: 50px;
   }
-  .bg-fglass-1{
+  .bg-fglass-1 {
     background: rgba(255, 255, 255, 0.13);
     border-bottom: 1px solid;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
@@ -310,21 +285,21 @@
     -webkit-backdrop-filter: blur(6px); */
   }
 
-  .bg-fglass-2{
+  .bg-fglass-2 {
     background: rgba(255, 255, 255, 0.13);
     border-radius: 16px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px); 
+    -webkit-backdrop-filter: blur(6px);
   }
   .user-avatar {
     width: 90px;
     height: 90px;
     display: flex;
-    object-fit:fill;
-    border-radius: 50%;    
+    object-fit: fill;
+    border-radius: 50%;
   }
-  .userImg-border{
+  .userImg-border {
     /* background: linear-gradient(to top, #8650F4, #0034C4); */
     border-radius: 50% !important;
     margin: 5px;
@@ -332,43 +307,40 @@
     box-sizing: border-box;
     display: flex;
     filter: none;
-    height: 100px ;
+    height: 100px;
     width: 100px;
     overflow: hidden;
     align-items: center;
     justify-content: center;
-
   }
-  .userimg_displayName{
+  .userimg_displayName {
     display: flex;
     align-items: center;
     margin: auto;
     gap: 10px;
     height: 30vw;
   }
-  .inputContainer{
+  .inputContainer {
     display: flex;
     flex-direction: column;
     gap: 10px;
   }
-  .emailImpCont > .form-control{
+  .emailImpCont > .form-control {
     background-color: transparent;
     color: rgb(198, 198, 198);
   }
-  .updateMailPassCont{
+  .updateMailPassCont {
     display: flex;
-    background-color: rgba(255, 255, 0, 0.242);
     flex-direction: column;
     gap: 5vw;
-
   }
-  .updateMailPassinput{
+  .updateMailPassinput {
     width: 70vw;
-    text-shadow:3px 3px #c46500;
+    /* text-shadow: 3px 3px #c46500; */
   }
 
   .updateMailPassinput > form > h5 {
-    text-shadow:3px 3px #c46500;
+    /* text-shadow: 3px 3px #c46500; */
   }
 
   .updateMailPassinput input {
