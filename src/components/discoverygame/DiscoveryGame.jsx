@@ -1,78 +1,85 @@
-import React, { useState, useRef, useEffect } from 'react'
-import { useSwipeable } from 'react-swipeable'
-import { FaPlay } from 'react-icons/fa'
-import { FaPause } from 'react-icons/fa'
+import React, { useState, useRef, useEffect } from "react";
+import { useSwipeable } from "react-swipeable";
+import { FaPlay } from "react-icons/fa";
+import { FaPause } from "react-icons/fa";
 
-import { BiArrowToLeft } from 'react-icons/bi'
+import { BiArrowToLeft } from "react-icons/bi";
 import {
   BiVolumeFull,
   BiVolumeLow,
   BiVolume,
-  BiVolumeMute
-} from 'react-icons/bi'
-import { BsXLg, BsCheckLg } from 'react-icons/bs'
-import { MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from 'react-icons/md'
-import Song from '../../components/song detail/Song'
-import tempImg from './NoSong.png'
-import tempImg2 from '../../assets/testImgs/roast_turkey_dinner.jpg'
-import tempImg3 from '../../assets/testImgs/chicken.jpg'
+  BiVolumeMute,
+} from "react-icons/bi";
+import { BsXLg, BsCheckLg } from "react-icons/bs";
+import {
+  MdOutlineArrowBackIos,
+  MdOutlineArrowForwardIos,
+} from "react-icons/md";
+import Song from "../../components/song detail/Song";
+import tempImg from "./NoSong.png";
+import tempImg2 from "../../assets/testImgs/roast_turkey_dinner.jpg";
+import tempImg3 from "../../assets/testImgs/chicken.jpg";
 
-import { AudioPlayer } from '../audioplayerOLD/AudioPlayer'
+import { AudioPlayer } from "../audioplayerOLD/AudioPlayer";
 
-import './DGstyle.css'
+import "./DGstyle.css";
 
-import Slider from 'react-slick'
+import Slider from "react-slick";
 
-import MyTrove from '../../pages/my trove/MyTrove'
+import MyTrove from "../../pages/my trove/MyTrove";
 
-import LikeData from '../../data/likeTemp'
-import { useAuthContext } from '../../hooks/user-hooks/useAuthContext'
-import { MusicContext } from '../../contexts/MusicContext'
-import { json } from 'react-router-dom'
+import LikeData from "../../data/likeTemp";
+import { useAuthContext } from "../../hooks/user-hooks/useAuthContext";
+import { MusicContext } from "../../contexts/MusicContext";
+import { json } from "react-router-dom";
 
 const DiscoveryGame = () => {
   //state
-  const [state, setState] = React.useState(0)
-  const [index, setIndex] = React.useState(0)
-  const [accept, setAccept] = React.useState(0)
-  const [deny, setDeny] = React.useState(0)
-  const [dGData, setDGData] = React.useState([])
-  const [volumeLevel, setVolumeLevel] = useState(0)
-  const [isPlaying, setIsPlaying] = useState(true)
-  const [isLoaded, setIsLoaded] = useState(false)
-  const [duration, setDuration] = useState(0)
-  const [foobar, setFoobar] = useState('these')
-  const [currentTime, setCurrentTime] = useState(0)
-  const [likedslides, setLikedslides] = useState([])
-  const [isMuted, setIsMuted] = useState(true)
+  const [state, setState] = React.useState(0);
+  const [index, setIndex] = React.useState(0);
+  const [accept, setAccept] = React.useState(0);
+  const [deny, setDeny] = React.useState(0);
+  const [dGData, setDGData] = React.useState([]);
+  const [volumeLevel, setVolumeLevel] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [duration, setDuration] = useState(0);
+  const [foobar, setFoobar] = useState("these");
+  const [currentTime, setCurrentTime] = useState(0);
+  const [likedslides, setLikedslides] = useState([]);
+  const [isMuted, setIsMuted] = useState(true);
   //isMuted is totally screwed... but it works. So i'm just gonna leave it as it is <3 sorry if it's confusing (I don't actually know what's happening lol)
-  const [prevVolume, updatePrevVol] = useState(0.5)
-  const [isLiked, setIsLiked] = useState("")
-  const [likedIds, setLikedIds] = useState([])
-  const [dislikedIds, setDisikedIds] = useState([])
-  const [currentUserLoaded, setCurrentUserLoaded] = useState(false)
+  const [prevVolume, updatePrevVol] = useState(0.5);
+  const [isLiked, setIsLiked] = useState("");
+  const [likedIds, setLikedIds] = useState([]);
+  const [dislikedIds, setDisikedIds] = useState([]);
+  const [currentUserLoaded, setCurrentUserLoaded] = useState(false);
   const [dgLoops, updateDgLoops] = useState(0);
   //reference
-  const audioPlayer = useRef() //reference to the audio player
-  const DGprogressBar = useRef() //reference to the progress bar
-  const animationRef = useRef() //reference to the animation
-  const musicSlides = useRef()
-  const DGvolumeRef = useRef()
+  const audioPlayer = useRef(); //reference to the audio player
+  const DGprogressBar = useRef(); //reference to the progress bar
+  const animationRef = useRef(); //reference to the animation
+  const musicSlides = useRef();
+  const DGvolumeRef = useRef();
   // const hardCodeId = '640f32ff50d15ac45201358c'
 
   //for likes   ([{ id: slides[state].id, songName: slides[state].songName, author: slides[state].author }])
-  const [songs, setSongs] = useState([])
-  const [songsLoaded, updateSongsLoaded] = useState(false)
-  const [needLoadsong, setneedLoadsong] = useState(false)
-  const user = useAuthContext()
-  const { displayMusicBar, updateDisplayMusicBar, play_list,
+  const [songs, setSongs] = useState([]);
+  const [songsLoaded, updateSongsLoaded] = useState(false);
+  const [needLoadsong, setneedLoadsong] = useState(false);
+  const user = useAuthContext();
+  const {
+    displayMusicBar,
+    updateDisplayMusicBar,
+    play_list,
 
     curr_DiscoveryDecision,
     setCurr_DiscoveryDecision,
     discovery_Decision_List,
     updateDiscovery_Decision_List,
     discovery_decision_add,
-    clear_discovery_decision_list, } = React.useContext(MusicContext)
+    clear_discovery_decision_list,
+  } = React.useContext(MusicContext);
 
   // hides musicBar when discovery game is active
   // user needs to play more music to get it back
@@ -80,10 +87,9 @@ const DiscoveryGame = () => {
     updateDisplayMusicBar(false);
   }
 
-const hasEffectRun = React.useRef(false);
+  const hasEffectRun = React.useRef(false);
 
-React.useEffect(() => {
-
+  React.useEffect(() => {
     if (hasEffectRun.current) {
       return;
     }
@@ -93,27 +99,33 @@ React.useEffect(() => {
       return;
       setState(0);
     }
-    console.log("test " + dgLoops)
+    console.log("test " + dgLoops);
     // console.log(user.user.id);
     const fetchDGSongs = async () => {
       if (songsLoaded === true) {
         console.log("return p1");
-        return
+        return;
       } else if (songs.length === 0 || songs === [] || songsLoaded === false) {
-        console.log("test")
-        let temp
-        setneedLoadsong(true)
-        await fetch(`api/DG/${JSON.parse(localStorage.getItem('user')).id}`)
-          .then(response => response.json())
-          .then(json => {
-            temp = json
-          })
-        setneedLoadsong(false)
-        if (!songsLoaded) updateSongs(temp)
+        console.log("test");
+        let temp;
+        setneedLoadsong(true);
+        await fetch(
+          `api/DG/${
+            JSON.parse(localStorage.getItem("user"))
+              ? JSON.parse(localStorage.getItem("user")).id
+              : null
+          }`
+        )
+          .then((response) => response.json())
+          .then((json) => {
+            temp = json;
+          });
+        setneedLoadsong(false);
+        if (!songsLoaded) updateSongs(temp);
       } else {
         console.log(songs.length);
         console.log("return p2");
-        return
+        return;
       }
     };
     fetchDGSongs();
@@ -123,12 +135,11 @@ React.useEffect(() => {
   function updateSongs(songsIn) {
     if (songsLoaded !== true) {
       // if (songs === 0) {
-      updateSongsLoaded(true)
-      setSongs(songsIn)
+      updateSongsLoaded(true);
+      setSongs(songsIn);
       // }
     }
-  };
-
+  }
 
   // * Discovery Game Music Player * //
   // ------------------------------- //
@@ -140,13 +151,13 @@ React.useEffect(() => {
   useEffect(() => {
     // changeVolumeLevel(50)
     if (songs.length !== 0) {
-      const seconds = Math.floor(audioPlayer.current.duration)
-      setDuration(seconds)
-      DGprogressBar.current.max = seconds
-      setIndex(musicSlides.current)
+      const seconds = Math.floor(audioPlayer.current.duration);
+      setDuration(seconds);
+      DGprogressBar.current.max = seconds;
+      setIndex(musicSlides.current);
     } else {
       // console.log("NO SONGS!");
-      return
+      return;
     }
   }, [audioPlayer?.current?.loadmetadata, audioPlayer?.current?.readyState]);
 
@@ -154,48 +165,48 @@ React.useEffect(() => {
     const onLoadedMetaData = () =>
     setTotalAudioTime(audioPlayer.current?.duration); 
     */
-  const calculateTime = secs => {
-    const minutes = Math.floor(secs / 60)
-    const returnedMinutes = minutes < 10 ? `0${minutes}` : minutes
-    const seconds = Math.floor(secs % 60)
-    const returnedSeconds = seconds < 10 ? `0${seconds}` : seconds
-    return `${returnedMinutes}:${returnedSeconds}`
+  const calculateTime = (secs) => {
+    const minutes = Math.floor(secs / 60);
+    const returnedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+    const seconds = Math.floor(secs % 60);
+    const returnedSeconds = seconds < 10 ? `0${seconds}` : seconds;
+    return `${returnedMinutes}:${returnedSeconds}`;
   };
   const togglePlayPause = () => {
     if (songs) {
-      const prevValue = isPlaying
-      setIsPlaying(!prevValue)
+      const prevValue = isPlaying;
+      setIsPlaying(!prevValue);
       // changeVolumeLevel()
       if (!prevValue) {
-        console.log('test- this is the if true')
-        audioPlayer.current.play()
-        animationRef.current = requestAnimationFrame(whilePlaying) //fix this
+        console.log("test- this is the if true");
+        audioPlayer.current.play();
+        animationRef.current = requestAnimationFrame(whilePlaying); //fix this
       } else {
-        console.log('test- this is the if false')
-        audioPlayer.current.pause()
-        cancelAnimationFrame(animationRef.current)
+        console.log("test- this is the if false");
+        audioPlayer.current.pause();
+        cancelAnimationFrame(animationRef.current);
       }
     }
   };
   const toggleMute = () => {
-    const prevValue = isMuted
-    updatePrevVol(audioPlayer.current.volume)
-    setIsMuted(!prevValue)
+    const prevValue = isMuted;
+    updatePrevVol(audioPlayer.current.volume);
+    setIsMuted(!prevValue);
     if (!prevValue) {
-      console.log(`isMuted ` + isMuted)
-      console.log(`unmuting!`)
+      console.log(`isMuted ` + isMuted);
+      console.log(`unmuting!`);
       // console.log(`previous vol: ` + prevVolume);
-      audioPlayer.current.volume = prevVolume
-      setVolumeLevel(audioPlayer.current.volume)
-      DGvolumeRef.current.value = prevVolume * 100
+      audioPlayer.current.volume = prevVolume;
+      setVolumeLevel(audioPlayer.current.volume);
+      DGvolumeRef.current.value = prevVolume * 100;
       // console.log(`current vol:` + (volumeLevel * 1000));
     } else {
-      console.log(`isMuted ` + isMuted)
-      console.log(`muting!`)
+      console.log(`isMuted ` + isMuted);
+      console.log(`muting!`);
       // console.log(`previous vol: ` + volumeLevel);
-      audioPlayer.current.volume = 0
-      setVolumeLevel(0)
-      DGvolumeRef.current.value = 0
+      audioPlayer.current.volume = 0;
+      setVolumeLevel(0);
+      DGvolumeRef.current.value = 0;
       // console.log(`current vol:` + volumeLevel);
     }
   };
@@ -203,50 +214,48 @@ React.useEffect(() => {
     // console.log('whilePlaying')
     if (songs.length !== 0) {
       // console.log('whilePlaying in da if statement')
-      DGprogressBar.current.value = audioPlayer.current?.currentTime
-      changePlayerCurrentTime()
-      animationRef.current = requestAnimationFrame(whilePlaying) //potential memory leak
+      DGprogressBar.current.value = audioPlayer.current?.currentTime;
+      changePlayerCurrentTime();
+      animationRef.current = requestAnimationFrame(whilePlaying); //potential memory leak
     }
   };
   const changeRange = () => {
     if (songs.length !== 0) {
-      audioPlayer.current.currentTime = DGprogressBar.current.value
-      changePlayerCurrentTime()
+      audioPlayer.current.currentTime = DGprogressBar.current.value;
+      changePlayerCurrentTime();
     }
   };
   const changePlayerCurrentTime = () => {
     DGprogressBar.current.style.setProperty(
-      '--seek-before-width',
+      "--seek-before-width",
       `${(DGprogressBar.current.value / duration) * 100}%`
-    )
-    setCurrentTime(DGprogressBar.current.value)
+    );
+    setCurrentTime(DGprogressBar.current.value);
   };
-  const changeVolumeLevel = input => {
-    setIsMuted(true)
-    audioPlayer.current.volume = DGvolumeRef.current.value / 100
+  const changeVolumeLevel = (input) => {
+    setIsMuted(true);
+    audioPlayer.current.volume = DGvolumeRef.current.value / 100;
   };
 
   // * Discovery Swiping Elements * //
   //
   //
   const gotoNext = () => {
-    musicSlides.current.slickNext()
-  }
+    musicSlides.current.slickNext();
+  };
   const resetSlideIndex = () => {
     musicSlides.current.slickGoTo(0);
-  }
+  };
 
-  const handleSwipe2 = direction => {
-    console.log("direction test: " + direction)
+  const handleSwipe2 = (direction) => {
+    console.log("direction test: " + direction);
 
     switch (direction) {
-      case 'like':
-        console.log("switch like! (song:" + songs[state].title + " )");
+      case "like":
         handleAddLikedSongs(direction);
         break;
 
-      case 'dislike':
-        console.log("switch dislike! (song:" + songs[state].title + " )");
+      case "dislike":
         handleAddLikedSongs(direction);
         break;
       default:
@@ -255,33 +264,30 @@ React.useEffect(() => {
     // setIsLiked(direction);
     //discovery_decision_add(songs[state]._id, direction);
     if (state === 4) {
-      console.log("we should really get you some new songs hey?");
       hasEffectRun.current = false;
       if (isPlaying === true) {
         togglePlayPause();
       }
       // Send the liked songs to TasteProfile here
-      // <3 
+      // <3
       updateSongsLoaded(false);
-      updateSongs([])
+      updateSongs([]);
 
       updateDgLoops(dgLoops + 1);
       resetSlideIndex();
       setState(0);
       clear_discovery_decision_list();
     } else {
-      gotoNext()
-      setState(state + 1)
-
+      gotoNext();
+      setState(state + 1);
     }
-
-  }
+  };
   const swipeableProps = useSwipeable({
     trackMouse: true,
     // like
 
     onSwipedLeft: () => {
-      handleSwipe2('like')
+      handleSwipe2("like");
       // if (state === songs.length - 1) return
       // setIndex(prevIndex => (prevIndex + 1) % songs.length)
       // setAccept(accept + 1)
@@ -293,10 +299,9 @@ React.useEffect(() => {
       // handleAddLikedSongs(isLiked);
     },
 
-
     // dislike
     onSwipedRight: () => {
-      handleSwipe2('dislike')
+      handleSwipe2("dislike");
       // if (state === songs.length - 1) return
       // setIndex(prevIndex => (prevIndex + 1) % songs.length)
       // setDeny(deny + 1)
@@ -304,10 +309,10 @@ React.useEffect(() => {
       //   songs[state]._id,
       //   songs[state].title,
       //   songs[state].artist
-      // 
+      //
       // handleAddLikedSongs(isLiked);
-    }
-  })
+    },
+  });
 
   // useEffect(() => {
   //   const alikedsong = JSON.parse(localStorage.getItem('likedSongs'))
@@ -319,15 +324,10 @@ React.useEffect(() => {
   //   }
   // }, [])
   const handleAddLikedSongs = (direction) => {
-
-    console.log("swipeDirection: " + direction);
-
     if (direction === "like") {
-
       let likedSongs = [5];
 
       likedSongs = [{ _id: songs[state]._id, direction: direction }];
-
 
       console.log("inside like");
 
@@ -338,73 +338,68 @@ React.useEffect(() => {
 
       setLikedslides(likedSongs);
 
-      localStorage.setItem('likedSongs', JSON.stringify(likedSongs));
+      localStorage.setItem("likedSongs", JSON.stringify(likedSongs));
 
       // console.log("likedSongs array: " + JSON.parse(likedSongs));
 
       fetch(`/api/DG/${user.id}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ likedSongs })
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ likedSongs }),
       });
-
-
-    }
-    else {
+    } else {
       console.log("swipe direction is left, user disliked song");
     }
 
     console.log("final swipeDirection: " + direction);
-
   };
 
-    //const updateLikes = [...likedslides, newLike]
+  //const updateLikes = [...likedslides, newLike]
 
-    // fetch(`/api/songs/liked/${likedSongs}`, {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify({ likedSongs })
-    // })
+  // fetch(`/api/songs/liked/${likedSongs}`, {
+  //   method: 'POST',
+  //   headers: { 'Content-Type': 'application/json' },
+  //   body: JSON.stringify({ likedSongs })
+  // })
 
-    // React.useEffect(() => {
-    //   // function getdgSongs () {
+  // React.useEffect(() => {
+  //   // function getdgSongs () {
 
-    //   if (songsLoaded === true) {
-    //     return;
-    //     setState(0);
-    //   }
-    //   console.log("test " + dgLoops)
-    //   const fetchDGSongs = async () => {
-    //     if (songsLoaded === true) {
-    //       console.log("return p1");
-    //       return
-    //     } else if (songs.length === 0 || songs === [] || songsLoaded === false) {
-    //       console.log("test")
-    //       let temp
-    //       setneedLoadsong(true)
-    //       await fetch(`api/DG/${user.id}`)
-    //         .then(response => response.json())
-    //         .then(json => {
-    //           temp = json
-    //         })
-    //       setneedLoadsong(false)
-    //       if (!songsLoaded) updateSongs(temp)
-    //     } else {
-    //       console.log(songs.length)
-    //       console.log("return p2");
-    //       return
-    //     }
-    //   }
-    //   fetchDGSongs()
+  //   if (songsLoaded === true) {
+  //     return;
+  //     setState(0);
+  //   }
+  //   console.log("test " + dgLoops)
+  //   const fetchDGSongs = async () => {
+  //     if (songsLoaded === true) {
+  //       console.log("return p1");
+  //       return
+  //     } else if (songs.length === 0 || songs === [] || songsLoaded === false) {
+  //       console.log("test")
+  //       let temp
+  //       setneedLoadsong(true)
+  //       await fetch(`api/DG/${user.id}`)
+  //         .then(response => response.json())
+  //         .then(json => {
+  //           temp = json
+  //         })
+  //       setneedLoadsong(false)
+  //       if (!songsLoaded) updateSongs(temp)
+  //     } else {
+  //       console.log(songs.length)
+  //       console.log("return p2");
+  //       return
+  //     }
+  //   }
+  //   fetchDGSongs()
 
-    // }, [dgLoops])
+  // }, [dgLoops])
 
-    // fetch(`/api/DG/${user.id}`, {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify({ likedSongs })
-    // });
-
+  // fetch(`/api/DG/${user.id}`, {
+  //   method: 'POST',
+  //   headers: { 'Content-Type': 'application/json' },
+  //   body: JSON.stringify({ likedSongs })
+  // });
 
   // * slider * /
 
@@ -415,62 +410,64 @@ React.useEffect(() => {
     swipe: false,
     swipeToSlide: false,
     infinite: true,
-    className: 'test',
+    className: "test",
     centerMode: true,
     // centerPadding: '1vw',
-    focusOnSelect: true
+    focusOnSelect: true,
   };
 
-  const [slides, setSlides] = React.useState([])
+  const [slides, setSlides] = React.useState([]);
 
-  const printIndex = index => {
-    setState(index)
-    console.log(index)
+  const printIndex = (index) => {
+    setState(index);
+    console.log(index);
   };
-
 
   {
     return (
-      <div className='Discovery-Container'>
-        <div className='DGtitle'><strong>Discovery </strong>Game</div>
-        <div className='Discovery-Top-Container'>
-          <Slider ref={musicSlides} {...settings} id='carousel'>
-            {songs && songs.length > 0 && songs?.map((song, i = 0) => {
-              return (
-                <div className='test2'>
-                  <div className='Discovery-Img-Container'>
-                    <img
-                      src={song?.imgUrl}
-                      className='DGimg'
-                    // onClick={() => printIndex(i++)}
-                    />
+      <div className="Discovery-Container">
+        <div className="DGtitle">
+          <strong>Discovery </strong>Game
+        </div>
+        <div className="Discovery-Top-Container">
+          <Slider ref={musicSlides} {...settings} id="carousel">
+            {songs &&
+              songs.length > 0 &&
+              songs?.map((song, i = 0) => {
+                return (
+                  <div className="test2">
+                    <div className="Discovery-Img-Container">
+                      <img
+                        src={song?.imgUrl}
+                        className="DGimg"
+                        // onClick={() => printIndex(i++)}
+                      />
+                    </div>
                   </div>
-                </div>
-              )
-            })}
+                );
+              })}
           </Slider>
-          <div className='Discovery-Text-Container'>
+          <div className="Discovery-Text-Container">
             {/* Song title */}
-            <h2 className='DGsongtxt'>
+            <h2 className="DGsongtxt">
               {/* {dGData && dGData[state].title}  */}
               {songs.length !== 0 && songs[state]?.title}
               {/* title */}
             </h2>
             {/* Song Artist */}
-            <h2 className='DGalbtxt'>
+            <h2 className="DGalbtxt">
               {songs.length !== 0 && songs[state]?.artist.artistName}
               {/* artist */}
             </h2>
           </div>
 
-          <div className='Discovery-Player-Container'>
-
-            <div className=''>
+          <div className="Discovery-Player-Container">
+            <div className="">
               <audio
                 ref={audioPlayer}
                 src={songs[state]?.songUrl}
                 autoPlay
-                preload='metadata'
+                preload="metadata"
                 isPlaying={
                   (animationRef.current = requestAnimationFrame(whilePlaying))
                 }
@@ -479,12 +476,12 @@ React.useEffect(() => {
                     togglePlayPause();
                   }
 
-                  changeRange()
-                  animationRef.current = requestAnimationFrame(whilePlaying)
+                  changeRange();
+                  animationRef.current = requestAnimationFrame(whilePlaying);
                 }}
                 onChange={() => {
-                  changeRange()
-                  animationRef.current = requestAnimationFrame(whilePlaying)
+                  changeRange();
+                  animationRef.current = requestAnimationFrame(whilePlaying);
                 }}
                 onEnded={() => {
                   if (isPlaying === true) {
@@ -497,61 +494,60 @@ React.useEffect(() => {
                     if (state === 4) {
                       console.log("at end");
                     }
-                    handleSwipe2('dislike')
-                  }, 2000)
-                }
-                }
+                    handleSwipe2("dislike");
+                  }, 2000);
+                }}
               ></audio>
               {/*testing maybe going in audio player to fix not loading the proggress bar on start up onLoadedMetaData={onLoadedMetaData}  */}
               {/*current time*/}
               {/* removed for testing */}
               {/* <div className={style.DGcurrentTime}>{calculateTime(currentTime)}</div> */}
               {/*progress bar*/}
-              <div className='DGprogressBarContainer'>
+              <div className="DGprogressBarContainer">
                 <input
-                  type='range'
+                  type="range"
                   // className={style.DGprogressBar}
-                  className='DGprogressBar'
-                  defaultValue='0'
+                  className="DGprogressBar"
+                  defaultValue="0"
                   ref={DGprogressBar}
                   onChange={() => {
-                    changeRange()
-                    animationRef.current = requestAnimationFrame(whilePlaying)
+                    changeRange();
+                    animationRef.current = requestAnimationFrame(whilePlaying);
                   }}
                 />
               </div>
-              <div className='DGpsbutsCont'>
+              <div className="DGpsbutsCont">
                 <button
                   onClick={togglePlayPause}
-                  className='DGplayPause'
-                  id='playPauseBtn'
+                  className="DGplayPause"
+                  id="playPauseBtn"
                 >
-                  {isPlaying ? <FaPause /> : <FaPlay className='DGplay' />}
+                  {isPlaying ? <FaPause /> : <FaPlay className="DGplay" />}
                 </button>
               </div>
-              <div className='DGvolumeContainter'>
+              <div className="DGvolumeContainter">
                 <button onClick={toggleMute}>
                   {isMuted ? <BiVolumeFull /> : <BiVolumeMute />}
                 </button>
                 <input
-                  type='range'
+                  type="range"
                   ref={DGvolumeRef}
-                  defaultValue='100'
+                  defaultValue="100"
                   className="volumeBar"
                   onChange={changeVolumeLevel}
-                  min='0'
-                  max='100'
-                  step='5'
+                  min="0"
+                  max="100"
+                  step="5"
                 ></input>
               </div>
             </div>
           </div>
           {/* Swipe Box */}
-          <div className='Discovery-Swipe-Container' {...swipeableProps}>
+          <div className="Discovery-Swipe-Container" {...swipeableProps}>
             {/* dislike */}
             <button
               onClick={() => {
-                handleSwipe2('dislike')
+                handleSwipe2("dislike");
                 // if (state === slides.length - 1) return;
                 // setIndex((prevIndex) => (prevIndex + 1) % slides.length);
                 // setDeny(deny + 1);
@@ -563,26 +559,26 @@ React.useEffect(() => {
                 // gotoNext();
                 // setState(state + 1);
               }}
-              className='Discovery-Disike'
+              className="Discovery-Disike"
             >
               <BsXLg />
             </button>
-            <div className='DGarrowcont'>
-              <MdOutlineArrowBackIos className='DGarrow' />
+            <div className="DGarrowcont">
+              <MdOutlineArrowBackIos className="DGarrow" />
               <MdOutlineArrowBackIos />
               <MdOutlineArrowBackIos />
             </div>
-            <div className='DGarrowcont'>
-              {' '}
+            <div className="DGarrowcont">
+              {" "}
               <MdOutlineArrowForwardIos />
               <MdOutlineArrowForwardIos />
-              <MdOutlineArrowForwardIos />{' '}
+              <MdOutlineArrowForwardIos />{" "}
             </div>
 
             {/* like */}
             <button
               onClick={() => {
-                handleSwipe2('like')
+                handleSwipe2("like");
                 // if (state === slides.length - 1) return;
                 // setIndex((prevIndex) => (prevIndex + 1) % slides.length);
                 // setAccept(accept + 1);
@@ -596,14 +592,14 @@ React.useEffect(() => {
                 // setState(state + 1);
                 //handleAddLikedSongs();
               }}
-              className='Discovery-Like'
+              className="Discovery-Like"
             >
               <BsCheckLg />
             </button>
           </div>
         </div>
       </div>
-    )
+    );
   }
-}
-export default DiscoveryGame
+};
+export default DiscoveryGame;
