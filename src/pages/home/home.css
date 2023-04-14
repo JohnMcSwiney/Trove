@@ -8,6 +8,13 @@
 .pad-t-10{
     padding-top: 10px;
 }
+.homeCuratedShowcase{
+    display: flex;
+    gap: 10px;
+    /* background-color: tomato; */
+    flex-wrap: wrap;
+    margin: auto;
+}
 @media screen and (max-width:380px){
     .mar-t{
         margin-top: 20px;

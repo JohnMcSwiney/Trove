@@ -141,7 +141,7 @@ export default function CuratedPlaylistPage (props) {
             <LoadingSearch />
           ) : (
             <div className='playlist--song--cover'>
-              <img src={playlist && playlist.playlistCoverUrl} alt='playlist' />
+              <img src={playlist && playlist.curatedPlaylistCoverUrl} alt='playlist' />
             </div>
           )}
           {!done ? (
@@ -149,7 +149,7 @@ export default function CuratedPlaylistPage (props) {
           ) : (
             <div className='playlist--stats--info'>
               <div className='playlist--release--info'>
-                <h6>Playlist</h6>
+                <h6><strong>Curated </strong>Playlist</h6>
                 {/* <div className="playlist--release--filler--div">|</div><h5>2014</h5> */}
                 <div className='playlist--release--filler--div'>|</div>
                 <h4>By: {playlist && playlist.curatedPlaylistCreator}</h4>

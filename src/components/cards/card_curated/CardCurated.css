@@ -1,20 +1,32 @@
+.curatedCardCont{
+    background-color: #080c3d7c;
+    padding: 0%;
+    margin: auto;
+    border-radius: 20px;
+    border: 2px solid rgba(242, 242, 245, 0.212);
+    overflow: hidden;
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(3.2px);
+    -webkit-backdrop-filter: blur(3.2px);
+}
 .curatedPlaylistCard{
     display: flex;
     flex-flow: column;
-    height: 15vw;
-    width: 11vw;
+    height: 170px;
+    width: 140px;
     background-color: rgba(165, 42, 42, 0);
     align-items: center;
-    margin-bottom: 1vm;
-    padding: 0.5vw;
-    gap: 0.5vw;
+    margin-bottom: 5px;
+    padding: 0px;
+    gap: 0;
     
 }
 .curatedPlaylistCover{
-    width: 10vw;
-    height: 10vw;
+    width: 130px;
+    height: 130px;
     position: relative;
-    border-radius: 1vw;
+    border-radius: 15px;
     overflow: hidden;
 }
 
@@ -35,17 +47,21 @@
     display: flex;
     background-color: rgba(255, 255, 255, 0);
     flex-direction: column;
-  
-    color: black;
-    width: 10vw;
-    text-align: center;;
+    align-items: center;
+    width: 125px;
+    text-align: center;
+    text-overflow: ellipsis;
     color: white;
     text-decoration: none !important;
-    height: 2vw;
+    height: 45px;
     overflow: hidden;
+    text-shadow: rgba(255, 255, 255, 0.486) 0px 1px 6px;
+    /* background-color: tan; */
+
 }
 .curatedPlaylistInfo > h3{
-    font-size: 1.3vw;
+    font-size: 15px;
+    margin: auto;
 }
 
 .border-w2{
