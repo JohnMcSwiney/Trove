@@ -1,11 +1,10 @@
+
 .curatedCardCont{
     background-color: #080c3d38;
     padding: 0%;
     margin: auto;
-    border-radius: 20px;
-    border: 2px solid rgba(242, 242, 245, 0.089);
+    border: solid  2px #12164bce !important;
     overflow: hidden;
-    border-radius: 16px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(1.2px);
     -webkit-backdrop-filter: blur(1.2px);
@@ -14,20 +13,14 @@
 .curatedPlaylistCard{
     display: flex;
     flex-flow: column;
-    height: 170px;
-    width: 140px;
     background-color: rgba(165, 42, 42, 0);
     align-items: center;
     margin-bottom: 5px;
     padding: 0px;
     gap: 0;
-    
 }
 .curatedPlaylistCover{
-    width: 130px;
-    height: 130px;
     position: relative;
-    border-radius: 15px;
     overflow: hidden;
     transition: 0.10s ease-in-out;
 }
@@ -46,32 +39,87 @@
     transition: 0.20s ease-in-out;
 }
 .curatedPlaylistCover > img:hover{
-    scale: 1.15;
-    
+    scale: 1.08; 
 }
 .curatedPlaylistInfo{
     display: flex;
     background-color: rgba(255, 255, 255, 0);
     flex-direction: column;
-    align-items: center;
-    width: 125px;
+    align-items: center;   
     text-align: center;
     text-overflow: ellipsis;
     color: white;
     text-decoration: none !important;
-    height: 45px;
     overflow: hidden;
     text-shadow: rgba(255, 255, 255, 0.486) 0px 1px 6px;
-    /* background-color: tan; */
-
 }
 .curatedPlaylistInfo > h3{
-    font-size: 15px;
     margin: auto;
 }
+@media only screen and (max-width: 799px) {
+    .curatedCardCont{
+        border-radius: 16px;
+    }
+    .curatedPlaylistCard{
+        height: 168px;
+        width: 140px;     
+    }
+    .curatedPlaylistCover{
+        width: 125px;
+        height: 125px;    
+        border-radius: 10px;
+    }
+    .curatedPlaylistCover:hover{
+    }
+    .curatedPlaylistCover > img{
+        
+    }
+    .curatedPlaylistCover > img:hover{
+    }
+    .curatedPlaylistInfo{
+        width: 125px;
+        height: 40px;
+    
+    }
+    .curatedPlaylistInfo > h3{
+        font-size: 15px;
+        margin: auto;
+    }
 
-.border-w2{
-    border: solid  2px #12164bce !important;
-    border-radius: 1.5vw;
+    
+    
+}
+@media only screen and (min-width: 800px) {
+    .curatedCardCont{
+        border-radius: 16px;
+    }
+    .curatedPlaylistCard{
+        height: 210px;
+        width: 180px;     
+    }
+    .curatedPlaylistCover{
+        width: 160px;
+        height: 160px;    
+        border-radius: 15px;
+    }
+    .curatedPlaylistCover:hover{
+    }
+    .curatedPlaylistCover > img{
+        
+    }
+    .curatedPlaylistCover > img:hover{
+    }
+    .curatedPlaylistInfo{
+        width: 145px;
+        height: 45px;
+    
+    }
+    .curatedPlaylistInfo > h3{
+        font-size: 18px;
+        margin: auto;
+    }
+
+    
+    
 }
 
