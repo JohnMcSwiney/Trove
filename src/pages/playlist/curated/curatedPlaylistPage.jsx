@@ -62,7 +62,6 @@ export default function CuratedPlaylistPage(props) {
         const json = await response.json();
         if (response.ok) {
           setPlaylist(json);
-
           setDone(true);
         }
       }, 500);
