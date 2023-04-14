@@ -51,10 +51,8 @@ const getYourPlaylists = async (req, res) => {
 
 //create a new playlist
 const createPlaylist = async (req, res) => {
-  console.log(req.body);
-  console.log(req.body.id);
   try {
-    const user = await User.findOne({ _id: req.body.id });
+    const user = await User.findById(req.body.id);
 
     if (!user) {
       throw new Error("Please sign in to play this");
@@ -63,18 +61,17 @@ const createPlaylist = async (req, res) => {
     let songList = [];
     let song;
 
-    if(req.body.songList) {
-        for(i = 0; i < req.body.songList.length; i++) {
-            song = await Song.findOne({ _id: req.body.songList[i]});
-            songList = [...songList, song._id];
-            console.log(songList)
+    if (req.body.songList) {
+      for (i = 0; i < req.body.songList.length; i++) {
+        song = await Song.findOne({ _id: req.body.songList[i] });
+        songList = [...songList, song._id];
+        console.log(songList);
 
         if (!song) {
-          throw new Error("Please sign in to play this SONG");
+          res.status(404).json({ error: "Please sign in to play this SONG" });
         }
-      
       }
-  }
+    }
 
     const playlist = new Playlist({
       ...req.body,
@@ -89,10 +86,10 @@ const createPlaylist = async (req, res) => {
     await user.save();
 
     res.status(201).json(playlist);
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    console.log(error);
 
-    res.status(400).json({ message: err.message });
+    res.status(400).json({ error: error.message });
   }
 };
 
