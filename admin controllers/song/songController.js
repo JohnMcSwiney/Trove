@@ -160,11 +160,9 @@ const dislikeSong = async (req, res) => {
       res.status(404).json({ error: "user not found" });
     }
 
-    console.log(song.isLoved.includes(user._id.toString()));
-
-    if (song.isLoved.includes(user._id.toString())) {
-      song.isLoved.pull(user._id);
-      user.likedSongs.pull(song._id);
+    if (song.isLoved.includes(user._id)) {
+      song.isLoved.pop(user._id);
+      user.likedSongs.pop(song._id);
     }
 
     console.log(song.isLoved);
