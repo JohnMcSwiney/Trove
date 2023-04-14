@@ -93,9 +93,7 @@ export default function CreatePlaylist(props) {
   // submit playlist
   const navigate = useNavigate();
   const { uploadPlaylist, error } = useCreatePlaylist();
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
+  const handleSubmit = () => {
     try {
       uploadPlaylist(playlistName, id, imageFile, songList);
       navigate("/mytrove");
