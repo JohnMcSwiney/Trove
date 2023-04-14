@@ -132,7 +132,7 @@
     /* margin-bottom: 10px; */
     flex-grow: 1; 
     min-width: 170px;
-    max-width: 500px;   
+    max-width: 100%;   
 }
 .Artistpage-follower_cont{
     /* background-color: blueviolet; */

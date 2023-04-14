@@ -41,6 +41,7 @@
     padding-top: 11vw;
     position: relative;
     z-index: 1;
+    margin-top: 1%;
 }
 @media screen and (min-width: 800px){
     .searchContentBoxContainer{
@@ -82,11 +83,14 @@
 }
 .artSearchHeader{
     font-size: 4vw;
+    color: white;
 }
 
 .artSearchSongHeader{
     font-size: 2vw;
-    margin-left: 2vw;
+    margin-left: 1vw;
+    margin-top: 1vw;
+    color: white;
 }
 .artImgNameContSearch{
     display: flex;
@@ -179,4 +183,8 @@
 }
 .no-decoration-bruh > div > div > h3{
     text-decoration: none;
+}
+
+.searchContentBoxContainer h2 {
+    color: white
 }

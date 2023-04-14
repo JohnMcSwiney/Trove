@@ -236,7 +236,7 @@ const MyAccount = () => {
                       <input
                         type="email"
                         id="currentEmail"
-                        className="form-control"
+                        className="form-control accst"
                         placeholder="current@gmail.com"
                         onChange={(e) => setCurrentEmail(e.target.value)}
                         value={currentEmail}
@@ -245,7 +245,7 @@ const MyAccount = () => {
                       <input
                         type="email"
                         id="newemail"
-                        className="form-control"
+                        className="form-control accst"
                         placeholder="new@gmail.com"
                         onChange={(e) => setNewEmail(e.target.value)}
                         value={newEmail}
@@ -255,7 +255,7 @@ const MyAccount = () => {
                       <input
                         type={"password"}
                         id="Cpassword"
-                        className="form-control"
+                        className="form-control accst"
                         placeholder="password"
                         onChange={(e) => setCPassword(e.target.value)}
                         value={cPassword}
@@ -285,7 +285,7 @@ const MyAccount = () => {
                       <input
                         type={"password"}
                         id="password"
-                        className="form-control"
+                        className="form-control accst"
                         placeholder="Current password"
                         onChange={(e) => setPassword(e.target.value)}
                         value={password}
@@ -303,7 +303,7 @@ const MyAccount = () => {
                         <input
                           type={showPassword ? "text" : "password"}
                           id="newPassword"
-                          className="form-control"
+                          className="form-control accst"
                           placeholder="New password"
                           onChange={(e) => setNewPassword(e.target.value)}
                           value={newPassword}
@@ -325,7 +325,7 @@ const MyAccount = () => {
                         <input
                           type={showCPassword ? "text" : "password"}
                           id="confirmNewPassword"
-                          className="form-control"
+                          className="form-control accst"
                           placeholder="New password"
                           onChange={(e) =>
                             setConfirmNewPassword(e.target.value)
