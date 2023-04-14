@@ -1,81 +1,74 @@
-import { useState, useEffect } from 'react'
-import React from 'react'
-import TasteProfile from '../../components/taste Profile/TasteProfile'
-import CardArtist from '../../components/cards/card_artist/CardArtist'
-import CardAlbum from '../../components/cards/card_album/CardAlbum'
-import CardDiscovery from '../../components/cards/card_discoverygame/CardDiscovery'
-import { Navigate, useNavigate, Link } from 'react-router-dom'
-import './home.css'
-import { useAuthContext } from '../../hooks/user-hooks/useAuthContext'
-import LoadingSearch from '../../components/loadingitems/loadingSearch/LoadingSearch'
-import CardCurated from '../../components/cards/card_curated/CardCurated'
+import { useState, useEffect } from "react";
+import React from "react";
+import TasteProfile from "../../components/taste Profile/TasteProfile";
+import CardArtist from "../../components/cards/card_artist/CardArtist";
+import CardAlbum from "../../components/cards/card_album/CardAlbum";
+import CardDiscovery from "../../components/cards/card_discoverygame/CardDiscovery";
+import { Navigate, useNavigate, Link } from "react-router-dom";
 
-import Slider from 'react-slick'
-import CardCarousel from '../../components/cards/card_carousel/CardCarousel'
+import "./home.css";
+import { useAuthContext } from "../../hooks/user-hooks/useAuthContext";
+import LoadingSearch from "../../components/loadingitems/loadingSearch/LoadingSearch";
+import CardCurated from "../../components/cards/card_curated/CardCurated";
+
+import Slider from "react-slick";
+import CardCarousel from "../../components/cards/card_carousel/CardCarousel";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const Home = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
+  const { user } = useAuthContext();
+  const notify = () => toast("You need to sign in for Discovery Game!");
   const redirectDiscovery = () => {
-    navigate('/discoverygame')
-  }
-  const userID = JSON.parse(localStorage.getItem('user'))
-  const id = userID ? userID.id : null
-  const [done, setDone] = React.useState(true)
-  // const favoriteArtists = JSON.parse(localStorage.getItem("user")).likedArtists;
-  // console.log(favoriteArtists);
+    if (!user) {
+      notify();
+      return;
+    }
+    navigate("/discoverygame");
+  };
 
-  const [userInfo, setUserInfo] = useState([])
-  const [curatedPlaylist, updateCurated] = useState([])
-
-  // // if(curatedPlaylist.length === 0){
-  //   const fetchCurated = async () => {
-  //     setDone(false)
-  //     setTimeout(() => {
-  //       fetch(`api/curated/`)
-  //       .then(response => response.json())
-  //         .then(json => {
-  //           console.log("curated")
-  //           console.log(json)
-  //           updateCurated(json)
-  //           setDone(true)
-  //         })
-  //     }, 500)
-  //   }
-  // // }
+  const userID = JSON.parse(localStorage.getItem("user"));
+  const id = userID ? userID.id : null;
+  const [done, setDone] = React.useState(true);
+  const [userInfo, setUserInfo] = useState([]);
+  const [curatedPlaylist, updateCurated] = useState([]);
 
   useEffect(() => {
     const fetchUserInfo = async () => {
-      setDone(false)
+      setDone(false);
       setTimeout(() => {
         fetch(`/api/users/${id}`)
-          .then(response => response.json())
-          .then(json => {
-            setUserInfo(json)
-            setDone(true)
-          })
-      }, 500)
-    }
-    fetchUserInfo()
-  }, [])
+          .then((response) => response.json())
+          .then((json) => {
+            setUserInfo(json);
+            setDone(true);
+          });
+      }, 500);
+    };
+    fetchUserInfo();
+  }, []);
 
   useEffect(() => {
     const fetchCurated = async () => {
-      setDone(false)
+      setDone(false);
       setTimeout(async () => {
         const response = await fetch(`/api/curated`, {
-          method: 'GET'
-        })
+          method: "GET",
+        });
 
-        const json = await response.json()
+        const json = await response.json();
 
         if (response.ok) {
-          updateCurated(json)
-          setDone(true)
+          updateCurated(json);
+          setDone(true);
         }
-      }, 500)
-    } 
+      }, 500);
+    };
 
-    fetchCurated()
-  }, [])
+    fetchCurated();
+  }, []);
   const settings = {
     speed: 800,
     slidesToShow: 1,
@@ -83,28 +76,24 @@ const Home = () => {
     swipe: true,
     swipeToSlide: false,
     infinite: true,
-    className: 'test',
+    className: "test",
     autoplay: true,
     autoplaySpeed: 5000,
     arrows: false,
-    cssEase: 'ease',
+    cssEase: "ease",
     dots: true,
     pauseOnHover: true,
-    pauseOnFocus: true
+    pauseOnFocus: true,
     // dotsClass:"carousel-dots"
     // pauseOnDotsHover: true,
     // centerMode: true,
     // centerPadding: '-1vw',
     // focusOnSelect: true
-  }
-  // if(curatedPlaylist.length !== 0 ){
-  //   console.log(curatedPlaylist)
-  // }
-  console.log(curatedPlaylist)
+  };
+
   return (
-    // <div className=' '>
-    <main className='container '>
-      <div className='myTrvcontainer'>
+    <main className="container ">
+      <div className="myTrvcontainer">
         {/* <h4 className='text-invisible'>...</h4> */}
         {/* <div className='homeShowcase'>
           <Slider {...settings}>
@@ -138,40 +127,41 @@ const Home = () => {
       </div>
 
       <div>
-        <h4 className='homeHeaderText'>Find Musical Treasures</h4>
+        <h4 className="homeHeaderText">Find Musical Treasures</h4>
         <div
-          href={'/discoverygame'}
-          className='my-3'
+          href={"/discoverygame"}
+          className="my-3"
           onClick={redirectDiscovery}
         >
           <CardDiscovery />
+          <ToastContainer />
         </div>
       </div>
 
       {userInfo?.likedArtists?.length > 0 && (
         <div>
-          <h4 className=' homeHeaderText '>Artists you love:</h4>
+          <h4 className=" homeHeaderText ">Artists you love:</h4>
           {!done ? (
             <LoadingSearch />
           ) : (
             <div>
               {userInfo?.likedArtists?.length > 0 &&
-                userInfo?.likedArtists.map(artist => {
+                userInfo?.likedArtists.map((artist) => {
                   return (
-                    <div className='art-card-cont' key={artist._id}>
+                    <div className="art-card-cont" key={artist._id}>
                       <CardArtist artist={artist} />
                     </div>
-                  )
+                  );
                 })}
             </div>
           )}
         </div>
       )}
 
-      <h4 className='homeHeaderText'>Try Something New:</h4>
-      <ul className='homeCuratedShowcase'>
+      <h4 className="homeHeaderText">Try Something New:</h4>
+      <ul className="homeCuratedShowcase">
         {curatedPlaylist?.length > 0 &&
-          curatedPlaylist?.map(curatedPlaylist => {
+          curatedPlaylist?.map((curatedPlaylist) => {
             return (
               <CardCurated
                 key={curatedPlaylist._id}
@@ -179,12 +169,12 @@ const Home = () => {
                 name={curatedPlaylist.curatedPlaylistName}
                 cover={curatedPlaylist.curatedPlaylistCoverUrl}
               />
-            )
+            );
           })}
       </ul>
     </main>
     // </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
