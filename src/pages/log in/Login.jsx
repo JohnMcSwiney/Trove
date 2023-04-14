@@ -32,18 +32,18 @@ const Login = () => {
     }
   };
 
-  const { loginFB, fbisLoading, fberror } = useFBLogin();
-  const handleFaceBookLogin = (e) => {
-    e.preventDefault();
-    try {
-      loginFB();
-      if (localStorage.getItem("user")) {
-        navigate("/");
-      }
-    } catch (fberror) {
-      console.log(fberror.data?.message || "Facebook is having some errors");
-    }
-  };
+  // const { loginFB, fbisLoading, fberror } = useFBLogin();
+  // const handleFaceBookLogin = (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     loginFB();
+  //     if (localStorage.getItem("user")) {
+  //       navigate("/");
+  //     }
+  //   } catch (fberror) {
+  //     console.log(fberror.data?.message || "Facebook is having some errors");
+  //   }
+  // };
 
   return (
     <div className="container">
@@ -79,7 +79,7 @@ const Login = () => {
 
           <div className="row mb-4">
             <div className="col">
-              <ChangePassword/>
+              <ChangePassword />
             </div>
           </div>
 
