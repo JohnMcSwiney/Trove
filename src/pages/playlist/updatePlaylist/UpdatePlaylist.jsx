@@ -107,7 +107,6 @@ export default function UpdatePlaylist(props) {
 
     } else if (songAction === "add") {
 
-      // if(playlistSongList?.length > 0) {
       setPlaylistSongList([
         ...playlistSongList,
         song
@@ -116,10 +115,7 @@ export default function UpdatePlaylist(props) {
         ...songList,
         song
       ]));
-      // } else {
-      //   playlistSongList?.push(song);
-      //   songList?.push(song._id);
-      // }
+
 
     }
   }
@@ -138,8 +134,8 @@ export default function UpdatePlaylist(props) {
     //e.preventDefault();
     try {
 
-      for (const song of playlist.songList) {
-        alert("should go in here if there is duplicate"); 
+      for (const song of playlist?.songList) {
+        alert("should go in here if there is duplicate " + song.title); 
         // if (playlist.songList.includes(currentSong._id)) {
         //   console.log("duplicate song found");
   

@@ -19,6 +19,7 @@ export const useUpdatePlaylist = () => {
   ) => {
     const storageRef = storage.ref();
 
+
     const uploadImageToFirebase = async () => {
       let imageCounter = 0;
 
@@ -80,9 +81,9 @@ export const useUpdatePlaylist = () => {
       return metadata !== false;
     };
 
-    const updatePlaylistObject = async (playlistName, playlistCoverUrl, songList) => {
+    const updatePlaylistObject = async (id, playlistName, creatorid, playlistCoverUrl, songList) => {
       if (playlistCoverUrl) {
-        const res = await fetch(`/api/playlists/${creatorid}`, {
+        const res = await fetch(`/api/playlists/${id}`, {
           method: "PATCH",
           headers: {
             Accept: "application/json",
@@ -91,7 +92,7 @@ export const useUpdatePlaylist = () => {
           },
           body: JSON.stringify({
             playlistName,
-            // id: creatorid,
+            creatorid,
             playlistCoverUrl: playlistCoverUrl,
             songList,
           }),
@@ -108,7 +109,7 @@ export const useUpdatePlaylist = () => {
         }
       } else {
         
-        const res = await fetch(`/api/playlists/${creatorid}`, {
+        const res = await fetch(`/api/playlists/${id}`, {
           method: "PATCH",
           headers: {
             Accept: "application/json",
@@ -117,6 +118,7 @@ export const useUpdatePlaylist = () => {
           },
           body: JSON.stringify({
             playlistName,
+            creatorid,
             songList,
           }),
         });
@@ -137,7 +139,7 @@ export const useUpdatePlaylist = () => {
     if (imageFile) {
       playlistCoverUrl = await uploadImageToFirebase();
     }
-    await updatePlaylistObject(playlistName, playlistCoverUrl, songList);
+    await updatePlaylistObject(id, playlistName, creatorid, playlistCoverUrl, songList);
     if (!error) {
       navigate("/mytrove");
       // window.location.reload(false);
