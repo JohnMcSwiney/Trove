@@ -134,9 +134,30 @@ export default function UpdatePlaylist(props) {
   // submit playlist
   const { updatePlaylist, error } = useUpdatePlaylist();
   const handleSubmit = async (e) => {
-    // e.preventDefault();
+    e.preventDefault();
     try {
-      await updatePlaylist(id, playlistName, creatorid, imageFile, songList);
+      // await updatePlaylist(id, playlistName, creatorid, imageFile, songList);
+      const response = await fetch(`/api/playlists/${creatorid}`, {
+        method: "PATCH",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+          //id,
+          playlistName,
+          playlistCreator: user.displayName,
+          //imageFile,
+          songList
+        })
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        console.log("did not update playlist");
+        console.log(error);
+      }
+      else {
+        console.log("updated playlist successfully");
+      }
       navigate("/mytrove");
     } catch (error) {
       console.log(error);
