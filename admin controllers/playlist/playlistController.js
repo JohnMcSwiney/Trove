@@ -126,7 +126,9 @@ const updatePlaylist = async (req, res) => {
       console.log("song should be removed");
     }
 
+    playlist.songList = [];
     for (const songId of req.body.songList) {
+
       console.log("song: " + songId);
 
       const currentSong = await Song.findById(songId);
