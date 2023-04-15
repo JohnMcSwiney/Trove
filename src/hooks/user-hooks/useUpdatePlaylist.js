@@ -21,13 +21,10 @@ export const useUpdatePlaylist = () => {
 
 
     const uploadImageToFirebase = async () => {
-      let imageCounter = 0;
+      
+      let fileRefName = imageFile?.name;
 
-      while (await checkImageExists(imageCounter)) {
-        imageCounter++;
-      }
-
-      const imageRef = storageRef.child(`images/${imageCounter}`);
+      const imageRef = storageRef.child(`images/${fileRefName}`);
 
       const imageUploadTask = imageRef.put(imageFile);
 
@@ -65,20 +62,6 @@ export const useUpdatePlaylist = () => {
           }
         );
       });
-    };
-
-    const checkImageExists = async (imageCounter) => {
-      const imageRef = storageRef.child(`images/${imageCounter}`);
-
-      const metadata = await imageRef.getMetadata().catch((err) => {
-        if (err.code === "storage/object-not-found") {
-          return false;
-        } else {
-          console.log(err);
-          return true;
-        }
-      });
-      return metadata !== false;
     };
 
     const updatePlaylistObject = async (id, playlistName, creatorid, playlistCoverUrl, songList) => {
@@ -139,7 +122,9 @@ export const useUpdatePlaylist = () => {
     if (imageFile) {
       playlistCoverUrl = await uploadImageToFirebase();
     }
+
     await updatePlaylistObject(id, playlistName, creatorid, playlistCoverUrl, songList);
+    
     if (!error) {
       navigate("/mytrove");
       // window.location.reload(false);
