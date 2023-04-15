@@ -120,12 +120,26 @@ const updatePlaylist = async (req, res) => {
       throw new Error("playlist not found");
     }
 
-    console.log(playlist);
+    console.log("playlist name: " + playlist.name + ", songs in playlist: " + playlist.songList);
 
-    for (song of req.body.songList) {
-      console.log("song: " + song);
+    if (!req.body.songList || req.body.songList.length === 0) {
+      const songs = await Song.find({ _id: { $in: playlist.songList } })
 
-      const currentSong = await Song.findOne({title: song})
+      songs.map(song => {
+
+        console.log("song in playlist: " + song.title);
+
+        playlist.songList.pop(song);
+
+      });
+
+      console.log("song should be removed");
+    }
+
+    for (const songId of req.body.songList) {
+      console.log("song: " + songId);
+
+      const currentSong = await Song.findById(songId);
 
       console.log("currentSong: " + currentSong);
 
@@ -134,15 +148,6 @@ const updatePlaylist = async (req, res) => {
       console.log("song should be added");
     }
 
-    if (!req.body.songList || req.body.songList.length === 0) {
-      const currentSong = await Song.findOne({title: song})
-
-      console.log("currentSong: " + currentSong);
-
-      playlist.songList.pop(currentSong);
-
-      console.log("song should be removed");
-    }
 
     console.log("playlist songList: " + playlist.songList);
 
