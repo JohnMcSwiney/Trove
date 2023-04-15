@@ -110,14 +110,14 @@ const updatePlaylist = async (req, res) => {
 
     if (!user) {
       console.log(user);
-      throw new Error("User not found");
+      //throw new Error("User not found");
     }
 
     const playlist = await Playlist.findOne({ playlistCreator: user._id });
 
     if (!playlist) {
       console.log(playlist);
-      throw new Error("playlist not found");
+      //throw new Error("playlist not found");
     }
 
     console.log("playlist name: " + playlist.name + ", songs in playlist: " + playlist.songList);
@@ -129,7 +129,7 @@ const updatePlaylist = async (req, res) => {
 
         console.log("song in playlist: " + song.title);
 
-        playlist.songList.pop(song);
+        playlist.songList.pop(song._id);
 
       });
 
