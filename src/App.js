@@ -26,6 +26,7 @@ import {
   PlaylistPage,
   UpdatePlaylist,
   CuratedPlaylist,
+  ErrorPage
 } from "./pages";
 import CreatePlaylist from "./pages/playlist/createPlaylist/CreatePlaylist";
 
@@ -73,6 +74,7 @@ function App() {
             <Route path="/editplaylist/">
               <Route path=":id" element={<UpdatePlaylist />}></Route>
             </Route>
+            <Route path="*" element={<ErrorPage />}></Route>
           </Routes>
         </div>
 
