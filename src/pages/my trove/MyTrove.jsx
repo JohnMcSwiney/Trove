@@ -110,8 +110,11 @@ const MyTrove = () => {
       <div className="myTrvcontainer ">
         <div className="pfp_name_follower_cont">
           <div className="borderuserimg">
+            <div className="user-img-cont">
             <img src={userInfo.imageURL} className="user-img"></img>
-          </div>
+          
+            </div>
+            </div>
           <div className="name_follower_cont">
             <div className="txt-container">
               <h1>{user?.displayName}</h1>

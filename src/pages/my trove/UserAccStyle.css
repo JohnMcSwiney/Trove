@@ -139,11 +139,26 @@
     filter: none;
     width: 100px;
     height: 100px;
-    flex: none;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+.user-img-cont{
+    border-radius: 500px;
+    width: 90px;
+    height: 90px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
 }
 .user-img{
-    border-radius: 50%;
-    width: 96px;
+    position: absolute;
+    width: 100%;
+    left: 0%;
 }
 .name_follower_cont{
     display: flex;
