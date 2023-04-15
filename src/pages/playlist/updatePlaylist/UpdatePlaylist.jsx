@@ -101,20 +101,21 @@ export default function UpdatePlaylist(props) {
       const newList = playlistSongList.filter((item) => item._id !== song._id);
       const newSongList = songList.filter((item) => item !== song._id);
 
+
       setPlaylistSongList(newList);
       setSongList(newSongList);
 
     } else if (songAction === "add") {
 
       // if(playlistSongList?.length > 0) {
-        setPlaylistSongList([
-          ...playlistSongList,
-         song
-        ]);
-        setSongList(([
-          ...songList,
-         song._id
-        ]));
+      setPlaylistSongList([
+        ...playlistSongList,
+        song
+      ]);
+      setSongList(([
+        ...songList,
+        song
+      ]));
       // } else {
       //   playlistSongList?.push(song);
       //   songList?.push(song._id);
@@ -134,30 +135,34 @@ export default function UpdatePlaylist(props) {
   // submit playlist
   const { updatePlaylist, error } = useUpdatePlaylist();
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    //e.preventDefault();
     try {
-      // await updatePlaylist(id, playlistName, creatorid, imageFile, songList);
-      const response = await fetch(`/api/playlists/${creatorid}`, {
-        method: "PATCH",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({
-          //id,
-          playlistName,
-          playlistCreator: user.displayName,
-          //imageFile,
-          songList
-        })
-      });
 
-      const data = await response.json();
+      for (const song of playlist.songList) {
+        alert("should go in here if there is duplicate"); 
+        // if (playlist.songList.includes(currentSong._id)) {
+        //   console.log("duplicate song found");
+  
+        //   //playlist.songList.pop(currentSong._id);
+        //   await Playlist.updateOne(
+        //     { _id: playlist._id },
+        //     {
+        //       $in: playlist.songList,
+        //       $pull: { songList: currentSong._id }
+        //     },
+        //     { new: true }
+        //   );
+        //   alert("backend removed duplicate song");
+        // }
+  
+        if (playlist.songList.some(item => item.id === song._id)) {
+          playlist.songList.pop(song._id);
+          alert("found duplicate song, should be removed");
+        }
+      }
+  
+      await updatePlaylist(id, playlistName, creatorid, imageFile, songList);
 
-      if (!response.ok) {
-        console.log("did not update playlist");
-        console.log(error);
-      }
-      else {
-        console.log("updated playlist successfully");
-      }
       navigate("/mytrove");
     } catch (error) {
       console.log(error);

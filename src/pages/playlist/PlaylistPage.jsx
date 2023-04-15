@@ -113,7 +113,9 @@ export default function PlaylistPage (props) {
       if(play_list !== playlist?.songList ){
         if(playlist?.songList.length === 0 ){
           return;
-        } else {
+        }
+        else {
+      
           console.log("setting Play_list")
           updatePlay_list(playlist?.songList);
         }
@@ -209,7 +211,23 @@ export default function PlaylistPage (props) {
           <div className='playlist--songs'>
             <ul className='playlist--songlist--container'>
               {playlist &&
-                playlist.songList.map((song, index) => {
+                playlist?.songList?.map((song, index) => {
+
+                  // alert("song in .map: " + song.title);
+
+                  // alert("playlist songlist in .map: " + );
+
+
+                  // if (playlist?.songList?.includes(song._id)) {
+                  //   alert("does it even go in here?")
+                  //   playlist.songList.pop(song._id);
+                  //   alert("found duplicate song, should be removed");
+                  // }
+
+                  // if (playlist?.songList?.some(item => item.id === song._id)) {
+                  //   playlist.songList.pop(currentSong._id);
+                  //   alert("found duplicate song, should be removed");
+                  // }
                   return (
                     <li className='playlist--song--container'>
                       <h1>{index + 1}</h1>

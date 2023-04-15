@@ -82,7 +82,7 @@ export const useUpdatePlaylist = () => {
 
     const updatePlaylistObject = async (playlistName, playlistCoverUrl, songList) => {
       if (playlistCoverUrl) {
-        const res = await fetch(`/api/playlists/${id}`, {
+        const res = await fetch(`/api/playlists/${creatorid}`, {
           method: "PATCH",
           headers: {
             Accept: "application/json",
@@ -107,7 +107,8 @@ export const useUpdatePlaylist = () => {
           setError(data.error);
         }
       } else {
-        const res = await fetch(`/api/playlists/${id}`, {
+        
+        const res = await fetch(`/api/playlists/${creatorid}`, {
           method: "PATCH",
           headers: {
             Accept: "application/json",
@@ -116,10 +117,10 @@ export const useUpdatePlaylist = () => {
           },
           body: JSON.stringify({
             playlistName,
-            // id: creatorid,
             songList,
           }),
         });
+        alert("should reach this and not do it again");
 
         const data = await res.json();
 
