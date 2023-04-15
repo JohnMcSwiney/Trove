@@ -80,7 +80,7 @@ export const useUpdatePlaylist = () => {
       return metadata !== false;
     };
 
-    const updatePlaylistObject = async (playlistCoverUrl) => {
+    const updatePlaylistObject = async (playlistName, playlistCoverUrl, songList) => {
       if (playlistCoverUrl) {
         const res = await fetch(`/api/playlists/${id}`, {
           method: "PATCH",
@@ -136,7 +136,7 @@ export const useUpdatePlaylist = () => {
     if (imageFile) {
       playlistCoverUrl = await uploadImageToFirebase();
     }
-    await updatePlaylistObject(playlistCoverUrl);
+    await updatePlaylistObject(playlistName, playlistCoverUrl, songList);
     if (!error) {
       navigate("/mytrove");
       // window.location.reload(false);

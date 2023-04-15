@@ -44,7 +44,7 @@ export default function PlaylistSong (props) {
       <img
           src={props.songActionImg}
           alt='deletesongicon'
-          onClick={() => props.handleRemoveSong(props.song, props.songAction)}
+          onClick={() => props.handleActionSong(props.song, props.songAction)}
         />
       </div>
       {/* <div className='createplaylist--song--info'>

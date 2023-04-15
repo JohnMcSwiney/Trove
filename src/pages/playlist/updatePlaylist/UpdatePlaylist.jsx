@@ -35,7 +35,7 @@ export default function UpdatePlaylist(props) {
       }
     };
     fetchPlaylist();
-  }, [id]);
+  }, []);
 
   const searchAPI = React.useEffect(() => {
     const fetchSearch = async () => {
@@ -77,7 +77,7 @@ export default function UpdatePlaylist(props) {
   React.useEffect(() => {
     setPreviewCover(playlist?.playlistCoverUrl);
     setPlaylistSongList(playlist?.songList);
-    setSongList(playlistSongList?.map((song) => song._id));
+    setSongList(playlist?.songList.map((song) => song._id));
     // setSongList(playlist?.songList._id)
     setPlaylistName(playlist?.playlistName);
   }, [playlist]);
@@ -93,36 +93,33 @@ export default function UpdatePlaylist(props) {
     setPlaylistName(e.target.value);
   };
 
-  // remove song from playlist songlist
-  function handleRemoveSong(song, songAction, index) {
+  // handle song from playlist songlist
+  function handleActionSong(song, songAction, index) {
     console.log(song._id);
 
     if (songAction === "remove") {
-      if (songList?.length > 0 && playlistSongList?.length > 0) {
-        const newPlaylistSongList = [...playlistSongList];
-        newPlaylistSongList.splice(index, 1); // remove the song at the specified index
-        setPlaylistSongList(newPlaylistSongList);
+      const newList = playlistSongList.filter((item) => item._id !== song._id);
+      const newSongList = songList.filter((item) => item !== song._id);
 
-        const newSongList = [...songList];
-        newSongList.splice(index, 1); // remove the song ID at the specified index
-        setSongList(newSongList);
-      }
+      setPlaylistSongList(newList);
+      setSongList(newSongList);
+
     } else if (songAction === "add") {
-      if (
-        songList &&
-        songList.length === 0 &&
-        playlistSongList &&
-        playlistSongList?.length === 0
-      ) {
-        playlistSongList.push(song._id);
-        songList.push(song._id);
-      } else if (songList?.length > 0 && playlistSongList.length > 0) {
-        setPlaylistSongList((prevPlaylistSongs) => [
-          ...prevPlaylistSongs,
-          song,
+
+      // if(playlistSongList?.length > 0) {
+        setPlaylistSongList([
+          ...playlistSongList,
+         song
         ]);
-        setSongList((prevSongList) => [...prevSongList, song._id]);
-      }
+        setSongList(([
+          ...songList,
+         song._id
+        ]));
+      // } else {
+      //   playlistSongList?.push(song);
+      //   songList?.push(song._id);
+      // }
+
     }
   }
 
@@ -167,7 +164,7 @@ export default function UpdatePlaylist(props) {
           togglePop={togglePop}
           albumSongs={albumSongs}
           songActionImg={addSongImg}
-          handleRemoveSong={handleRemoveSong}
+          handleActionSong={handleActionSong}
           search={search}
           setSearch={setSearch}
           done={done}
@@ -242,14 +239,14 @@ export default function UpdatePlaylist(props) {
 
         <div className="updateplaylist--songs">
           {playlistSongList &&
-            playlistSongList.map((item, index) => {
+            playlistSongList?.map((item, index) => {
               return (
                 <PlaylistSong
                   key={index}
                   {...item}
                   song={item}
                   index={index}
-                  handleRemoveSong={handleRemoveSong}
+                  handleActionSong={handleActionSong}
                   songActionImg={removeSongImg}
                   songAction={"remove"}
                 />

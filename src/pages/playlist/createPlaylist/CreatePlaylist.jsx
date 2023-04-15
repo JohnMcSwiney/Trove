@@ -67,8 +67,8 @@ export default function CreatePlaylist(props) {
     setPlaylistName(e.target.value);
   };
 
-  // remove song from playlist creation
-  function handleRemoveSong(song, songAction) {
+  // handle song from playlist creation
+  function handleActionSong(song, songAction) {
     console.log(song._id);
 
     if (songAction === "remove") {
@@ -77,6 +77,8 @@ export default function CreatePlaylist(props) {
 
       setPlaylistSongList(newList);
       setSongList(newSongList);
+
+
     } else if (songAction === "add") {
       setPlaylistSongList((prevPlaylistSongs) => [...prevPlaylistSongs, song]);
       setSongList((prevSongList) => [...prevSongList, song._id]);
@@ -111,7 +113,7 @@ export default function CreatePlaylist(props) {
           togglePop={togglePop}
           albumSongs={albumSongs}
           songActionImg={addSongImg}
-          handleRemoveSong={handleRemoveSong}
+          handleActionSong={handleActionSong}
           search={search}
           setSearch={setSearch}
           done={done}
@@ -193,7 +195,7 @@ export default function CreatePlaylist(props) {
                       {...item}
                       song={item}
                       index={index}
-                      handleRemoveSong={handleRemoveSong}
+                      handleActionSong={handleActionSong}
                       songActionImg={removeSongImg}
                       songAction={"remove"}
                     />

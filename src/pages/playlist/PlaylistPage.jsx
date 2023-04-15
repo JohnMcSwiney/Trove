@@ -36,29 +36,12 @@ export default function PlaylistPage (props) {
   } = React.useContext(MusicContext)
 
   const [playlist, setPlaylist] = React.useState(null)
+  const [playlistCreator, setPlaylistCreator] = React.useState(null)
   
-  React.useEffect(() => {
-    const findPlaylistCreator = async () => {
-      // setDone(false);
-      fetch(`/api/users/${playlist.playlistCreator}`)
-        .then(response => response.json())
-        .then(json => {
-          setPlaylistCreator(json)
-        })
-    }
-    findPlaylistCreator()
-    
-    if(playlist === undefined && clicks !== 1){
-      console.log(play_list);
-      setClicks(clicks+1);
-    }
-    if(playlist?.songList === play_list){
-      console.log("we have a match");
-    }
-  }, [])
   const togglePlayPause = () => {
     toggleIsPlay_G();
   }
+
   React.useEffect(() => {
     const fetchPlaylist = async () => {
       // const playlistResponse = await fetch(`/api/playlists/${id}`, {
@@ -76,15 +59,36 @@ export default function PlaylistPage (props) {
             // setPlaylistCreator(json)
             setDone(true)
             setPlaylist(json)
+            setPlaylistCreator(json._id)
           })
       }, 500)
     }
     fetchPlaylist()
   }, [id])
 
-  const [playlistCreator, setPlaylistCreator] = React.useState(null)
+
   const [done, setDone] = React.useState(false)
   const [clicks, setClicks] = React.useState(0);
+
+  // // React.useEffect(() => {
+  // //   const findPlaylistCreator = async () => {
+  // //     // setDone(false);
+  // //     fetch(`/api/users/${playlist.playlistCreator}`)
+  // //       .then(response => response.json())
+  // //       .then(json => {
+  // //         setPlaylistCreator(json)
+  // //       })
+  // //   }
+  // //   findPlaylistCreator()
+    
+  // //   if(playlist === undefined && clicks !== 1){
+  // //     console.log(play_list);
+  // //     setClicks(clicks+1);
+  // //   }
+  // //   if(playlist?.songList === play_list){
+  // //     console.log("we have a match");
+  // //   }
+  // // }, [])
 
   
 

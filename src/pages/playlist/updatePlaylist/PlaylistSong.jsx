@@ -19,7 +19,7 @@ export default function PlaylistSong(props) {
     return (
         <div className="updateplaylist--song">
                 <div className="updateplaylist--delsong">
-                    <img src={props.songActionImg} alt="deletesongicon" onClick={ () =>  props.handleRemoveSong(props.song, props.songAction)} />
+                    <img src={props.songActionImg} alt="deletesongicon" onClick={ () =>  props.handleActionSong(props.song, props.songAction)} />
                 </div>
                 <div className="updateplaylist--tiny--cover">
                         <img src={props.song.imgUrl} alt="playlistcover"/>

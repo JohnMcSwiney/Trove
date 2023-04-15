@@ -42,7 +42,7 @@ export default function PopUp(props) {
                         {props.searchResult.songs.map((song, index) => (
                           <li className='playlist--song--container'>
                           <PlaylistSong key={song._id} song={song} setSongData={props.setSongData}
-                          handleRemoveSong={props.handleRemoveSong}
+                          handleActionSong={props.handleActionSong}
                           songActionImg={props.songActionImg}
                           songAction={"add"}
                           />
