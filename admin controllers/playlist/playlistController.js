@@ -95,14 +95,14 @@ const updatePlaylist = async (req, res) => {
 
   try {
 
-    const user = await User.findById(id);
+    const user = await User.findById(req.body.creatorid);
 
     if (!user) {
       console.log(user);
       //throw new Error("User not found");
     }
 
-    const playlist = await Playlist.findOne({ playlistCreator: user._id });
+    const playlist = await Playlist.findById(id);
 
     if (!playlist) {
       console.log(playlist);
