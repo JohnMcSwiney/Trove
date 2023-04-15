@@ -1,0 +1,45 @@
+.music--errorpage {
+    color: white;
+    display: flex;
+    align-content: center;
+    margin-top: 10%;
+}
+
+.music--errorpage > img {
+    width: 250px;
+    height: auto;
+    float: right;
+    
+}
+
+.music--errorpage  h4 {
+    display: block;
+
+
+}
+
+.music--errorpage h3 {
+    display: block;
+    font-weight: 800;
+
+}
+
+#big404 {
+    font-size: 150px;
+
+    
+}
+
+.music--errorpage-msg {
+    /* width: 50%; */
+    margin-left: 5%;
+}
+
+.music--errorpage-msg > a {
+    color: #0034c4;
+    font-weight: 700;
+}
+
+.music--errorpage-msg > a:hover {
+    color: #6f49e8;
+}
