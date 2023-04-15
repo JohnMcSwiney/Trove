@@ -6,7 +6,7 @@ const playlistSchema = new mongoose.Schema(
     playlistName: {
       type: String,
       maxlength: 75,
-      default: "My Trove List"
+      default: "My Trove Playlist"
     },
     playlistCreator: {
       type: String,

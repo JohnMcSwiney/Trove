@@ -30,8 +30,7 @@ const getAPlaylist = async (req, res) => {
   if (!playlist) {
     return res.status(404).json({ err: "No such playlist" });
   } else {
-    console.log(playlist);
-
+    console.log("get function working");
     res.status(200).json(playlist);
   }
 };
@@ -54,24 +53,14 @@ const createPlaylist = async (req, res) => {
   try {
     const user = await User.findById(req.body.id);
 
+    console.log("user ID: " + req.body.id);
+
     if (!user) {
       throw new Error("Please sign in to play this");
     }
 
     let songList = [];
     let song;
-
-    if (req.body.songList) {
-      for (i = 0; i < req.body.songList.length; i++) {
-        song = await Song.findOne({ _id: req.body.songList[i] });
-        songList = [...songList, song._id];
-        console.log(songList);
-
-        if (!song) {
-          res.status(404).json({ error: "Please sign in to play this SONG" });
-        }
-      }
-    }
 
     const playlist = new Playlist({
       ...req.body,
@@ -120,7 +109,8 @@ const updatePlaylist = async (req, res) => {
       //throw new Error("playlist not found");
     }
 
-    console.log("playlist name: " + playlist.name + ", songs in playlist: " + playlist.songList);
+    //console.log("playlist name: " + playlist.playlistName + ", songs in playlist: " + playlist.songList);
+
 
     if (!req.body.songList || req.body.songList.length === 0) {
       const songs = await Song.find({ _id: { $in: playlist.songList } })
@@ -142,6 +132,26 @@ const updatePlaylist = async (req, res) => {
       const currentSong = await Song.findById(songId);
 
       console.log("currentSong: " + currentSong);
+
+      // if (playlist.songList.includes(currentSong._id)) {
+      //   console.log("duplicate song found");
+
+      //   //playlist.songList.pop(currentSong._id);
+      //   await Playlist.updateOne(
+      //     { _id: playlist._id },
+      //     {
+      //       $in: playlist.songList,
+      //       $pull: { songList: currentSong._id }
+      //     },
+      //     { new: true }
+      //   );
+      //   alert("backend removed duplicate song");
+      // }
+
+      // if (playlist.songList.some(song => song.id === currentSong._id)) {
+      //   playlist.songList.pop(currentSong._id);
+      //   console.log("duplicate song removed");
+      // }
 
       playlist.songList.push(currentSong);
 
