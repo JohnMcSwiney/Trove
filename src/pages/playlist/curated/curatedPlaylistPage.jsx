@@ -97,18 +97,18 @@ export default function CuratedPlaylistPage(props) {
     }
   };
   return (
-    <section className="playlist-containter-ver2">
+    <section className="curated-containter-ver2">
       {/* HEADER */}
       {/* ALBUM COVER / INFO */}
-      <div className="bg-fglass--1--playlist">
+      <div className="bg-fglass--1--curated">
         <div
-          className="playlist--info"
+          className="curated--info"
           // onClick={handlePlayPlaylist()}
         >
-          <div className="playPauseQueueBtnCont">
+          <div className="curatedPlayPauseQueueBtnCont">
             {clicks !== 0 && play_list === playlist?.songList ? (
               <button
-                className="playlist--playbtn"
+                className="curated--playbtn"
                 // id='playPauseBtn'
                 onClick={togglePlayPause}
               >
@@ -135,37 +135,38 @@ export default function CuratedPlaylistPage(props) {
           {!done ? (
             <LoadingSearch />
           ) : (
-            <div className='playlist--song--cover'>
+            <div className='curated--song--cover'>
               <img src={playlist && playlist.curatedPlaylistCoverUrl} alt='playlist' />
             </div>
           )}
           {!done ? (
             <LoadingSearch />
           ) : (
-            <div className='playlist--stats--info'>
-              <div className='playlist--release--info'>
-                <h6><strong>Curated </strong>Playlist</h6>
+            <div className='curated--stats--info'>
+              <div className='curated--release--info'>
+                <h6><strong>Curated</strong> Playlist</h6>
                 {/* <div className="playlist--release--filler--div">|</div><h5>2014</h5> */}
                 <div className="playlist--release--filler--div">|</div>
                 <h4>By: {playlist && playlist.curatedPlaylistCreator}</h4>
               </div>
               <h3>{playlist && playlist.curatedPlaylistName}</h3>
+              <h5>{playlist.curatedPlaylistBio}</h5>
             </div>
           )}
         </div>
       </div>
 
       {/* SONGS */}
-      <div className="bg-fglass--2--playlist">
+      <div className="bg-fglass--2--curated">
         {!done ? (
           <LoadingSearch />
         ) : (
-          <div className="playlist--songs">
-            <ul className="playlist--songlist--container">
+          <div className="curated--songs">
+            <ul className="curated--songlist--container">
               {playlist &&
                 playlist?.songList?.map((song, index) => {
                   return (
-                    <li className="playlist--song--container">
+                    <li className="curated--song--container">
                       <h1>{index + 1}</h1>
                       <SearchSongCard2 key={song._id} song={song} />
                     </li>
