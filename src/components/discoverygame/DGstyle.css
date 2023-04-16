@@ -452,7 +452,7 @@
   .DGvolumeContainter {
     position: fixed;
     bottom: 0;
-    background-color: rgba(128, 255, 0, 0.178);
+    /* background-color: rgba(128, 255, 0, 0.178); */
     /* left: 25%; */
     width: 100%;
     padding: 1%;
