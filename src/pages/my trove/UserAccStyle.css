@@ -106,13 +106,24 @@
     .topGenreCont{
         display: inline-flex;
         width: 100%;
+        flex-direction: row;
         align-items: center;
         justify-content: space-around;
         padding-bottom: 10px;
         padding-top: 10px;
-        margin-left: 20px;
+        margin-left: 10px;
         margin-right: 20px;
         }
+        .topGenreCont >.topGenre1{
+                order: 2;
+                   }
+                   .topGenreCont > .topGenre2{
+                   order:1;
+                   }
+                   .topGenreCont > .topGenre3{
+                   /* transform: translateX(-80px); */
+                   order: 3;
+                   }
 }
 .txt-container{
     margin-left: 3px ;
