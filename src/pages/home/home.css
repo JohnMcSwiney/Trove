@@ -14,6 +14,7 @@
     /* background-color: tomato; */
     flex-wrap: wrap;
     margin: auto;
+    margin-bottom: 200px;
 }
 @media screen and (max-width:380px){
     .mar-t{
@@ -33,6 +34,7 @@
     .homeHeaderText{
         font-size: 1.5vw;
         padding-top:1.5vw;
+        color: white;
     }
     .test123456{
       /* background-color: crimson; */
