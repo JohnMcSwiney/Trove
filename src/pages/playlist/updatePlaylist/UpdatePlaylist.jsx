@@ -134,8 +134,8 @@ export default function UpdatePlaylist(props) {
     //e.preventDefault();
     try {
 
-      for (const song of playlist?.songList) {
-        alert("should go in here if there is duplicate " + song.title); 
+      // for (const song of playlist?.songList) {
+      //   alert("should go in here if there is duplicate " + song.title); 
         // if (playlist.songList.includes(currentSong._id)) {
         //   console.log("duplicate song found");
   
@@ -151,12 +151,12 @@ export default function UpdatePlaylist(props) {
         //   alert("backend removed duplicate song");
         // }
   
-        if (playlist.songList.some(item => item.id === song._id)) {
-          playlist.songList.pop(song._id);
-          alert("found duplicate song, should be removed");
-        }
-      }
-  
+        // if (playlist.songList.some(item => item.id === song._id)) {
+        //   playlist.songList.pop(song._id);
+        //   alert("found duplicate song, should be removed");
+        // }
+      // }
+      // alert("This is the song list" + songList);
       await updatePlaylist(id, playlistName, creatorid, imageFile, songList);
 
       navigate("/mytrove");

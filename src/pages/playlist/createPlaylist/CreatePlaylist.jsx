@@ -165,13 +165,13 @@ export default function CreatePlaylist(props) {
         <div className="createplaylist--addsongs">
           {/* <input type="text" id="searchbar" placeholder="Search Songs"/> */}
 
-          {/* <input
+          <input
             type="button"
             value="Add Songs"
             // className='createplaylist--gradient--btn createplaylist--addsongsbtn'
             className="createPlaylist--addSongsBtnVer2 btn"
             onClick={togglePop}
-          /> */}
+          />
         </div>
 
         <input

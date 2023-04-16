@@ -64,6 +64,7 @@ export const useUpdatePlaylist = () => {
       });
     };
 
+
     const updatePlaylistObject = async (id, playlistName, creatorid, playlistCoverUrl, songList) => {
       if (playlistCoverUrl) {
         const res = await fetch(`/api/playlists/${id}`, {
@@ -77,7 +78,7 @@ export const useUpdatePlaylist = () => {
             playlistName,
             creatorid,
             playlistCoverUrl: playlistCoverUrl,
-            songList,
+            songList: songList,
           }),
         });
 
