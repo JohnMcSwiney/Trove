@@ -843,7 +843,7 @@
   .DGarrowcont {
     margin: 2.5px;
     font-size: xx-large;
-    gap: 0.25vw;
+    gap: 2.5vh;
 
     background-blend-mode: multiply;
   }
@@ -859,6 +859,7 @@
   .Discovery-Player-Container > div > .DGpsbutsCont {
     font-size: 7vmin;
     margin: 5vmin;
+    transform: translateY(-4vh);
     /* margin-top: 3vmin; */
     width: 20vw;
     margin-left: 15vw;
