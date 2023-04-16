@@ -19,3 +19,5 @@ export { default as CreatePlaylist } from "./pages/playlist/createPlaylist/Creat
 export { default as UpdatePlaylist } from "./pages/playlist/updatePlaylist/UpdatePlaylist.jsx";
 
 export {default as CuratedPlaylist} from "./pages/playlist/curated/curatedPlaylistPage";
+
+export { default as ErrorPage } from "./pages/errornotfound/ErrorPage.jsx";
