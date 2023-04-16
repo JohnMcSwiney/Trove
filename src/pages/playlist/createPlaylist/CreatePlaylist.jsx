@@ -149,7 +149,7 @@ export default function CreatePlaylist(props) {
                 className="createplaylist--gradient--btn createplaylist--image--btn createplaylist--hide--file"
                 onChange={handleImageFileChange}
               />
-              Choose Image
+              Change Playlist Cover
               <FiUpload id="upload--icon" />
               {/* <img
                 src="../../assets/upload_icon.png"
@@ -177,11 +177,10 @@ export default function CreatePlaylist(props) {
           type="submit"
           // value="Create Playlist"
           className="createplaylist--submit--ver2"
-          onClick={handleSubmit}
-        >
+          onClick={handleSubmit}/>
           {/* <p>Create</p> */}
-          <h1>Create Playlist</h1>
-        </button>
+          {/* <h1>Create Playlist</h1> */}
+
       </div>
 
       <div className="bg-fglass--2--playlist">
