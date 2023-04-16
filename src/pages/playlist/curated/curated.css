@@ -160,17 +160,20 @@
     .curated--release--info {
     width: fit-content;
     max-width: 100%;
+    margin-top: auto;
+    margin-bottom: auto;
   }
 
   .curated--release--info > h6 {
-    font-size: 20px;
+    font-size: 15px;
     font-weight: 300;
     margin: 0;
-    width: 200px;
+    width: 115px;
+    /* position: absolute; */
   }
   .curated--release--info > h4 {
     font-weight: 400;
-    font-size: 15px;
+    font-size: 14px;
     margin: 0;
   }
 
@@ -192,7 +195,7 @@
     /* font-weight: 200; */
     margin: 0;
     max-width: 300px;
-    height: 60px;
+    max-height: 60px;
   }
   .curated-containter-ver2 {
     /* display: flex; */
@@ -223,8 +226,8 @@
   }
   .curated--song--cover {
     border-radius: 1vmin;
-    height: 20vmin;
-    width: 20vmin;
+    height: 19vmin;
+    width: 19vmin;
     
   }
   
@@ -295,7 +298,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: auto;
+  margin: 5px
 }
 .playPauseQueueBtnCont > .AddPlaylist_ToQueue{
   /* margin: auto; */

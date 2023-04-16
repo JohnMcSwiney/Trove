@@ -120,7 +120,7 @@ export default function CuratedPlaylistPage(props) {
               </button>
             ) : (
               <button
-                className="playlist--playbtn"
+                className="curated--playbtn"
                 onClick={handlePlayPlaylist}
               >
                 <BsFillPlayFill className="playIconPlayList" />

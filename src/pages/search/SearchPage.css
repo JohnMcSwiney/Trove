@@ -21,7 +21,7 @@
     backdrop-filter: blur(2px);
     width: 100%;
     padding-left: 4.5vw;
-    height: 8vw;
+    height: 9vw;
     max-height: 60px;
     /* transform: translateY(-1vw); */
     transition: 0.5s;
@@ -43,24 +43,38 @@
     z-index: 1;
     margin-top: 1%;
 }
+@media screen and (max-width: 799px){
+    .searchBox{
+        background-color: #080c3dd0;
+        width: 80vw;
+        padding: 0.5vw;
+        border-radius: 5px;
+        border: solid rgba(255, 255, 255, 0.575) 2px;
+        height: 40px;
+        padding: 2px;
+        
+    }
+}
 @media screen and (min-width: 800px){
     .searchContentBoxContainer{
         padding-top: 6% !important;
         position: relative;
     }
+    .searchBox{
+        background-color: #080c3dd0;
+        width: 70vw;
+        padding: 0.5vw;
+        border-radius: 5px;
+        border: solid rgba(255, 255, 255, 0.575) 2px;
+        height: 40px;
+        padding: 2px;
+        
+    }
     /* .searchInpCont{
         padding-top: 5vw;
     } */
 }
-.searchBox{
-    background-color: #080c3dd0;
-    width: 70vw;
-    padding: 0.5vw;
-    border-radius: 5px;
-    border: solid rgba(255, 255, 255, 0.575) 2px;
-    height: 40px;
-    
-}
+
 .artSearchContainer{
     display: flex;
     gap: 2vw;
