@@ -437,6 +437,7 @@ const loadDiscoveryGame = async (req, res) => {
     }
 
     if (user.likedSongs.length == 0) {
+      console.log("user has no liked songs at the moment");
       const differentSongsLimit = await randomSong(user);
       res.status(200).json(differentSongsLimit);
     } else {
