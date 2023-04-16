@@ -1,3 +1,6 @@
+
+
+
 .myTrvcontainer{
     display: flex;
     flex-direction: column;
@@ -21,24 +24,10 @@
     margin-right: auto;
     margin-left: 1%;
 }
-.txt-container{
-    text-overflow: ellipsis;
-    overflow:hidden;
-    white-space: wrap;
-    height: 60px;
-    /* background-color: cyan; */
-    min-width: 60%;
-    max-width: 80%;
-    align-items: center;
-    display: flex;
-    color: white;
 
-}
 
 @media screen and (min-width: 300px ){
-.txt-container{
-    font-size: medium;
-}
+
 .topGenreCont{
     display: flex;
     
@@ -65,10 +54,7 @@
     }
 }
 @media screen and (max-width: 370px){
-.txt-container{
-    font-size: large;
 
-}
 .topGenreCont{
     display: flex;
     
@@ -106,17 +92,47 @@
     .topGenreCont{
         display: inline-flex;
         width: 100%;
+        flex-direction: row;
         align-items: center;
         justify-content: space-around;
         padding-bottom: 10px;
         padding-top: 10px;
-        margin-left: 20px;
+        margin-left: 10px;
         margin-right: 20px;
         }
+        .topGenreCont >.topGenre1{
+                order: 2;
+                   }
+                   .topGenreCont > .topGenre2{
+                   order:1;
+                   }
+                   .topGenreCont > .topGenre3{
+                   /* transform: translateX(-80px); */
+                   order: 3;
+                   }
 }
 .txt-container{
+    text-overflow: ellipsis;
+    overflow:hidden;
+    white-space: wrap;
+    /* height: 60px; */
+    /* background-color: cyan; */
+    min-width: 60%;
+    max-width: 100%;
+    max-height: 15vmin;
+    /* background-color: tan; */
+    align-items: center;
+    display: flex;
+    color: white;
     margin-left: 3px ;
+    
+
 }
+.txt-container > h1{
+    
+    font-size: 6vmin;
+}
+
 .text{
     color: #878694;
     text-decoration: none;
@@ -130,15 +146,16 @@
     padding-left: 10px;
     padding-right: 10px;
     padding-top: 40px;
+    align-items: center;
 
 }
 .borderuserimg{
     background: linear-gradient(to top, #8650F4, #0034C4);
     border-radius: 50%;
-    padding:5px;
+    padding:1vmin;
     filter: none;
-    width: 100px;
-    height: 100px;
+    width: 15vmin;
+    height: 15vmin;
     
     display: flex;
     justify-content: center;
@@ -146,9 +163,9 @@
     position: relative;
 }
 .user-img-cont{
-    border-radius: 500px;
-    width: 90px;
-    height: 90px;
+    border-radius: 50vmin;
+    width: 14vmin;
+    height: 13vmin;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -170,7 +187,8 @@
     margin-bottom: 10px;
     flex-grow: 1; 
     min-width: 170px;
-    max-width: 500px;   
+    max-width: 500px;  
+    font-size: 10vmin; 
 }
 .follower_cont{
     /* background-color: blueviolet; */

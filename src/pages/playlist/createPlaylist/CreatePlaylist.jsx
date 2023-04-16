@@ -124,9 +124,22 @@ export default function CreatePlaylist(props) {
       ) : null}
       {/* playlistInfo */}
       <div className="bg-fglass--1--playlist">
-        <div className="playlist--info">
+        <div className="createPlaylist--info">
           <div className="createplaylist--song--cover">
             <img src={previewCover} alt="playlist" />
+           
+          </div>
+
+          <div className="createplaylist--stats--info">
+            <h4>Playlist Name:</h4>
+            <input
+              type="text"
+              className="playlistTitleInp"
+              onChange={handlePlaylistName}
+            />
+
+            {/* <input type="text" id="playlisttitle" placeholder="Playlist Name" onChange={handlePlaylistName} /> */}
+            <div className="createplaylist--release--info">
             <label className="createplaylist--custom-file-upload">
               <input
                 type="file"
@@ -144,20 +157,6 @@ export default function CreatePlaylist(props) {
                 alt="upload_icon"
               /> */}
             </label>
-          </div>
-
-          <div className="createplaylist--stats--info">
-            <input
-              type="text"
-              className="playlistTitleInp"
-              placeholder="Playlist Name"
-              onChange={handlePlaylistName}
-            />
-
-            {/* <input type="text" id="playlisttitle" placeholder="Playlist Name" onChange={handlePlaylistName} /> */}
-            <div className="createplaylist--release--info">
-              {/* <h5>2014</h5> */}
-              {/* <h6>PLAYLIST</h6> */}
             </div>
             {/* <h4>Creator Username</h4> */}
           </div>
@@ -176,10 +175,13 @@ export default function CreatePlaylist(props) {
 
         <input
           type="submit"
-          value="Create Playlist"
-          className="createplaylist--gradient--btn createplaylist--submit--btn"
+          // value="Create Playlist"
+          className="createplaylist--submit--ver2"
           onClick={handleSubmit}
-        />
+        >
+          {/* <p>Create</p> */}
+          <h1>Create Playlist</h1>
+        </button>
       </div>
 
       <div className="bg-fglass--2--playlist">
