@@ -62,6 +62,18 @@ const createPlaylist = async (req, res) => {
     let songList = [];
     let song;
 
+    if (req.body.songList) {
+      for (i = 0; i < req.body.songList.length; i++) {
+        song = await Song.findOne({ _id: req.body.songList[i] });
+        songList = [...songList, song._id];
+        console.log(songList);
+
+        if (!song) {
+          res.status(404).json({ error: "Please sign in to play this SONG" });
+        }
+      }
+    }
+
     const playlist = new Playlist({
       ...req.body,
       playlistCreator: user._id,
@@ -112,28 +124,38 @@ const updatePlaylist = async (req, res) => {
     //console.log("playlist name: " + playlist.playlistName + ", songs in playlist: " + playlist.songList);
 
 
-    if (!req.body.songList || req.body.songList.length === 0) {
-      const songs = await Song.find({ _id: { $in: playlist.songList } })
+    // if (!req.body.songList || req.body.songList.length === 0) {
+    //   const songs = await Song.find({ _id: { $in: playlist.songList } })
 
-      songs.map(song => {
+    //   songs.map(song => {
 
-        console.log("song in playlist: " + song.title);
+    //     console.log("song in playlist: " + song.title);
 
-        playlist.songList.pop(song._id);
+    //     playlist.songList.pop(song._id);
 
-      });
+    //   });
 
-      console.log("song should be removed");
+    //   console.log("song should be removed");
+    // }
+    
+    const songListAlreadyExists = await playlist.songList.filter(
+        (song) => req.body.songList.includes(song.id)
+    );
+    if (songListAlreadyExists.length > 0) {
+        playlist.songList = songListAlreadyExists;
+    } else {
+        playlist.songList = req.body.songList;
     }
+  
 
-    playlist.songList = [];
-    for (const songId of req.body.songList) {
+    // // playlist.songList = [];
+    // for (const songId of req.body.songList) {
 
-      console.log("song: " + songId);
+    //   console.log("song: " + songId);
 
-      const currentSong = await Song.findById(songId);
+    //   const currentSong = await Song.findById(songId);
 
-      console.log("currentSong: " + currentSong);
+    //   console.log("currentSong: " + currentSong);
 
       // if (playlist.songList.includes(currentSong._id)) {
       //   console.log("duplicate song found");
@@ -155,10 +177,10 @@ const updatePlaylist = async (req, res) => {
       //   console.log("duplicate song removed");
       // }
 
-      playlist.songList.push(currentSong);
+    //   playlist.songList.push(currentSong);
 
-      console.log("song should be added");
-    }
+    //   console.log("song should be added");
+    // }
 
 
     console.log("playlist songList: " + playlist.songList);
