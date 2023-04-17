@@ -61,6 +61,8 @@ const createTopUserSongsPlaylist = async (req, res) => {
 
     try {
 
+        await CuratedPlaylist.deleteOne({isGenerated: false});
+
         const { id } = req.body;
 
         const user = await User.findById(id);
@@ -246,7 +248,7 @@ const createTopUserSongsPlaylist = async (req, res) => {
                 curatedPlaylistBio: "Daily songs picked out for you!",
                 curatedPlaylistCoverUrl: image,
                 songList: songLimit,
-                isGenerated: true
+                isGenerated: false
             });
 
             console.log("curatedPlaylist: " + curatedPlaylist);
