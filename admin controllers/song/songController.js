@@ -9,7 +9,7 @@ const { json } = require("express");
 //get all songs
 const getAllSongs = async (req, res) => {
   try {
-    const songs = await Song.find()
+    const songs = await Song.find({isVerified: true})
       .populate({
         path: "artist",
         select: "-password -email -dob; -gender", // Exclude password and email fields
@@ -49,7 +49,7 @@ const getSong = async (request, response) => {
     })
     .populate("album");
 
-  if (!song) {
+  if (!song || song.isVerified=== false) {
     return response.status(404).json({ error: "Song not found" });
   } else {
     console.log(song);

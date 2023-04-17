@@ -20,6 +20,7 @@ const curatedPlaylistSchema = new mongoose.Schema(
     },
     curatedPlaylistCoverUrl: {
       type: String,
+     
     },
     isPublished: {
       type: Boolean,

@@ -61,7 +61,7 @@ const createTopUserSongsPlaylist = async (req, res) => {
 
     try {
 
-        await CuratedPlaylist.deleteOne({isGenerated: false});
+        await CuratedPlaylist.deleteMany({isGenerated: false});
 
         const { id } = req.body;
 
@@ -289,12 +289,13 @@ const createTopUserSongsPlaylist = async (req, res) => {
 
 
         const name = "For You";
-
+        const image = "https://firebasestorage.googleapis.com/v0/b/helical-analyst-376421.appspot.com/o/images%2Ffor_ypu.png?alt=media&token=1b00e19a-ce4b-4700-9cb1-e7bc48c04cec";
         const curatedPlaylist = new CuratedPlaylist({
             curatedPlaylistName: name,
             curatedPlaylistBio: "Daily songs picked out for you!",
+            curatedPlaylistCoverUrl: image,
             songList: songLimit,
-            isGenerated: true
+            isGenerated: false
         });
 
         console.log("curatedPlaylist: " + curatedPlaylist);
