@@ -63,7 +63,7 @@ const Home = () => {
     fetchUserInfo();
   }, []);
 
-setTimeout(
+
   useEffect (()=> {
     setDone(false)
     const fetchCurated = async () => {
@@ -77,8 +77,8 @@ setTimeout(
     setDone(true)
     }
     fetchCurated();
-  },[setDone])
-, 60000)
+  },[])
+
 
   useEffect(() => {
     const fetchCurated = async () => {
