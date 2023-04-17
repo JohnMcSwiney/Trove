@@ -42,8 +42,8 @@ const Home = () => {
     navigate("/discoverygame");
   };
 
-  const userID = JSON.parse(localStorage.getItem("user"));
-  const id = userID ? userID.id : null;
+  const userStorage = JSON.parse(localStorage.getItem("user"));
+  const id = userStorage ? userStorage.id : null;
   const [done, setDone] = React.useState(true);
   const [userInfo, setUserInfo] = useState([]);
   const [curatedPlaylist, updateCurated] = useState([]);
@@ -63,18 +63,22 @@ const Home = () => {
     fetchUserInfo();
   }, []);
 
+setTimeout(
   useEffect (()=> {
+    setDone(false)
     const fetchCurated = async () => {
-      const response = await fetch(`/api/curated/`, {
+      const response = await fetch(`/api/curated`, {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({id}),
       })
       
     const json = await response.json();
+    setDone(true)
     }
     fetchCurated();
-  },[])
+  },[setDone])
+, 60000)
 
   useEffect(() => {
     const fetchCurated = async () => {
