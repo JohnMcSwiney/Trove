@@ -63,6 +63,19 @@ const Home = () => {
     fetchUserInfo();
   }, []);
 
+  useEffect (()=> {
+    const fetchCurated = async () => {
+      const response = await fetch(`/api/curated/`, {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({id}),
+      })
+      
+    const json = await response.json();
+    }
+    fetchCurated();
+  },[])
+
   useEffect(() => {
     const fetchCurated = async () => {
       setDone(false);
