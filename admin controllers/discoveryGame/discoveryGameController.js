@@ -94,79 +94,6 @@ const compareSongData = async (user) => {
       }
     });
 
-    // user.likedSongs.forEach(async (songId) => {
-
-    //   console.log("songID: " + songId);
-
-    //   if (!mongoose.Types.ObjectId.isValid(songId)) {
-    //     return res.status(404).json({ err: "No such song" });
-    //   }
-
-    //   const currentSong = await Song.findById(songId);
-
-    //   if (!currentSong || currentSong == null) {
-
-    //     console.log("SongID is null: " + songId);
-
-    //     await User.updateOne(
-    //       { _id: user._id },
-    //       { $pull: { likedSongs: songId } }
-    //     );
-    //     console.log("SongID should be removed");
-    //   }
-
-    //   if (currentSong.songUrl) {
-    //     console.log("inside url validation")
-    //     try {
-    //       console.log("if url is valid")
-    //       new URL(currentSong.songUrl);
-    //     } catch (err) {
-    //       console.log("Invalid songUrl, contents not found");
-
-    //       await Song.updateOne(
-    //         { _id: currentSong._id },
-    //         { $set: { isPublished: false } }
-    //       );
-    //       console.log("Song should be disabled.");
-    //     }
-    //   }
-
-    //   console.log("currentSong title: " + currentSong.title);
-
-    //   console.log("currentSongGenre: " + currentSong.genre);
-
-    //   if (!currentSong.genre || currentSong.genre == null) {
-
-    //     await Song.updateOne(
-    //       { _id: currentSong._id },
-    //       { $set: { isPublished: false } }
-    //     );
-    //     console.log("song did not contain a genre");
-    //     //throw new Error("SongGenre not found");
-    //   }
-
-    //   switch (currentSong.genre) {
-    //     case "pop":
-    //       numOfPop++;
-    //       console.log("popValue: " + numOfPop);
-    //       break;
-    //     case "rock":
-    //       numOfRock++;
-    //       console.log("rockValue: " + numOfRock);
-    //       break;
-    //     case "country":
-    //       numOfCountry++;
-    //       console.log("countryValue: " + numOfCountry);
-    //       break;
-    //     case "hiphop":
-    //       numOfHipHop++;
-    //       console.log("hipHopValue: " + numOfHipHop);
-    //       break;
-    //     default:
-    //       console.log("Invalid songGenre");
-    //       break;
-    //   }
-    // });
 
     console.log("final # of pop: " + numOfPop);
     console.log("final # of rock: " + numOfRock);
@@ -369,21 +296,12 @@ const randomSong = async (user) => {
     return res.status(404).send("songs not found");
   }
 
-  // const uniqueSongs = [...new Set(songs)];
-
-  // if (uniqueSongs.length < 5) {
-  //   console.log("not enough unique songs found");
-  //   return randomSong(user);
-  // }
 
   const songLimit = [];
 
   while (songLimit.length < 5) {
-    // const index = Math.floor(Math.random() * uniqueSongs.length);
-    // const randomSong = uniqueSongs[index];
-    const randomSong = songs[Math.floor(Math.random() * songs.length)];
 
-    //console.log("randomSong in for loop: " + randomSimilarSong);
+    const randomSong = songs[Math.floor(Math.random() * songs.length)];
 
     if (!randomSong) {
       console.log("randomSong not found");
@@ -402,17 +320,6 @@ const randomSong = async (user) => {
       );
     }
 
-    // const randomSong = songs[Math.floor(Math.random() * songs.length)];
-
-    // // if (!songLimit.includes(randomSong._id) || !user.likedSongs.includes(randomSong._id) || !songLimit.includes(randomSong._id) && !user.likedSongs.includes(randomSong._id)) {
-    // //   songLimit.push(randomSong);
-    // //   console.log("added randomSong: " + randomSong.title);
-    // // }
-
-    // if (!songLimit.some((song) => song._id === randomSong._id) || !user.likedSongs.includes(randomSong._id)) {
-    //   songLimit.push(randomSong);
-    //   console.log("added randomSong: " + randomSong.title);
-    // }
   }
   console.log("songLimit length: " + songLimit.length);
 
