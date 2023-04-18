@@ -42,8 +42,8 @@ margin-bottom: 10px;
 
 
 }
-.mytrv-playlistShowcase > CardPlaylist2 {
-    scale: 0.6;
+.mytrv-playlistShowcase > .cardPlaylist2 {
+    transform: (scale(0.6));
 }
 /* Hide scrollbar for Chrome, Safari and Opera */
 .mytrv-playlistShowcase::-webkit-scrollbar {

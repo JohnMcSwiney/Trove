@@ -142,6 +142,7 @@ const MyTrove = () => {
                 playlists.length > 0 &&
                 playlists.map(playlist => (
                   <CardPlaylist2
+                  className='cardPlaylist2'
                     key={playlist._id}
                     id={playlist._id}
                     name={playlist.playlistName}
