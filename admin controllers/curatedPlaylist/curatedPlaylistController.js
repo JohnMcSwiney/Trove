@@ -61,12 +61,12 @@ const createTopUserSongsPlaylist = async (req, res) => {
 
     try {
 
-        await CuratedPlaylist.deleteMany({isGenerated: false});
+       
 
         const { id } = req.body;
 
         const user = await User.findById(id);
-
+        await CuratedPlaylist.findByIdAndDelete({belongTo: id, isGenerated: false});
         console.log("user in func: " + user);
 
         let numOfPop = 0;
@@ -248,7 +248,8 @@ const createTopUserSongsPlaylist = async (req, res) => {
                 curatedPlaylistBio: "Daily songs picked out for you!",
                 curatedPlaylistCoverUrl: image,
                 songList: songLimit,
-                isGenerated: false
+                isGenerated: false,
+                belongTo: user._id
             });
 
             console.log("curatedPlaylist: " + curatedPlaylist);
@@ -295,7 +296,8 @@ const createTopUserSongsPlaylist = async (req, res) => {
             curatedPlaylistBio: "Daily songs picked out for you!",
             curatedPlaylistCoverUrl: image,
             songList: songLimit,
-            isGenerated: false
+            isGenerated: false,
+            belongTo: user._id
         });
 
         console.log("curatedPlaylist: " + curatedPlaylist);

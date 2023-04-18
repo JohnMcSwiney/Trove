@@ -8,6 +8,11 @@ const curatedPlaylistSchema = new mongoose.Schema(
       maxlength: 75,
       default: "My Trove List"
     },
+
+    belongTo: {
+      type: mongoose.Schema.ObjectId,
+      ref: "User"
+    },
     curatedPlaylistCreator: {
       type: String,
       //default
