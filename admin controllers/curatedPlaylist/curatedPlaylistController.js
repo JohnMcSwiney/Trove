@@ -5,11 +5,20 @@ const User = require("../../models/user model/user-model");
 
 
 const mongoose = require("mongoose");
-
-
 //get all curatedPlaylist
 const getAllCuratedPlaylist = async (req, res) => {
     const curatedPlaylists = await CuratedPlaylist.find()
+    .sort({ createdAt: -1 });
+
+    res.status(200).json(curatedPlaylists);
+};
+
+
+const foryou = async (req, res) => {
+    const {id} =req.params
+    const user = await User.findById(id)
+
+    const curatedPlaylists = await CuratedPlaylist.findOne({belongTo:user._id})
     .sort({ createdAt: -1 });
 
     res.status(200).json(curatedPlaylists);
@@ -317,5 +326,6 @@ const createTopUserSongsPlaylist = async (req, res) => {
 module.exports = {
     getAllCuratedPlaylist,
     getACuratedPlaylist,
-    createTopUserSongsPlaylist
+    createTopUserSongsPlaylist,
+    foryou
 };
