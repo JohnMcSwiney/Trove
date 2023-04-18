@@ -147,7 +147,7 @@ const Search = () => {
               <div>
                 <h2>Songs</h2>
                 {searchResult.songs.map((song) => (
-                  <SearchSongCard2 key={song._id} song={song} setSongData={setSongData} />
+                song.isVerified && <SearchSongCard2 key={song._id} song={song} setSongData={setSongData} />
                 ))}
 
                 {/* <div>
