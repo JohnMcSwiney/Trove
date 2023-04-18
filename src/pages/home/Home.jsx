@@ -63,28 +63,32 @@ const Home = () => {
     fetchUserInfo();
   }, []);
 
+  // useEffect(() => {
+  //   if () {
+  //     try {
+  //       setDone(false);
+  //       const fetchCurated = async () => {
+  //         const response = await fetch(`/api/curated`, {
+  //           method: "POST",
+  //           headers: { "Content-Type": "application/json" },
+  //           body: JSON.stringify({ id }),
+  //         });
 
-  useEffect (()=> {
-    setDone(false)
-    const fetchCurated = async () => {
-      const response = await fetch(`/api/curated`, {
-        method: 'POST',
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({id}),
-      })
-      
-    const json = await response.json();
-    setDone(true)
-    }
-    fetchCurated();
-  },[])
-
+  //         const json = await response.json();
+  //         setDone(true);
+  //       };
+  //       fetchCurated();
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   }
+  // }, [id]);
 
   useEffect(() => {
     const fetchCurated = async () => {
       setDone(false);
       setTimeout(async () => {
-        const response = await fetch(`/api/curated`, {
+        const response = await fetch(`/api/curated/`, {
           method: "GET",
         });
 
@@ -189,7 +193,6 @@ const Home = () => {
       )}
 
       <h4 className="homeHeaderText">Try Something New:</h4>
-
       <ul className="homeCuratedShowcase">
         {curatedPlaylist?.length > 0 &&
           curatedPlaylist?.map((curatedPlaylist) => {
@@ -203,7 +206,6 @@ const Home = () => {
             );
           })}
       </ul>
-
     </main>
     // </div>
   );
