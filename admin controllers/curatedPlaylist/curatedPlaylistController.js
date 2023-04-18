@@ -6,18 +6,22 @@ const User = require("../../models/user model/user-model");
 const mongoose = require("mongoose");
 //get all curatedPlaylist
 const getAllCuratedPlaylist = async (req, res) => {
-  const { id } = req.params;
+  const curatedPlaylists = await CuratedPlaylist.find({
+    isGenerated: true,
+  }).sort({ createdAt: -1 });
 
+  res.status(200).json(curatedPlaylists);
+};
+
+const foryou = async (req, res) => {
+  const { id } = req.params;
   const user = await User.findById(id);
 
-  const adminPlaylists = await CuratedPlaylist.find({ isGenerated: true });
-  //.sort({ createdAt: -1 });
+  const curatedPlaylists = await CuratedPlaylist.findOne({
+    belongTo: user._id,
+  }).sort({ createdAt: -1 });
 
-  const filteredPlaylists = await CuratedPlaylist.find({ belongTo: user._id });
-
-  const allPlaylist = adminPlaylists.concat(filteredPlaylists);
-
-  res.status(200).json(allPlaylist);
+  res.status(200).json(curatedPlaylists);
 };
 
 //get 1 pl
@@ -340,4 +344,5 @@ module.exports = {
   getAllCuratedPlaylist,
   getACuratedPlaylist,
   createTopUserSongsPlaylist,
+  foryou,
 };

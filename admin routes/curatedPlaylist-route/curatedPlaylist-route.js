@@ -7,14 +7,13 @@ const {
   getAllCuratedPlaylist,
   getACuratedPlaylist,
   createTopUserSongsPlaylist,
-  forYou,
 } = require("../../admin controllers/curatedPlaylist/curatedPlaylistController");
 
-router.get("/for-you/:id", getAllCuratedPlaylist);
+router.get("/", getAllCuratedPlaylist);
 
 router.get("/:id", getACuratedPlaylist);
 
-router.post("/", createTopUserSongsPlaylist);
+// router.post("/", createTopUserSongsPlaylist);
 
 // cron.schedule("* * * * *", async (req, res) => {
 //     try {
