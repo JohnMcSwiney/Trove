@@ -5,6 +5,8 @@ const User = require("../../models/user model/user-model");
 
 
 const mongoose = require("mongoose");
+
+
 //get all curatedPlaylist
 const getAllCuratedPlaylist = async (req, res) => {
     const curatedPlaylists = await CuratedPlaylist.find()
