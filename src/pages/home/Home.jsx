@@ -189,6 +189,7 @@ const Home = () => {
       )}
 
       <h4 className="homeHeaderText">Try Something New:</h4>
+
       <ul className="homeCuratedShowcase">
         {curatedPlaylist?.length > 0 &&
           curatedPlaylist?.map((curatedPlaylist) => {
@@ -202,6 +203,7 @@ const Home = () => {
             );
           })}
       </ul>
+
     </main>
     // </div>
   );

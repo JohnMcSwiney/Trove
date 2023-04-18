@@ -24,8 +24,37 @@
     margin-right: auto;
     margin-left: 1%;
 }
+.scrollableCont{
+/* background-color: chartreuse; */
+overflow-y: scroll !important;
+width: 100%;
+margin-top: 10px;
+margin-bottom: 10px;
+}
+.mytrv-playlistShowcase{
+    display:  inline-flex;
+    gap: 10px;
+    /* background-color: tomato; */
+    /* flex-wrap: wrap; */
+    margin: auto;
+    /* overflow: scroll; */
+    overflow: visible ;
 
 
+}
+.mytrv-playlistShowcase > CardPlaylist2 {
+    scale: 0.6;
+}
+/* Hide scrollbar for Chrome, Safari and Opera */
+.mytrv-playlistShowcase::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .mytrv-playlistShowcase {
+    -ms-overflow-style: default;  /* IE and Edge */
+    scrollbar-width: default;  /* Firefox */
+  }
 @media screen and (min-width: 300px ){
 
 .topGenreCont{
@@ -310,7 +339,8 @@
     overflow:scroll;
     gap: 5px;
     align-items: center;
-    width: 2200px;
+    width: 100%;
+    flex-wrap: wrap;
 }
 .showcase-title-cont{
     width: 100%;

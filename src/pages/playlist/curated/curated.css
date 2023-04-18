@@ -293,7 +293,7 @@
    }
 .curatedPlayPauseQueueBtnCont{
   /* margin-right: 2vw; */
-  background-color: yellow;
+  /* background-color: yellow; */
   gap: 0.25vw;
   display: flex;
   align-items: center;

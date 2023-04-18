@@ -11,7 +11,6 @@ function CardArtist({ playlist }) {
   };
 
   return (
-    <>
       <div onClick={redirectPlaylist}>
         <div className="contPlaylist">
           <div className="rounded-md m-auto  ">
@@ -34,7 +33,6 @@ function CardArtist({ playlist }) {
           </div>
         </div>
       </div>
-    </>
   );
 }
 export default CardArtist;

@@ -1,0 +1,125 @@
+
+.playlistCardCont2{
+    background-color: #080c3d38;
+    padding: 0%;
+    margin: auto;
+    border: solid  2px #12164bce !important;
+    overflow: hidden;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(1.2px);
+    -webkit-backdrop-filter: blur(1.2px);
+    transition: 0.15s ease-in-out;
+}
+.playlistCard2{
+    display: flex;
+    flex-flow: column;
+    background-color: rgba(165, 42, 42, 0);
+    align-items: center;
+    margin-bottom: 5px;
+    padding: 0px;
+    gap: 0;
+}
+.playlistCover2{
+    position: relative;
+    overflow: hidden;
+    transition: 0.10s ease-in-out;
+}
+.playlistCover2:hover{
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    scale: 1.025;
+    transition: 0.10s ease-in-out;
+}
+.playlistCover2 > img{
+    position: absolute;
+    left: 0%;
+    top: 0%;
+    width: 100%;
+    scale: 1.05;
+    background: black;
+    transition: 0.20s ease-in-out;
+}
+.playlistCover2 > img:hover{
+    scale: 1.08; 
+}
+.playlistInfo2{
+    display: flex;
+    background-color: rgba(255, 255, 255, 0);
+    flex-direction: column;
+    align-items: center;   
+    text-align: center;
+    text-overflow: ellipsis;
+    color: white;
+    text-decoration: none !important;
+    overflow: hidden;
+    text-shadow: rgba(255, 255, 255, 0.486) 0px 1px 6px;
+}
+.playlistInfo2 > h3{
+    margin: auto;
+}
+@media only screen and (max-width: 799px) {
+    .playlistCardCont2{
+        border-radius: 16px;
+    }
+    .playlistCard2{
+        height: 168px;
+        width: 140px;     
+    }
+    .playlistCover2{
+        width: 125px;
+        height: 125px;    
+        border-radius: 10px;
+    }
+    .playlistCover2:hover{
+    }
+    .playlistCover2 > img{
+        
+    }
+    .playlistCover2 > img:hover{
+    }
+    .playlistInfo2{
+        width: 125px;
+        height: 40px;
+    
+    }
+    .playlistInfo2 > h3{
+        font-size: 15px;
+        margin: auto;
+    }
+
+    
+    
+}
+@media only screen and (min-width: 800px) {
+    .playlistCardCont2{
+        border-radius: 20px;
+    }
+    .playlistCard2{
+        height: 210px;
+        width: 180px;     
+    }
+    .playlistCover2{
+        width: 160px;
+        height: 160px;    
+        border-radius: 15px;
+    }
+    .playlistCover2:hover{
+    }
+    .playlistCover2 > img{
+        
+    }
+    .playlistCover2 > img:hover{
+    }
+    .playlistInfo2{
+        width: 145px;
+        height: 45px;
+    
+    }
+    .playlistInfo2 > h3{
+        font-size: 18px;
+        margin: auto;
+    }
+
+    
+    
+}
+
