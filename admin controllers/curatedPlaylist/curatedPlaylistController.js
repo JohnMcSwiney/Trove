@@ -66,7 +66,7 @@ const createTopUserSongsPlaylist = async (req, res) => {
         const { id } = req.body;
 
         const user = await User.findById(id);
-        await CuratedPlaylist.findByIdAndDelete({belongTo: id, isGenerated: false});
+        await CuratedPlaylist.findOneAndDelete({belongTo: user._id});
         console.log("user in func: " + user);
 
         let numOfPop = 0;
