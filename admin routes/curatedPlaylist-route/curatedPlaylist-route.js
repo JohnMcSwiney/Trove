@@ -1,21 +1,20 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 //const cron = require("node-cron");
 const CuratedPlaylist = require("../../models/curatedPlaylist model/curatedPlaylist-model");
 
-
 const {
-    getAllCuratedPlaylist,
-    getACuratedPlaylist,
-    createTopUserSongsPlaylist
-} = require('../../admin controllers/curatedPlaylist/curatedPlaylistController');
+  getAllCuratedPlaylist,
+  getACuratedPlaylist,
+  createTopUserSongsPlaylist,
+  forYou,
+} = require("../../admin controllers/curatedPlaylist/curatedPlaylistController");
 
-router.get('/', getAllCuratedPlaylist);
+router.get("/for-you/:id", getAllCuratedPlaylist);
 
-router.get('/:id', getACuratedPlaylist);
+router.get("/:id", getACuratedPlaylist);
 
-router.post('/', createTopUserSongsPlaylist);
-
+router.post("/", createTopUserSongsPlaylist);
 
 // cron.schedule("* * * * *", async (req, res) => {
 //     try {
