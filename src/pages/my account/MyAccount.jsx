@@ -351,17 +351,18 @@ const MyAccount = () => {
 
             <div>
               <h5>FAQ</h5>
-              <p>View out Frequently asked questions</p>
+              <p>Thanks for trying Trove Music!</p>
             </div>
 
             <div>
               <h5>Contact us</h5>
-              <p>Contact our support team, offer limited to premium users</p>
+              <p>Email: JohnnyMcSwiney64@gmail.com</p>
             </div>
 
             <div>
               <h5>Report an issue</h5>
               <p>Report what's not working well, so we can fix it</p>
+              <p>Use this <a href='https://trello.com/invite/b/w5xRPPYI/ATTI4e42a63cb17d86a363211bde5e61758b333D8BC9/trove-app'>Trello </a></p>
             </div>
           </div>
         </div>
