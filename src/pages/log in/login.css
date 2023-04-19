@@ -8,12 +8,22 @@
     display: flex;
     flex-direction: column;
     justify-content: center; 
+    margin-top: 8vh;
 }
 
-
-.user-login-header{
+.user-login-header-title{
+    margin: auto;
+    margin-top: 8vh;
     text-align: center;
+    font-size: 10vmin;
+    color: rgba(255, 255, 255, 0.437);
+}
+.user-login-header{
+    margin: auto;
+    text-align: center;
+    font-size: 10vmin;
     color: white;
+    
 }
 
 .user-loginbtn{

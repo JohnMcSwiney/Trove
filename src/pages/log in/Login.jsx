@@ -48,7 +48,8 @@ const Login = () => {
   return (
     <div className="container">
       <form className="user-login" onSubmit={handleSubmit}>
-        <h1 className="user-login-header">Log in</h1>
+        <h1 className="user-login-header-title"><strong>Trove</strong>Music</h1>
+        <h1 className="user-login-header"> Login</h1>
 
         <div className="user-login-container">
           <div className="form-outline mb-4">
