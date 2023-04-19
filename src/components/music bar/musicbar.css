@@ -822,6 +822,8 @@
         order: 5;
         position: absolute;
         right: 0;
+        background-color: rgba(255, 255, 0, 0);
+        gap: 1.5px;
 
     }
 
@@ -830,14 +832,17 @@
         margin: auto;
         width: fit-content;
         color: white;
-        height: 20px;
-        width: 20px;
+        height: 30px;
+        width: 30px;
         align-items: center;
         display: flex;
         justify-content: center;
-        font-size: x-large;
+        font-size: xx-large;
+        
     }
-
+    .control-container > .rwBtn, .control-container > .ffBtn{
+        /* opacity: 0.8 */
+    }
     .bg1 {
         background-color: rgba(128, 255, 0, 0.757);
         position: relative;
