@@ -30,7 +30,7 @@ const epSchema = new mongoose.Schema({
   epGenre: {
     type: String,
     required: [true, `Please provide album's genre`],
-    enum: ["pop", "rock", "hiphop", "country"],
+    enum: ["pop", "rock", "hiphop", "country", "electronic"],
   },
 
   isPublished: {
